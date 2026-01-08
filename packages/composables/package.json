@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Vue 3 composables for Haspen UI",
   "license": "MIT",
+  "private": false,
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

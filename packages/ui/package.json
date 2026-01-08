@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Vue 3 UI components for Haspen UI",
   "license": "MIT",
+  "private": false,
   "type": "module",
   "main": "./dist/index.umd.cjs",
   "module": "./dist/index.js",
