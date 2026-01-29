@@ -3,10 +3,16 @@ import { resolve } from 'path';
 
 const config: StorybookConfig = {
   stories: [
-    '../packages/*/src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
-    '../packages/*/src/**/*.mdx',
+    '../packages/design-tokens/src/**/*.mdx',
+    '../packages/design-tokens/src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+    '../packages/ui/src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+    '../packages/composables/src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
-  addons: ['@storybook/addon-vitest', '@storybook/addon-a11y'],
+  addons: [
+    '@storybook/addon-vitest',
+    '@storybook/addon-a11y',
+    '@storybook/addon-essentials',
+  ],
   framework: {
     name: '@storybook/vue3-vite',
     options: {},
