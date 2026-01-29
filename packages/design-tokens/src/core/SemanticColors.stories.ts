@@ -582,7 +582,7 @@ export const BusinessIntent: Story = {
       source: {
         code: `
 // Business Intent Color Usage
-@use '@haspen/design-tokens' as tokens;
+@use '@ipeeon/design-tokens' as tokens;
 
 .success-message {
   @include tokens.business-intent-colors('success', true);
@@ -609,7 +609,7 @@ export const ComponentStatesDemo: Story = {
       source: {
         code: `
 // Component State Color Usage
-@use '@haspen/design-tokens' as tokens;
+@use '@ipeeon/design-tokens' as tokens;
 
 .primary-button {
   @include tokens.component-colors('button', 'primary');
@@ -641,7 +641,7 @@ export const ContextualVariations: Story = {
       source: {
         code: `
 // Contextual Color Usage  
-@use '@haspen/design-tokens' as tokens;
+@use '@ipeeon/design-tokens' as tokens;
 
 .light-section {
   @include tokens.contextual-colors('light-context');

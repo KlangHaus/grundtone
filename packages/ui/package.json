@@ -1,5 +1,5 @@
 {
-  "name": "@haspen/ui",
+  "name": "@ipeeon/ui",
   "version": "1.0.0",
   "description": "Vue 3 UI components for Haspen UI",
   "license": "MIT",
@@ -38,12 +38,12 @@
     "vue": "^3.5.13"
   },
   "dependencies": {
-    "@haspen/core": "workspace:*",
-    "@haspen/shared": "workspace:*"
+    "@ipeeon/core": "workspace:*",
+    "@ipeeon/shared": "workspace:*"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.2",
-    "@haspen/composables": "workspace:*",
+    "@ipeeon/composables": "workspace:*",
     "@testing-library/jest-dom": "^6.8.0",
     "@vitejs/plugin-vue": "^5.0.3",
     "@vue/test-utils": "^2.4.0",

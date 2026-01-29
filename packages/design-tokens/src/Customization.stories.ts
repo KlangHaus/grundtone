@@ -64,7 +64,7 @@ Override CSS variables to change colors at runtime without rebuilding:
 
 \`\`\`typescript
 // main.ts
-import '@haspen/design-tokens/dist/index.css';
+import '@ipeeon/design-tokens/dist/index.css';
 import './styles/custom-theme.css'; // Import after design tokens
 \`\`\`
 
@@ -74,7 +74,7 @@ Create custom SCSS with design token functions:
 
 \`\`\`scss
 // styles/_custom-colors.scss
-@use '@haspen/design-tokens' as tokens;
+@use '@ipeeon/design-tokens' as tokens;
 
 // Define your custom color palette
 $brand-primary: #ff6b6b;
@@ -216,7 +216,7 @@ setCustomColors({
 ### Method 4: SCSS Typography Customization
 
 \`\`\`scss
-@use '@haspen/design-tokens' as tokens;
+@use '@ipeeon/design-tokens' as tokens;
 
 // Custom typography scale
 .heading-1 {
@@ -290,8 +290,8 @@ Use Vue composable to configure theme:
 </template>
 
 <script setup lang="ts">
-import { ThemeProvider } from '@haspen/ui';
-import type { Theme } from '@haspen/core';
+import { ThemeProvider } from '@ipeeon/ui';
+import type { Theme } from '@ipeeon/core';
 
 const customTheme: Theme = {
   mode: 'light',
@@ -372,8 +372,8 @@ Merge with default theme:
 
 \`\`\`vue
 <script setup lang="ts">
-import { ThemeProvider } from '@haspen/ui';
-import { DEFAULT_THEME } from '@haspen/core';
+import { ThemeProvider } from '@ipeeon/ui';
+import { DEFAULT_THEME } from '@ipeeon/core';
 
 const customTheme = {
   ...DEFAULT_THEME,
@@ -411,7 +411,7 @@ const customTheme = {
 ### Method 2: Global Component Styles
 
 \`\`\`scss
-@use '@haspen/design-tokens' as tokens;
+@use '@ipeeon/design-tokens' as tokens;
 
 // Customize all buttons
 .haspen-button {
@@ -505,7 +505,7 @@ Add your own design tokens:
 \`\`\`
 
 \`\`\`scss
-@use '@haspen/design-tokens' as tokens;
+@use '@ipeeon/design-tokens' as tokens;
 
 .my-special-card {
   background: var(--my-brand-accent);

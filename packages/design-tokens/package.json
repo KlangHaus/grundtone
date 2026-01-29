@@ -1,5 +1,5 @@
 {
-  "name": "@haspen/design-tokens",
+  "name": "@ipeeon/design-tokens",
   "version": "1.0.0",
   "description": "Design tokens for Haspen UI - colors, typography, spacing, and more",
   "license": "MIT",
@@ -29,7 +29,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsup && sass scss/index.scss dist/index.css",
+    "build": "tsup && sass --silence-deprecation=if-function scss/index.scss dist/index.css",
     "dev": "tsup --watch",
     "clean": "rm -rf .turbo node_modules dist",
     "prepublishOnly": "pnpm run build"

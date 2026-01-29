@@ -12,7 +12,7 @@ SCSS functions til nem adgang til design tokens i din kode.
 
 ## Import
 \`\`\`scss
-@use '@haspen/design-tokens' as tokens;
+@use '@ipeeon/design-tokens' as tokens;
 
 // Brug functions
 .my-component {

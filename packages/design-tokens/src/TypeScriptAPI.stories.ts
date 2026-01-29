@@ -28,9 +28,9 @@ While SCSS is great for static styles, the TypeScript API allows you to:
 The TypeScript exports are included when you install the package:
 
 \`\`\`bash
-npm install @haspen/design-tokens
+npm install @ipeeon/design-tokens
 # or
-pnpm add @haspen/design-tokens
+pnpm add @ipeeon/design-tokens
 \`\`\`
 
 ## Available Exports
@@ -60,7 +60,7 @@ export const ColorTokens: Story = {
 
         <h3>Import</h3>
         <div class="code-block">
-          <pre><code>import { colors } from '@haspen/design-tokens';
+          <pre><code>import { colors } from '@ipeeon/design-tokens';
 
 // Access color values
 const primaryBlue = colors.primary[500];  // '#3b82f6'
@@ -121,7 +121,7 @@ const color3 = getColor('blue', 500);     // ❌ TypeScript error</code></pre>
 
         <h3>Runtime Usage Examples</h3>
         <div class="code-block">
-          <pre><code>import { colors } from '@haspen/design-tokens';
+          <pre><code>import { colors } from '@ipeeon/design-tokens';
 
 // Example 1: Dynamic button styling
 function createButton(variant: 'primary' | 'secondary') {
@@ -185,7 +185,7 @@ export const SpacingTokens: Story = {
 
         <h3>Import</h3>
         <div class="code-block">
-          <pre><code>import { spacing } from '@haspen/design-tokens';
+          <pre><code>import { spacing } from '@ipeeon/design-tokens';
 
 // Access spacing values (in rem)
 const small = spacing[2];    // '0.5rem'   (8px)
@@ -205,7 +205,7 @@ const xl = spacing[12];      // '3rem'     (48px)</code></pre>
 
         <h3>Usage Examples</h3>
         <div class="code-block">
-          <pre><code>import { spacing } from '@haspen/design-tokens';
+          <pre><code>import { spacing } from '@ipeeon/design-tokens';
 
 // Example 1: Dynamic padding
 function setElementSpacing(element: HTMLElement, size: 'sm' | 'md' | 'lg') {
@@ -284,7 +284,7 @@ export const TypographyTokens: Story = {
 
         <h3>Import</h3>
         <div class="code-block">
-          <pre><code>import { typography } from '@haspen/design-tokens';
+          <pre><code>import { typography } from '@ipeeon/design-tokens';
 
 // Font families
 const sansFont = typography.fontFamily.sans;  // ['Inter', 'system-ui', ...]
@@ -346,7 +346,7 @@ const normal = typography.lineHeight.normal;  // '1.5'</code></pre>
 
         <h3>Usage Examples</h3>
         <div class="code-block">
-          <pre><code>import { typography } from '@haspen/design-tokens';
+          <pre><code>import { typography } from '@ipeeon/design-tokens';
 
 // Example 1: Dynamic heading styles
 function createHeading(level: 1 | 2 | 3, text: string) {
@@ -449,7 +449,7 @@ export const VueIntegration: Story = {
         <h3>Setup in Component</h3>
         <div class="code-block">
           <pre><code>&lt;script setup lang="ts"&gt;
-import { colors, spacing, typography } from '@haspen/design-tokens';
+import { colors, spacing, typography } from '@ipeeon/design-tokens';
 import { ref, computed } from 'vue';
 
 // Use tokens in reactive state
@@ -483,7 +483,7 @@ const cardPadding = computed(() =>
         <div class="code-block">
           <pre><code>// composables/useTheme.ts
 import { ref, computed } from 'vue';
-import { colors } from '@haspen/design-tokens';
+import { colors } from '@ipeeon/design-tokens';
 
 export function useTheme() {
   const isDark = ref(false);
@@ -516,7 +516,7 @@ export function useTheme() {
         <h3>Style Bindings</h3>
         <div class="code-block">
           <pre><code>&lt;script setup lang="ts"&gt;
-import { colors, spacing } from '@haspen/design-tokens';
+import { colors, spacing } from '@ipeeon/design-tokens';
 
 interface Props {
   variant?: 'primary' | 'secondary';
@@ -573,7 +573,7 @@ export const BestPractices: Story = {
             <strong>Use TypeScript for type safety</strong>
             <div class="code-block">
               <pre><code>// Good: Type-safe access
-import type { colors } from '@haspen/design-tokens';
+import type { colors } from '@ipeeon/design-tokens';
 type ColorPalette = typeof colors;
 type ColorShade = keyof ColorPalette['primary'];</code></pre>
             </div>

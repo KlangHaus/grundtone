@@ -10,18 +10,18 @@
   "fixed": [],
   "linked": [
     [
-      "@haspen/core",
-      "@haspen/shared",
-      "@haspen/ui",
-      "@haspen/composables",
-      "@haspen/design-tokens",
-      "@haspen/nuxt"
+      "@ipeeon/core",
+      "@ipeeon/shared",
+      "@ipeeon/ui",
+      "@ipeeon/composables",
+      "@ipeeon/design-tokens",
+      "@ipeeon/nuxt"
     ]
   ],
   "access": "public",
   "baseBranch": "develop",
   "updateInternalDependencies": "patch",
-  "ignore": ["@haspen/playground"],
+  "ignore": [],
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
     "onlyUpdatePeerDependentsWhenOutOfRange": true
   },

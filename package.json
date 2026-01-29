@@ -7,7 +7,6 @@
     "build": "turbo run build",
     "build:packages": "turbo run build --filter=./packages/*",
     "dev": "turbo run dev",
-    "dev:playground": "turbo run dev --filter=@haspen/playground",
     "lint": "turbo run lint",
     "test": "turbo run test",
     "test:watch": "vitest watch",

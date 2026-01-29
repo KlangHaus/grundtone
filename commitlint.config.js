@@ -22,13 +22,12 @@ export default {
       2,
       'always',
       [
-        'ui',           // @haspen/ui package
-        'core',         // @haspen/core package
-        'shared',       // @haspen/shared package
-        'composables',  // @haspen/composables package
-        'design-tokens',// @haspen/design-tokens package
-        'nuxt',         // @haspen/nuxt package
-        'playground',   // @haspen/playground package
+        'ui',           // @ipeeon/ui package
+        'core',         // @ipeeon/core package
+        'shared',       // @ipeeon/shared package
+        'composables',  // @ipeeon/composables package
+        'design-tokens',// @ipeeon/design-tokens package
+        'nuxt',         // @ipeeon/nuxt package
         'storybook',    // Storybook configuration
         'deps',         // Dependencies
         'config',       // Configuration files

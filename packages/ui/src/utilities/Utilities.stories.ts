@@ -7,7 +7,7 @@ import {
   isValidCPR,
   isValidEmail,
   isValidPhoneNumber,
-} from '@haspen/shared';
+} from '@ipeeon/shared';
 import './Utilities.stories.scss';
 
 // Demo component for utility functions

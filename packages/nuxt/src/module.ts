@@ -29,7 +29,7 @@ export interface ModuleOptions {
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: '@haspen/nuxt',
+    name: '@ipeeon/nuxt',
     configKey: 'haspen',
     compatibility: {
       nuxt: '^3.0.0',

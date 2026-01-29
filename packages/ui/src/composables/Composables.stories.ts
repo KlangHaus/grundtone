@@ -5,7 +5,7 @@ import Icon from '../atoms/Icon/Icon.vue';
 import IconProvider from '../atoms/Icon/IconProvider.vue';
 import ThemeProvider from '../molecules/ThemeProvider/ThemeProvider.vue';
 import { haspenIcons } from '../atoms/Icon/libraries';
-import { useTheme, useToggle, useClickOutside } from '@haspen/composables';
+import { useTheme, useToggle, useClickOutside } from '@ipeeon/composables';
 import { logger } from '../utils/error-handling';
 
 // Create a demo component for composables
@@ -44,7 +44,7 @@ Vue 3 composables for common functionality and state management patterns.
 
 \`\`\`vue
 <script setup>
-import { useTheme, useToggle } from '@haspen/composables';
+import { useTheme, useToggle } from '@ipeeon/composables';
 
 const { mode, isDark, toggleMode } = useTheme();
 const { isOpen, toggle, open, close } = useToggle();

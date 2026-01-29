@@ -34,7 +34,7 @@ A flexible, configurable icon system that supports multiple icon libraries inclu
 </template>
 
 <script setup>
-import { Icon, IconProvider, haspenIcons } from '@haspen/ui';
+import { Icon, IconProvider, haspenIcons } from '@ipeeon/ui';
 </script>
 \`\`\`
         `,
@@ -307,7 +307,7 @@ export const TreeShaking: Story = {
         <details style="margin-top: 1rem;">
           <summary style="cursor: pointer; font-weight: 500; color: #0369a1;">Bundle Analysis Example</summary>
           <pre style="margin: 0.5rem 0 0 0; padding: 1rem; background: white; border-radius: 4px; overflow-x: auto; font-size: 0.875rem;"><code># Icons used in your app:
-import { Icon, IconProvider, haspenIcons } from '@haspen/ui';
+import { Icon, IconProvider, haspenIcons } from '@ipeeon/ui';
 
 # Only these icons will be in your bundle:
 ✅ SunIcon.vue (2.1KB)

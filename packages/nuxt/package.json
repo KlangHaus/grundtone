@@ -1,5 +1,5 @@
 {
-  "name": "@haspen/nuxt",
+  "name": "@ipeeon/nuxt",
   "version": "1.0.0",
   "description": "Nuxt 3 module for Haspen UI",
   "license": "MIT",
@@ -40,8 +40,8 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@haspen/ui": "workspace:*",
-    "@haspen/composables": "workspace:*",
+    "@ipeeon/ui": "workspace:*",
+    "@ipeeon/composables": "workspace:*",
     "@nuxt/kit": "^3.17.2"
   },
   "devDependencies": {

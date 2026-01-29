@@ -28,7 +28,7 @@ WCAG 2.1 compliant accessibility tools for creating inclusive interfaces.
 ## Import
 
 \`\`\`scss
-@use '@haspen/design-tokens/core/accessibility' as a11y;
+@use '@ipeeon/design-tokens/core/accessibility' as a11y;
 
 .my-component {
   $ratio: a11y.contrast-ratio(#333333, #ffffff);
@@ -158,7 +158,7 @@ export const ContrastRatios: Story = {
 
         <h3>SCSS Usage</h3>
         <div class="code-block">
-          <pre><code>@use '@haspen/design-tokens/core/accessibility' as a11y;
+          <pre><code>@use '@ipeeon/design-tokens/core/accessibility' as a11y;
 
 // Calculate contrast ratio
 $ratio: a11y.contrast-ratio(#333333, #ffffff);
@@ -243,7 +243,7 @@ export const AutomaticTextColors: Story = {
 
         <h3>SCSS Usage</h3>
         <div class="code-block">
-          <pre><code>@use '@haspen/design-tokens/core/accessibility' as a11y;
+          <pre><code>@use '@ipeeon/design-tokens/core/accessibility' as a11y;
 
 // Simple automatic text color
 .badge {
@@ -358,7 +358,7 @@ export const EnsureContrast: Story = {
 
         <h3>SCSS Usage</h3>
         <div class="code-block">
-          <pre><code>@use '@haspen/design-tokens/core/accessibility' as a11y;
+          <pre><code>@use '@ipeeon/design-tokens/core/accessibility' as a11y;
 
 // Adjust color to meet AA standard (4.5:1)
 .text-on-white {
@@ -496,7 +496,7 @@ export const AccessibleShades: Story = {
 
         <h3>SCSS Usage</h3>
         <div class="code-block">
-          <pre><code>@use '@haspen/design-tokens/core/accessibility' as a11y;
+          <pre><code>@use '@ipeeon/design-tokens/core/accessibility' as a11y;
 
 // Find accessible blue for white background
 .primary-text {
@@ -567,7 +567,7 @@ export const ValidationMixins: Story = {
         <p>Automatically validates color combinations and warns in console during compilation.</p>
 
         <div class="code-block">
-          <pre><code>@use '@haspen/design-tokens/core/accessibility' as a11y;
+          <pre><code>@use '@ipeeon/design-tokens/core/accessibility' as a11y;
 
 // Validate text color contrast
 .my-component {
@@ -832,7 +832,7 @@ export const CompleteReference: Story = {
 
         <h3>Quick Start Examples</h3>
         <div class="code-block">
-          <pre><code>@use '@haspen/design-tokens/core/accessibility' as a11y;
+          <pre><code>@use '@ipeeon/design-tokens/core/accessibility' as a11y;
 
 // Example 1: Simple contrast check
 $ratio: a11y.contrast-ratio(#333333, #ffffff);

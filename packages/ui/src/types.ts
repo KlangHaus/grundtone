@@ -11,4 +11,4 @@ export type {
   ThemeProviderContext,
   ThemeProviderProps,
   THEME_INJECTION_KEY,
-} from '@haspen/core';
+} from '@ipeeon/core';

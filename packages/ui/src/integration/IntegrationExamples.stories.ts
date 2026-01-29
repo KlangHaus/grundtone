@@ -3,8 +3,8 @@ import { ref } from 'vue';
 import ThemeProvider from '../molecules/ThemeProvider/ThemeProvider.vue';
 import Button from '../atoms/Button/Button.vue';
 import ThemeToggle from '../atoms/ThemeToggle/ThemeToggle.vue';
-import { useTheme, useToggle } from '@haspen/composables';
-import { formatCurrency, formatDate, isValidCPR } from '@haspen/shared';
+import { useTheme, useToggle } from '@ipeeon/composables';
+import { formatCurrency, formatDate, isValidCPR } from '@ipeeon/shared';
 import './IntegrationExamples.stories.scss';
 
 // Integration Examples Demo Component
@@ -116,7 +116,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 
 // Import Haspen UI styles
-import '@haspen/ui/dist/index.css'
+import '@ipeeon/ui/dist/index.css'
 
 const app = createApp(App)
 app.mount('#app')</code></pre>
@@ -132,7 +132,7 @@ app.mount('#app')</code></pre>
 &lt;/template&gt;
 
 &lt;script setup lang="ts"&gt;
-import { ThemeProvider } from '@haspen/ui'
+import { ThemeProvider } from '@ipeeon/ui'
 import { Header, MainContent, Footer } from './components'
 &lt;/script&gt;</code></pre>
 
@@ -149,9 +149,9 @@ import { Header, MainContent, Footer } from './components'
 &lt;/template&gt;
 
 &lt;script setup lang="ts"&gt;
-import { Button, ThemeToggle } from '@haspen/ui'
-import { useTheme } from '@haspen/composables'
-import { formatCurrency } from '@haspen/shared'
+import { Button, ThemeToggle } from '@ipeeon/ui'
+import { useTheme } from '@ipeeon/composables'
+import { formatCurrency } from '@ipeeon/shared'
 
 const { theme, setMode } = useTheme()
 
@@ -233,7 +233,7 @@ function handleAction() {
                 <pre v-show="activeNuxtTab === 'config'"><code>// nuxt.config.ts
 export default defineNuxtConfig({
   modules: [
-    '@haspen/nuxt'
+    '@ipeeon/nuxt'
   ],
   
   haspen: {
@@ -243,7 +243,7 @@ export default defineNuxtConfig({
   },
   
   css: [
-    '@haspen/ui/dist/index.css'
+    '@ipeeon/ui/dist/index.css'
   ]
 })</code></pre>
 
@@ -408,7 +408,7 @@ import type {
   ThemeMode, 
   Theme, 
   ThemeProviderContext 
-} from '@haspen/core'
+} from '@ipeeon/core'
 
 // Your app types
 interface User {
@@ -446,10 +446,10 @@ interface AppTheme extends Theme {
 &lt;/template&gt;
 
 &lt;script setup lang="ts"&gt;
-import { Button } from '@haspen/ui'
-import { useTheme } from '@haspen/composables'
-import { formatCurrency } from '@haspen/shared'
-import type { ButtonVariant, ButtonSize } from '@haspen/core'
+import { Button } from '@ipeeon/ui'
+import { useTheme } from '@ipeeon/composables'
+import { formatCurrency } from '@ipeeon/shared'
+import type { ButtonVariant, ButtonSize } from '@ipeeon/core'
 
 // Typed props
 interface Props {
@@ -475,7 +475,7 @@ const formattedBalance = computed(() =&gt;
 
                 <pre v-show="activeTsTab === 'composable'"><code>// composables/useAccount.ts
 import { ref, computed } from 'vue'
-import { formatCurrency, isValidCPR } from '@haspen/shared'
+import { formatCurrency, isValidCPR } from '@ipeeon/shared'
 import type { BankAccount, User } from '~/types'
 
 export function useAccount(user: User) {
@@ -594,16 +594,16 @@ export function useAccount(user: User) {
               
               <div class="tab-content">
                 <pre v-show="activePerfTab === 'treeshaking'"><code>// ✅ Good: Named imports for tree shaking
-import { Button, ThemeProvider } from '@haspen/ui'
-import { useTheme, useToggle } from '@haspen/composables'
-import { formatCurrency, isValidCPR } from '@haspen/shared'
+import { Button, ThemeProvider } from '@ipeeon/ui'
+import { useTheme, useToggle } from '@ipeeon/composables'
+import { formatCurrency, isValidCPR } from '@ipeeon/shared'
 
 // ❌ Bad: Default import includes everything
-import HAspenUI from '@haspen/ui' // Don't do this
+import HAspenUI from '@ipeeon/ui' // Don't do this
 
 // ✅ Even better: Individual component imports
-import Button from '@haspen/ui/Button'
-import ThemeProvider from '@haspen/ui/ThemeProvider'
+import Button from '@ipeeon/ui/Button'
+import ThemeProvider from '@ipeeon/ui/ThemeProvider'
 
 // Bundle analyzer results:
 // Named imports: ~45kb gzipped
@@ -615,7 +615,7 @@ import { defineAsyncComponent } from 'vue'
 
 // Lazy load heavy components
 const DataTable = defineAsyncComponent(() =&gt;
-  import('@haspen/ui/DataTable')
+  import('@ipeeon/ui/DataTable')
 )
 
 const Dashboard = defineAsyncComponent(() =&gt;
@@ -624,7 +624,7 @@ const Dashboard = defineAsyncComponent(() =&gt;
 
 // Lazy load with loading/error states
 const AsyncComponent = defineAsyncComponent({
-  loader: () =&gt; import('@haspen/ui/ComplexComponent'),
+  loader: () =&gt; import('@ipeeon/ui/ComplexComponent'),
   loadingComponent: () =&gt; h('div', 'Loading...'),
   errorComponent: () =&gt; h('div', 'Failed to load'),
   delay: 200,
@@ -646,9 +646,9 @@ export default defineConfig({
       output: {
         manualChunks: {
           // Separate vendor chunk
-          'haspen-ui': ['@haspen/ui'],
-          'haspen-composables': ['@haspen/composables'],
-          'haspen-utils': ['@haspen/shared']
+          'haspen-ui': ['@ipeeon/ui'],
+          'haspen-composables': ['@ipeeon/composables'],
+          'haspen-utils': ['@ipeeon/shared']
         }
       }
     }
@@ -658,7 +658,7 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         // Optimize SCSS imports
-        additionalData: \`@import "@haspen/design-tokens";\`
+        additionalData: \`@import "@ipeeon/design-tokens";\`
       }
     }
   }
@@ -673,7 +673,7 @@ export default defineNuxtConfig({
   },
   
   // CSS optimization
-  css: ['@haspen/ui/dist/index.css'],
+  css: ['@ipeeon/ui/dist/index.css'],
   
   // Bundle analysis
   analyze: process.env.ANALYZE === 'true'
@@ -1023,7 +1023,7 @@ export const NuxtModuleDemo: Story = {
               <div class="config-preview">
                 <pre><code>// nuxt.config.ts
 export default defineNuxtConfig({
-  modules: ['@haspen/nuxt'],
+  modules: ['@ipeeon/nuxt'],
   haspen: {
     components: true,
     composables: true, 

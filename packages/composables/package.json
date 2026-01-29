@@ -1,5 +1,5 @@
 {
-  "name": "@haspen/composables",
+  "name": "@ipeeon/composables",
   "version": "1.0.0",
   "description": "Vue 3 composables for Haspen UI",
   "license": "MIT",
@@ -37,9 +37,9 @@
     "vue": "^3.5.13"
   },
   "dependencies": {
-    "@haspen/core": "workspace:*",
-    "@haspen/design-tokens": "workspace:*",
-    "@haspen/shared": "workspace:*"
+    "@ipeeon/core": "workspace:*",
+    "@ipeeon/design-tokens": "workspace:*",
+    "@ipeeon/shared": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20.17.45",

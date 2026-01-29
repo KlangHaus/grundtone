@@ -12,7 +12,7 @@ import { ref } from 'vue';
 const mockToggleMode = vi.fn();
 const mockIsDark = ref(false);
 
-vi.mock('@haspen/composables', () => ({
+vi.mock('@ipeeon/composables', () => ({
   useTheme: () => ({
     isDark: mockIsDark,
     toggleMode: mockToggleMode,

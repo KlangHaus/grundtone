@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { ref } from 'vue';
 import ThemeProvider from './ThemeProvider.vue';
-import { useTheme } from '@haspen/composables';
-import type { ThemeMode } from '@haspen/core';
+import { useTheme } from '@ipeeon/composables';
+import type { ThemeMode } from '@ipeeon/core';
 
 // Demo component to show theme usage
 const ThemeDemo = {

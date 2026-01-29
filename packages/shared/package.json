@@ -1,5 +1,5 @@
 {
-  "name": "@haspen/shared",
+  "name": "@ipeeon/shared",
   "version": "1.0.0",
   "description": "Shared utilities and helpers for Haspen UI",
   "license": "MIT",
@@ -28,7 +28,7 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@haspen/core": "workspace:*"
+    "@ipeeon/core": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20.17.45",

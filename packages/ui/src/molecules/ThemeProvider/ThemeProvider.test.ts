@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
 import ThemeProvider from './ThemeProvider.vue';
-import { useTheme } from '@haspen/composables';
+import { useTheme } from '@ipeeon/composables';
 
 // Mock localStorage
 const mockLocalStorage = {

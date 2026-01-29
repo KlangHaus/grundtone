@@ -12,19 +12,19 @@ const config: StorybookConfig = {
     options: {},
   },
   viteFinal: async config => {
-    // Add path resolution for @haspen packages
+    // Add path resolution for @ipeeon packages
     if (!config.resolve) config.resolve = {};
     if (!config.resolve.alias) config.resolve.alias = {};
 
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@haspen/design-tokens': resolve(
+      '@ipeeon/design-tokens': resolve(
         __dirname,
         '../packages/design-tokens/src',
       ),
-      '@haspen/core': resolve(__dirname, '../packages/core/src'),
-      '@haspen/shared': resolve(__dirname, '../packages/shared/src'),
-      '@haspen/composables': resolve(__dirname, '../packages/composables/src'),
+      '@ipeeon/core': resolve(__dirname, '../packages/core/src'),
+      '@ipeeon/shared': resolve(__dirname, '../packages/shared/src'),
+      '@ipeeon/composables': resolve(__dirname, '../packages/composables/src'),
     };
 
     return config;

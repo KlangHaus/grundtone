@@ -44,7 +44,7 @@
 
 <script setup lang="ts">
   import { computed } from 'vue';
-  import { useTheme } from '@haspen/composables';
+  import { useTheme } from '@ipeeon/composables';
   import type { ThemeToggleProps } from './types';
 
   // Icons - can use either individual components or the configurable system
