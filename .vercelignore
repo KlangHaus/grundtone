@@ -1,0 +1,13 @@
+node_modules
+.turbo
+dist
+coverage
+.cache
+*.log
+.DS_Store
+apps/
+TEMPLATES/
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
