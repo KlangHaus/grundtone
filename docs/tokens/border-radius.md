@@ -207,7 +207,421 @@ Visual comparison of all radius values on identical shapes.
 - **round (50%)**: Circular elements like avatars, icons
 - **full (9999px)**: Pills, capsule buttons, tags :::
 
-## Usage
+## Hvordan Bruger Man Border Radius
+
+### Praktiske Komponent Eksempler
+
+**Buttons med Forskellige Styles**
+
+```scss
+@use '@ipeeon/design-tokens' as tokens;
+
+// Standard button
+.button {
+  padding: tokens.spacing(3) tokens.spacing(6);
+  border-radius: tokens.radius('default'); // 6px
+  background: tokens.getColor('primary', 600);
+  color: white;
+}
+
+// Rounded button
+.button-rounded {
+  @extend .button;
+  border-radius: tokens.radius('lg'); // 12px - more friendly
+}
+
+// Pill button (fully rounded)
+.button-pill {
+  @extend .button;
+  border-radius: tokens.radius('full'); // 9999px
+  padding: tokens.spacing(3) tokens.spacing(8);
+}
+
+// Square button (sharp corners)
+.button-square {
+  @extend .button;
+  border-radius: tokens.radius('none'); // 0 - technical look
+}
+
+// Icon button (circular)
+.button-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: tokens.radius('round'); // 50% - perfect circle
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+```
+
+**Cards & Containers**
+
+```scss
+// Standard card
+.card {
+  background: white;
+  border: 1px solid tokens.getColor('gray', 200);
+  border-radius: tokens.radius('lg'); // 12px
+  padding: tokens.spacing(6);
+  box-shadow: tokens.shadow('light');
+
+  // Card header with top-only radius
+  .card-header {
+    margin: tokens.spacing(-6) tokens.spacing(-6) tokens.spacing(4);
+    padding: tokens.spacing(4) tokens.spacing(6);
+    background: tokens.getColor('gray', 50);
+    border-bottom: 1px solid tokens.getColor('gray', 200);
+    border-radius: tokens.radius('lg') tokens.radius('lg') 0 0;
+  }
+
+  // Card with image
+  img {
+    border-radius: tokens.radius('lg') tokens.radius('lg') 0 0;
+    width: 100%;
+  }
+}
+
+// Product card with hover effect
+.product-card {
+  border-radius: tokens.radius('xl'); // 16px - more prominent
+  overflow: hidden;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+// Modal dialog
+.modal {
+  background: white;
+  border-radius: tokens.radius('2xl'); // 20px - soft, friendly
+  padding: tokens.spacing(8);
+  max-width: 500px;
+  box-shadow: tokens.shadow('extra-large');
+}
+```
+
+**Form Elements**
+
+```scss
+// Input fields
+.input {
+  padding: tokens.spacing(3);
+  border: 1px solid tokens.getColor('gray', 300);
+  border-radius: tokens.radius('default'); // 6px
+  font-size: tokens.font-size('base');
+
+  &:focus {
+    outline: none;
+    border-color: tokens.getColor('primary', 500);
+    box-shadow: 0 0 0 3px tokens.getColor('primary', 100);
+  }
+
+  // Rounded input
+  &.input-rounded {
+    border-radius: tokens.radius('full'); // Fully rounded
+    padding-left: tokens.spacing(6);
+    padding-right: tokens.spacing(6);
+  }
+}
+
+// Select dropdown
+.select {
+  padding: tokens.spacing(3);
+  border: 1px solid tokens.getColor('gray', 300);
+  border-radius: tokens.radius('default');
+  appearance: none;
+  background: white;
+}
+
+// Checkbox/Radio (small radius)
+.checkbox,
+.radio {
+  width: 20px;
+  height: 20px;
+  border: 2px solid tokens.getColor('gray', 400);
+  border-radius: tokens.radius('sm'); // 4px for checkbox
+
+  &:checked {
+    background: tokens.getColor('primary', 600);
+    border-color: tokens.getColor('primary', 600);
+  }
+}
+
+.radio {
+  border-radius: tokens.radius('round'); // 50% for radio
+}
+
+// Input group (combined inputs)
+.input-group {
+  display: flex;
+
+  .input {
+    border-radius: 0;
+
+    &:first-child {
+      border-radius: tokens.radius('default') 0 0 tokens.radius('default');
+    }
+
+    &:last-child {
+      border-radius: 0 tokens.radius('default') tokens.radius('default') 0;
+    }
+  }
+}
+```
+
+**Badges & Tags**
+
+```scss
+// Badge/tag
+.badge {
+  display: inline-block;
+  padding: tokens.spacing(1) tokens.spacing(3);
+  font-size: tokens.font-size('xs');
+  font-weight: tokens.font-weight('semibold');
+  border-radius: tokens.radius('full'); // Pill shape
+  background: tokens.getColor('primary', 100);
+  color: tokens.getColor('primary', 800);
+}
+
+// Status dot
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: tokens.radius('round'); // Perfect circle
+  background: tokens.getColor('green', 500);
+
+  &.status-offline {
+    background: tokens.getColor('gray', 400);
+  }
+}
+
+// Chip (removable tag)
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: tokens.spacing(2);
+  padding: tokens.spacing(2) tokens.spacing(3);
+  border-radius: tokens.radius('full');
+  background: tokens.getColor('gray', 100);
+  font-size: tokens.font-size('sm');
+
+  .chip-remove {
+    width: 16px;
+    height: 16px;
+    border-radius: tokens.radius('round');
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &:hover {
+      background: tokens.getColor('gray', 300);
+    }
+  }
+}
+```
+
+**Images & Avatars**
+
+```scss
+// Avatar (circular)
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: tokens.radius('round'); // 50% - perfect circle
+  object-fit: cover;
+
+  &.avatar-sm {
+    width: 32px;
+    height: 32px;
+  }
+
+  &.avatar-lg {
+    width: 56px;
+    height: 56px;
+  }
+
+  // Rounded square avatar
+  &.avatar-rounded {
+    border-radius: tokens.radius('lg'); // 12px
+  }
+}
+
+// Image card
+.image-card {
+  border-radius: tokens.radius('xl'); // 16px
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+// Thumbnail
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  border-radius: tokens.radius('md'); // 8px
+  object-fit: cover;
+  border: 2px solid tokens.getColor('gray', 200);
+}
+```
+
+**Navigation & Tabs**
+
+```scss
+// Tab navigation
+.tabs {
+  display: flex;
+  gap: tokens.spacing(2);
+  border-bottom: 1px solid tokens.getColor('gray', 200);
+
+  .tab {
+    padding: tokens.spacing(3) tokens.spacing(6);
+    border-radius: tokens.radius('default') tokens.radius('default') 0 0;
+    cursor: pointer;
+
+    &:hover {
+      background: tokens.getColor('gray', 50);
+    }
+
+    &.active {
+      background: white;
+      border: 1px solid tokens.getColor('gray', 200);
+      border-bottom: 1px solid white;
+      margin-bottom: -1px;
+    }
+  }
+}
+
+// Pill navigation
+.nav-pills {
+  display: flex;
+  gap: tokens.spacing(2);
+  padding: tokens.spacing(1);
+  background: tokens.getColor('gray', 100);
+  border-radius: tokens.radius('lg');
+
+  .nav-item {
+    padding: tokens.spacing(2) tokens.spacing(4);
+    border-radius: tokens.radius('md');
+    cursor: pointer;
+
+    &.active {
+      background: white;
+      box-shadow: tokens.shadow('subtle');
+    }
+  }
+}
+```
+
+**Alerts & Notifications**
+
+```scss
+// Alert box
+.alert {
+  padding: tokens.spacing(4);
+  border-radius: tokens.radius('default'); // 6px
+  border-left: 4px solid;
+
+  &.alert-success {
+    background: tokens.getColor('green', 50);
+    border-color: tokens.getColor('green', 600);
+    color: tokens.getColor('green', 900);
+  }
+
+  &.alert-error {
+    background: tokens.getColor('red', 50);
+    border-color: tokens.getColor('red', 600);
+    color: tokens.getColor('red', 900);
+  }
+}
+
+// Toast notification
+.toast {
+  min-width: 300px;
+  padding: tokens.spacing(4);
+  background: white;
+  border-radius: tokens.radius('lg'); // 12px - friendly
+  box-shadow: tokens.shadow('large');
+  border: 1px solid tokens.getColor('gray', 200);
+}
+
+// Banner (full width, less rounded)
+.banner {
+  padding: tokens.spacing(4);
+  border-radius: tokens.radius('sm'); // 4px - subtle
+  background: tokens.getColor('primary', 50);
+  border-left: 4px solid tokens.getColor('primary', 600);
+}
+```
+
+### Asymmetrisk Border Radius
+
+```scss
+// Different radius per corner
+.card-asymmetric {
+  border-radius: tokens.radius('xl') tokens.radius('sm') tokens.radius('xl') tokens.radius('sm');
+  // Top-left: 16px, Top-right: 4px, Bottom-right: 16px, Bottom-left: 4px
+}
+
+// Top-only radius (for stacked elements)
+.card-top {
+  border-radius: tokens.radius('lg') tokens.radius('lg') 0 0;
+}
+
+// Bottom-only radius
+.card-bottom {
+  border-radius: 0 0 tokens.radius('lg') tokens.radius('lg');
+}
+
+// Left-only radius
+.card-left {
+  border-radius: tokens.radius('lg') 0 0 tokens.radius('lg');
+}
+
+// Right-only radius
+.card-right {
+  border-radius: 0 tokens.radius('lg') tokens.radius('lg') 0;
+}
+```
+
+### Responsive Border Radius
+
+```scss
+// Adjust radius based on screen size
+.hero-card {
+  border-radius: tokens.radius('lg'); // 12px on mobile
+
+  @include tokens.respond-to('md') {
+    border-radius: tokens.radius('2xl'); // 20px on tablet
+  }
+
+  @include tokens.respond-to('lg') {
+    border-radius: tokens.radius('3xl'); // 24px on desktop
+  }
+}
+
+// Remove radius on mobile for edge-to-edge
+.modal {
+  border-radius: 0; // Full width on mobile
+
+  @include tokens.respond-to('md') {
+    border-radius: tokens.radius('xl'); // Rounded on tablet+
+  }
+}
+```
+
+## Grundlæggende Usage
 
 ### SCSS
 
