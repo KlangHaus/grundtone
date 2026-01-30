@@ -20,7 +20,7 @@
     "commitlint": "commitlint --edit",
     "prepare": "husky",
     "docs:dev": "pnpm --filter @haspen/docs dev",
-    "docs:build": "pnpm --filter @haspen/docs build",
+    "docs:build": "turbo build --filter=@haspen/docs",
     "docs:preview": "pnpm --filter @haspen/docs preview",
     "changeset": "changeset",
     "changeset:add": "changeset add",
