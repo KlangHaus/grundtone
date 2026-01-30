@@ -8,7 +8,7 @@ export default defineConfig({
     nav: [
       { text: 'Guide', link: '/guide/welcome' },
       { text: 'Design Tokens', link: '/tokens/colors' },
-      { text: 'Utilities', link: '/utilities/aspect-ratio' },
+      { text: 'Utilities', link: '/utilities/grid' },
     ],
 
     sidebar: {
@@ -49,11 +49,12 @@ export default defineConfig({
         {
           text: 'Layout',
           items: [
-            { text: 'Aspect Ratio', link: '/utilities/aspect-ratio' },
-            { text: 'Display', link: '/utilities/display' },
+            { text: 'Grid System', link: '/utilities/grid' },
             { text: 'Flexbox', link: '/utilities/flexbox' },
+            { text: 'Display', link: '/utilities/display' },
             { text: 'Position', link: '/utilities/position' },
             { text: 'Width', link: '/utilities/width' },
+            { text: 'Aspect Ratio', link: '/utilities/aspect-ratio' },
           ],
         },
         {
