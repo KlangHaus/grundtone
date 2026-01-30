@@ -1,0 +1,91 @@
+// Container Utilities
+@use 'sass:map';
+@use '../core/breakpoints' as *;
+
+// Base container
+.container,
+.container-fluid,
+.container-sm,
+.container-md,
+.container-lg,
+.container-xl {
+  width: 100%;
+  padding-right: calc($grid-gutter-width / 2);
+  padding-left: calc($grid-gutter-width / 2);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+// Fixed max-width container
+.container {
+  @each $breakpoint, $max-width in $container-max-widths {
+    @include media-breakpoint-up($breakpoint) {
+      max-width: $max-width;
+    }
+  }
+}
+
+// Responsive containers (max-width only at specific breakpoint and above)
+.container-sm {
+  @include media-breakpoint-up(sm) {
+    max-width: map.get($container-max-widths, sm);
+  }
+}
+
+.container-md {
+  @include media-breakpoint-up(md) {
+    max-width: map.get($container-max-widths, md);
+  }
+}
+
+.container-lg {
+  @include media-breakpoint-up(lg) {
+    max-width: map.get($container-max-widths, lg);
+  }
+}
+
+.container-xl {
+  @include media-breakpoint-up(xl) {
+    max-width: map.get($container-max-widths, xl);
+  }
+}
+
+// Fluid container (no max-width, always 100%)
+.container-fluid {
+  max-width: 100%;
+}
+
+// Narrow containers for focused content
+.container-narrow {
+  max-width: 768px;
+  padding-right: calc($grid-gutter-width / 2);
+  padding-left: calc($grid-gutter-width / 2);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.container-tight {
+  max-width: 640px;
+  padding-right: calc($grid-gutter-width / 2);
+  padding-left: calc($grid-gutter-width / 2);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+// Wide container for dashboards/data
+.container-wide {
+  max-width: 1400px;
+  padding-right: calc($grid-gutter-width / 2);
+  padding-left: calc($grid-gutter-width / 2);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+// Extra wide container
+.container-ultrawide {
+  max-width: 1600px;
+  padding-right: calc($grid-gutter-width / 2);
+  padding-left: calc($grid-gutter-width / 2);
+  margin-right: auto;
+  margin-left: auto;
+}

@@ -49,6 +49,7 @@ export default defineConfig({
         {
           text: 'Layout',
           items: [
+            { text: 'Containers', link: '/utilities/containers' },
             { text: 'Grid System', link: '/utilities/grid' },
             { text: 'Flexbox', link: '/utilities/flexbox' },
             { text: 'Display', link: '/utilities/display' },
