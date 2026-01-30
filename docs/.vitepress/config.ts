@@ -8,6 +8,7 @@ export default defineConfig({
     nav: [
       { text: 'Guide', link: '/guide/welcome' },
       { text: 'Design Tokens', link: '/tokens/colors' },
+      { text: 'Utilities', link: '/utilities/aspect-ratio' },
     ],
 
     sidebar: {
@@ -31,7 +32,32 @@ export default defineConfig({
             { text: 'Shadows', link: '/tokens/shadows' },
             { text: 'Border Radius', link: '/tokens/border-radius' },
             { text: 'Breakpoints', link: '/tokens/breakpoints' },
+            { text: 'Z-Index', link: '/tokens/z-index' },
           ],
+        },
+      ],
+      '/utilities/': [
+        {
+          text: 'Layout',
+          items: [
+            { text: 'Aspect Ratio', link: '/utilities/aspect-ratio' },
+            { text: 'Display', link: '/utilities/display' },
+            { text: 'Flexbox', link: '/utilities/flexbox' },
+            { text: 'Position', link: '/utilities/position' },
+            { text: 'Width', link: '/utilities/width' },
+          ],
+        },
+        {
+          text: 'Styling',
+          items: [
+            { text: 'Background', link: '/utilities/background' },
+            { text: 'Spacing', link: '/utilities/spacing' },
+            { text: 'Text Align', link: '/utilities/text-align' },
+          ],
+        },
+        {
+          text: 'Accessibility',
+          items: [{ text: 'Accessibility', link: '/utilities/accessibility' }],
         },
       ],
     },
