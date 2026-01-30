@@ -6,6 +6,12 @@ export default defineConfig({
 
   ignoreDeadLinks: true,
 
+  vite: {
+    resolve: {
+      dedupe: ['vue'],
+    },
+  },
+
   themeConfig: {
     nav: [
       { text: 'Getting Started', link: '/guide/welcome' },

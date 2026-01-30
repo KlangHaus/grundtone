@@ -1,5 +1,5 @@
 {
-  "name": "haspen-ui-docs",
+  "name": "@haspen/docs",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -7,6 +7,9 @@
     "dev": "vitepress dev",
     "build": "vitepress build",
     "preview": "vitepress preview"
+  },
+  "dependencies": {
+    "@ipeeon/design-tokens": "workspace:*"
   },
   "devDependencies": {
     "vitepress": "^1.6.4"

@@ -1,7 +1,6 @@
 packages:
   - packages/*
-  # - apps/*  # Commented out - not in use
-  # - docs    # Commented out - not in use
+  - apps/*
 
 ignoredBuiltDependencies:
   - unrs-resolver
