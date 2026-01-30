@@ -207,6 +207,526 @@ Visual comparison of all radius values on identical shapes.
 - **round (50%)**: Circular elements like avatars, icons
 - **full (9999px)**: Pills, capsule buttons, tags :::
 
+## Platform-Specifik Usage
+
+**Border radius tokens er platform-uafhængige** - kan bruges i web, iOS, Android og React Native med
+forskellige implementationer.
+
+### Web (HTML/CSS/SCSS)
+
+```scss
+@use '@haspen/design-tokens' as tokens;
+
+// Buttons med forskellige radius
+.button {
+  border-radius: tokens.radius('default'); // 6px
+}
+
+.button-rounded {
+  border-radius: tokens.radius('lg'); // 12px
+}
+
+.button-pill {
+  border-radius: tokens.radius('full'); // 9999px - perfekt afrundet
+}
+
+// Cards
+.card {
+  border-radius: tokens.radius('lg'); // 12px
+}
+
+// Inputs
+.input {
+  border-radius: tokens.radius('default'); // 6px
+}
+
+// Asymmetrisk radius (kun bestemte hjørner)
+.dropdown {
+  border-top-left-radius: tokens.radius('lg');
+  border-top-right-radius: tokens.radius('lg');
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+```
+
+```html
+<!-- HTML med inline style (hvis nødvendigt) -->
+<div style="border-radius: 8px">Content</div>
+
+<!-- Cirkulær element -->
+<div class="avatar" style="width: 48px; height: 48px; border-radius: 50%">
+  <img src="avatar.jpg" alt="User" />
+</div>
+```
+
+### iOS (SwiftUI)
+
+```swift
+// BorderRadius.swift - Design token constants
+import SwiftUI
+
+struct BorderRadius {
+    static let none: CGFloat = 0
+    static let sm: CGFloat = 4
+    static let `default`: CGFloat = 6
+    static let md: CGFloat = 8
+    static let lg: CGFloat = 12
+    static let xl: CGFloat = 16
+    static let xl2: CGFloat = 20
+    static let xl3: CGFloat = 24
+    static let round: CGFloat = 9999  // Will be clamped to 50%
+}
+
+// RoundedCorner shape helper
+struct RoundedCorner: Shape {
+    var radius: CGFloat = .infinity
+    var corners: UIRectCorner = .allCorners
+
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(
+            roundedRect: rect,
+            byRoundingCorners: corners,
+            cornerRadii: CGSize(width: radius, height: radius)
+        )
+        return Path(path.cgPath)
+    }
+}
+
+// Convenience modifiers
+extension View {
+    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner = .allCorners) -> some View {
+        clipShape(RoundedCorner(radius: radius, corners: corners))
+    }
+
+    func defaultRadius() -> some View {
+        cornerRadius(BorderRadius.default)
+    }
+
+    func largeRadius() -> some View {
+        cornerRadius(BorderRadius.lg)
+    }
+
+    func circleShape() -> some View {
+        clipShape(Circle())
+    }
+}
+```
+
+**Brug i SwiftUI:**
+
+```swift
+// Button variants
+struct ButtonExamples: View {
+    var body: some View {
+        VStack(spacing: 16) {
+            // Default radius
+            Button("Default") {}
+                .padding(.horizontal, 24)
+                .padding(.vertical, 12)
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(BorderRadius.default)  // 6
+
+            // Large radius
+            Button("Large Radius") {}
+                .padding(.horizontal, 24)
+                .padding(.vertical, 12)
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(BorderRadius.lg)  // 12
+
+            // Pill/Capsule shape
+            Button("Pill Button") {}
+                .padding(.horizontal, 24)
+                .padding(.vertical, 12)
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .clipShape(Capsule())  // Native capsule shape
+
+            // Icon button (circular)
+            Button(action: {}) {
+                Image(systemName: "heart.fill")
+                    .frame(width: 48, height: 48)
+                    .background(Color.red)
+                    .foregroundColor(.white)
+                    .circleShape()  // Perfect circle
+            }
+        }
+    }
+}
+
+// Card med rounded corners
+struct CardView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Card Title").font(.headline)
+            Text("Card content").font(.body)
+        }
+        .padding(16)
+        .background(Color.white)
+        .cornerRadius(BorderRadius.lg)  // 12
+        .shadow(radius: 4)
+    }
+}
+
+// Asymmetrisk radius (kun top corners)
+struct TopRoundedCard: View {
+    var body: some View {
+        VStack {
+            Text("Content")
+        }
+        .frame(maxWidth: .infinity)
+        .padding(24)
+        .background(Color.white)
+        .cornerRadius(BorderRadius.lg, corners: [.topLeft, .topRight])
+    }
+}
+
+// Avatar (cirkulær)
+struct Avatar: View {
+    let imageURL: URL?
+
+    var body: some View {
+        AsyncImage(url: imageURL) { image in
+            image
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+        } placeholder: {
+            Color.gray
+        }
+        .frame(width: 48, height: 48)
+        .clipShape(Circle())  // Perfect circle
+    }
+}
+```
+
+### Android (Jetpack Compose)
+
+```kotlin
+// BorderRadius.kt - Design token constants
+package com.haspen.ui.theme
+
+import androidx.compose.ui.unit.dp
+
+object BorderRadius {
+    val none = 0.dp
+    val sm = 4.dp
+    val default = 6.dp
+    val md = 8.dp
+    val lg = 12.dp
+    val xl = 16.dp
+    val xl2 = 20.dp
+    val xl3 = 24.dp
+    val round = 9999.dp  // Will create circle for square elements
+}
+```
+
+**Brug i Jetpack Compose:**
+
+```kotlin
+// Button variants
+@Composable
+fun ButtonExamples() {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = Modifier.padding(16.dp)
+    ) {
+        // Default radius
+        Button(
+            onClick = {},
+            shape = RoundedCornerShape(BorderRadius.default)  // 6dp
+        ) {
+            Text("Default")
+        }
+
+        // Large radius
+        Button(
+            onClick = {},
+            shape = RoundedCornerShape(BorderRadius.lg)  // 12dp
+        ) {
+            Text("Large Radius")
+        }
+
+        // Pill/Capsule shape
+        Button(
+            onClick = {},
+            shape = RoundedCornerShape(BorderRadius.round)  // Fully rounded
+        ) {
+            Text("Pill Button")
+        }
+
+        // Circular icon button
+        IconButton(
+            onClick = {},
+            modifier = Modifier
+                .size(48.dp)
+                .background(Color.Red, shape = CircleShape)  // Perfect circle
+        ) {
+            Icon(
+                imageVector = Icons.Default.Favorite,
+                contentDescription = "Favorite",
+                tint = Color.White
+            )
+        }
+    }
+}
+
+// Card med rounded corners
+@Composable
+fun CardView(
+    title: String,
+    content: String
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        shape = RoundedCornerShape(BorderRadius.lg),  // 12dp
+        elevation = CardDefaults.cardElevation(4.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Text(text = title, style = MaterialTheme.typography.titleMedium)
+            Text(text = content, style = MaterialTheme.typography.bodyMedium)
+        }
+    }
+}
+
+// Asymmetrisk radius (kun top corners)
+@Composable
+fun TopRoundedCard() {
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(
+            topStart = BorderRadius.lg,    // 12dp
+            topEnd = BorderRadius.lg,      // 12dp
+            bottomStart = 0.dp,
+            bottomEnd = 0.dp
+        ),
+        color = Color.White
+    ) {
+        Box(modifier = Modifier.padding(24.dp)) {
+            Text("Content")
+        }
+    }
+}
+
+// Avatar (cirkulær)
+@Composable
+fun Avatar(imageUrl: String?) {
+    AsyncImage(
+        model = imageUrl,
+        contentDescription = "User avatar",
+        modifier = Modifier
+            .size(48.dp)
+            .clip(CircleShape),  // Perfect circle
+        contentScale = ContentScale.Crop
+    )
+}
+
+// Forskellige radius per corner
+@Composable
+fun CustomCornerCard() {
+    Surface(
+        shape = RoundedCornerShape(
+            topStart = BorderRadius.lg,      // 12dp
+            topEnd = BorderRadius.default,   // 6dp
+            bottomStart = BorderRadius.sm,   // 4dp
+            bottomEnd = 0.dp
+        ),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text("Custom corners", modifier = Modifier.padding(16.dp))
+    }
+}
+```
+
+### React Native (TypeScript)
+
+```typescript
+// borderRadius.ts - Design token constants
+export const borderRadius = {
+  none: 0,
+  sm: 4,
+  default: 6,
+  md: 8,
+  lg: 12,
+  xl: 16,
+  xl2: 20,
+  xl3: 24,
+  round: 9999, // For circular elements when width === height
+} as const;
+```
+
+**Brug i React Native:**
+
+```typescript
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { borderRadius } from './tokens/borderRadius';
+
+// Button variants
+const ButtonExamples = () => (
+  <View style={{ gap: 16, padding: 16 }}>
+    {/* Default radius */}
+    <TouchableOpacity style={styles.buttonDefault}>
+      <Text style={styles.buttonText}>Default</Text>
+    </TouchableOpacity>
+
+    {/* Large radius */}
+    <TouchableOpacity style={styles.buttonLarge}>
+      <Text style={styles.buttonText}>Large Radius</Text>
+    </TouchableOpacity>
+
+    {/* Pill/Capsule */}
+    <TouchableOpacity style={styles.buttonPill}>
+      <Text style={styles.buttonText}>Pill Button</Text>
+    </TouchableOpacity>
+
+    {/* Circular icon button */}
+    <TouchableOpacity style={styles.iconButton}>
+      <Text style={{ color: 'white', fontSize: 24 }}>♥</Text>
+    </TouchableOpacity>
+  </View>
+);
+
+const styles = StyleSheet.create({
+  buttonDefault: {
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    backgroundColor: '#2563EB',
+    borderRadius: borderRadius.default,  // 6
+  },
+  buttonLarge: {
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    backgroundColor: '#2563EB',
+    borderRadius: borderRadius.lg,  // 12
+  },
+  buttonPill: {
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    backgroundColor: '#2563EB',
+    borderRadius: borderRadius.round,  // 9999 - fully rounded
+  },
+  iconButton: {
+    width: 48,
+    height: 48,
+    backgroundColor: '#EF4444',
+    borderRadius: borderRadius.round,  // Perfect circle når width === height
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+});
+
+// Card med rounded corners
+const Card = ({ title, content }) => (
+  <View style={cardStyles.container}>
+    <Text style={cardStyles.title}>{title}</Text>
+    <Text style={cardStyles.content}>{content}</Text>
+  </View>
+);
+
+const cardStyles = StyleSheet.create({
+  container: {
+    padding: 16,
+    backgroundColor: 'white',
+    borderRadius: borderRadius.lg,  // 12
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 4,  // Android shadow
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: '700',
+    marginBottom: 8,
+  },
+  content: {
+    fontSize: 16,
+    lineHeight: 24,
+  },
+});
+
+// Asymmetrisk radius (React Native understøtter individuelle corners)
+const TopRoundedCard = () => (
+  <View style={asymmetricStyles.container}>
+    <Text>Content</Text>
+  </View>
+);
+
+const asymmetricStyles = StyleSheet.create({
+  container: {
+    padding: 24,
+    backgroundColor: 'white',
+    borderTopLeftRadius: borderRadius.lg,      // 12
+    borderTopRightRadius: borderRadius.lg,     // 12
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+  },
+});
+
+// Avatar (cirkulær)
+const Avatar = ({ imageUrl }) => (
+  <Image
+    source={{ uri: imageUrl }}
+    style={avatarStyles.image}
+  />
+);
+
+const avatarStyles = StyleSheet.create({
+  image: {
+    width: 48,
+    height: 48,
+    borderRadius: borderRadius.round,  // Perfect circle
+  },
+});
+```
+
+### Platform Sammenligning
+
+| Feature                | Web (CSS)               | iOS (SwiftUI)          | Android (Compose)     | React Native              |
+| ---------------------- | ----------------------- | ---------------------- | --------------------- | ------------------------- |
+| **Værdi format**       | `px` / `rem`            | `CGFloat` (points)     | `dp`                  | `number` (points)         |
+| **Cirkulær element**   | `border-radius: 50%`    | `clipShape(Circle())`  | `CircleShape`         | `borderRadius: 9999`      |
+| **Asymmetrisk radius** | ✅ Individuelle corners | ✅ RoundedCorner shape | ✅ RoundedCornerShape | ✅ Individuelle props     |
+| **Performance**        | ✅ God                  | ✅ God                 | ✅ God                | ✅ God                    |
+| **Import**             | `@use 'tokens'`         | `import BorderRadius`  | `import BorderRadius` | `import { borderRadius }` |
+| **Property navn**      | `border-radius`         | `.cornerRadius()`      | `shape` parameter     | `borderRadius`            |
+
+::: tip Platform Tips
+
+**Web:**
+
+- Brug `%` for cirkulære elementer: `border-radius: 50%`
+- Brug `border-top-left-radius` osv. for asymmetrisk radius
+
+**iOS:**
+
+- Brug `Circle()` eller `Capsule()` shape for optimale cirkulære elementer
+- Brug `RoundedCorner` shape helper for asymmetrisk radius
+- `.clipShape()` modifier for at anvende shapes
+
+**Android:**
+
+- Brug `CircleShape` for perfekte cirkler
+- Brug `RoundedCornerShape()` med individuelle corner værdier
+- Material components har ofte `shape` parameter
+
+**React Native:**
+
+- Brug `borderRadius: 9999` for cirkler (når width === height)
+- Understøtter individuelle corner props uden ekstra kode
+- Android og iOS renderer radius lidt forskelligt ved meget store værdier :::
+
 ## Hvordan Bruger Man Border Radius
 
 ### Praktiske Komponent Eksempler

@@ -164,6 +164,424 @@ Complete typography scale with different combinations.
   <p style="color: #999; margin-bottom: 2rem; font-size: 0.75rem;">Font size: sm (0.875rem) · Weight: normal (400) · Line height: normal (1.5)</p>
 </div>
 
+## Platform-Specifik Usage
+
+**Typography tokens er platform-uafhængige** - font sizes, weights, line heights kan bruges i web,
+iOS, Android og React Native.
+
+### Web (HTML/CSS/SCSS)
+
+```scss
+@use '@haspen/design-tokens' as tokens;
+
+// Headings
+h1,
+.h1 {
+  font-size: tokens.font-size('5xl'); // 3rem (48px)
+  font-weight: tokens.font-weight('bold'); // 700
+  line-height: tokens.line-height('tight'); // 1.25
+  letter-spacing: tokens.letter-spacing('tight'); // -0.025em
+}
+
+h2,
+.h2 {
+  font-size: tokens.font-size('4xl'); // 2.25rem (36px)
+  font-weight: tokens.font-weight('bold');
+  line-height: tokens.line-height('tight');
+}
+
+// Body text
+p,
+.body {
+  font-size: tokens.font-size('base'); // 1rem (16px)
+  line-height: tokens.line-height('relaxed'); // 1.625
+  font-weight: tokens.font-weight('normal'); // 400
+}
+
+// Small text
+.text-sm {
+  font-size: tokens.font-size('sm'); // 0.875rem (14px)
+  line-height: tokens.line-height('normal');
+}
+```
+
+```html
+<!-- HTML med utility klasser (KUN web) -->
+<h1 class="text-5xl font-bold leading-tight">Main Heading</h1>
+<p class="text-base leading-relaxed font-normal">Body text</p>
+<span class="text-sm text-gray-600">Small metadata text</span>
+```
+
+### iOS (Swift/SwiftUI)
+
+```swift
+// Typography.swift - Design token constants
+import SwiftUI
+
+struct Typography {
+    // Font sizes (in points)
+    struct FontSize {
+        static let xs: CGFloat = 12       // 0.75rem
+        static let sm: CGFloat = 14       // 0.875rem
+        static let base: CGFloat = 16     // 1rem
+        static let lg: CGFloat = 18       // 1.125rem
+        static let xl: CGFloat = 20       // 1.25rem
+        static let xl2: CGFloat = 24      // 1.5rem
+        static let xl3: CGFloat = 30      // 1.875rem
+        static let xl4: CGFloat = 36      // 2.25rem
+        static let xl5: CGFloat = 48      // 3rem
+    }
+
+    // Font weights
+    struct FontWeight {
+        static let light: Font.Weight = .light        // 300
+        static let normal: Font.Weight = .regular     // 400
+        static let medium: Font.Weight = .medium      // 500
+        static let semibold: Font.Weight = .semibold  // 600
+        static let bold: Font.Weight = .bold          // 700
+        static let black: Font.Weight = .black        // 900
+    }
+
+    // Line heights (as multipliers)
+    struct LineSpacing {
+        static let tight: CGFloat = 0.25      // 1.25 (tight)
+        static let normal: CGFloat = 0.5      // 1.5 (normal)
+        static let relaxed: CGFloat = 0.625   // 1.625 (relaxed)
+        static let loose: CGFloat = 0.75      // 1.75 (loose)
+    }
+}
+
+// Typography helpers
+extension Font {
+    static func heading1() -> Font {
+        .system(size: Typography.FontSize.xl5, weight: Typography.FontWeight.bold)
+    }
+
+    static func heading2() -> Font {
+        .system(size: Typography.FontSize.xl4, weight: Typography.FontWeight.bold)
+    }
+
+    static func heading3() -> Font {
+        .system(size: Typography.FontSize.xl3, weight: Typography.FontWeight.semibold)
+    }
+
+    static func body() -> Font {
+        .system(size: Typography.FontSize.base, weight: Typography.FontWeight.normal)
+    }
+
+    static func bodySmall() -> Font {
+        .system(size: Typography.FontSize.sm, weight: Typography.FontWeight.normal)
+    }
+}
+```
+
+**Brug i SwiftUI:**
+
+```swift
+// Headings
+struct ContentView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Main Heading")
+                .font(.heading1())
+                .lineSpacing(Typography.LineSpacing.tight)
+
+            Text("Subheading")
+                .font(.heading2())
+                .lineSpacing(Typography.LineSpacing.tight)
+
+            Text("This is body text with relaxed line height for better readability.")
+                .font(.body())
+                .lineSpacing(Typography.LineSpacing.relaxed)
+
+            Text("Small metadata text")
+                .font(.bodySmall())
+                .foregroundColor(.gray600)
+        }
+        .padding()
+    }
+}
+
+// Custom text styles
+extension Text {
+    func headingStyle() -> some View {
+        self
+            .font(.system(size: Typography.FontSize.xl3))
+            .fontWeight(Typography.FontWeight.bold)
+            .lineSpacing(Typography.LineSpacing.tight)
+    }
+
+    func captionStyle() -> some View {
+        self
+            .font(.system(size: Typography.FontSize.xs))
+            .fontWeight(Typography.FontWeight.normal)
+            .foregroundColor(.gray600)
+    }
+}
+```
+
+### Android (Kotlin/Jetpack Compose)
+
+```kotlin
+// Typography.kt - Design token constants
+package com.haspen.ui.theme
+
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
+
+object Typography {
+    // Font sizes
+    object FontSize {
+        val xs = 12.sp        // 0.75rem
+        val sm = 14.sp        // 0.875rem
+        val base = 16.sp      // 1rem
+        val lg = 18.sp        // 1.125rem
+        val xl = 20.sp        // 1.25rem
+        val xl2 = 24.sp       // 1.5rem
+        val xl3 = 30.sp       // 1.875rem
+        val xl4 = 36.sp       // 2.25rem
+        val xl5 = 48.sp       // 3rem
+    }
+
+    // Font weights
+    object Weight {
+        val light = FontWeight.Light        // 300
+        val normal = FontWeight.Normal      // 400
+        val medium = FontWeight.Medium      // 500
+        val semibold = FontWeight.SemiBold  // 600
+        val bold = FontWeight.Bold          // 700
+        val black = FontWeight.Black        // 900
+    }
+
+    // Line heights (as multipliers)
+    object LineHeight {
+        const val tight = 1.25f
+        const val normal = 1.5f
+        const val relaxed = 1.625f
+        const val loose = 1.75f
+    }
+}
+```
+
+**Brug i Jetpack Compose:**
+
+```kotlin
+import androidx.compose.material3.Typography
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.em
+
+// Define Material 3 typography
+val AppTypography = Typography(
+    displayLarge = TextStyle(
+        fontSize = Typography.FontSize.xl5,
+        fontWeight = Typography.Weight.bold,
+        lineHeight = Typography.FontSize.xl5 * Typography.LineHeight.tight
+    ),
+    displayMedium = TextStyle(
+        fontSize = Typography.FontSize.xl4,
+        fontWeight = Typography.Weight.bold,
+        lineHeight = Typography.FontSize.xl4 * Typography.LineHeight.tight
+    ),
+    headlineLarge = TextStyle(
+        fontSize = Typography.FontSize.xl3,
+        fontWeight = Typography.Weight.semibold,
+        lineHeight = Typography.FontSize.xl3 * Typography.LineHeight.tight
+    ),
+    bodyLarge = TextStyle(
+        fontSize = Typography.FontSize.base,
+        fontWeight = Typography.Weight.normal,
+        lineHeight = Typography.FontSize.base * Typography.LineHeight.relaxed
+    ),
+    bodyMedium = TextStyle(
+        fontSize = Typography.FontSize.sm,
+        fontWeight = Typography.Weight.normal,
+        lineHeight = Typography.FontSize.sm * Typography.LineHeight.normal
+    ),
+    labelSmall = TextStyle(
+        fontSize = Typography.FontSize.xs,
+        fontWeight = Typography.Weight.normal,
+        lineHeight = Typography.FontSize.xs * Typography.LineHeight.normal
+    )
+)
+
+// Usage in composables
+@Composable
+fun ContentScreen() {
+    Column(
+        modifier = Modifier.padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Text(
+            text = "Main Heading",
+            style = MaterialTheme.typography.displayLarge
+        )
+
+        Text(
+            text = "Subheading",
+            style = MaterialTheme.typography.displayMedium
+        )
+
+        Text(
+            text = "This is body text with relaxed line height for better readability.",
+            style = MaterialTheme.typography.bodyLarge
+        )
+
+        Text(
+            text = "Small metadata text",
+            style = MaterialTheme.typography.bodyMedium,
+            color = Colors.gray600
+        )
+    }
+}
+
+// Custom text styles
+@Composable
+fun CustomTextStyles() {
+    Text(
+        text = "Custom heading",
+        fontSize = Typography.FontSize.xl3,
+        fontWeight = Typography.Weight.bold,
+        lineHeight = Typography.FontSize.xl3 * Typography.LineHeight.tight
+    )
+
+    Text(
+        text = "Caption text",
+        fontSize = Typography.FontSize.xs,
+        fontWeight = Typography.Weight.normal,
+        color = Colors.gray600
+    )
+}
+```
+
+### React Native (TypeScript)
+
+```typescript
+// typography.ts - Design token constants
+import { TextStyle } from 'react-native';
+
+export const typography = {
+  fontSize: {
+    xs: 12, // 0.75rem
+    sm: 14, // 0.875rem
+    base: 16, // 1rem
+    lg: 18, // 1.125rem
+    xl: 20, // 1.25rem
+    xl2: 24, // 1.5rem
+    xl3: 30, // 1.875rem
+    xl4: 36, // 2.25rem
+    xl5: 48, // 3rem
+  },
+  fontWeight: {
+    light: '300' as TextStyle['fontWeight'],
+    normal: '400' as TextStyle['fontWeight'],
+    medium: '500' as TextStyle['fontWeight'],
+    semibold: '600' as TextStyle['fontWeight'],
+    bold: '700' as TextStyle['fontWeight'],
+    black: '900' as TextStyle['fontWeight'],
+  },
+  lineHeight: {
+    tight: 1.25,
+    normal: 1.5,
+    relaxed: 1.625,
+    loose: 1.75,
+  },
+} as const;
+```
+
+**Brug i React Native:**
+
+```typescript
+import { Text, StyleSheet } from 'react-native';
+import { typography } from './tokens/typography';
+import { colors } from './tokens/colors';
+
+// Heading components
+const Heading1 = ({ children }) => (
+  <Text style={styles.h1}>{children}</Text>
+);
+
+const Heading2 = ({ children }) => (
+  <Text style={styles.h2}>{children}</Text>
+);
+
+const BodyText = ({ children }) => (
+  <Text style={styles.body}>{children}</Text>
+);
+
+const CaptionText = ({ children }) => (
+  <Text style={styles.caption}>{children}</Text>
+);
+
+const styles = StyleSheet.create({
+  h1: {
+    fontSize: typography.fontSize.xl5,
+    fontWeight: typography.fontWeight.bold,
+    lineHeight: typography.fontSize.xl5 * typography.lineHeight.tight,
+    color: colors.gray[900],
+  },
+  h2: {
+    fontSize: typography.fontSize.xl4,
+    fontWeight: typography.fontWeight.bold,
+    lineHeight: typography.fontSize.xl4 * typography.lineHeight.tight,
+    color: colors.gray[900],
+  },
+  h3: {
+    fontSize: typography.fontSize.xl3,
+    fontWeight: typography.fontWeight.semibold,
+    lineHeight: typography.fontSize.xl3 * typography.lineHeight.tight,
+    color: colors.gray[900],
+  },
+  body: {
+    fontSize: typography.fontSize.base,
+    fontWeight: typography.fontWeight.normal,
+    lineHeight: typography.fontSize.base * typography.lineHeight.relaxed,
+    color: colors.gray[700],
+  },
+  bodySmall: {
+    fontSize: typography.fontSize.sm,
+    fontWeight: typography.fontWeight.normal,
+    lineHeight: typography.fontSize.sm * typography.lineHeight.normal,
+    color: colors.gray[700],
+  },
+  caption: {
+    fontSize: typography.fontSize.xs,
+    fontWeight: typography.fontWeight.normal,
+    lineHeight: typography.fontSize.xs * typography.lineHeight.normal,
+    color: colors.gray[600],
+  },
+});
+
+// Usage example
+const ContentScreen = () => (
+  <View style={{ padding: 16 }}>
+    <Heading1>Main Heading</Heading1>
+    <Heading2>Subheading</Heading2>
+    <BodyText>
+      This is body text with relaxed line height for better readability.
+    </BodyText>
+    <CaptionText>Small metadata text</CaptionText>
+  </View>
+);
+```
+
+### Platform Sammenligning
+
+| Feature                | Web (SCSS/CSS)                   | iOS (SwiftUI)            | Android (Compose)        | React Native                 |
+| ---------------------- | -------------------------------- | ------------------------ | ------------------------ | ---------------------------- |
+| **Font size format**   | `rem` / `px`                     | `CGFloat` (points)       | `sp` (scale pixels)      | `number` (points)            |
+| **Font weight format** | `300-900` number                 | `Font.Weight`            | `FontWeight`             | `'300'-'900'` string         |
+| **Line height format** | Multiplier (1.5)                 | Spacing (points)         | Multiplier (1.5f)        | Multiplier (1.5)             |
+| **Import**             | `@use 'tokens'`                  | `import Typography`      | `import Typography`      | `import { typography }`      |
+| **Font size brug**     | `tokens.font-size('xl')`         | `Typography.FontSize.xl` | `Typography.FontSize.xl` | `typography.fontSize.xl`     |
+| **Utility klasser**    | ✅ Ja (`.text-xl`, `.font-bold`) | ❌ Nej                   | ❌ Nej                   | ❌ Nej                       |
+| **Custom fonts**       | ✅ @font-face                    | ✅ Font assets           | ✅ Font resources        | ✅ react-native-vector-icons |
+
+::: tip Vigtig Note **Typography tokens** (sizes, weights, line heights) kan bruges på alle
+platforme, men **utility klasser** som `.text-xl` eller `.font-bold` kan kun bruges i web
+(HTML/CSS).
+
+Native apps skal definere deres egne TextStyle/Font systemer med typography token værdierne. :::
+
 ## Hvordan Bruger Man Typography
 
 ### Heading Hierarki

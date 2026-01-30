@@ -165,6 +165,444 @@ Visual guide showing how different shadow levels create depth perception.
 - **Extra Large**: High-priority modals, critical alerts
 - **Inner**: Pressed/active states, inset elements :::
 
+## Platform-Specifik Usage
+
+**Shadow tokens er platform-uafhængige** - kan bruges i web, iOS og Android, men implementeres
+forskelligt på hver platform.
+
+### Web (HTML/CSS/SCSS)
+
+```scss
+@use '@haspen/design-tokens' as tokens;
+
+// Card med shadow
+.card {
+  box-shadow: tokens.shadow('light');
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: tokens.shadow('medium');
+  }
+}
+
+// Button med shadow
+.button {
+  box-shadow: tokens.shadow('light');
+
+  &:hover {
+    box-shadow: tokens.shadow('medium');
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    box-shadow: tokens.shadow('inner');
+    transform: translateY(0);
+  }
+}
+
+// Modal/Dialog
+.modal {
+  box-shadow: tokens.shadow('extra-large');
+}
+```
+
+```html
+<!-- HTML med inline style (hvis nødvendigt) -->
+<div style="box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)">
+  Card content
+</div>
+```
+
+### iOS (SwiftUI)
+
+**Shadows i SwiftUI er baseret på radius, x/y offset og opacity:**
+
+```swift
+// ShadowStyles.swift - Design token constants
+import SwiftUI
+
+struct ShadowStyle {
+    let radius: CGFloat
+    let x: CGFloat
+    let y: CGFloat
+    let opacity: Double
+
+    static let light = ShadowStyle(
+        radius: 3,
+        x: 0,
+        y: 1,
+        opacity: 0.1
+    )
+
+    static let medium = ShadowStyle(
+        radius: 6,
+        x: 0,
+        y: 4,
+        opacity: 0.1
+    )
+
+    static let large = ShadowStyle(
+        radius: 15,
+        x: 0,
+        y: 10,
+        opacity: 0.1
+    )
+
+    static let extraLarge = ShadowStyle(
+        radius: 25,
+        x: 0,
+        y: 20,
+        opacity: 0.15
+    )
+}
+
+// Shadow modifier extension
+extension View {
+    func shadowStyle(_ style: ShadowStyle) -> some View {
+        self.shadow(
+            color: Color.black.opacity(style.opacity),
+            radius: style.radius,
+            x: style.x,
+            y: style.y
+        )
+    }
+
+    func lightShadow() -> some View {
+        shadowStyle(.light)
+    }
+
+    func mediumShadow() -> some View {
+        shadowStyle(.medium)
+    }
+
+    func largeShadow() -> some View {
+        shadowStyle(.large)
+    }
+}
+```
+
+**Brug i SwiftUI:**
+
+```swift
+// Card med shadow
+struct CardView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Card Title")
+                .font(.headline)
+
+            Text("Card content")
+                .font(.body)
+        }
+        .padding(16)
+        .background(Color.white)
+        .cornerRadius(8)
+        .lightShadow()  // Anvend shadow
+    }
+}
+
+// Button med hover effect (bruger @State for interaction)
+struct ElevatedButton: View {
+    @State private var isPressed = false
+
+    var body: some View {
+        Button(action: {}) {
+            Text("Button")
+                .padding(.horizontal, 24)
+                .padding(.vertical, 12)
+        }
+        .background(Color.blue)
+        .foregroundColor(.white)
+        .cornerRadius(6)
+        .shadowStyle(isPressed ? .light : .medium)
+        .scaleEffect(isPressed ? 0.98 : 1.0)
+        .onLongPressGesture(minimumDuration: .infinity, maximumDistance: .infinity,
+                           pressing: { pressing in
+            withAnimation(.easeInOut(duration: 0.1)) {
+                isPressed = pressing
+            }
+        }, perform: {})
+    }
+}
+
+// Modal/Dialog med stor shadow
+struct ModalView: View {
+    var body: some View {
+        VStack {
+            // Modal content
+        }
+        .padding(24)
+        .background(Color.white)
+        .cornerRadius(12)
+        .shadowStyle(.extraLarge)
+    }
+}
+```
+
+**Note:** SwiftUI shadows kan påvirke performance ved mange views. Overvej at bruge `background` med
+`Material` for bedre performance:
+
+```swift
+.background(.ultraThinMaterial)  // Native blur effect i stedet for shadow
+```
+
+### Android (Jetpack Compose)
+
+**Shadows i Compose bruger elevation (Material Design):**
+
+```kotlin
+// ShadowStyles.kt - Design token constants
+package com.haspen.ui.theme
+
+import androidx.compose.ui.unit.dp
+
+object Elevation {
+    val none = 0.dp
+    val light = 2.dp      // Small shadow
+    val medium = 4.dp     // Medium shadow
+    val large = 8.dp      // Large shadow
+    val extraLarge = 16.dp // Extra large shadow
+}
+```
+
+**Brug i Jetpack Compose:**
+
+```kotlin
+// Card med shadow (via elevation)
+@Composable
+fun CardView(
+    title: String,
+    content: String
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        shape = RoundedCornerShape(8.dp),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = Elevation.light
+        )
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Text(text = title, style = MaterialTheme.typography.titleMedium)
+            Text(text = content, style = MaterialTheme.typography.bodyMedium)
+        }
+    }
+}
+
+// Button med hover/press effect
+@Composable
+fun ElevatedButton(
+    text: String,
+    onClick: () -> Unit
+) {
+    var isPressed by remember { mutableStateOf(false) }
+
+    Button(
+        onClick = onClick,
+        modifier = Modifier
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onPress = {
+                        isPressed = true
+                        tryAwaitRelease()
+                        isPressed = false
+                    }
+                )
+            },
+        elevation = ButtonDefaults.buttonElevation(
+            defaultElevation = if (isPressed) Elevation.light else Elevation.medium,
+            pressedElevation = Elevation.light,
+            hoveredElevation = Elevation.large
+        )
+    ) {
+        Text(text)
+    }
+}
+
+// Surface med custom elevation
+@Composable
+fun ElevatedSurface(content: @Composable () -> Unit) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        shape = RoundedCornerShape(8.dp),
+        shadowElevation = Elevation.medium,  // Shadow via elevation
+        tonalElevation = 2.dp                // Surface tint
+    ) {
+        content()
+    }
+}
+
+// Modal/Dialog med stor shadow
+@Composable
+fun ModalDialog(
+    onDismiss: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    Dialog(onDismissRequest = onDismiss) {
+        Surface(
+            shape = RoundedCornerShape(12.dp),
+            shadowElevation = Elevation.extraLarge,
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Box(modifier = Modifier.padding(24.dp)) {
+                content()
+            }
+        }
+    }
+}
+```
+
+**Material 3 Elevation System:**
+
+```kotlin
+// Compose bruger Material Design elevation levels
+object MaterialElevation {
+    val level0 = 0.dp    // Surface
+    val level1 = 1.dp    // Elevated surface
+    val level2 = 3.dp    // Cards, buttons
+    val level3 = 6.dp    // FAB
+    val level4 = 8.dp    // Navigation drawer
+    val level5 = 12.dp   // Modal dialogs
+}
+```
+
+### React Native ⚠️
+
+**React Native har BEGRÆNSET shadow support:**
+
+**iOS support ✅:**
+
+```typescript
+// shadows.ts
+export const shadows = {
+  light: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+  },
+  medium: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+  },
+  large: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.1,
+    shadowRadius: 15,
+  },
+  extraLarge: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 20 },
+    shadowOpacity: 0.15,
+    shadowRadius: 25,
+  },
+} as const;
+```
+
+**Android support via elevation:**
+
+```typescript
+import { Platform, View, StyleSheet } from 'react-native';
+
+const Card = ({ children }) => (
+  <View style={[styles.card, Platform.select({
+    ios: shadows.light,
+    android: { elevation: 4 }  // Android bruger elevation
+  })]}>
+    {children}
+  </View>
+);
+
+const styles = StyleSheet.create({
+  card: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: 16,
+  },
+});
+```
+
+**Cross-platform shadow library (anbefalet):**
+
+```bash
+npm install react-native-shadow-2
+```
+
+```typescript
+import { Shadow } from 'react-native-shadow-2';
+
+const Card = ({ children }) => (
+  <Shadow distance={4} startColor={'rgba(0,0,0,0.1)'}>
+    <View style={styles.card}>
+      {children}
+    </View>
+  </Shadow>
+);
+```
+
+### Platform Sammenligning
+
+| Feature              | Web (CSS)               | iOS (SwiftUI)           | Android (Compose)       | React Native             |
+| -------------------- | ----------------------- | ----------------------- | ----------------------- | ------------------------ |
+| **Implementation**   | `box-shadow`            | `.shadow()` modifier    | Elevation (Material)    | Platform-specific props  |
+| **Shadow format**    | CSS box-shadow          | radius/x/y/opacity      | `dp` elevation          | shadowOffset/Radius      |
+| **Multiple shadows** | ✅ Ja (comma separated) | ✅ Ja (flere modifiers) | ❌ Kun én elevation     | ❌ Nej                   |
+| **Color support**    | ✅ Any color            | ✅ Any color + opacity  | ⚠️ Automatic (Material) | ✅ shadowColor prop      |
+| **Performance**      | ✅ God                  | ⚠️ Kan være tungt       | ✅ God (native)         | ⚠️ iOS god, Android okay |
+| **Blur radius**      | ✅ Ja                   | ✅ Ja (radius)          | ✅ Ja (via elevation)   | ✅ shadowRadius          |
+| **Inner shadows**    | ✅ Ja (`inset`)         | ❌ Nej                  | ❌ Nej                  | ❌ Nej                   |
+
+::: warning Platform Begrænsninger
+
+**React Native:**
+
+- iOS: Fuld shadow support via `shadowColor`, `shadowOffset`, `shadowOpacity`, `shadowRadius`
+- Android: Kun `elevation` (ingen farve control)
+- Shadows virker KUN på View komponenter med baggrundfarve
+- Inner shadows ikke supporteret
+
+**SwiftUI:**
+
+- Multiple shadows kan påvirke performance
+- Overvej `.background(.ultraThinMaterial)` for bedre performance
+
+**Jetpack Compose:**
+
+- Shadows følger Material Design elevation system
+- Shadow farve kan ikke customizes direkte (følger tema)
+- Inner shadows ikke supporteret :::
+
+::: tip Anbefalinger
+
+**Web:**
+
+- Brug `box-shadow` direkte via tokens
+- Kombiner med `transition` for smooth effekter
+
+**iOS:**
+
+- Brug SwiftUI `.shadow()` modifier
+- Overvej Material blur effects for performance
+
+**Android:**
+
+- Brug Material elevation system
+- Følg Material Design guidelines
+
+**React Native:**
+
+- Brug platform-specific styling eller shadow bibliotek
+- Test på begge platforme :::
+
 ## Hvordan Bruger Man Shadows
 
 ### Praktiske Komponent Eksempler

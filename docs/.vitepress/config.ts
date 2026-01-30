@@ -21,6 +21,15 @@ export default defineConfig({
             { text: 'Usage', link: '/guide/usage' },
           ],
         },
+        {
+          text: 'Concepts',
+          items: [
+            {
+              text: 'Design Tokens vs Utilities',
+              link: '/guide/design-tokens-vs-utilities',
+            },
+          ],
+        },
       ],
       '/tokens/': [
         {

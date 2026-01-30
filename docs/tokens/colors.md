@@ -296,6 +296,329 @@ Test color combinations for accessibility compliance.
 - **AA Large** (3:1): Minimum for text ≥18px or ≥14px bold
 - **Fail** (<4.5:1): Does not meet WCAG standards :::
 
+## Platform-Specifik Usage
+
+**Design tokens er platform-uafhængige** - de kan bruges i web, iOS, Android og React Native.
+**Utilities (CSS klasser) kan kun bruges i web.**
+
+### Web (HTML/CSS/SCSS)
+
+```scss
+@use '@haspen/design-tokens' as tokens;
+
+// Direkte brug i SCSS
+.button-primary {
+  background-color: tokens.getColor('primary', 600); // #2563eb
+  color: white;
+
+  &:hover {
+    background-color: tokens.getColor('primary', 700); // #1d4ed8
+  }
+}
+
+// Eller via CSS variabel
+.button-secondary {
+  background-color: var(--haspen-color-primary-600);
+}
+```
+
+```html
+<!-- HTML med inline style -->
+<button style="background-color: #2563eb; color: white">Button</button>
+
+<!-- Eller via utility klasse (KUN web) -->
+<button class="bg-primary-600 text-white">Button</button>
+```
+
+### iOS (Swift/SwiftUI)
+
+Først skal du konvertere design tokens til Swift constants:
+
+```swift
+// Colors.swift - Design token constants
+import SwiftUI
+
+extension Color {
+    // Primary colors
+    static let primary50 = Color(hex: "EFF6FF")
+    static let primary100 = Color(hex: "DBEAFE")
+    static let primary200 = Color(hex: "BFDBFE")
+    static let primary300 = Color(hex: "93C5FD")
+    static let primary400 = Color(hex: "60A5FA")
+    static let primary500 = Color(hex: "3B82F6")
+    static let primary600 = Color(hex: "2563EB") // Main primary
+    static let primary700 = Color(hex: "1D4ED8")
+    static let primary800 = Color(hex: "1E40AF")
+    static let primary900 = Color(hex: "1E3A8A")
+
+    // Gray colors
+    static let gray50 = Color(hex: "F9FAFB")
+    static let gray100 = Color(hex: "F3F4F6")
+    static let gray200 = Color(hex: "E5E7EB")
+    static let gray300 = Color(hex: "D1D5DB")
+    static let gray400 = Color(hex: "9CA3AF")
+    static let gray500 = Color(hex: "6B7280")
+    static let gray600 = Color(hex: "4B5563")
+    static let gray700 = Color(hex: "374151")
+    static let gray800 = Color(hex: "1F2937")
+    static let gray900 = Color(hex: "111827")
+}
+
+// Hex initializer helper
+extension Color {
+    init(hex: String) {
+        let scanner = Scanner(string: hex)
+        var rgbValue: UInt64 = 0
+        scanner.scanHexInt64(&rgbValue)
+
+        let r = Double((rgbValue & 0xFF0000) >> 16) / 255.0
+        let g = Double((rgbValue & 0x00FF00) >> 8) / 255.0
+        let b = Double(rgbValue & 0x0000FF) / 255.0
+
+        self.init(red: r, green: g, blue: b)
+    }
+}
+```
+
+**Brug i SwiftUI:**
+
+```swift
+struct PrimaryButton: View {
+    var body: some View {
+        Button(action: {}) {
+            Text("Button Text")
+                .foregroundColor(.white)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
+        }
+        .background(Color.primary600)
+        .cornerRadius(6)
+    }
+}
+
+// Card component
+struct CardView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Card Title")
+                .font(.headline)
+                .foregroundColor(.gray900)
+
+            Text("Card description text")
+                .font(.body)
+                .foregroundColor(.gray700)
+        }
+        .padding(16)
+        .background(Color.white)
+        .cornerRadius(8)
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(Color.gray200, lineWidth: 1)
+        )
+    }
+}
+```
+
+### Android (Kotlin/Jetpack Compose)
+
+Først skal du konvertere design tokens til Kotlin constants:
+
+```kotlin
+// Colors.kt - Design token constants
+package com.haspen.ui.theme
+
+import androidx.compose.ui.graphics.Color
+
+object Colors {
+    // Primary colors
+    val primary50 = Color(0xFFEFF6FF)
+    val primary100 = Color(0xFFDBEAFE)
+    val primary200 = Color(0xFFBFDBFE)
+    val primary300 = Color(0xFF93C5FD)
+    val primary400 = Color(0xFF60A5FA)
+    val primary500 = Color(0xFF3B82F6)
+    val primary600 = Color(0xFF2563EB) // Main primary
+    val primary700 = Color(0xFF1D4ED8)
+    val primary800 = Color(0xFF1E40AF)
+    val primary900 = Color(0xFF1E3A8A)
+
+    // Gray colors
+    val gray50 = Color(0xFFF9FAFB)
+    val gray100 = Color(0xFFF3F4F6)
+    val gray200 = Color(0xFFE5E7EB)
+    val gray300 = Color(0xFFD1D5DB)
+    val gray400 = Color(0xFF9CA3AF)
+    val gray500 = Color(0xFF6B7280)
+    val gray600 = Color(0xFF4B5563)
+    val gray700 = Color(0xFF374151)
+    val gray800 = Color(0xFF1F2937)
+    val gray900 = Color(0xFF111827)
+
+    val white = Color(0xFFFFFFFF)
+}
+```
+
+**Brug i Jetpack Compose:**
+
+```kotlin
+@Composable
+fun PrimaryButton(
+    text: String,
+    onClick: () -> Unit
+) {
+    Button(
+        onClick = onClick,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Colors.primary600,
+            contentColor = Colors.white
+        ),
+        shape = RoundedCornerShape(6.dp)
+    ) {
+        Text(
+            text = text,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
+        )
+    }
+}
+
+// Card component
+@Composable
+fun CardView(
+    title: String,
+    description: String
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        shape = RoundedCornerShape(8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Colors.white
+        ),
+        border = BorderStroke(1.dp, Colors.gray200)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleMedium,
+                color = Colors.gray900
+            )
+
+            Text(
+                text = description,
+                style = MaterialTheme.typography.bodyMedium,
+                color = Colors.gray700
+            )
+        }
+    }
+}
+```
+
+### React Native (TypeScript)
+
+```typescript
+// colors.ts - Design token constants
+export const colors = {
+  primary: {
+    50: '#EFF6FF',
+    100: '#DBEAFE',
+    200: '#BFDBFE',
+    300: '#93C5FD',
+    400: '#60A5FA',
+    500: '#3B82F6',
+    600: '#2563EB',
+    700: '#1D4ED8',
+    800: '#1E40AF',
+    900: '#1E3A8A',
+  },
+  gray: {
+    50: '#F9FAFB',
+    100: '#F3F4F6',
+    200: '#E5E7EB',
+    300: '#D1D5DB',
+    400: '#9CA3AF',
+    500: '#6B7280',
+    600: '#4B5563',
+    700: '#374151',
+    800: '#1F2937',
+    900: '#111827',
+  },
+  white: '#FFFFFF',
+} as const;
+```
+
+**Brug i React Native:**
+
+```typescript
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { colors } from './tokens/colors';
+
+const PrimaryButton = ({ title, onPress }) => (
+  <TouchableOpacity style={styles.button} onPress={onPress}>
+    <Text style={styles.buttonText}>{title}</Text>
+  </TouchableOpacity>
+);
+
+const Card = ({ title, description }) => (
+  <View style={styles.card}>
+    <Text style={styles.cardTitle}>{title}</Text>
+    <Text style={styles.cardDescription}>{description}</Text>
+  </View>
+);
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: colors.primary[600],
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 6,
+  },
+  buttonText: {
+    color: colors.white,
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  card: {
+    backgroundColor: colors.white,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.gray[200],
+    padding: 16,
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: colors.gray[900],
+    marginBottom: 12,
+  },
+  cardDescription: {
+    fontSize: 16,
+    color: colors.gray[700],
+    lineHeight: 24,
+  },
+});
+```
+
+### Platform Sammenligning
+
+| Feature                  | Web (SCSS/CSS)      | iOS (SwiftUI)       | Android (Compose)   | React Native          |
+| ------------------------ | ------------------- | ------------------- | ------------------- | --------------------- |
+| **Token format**         | SCSS variables      | Swift Color         | Kotlin Color        | TypeScript object     |
+| **Værdi format**         | `#2563eb`           | `Color(hex: "...")` | `Color(0xFF...)`    | `'#2563EB'`           |
+| **Import**               | `@use 'tokens'`     | `import SwiftUI`    | `import Colors`     | `import { colors }`   |
+| **Brug**                 | `tokens.getColor()` | `Color.primary600`  | `Colors.primary600` | `colors.primary[600]` |
+| **Utility klasser**      | ✅ Ja               | ❌ Nej              | ❌ Nej              | ❌ Nej                |
+| **CSS variabel support** | ✅ Ja               | ❌ Nej              | ❌ Nej              | ❌ Nej                |
+| **Runtime ændringer**    | ✅ Ja (CSS vars)    | ✅ Ja (@State)      | ✅ Ja (remember)    | ✅ Ja (useState)      |
+
+::: tip Vigtig Note **Design tokens** (farveværdierne) kan bruges på alle platforme, men **utility
+klasser** som `.bg-primary-600` kan kun bruges i web (HTML/CSS).
+
+Native apps skal bruge deres platform-specifikke styling systemer med design token værdierne. :::
+
 ## Hvordan Bruger Man Farver
 
 ### Valg af Rigtig Shade
