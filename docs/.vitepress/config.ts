@@ -8,9 +8,20 @@ export default defineConfig({
 
   themeConfig: {
     nav: [
-      { text: 'Guide', link: '/guide/welcome' },
+      { text: 'Getting Started', link: '/guide/welcome' },
       { text: 'Design Tokens', link: '/tokens/colors' },
-      { text: 'HTML Utilities', link: '/utilities/grid' },
+      { text: 'HTML Utilities', link: '/utilities/containers' },
+      {
+        text: 'Packages',
+        items: [
+          { text: '@haspen/design-tokens', link: '/packages/design-tokens' },
+          { text: '@haspen/core', link: '/packages/core' },
+          { text: '@haspen/shared', link: '/packages/shared' },
+          { text: '@haspen/composables', link: '/packages/composables' },
+          { text: '@haspen/ui', link: '/packages/ui' },
+          { text: '@haspen/nuxt', link: '/packages/nuxt' },
+        ],
+      },
     ],
 
     sidebar: {
@@ -71,6 +82,19 @@ export default defineConfig({
         {
           text: 'Accessibility',
           items: [{ text: 'Accessibility', link: '/utilities/accessibility' }],
+        },
+      ],
+      '/packages/': [
+        {
+          text: 'Packages',
+          items: [
+            { text: '@haspen/design-tokens', link: '/packages/design-tokens' },
+            { text: '@haspen/core', link: '/packages/core' },
+            { text: '@haspen/shared', link: '/packages/shared' },
+            { text: '@haspen/composables', link: '/packages/composables' },
+            { text: '@haspen/ui', link: '/packages/ui' },
+            { text: '@haspen/nuxt', link: '/packages/nuxt' },
+          ],
         },
       ],
     },
