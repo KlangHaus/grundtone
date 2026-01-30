@@ -197,7 +197,361 @@ Best for page sections, major layout divisions, and large-scale spacing.
   </div>
 </div>
 
-## Usage
+## Hvordan Bruger Man Spacing
+
+### Layout Patterns
+
+**Container Spacing**
+
+```scss
+@use '@ipeeon/design-tokens' as tokens;
+
+// Page container
+.page-container {
+  padding: tokens.spacing(4); // Mobile: 1rem
+
+  @include tokens.respond-to('md') {
+    padding: tokens.spacing(8); // Tablet: 2rem
+  }
+
+  @include tokens.respond-to('lg') {
+    padding: tokens.spacing(12); // Desktop: 3rem
+  }
+}
+
+// Section spacing
+.section {
+  margin-bottom: tokens.spacing(12); // 3rem between sections
+
+  @include tokens.respond-to('lg') {
+    margin-bottom: tokens.spacing(20); // 5rem on large screens
+  }
+}
+```
+
+**Component Spacing**
+
+```scss
+// Card internal spacing
+.card {
+  padding: tokens.spacing(6); // 1.5rem internal padding
+
+  // Spacing between card elements
+  & > * + * {
+    margin-top: tokens.spacing(4); // 1rem between children
+  }
+}
+
+// Button spacing
+.button {
+  padding: tokens.spacing(3) tokens.spacing(6); // Vertical: 0.75rem, Horizontal: 1.5rem
+
+  &.button-sm {
+    padding: tokens.spacing(2) tokens.spacing(4); // Small: 0.5rem 1rem
+  }
+
+  &.button-lg {
+    padding: tokens.spacing(4) tokens.spacing(8); // Large: 1rem 2rem
+  }
+}
+
+// Icon med text
+.icon-with-text {
+  display: flex;
+  align-items: center;
+  gap: tokens.spacing(2); // 0.5rem between icon and text
+}
+```
+
+**Form Spacing**
+
+```scss
+// Form field spacing
+.form-field {
+  margin-bottom: tokens.spacing(6); // 1.5rem between fields
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Label spacing
+.form-label {
+  margin-bottom: tokens.spacing(2); // 0.5rem under label
+}
+
+// Input spacing
+.form-input {
+  padding: tokens.spacing(3); // 0.75rem internal padding
+
+  // With icon
+  &.has-icon {
+    padding-left: tokens.spacing(10); // 2.5rem for icon space
+  }
+}
+
+// Form group spacing
+.form-group {
+  & > * + * {
+    margin-top: tokens.spacing(2); // 0.5rem between elements
+  }
+}
+
+// Error message spacing
+.form-error {
+  margin-top: tokens.spacing(1); // 0.25rem after input
+}
+```
+
+**Grid & Flexbox Spacing**
+
+```scss
+// Grid layout
+.grid {
+  display: grid;
+  gap: tokens.spacing(4); // 1rem gap
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+  @include tokens.respond-to('md') {
+    gap: tokens.spacing(6); // 1.5rem on tablet
+  }
+
+  @include tokens.respond-to('lg') {
+    gap: tokens.spacing(8); // 2rem on desktop
+  }
+}
+
+// Flex layout
+.flex-container {
+  display: flex;
+  gap: tokens.spacing(4); // 1rem between items
+
+  &.flex-tight {
+    gap: tokens.spacing(2); // 0.5rem for tight spacing
+  }
+
+  &.flex-loose {
+    gap: tokens.spacing(8); // 2rem for loose spacing
+  }
+}
+```
+
+**List Spacing**
+
+```scss
+// Vertical list
+.list {
+  & > li + li {
+    margin-top: tokens.spacing(3); // 0.75rem between items
+  }
+
+  &.list-tight > li + li {
+    margin-top: tokens.spacing(2); // 0.5rem for tight lists
+  }
+
+  &.list-loose > li + li {
+    margin-top: tokens.spacing(6); // 1.5rem for loose lists
+  }
+}
+
+// Horizontal list (menu/navigation)
+.nav-list {
+  display: flex;
+  gap: tokens.spacing(6); // 1.5rem between nav items
+
+  @include tokens.respond-to('lg') {
+    gap: tokens.spacing(8); // 2rem on desktop
+  }
+}
+```
+
+### Stack Pattern (Lobotomized Owl)
+
+```scss
+// Automatic spacing between sibling elements
+.stack > * + * {
+  margin-top: tokens.spacing(4); // 1rem default
+}
+
+.stack-sm > * + * {
+  margin-top: tokens.spacing(2); // 0.5rem tight
+}
+
+.stack-lg > * + * {
+  margin-top: tokens.spacing(8); // 2rem loose
+}
+
+// Eksempel brug
+.article {
+  @extend .stack;
+
+  .article-header {
+    // No extra margin needed
+  }
+
+  .article-body {
+    // Automatically gets margin-top
+  }
+
+  .article-footer {
+    // Automatically gets margin-top
+  }
+}
+```
+
+### Responsive Spacing Patterns
+
+```scss
+// Mobile first approach
+.hero-section {
+  padding: tokens.spacing(8) tokens.spacing(4); // Mobile: 2rem vertical, 1rem horizontal
+
+  @include tokens.respond-to('md') {
+    padding: tokens.spacing(16) tokens.spacing(8); // Tablet: 4rem, 2rem
+  }
+
+  @include tokens.respond-to('lg') {
+    padding: tokens.spacing(24) tokens.spacing(12); // Desktop: 6rem, 3rem
+  }
+}
+
+// Asymmetric spacing
+.section-with-gap {
+  padding-top: tokens.spacing(12); // 3rem top
+  padding-bottom: tokens.spacing(20); // 5rem bottom (more breathing room)
+}
+```
+
+### Praktiske Komponenter
+
+**Modal Dialog**
+
+```scss
+.modal {
+  padding: tokens.spacing(8); // 2rem outer padding
+
+  .modal-header {
+    padding-bottom: tokens.spacing(4);
+    border-bottom: 1px solid tokens.getColor('gray', 200);
+    margin-bottom: tokens.spacing(6);
+  }
+
+  .modal-body {
+    // Content spacing
+    & > * + * {
+      margin-top: tokens.spacing(4);
+    }
+  }
+
+  .modal-footer {
+    padding-top: tokens.spacing(6);
+    margin-top: tokens.spacing(8);
+    border-top: 1px solid tokens.getColor('gray', 200);
+
+    // Button spacing
+    display: flex;
+    gap: tokens.spacing(3);
+    justify-content: flex-end;
+  }
+}
+```
+
+**Navigation Bar**
+
+```scss
+.navbar {
+  padding: tokens.spacing(4) tokens.spacing(6); // 1rem vertical, 1.5rem horizontal
+  display: flex;
+  align-items: center;
+  gap: tokens.spacing(8); // 2rem between logo and nav
+
+  .nav-links {
+    display: flex;
+    gap: tokens.spacing(6); // 1.5rem between links
+  }
+
+  .nav-actions {
+    margin-left: auto;
+    display: flex;
+    gap: tokens.spacing(3); // 0.75rem between action buttons
+  }
+}
+```
+
+**Data Table**
+
+```scss
+.table {
+  th,
+  td {
+    padding: tokens.spacing(3) tokens.spacing(4); // 0.75rem vertical, 1rem horizontal
+  }
+
+  tbody tr + tr {
+    border-top: 1px solid tokens.getColor('gray', 200);
+  }
+
+  &.table-compact {
+    th,
+    td {
+      padding: tokens.spacing(2) tokens.spacing(3); // Compact version
+    }
+  }
+}
+```
+
+### Vue/React Component Eksempel
+
+**Vue 3 med Composable**
+
+```vue
+<script setup lang="ts">
+  import { computed } from 'vue';
+  import { spacing } from '@ipeeon/design-tokens';
+
+  const props = defineProps<{
+    size?: 'sm' | 'md' | 'lg';
+  }>();
+
+  const cardPadding = computed(() => {
+    switch (props.size) {
+      case 'sm':
+        return spacing[4]; // 1rem
+      case 'lg':
+        return spacing[8]; // 2rem
+      default:
+        return spacing[6]; // 1.5rem
+    }
+  });
+
+  const itemGap = computed(() => {
+    switch (props.size) {
+      case 'sm':
+        return spacing[2]; // 0.5rem
+      case 'lg':
+        return spacing[6]; // 1.5rem
+      default:
+        return spacing[4]; // 1rem
+    }
+  });
+</script>
+
+<template>
+  <div
+    class="card"
+    :style="{
+      padding: cardPadding,
+      display: 'flex',
+      flexDirection: 'column',
+      gap: itemGap,
+    }"
+  >
+    <slot />
+  </div>
+</template>
+```
+
+## Grundlæggende Usage
 
 ### TypeScript
 

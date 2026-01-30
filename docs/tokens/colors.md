@@ -296,7 +296,391 @@ Test color combinations for accessibility compliance.
 - **AA Large** (3:1): Minimum for text ≥18px or ≥14px bold
 - **Fail** (<4.5:1): Does not meet WCAG standards :::
 
-## Usage
+## Hvordan Bruger Man Farver
+
+### Valg af Rigtig Shade
+
+Hver farve har 9 shades (50-900). Her er hvordan du vælger den rigtige:
+
+**Baggrunde og Containers (50-200)**
+
+```scss
+@use '@ipeeon/design-tokens' as tokens;
+
+.page-background {
+  background-color: tokens.getColor('gray', 50); // Meget lys baggrund
+}
+
+.card-subtle {
+  background-color: tokens.getColor('primary', 50); // Subtle colored background
+}
+
+.hover-background {
+  &:hover {
+    background-color: tokens.getColor('gray', 100); // Hover state
+  }
+}
+```
+
+**Borders og Dividers (200-300)**
+
+```scss
+.card {
+  border: 1px solid tokens.getColor('gray', 200); // Default border
+}
+
+.input {
+  border: 1px solid tokens.getColor('gray', 300); // Input border
+
+  &:focus {
+    border-color: tokens.getColor('primary', 500); // Focus state
+  }
+}
+```
+
+**Interaktive Elementer (500-700)**
+
+```scss
+.button-primary {
+  background-color: tokens.getColor('primary', 600); // Primary button
+  color: white;
+
+  &:hover {
+    background-color: tokens.getColor('primary', 700); // Darker on hover
+  }
+
+  &:active {
+    background-color: tokens.getColor('primary', 800); // Even darker when pressed
+  }
+
+  &:disabled {
+    background-color: tokens.getColor('gray', 300); // Disabled state
+    color: tokens.getColor('gray', 500);
+  }
+}
+
+.link {
+  color: tokens.getColor('primary', 600); // Link color
+
+  &:hover {
+    color: tokens.getColor('primary', 700);
+    text-decoration: underline;
+  }
+}
+```
+
+**Tekst (600-900)**
+
+```scss
+.heading {
+  color: tokens.getColor('gray', 900); // Primary heading
+}
+
+.body-text {
+  color: tokens.getColor('gray', 700); // Body text
+}
+
+.secondary-text {
+  color: tokens.getColor('gray', 600); // Secondary/meta text
+}
+
+.muted-text {
+  color: tokens.getColor('gray', 500); // Placeholder/disabled text
+}
+```
+
+### Praktiske Komponent Eksempler
+
+**Button Komponenter**
+
+```scss
+// Primary button
+.btn-primary {
+  background-color: tokens.getColor('primary', 600);
+  color: white;
+  border: none;
+  padding: tokens.spacing(3) tokens.spacing(6);
+  border-radius: tokens.radius('default');
+
+  &:hover:not(:disabled) {
+    background-color: tokens.getColor('primary', 700);
+  }
+
+  &:active {
+    background-color: tokens.getColor('primary', 800);
+  }
+}
+
+// Secondary button
+.btn-secondary {
+  background-color: transparent;
+  color: tokens.getColor('primary', 600);
+  border: 1px solid tokens.getColor('primary', 600);
+  padding: tokens.spacing(3) tokens.spacing(6);
+
+  &:hover {
+    background-color: tokens.getColor('primary', 50);
+    border-color: tokens.getColor('primary', 700);
+    color: tokens.getColor('primary', 700);
+  }
+}
+
+// Danger button
+.btn-danger {
+  background-color: tokens.getColor('red', 600);
+  color: white;
+
+  &:hover {
+    background-color: tokens.getColor('red', 700);
+  }
+}
+```
+
+**Card Komponenter**
+
+```scss
+.card {
+  background-color: white;
+  border: 1px solid tokens.getColor('gray', 200);
+  border-radius: tokens.radius('lg');
+  padding: tokens.spacing(6);
+  box-shadow: tokens.shadow('light');
+
+  &:hover {
+    border-color: tokens.getColor('gray', 300);
+    box-shadow: tokens.shadow('medium');
+  }
+}
+
+.card-header {
+  color: tokens.getColor('gray', 900);
+  font-weight: 700;
+  margin-bottom: tokens.spacing(4);
+}
+
+.card-body {
+  color: tokens.getColor('gray', 700);
+  line-height: 1.6;
+}
+
+.card-footer {
+  color: tokens.getColor('gray', 600);
+  font-size: 0.875rem;
+  margin-top: tokens.spacing(4);
+  padding-top: tokens.spacing(4);
+  border-top: 1px solid tokens.getColor('gray', 200);
+}
+```
+
+**Form Elementer**
+
+```scss
+.form-input {
+  background-color: white;
+  border: 1px solid tokens.getColor('gray', 300);
+  color: tokens.getColor('gray', 900);
+  padding: tokens.spacing(2) tokens.spacing(3);
+  border-radius: tokens.radius('default');
+
+  &::placeholder {
+    color: tokens.getColor('gray', 400);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: tokens.getColor('primary', 500);
+    box-shadow: 0 0 0 3px tokens.getColor('primary', 100);
+  }
+
+  &:disabled {
+    background-color: tokens.getColor('gray', 50);
+    color: tokens.getColor('gray', 500);
+    cursor: not-allowed;
+  }
+
+  &.error {
+    border-color: tokens.getColor('red', 500);
+
+    &:focus {
+      box-shadow: 0 0 0 3px tokens.getColor('red', 100);
+    }
+  }
+}
+
+.form-label {
+  color: tokens.getColor('gray', 700);
+  font-weight: 600;
+  margin-bottom: tokens.spacing(2);
+}
+
+.form-error {
+  color: tokens.getColor('red', 600);
+  font-size: 0.875rem;
+  margin-top: tokens.spacing(1);
+}
+
+.form-hint {
+  color: tokens.getColor('gray', 600);
+  font-size: 0.875rem;
+}
+```
+
+**Alert/Notification Komponenter**
+
+```scss
+.alert {
+  padding: tokens.spacing(4);
+  border-radius: tokens.radius('default');
+  border-left: 4px solid;
+
+  &-success {
+    background-color: tokens.getColor('green', 50);
+    border-color: tokens.getColor('green', 600);
+    color: tokens.getColor('green', 900);
+  }
+
+  &-warning {
+    background-color: tokens.getColor('yellow', 50);
+    border-color: tokens.getColor('yellow', 600);
+    color: tokens.getColor('yellow', 900);
+  }
+
+  &-error {
+    background-color: tokens.getColor('red', 50);
+    border-color: tokens.getColor('red', 600);
+    color: tokens.getColor('red', 900);
+  }
+
+  &-info {
+    background-color: tokens.getColor('primary', 50);
+    border-color: tokens.getColor('primary', 600);
+    color: tokens.getColor('primary', 900);
+  }
+}
+```
+
+**Badge/Tag Komponenter**
+
+```scss
+.badge {
+  display: inline-block;
+  padding: tokens.spacing(1) tokens.spacing(2);
+  border-radius: tokens.radius('full');
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  &-primary {
+    background-color: tokens.getColor('primary', 100);
+    color: tokens.getColor('primary', 800);
+  }
+
+  &-success {
+    background-color: tokens.getColor('green', 100);
+    color: tokens.getColor('green', 800);
+  }
+
+  &-gray {
+    background-color: tokens.getColor('gray', 100);
+    color: tokens.getColor('gray', 800);
+  }
+}
+```
+
+### Dark Mode Implementation
+
+```scss
+// Light mode (default)
+:root {
+  --surface: #{tokens.getColor('white')};
+  --surface-elevated: #{tokens.getColor('gray', 50)};
+  --text-primary: #{tokens.getColor('gray', 900)};
+  --text-secondary: #{tokens.getColor('gray', 700)};
+  --border: #{tokens.getColor('gray', 200)};
+}
+
+// Dark mode
+[data-theme='dark'] {
+  --surface: #{tokens.getColor('gray', 900)};
+  --surface-elevated: #{tokens.getColor('gray', 800)};
+  --text-primary: #{tokens.getColor('gray', 50)};
+  --text-secondary: #{tokens.getColor('gray', 300)};
+  --border: #{tokens.getColor('gray', 700)};
+}
+
+// Brug variablerne
+.card {
+  background-color: var(--surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+```
+
+### TypeScript Integration
+
+**Vue 3 Composable Eksempel**
+
+```typescript
+import { computed } from 'vue';
+import { colors } from '@ipeeon/design-tokens';
+
+export function useButtonColors(variant: 'primary' | 'secondary' | 'danger') {
+  const buttonColors = computed(() => {
+    switch (variant) {
+      case 'primary':
+        return {
+          background: colors.primary[600],
+          hover: colors.primary[700],
+          active: colors.primary[800],
+          text: '#ffffff',
+        };
+      case 'secondary':
+        return {
+          background: 'transparent',
+          hover: colors.primary[50],
+          active: colors.primary[100],
+          text: colors.primary[600],
+          border: colors.primary[600],
+        };
+      case 'danger':
+        return {
+          background: colors.red[600],
+          hover: colors.red[700],
+          active: colors.red[800],
+          text: '#ffffff',
+        };
+    }
+  });
+
+  return { buttonColors };
+}
+```
+
+**React Styling Eksempel**
+
+```typescript
+import { colors } from '@ipeeon/design-tokens';
+
+export const buttonStyles = {
+  primary: {
+    backgroundColor: colors.primary[600],
+    color: '#ffffff',
+    border: 'none',
+    '&:hover': {
+      backgroundColor: colors.primary[700],
+    },
+  },
+  secondary: {
+    backgroundColor: 'transparent',
+    color: colors.primary[600],
+    border: `1px solid ${colors.primary[600]}`,
+    '&:hover': {
+      backgroundColor: colors.primary[50],
+    },
+  },
+};
+```
+
+## Grundlæggende Usage
 
 ### TypeScript
 
@@ -306,6 +690,11 @@ import { colors } from '@ipeeon/design-tokens';
 // Access colors
 const primaryColor = colors.primary[600]; // '#2563eb'
 const grayColor = colors.gray[500]; // '#6b7280'
+
+// Loop through shades
+Object.entries(colors.primary).forEach(([shade, hex]) => {
+  console.log(`Primary ${shade}: ${hex}`);
+});
 ```
 
 ### SCSS
@@ -314,7 +703,7 @@ const grayColor = colors.gray[500]; // '#6b7280'
 @use '@ipeeon/design-tokens' as tokens;
 
 .button {
-  background-color: tokens.getColor('blue', 600);
+  background-color: tokens.getColor('primary', 600);
 }
 ```
 

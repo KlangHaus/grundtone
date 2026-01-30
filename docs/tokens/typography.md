@@ -164,7 +164,356 @@ Complete typography scale with different combinations.
   <p style="color: #999; margin-bottom: 2rem; font-size: 0.75rem;">Font size: sm (0.875rem) · Weight: normal (400) · Line height: normal (1.5)</p>
 </div>
 
-## Usage
+## Hvordan Bruger Man Typography
+
+### Heading Hierarki
+
+**Complete Heading System**
+
+```scss
+@use '@ipeeon/design-tokens' as tokens;
+
+h1,
+.h1 {
+  font-size: tokens.font-size('5xl'); // 3rem
+  font-weight: tokens.font-weight('bold'); // 700
+  line-height: tokens.line-height('tight'); // 1.25
+  color: tokens.getColor('gray', 900);
+  margin-bottom: tokens.spacing(6);
+
+  @include tokens.respond-to('md') {
+    font-size: tokens.font-size('6xl'); // Even larger on desktop
+  }
+}
+
+h2,
+.h2 {
+  font-size: tokens.font-size('4xl'); // 2.25rem
+  font-weight: tokens.font-weight('bold');
+  line-height: tokens.line-height('tight');
+  color: tokens.getColor('gray', 900);
+  margin-bottom: tokens.spacing(4);
+}
+
+h3,
+.h3 {
+  font-size: tokens.font-size('3xl'); // 1.875rem
+  font-weight: tokens.font-weight('semibold'); // 600
+  line-height: tokens.line-height('tight');
+  color: tokens.getColor('gray', 800);
+  margin-bottom: tokens.spacing(3);
+}
+
+h4,
+.h4 {
+  font-size: tokens.font-size('2xl'); // 1.5rem
+  font-weight: tokens.font-weight('semibold');
+  line-height: tokens.line-height('normal'); // 1.5
+  color: tokens.getColor('gray', 800);
+  margin-bottom: tokens.spacing(3);
+}
+
+h5,
+.h5 {
+  font-size: tokens.font-size('xl'); // 1.25rem
+  font-weight: tokens.font-weight('semibold');
+  line-height: tokens.line-height('normal');
+  color: tokens.getColor('gray', 700);
+  margin-bottom: tokens.spacing(2);
+}
+
+h6,
+.h6 {
+  font-size: tokens.font-size('lg'); // 1.125rem
+  font-weight: tokens.font-weight('semibold');
+  line-height: tokens.line-height('normal');
+  color: tokens.getColor('gray', 700);
+  margin-bottom: tokens.spacing(2);
+}
+```
+
+### Body Text & Paragraphs
+
+```scss
+// Base body text
+body {
+  font-family: tokens.font-family('sans');
+  font-size: tokens.font-size('base'); // 1rem
+  font-weight: tokens.font-weight('normal'); // 400
+  line-height: tokens.line-height('normal'); // 1.5
+  color: tokens.getColor('gray', 900);
+}
+
+// Paragraphs
+p {
+  margin-bottom: tokens.spacing(4); // 1rem between paragraphs
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  // Lead paragraph (introductory text)
+  &.lead {
+    font-size: tokens.font-size('lg'); // 1.125rem
+    line-height: tokens.line-height('relaxed'); // 1.75
+    color: tokens.getColor('gray', 700);
+  }
+
+  // Small text
+  &.small {
+    font-size: tokens.font-size('sm'); // 0.875rem
+    color: tokens.getColor('gray', 600);
+  }
+}
+```
+
+### Text Styles & Utilities
+
+```scss
+// Text sizes
+.text-xs {
+  font-size: tokens.font-size('xs');
+} // 0.75rem
+.text-sm {
+  font-size: tokens.font-size('sm');
+} // 0.875rem
+.text-base {
+  font-size: tokens.font-size('base');
+} // 1rem
+.text-lg {
+  font-size: tokens.font-size('lg');
+} // 1.125rem
+.text-xl {
+  font-size: tokens.font-size('xl');
+} // 1.25rem
+.text-2xl {
+  font-size: tokens.font-size('2xl');
+} // 1.5rem
+
+// Font weights
+.font-light {
+  font-weight: tokens.font-weight('light');
+} // 300
+.font-normal {
+  font-weight: tokens.font-weight('normal');
+} // 400
+.font-medium {
+  font-weight: tokens.font-weight('medium');
+} // 500
+.font-semibold {
+  font-weight: tokens.font-weight('semibold');
+} // 600
+.font-bold {
+  font-weight: tokens.font-weight('bold');
+} // 700
+
+// Line heights
+.leading-tight {
+  line-height: tokens.line-height('tight');
+} // 1.25
+.leading-normal {
+  line-height: tokens.line-height('normal');
+} // 1.5
+.leading-relaxed {
+  line-height: tokens.line-height('relaxed');
+} // 1.75
+.leading-loose {
+  line-height: tokens.line-height('loose');
+} // 2
+
+// Text colors
+.text-primary {
+  color: tokens.getColor('gray', 900);
+}
+.text-secondary {
+  color: tokens.getColor('gray', 700);
+}
+.text-muted {
+  color: tokens.getColor('gray', 600);
+}
+.text-disabled {
+  color: tokens.getColor('gray', 400);
+}
+```
+
+### Praktiske Komponenter
+
+**Article/Blog Content**
+
+```scss
+.article {
+  max-width: 65ch; // Optimal reading width
+
+  h1 {
+    font-size: tokens.font-size('4xl');
+    font-weight: tokens.font-weight('bold');
+    line-height: tokens.line-height('tight');
+    margin-bottom: tokens.spacing(4);
+  }
+
+  h2 {
+    font-size: tokens.font-size('3xl');
+    font-weight: tokens.font-weight('semibold');
+    margin-top: tokens.spacing(12);
+    margin-bottom: tokens.spacing(4);
+  }
+
+  h3 {
+    font-size: tokens.font-size('2xl');
+    font-weight: tokens.font-weight('semibold');
+    margin-top: tokens.spacing(8);
+    margin-bottom: tokens.spacing(3);
+  }
+
+  p {
+    font-size: tokens.font-size('lg');
+    line-height: tokens.line-height('relaxed'); // 1.75 for readability
+    color: tokens.getColor('gray', 700);
+    margin-bottom: tokens.spacing(6);
+  }
+
+  ul,
+  ol {
+    margin-bottom: tokens.spacing(6);
+    padding-left: tokens.spacing(6);
+
+    li {
+      margin-bottom: tokens.spacing(2);
+      line-height: tokens.line-height('relaxed');
+    }
+  }
+
+  code {
+    font-family: tokens.font-family('mono');
+    font-size: tokens.font-size('sm');
+    background-color: tokens.getColor('gray', 100);
+    padding: tokens.spacing(1) tokens.spacing(2);
+    border-radius: tokens.radius('sm');
+  }
+}
+```
+
+**Form Labels & Helpers**
+
+```scss
+.form-label {
+  display: block;
+  font-size: tokens.font-size('sm'); // 0.875rem
+  font-weight: tokens.font-weight('semibold'); // 600
+  color: tokens.getColor('gray', 700);
+  margin-bottom: tokens.spacing(2);
+
+  // Required indicator
+  &.required::after {
+    content: ' *';
+    color: tokens.getColor('red', 600);
+  }
+}
+
+.form-helper {
+  font-size: tokens.font-size('sm');
+  color: tokens.getColor('gray', 600);
+  margin-top: tokens.spacing(1);
+  line-height: tokens.line-height('normal');
+}
+
+.form-error {
+  font-size: tokens.font-size('sm');
+  font-weight: tokens.font-weight('medium');
+  color: tokens.getColor('red', 600);
+  margin-top: tokens.spacing(1);
+}
+```
+
+**Button Typography**
+
+```scss
+.button {
+  font-family: inherit;
+  font-weight: tokens.font-weight('semibold');
+  line-height: tokens.line-height('none'); // 1 for buttons
+
+  &.button-sm {
+    font-size: tokens.font-size('sm');
+  }
+
+  &.button-md {
+    font-size: tokens.font-size('base');
+  }
+
+  &.button-lg {
+    font-size: tokens.font-size('lg');
+  }
+}
+```
+
+**Card Typography**
+
+```scss
+.card {
+  .card-title {
+    font-size: tokens.font-size('xl'); // 1.25rem
+    font-weight: tokens.font-weight('semibold');
+    color: tokens.getColor('gray', 900);
+    line-height: tokens.line-height('tight');
+    margin-bottom: tokens.spacing(2);
+  }
+
+  .card-subtitle {
+    font-size: tokens.font-size('sm');
+    font-weight: tokens.font-weight('medium');
+    color: tokens.getColor('gray', 600);
+    margin-bottom: tokens.spacing(4);
+  }
+
+  .card-body {
+    font-size: tokens.font-size('base');
+    line-height: tokens.line-height('normal');
+    color: tokens.getColor('gray', 700);
+  }
+
+  .card-meta {
+    font-size: tokens.font-size('xs');
+    color: tokens.getColor('gray', 500);
+    margin-top: tokens.spacing(3);
+  }
+}
+```
+
+### Responsive Typography
+
+```scss
+// Fluid typography that scales with viewport
+.hero-title {
+  // Mobile
+  font-size: tokens.font-size('3xl'); // 1.875rem
+  font-weight: tokens.font-weight('extrabold');
+  line-height: tokens.line-height('tight');
+
+  // Tablet
+  @include tokens.respond-to('md') {
+    font-size: tokens.font-size('5xl'); // 3rem
+  }
+
+  // Desktop
+  @include tokens.respond-to('lg') {
+    font-size: 4rem; // Custom large size
+    letter-spacing: -0.02em; // Tighten for large text
+  }
+}
+
+// Body text responsive
+.article-body {
+  font-size: tokens.font-size('base'); // 1rem on mobile
+
+  @include tokens.respond-to('md') {
+    font-size: tokens.font-size('lg'); // 1.125rem on tablet+
+    line-height: tokens.line-height('relaxed');
+  }
+}
+```
+
+## Grundlæggende Usage
 
 ### TypeScript
 

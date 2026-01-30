@@ -165,7 +165,411 @@ Visual guide showing how different shadow levels create depth perception.
 - **Extra Large**: High-priority modals, critical alerts
 - **Inner**: Pressed/active states, inset elements :::
 
-## Usage
+## Hvordan Bruger Man Shadows
+
+### Praktiske Komponent Eksempler
+
+**Card med Hover Effect**
+
+```scss
+@use '@ipeeon/design-tokens' as tokens;
+
+.card {
+  background: white;
+  border-radius: tokens.radius('lg');
+  padding: tokens.spacing(6);
+  box-shadow: tokens.shadow('light');
+  transition: all 0.3s ease;
+
+  // Hover state
+  &:hover {
+    box-shadow: tokens.shadow('medium');
+    transform: translateY(-2px); // Subtle lift effect
+  }
+
+  // Active/pressed state
+  &:active {
+    box-shadow: tokens.shadow('subtle');
+    transform: translateY(0);
+  }
+}
+
+// Interactive card (clickable)
+.card-interactive {
+  @extend .card;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: tokens.shadow('large');
+    border-color: tokens.getColor('primary', 500);
+  }
+}
+```
+
+**Button Shadows**
+
+```scss
+.button {
+  padding: tokens.spacing(3) tokens.spacing(6);
+  border-radius: tokens.radius('default');
+  transition: all 0.2s ease;
+
+  // Primary button med shadow
+  &.button-primary {
+    background-color: tokens.getColor('primary', 600);
+    color: white;
+    box-shadow: tokens.shadow('subtle');
+
+    &:hover {
+      background-color: tokens.getColor('primary', 700);
+      box-shadow: tokens.shadow('light');
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      box-shadow: tokens.shadow('inner'); // Inset shadow when pressed
+      transform: translateY(0);
+    }
+  }
+
+  // Flat button (no shadow by default)
+  &.button-flat {
+    box-shadow: none;
+
+    &:hover {
+      box-shadow: tokens.shadow('subtle');
+    }
+  }
+
+  // Floating action button (FAB)
+  &.button-fab {
+    border-radius: tokens.radius('round');
+    width: 56px;
+    height: 56px;
+    box-shadow: tokens.shadow('medium');
+
+    &:hover {
+      box-shadow: tokens.shadow('large');
+    }
+  }
+}
+```
+
+**Modal Dialogs**
+
+```scss
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: tokens.radius('lg');
+  padding: tokens.spacing(8);
+  box-shadow: tokens.shadow('large');
+  max-width: 90vw;
+  max-height: 90vh;
+  z-index: 1000;
+
+  // Critical/important modal
+  &.modal-critical {
+    box-shadow: tokens.shadow('extra-large');
+    border: 2px solid tokens.getColor('red', 500);
+  }
+}
+
+// Modal overlay
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+```
+
+**Dropdown Menus**
+
+```scss
+.dropdown {
+  position: relative;
+  display: inline-block;
+
+  .dropdown-trigger {
+    cursor: pointer;
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: tokens.spacing(2);
+    background: white;
+    border-radius: tokens.radius('md');
+    box-shadow: tokens.shadow('medium');
+    min-width: 200px;
+    padding: tokens.spacing(2);
+    z-index: 100;
+
+    // Animation
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: all 0.2s ease;
+    pointer-events: none;
+
+    &.open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+  }
+
+  .dropdown-item {
+    padding: tokens.spacing(2) tokens.spacing(3);
+    border-radius: tokens.radius('sm');
+    cursor: pointer;
+
+    &:hover {
+      background-color: tokens.getColor('gray', 100);
+    }
+  }
+}
+```
+
+**Navigation Bar**
+
+```scss
+.navbar {
+  background: white;
+  padding: tokens.spacing(4) tokens.spacing(6);
+  box-shadow: tokens.shadow('subtle');
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  // Elevated navbar (scrolled state)
+  &.elevated {
+    box-shadow: tokens.shadow('medium');
+  }
+
+  // Transparent navbar
+  &.transparent {
+    background: transparent;
+    box-shadow: none;
+
+    &.elevated {
+      background: white;
+      box-shadow: tokens.shadow('light');
+    }
+  }
+}
+```
+
+**Tooltips**
+
+```scss
+.tooltip {
+  position: absolute;
+  background: tokens.getColor('gray', 900);
+  color: white;
+  padding: tokens.spacing(2) tokens.spacing(3);
+  border-radius: tokens.radius('sm');
+  box-shadow: tokens.shadow('light');
+  font-size: tokens.font-size('sm');
+  white-space: nowrap;
+  z-index: 1000;
+
+  // Arrow
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid tokens.getColor('gray', 900);
+  }
+}
+```
+
+**Image Cards**
+
+```scss
+.image-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: tokens.radius('lg');
+  box-shadow: tokens.shadow('light');
+  transition: all 0.3s ease;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    box-shadow: tokens.shadow('extra-large');
+
+    img {
+      transform: scale(1.05); // Subtle zoom
+    }
+  }
+
+  .image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    padding: tokens.spacing(6);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+}
+```
+
+**Focus States**
+
+```scss
+// Focus shadow for accessibility
+.input,
+.button,
+.link {
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px tokens.getColor('primary', 100);
+  }
+
+  // Error focus state
+  &.error:focus-visible {
+    box-shadow: 0 0 0 3px tokens.getColor('red', 100);
+  }
+}
+```
+
+### Layering & Z-Index with Shadows
+
+```scss
+// Create depth hierarchy with shadows
+.layer-1 {
+  box-shadow: tokens.shadow('light');
+  z-index: 1;
+}
+
+.layer-2 {
+  box-shadow: tokens.shadow('medium');
+  z-index: 2;
+}
+
+.layer-3 {
+  box-shadow: tokens.shadow('large');
+  z-index: 3;
+}
+
+.layer-4 {
+  box-shadow: tokens.shadow('extra-large');
+  z-index: 4;
+}
+
+// Exempel: Stacked cards
+.card-stack {
+  .card {
+    box-shadow: tokens.shadow('light');
+
+    &.active {
+      box-shadow: tokens.shadow('large');
+      z-index: 2;
+    }
+
+    &.hover:not(.active) {
+      box-shadow: tokens.shadow('medium');
+      z-index: 1;
+    }
+  }
+}
+```
+
+### Animations med Shadows
+
+```scss
+// Smooth shadow transitions
+.card {
+  box-shadow: tokens.shadow('light');
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+
+  &:hover {
+    box-shadow: tokens.shadow('large');
+    transform: translateY(-4px);
+  }
+}
+
+// Pulse effect
+@keyframes pulse-shadow {
+  0%,
+  100% {
+    box-shadow: tokens.shadow('medium');
+  }
+  50% {
+    box-shadow: tokens.shadow('large');
+  }
+}
+
+.pulse {
+  animation: pulse-shadow 2s ease-in-out infinite;
+}
+
+// Loading skeleton
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    tokens.getColor('gray', 100) 25%,
+    tokens.getColor('gray', 50) 50%,
+    tokens.getColor('gray', 100) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s ease-in-out infinite;
+  border-radius: tokens.radius('default');
+  box-shadow: tokens.shadow('subtle');
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+```
+
+### Dark Mode Shadows
+
+```scss
+// Adjust shadows for dark mode
+:root {
+  --shadow-overlay: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] {
+  --shadow-overlay: rgba(0, 0, 0, 0.5);
+
+  .card {
+    // Stronger shadows in dark mode for better definition
+    box-shadow: 0 4px 12px var(--shadow-overlay);
+  }
+
+  .modal {
+    box-shadow: 0 8px 24px var(--shadow-overlay);
+  }
+}
+```
+
+## Grundlæggende Usage
 
 ### SCSS
 
