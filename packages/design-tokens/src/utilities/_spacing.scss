@@ -2,40 +2,20 @@
 @use 'sass:map';
 @use '../core/breakpoints' as *;
 
-// Spacing scale based on DKFDS
+// Standard spacing scale (0-6)
 $spacers: (
   0: 0,
   1: 0.25rem,
-  // 2px
-  2: 0.5rem,
   // 4px
-  3: 1rem,
+  2: 0.5rem,
   // 8px
-  305: 1.5rem,
+  3: 0.75rem,
   // 12px
-  4: 2rem,
+  4: 1rem,
   // 16px
-  405: 2.5rem,
+  5: 1.25rem,
   // 20px
-  5: 3rem,
-  // 24px
-  505: 3.5rem,
-  // 28px
-  6: 4rem,
-  // 32px
-  605: 4.5rem,
-  // 36px
-  7: 5rem,
-  // 40px
-  705: 5.5rem,
-  // 44px
-  8: 6rem,
-  // 48px
-  805: 6.5rem,
-  // 52px
-  9: 7rem,
-  // 56px
-  905: 7.5rem, // 60px
+  6: 1.5rem, // 24px
 );
 
 // Generate margin and padding utilities
