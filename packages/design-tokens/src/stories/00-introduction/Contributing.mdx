@@ -10,22 +10,22 @@ Thank you for your interest in contributing to Haspen UI! This guide will help y
 
 There are many ways to contribute to Haspen UI:
 
-### 🐛 Report Bugs
+### [BUG] Report Bugs
 Found a bug? Help us fix it by creating a detailed bug report.
 
-### 💡 Suggest Features
+### [IDEA] Suggest Features
 Have an idea for a new token, function, or improvement? We'd love to hear it.
 
-### 📖 Improve Documentation
+### [DOCS] Improve Documentation
 Documentation can always be better. Help us make it clearer and more comprehensive.
 
-### 🎨 Add Design Tokens
+### [DESIGN] Add Design Tokens
 Propose new colors, spacing values, or other tokens that would benefit the system.
 
-### 🔧 Fix Issues
+### [FIX] Fix Issues
 Browse open issues and submit pull requests to fix bugs or implement features.
 
-### ✅ Write Tests
+### [TEST] Write Tests
 Help us improve code quality by writing tests for untested code.
 
 ## Getting Started
@@ -163,14 +163,14 @@ Then create a pull request on GitHub with:
 - Use descriptive variable names
 
 ```typescript
-// ✅ Good
+// [TEST] Good
 interface ColorToken {
   name: string;
   value: string;
   shade?: number;
 }
 
-// ❌ Bad
+// [DON'T] Bad
 interface Token {
   n: string;
   v: any;
@@ -185,7 +185,7 @@ interface Token {
 - Keep specificity low
 
 ```scss
-// ✅ Good
+// [TEST] Good
 @use '@ipeeon/design-tokens' as tokens;
 
 .button {
@@ -196,7 +196,7 @@ interface Token {
   }
 }
 
-// ❌ Bad
+// [DON'T] Bad
 .button {
   background-color: #0059b3;
 }
@@ -279,8 +279,8 @@ $font-size-base: 1rem;
 $font-weight-bold: 700;
 
 // Semantic names over literal names
-$color-error: $color-red-500; // ✅ Good
-$color-red: #dc3545; // ❌ Less clear
+$color-error: $color-red-500; // [TEST] Good
+$color-red: #dc3545; // [DON'T] Less clear
 ```
 
 ### Color Tokens

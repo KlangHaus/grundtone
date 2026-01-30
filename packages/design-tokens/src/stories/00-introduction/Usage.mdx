@@ -191,8 +191,8 @@ function getButtonStyle(color: ColorName, padding: SpacingSize) {
 }
 
 // TypeScript will ensure valid values
-getButtonStyle('primary', 'md'); // ✓ Valid
-getButtonStyle('invalid', 'wrong'); // ✗ Type error
+getButtonStyle('primary', 'md'); // [OK] Valid
+getButtonStyle('invalid', 'wrong'); // [NO] Type error
 ```
 
 ## CSS Variables Usage
@@ -380,7 +380,7 @@ setProperty('COLOR_PRIMARY', '#ff0000');
 
 ## Best Practices
 
-### ✅ Do
+### [TEST] Do
 
 - Use semantic color names (`primary`, `success`) instead of color names (`blue`, `green`)
 - Use spacing tokens for all margins, padding, and gaps
@@ -388,7 +388,7 @@ setProperty('COLOR_PRIMARY', '#ff0000');
 - Leverage SCSS functions for programmatic token access
 - Use TypeScript for type-safe token usage
 
-### ❌ Don't
+### [DON'T] Don't
 
 - Hard-code color values (`#0059b3`)
 - Use arbitrary spacing values (`23px`)
@@ -403,10 +403,10 @@ setProperty('COLOR_PRIMARY', '#ff0000');
 Only import the tokens you need:
 
 ```typescript
-// ✅ Import specific tokens
+// [TEST] Import specific tokens
 import { COLORS } from '@ipeeon/design-tokens';
 
-// ❌ Import everything
+// [DON'T] Import everything
 import * as tokens from '@ipeeon/design-tokens';
 ```
 
