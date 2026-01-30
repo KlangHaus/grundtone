@@ -1,10 +1,7 @@
-import { Meta } from '@storybook/blocks';
-
-<Meta title="Introduction/Usage" />
-
 # Usage Guide
 
-Learn how to use Haspen UI design tokens in your projects with SCSS, TypeScript, CSS variables, and Vue 3 composables.
+Learn how to use Haspen UI design tokens in your projects with SCSS, TypeScript, CSS variables, and
+Vue 3 composables.
 
 ## Quick Start
 
@@ -191,8 +188,8 @@ function getButtonStyle(color: ColorName, padding: SpacingSize) {
 }
 
 // TypeScript will ensure valid values
-getButtonStyle('primary', 'md'); // [OK] Valid
-getButtonStyle('invalid', 'wrong'); // [NO] Type error
+getButtonStyle('primary', 'md'); // ✓ Valid
+getButtonStyle('invalid', 'wrong'); // ✗ Type error
 ```
 
 ## CSS Variables Usage
@@ -245,9 +242,7 @@ Design tokens are available as CSS custom properties with the `--haspen-` prefix
   border-radius: var(--haspen-radius-md);
 
   /* Transitions */
-  transition:
-    all var(--haspen-transition-duration-normal)
-    var(--haspen-transition-timing-ease);
+  transition: all var(--haspen-transition-duration-normal) var(--haspen-transition-timing-ease);
 }
 ```
 
@@ -259,9 +254,9 @@ For Vue 3 projects, use composables for reactive theme management:
 
 ```vue
 <script setup>
-import { useTheme } from '@ipeeon/composables';
+  import { useTheme } from '@ipeeon/composables';
 
-const { theme, mode, isDark, isLight, setMode, toggleMode } = useTheme();
+  const { theme, mode, isDark, isLight, setMode, toggleMode } = useTheme();
 </script>
 
 <template>
@@ -283,18 +278,19 @@ const { theme, mode, isDark, isLight, setMode, toggleMode } = useTheme();
 
 ```vue
 <script setup>
-import { useRegisteredProperties } from '@ipeeon/composables';
+  import { useRegisteredProperties } from '@ipeeon/composables';
 
-const { isSupported, isRegistered, register, getProperty, setProperty } = useRegisteredProperties();
+  const { isSupported, isRegistered, register, getProperty, setProperty } =
+    useRegisteredProperties();
 
-// Check support
-console.log('CSS.registerProperty supported:', isSupported.value);
+  // Check support
+  console.log('CSS.registerProperty supported:', isSupported.value);
 
-// Get property value
-const primaryColor = getProperty('COLOR_PRIMARY');
+  // Get property value
+  const primaryColor = getProperty('COLOR_PRIMARY');
 
-// Set custom value
-setProperty('COLOR_PRIMARY', '#ff0000');
+  // Set custom value
+  setProperty('COLOR_PRIMARY', '#ff0000');
 </script>
 ```
 
@@ -380,7 +376,7 @@ setProperty('COLOR_PRIMARY', '#ff0000');
 
 ## Best Practices
 
-### [TEST] Do
+### Do
 
 - Use semantic color names (`primary`, `success`) instead of color names (`blue`, `green`)
 - Use spacing tokens for all margins, padding, and gaps
@@ -388,7 +384,7 @@ setProperty('COLOR_PRIMARY', '#ff0000');
 - Leverage SCSS functions for programmatic token access
 - Use TypeScript for type-safe token usage
 
-### [DON'T] Don't
+### Don't
 
 - Hard-code color values (`#0059b3`)
 - Use arbitrary spacing values (`23px`)
@@ -403,10 +399,10 @@ setProperty('COLOR_PRIMARY', '#ff0000');
 Only import the tokens you need:
 
 ```typescript
-// [TEST] Import specific tokens
+// ✓ Import specific tokens
 import { COLORS } from '@ipeeon/design-tokens';
 
-// [DON'T] Import everything
+// ✗ Import everything
 import * as tokens from '@ipeeon/design-tokens';
 ```
 
@@ -450,14 +446,11 @@ registerCSSProperties({
 
 ## Next Steps
 
-- **[Explore Colors](?path=/docs/foundation-colors--docs)** - Browse the color palette
-- **[Typography Tokens](?path=/docs/foundation-typography--docs)** - Discover typography options
-- **[Spacing System](?path=/docs/foundation-spacing--docs)** - Learn the spacing scale
-- **[SCSS Functions](?path=/docs/functions-color-functions--docs)** - Master SCSS utilities
-- **[Real Examples](?path=/docs/examples-component-theming--docs)** - See tokens in action
+- **[Explore Colors](/tokens/colors)** - Browse the color palette
+- **[Typography Tokens](/tokens/typography)** - Discover typography options
+- **[Spacing System](/tokens/spacing)** - Learn the spacing scale
 
 ## Need Help?
 
 - **[GitHub Issues](https://github.com/allanasp/haspen-ui/issues)** - Report bugs
 - **[GitHub Discussions](https://github.com/allanasp/haspen-ui/discussions)** - Ask questions
-- **[Contributing Guide](?path=/docs/introduction-contributing--docs)** - Learn how to contribute

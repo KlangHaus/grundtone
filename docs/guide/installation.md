@@ -1,7 +1,3 @@
-import { Meta } from '@storybook/blocks';
-
-<Meta title="Introduction/Installation" />
-
 # Installation
 
 Get started with Haspen UI design tokens by installing the package and configuring your build tools.
@@ -38,7 +34,8 @@ yarn add @ipeeon/design-tokens
 
 ### Peer Dependencies
 
-The design tokens package has no required peer dependencies. However, if you want to use the Vue 3 composables, you'll also need:
+The design tokens package has no required peer dependencies. However, if you want to use the Vue 3
+composables, you'll also need:
 
 ```bash
 pnpm add @ipeeon/composables vue@^3.5.0
@@ -153,7 +150,8 @@ import { COLORS } from '@tokens';
 
 ## CSS Variables Setup
 
-Design tokens automatically generate CSS custom properties. To use them, import the CSS file in your entry point:
+Design tokens automatically generate CSS custom properties. To use them, import the CSS file in your
+entry point:
 
 ### JavaScript/TypeScript Entry
 
@@ -209,7 +207,8 @@ registerCSSProperties({
 });
 ```
 
-> **Note**: CSS property registration is only supported in Chromium-based browsers (Chrome, Edge, Opera). It gracefully degrades in other browsers.
+::: tip Note CSS property registration is only supported in Chromium-based browsers (Chrome, Edge,
+Opera). It gracefully degrades in other browsers. :::
 
 ## Vue 3 Integration
 
@@ -229,7 +228,7 @@ Then use the theme provider:
 </template>
 
 <script setup>
-import { ThemeProvider } from '@ipeeon/composables';
+  import { ThemeProvider } from '@ipeeon/composables';
 </script>
 ```
 
@@ -250,6 +249,7 @@ export default defineNuxtConfig({
 ```
 
 The module automatically:
+
 - Imports design tokens globally
 - Sets up SCSS configuration
 - Registers CSS custom properties
@@ -294,11 +294,12 @@ console.log(SPACING.md); // '1rem'
 
 **Error**: `Can't find stylesheet to import`
 
-**Solution**: Ensure your build tool is configured to resolve node_modules. Add to your SCSS loader configuration:
+**Solution**: Ensure your build tool is configured to resolve node_modules. Add to your SCSS loader
+configuration:
 
 ```javascript
 {
-  includePaths: ['node_modules']
+  includePaths: ['node_modules'];
 }
 ```
 
@@ -330,7 +331,7 @@ import '@ipeeon/design-tokens/dist/index.css';
 
 ```typescript
 {
-  silenceDeprecations: ['if-function']
+  silenceDeprecations: ['if-function'];
 }
 ```
 
@@ -338,10 +339,9 @@ import '@ipeeon/design-tokens/dist/index.css';
 
 Now that you've installed the package, learn how to use it:
 
-- **[Basic Usage](?path=/docs/introduction-usage--docs)** - Learn how to use tokens in your code
-- **[Color Tokens](?path=/docs/foundation-colors--docs)** - Explore the color palette
-- **[Typography](?path=/docs/foundation-typography--docs)** - Discover typography tokens
-- **[Examples](?path=/docs/examples-component-theming--docs)** - See real-world usage patterns
+- **[Basic Usage](/guide/usage)** - Learn how to use tokens in your code
+- **[Color Tokens](/tokens/colors)** - Explore the color palette
+- **[Typography](/tokens/typography)** - Discover typography tokens
 
 ## Need Help?
 
