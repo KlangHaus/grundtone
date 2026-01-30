@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "pnpm --filter=. run docs:build",
+  "buildCommand": "pnpm exec vitepress build docs",
   "outputDirectory": "docs/.vitepress/dist",
   "framework": null,
-  "devCommand": "pnpm --filter=. run docs:dev"
+  "devCommand": "pnpm exec vitepress dev docs"
 }
