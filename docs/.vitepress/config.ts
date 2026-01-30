@@ -8,7 +8,7 @@ export default defineConfig({
     nav: [
       { text: 'Guide', link: '/guide/welcome' },
       { text: 'Design Tokens', link: '/tokens/colors' },
-      { text: 'Utilities', link: '/utilities/grid' },
+      { text: 'HTML Utilities', link: '/utilities/grid' },
     ],
 
     sidebar: {
