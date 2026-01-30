@@ -1,4 +1,4 @@
 {
-  "buildCommand": "pnpm install && pnpm --filter @haspen/docs build",
+  "buildCommand": "pnpm turbo build --filter=@haspen/docs",
   "outputDirectory": "apps/docs/.vitepress/dist"
 }

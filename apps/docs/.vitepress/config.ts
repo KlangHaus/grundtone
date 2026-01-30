@@ -10,6 +10,9 @@ export default defineConfig({
     resolve: {
       dedupe: ['vue'],
     },
+    ssr: {
+      noExternal: ['@ipeeon/design-tokens'],
+    },
   },
 
   themeConfig: {
