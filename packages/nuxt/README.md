@@ -7,7 +7,7 @@ Find and replace all on all files (CMD+SHIFT+F):
 - Description: My new Nuxt module
 -->
 
-# @haspen-ui/nuxt
+# @haspen/nuxt
 
 Nuxt 3 module for HäspenUI design system.
 
@@ -15,22 +15,22 @@ Nuxt 3 module for HäspenUI design system.
 
 ```bash
 # Using pnpm
-pnpm add -D @haspen-ui/nuxt
+pnpm add -D @haspen/nuxt
 
 # Using npm
-npm install -D @haspen-ui/nuxt
+npm install -D @haspen/nuxt
 
 # Using yarn
-yarn add -D @haspen-ui/nuxt
+yarn add -D @haspen/nuxt
 ```
 
 ## Usage
 
-Add `@haspen-ui/nuxt` to your Nuxt modules in `nuxt.config.ts`:
+Add `@haspen/nuxt` to your Nuxt modules in `nuxt.config.ts`:
 
 ```ts
 export default defineNuxtConfig({
-  modules: ['@haspen-ui/nuxt'],
+  modules: ['@haspen/nuxt'],
   haspen: {
     // Module options
     components: true, // Auto-import components

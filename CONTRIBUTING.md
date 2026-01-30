@@ -78,12 +78,12 @@ haspen-ui/
 
 ### Package Responsibilities
 
-- **@haspen-ui/ui**: Vue 3 components following atomic design
-- **@haspen-ui/design-tokens**: Colors, typography, spacing tokens
-- **@haspen-ui/composables**: Reusable Vue composables
-- **@haspen-ui/core**: Framework-agnostic utilities
-- **@haspen-ui/shared**: Shared build tools and presets
-- **@haspen-ui/nuxt**: Nuxt integration module
+- **@haspen/ui**: Vue 3 components following atomic design
+- **@haspen/design-tokens**: Colors, typography, spacing tokens
+- **@haspen/composables**: Reusable Vue composables
+- **@haspen/core**: Framework-agnostic utilities
+- **@haspen/shared**: Shared build tools and presets
+- **@haspen/nuxt**: Nuxt integration module
 
 ## Development Workflow
 

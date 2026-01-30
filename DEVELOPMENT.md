@@ -169,7 +169,7 @@ pnpm test:watch
 pnpm test:coverage
 
 # Run tests for specific package
-pnpm test --filter=@haspen-ui/ui
+pnpm test --filter=@haspen/ui
 ```
 
 ### Test Structure
@@ -199,7 +199,7 @@ pnpm test --filter=@haspen-ui/ui
 - Use SCSS for component styles
 - Follow BEM naming convention
 - Scope styles with `scoped` attribute
-- Use design tokens from `@haspen-ui/design-tokens`
+- Use design tokens from `@haspen/design-tokens`
 
 ### Git Workflow
 
@@ -230,7 +230,7 @@ chore: update dependencies
 pnpm build
 
 # Build specific package
-pnpm build --filter=@haspen-ui/ui
+pnpm build --filter=@haspen/ui
 
 # Build in watch mode
 pnpm dev

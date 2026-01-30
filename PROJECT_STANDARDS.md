@@ -87,7 +87,7 @@ ComponentName/
 - **Strict mode enabled** across all packages
 - **No `any` types** - all props, events, and methods must be properly typed
 - **Interface-based props** - use interfaces, never inline types
-- **Path aliases**: `@haspen-ui/*` maps to `packages/*/src`
+- **Path aliases**: `@haspen/*` maps to `packages/*/src`
 
 ### Testing Requirements (MANDATORY)
 
@@ -206,8 +206,8 @@ Every component must include:
 ### Release Process
 
 - **Semantic versioning**: Follow semver strictly
-- **Automated releases**: via `auto-it` with conventional commits
-- **Changelog generation**: Automated based on conventional commits
+- **Automated releases**: via Changesets for version management
+- **Changelog generation**: Automated based on changeset descriptions
 - **NPM publishing**: Automated via CI/CD pipeline
 
 ## CI/CD Standards

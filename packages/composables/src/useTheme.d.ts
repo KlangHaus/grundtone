@@ -1,6 +1,6 @@
-import type { ThemeProviderContext } from '@haspen-ui/core';
+import type { ThemeProviderContext } from '@ipeeon/core';
 export declare function useTheme(): ThemeProviderContext;
-export { THEME_INJECTION_KEY } from '@haspen-ui/core';
+export { THEME_INJECTION_KEY } from '@ipeeon/core';
 export type {
   ThemeMode,
   Theme,
@@ -12,4 +12,4 @@ export type {
   ThemeTransitions,
   ThemeProviderContext,
   ThemeProviderProps,
-} from '@haspen-ui/core';
+} from '@ipeeon/core';

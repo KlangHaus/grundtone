@@ -14,6 +14,8 @@ export default defineConfig({
         ],
         // Global SCSS variables/mixins available in all components
         additionalData: `@use "${resolve(__dirname, '../design-tokens/src/index.scss')}" as tokens;`,
+        // Silence Sass deprecation warnings
+        silenceDeprecations: ['if-function'],
       },
     },
   },
@@ -26,16 +28,16 @@ export default defineConfig({
     rollupOptions: {
       external: [
         'vue',
-        '@haspen-ui/core',
-        '@haspen-ui/shared',
-        '@haspen-ui/composables',
+        '@ipeeon/core',
+        '@ipeeon/shared',
+        '@ipeeon/composables',
       ],
       output: {
         globals: {
           vue: 'Vue',
-          '@haspen-ui/core': 'HaspenUICore',
-          '@haspen-ui/shared': 'HaspenUIShared',
-          '@haspen-ui/composables': 'HaspenUIComposables',
+          '@ipeeon/core': 'HaspenCore',
+          '@ipeeon/shared': 'HaspenShared',
+          '@ipeeon/composables': 'HaspenComposables',
         },
       },
     },

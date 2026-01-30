@@ -6,7 +6,7 @@ This guide covers common issues you might encounter when working with Haspen UI 
 
 ### Package Resolution Errors
 
-**Problem**: `Failed to resolve entry for package "@haspen-ui/ui"`
+**Problem**: `Failed to resolve entry for package "@haspen/ui"`
 
 **Causes**:
 
@@ -47,7 +47,7 @@ turbo run build --force  # Force rebuild without cache
 
 ### TypeScript Compilation Errors
 
-**Problem**: `Cannot find module '@haspen-ui/design-tokens'`
+**Problem**: `Cannot find module '@haspen/design-tokens'`
 
 **Causes**:
 
@@ -61,10 +61,10 @@ turbo run build --force  # Force rebuild without cache
 
 ```bash
 # Build foundation packages first
-turbo run build --filter=@haspen-ui/core --filter=@haspen-ui/design-tokens --filter=@haspen-ui/shared
+turbo run build --filter=@haspen/core --filter=@haspen/design-tokens --filter=@haspen/shared
 
 # Then build dependent packages
-turbo run build --filter=@haspen-ui/ui --filter=@haspen-ui/composables
+turbo run build --filter=@haspen/ui --filter=@haspen/composables
 ```
 
 2. **Verify TypeScript path mapping**:
@@ -74,7 +74,7 @@ turbo run build --filter=@haspen-ui/ui --filter=@haspen-ui/composables
 {
   "compilerOptions": {
     "paths": {
-      "@haspen-ui/*": ["packages/*/src"]
+      "@haspen/*": ["packages/*/src"]
     }
   }
 }
@@ -115,7 +115,7 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['.storybook/vitest.setup.ts'],
     deps: {
-      inline: ['@haspen-ui/*'],
+      inline: ['@haspen/*'],
     },
   },
 });
@@ -336,7 +336,7 @@ rules: {
 
 ### Design Token Import Errors
 
-**Problem**: `@use '@haspen-ui/design-tokens' as tokens;` not resolving
+**Problem**: `@use '@haspen/design-tokens' as tokens;` not resolving
 
 **Causes**:
 
@@ -349,7 +349,7 @@ rules: {
 1. **Build design-tokens package first**:
 
 ```bash
-turbo run build --filter=@haspen-ui/design-tokens
+turbo run build --filter=@haspen/design-tokens
 ```
 
 2. **Verify SCSS import in Vite config**:
@@ -360,7 +360,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@use '@haspen-ui/design-tokens' as tokens;`,
+        additionalData: `@use '@haspen/design-tokens' as tokens;`,
       },
     },
   },
@@ -421,7 +421,7 @@ export default defineConfig({
 pnpm build
 
 # Use filters for specific packages
-turbo run build --filter=@haspen-ui/ui
+turbo run build --filter=@haspen/ui
 ```
 
 2. **Enable Turbo cache**:

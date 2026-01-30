@@ -54,7 +54,7 @@ console.log('\n\n🔍 DEPENDENCY VERSION CONFLICTS:\n');
 const conflictDeps = [];
 allDeps.forEach((versions, depName) => {
   const uniqueVersions = new Set(versions.values());
-  if (uniqueVersions.size > 1 && !depName.startsWith('@haspen-ui/')) {
+  if (uniqueVersions.size > 1 && !depName.startsWith('@haspen/')) {
     console.log(`❌ ${depName}:`);
     versions.forEach((version, pkg) => {
       console.log(`  ${pkg}: ${version}`);

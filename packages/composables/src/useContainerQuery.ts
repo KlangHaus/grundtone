@@ -55,7 +55,7 @@ export interface UseContainerQueryReturn {
  *
  * <script setup>
  * import { ref } from 'vue'
- * import { useContainerQuery } from '@haspen-ui/composables'
+ * import { useContainerQuery } from '@ipeeon/composables'
  *
  * const containerRef = ref()
  * const { matches } = useContainerQuery({

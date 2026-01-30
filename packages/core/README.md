@@ -1,4 +1,4 @@
-# @haspen-ui/core
+# @haspen/core
 
 Core package for the HäspenUI design system. This package contains the fundamental building blocks,
 types, and utilities that form the foundation of the design system.
@@ -6,13 +6,13 @@ types, and utilities that form the foundation of the design system.
 ## Installation
 
 ```bash
-pnpm add @haspen-ui/core
+pnpm add @haspen/core
 ```
 
 ## Usage
 
 ```typescript
-import { DEFAULT_THEME, type ThemeConfig } from '@haspen-ui/core';
+import { DEFAULT_THEME, type ThemeConfig } from '@haspen/core';
 
 // Use the default theme
 const theme: ThemeConfig = DEFAULT_THEME;

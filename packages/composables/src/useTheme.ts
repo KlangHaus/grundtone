@@ -1,11 +1,11 @@
 import { inject, computed, ref } from 'vue';
-import type { ThemeProviderContext, Theme } from '@haspen-ui/core';
-import { THEME_INJECTION_KEY } from '@haspen-ui/core';
+import type { ThemeProviderContext, Theme } from '@ipeeon/core';
+import { THEME_INJECTION_KEY } from '@ipeeon/core';
 
 // Simple logger for composables (to avoid circular dependencies)
 const logger = {
   warn: (message: string, metadata?: Record<string, unknown>) => {
-    if (import.meta.env.DEV) {
+    if (process.env.NODE_ENV !== 'production') {
       // eslint-disable-next-line no-console
       console.warn(`[Haspen UI] ${message}`, metadata);
     }
@@ -142,7 +142,7 @@ export function useTheme(): ThemeProviderContext {
   return themeContext;
 }
 
-export { THEME_INJECTION_KEY } from '@haspen-ui/core';
+export { THEME_INJECTION_KEY } from '@ipeeon/core';
 export type {
   ThemeMode,
   Theme,
@@ -154,4 +154,4 @@ export type {
   ThemeTransitions,
   ThemeProviderContext,
   ThemeProviderProps,
-} from '@haspen-ui/core';
+} from '@ipeeon/core';

@@ -7,67 +7,124 @@ environments and platforms.
 
 ### NPM Publishing Workflow
 
-Haspen UI uses automated publishing via GitHub Actions and `auto-it`. Here's how it works:
+Haspen UI uses automated publishing via GitHub Actions and Changesets. Here's how it works:
 
 #### Automated Release Process
 
-1. **Commit with Conventional Commits**:
+1. **Create a changeset** when making changes:
 
 ```bash
+# Make your code changes
 git add .
+
+# Create a changeset (interactive prompt)
+pnpm changeset
+# or
+pnpm changeset:add
+```
+
+The changeset prompt will ask you to:
+
+- Select which packages have changed
+- Choose version bump type (major/minor/patch)
+- Write a summary of the changes (becomes the changelog entry)
+
+2. **Commit the changeset**:
+
+```bash
 git commit -m "feat(ui): add new Button component variant"
-git push origin develop
+git push origin main
 ```
 
-2. **Auto-it analyzes commits** and determines version bump:
+3. **Changesets analyzes version bumps**:
 
-   - `feat:` → Minor version (0.1.0 → 0.2.0)
-   - `fix:` → Patch version (0.1.0 → 0.1.1)
-   - `feat!:` or `BREAKING CHANGE:` → Major version (0.1.0 → 1.0.0)
+   - `patch` → Patch version (0.1.0 → 0.1.1) - Bug fixes
+   - `minor` → Minor version (0.1.0 → 0.2.0) - New features
+   - `major` → Major version (0.1.0 → 1.0.0) - Breaking changes
 
-3. **GitHub Actions workflow** (`/.github/workflows/release.yml`) triggers on push to `main` or
-   `develop`:
+4. **GitHub Actions workflow** (`.github/workflows/release.yml`) automatically:
 
-```yaml
-name: Release
-on:
-  push:
-    branches: [main, develop]
+   - Detects changesets on push to `main` branch
+   - Creates/updates a "Version Packages" PR
+   - Generates CHANGELOGs with GitHub integration:
+     - Links to commits and pull requests
+     - Credits to all contributors
+     - Full git history integration
+   - Consumes changesets and updates versions
 
-jobs:
-  release:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-      - run: pnpm install
-      - run: pnpm build
-      - run: pnpm test
-      - run: pnpm release
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-```
+5. **Review the Version Packages PR** to verify:
+
+   - Version bumps are correct
+   - Changelogs include all changes
+   - No unintended packages are being published
+
+6. **Merge the Version Packages PR** to trigger:
+   - Automated build of all packages
+   - Publishing to NPM registry
+   - Git tags for each released version
 
 #### Manual Release Process
 
-If you need to publish manually:
+If you need to publish manually (emergency use only):
 
 ```bash
 # 1. Ensure everything is built and tested
-pnpm build
+pnpm build:packages
 pnpm test
 pnpm typecheck
 pnpm lint
 
-# 2. Check what would be released
-pnpm version
+# 2. Create a changeset for your changes
+pnpm changeset
 
-# 3. Generate changelog preview
-pnpm changelog
+# 3. Check what will be published
+pnpm changeset:status
 
-# 4. Create release (requires NPM_TOKEN)
+# 4. Update versions (consumes all changesets and updates lockfile)
+pnpm version-packages
+
+# 5. Commit the version changes
+git add .
+git commit -m "chore(release): version packages"
+
+# 6. Publish to npm (requires NPM_TOKEN)
 pnpm release
+
+# 7. Push changes and tags
+git push --follow-tags
+```
+
+#### Checking Release Status
+
+Before publishing, verify what changes will be released:
+
+```bash
+# See detailed status of pending changesets
+pnpm changeset:status
+
+# Output shows:
+# - Which packages will be published
+# - What version bumps will occur
+# - Which changesets are pending
+```
+
+#### Snapshot Releases
+
+For testing pre-release versions without affecting published versions:
+
+```bash
+# Create and publish snapshot versions
+pnpm release:snapshot
+
+# Generates versions like: 0.0.0-snapshot-20231231120000
+# Published with @snapshot tag on NPM
+# Useful for testing in other projects before official release
+```
+
+Install snapshot versions in consuming projects:
+
+```bash
+npm install @haspen/ui@snapshot
 ```
 
 ### Package Configuration
@@ -76,7 +133,7 @@ Each package is configured for optimal distribution:
 
 ```json
 {
-  "name": "@haspen-ui/ui",
+  "name": "@haspen/ui",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.umd.cjs",
@@ -91,7 +148,10 @@ Each package is configured for optimal distribution:
     "./dist/style.css": "./dist/index.css"
   },
   "files": ["dist"],
-  "sideEffects": false
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  }
 }
 ```
 
@@ -222,9 +282,9 @@ Or configure in your hosting platform's settings.
 #### Installation
 
 ```bash
-npm install @haspen-ui/ui @haspen-ui/design-tokens
+npm install @haspen/ui @haspen/design-tokens
 # or
-pnpm add @haspen-ui/ui @haspen-ui/design-tokens
+pnpm add @haspen/ui @haspen/design-tokens
 ```
 
 #### Global Setup
@@ -232,8 +292,8 @@ pnpm add @haspen-ui/ui @haspen-ui/design-tokens
 ```typescript
 // main.ts
 import { createApp } from 'vue';
-import HaspenUI from '@haspen-ui/ui';
-import '@haspen-ui/ui/dist/style.css';
+import HaspenUI from '@haspen/ui';
+import '@haspen/ui/dist/style.css';
 import App from './App.vue';
 
 const app = createApp(App);
@@ -245,7 +305,7 @@ app.mount('#app');
 
 ```vue
 <script setup lang="ts">
-  import { Button } from '@haspen-ui/ui';
+  import { Button } from '@haspen/ui';
 </script>
 
 <template>
@@ -253,7 +313,7 @@ app.mount('#app');
 </template>
 
 <style lang="scss">
-  @use '@haspen-ui/design-tokens' as tokens;
+  @use '@haspen/design-tokens' as tokens;
 
   .custom-component {
     color: tokens.color('primary');
@@ -267,7 +327,7 @@ app.mount('#app');
 #### Module Installation
 
 ```bash
-npm install @haspen-ui/nuxt
+npm install @haspen/nuxt
 ```
 
 #### Configuration
@@ -275,7 +335,7 @@ npm install @haspen-ui/nuxt
 ```typescript
 // nuxt.config.ts
 export default defineNuxtConfig({
-  modules: ['@haspen-ui/nuxt'],
+  modules: ['@haspen/nuxt'],
 
   // Optional: Configure module options
   haspenUI: {
@@ -323,7 +383,7 @@ The design system is fully compatible with SSR:
 ```typescript
 // entry-server.js
 import { createSSRApp } from 'vue';
-import HaspenUI from '@haspen-ui/ui';
+import HaspenUI from '@haspen/ui';
 import App from './App.vue';
 
 export function createApp() {
@@ -338,7 +398,7 @@ export function createApp() {
 ```typescript
 // nuxt.config.ts
 export default defineNuxtConfig({
-  modules: ['@haspen-ui/nuxt'],
+  modules: ['@haspen/nuxt'],
   ssr: true, // Default in Nuxt 3
 });
 ```
@@ -357,7 +417,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@use '@haspen-ui/design-tokens' as tokens;`,
+        additionalData: `@use '@haspen/design-tokens' as tokens;`,
       },
     },
   },
@@ -381,7 +441,7 @@ export default defineConfig({
 module.exports = {
   resolve: {
     alias: {
-      '@haspen-ui': path.resolve(__dirname, 'node_modules/@haspen-ui'),
+      '@haspen': path.resolve(__dirname, 'node_modules/@haspen'),
     },
   },
   module: {
@@ -394,7 +454,7 @@ module.exports = {
           {
             loader: 'sass-loader',
             options: {
-              additionalData: `@use '@haspen-ui/design-tokens' as tokens;`,
+              additionalData: `@use '@haspen/design-tokens' as tokens;`,
             },
           },
         ],

@@ -9,7 +9,7 @@ repository.
 
 ```bash
 pnpm dev                    # Start all development servers
-pnpm dev:playground         # Start playground app only (@haspen-ui/playground)
+pnpm dev:playground         # Start playground app only (@haspen/playground)
 pnpm storybook             # Start Storybook component documentation (port 6006)
 ```
 
@@ -19,7 +19,7 @@ pnpm storybook             # Start Storybook component documentation (port 6006)
 pnpm build                 # Build all packages and apps
 pnpm build:packages        # Build only packages (excludes apps)
 pnpm test                  # Run all tests across monorepo
-pnpm test --filter=@haspen-ui/ui  # Run tests for specific package
+pnpm test --filter=@haspen/ui  # Run tests for specific package
 pnpm test:watch            # Run tests in watch mode
 pnpm typecheck             # TypeScript checking across all packages
 pnpm lint                  # Lint all packages
@@ -29,23 +29,100 @@ pnpm lint                  # Lint all packages
 
 ```bash
 # Build single package in watch mode
-turbo run dev --filter=@haspen-ui/ui
+turbo run dev --filter=@haspen/ui
 
 # Run tests for single package
-pnpm test --filter=@haspen-ui/composables
+pnpm test --filter=@haspen/composables
 ```
+
+### Versioning and Publishing
+
+This project uses **Changesets** for version management and publishing. Changesets provides
+automated version bumping, changelog generation with git integration, and NPM publishing.
+
+#### Creating a Changeset
+
+When you make changes that should be published, create a changeset:
+
+```bash
+pnpm changeset        # Interactive CLI to create a changeset
+pnpm changeset:add    # Same as above (alias)
+```
+
+This will prompt you to:
+
+1. Select which packages have changed
+2. Choose the bump type (major/minor/patch) for each package
+3. Write a summary of the changes (this becomes the changelog entry)
+
+Changesets are stored as markdown files in `.changeset/` and should be committed with your PR.
+
+#### Changeset Bump Types
+
+- **major** (1.0.0 → 2.0.0): Breaking changes that require user code updates
+- **minor** (1.0.0 → 1.1.0): New features that are backwards compatible
+- **patch** (1.0.0 → 1.0.1): Bug fixes and minor improvements
+
+#### Release Workflow
+
+**Automated via GitHub Actions:**
+
+1. Push changes with changesets to `main` branch
+2. GitHub Actions creates/updates a "Version Packages" PR
+3. Review the PR to see version bumps and generated changelogs
+4. Merge the PR to publish all packages to NPM
+
+**Manual release (emergency use only):**
+
+```bash
+pnpm version-packages  # Bump versions and update changelogs
+pnpm release          # Build and publish to NPM
+```
+
+#### Checking Release Status
+
+```bash
+pnpm changeset:status  # See which packages will be published and their versions
+```
+
+#### Snapshot Releases
+
+For testing pre-release versions:
+
+```bash
+pnpm release:snapshot  # Publish packages with snapshot versions (e.g., 0.0.0-snapshot-20231231)
+```
+
+#### Changelog Generation
+
+Changelogs are automatically generated with:
+
+- Links to GitHub commits and PRs
+- Credit to all contributors
+- Grouped by package
+- Full git history integration
+
+Changelogs are created in each package's `CHANGELOG.md` file when running `pnpm version-packages`.
+
+#### Important Notes
+
+- **Always create a changeset** for user-facing changes
+- **Skip changesets** for internal refactoring that doesn't affect the public API
+- The `@haspen/playground` package is excluded from releases (demo app only)
+- Versioning follows [Semantic Versioning (semver)](https://semver.org/)
+- All packages in this monorepo are versioned independently
 
 ## Monorepo Architecture
 
 ### Package Structure and Dependencies
 
-- **@haspen-ui/core** - Foundation types, constants, base interfaces
-- **@haspen-ui/shared** - Utilities, formatters, validation (depends on core)
-- **@haspen-ui/design-tokens** - SCSS variables, colors, typography, spacing
-- **@haspen-ui/ui** - Vue 3 components using atomic design (depends on core, shared)
-- **@haspen-ui/composables** - Vue 3 composables/hooks (depends on core, shared)
-- **@haspen-ui/nuxt** - Nuxt 3 module (depends on ui, composables)
-- **@haspen-ui/playground** - Demo application (depends on all packages)
+- **@haspen/core** - Foundation types, constants, base interfaces
+- **@haspen/shared** - Utilities, formatters, validation (depends on core)
+- **@haspen/design-tokens** - SCSS variables, colors, typography, spacing
+- **@haspen/ui** - Vue 3 components using atomic design (depends on core, shared)
+- **@haspen/composables** - Vue 3 composables/hooks (depends on core, shared)
+- **@haspen/nuxt** - Nuxt 3 module (depends on ui, composables)
+- **@haspen/playground** - Demo application (depends on all packages)
 
 ### Build Pipeline (Turborepo)
 
@@ -84,7 +161,7 @@ ComponentName/
 ### TypeScript Configuration
 
 - Strict mode enabled across all packages
-- Path aliases: `@haspen-ui/*` maps to `packages/*/src`
+- Path aliases: `@haspen/*` maps to `packages/*/src`
 - `tsconfig.build.json` excludes test files from production builds
 - Each package extends root config with package-specific overrides
 
@@ -92,7 +169,7 @@ ComponentName/
 
 This design system includes Danish-specific utilities:
 
-- CPR (Danish social security) number validation in `@haspen-ui/shared`
+- CPR (Danish social security) number validation in `@haspen/shared`
 - Danish phone number formatting and validation
 - Danish currency formatting (`formatCurrency` outputs "kr.")
 - Danish date formatting
@@ -117,7 +194,7 @@ This design system includes Danish-specific utilities:
 - All packages build to dual format (ESM + CommonJS) via tsup
 - Tree-shaking friendly with proper `sideEffects: false`
 - Workspace dependencies use `workspace:*` protocol
-- Automated releases via `auto-it` with conventional commits
+- Automated releases via Changesets for version management
 
 ## Mandatory Development Standards
 

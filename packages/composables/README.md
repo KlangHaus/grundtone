@@ -1,4 +1,4 @@
-# @haspen-ui/composables
+# @haspen/composables
 
 Vue 3 composables for HäspenUI designsystemet. En samling af genbrugelige kompositionsfunktioner
 bygget med Vue Composition API.
@@ -6,11 +6,11 @@ bygget med Vue Composition API.
 ## Installation
 
 ```bash
-npm install @haspen-ui/composables
+npm install @haspen/composables
 # eller
-yarn add @haspen-ui/composables
+yarn add @haspen/composables
 # eller
-pnpm add @haspen-ui/composables
+pnpm add @haspen/composables
 ```
 
 ## Brug
@@ -26,7 +26,7 @@ pnpm add @haspen-ui/composables
 </template>
 
 <script setup lang="ts">
-  import { useToggle } from '@haspen-ui/composables';
+  import { useToggle } from '@haspen/composables';
 
   const { isOpen, toggle } = useToggle();
 </script>

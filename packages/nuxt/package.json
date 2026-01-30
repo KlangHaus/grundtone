@@ -1,9 +1,9 @@
 {
-  "name": "@haspen-ui/nuxt",
+  "name": "@ipeeon/nuxt",
   "version": "1.0.0",
-  "description": "My new Nuxt module",
-  "repository": "your-org/my-module",
+  "description": "Nuxt 3 module for Haspen UI",
   "license": "MIT",
+  "private": false,
   "type": "module",
   "exports": {
     ".": {
@@ -22,16 +22,26 @@
   "files": [
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/allanasp/haspen-ui.git",
+    "directory": "packages/nuxt"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
+    "build": "nuxt-module-build build",
     "build:nuxt": "nuxt-module-build build",
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
-    "test": "../../node_modules/.bin/vitest run"
+    "test": "../../node_modules/.bin/vitest run",
+    "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@haspen-ui/ui": "workspace:*",
-    "@haspen-ui/composables": "workspace:*",
+    "@ipeeon/ui": "workspace:*",
+    "@ipeeon/composables": "workspace:*",
     "@nuxt/kit": "^3.17.2"
   },
   "devDependencies": {

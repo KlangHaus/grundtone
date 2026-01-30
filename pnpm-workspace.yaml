@@ -1,7 +1,6 @@
 packages:
   - packages/*
   - apps/*
-  - docs
 
 ignoredBuiltDependencies:
   - unrs-resolver

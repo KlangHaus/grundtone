@@ -1,4 +1,4 @@
-# @haspen-ui/shared
+# @haspen/shared
 
 Shared utilities package for the HäspenUI design system. This package contains common helper
 functions, formatters, and validators used across the design system.
@@ -6,13 +6,13 @@ functions, formatters, and validators used across the design system.
 ## Installation
 
 ```bash
-pnpm add @haspen-ui/shared
+pnpm add @haspen/shared
 ```
 
 ## Usage
 
 ```typescript
-import { formatCurrency, isValidEmail } from '@haspen-ui/shared';
+import { formatCurrency, isValidEmail } from '@haspen/shared';
 
 // Format currency
 const price = formatCurrency(199.99); // "199,99 kr."
@@ -37,7 +37,7 @@ const isValid = isValidEmail('test@example.com'); // true
 
 ## Dependencies
 
-- `@haspen-ui/core` - Core package with types and constants
+- `@haspen/core` - Core package with types and constants
 - `vue` - Vue.js framework
 
 ## Development

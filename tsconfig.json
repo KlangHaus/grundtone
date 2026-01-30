@@ -24,7 +24,7 @@
     "types": ["vitest", "node", "vue"],
     "baseUrl": ".",
     "paths": {
-      "@haspen-ui/*": ["packages/*/src"]
+      "@ipeeon/*": ["packages/*/src"]
     }
   },
   "include": [

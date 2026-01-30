@@ -1,15 +1,15 @@
-# @haspen-ui/components
+# @haspen/components
 
 Vue 3 komponenter for HäspenUI designsystemet, bygget med Atomic Design principper.
 
 ## Installation
 
 ```bash
-npm install @haspen-ui/components
+npm install @haspen/components
 # eller
-yarn add @haspen-ui/components
+yarn add @haspen/components
 # eller
-pnpm add @haspen-ui/components
+pnpm add @haspen/components
 ```
 
 ## Brug
@@ -20,7 +20,7 @@ pnpm add @haspen-ui/components
 </template>
 
 <script setup>
-  import { Button } from '@haspen-ui/components';
+  import { Button } from '@haspen/components';
 </script>
 ```
 
@@ -109,7 +109,7 @@ ComponentName/
 
 - Brug BEM metodologi
 - Hold styling i separate SCSS-filer
-- Brug CSS variabler fra @haspen-ui/core
+- Brug CSS variabler fra @haspen/core
 
 ### TypeScript
 

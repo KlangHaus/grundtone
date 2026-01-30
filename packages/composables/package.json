@@ -1,6 +1,9 @@
 {
-  "name": "@haspen-ui/composables",
-  "version": "0.1.0",
+  "name": "@ipeeon/composables",
+  "version": "1.0.0",
+  "description": "Vue 3 composables for Haspen UI",
+  "license": "MIT",
+  "private": false,
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -15,19 +18,28 @@
   "files": [
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/allanasp/haspen-ui.git",
+    "directory": "packages/composables"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
     "clean": "rm -rf .turbo node_modules dist",
-    "test": "vitest --passWithNoTests"
+    "test": "vitest --passWithNoTests",
+    "prepublishOnly": "pnpm run build"
   },
   "peerDependencies": {
     "vue": "^3.5.13"
   },
   "dependencies": {
-    "@haspen-ui/core": "workspace:*",
-    "@haspen-ui/design-tokens": "workspace:*",
-    "@haspen-ui/shared": "workspace:*"
+    "@ipeeon/core": "workspace:*",
+    "@ipeeon/design-tokens": "workspace:*",
+    "@ipeeon/shared": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20.17.45",

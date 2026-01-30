@@ -14,7 +14,7 @@ performance and accessibility.
 </template>
 
 <script setup>
-  import { Icon, IconProvider, haspenIcons } from '@haspen-ui/ui';
+  import { Icon, IconProvider, haspenIcons } from '@haspen/ui';
 </script>
 ```
 
@@ -29,7 +29,7 @@ performance and accessibility.
 
 ## 📦 Installation
 
-The icon system is included with `@haspen-ui/ui`. For external icon libraries:
+The icon system is included with `@haspen/ui`. For external icon libraries:
 
 ```bash
 # Optional: External icon libraries
@@ -49,7 +49,7 @@ pnpm add @heroicons/vue lucide-vue-next
 </template>
 
 <script setup>
-  import { Icon, IconProvider, haspenIcons } from '@haspen-ui/ui';
+  import { Icon, IconProvider, haspenIcons } from '@haspen/ui';
 </script>
 ```
 
@@ -64,7 +64,7 @@ pnpm add @heroicons/vue lucide-vue-next
 </template>
 
 <script setup>
-  import { Icon, IconProvider } from '@haspen-ui/ui';
+  import { Icon, IconProvider } from '@haspen/ui';
   import LogoIcon from './LogoIcon.vue';
   import StarIcon from './StarIcon.vue';
 
@@ -80,7 +80,7 @@ pnpm add @heroicons/vue lucide-vue-next
 ### Custom Icons Configuration
 
 ```typescript
-import { createCustomIconsConfig, haspenIcons } from '@haspen-ui/ui';
+import { createCustomIconsConfig, haspenIcons } from '@haspen/ui';
 
 const config = createCustomIconsConfig(
   {
@@ -97,7 +97,7 @@ const config = createCustomIconsConfig(
 ### Heroicons Configuration
 
 ```typescript
-import { createHeroiconsConfig } from '@haspen-ui/ui';
+import { createHeroiconsConfig } from '@haspen/ui';
 
 const config = createHeroiconsConfig({
   variant: 'outline', // 'outline' | 'solid' | 'mini'
@@ -108,7 +108,7 @@ const config = createHeroiconsConfig({
 ### Lucide Configuration
 
 ```typescript
-import { createLucideConfig } from '@haspen-ui/ui';
+import { createLucideConfig } from '@haspen/ui';
 
 const config = createLucideConfig({
   strokeWidth: 2,
@@ -119,7 +119,7 @@ const config = createLucideConfig({
 ### Hybrid Configuration
 
 ```typescript
-import { createHybridIconsConfig, haspenIcons } from '@haspen-ui/ui';
+import { createHybridIconsConfig, haspenIcons } from '@haspen/ui';
 
 const config = createHybridIconsConfig({
   primary: 'heroicons',
@@ -269,7 +269,7 @@ Best for: Gradual migration, mixed requirements
 Convert between library naming conventions:
 
 ```typescript
-import { mapIconName } from '@haspen-ui/ui';
+import { mapIconName } from '@haspen/ui';
 
 // Heroicons → Lucide
 const lucideName = mapIconName('chevron-up', 'heroicons', 'lucide');
@@ -328,7 +328,7 @@ Get the current icon configuration:
 
 ```vue
 <script setup>
-  import { useIconConfig } from '@haspen-ui/ui';
+  import { useIconConfig } from '@haspen/ui';
 
   const config = useIconConfig();
   console.log(config.library); // 'custom'
@@ -342,7 +342,7 @@ Check if an icon exists in the current configuration:
 
 ```vue
 <script setup>
-  import { useIconExists } from '@haspen-ui/ui';
+  import { useIconExists } from '@haspen/ui';
 
   const sunExists = useIconExists('sun'); // true/false
 </script>
@@ -354,7 +354,7 @@ Get all available icon names:
 
 ```vue
 <script setup>
-  import { useAvailableIcons } from '@haspen-ui/ui';
+  import { useAvailableIcons } from '@haspen/ui';
 
   const icons = useAvailableIcons(); // ['sun', 'moon', ...]
 </script>
@@ -384,11 +384,11 @@ Only icons you use are included in your bundle:
 
 ```typescript
 // ✅ Good: Only SunIcon.vue is bundled
-import { Icon } from '@haspen-ui/ui';
+import { Icon } from '@haspen/ui';
 // Usage: <Icon name="sun" />
 
 // ❌ Bad: All icons bundled
-import * as icons from '@haspen-ui/ui/icons';
+import * as icons from '@haspen/ui/icons';
 ```
 
 ### Bundle Size Examples

@@ -42,16 +42,16 @@ pnpm dev
 
 ### Packages
 
-- **`@haspen-ui/ui`** - Vue 3 components (buttons, forms, etc.)
-- **`@haspen-ui/core`** - Core types and constants
-- **`@haspen-ui/shared`** - Shared utilities and helpers
-- **`@haspen-ui/composables`** - Vue composables (hooks)
-- **`@haspen-ui/design-tokens`** - Design tokens (colors, spacing, typography)
-- **`@haspen-ui/nuxt`** - Nuxt 3 module
+- **`@haspen/ui`** - Vue 3 components (buttons, forms, etc.)
+- **`@haspen/core`** - Core types and constants
+- **`@haspen/shared`** - Shared utilities and helpers
+- **`@haspen/composables`** - Vue composables (hooks)
+- **`@haspen/design-tokens`** - Design tokens (colors, spacing, typography)
+- **`@haspen/nuxt`** - Nuxt 3 module
 
 ### Applications
 
-- **`@haspen-ui/playground`** - Interactive demo app
+- **`@haspen/playground`** - Interactive demo app
 - **`apps/components-test`** - Component testing app
 
 ## 🎯 Common Tasks
@@ -77,7 +77,7 @@ pnpm test
 pnpm test:watch
 
 # Run specific package tests
-pnpm test --filter=@haspen-ui/ui
+pnpm test --filter=@haspen/ui
 ```
 
 ### Building for Production
@@ -87,7 +87,7 @@ pnpm test --filter=@haspen-ui/ui
 pnpm build
 
 # Build specific package
-pnpm build --filter=@haspen-ui/ui
+pnpm build --filter=@haspen/ui
 ```
 
 ## 📚 Next Steps

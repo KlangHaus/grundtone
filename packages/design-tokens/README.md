@@ -16,7 +16,7 @@ palette, semantic naming, and powerful helper functions.
 
 ```bash
 # Already included in the monorepo
-import '@haspen-ui/design-tokens';
+import '@haspen/design-tokens';
 ```
 
 ## Color System
@@ -50,7 +50,7 @@ Pre-defined semantic colors for common use cases:
 #### Basic Color Access
 
 ```scss
-@use '@haspen-ui/design-tokens' as tokens;
+@use '@haspen/design-tokens' as tokens;
 
 .button {
   // Access specific color shades
@@ -343,7 +343,7 @@ All design tokens are fully documented in Storybook with interactive examples:
 Import and use design tokens directly in TypeScript/JavaScript:
 
 ```typescript
-import { colors, spacing, typography } from '@haspen-ui/design-tokens';
+import { colors, spacing, typography } from '@haspen/design-tokens';
 
 // Access color values
 const primaryBlue = colors.primary[500]; // '#3b82f6'
@@ -364,7 +364,7 @@ See [TypeScript API documentation](./src/TypeScriptAPI.stories.ts) for complete 
 Built-in WCAG 2.1 accessibility functions:
 
 ```scss
-@use '@haspen-ui/design-tokens/core/accessibility' as a11y;
+@use '@haspen/design-tokens/core/accessibility' as a11y;
 
 // Calculate contrast ratios
 $ratio: a11y.contrast-ratio(#333333, #ffffff); // 12.63:1

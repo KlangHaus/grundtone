@@ -38,8 +38,8 @@
     ThemeProviderContext,
     ThemeMode,
     Theme,
-  } from '@haspen-ui/core';
-  import { THEME_INJECTION_KEY } from '@haspen-ui/core';
+  } from '@ipeeon/core';
+  import { THEME_INJECTION_KEY } from '@ipeeon/core';
   import { lightTheme, darkTheme } from './themes';
   import {
     applyThemeToDOM,

@@ -70,16 +70,16 @@ graph TB
 
 ### Core Packages
 
-#### `@haspen-ui/core`
+#### `@haspen/core`
 
 **Purpose**: Foundation layer with CSS reset and base styles **Dependencies**: None **Exports**:
 
 ```typescript
 // CSS normalization and base styles
-import '@haspen-ui/core/dist/index.css';
+import '@haspen/core/dist/index.css';
 ```
 
-#### `@haspen-ui/design-tokens`
+#### `@haspen/design-tokens`
 
 **Purpose**: Complete DKFDS implementation with tokens, functions, and utilities **Dependencies**:
 None **Architecture**:
@@ -106,10 +106,9 @@ src/
     └── _position.scss    # Position utilities
 ```
 
-#### `@haspen-ui/shared`
+#### `@haspen/shared`
 
-**Purpose**: Framework-agnostic utilities and helpers **Dependencies**: `@haspen-ui/core`
-**Exports**:
+**Purpose**: Framework-agnostic utilities and helpers **Dependencies**: `@haspen/core` **Exports**:
 
 ```typescript
 // Danish-specific utilities
@@ -123,10 +122,10 @@ export type { BaseComponent, ComponentSize } from './types';
 
 ### Component Layer
 
-#### `@haspen-ui/ui`
+#### `@haspen/ui`
 
-**Purpose**: Vue 3 component library following atomic design **Dependencies**: `@haspen-ui/core`,
-`@haspen-ui/shared` **Architecture**:
+**Purpose**: Vue 3 component library following atomic design **Dependencies**: `@haspen/core`,
+`@haspen/shared` **Architecture**:
 
 ```
 src/
@@ -164,10 +163,10 @@ ComponentName/
 └── README.md               # Component documentation
 ```
 
-#### `@haspen-ui/composables`
+#### `@haspen/composables`
 
-**Purpose**: Vue 3 composables for shared logic **Dependencies**: `@haspen-ui/core`,
-`@haspen-ui/shared` **Exports**:
+**Purpose**: Vue 3 composables for shared logic **Dependencies**: `@haspen/core`, `@haspen/shared`
+**Exports**:
 
 ```typescript
 // DOM utilities
@@ -185,17 +184,17 @@ export { useTheme } from './theme';
 
 ### Integration Layer
 
-#### `@haspen-ui/nuxt`
+#### `@haspen/nuxt`
 
-**Purpose**: Nuxt 3 module for seamless integration **Dependencies**: `@haspen-ui/ui`,
-`@haspen-ui/composables` **Features**:
+**Purpose**: Nuxt 3 module for seamless integration **Dependencies**: `@haspen/ui`,
+`@haspen/composables` **Features**:
 
 - Auto-imports for components and composables
 - SCSS preprocessing configuration
 - Build optimizations
 - SSR compatibility
 
-#### `@haspen-ui/playground`
+#### `@haspen/playground`
 
 **Purpose**: Development and demonstration application **Dependencies**: All packages **Features**:
 

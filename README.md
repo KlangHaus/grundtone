@@ -75,8 +75,8 @@ pnpm lint                  # Lint all packages
 pnpm format                # Format all files
 
 # Package-specific commands
-pnpm test --filter=@haspen-ui/ui  # Test specific package
-turbo run dev --filter=@haspen-ui/ui  # Build specific package in watch mode
+pnpm test --filter=@haspen/ui  # Test specific package
+turbo run dev --filter=@haspen/ui  # Build specific package in watch mode
 ```
 
 ## 🏛️ Design System Features
@@ -107,14 +107,14 @@ Every component follows atomic design principles:
 ### Vue 3 Integration
 
 ```bash
-npm install @haspen-ui/ui @haspen-ui/design-tokens
+npm install @haspen/ui @haspen/design-tokens
 ```
 
 ```javascript
 // main.ts
 import { createApp } from 'vue';
-import HaspenUI from '@haspen-ui/ui';
-import '@haspen-ui/ui/dist/style.css';
+import HaspenUI from '@haspen/ui';
+import '@haspen/ui/dist/style.css';
 import App from './App.vue';
 
 const app = createApp(App);
@@ -125,20 +125,20 @@ app.mount('#app');
 ### Nuxt 3 Integration
 
 ```bash
-npm install @haspen-ui/nuxt
+npm install @haspen/nuxt
 ```
 
 ```javascript
 // nuxt.config.ts
 export default defineNuxtConfig({
-  modules: ['@haspen-ui/nuxt'],
+  modules: ['@haspen/nuxt'],
 });
 ```
 
 ### Design Tokens Usage
 
 ```scss
-@use '@haspen-ui/design-tokens' as tokens;
+@use '@haspen/design-tokens' as tokens;
 
 .my-component {
   color: tokens.color('primary');
@@ -153,14 +153,14 @@ export default defineNuxtConfig({
 ### CPR Number Validation
 
 ```typescript
-import { isValidCPR } from '@haspen-ui/shared';
+import { isValidCPR } from '@haspen/shared';
 isValidCPR('123456-7890'); // true
 ```
 
 ### Danish Currency & Date Formatting
 
 ```typescript
-import { formatCurrency, formatDanishDate } from '@haspen-ui/shared';
+import { formatCurrency, formatDanishDate } from '@haspen/shared';
 formatCurrency(1234.56); // '1.234,56 kr.'
 formatDanishDate(new Date()); // 'DD/MM/YYYY'
 ```
@@ -246,13 +246,13 @@ git push origin feature/new-component
 
 ### Package Status
 
-- ✅ **@haspen-ui/core**: Stable - CSS reset and base styles
-- ✅ **@haspen-ui/design-tokens**: Stable - Complete DKFDS implementation
-- ✅ **@haspen-ui/shared**: Stable - Danish utilities and helpers
-- ✅ **@haspen-ui/ui**: Stable - Vue 3 component library
-- ✅ **@haspen-ui/composables**: Stable - Vue 3 composables
-- ✅ **@haspen-ui/nuxt**: Stable - Nuxt 3 integration module
-- ✅ **@haspen-ui/playground**: Development - Demo application
+- ✅ **@haspen/core**: Stable - CSS reset and base styles
+- ✅ **@haspen/design-tokens**: Stable - Complete DKFDS implementation
+- ✅ **@haspen/shared**: Stable - Danish utilities and helpers
+- ✅ **@haspen/ui**: Stable - Vue 3 component library
+- ✅ **@haspen/composables**: Stable - Vue 3 composables
+- ✅ **@haspen/nuxt**: Stable - Nuxt 3 integration module
+- ✅ **@haspen/playground**: Development - Demo application
 
 ### Build Status
 

@@ -3,7 +3,6 @@ import tseslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import vue from 'eslint-plugin-vue';
 import vueParser from 'vue-eslint-parser';
-import storybook from 'eslint-plugin-storybook';
 
 export default [
   // Base JavaScript configuration
@@ -129,16 +128,14 @@ export default [
     },
   },
 
-  // Storybook files
-  ...storybook.configs['flat/recommended'],
-
   // Ignore patterns
   {
     ignores: [
       'dist/**',
       'node_modules/**',
       '.nuxt/**',
-      'storybook-static/**',
+      'docs/.vitepress/dist/**',
+      'docs/.vitepress/cache/**',
       '**/*.d.ts',
       'apps/*/dist/**',
       'packages/*/dist/**',

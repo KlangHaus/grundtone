@@ -69,7 +69,7 @@ function testCustomIcons() {
 </template>
 
 <script setup>
-import { IconProvider, Icon, createCustomIconsConfig, haspenIcons } from '@haspen-ui/ui';
+import { IconProvider, Icon, createCustomIconsConfig, haspenIcons } from '@haspen/ui';
 import MyCustomIcon from './MyCustomIcon.vue';
 
 const customConfig = createCustomIconsConfig({
@@ -106,7 +106,7 @@ function testHeroicons() {
 </template>
 
 <script setup>
-import { IconProvider, Icon } from '@haspen-ui/ui';
+import { IconProvider, Icon } from '@haspen/ui';
 </script>`);
 
   console.log('\n🔗 Popular icons:');
@@ -142,7 +142,7 @@ function testLucide() {
 </template>
 
 <script setup>
-import { IconProvider, Icon } from '@haspen-ui/ui';
+import { IconProvider, Icon } from '@haspen/ui';
 </script>`);
 
   console.log('\n🔗 Popular icons:');
@@ -180,7 +180,7 @@ function testHybrid() {
 </template>
 
 <script setup>
-import { IconProvider, Icon, createHybridIconsConfig, haspenIcons } from '@haspen-ui/ui';
+import { IconProvider, Icon, createHybridIconsConfig, haspenIcons } from '@haspen/ui';
 import CustomLogo from './CustomLogo.vue';
 
 const hybridConfig = createHybridIconsConfig({

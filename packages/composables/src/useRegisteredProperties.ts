@@ -5,17 +5,17 @@ import {
   HASPEN_CSS_PROPERTIES,
   type HaspenCSSPropertyName,
   type HaspenRegisteredProperties,
-} from '@haspen-ui/design-tokens';
+} from '@ipeeon/design-tokens';
 // Simple logger for composables (to avoid circular dependencies)
 const logger = {
   warn: (message: string, metadata?: Record<string, unknown>) => {
-    if (import.meta.env.DEV) {
+    if (process.env.NODE_ENV !== 'production') {
       // eslint-disable-next-line no-console
       console.warn(`[Haspen UI] ${message}`, metadata);
     }
   },
   error: (message: string, metadata?: Record<string, unknown>) => {
-    if (import.meta.env.DEV) {
+    if (process.env.NODE_ENV !== 'production') {
       // eslint-disable-next-line no-console
       console.error(`[Haspen UI] ${message}`, metadata);
     }

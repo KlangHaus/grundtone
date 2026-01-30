@@ -26,7 +26,7 @@ provide/inject pattern.
 </template>
 
 <script setup lang="ts">
-  import { ThemeProvider } from '@haspen-ui/ui';
+  import { ThemeProvider } from '@haspen/ui';
 </script>
 ```
 
@@ -46,7 +46,7 @@ provide/inject pattern.
 </template>
 
 <script setup lang="ts">
-  import { useTheme } from '@haspen-ui/composables';
+  import { useTheme } from '@haspen/composables';
 
   const { mode, isDark, toggleMode, setMode } = useTheme();
 </script>
@@ -68,7 +68,7 @@ provide/inject pattern.
 </template>
 
 <script setup lang="ts">
-  import { ThemeProvider } from '@haspen-ui/ui';
+  import { ThemeProvider } from '@haspen/ui';
 
   const customTheme = {
     colors: {
@@ -185,7 +185,7 @@ When set to `auto` mode:
 
 <script setup lang="ts">
   import { computed } from 'vue';
-  import { useTheme } from '@haspen-ui/composables';
+  import { useTheme } from '@haspen/composables';
 
   const { isDark, toggleMode } = useTheme();
 
