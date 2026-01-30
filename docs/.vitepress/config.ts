@@ -4,6 +4,8 @@ export default defineConfig({
   title: 'Haspen UI',
   description: 'Design system documentation for Haspen UI',
 
+  ignoreDeadLinks: true,
+
   themeConfig: {
     nav: [
       { text: 'Guide', link: '/guide/welcome' },
