@@ -1,13 +1,13 @@
 # 🛠 Development Guide
 
-This guide provides detailed information for developing the HäspenUI Design System.
+This guide provides detailed information for developing the Grundtone Design System.
 
 ## 📦 Monorepo Architecture
 
 ### Package Structure
 
 ```
-haspen-ui/
+grundtone/
 ├── packages/              # Core packages
 │   ├── ui/               # Vue components
 │   ├── core/             # Types and constants
@@ -79,9 +79,9 @@ packages/ui/src/atoms/ComponentName/
   });
 
   const classes = computed(() => [
-    'haspen-component-name',
-    `haspen-component-name--${props.variant}`,
-    `haspen-component-name--${props.size}`,
+    'grundtone-component-name',
+    `grundtone-component-name--${props.variant}`,
+    `grundtone-component-name--${props.size}`,
   ]);
 </script>
 
@@ -136,7 +136,7 @@ pnpm test:watch
 pnpm test:coverage
 
 # Run tests for specific package
-pnpm test --filter=@haspen/ui
+pnpm test --filter=@grundtone/ui
 ```
 
 ### Test Structure
@@ -166,7 +166,7 @@ pnpm test --filter=@haspen/ui
 - Use SCSS for component styles
 - Follow BEM naming convention
 - Scope styles with `scoped` attribute
-- Use design tokens from `@haspen/design-tokens`
+- Use design tokens from `@grundtone/design-tokens`
 
 ### Git Workflow
 
@@ -197,7 +197,7 @@ chore: update dependencies
 pnpm build
 
 # Build specific package
-pnpm build --filter=@haspen/ui
+pnpm build --filter=@grundtone/ui
 
 # Build in watch mode
 pnpm dev

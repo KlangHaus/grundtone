@@ -4,7 +4,7 @@ import { nextTick } from 'vue';
 import { ThemeToggle } from './index';
 import {
   testComponentAccessibility,
-  configureHaspenAxe,
+  configureGrundtoneAxe,
 } from '../../test-utils/accessibility';
 
 // Mock the theme composable
@@ -12,7 +12,7 @@ import { ref } from 'vue';
 const mockToggleMode = vi.fn();
 const mockIsDark = ref(false);
 
-vi.mock('@ipeeon/composables', () => ({
+vi.mock('@grundtone/composables', () => ({
   useTheme: () => ({
     isDark: mockIsDark,
     toggleMode: mockToggleMode,
@@ -20,7 +20,7 @@ vi.mock('@ipeeon/composables', () => ({
 }));
 
 // Configure axe for tests
-configureHaspenAxe();
+configureGrundtoneAxe();
 
 describe('ThemeToggle', () => {
   beforeEach(() => {

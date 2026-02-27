@@ -1,7 +1,7 @@
 {
-  "name": "@ipeeon/nuxt",
+  "name": "@grundtone/nuxt",
   "version": "1.0.0",
-  "description": "Nuxt 3 module for Haspen UI",
+  "description": "Nuxt 3 module for Grundtone",
   "license": "MIT",
   "private": false,
   "type": "module",
@@ -24,7 +24,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/allanasp/haspen-ui.git",
+    "url": "https://github.com/allanasp/grundtone.git",
     "directory": "packages/nuxt"
   },
   "publishConfig": {
@@ -40,8 +40,8 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@ipeeon/ui": "workspace:*",
-    "@ipeeon/composables": "workspace:*",
+    "@grundtone/ui": "workspace:*",
+    "@grundtone/composables": "workspace:*",
     "@nuxt/kit": "^3.17.2"
   },
   "devDependencies": {

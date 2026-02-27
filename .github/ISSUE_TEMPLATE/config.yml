@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: 💬 Discussions
-    url: https://github.com/haspenui/haspen-ui/discussions
+    url: https://github.com/allanasp/grundtone/discussions
     about: Ask questions and discuss ideas with the community
   - name: 📖 Documentation
-    url: https://haspenui.dev
+    url: https://grundtone.dev
     about: Check our documentation for guides and examples

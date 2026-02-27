@@ -205,7 +205,7 @@ Native. **Utility klasser (som `.mt-4`, `.p-6`) kan kun bruges i web.**
 ### Web (HTML/CSS/SCSS)
 
 ```scss
-@use '@haspen/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 // Direkte brug i SCSS
 .card {
@@ -338,7 +338,7 @@ Først skal du konvertere design tokens til Kotlin constants:
 
 ```kotlin
 // Spacing.kt - Design token constants
-package com.haspen.ui.theme
+package com.grundtone.ui.theme
 
 import androidx.compose.ui.unit.dp
 
@@ -565,7 +565,7 @@ Arrangement.spacedBy osv.) med spacing token værdierne. :::
 **Container Spacing**
 
 ```scss
-@use '@ipeeon/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 // Page container
 .page-container {
@@ -868,7 +868,7 @@ Arrangement.spacedBy osv.) med spacing token værdierne. :::
 ```vue
 <script setup lang="ts">
   import { computed } from 'vue';
-  import { spacing } from '@ipeeon/design-tokens';
+  import { spacing } from '@grundtone/design-tokens';
 
   const props = defineProps<{
     size?: 'sm' | 'md' | 'lg';
@@ -917,7 +917,7 @@ Arrangement.spacedBy osv.) med spacing token værdierne. :::
 ### TypeScript
 
 ```typescript
-import { spacing } from '@ipeeon/design-tokens';
+import { spacing } from '@grundtone/design-tokens';
 
 // Get spacing value
 const mediumSpacing = spacing[4]; // '1rem'
@@ -933,7 +933,7 @@ const styles = {
 ### SCSS
 
 ```scss
-@use '@ipeeon/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 .card {
   padding: tokens.spacing(4); // 1rem
@@ -949,9 +949,9 @@ const styles = {
 
 ```css
 .card {
-  padding: var(--haspen-spacing-4);
-  margin: var(--haspen-spacing-8);
-  gap: var(--haspen-spacing-6);
+  padding: var(--grundtone-spacing-4);
+  margin: var(--grundtone-spacing-8);
+  gap: var(--grundtone-spacing-6);
 }
 ```
 

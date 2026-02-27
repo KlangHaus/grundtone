@@ -1,4 +1,4 @@
-// Modern Haspen UI Functions
+// Modern Grundtone UI Functions
 // Simple functions for accessing CSS custom properties
 
 @use 'sass:map';
@@ -6,62 +6,62 @@
 
 // Modern color function - returns CSS custom property
 @function color($key: 'primary') {
-  @return var(--haspen-color-#{$key});
+  @return var(--grundtone-color-#{$key});
 }
 
 // Font size function using modern CSS custom properties
 @function font-size($size: 'base') {
-  @return var(--haspen-font-size-#{$size});
+  @return var(--grundtone-font-size-#{$size});
 }
 
 // Font weight function
 @function font-weight($weight: 'normal') {
-  @return var(--haspen-font-weight-#{$weight});
+  @return var(--grundtone-font-weight-#{$weight});
 }
 
 // Font family function
 @function font-family($family: 'base') {
-  @return var(--haspen-font-family-#{$family});
+  @return var(--grundtone-font-family-#{$family});
 }
 
 // Line height function
 @function line-height($height: 'normal') {
-  @return var(--haspen-line-height-#{$height});
+  @return var(--grundtone-line-height-#{$height});
 }
 
 // Spacing function using modern units
 @function space($size: 'md') {
-  @return var(--haspen-space-#{$size});
+  @return var(--grundtone-space-#{$size});
 }
 
 // Border radius function
 @function radius($size: 'md') {
-  @return var(--haspen-radius-#{$size});
+  @return var(--grundtone-radius-#{$size});
 }
 
 // Shadow function
 @function shadow($level: 'md') {
-  @return var(--haspen-shadow-#{$level});
+  @return var(--grundtone-shadow-#{$level});
 }
 
 // Z-index function
 @function z-index($layer: 'modal') {
-  @return var(--haspen-z-#{$layer});
+  @return var(--grundtone-z-#{$layer});
 }
 
 // Animation duration function
 @function duration($speed: 'normal') {
-  @return var(--haspen-duration-#{$speed});
+  @return var(--grundtone-duration-#{$speed});
 }
 
 // Animation easing function
 @function ease($type: 'out') {
-  @return var(--haspen-ease-#{$type});
+  @return var(--grundtone-ease-#{$type});
 }
 
 // Breakpoint function (for consistency, though container queries are preferred)
 @function breakpoint($name) {
-  @return var(--haspen-breakpoint-#{$name});
+  @return var(--grundtone-breakpoint-#{$name});
 }
 
 // Legacy compatibility function - maps old color() calls to modern ones

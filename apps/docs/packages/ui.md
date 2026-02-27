@@ -1,18 +1,18 @@
-# @haspen/ui
+# @grundtone/ui
 
-[![npm version](https://img.shields.io/npm/v/@haspen/ui.svg?style=flat)](https://www.npmjs.com/package/@haspen/ui)
+[![npm version](https://img.shields.io/npm/v/@grundtone/ui.svg?style=flat)](https://www.npmjs.com/package/@grundtone/ui)
 
-Vue 3 component library for Haspen UI following atomic design principles.
+Vue 3 component library for Grundtone following atomic design principles.
 
 ## Coming Soon
 
-Documentation for `@haspen/ui` is coming soon.
+Documentation for `@grundtone/ui` is coming soon.
 
 ## Purpose & Intent
 
-The `@haspen/ui` package is the **component implementation layer** of Haspen UI. Its purpose is to
-provide production-ready, accessible, and tested Vue 3 components that implement the design system
-defined by `@haspen/design-tokens`.
+The `@grundtone/ui` package is the **component implementation layer** of Grundtone. Its purpose is
+to provide production-ready, accessible, and tested Vue 3 components that implement the design
+system defined by `@grundtone/design-tokens`.
 
 ### Key Principles
 
@@ -37,11 +37,11 @@ Components are organized hierarchically following atomic design methodology:
 ## Installation
 
 ```bash
-npm install @haspen/ui vue
+npm install @grundtone/ui vue
 # or
-pnpm add @haspen/ui vue
+pnpm add @grundtone/ui vue
 # or
-yarn add @haspen/ui vue
+yarn add @grundtone/ui vue
 ```
 
 ## Architecture
@@ -49,9 +49,9 @@ yarn add @haspen/ui vue
 ### Dependencies
 
 ```
-@haspen/ui
-├── @haspen/core (base styles)
-├── @haspen/shared (utilities)
+@grundtone/ui
+├── @grundtone/core (base styles)
+├── @grundtone/shared (utilities)
 └── Vue 3 (peer dependency)
 ```
 
@@ -76,7 +76,7 @@ ComponentName/
 
 ```vue
 <script setup lang="ts">
-  import { Button, Input, Card } from '@haspen/ui';
+  import { Button, Input, Card } from '@grundtone/ui';
 </script>
 
 <template>
@@ -93,7 +93,7 @@ ComponentName/
 
 ### Why This Package Exists
 
-`@haspen/ui` bridges the gap between **design tokens** (abstract values) and **application UI**
+`@grundtone/ui` bridges the gap between **design tokens** (abstract values) and **application UI**
 (concrete components). It provides:
 
 1. **Consistency**: All components use the same design tokens
@@ -112,7 +112,7 @@ leading to:
 - Accessibility gaps
 - High maintenance cost
 
-`@haspen/ui` solves this by providing **one canonical implementation** of each component pattern.
+`@grundtone/ui` solves this by providing **one canonical implementation** of each component pattern.
 
 ## Component Categories
 
@@ -154,8 +154,8 @@ Structural layouts for pages:
 
 ```vue
 <script setup lang="ts">
-  import { Button } from '@haspen/ui';
-  import type { ColorToken } from '@haspen/design-tokens';
+  import { Button } from '@grundtone/ui';
+  import type { ColorToken } from '@grundtone/design-tokens';
 
   // Components use design tokens internally
   // No need to manually apply token values
@@ -190,8 +190,8 @@ Full component documentation coming soon, including:
 
 In the meantime, explore the source code:
 
-- [View on GitHub](https://github.com/allanasp/haspen-ui/tree/main/packages/ui)
-- [View on npm](https://www.npmjs.com/package/@haspen/ui)
+- [View on GitHub](https://github.com/allanasp/grundtone/tree/main/packages/ui)
+- [View on npm](https://www.npmjs.com/package/@grundtone/ui)
 
 ## License
 

@@ -9,7 +9,7 @@ const packages = fs.readdirSync(packagesDir);
 const allDeps = new Map();
 const allDevDeps = new Map();
 
-console.log('📦 Analyzing package dependencies across Haspen UI monorepo\n');
+console.log('📦 Analyzing package dependencies across Grundtone monorepo\n');
 
 packages.forEach(pkg => {
   const packageJsonPath = path.join(packagesDir, pkg, 'package.json');
@@ -54,7 +54,7 @@ console.log('\n\n🔍 DEPENDENCY VERSION CONFLICTS:\n');
 const conflictDeps = [];
 allDeps.forEach((versions, depName) => {
   const uniqueVersions = new Set(versions.values());
-  if (uniqueVersions.size > 1 && !depName.startsWith('@haspen/')) {
+  if (uniqueVersions.size > 1 && !depName.startsWith('@grundtone/')) {
     console.log(`❌ ${depName}:`);
     versions.forEach((version, pkg) => {
       console.log(`  ${pkg}: ${version}`);

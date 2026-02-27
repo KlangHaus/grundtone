@@ -26,7 +26,7 @@ provide/inject pattern.
 </template>
 
 <script setup lang="ts">
-  import { ThemeProvider } from '@haspen/ui';
+  import { ThemeProvider } from '@grundtone/ui';
 </script>
 ```
 
@@ -36,8 +36,8 @@ provide/inject pattern.
 <template>
   <div
     :style="{
-      backgroundColor: 'var(--haspen-color-background)',
-      color: 'var(--haspen-color-text)',
+      backgroundColor: 'var(--grundtone-color-background)',
+      color: 'var(--grundtone-color-text)',
     }"
   >
     <h1>Current theme: {{ mode }}</h1>
@@ -46,7 +46,7 @@ provide/inject pattern.
 </template>
 
 <script setup lang="ts">
-  import { useTheme } from '@haspen/composables';
+  import { useTheme } from '@grundtone/composables';
 
   const { mode, isDark, toggleMode, setMode } = useTheme();
 </script>
@@ -68,7 +68,7 @@ provide/inject pattern.
 </template>
 
 <script setup lang="ts">
-  import { ThemeProvider } from '@haspen/ui';
+  import { ThemeProvider } from '@grundtone/ui';
 
   const customTheme = {
     colors: {
@@ -91,7 +91,7 @@ provide/inject pattern.
 | theme             | `Partial<Theme>`              | `undefined`              | Custom theme overrides                   |
 | enableTransitions | `boolean`                     | `true`                   | Enable smooth transitions between themes |
 | persistMode       | `boolean`                     | `true`                   | Persist theme mode in localStorage       |
-| storageKey        | `string`                      | `'haspen-ui-theme-mode'` | localStorage key for persistence         |
+| storageKey        | `string`                      | `'grundtone-theme-mode'` | localStorage key for persistence         |
 
 ## Theme Context API
 
@@ -120,26 +120,26 @@ The ThemeProvider generates CSS custom properties that can be used throughout yo
 
 ### Colors
 
-- `--haspen-color-primary`
-- `--haspen-color-secondary`
-- `--haspen-color-background`
-- `--haspen-color-surface`
-- `--haspen-color-text`
+- `--grundtone-color-primary`
+- `--grundtone-color-secondary`
+- `--grundtone-color-background`
+- `--grundtone-color-surface`
+- `--grundtone-color-text`
 - And many more...
 
 ### Spacing
 
-- `--haspen-spacing-xs` through `--haspen-spacing-4xl`
+- `--grundtone-spacing-xs` through `--grundtone-spacing-4xl`
 
 ### Typography
 
-- `--haspen-font-family-base`, `-heading`, `-mono`
-- `--haspen-font-size-xs` through `--haspen-font-size-5xl`
-- `--haspen-font-weight-thin` through `--haspen-font-weight-extrabold`
+- `--grundtone-font-family-base`, `-heading`, `-mono`
+- `--grundtone-font-size-xs` through `--grundtone-font-size-5xl`
+- `--grundtone-font-weight-thin` through `--grundtone-font-weight-extrabold`
 
 ### Shadows, Radius, Transitions
 
-- `--haspen-shadow-*`, `--haspen-radius-*`, `--haspen-transition-*`
+- `--grundtone-shadow-*`, `--grundtone-radius-*`, `--grundtone-transition-*`
 
 ## Theme Structure
 
@@ -185,18 +185,19 @@ When set to `auto` mode:
 
 <script setup lang="ts">
   import { computed } from 'vue';
-  import { useTheme } from '@haspen/composables';
+  import { useTheme } from '@grundtone/composables';
 
   const { isDark, toggleMode } = useTheme();
 
   const buttonStyles = computed(() => ({
-    backgroundColor: 'var(--haspen-color-primary)',
+    backgroundColor: 'var(--grundtone-color-primary)',
     color: '#ffffff',
-    padding: 'var(--haspen-spacing-sm) var(--haspen-spacing-md)',
+    padding: 'var(--grundtone-spacing-sm) var(--grundtone-spacing-md)',
     border: 'none',
-    borderRadius: 'var(--haspen-radius-md)',
+    borderRadius: 'var(--grundtone-radius-md)',
     cursor: 'pointer',
-    transition: 'all var(--haspen-transition-duration-fast) var(--haspen-transition-timing-ease)',
+    transition:
+      'all var(--grundtone-transition-duration-fast) var(--grundtone-transition-timing-ease)',
   }));
 </script>
 ```
@@ -213,13 +214,14 @@ When set to `auto` mode:
 
 <style scoped>
   .themed-card {
-    background: var(--haspen-color-surface);
-    color: var(--haspen-color-text);
-    padding: var(--haspen-spacing-lg);
-    border-radius: var(--haspen-radius-lg);
-    box-shadow: var(--haspen-shadow-md);
-    border: 1px solid var(--haspen-color-border);
-    transition: all var(--haspen-transition-duration-base) var(--haspen-transition-timing-ease);
+    background: var(--grundtone-color-surface);
+    color: var(--grundtone-color-text);
+    padding: var(--grundtone-spacing-lg);
+    border-radius: var(--grundtone-radius-lg);
+    box-shadow: var(--grundtone-shadow-md);
+    border: 1px solid var(--grundtone-color-border);
+    transition: all var(--grundtone-transition-duration-base)
+      var(--grundtone-transition-timing-ease);
   }
 </style>
 ```

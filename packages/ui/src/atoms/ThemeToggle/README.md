@@ -27,8 +27,8 @@ themes.
 </template>
 
 <script setup>
-  import { ThemeProvider } from '@haspen/ui';
-  import { ThemeToggle } from '@haspen/ui';
+  import { ThemeProvider } from '@grundtone/ui';
+  import { ThemeToggle } from '@grundtone/ui';
 </script>
 ```
 

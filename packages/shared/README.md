@@ -1,18 +1,18 @@
-# @haspen/shared
+# @grundtone/shared
 
-Shared utilities package for the HäspenUI design system. This package contains common helper
+Shared utilities package for the Grundtone design system. This package contains common helper
 functions, formatters, and validators used across the design system.
 
 ## Installation
 
 ```bash
-pnpm add @haspen/shared
+pnpm add @grundtone/shared
 ```
 
 ## Usage
 
 ```typescript
-import { formatCurrency, isValidEmail } from '@haspen/shared';
+import { formatCurrency, isValidEmail } from '@grundtone/shared';
 
 // Format currency
 const price = formatCurrency(199.99); // "199,99 kr."
@@ -37,7 +37,7 @@ const isValid = isValidEmail('test@example.com'); // true
 
 ## Dependencies
 
-- `@haspen/core` - Core package with types and constants
+- `@grundtone/core` - Core package with types and constants
 - `vue` - Vue.js framework
 
 ## Development

@@ -2,19 +2,19 @@
   <button
     type="button"
     :class="[
-      'haspen-button',
-      `haspen-button--${variant}`,
-      `haspen-button--${size}`,
-      { 'haspen-button--loading': loading },
-      { 'haspen-button--disabled': disabled },
+      'grundtone-button',
+      `grundtone-button--${variant}`,
+      `grundtone-button--${size}`,
+      { 'grundtone-button--loading': loading },
+      { 'grundtone-button--disabled': disabled },
     ]"
     :disabled="disabled || loading"
     :aria-disabled="disabled"
     :aria-busy="loading"
     v-bind="$attrs"
   >
-    <span v-if="loading" class="haspen-button__loader"></span>
-    <span v-else class="haspen-button__content">
+    <span v-if="loading" class="grundtone-button__loader"></span>
+    <span v-else class="grundtone-button__content">
       <slot></slot>
     </span>
   </button>

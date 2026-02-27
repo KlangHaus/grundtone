@@ -1,12 +1,12 @@
-# @ipeeon/core
+# @grundtone/core
 
-Foundation package for Ipeeon design system. Provides TypeScript types, theme constants, CSS custom
-properties, and Vue 3 theme injection utilities.
+Foundation package for grundtone design system. Provides TypeScript types, theme constants, CSS
+custom properties, and Vue 3 theme injection utilities.
 
 ## Install
 
 ```bash
-pnpm add @ipeeon/core
+pnpm add @grundtone/core
 ```
 
 Peer dependency: `vue >= 3.5.13`
@@ -34,7 +34,7 @@ import {
   // Constants
   DEFAULT_THEME,
   THEME_INJECTION_KEY,
-} from '@ipeeon/core';
+} from '@grundtone/core';
 ```
 
 Importing the package also loads `style.css` which defines global CSS custom properties.
@@ -222,7 +222,7 @@ const DEFAULT_THEME: ThemeConfig = {
 Vue 3 injection key for theme context. Use with `provide`/`inject`:
 
 ```typescript
-import { THEME_INJECTION_KEY } from '@ipeeon/core';
+import { THEME_INJECTION_KEY } from '@grundtone/core';
 
 // In parent component
 provide(THEME_INJECTION_KEY, themeContext);
@@ -233,51 +233,52 @@ const theme = inject(THEME_INJECTION_KEY);
 
 ## CSS Custom Properties
 
-Importing `@ipeeon/core` adds these CSS variables to `:root`:
+Importing `@grundtone/core` adds these CSS variables to `:root`:
 
 ### Colors
 
 ```css
---haspen-color-primary: #007aff;
---haspen-color-secondary: #5856d6;
---haspen-color-success: #34c759;
---haspen-color-warning: #ff9500;
---haspen-color-danger: #ff3b30;
---haspen-color-info: #5ac8fa;
+--grundtone-color-primary: #007aff;
+--grundtone-color-secondary: #5856d6;
+--grundtone-color-success: #34c759;
+--grundtone-color-warning: #ff9500;
+--grundtone-color-danger: #ff3b30;
+--grundtone-color-info: #5ac8fa;
 ```
 
 ### Typography
 
 ```css
---haspen-font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
---haspen-font-size-base: 16px;
---haspen-line-height-base: 1.5;
+--grundtone-font-family:
+  system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+--grundtone-font-size-base: 16px;
+--grundtone-line-height-base: 1.5;
 ```
 
 ### Spacing (8px base unit)
 
 ```css
---haspen-spacing-xs: 4px;
---haspen-spacing-sm: 8px;
---haspen-spacing-md: 16px;
---haspen-spacing-lg: 24px;
---haspen-spacing-xl: 32px;
+--grundtone-spacing-xs: 4px;
+--grundtone-spacing-sm: 8px;
+--grundtone-spacing-md: 16px;
+--grundtone-spacing-lg: 24px;
+--grundtone-spacing-xl: 32px;
 ```
 
 ### Border Radius
 
 ```css
---haspen-border-radius-sm: 4px;
---haspen-border-radius-md: 8px;
---haspen-border-radius-lg: 12px;
---haspen-border-radius-full: 9999px;
+--grundtone-border-radius-sm: 4px;
+--grundtone-border-radius-md: 8px;
+--grundtone-border-radius-lg: 12px;
+--grundtone-border-radius-full: 9999px;
 ```
 
 ### Transitions
 
 ```css
---haspen-transition-duration: 0.2s;
---haspen-transition-timing: ease-in-out;
+--grundtone-transition-duration: 0.2s;
+--grundtone-transition-timing: ease-in-out;
 ```
 
 ## Usage in a Web Project
@@ -286,18 +287,18 @@ Importing `@ipeeon/core` adds these CSS variables to `:root`:
 
 ```typescript
 // main.ts
-import '@ipeeon/core'; // loads CSS custom properties
+import '@grundtone/core'; // loads CSS custom properties
 ```
 
 ### Using CSS Variables
 
 ```css
 .card {
-  background: var(--haspen-color-primary);
-  padding: var(--haspen-spacing-md);
-  border-radius: var(--haspen-border-radius-md);
-  font-family: var(--haspen-font-family);
-  transition: all var(--haspen-transition-duration) var(--haspen-transition-timing);
+  background: var(--grundtone-color-primary);
+  padding: var(--grundtone-spacing-md);
+  border-radius: var(--grundtone-border-radius-md);
+  font-family: var(--grundtone-font-family);
+  transition: all var(--grundtone-transition-duration) var(--grundtone-transition-timing);
 }
 ```
 
@@ -305,7 +306,7 @@ import '@ipeeon/core'; // loads CSS custom properties
 
 ```vue
 <script setup lang="ts">
-  import type { Size, Variant, ComponentProps } from '@ipeeon/core';
+  import type { Size, Variant, ComponentProps } from '@grundtone/core';
 
   interface ButtonProps extends ComponentProps {
     size?: Size;
@@ -331,7 +332,7 @@ import '@ipeeon/core'; // loads CSS custom properties
     DEFAULT_THEME,
     type ThemeMode,
     type ThemeProviderContext,
-  } from '@ipeeon/core';
+  } from '@grundtone/core';
 
   const mode = ref<ThemeMode>('auto');
   const isDark = computed(() => mode.value === 'dark');
@@ -358,8 +359,9 @@ import '@ipeeon/core'; // loads CSS custom properties
 
 ## Related Packages
 
-- `@ipeeon/design-tokens` - SCSS variables, utility CSS classes, 12-column grid system
-- `@ipeeon/shared` - Validation (CPR, phone), formatters (currency, dates), Danish locale utilities
-- `@ipeeon/ui` - Vue 3 components (Button, Icon, ThemeToggle, etc.)
-- `@ipeeon/composables` - Vue 3 composables (useToggle, etc.)
-- `@ipeeon/nuxt` - Nuxt 3 module that auto-imports everything
+- `@grundtone/design-tokens` - SCSS variables, utility CSS classes, 12-column grid system
+- `@grundtone/shared` - Validation (CPR, phone), formatters (currency, dates), Danish locale
+  utilities
+- `@grundtone/ui` - Vue 3 components (Button, Icon, ThemeToggle, etc.)
+- `@grundtone/composables` - Vue 3 composables (useToggle, etc.)
+- `@grundtone/nuxt` - Nuxt 3 module that auto-imports everything

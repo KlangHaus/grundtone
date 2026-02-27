@@ -22,22 +22,22 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
-      name: 'HaspenUI',
+      name: 'GrundtoneUI',
       fileName: 'index',
     },
     rollupOptions: {
       external: [
         'vue',
-        '@ipeeon/core',
-        '@ipeeon/shared',
-        '@ipeeon/composables',
+        '@grundtone/core',
+        '@grundtone/shared',
+        '@grundtone/composables',
       ],
       output: {
         globals: {
           vue: 'Vue',
-          '@ipeeon/core': 'HaspenCore',
-          '@ipeeon/shared': 'HaspenShared',
-          '@ipeeon/composables': 'HaspenComposables',
+          '@grundtone/core': 'GrundtoneCore',
+          '@grundtone/shared': 'GrundtoneShared',
+          '@grundtone/composables': 'GrundtoneComposables',
         },
       },
     },

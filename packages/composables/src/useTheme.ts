@@ -1,13 +1,13 @@
 import { inject, computed, ref } from 'vue';
-import type { ThemeProviderContext, Theme } from '@ipeeon/core';
-import { THEME_INJECTION_KEY } from '@ipeeon/core';
+import type { ThemeProviderContext, Theme } from '@grundtone/core';
+import { THEME_INJECTION_KEY } from '@grundtone/core';
 
 // Simple logger for composables (to avoid circular dependencies)
 const logger = {
   warn: (message: string, metadata?: Record<string, unknown>) => {
     if (process.env.NODE_ENV !== 'production') {
       // eslint-disable-next-line no-console
-      console.warn(`[Haspen UI] ${message}`, metadata);
+      console.warn(`[Grundtone UI] ${message}`, metadata);
     }
   },
 };
@@ -142,7 +142,7 @@ export function useTheme(): ThemeProviderContext {
   return themeContext;
 }
 
-export { THEME_INJECTION_KEY } from '@ipeeon/core';
+export { THEME_INJECTION_KEY } from '@grundtone/core';
 export type {
   ThemeMode,
   Theme,
@@ -154,4 +154,4 @@ export type {
   ThemeTransitions,
   ThemeProviderContext,
   ThemeProviderProps,
-} from '@ipeeon/core';
+} from '@grundtone/core';

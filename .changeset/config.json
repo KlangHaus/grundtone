@@ -3,19 +3,19 @@
   "changelog": [
     "@changesets/changelog-github",
     {
-      "repo": "allanasp/haspen-ui"
+      "repo": "allanasp/grundtone"
     }
   ],
   "commit": false,
   "fixed": [],
   "linked": [
     [
-      "@ipeeon/core",
-      "@ipeeon/shared",
-      "@ipeeon/ui",
-      "@ipeeon/composables",
-      "@ipeeon/design-tokens",
-      "@ipeeon/nuxt"
+      "@grundtone/core",
+      "@grundtone/shared",
+      "@grundtone/ui",
+      "@grundtone/composables",
+      "@grundtone/design-tokens",
+      "@grundtone/nuxt"
     ]
   ],
   "access": "public",

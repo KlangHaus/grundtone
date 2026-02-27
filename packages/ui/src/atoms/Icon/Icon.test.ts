@@ -6,11 +6,11 @@ import IconProvider from './IconProvider.vue';
 import { ICON_PROVIDER_KEY } from './provider';
 import {
   testComponentAccessibility,
-  configureHaspenAxe,
+  configureGrundtoneAxe,
 } from '../../test-utils/accessibility';
 
 // Configure axe for tests
-configureHaspenAxe();
+configureGrundtoneAxe();
 
 // Mock icon component for testing
 const TestIcon = {
@@ -133,7 +133,7 @@ describe('Icon (Simplified)', () => {
     });
 
     expect(consoleSpy).toHaveBeenCalledWith(
-      '[Haspen UI Warning]',
+      '[Grundtone UI Warning]',
       expect.objectContaining({
         message: 'Icon "nonexistent" not found in custom library',
         context: expect.objectContaining({
@@ -168,8 +168,8 @@ describe('Icon (Simplified)', () => {
     });
 
     const iconWrapper = wrapper.findComponent(Icon);
-    expect(iconWrapper.classes()).toContain('haspen-icon');
-    expect(iconWrapper.classes()).toContain('haspen-icon--test');
+    expect(iconWrapper.classes()).toContain('grundtone-icon');
+    expect(iconWrapper.classes()).toContain('grundtone-icon--test');
     expect(iconWrapper.classes()).toContain('my-prefix-test');
   });
 
@@ -203,7 +203,7 @@ describe('Icon (Simplified)', () => {
     // Should render but warn about missing icon using structured logging
     expect(wrapper.exists()).toBe(true);
     expect(consoleSpy).toHaveBeenCalledWith(
-      '[Haspen UI Warning]',
+      '[Grundtone UI Warning]',
       expect.objectContaining({
         message: 'Icon "missing" not found in custom library',
         context: expect.objectContaining({

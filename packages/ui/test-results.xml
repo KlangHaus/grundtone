@@ -427,10 +427,10 @@ Component that was made reactive:  {
         </testcase>
         <testcase classname="src/molecules/ThemeProvider/ThemeProvider.test.ts" name="ThemeProvider &gt; Theme Context &gt; provides fallback theme when called outside ThemeProvider" time="0.003963291">
             <system-err>
-[Vue warn]: injection &quot;Symbol(haspen-ui-theme)&quot; not found. 
+[Vue warn]: injection &quot;Symbol(grundtone-theme)&quot; not found. 
   at &lt;Anonymous ref=&quot;VTU_COMPONENT&quot; &gt; 
   at &lt;VTUROOT&gt;
-[Haspen UI] ThemeProvider not found. Using fallback theme. For full functionality, wrap your app with &lt;ThemeProvider&gt;. { component: [32m&apos;useTheme&apos;[39m, action: [32m&apos;inject&apos;[39m, severity: [32m&apos;medium&apos;[39m }
+[Grundtone UI] ThemeProvider not found. Using fallback theme. For full functionality, wrap your app with &lt;ThemeProvider&gt;. { component: [32m&apos;useTheme&apos;[39m, action: [32m&apos;inject&apos;[39m, severity: [32m&apos;medium&apos;[39m }
 
             </system-err>
         </testcase>

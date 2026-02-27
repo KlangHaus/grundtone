@@ -6,7 +6,7 @@ const logger = {
     if (process.env.NODE_ENV === 'development') {
       // eslint-disable-next-line no-console
       console.info(
-        '[Haspen UI Nuxt Plugin]',
+        '[Grundtone UI Nuxt Plugin]',
         message,
         new Date().toISOString(),
       );
@@ -15,5 +15,5 @@ const logger = {
 };
 
 export default defineNuxtPlugin(_nuxtApp => {
-  logger.info('Plugin injected by Haspen UI module');
+  logger.info('Plugin injected by Grundtone UI module');
 });

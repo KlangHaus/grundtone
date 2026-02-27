@@ -1,5 +1,5 @@
 /**
- * Comprehensive color contrast testing for Haspen UI design tokens
+ * Comprehensive color contrast testing for Grundtone UI design tokens
  * Ensures WCAG 2.1 AA compliance across all color combinations
  */
 

@@ -1,27 +1,27 @@
 # Installation
 
-Get started with Haspen UI design tokens by installing the package and configuring your build tools.
+Get started with Grundtone design tokens by installing the package and configuring your build tools.
 
 ## Package Installation
 
-Install `@ipeeon/design-tokens` using your preferred package manager:
+Install `@grundtone/design-tokens` using your preferred package manager:
 
 ### npm
 
 ```bash
-npm install @ipeeon/design-tokens
+npm install @grundtone/design-tokens
 ```
 
 ### pnpm (Recommended)
 
 ```bash
-pnpm add @ipeeon/design-tokens
+pnpm add @grundtone/design-tokens
 ```
 
 ### yarn
 
 ```bash
-yarn add @ipeeon/design-tokens
+yarn add @grundtone/design-tokens
 ```
 
 ## Requirements
@@ -38,7 +38,7 @@ The design tokens package has no required peer dependencies. However, if you wan
 composables, you'll also need:
 
 ```bash
-pnpm add @ipeeon/composables vue@^3.5.0
+pnpm add @grundtone/composables vue@^3.5.0
 ```
 
 ## SCSS Setup
@@ -55,7 +55,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@use '@ipeeon/design-tokens' as tokens;`,
+        additionalData: `@use '@grundtone/design-tokens' as tokens;`,
         // Silence Sass deprecation warnings
         silenceDeprecations: ['if-function'],
       },
@@ -79,7 +79,7 @@ module.exports = {
           {
             loader: 'sass-loader',
             options: {
-              additionalData: `@use '@ipeeon/design-tokens' as tokens;`,
+              additionalData: `@use '@grundtone/design-tokens' as tokens;`,
             },
           },
         ],
@@ -98,7 +98,7 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@use '@ipeeon/design-tokens' as tokens;`,
+          additionalData: `@use '@grundtone/design-tokens' as tokens;`,
           silenceDeprecations: ['if-function'],
         },
       },
@@ -113,7 +113,7 @@ export default defineNuxtConfig({
 // next.config.js
 module.exports = {
   sassOptions: {
-    additionalData: `@use '@ipeeon/design-tokens' as tokens;`,
+    additionalData: `@use '@grundtone/design-tokens' as tokens;`,
   },
 };
 ```
@@ -124,7 +124,7 @@ The package includes TypeScript definitions out of the box. No additional config
 
 ```typescript
 // TypeScript imports work automatically
-import { COLORS, SPACING, TYPOGRAPHY } from '@ipeeon/design-tokens';
+import { COLORS, SPACING, TYPOGRAPHY } from '@grundtone/design-tokens';
 ```
 
 ### Path Aliases (Optional)
@@ -136,7 +136,7 @@ For cleaner imports, you can configure TypeScript path aliases:
 {
   "compilerOptions": {
     "paths": {
-      "@tokens/*": ["node_modules/@ipeeon/design-tokens/*"]
+      "@tokens/*": ["node_modules/@grundtone/design-tokens/*"]
     }
   }
 }
@@ -157,14 +157,14 @@ entry point:
 
 ```typescript
 // main.ts or index.ts
-import '@ipeeon/design-tokens/dist/index.css';
+import '@grundtone/design-tokens/dist/index.css';
 ```
 
 ### HTML Entry
 
 ```html
 <!-- index.html -->
-<link rel="stylesheet" href="node_modules/@ipeeon/design-tokens/dist/index.css" />
+<link rel="stylesheet" href="node_modules/@grundtone/design-tokens/dist/index.css" />
 ```
 
 ### Vue 3
@@ -172,7 +172,7 @@ import '@ipeeon/design-tokens/dist/index.css';
 ```typescript
 // main.ts
 import { createApp } from 'vue';
-import '@ipeeon/design-tokens/dist/index.css';
+import '@grundtone/design-tokens/dist/index.css';
 import App from './App.vue';
 
 createApp(App).mount('#app');
@@ -183,7 +183,7 @@ createApp(App).mount('#app');
 ```typescript
 // nuxt.config.ts
 export default defineNuxtConfig({
-  css: ['@ipeeon/design-tokens/dist/index.css'],
+  css: ['@grundtone/design-tokens/dist/index.css'],
 });
 ```
 
@@ -192,7 +192,7 @@ export default defineNuxtConfig({
 For enhanced performance with CSS animations and transitions, register CSS custom properties:
 
 ```typescript
-import { registerCSSProperties } from '@ipeeon/design-tokens';
+import { registerCSSProperties } from '@grundtone/design-tokens';
 
 // Register all properties
 registerCSSProperties();
@@ -215,7 +215,7 @@ Opera). It gracefully degrades in other browsers. :::
 If you're using Vue 3, install the composables package for reactive theme management:
 
 ```bash
-pnpm add @ipeeon/composables
+pnpm add @grundtone/composables
 ```
 
 Then use the theme provider:
@@ -228,7 +228,7 @@ Then use the theme provider:
 </template>
 
 <script setup>
-  import { ThemeProvider } from '@ipeeon/composables';
+  import { ThemeProvider } from '@grundtone/composables';
 </script>
 ```
 
@@ -237,14 +237,14 @@ Then use the theme provider:
 For Nuxt 3 projects, use the official Nuxt module for automatic setup:
 
 ```bash
-pnpm add @ipeeon/nuxt
+pnpm add @grundtone/nuxt
 ```
 
 Add to your `nuxt.config.ts`:
 
 ```typescript
 export default defineNuxtConfig({
-  modules: ['@ipeeon/nuxt'],
+  modules: ['@grundtone/nuxt'],
 });
 ```
 
@@ -262,7 +262,7 @@ Verify the installation by importing and using a token:
 ### SCSS
 
 ```scss
-@use '@ipeeon/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 .button {
   background-color: tokens.getColor('primary');
@@ -273,7 +273,7 @@ Verify the installation by importing and using a token:
 ### TypeScript
 
 ```typescript
-import { COLORS, SPACING } from '@ipeeon/design-tokens';
+import { COLORS, SPACING } from '@grundtone/design-tokens';
 
 console.log(COLORS.primary); // '#0059b3'
 console.log(SPACING.md); // '1rem'
@@ -283,8 +283,8 @@ console.log(SPACING.md); // '1rem'
 
 ```css
 .button {
-  background-color: var(--haspen-color-primary);
-  padding: var(--haspen-spacing-md);
+  background-color: var(--grundtone-color-primary);
+  padding: var(--grundtone-spacing-md);
 }
 ```
 
@@ -305,11 +305,11 @@ configuration:
 
 ### TypeScript Errors
 
-**Error**: `Cannot find module '@ipeeon/design-tokens'`
+**Error**: `Cannot find module '@grundtone/design-tokens'`
 
 **Solution**: Ensure TypeScript can resolve the package:
 
-1. Check that `node_modules/@ipeeon/design-tokens` exists
+1. Check that `node_modules/@grundtone/design-tokens` exists
 2. Run `pnpm install` to reinstall dependencies
 3. Restart your TypeScript server
 
@@ -320,7 +320,7 @@ configuration:
 **Solution**: Import the CSS file in your entry point:
 
 ```typescript
-import '@ipeeon/design-tokens/dist/index.css';
+import '@grundtone/design-tokens/dist/index.css';
 ```
 
 ### Sass Deprecation Warnings
@@ -347,6 +347,6 @@ Now that you've installed the package, learn how to use it:
 
 If you encounter any issues during installation:
 
-- Check the [GitHub Issues](https://github.com/allanasp/haspen-ui/issues) for known problems
-- Search [GitHub Discussions](https://github.com/allanasp/haspen-ui/discussions) for solutions
+- Check the [GitHub Issues](https://github.com/allanasp/grundtone/issues) for known problems
+- Search [GitHub Discussions](https://github.com/allanasp/grundtone/discussions) for solutions
 - Open a new issue if you've found a bug

@@ -1,23 +1,23 @@
 import { ref, readonly, onMounted, type Ref } from 'vue';
 import {
   registerCSSProperties,
-  HASPEN_REGISTERED_PROPERTIES,
-  HASPEN_CSS_PROPERTIES,
-  type HaspenCSSPropertyName,
-  type HaspenRegisteredProperties,
-} from '@ipeeon/design-tokens';
+  GRUNDTONE_REGISTERED_PROPERTIES,
+  GRUNDTONE_CSS_PROPERTIES,
+  type GrundtoneCSSPropertyName,
+  type GrundtoneRegisteredProperties,
+} from '@grundtone/design-tokens';
 // Simple logger for composables (to avoid circular dependencies)
 const logger = {
   warn: (message: string, metadata?: Record<string, unknown>) => {
     if (process.env.NODE_ENV !== 'production') {
       // eslint-disable-next-line no-console
-      console.warn(`[Haspen UI] ${message}`, metadata);
+      console.warn(`[Grundtone UI] ${message}`, metadata);
     }
   },
   error: (message: string, metadata?: Record<string, unknown>) => {
     if (process.env.NODE_ENV !== 'production') {
       // eslint-disable-next-line no-console
-      console.error(`[Haspen UI] ${message}`, metadata);
+      console.error(`[Grundtone UI] ${message}`, metadata);
     }
   },
 };
@@ -33,7 +33,7 @@ interface UseRegisteredPropertiesOptions {
    * Subset of properties to register
    * @default all properties
    */
-  properties?: Partial<HaspenRegisteredProperties>;
+  properties?: Partial<GrundtoneRegisteredProperties>;
 
   /**
    * Whether to warn about unsupported browsers
@@ -56,27 +56,27 @@ interface UseRegisteredPropertiesReturn {
   /**
    * Register CSS properties programmatically
    */
-  register: (properties?: Partial<HaspenRegisteredProperties>) => void;
+  register: (properties?: Partial<GrundtoneRegisteredProperties>) => void;
 
   /**
    * Get a CSS custom property value
    */
-  getProperty: (name: HaspenCSSPropertyName) => string;
+  getProperty: (name: GrundtoneCSSPropertyName) => string;
 
   /**
    * Set a CSS custom property value
    */
-  setProperty: (name: HaspenCSSPropertyName, value: string) => void;
+  setProperty: (name: GrundtoneCSSPropertyName, value: string) => void;
 
   /**
    * Remove a CSS custom property
    */
-  removeProperty: (name: HaspenCSSPropertyName) => void;
+  removeProperty: (name: GrundtoneCSSPropertyName) => void;
 
   /**
    * Property name constants for type safety
    */
-  properties: typeof HASPEN_CSS_PROPERTIES;
+  properties: typeof GRUNDTONE_CSS_PROPERTIES;
 }
 
 /**
@@ -110,7 +110,7 @@ export function useRegisteredProperties(
 ): UseRegisteredPropertiesReturn {
   const {
     autoRegister = true,
-    properties = HASPEN_REGISTERED_PROPERTIES,
+    properties = GRUNDTONE_REGISTERED_PROPERTIES,
     warn = true,
   } = options;
 
@@ -126,7 +126,7 @@ export function useRegisteredProperties(
 
   // Register CSS properties
   function register(
-    propertiesToRegister: Partial<HaspenRegisteredProperties> = properties,
+    propertiesToRegister: Partial<GrundtoneRegisteredProperties> = properties,
   ): void {
     if (!checkSupport()) {
       if (warn) {
@@ -158,22 +158,22 @@ export function useRegisteredProperties(
   }
 
   // Get CSS custom property value
-  function getProperty(name: HaspenCSSPropertyName): string {
-    const propertyName = HASPEN_CSS_PROPERTIES[name];
+  function getProperty(name: GrundtoneCSSPropertyName): string {
+    const propertyName = GRUNDTONE_CSS_PROPERTIES[name];
     return getComputedStyle(document.documentElement)
       .getPropertyValue(propertyName)
       .trim();
   }
 
   // Set CSS custom property value
-  function setProperty(name: HaspenCSSPropertyName, value: string): void {
-    const propertyName = HASPEN_CSS_PROPERTIES[name];
+  function setProperty(name: GrundtoneCSSPropertyName, value: string): void {
+    const propertyName = GRUNDTONE_CSS_PROPERTIES[name];
     document.documentElement.style.setProperty(propertyName, value);
   }
 
   // Remove CSS custom property
-  function removeProperty(name: HaspenCSSPropertyName): void {
-    const propertyName = HASPEN_CSS_PROPERTIES[name];
+  function removeProperty(name: GrundtoneCSSPropertyName): void {
+    const propertyName = GRUNDTONE_CSS_PROPERTIES[name];
     document.documentElement.style.removeProperty(propertyName);
   }
 
@@ -192,13 +192,13 @@ export function useRegisteredProperties(
     getProperty,
     setProperty,
     removeProperty,
-    properties: HASPEN_CSS_PROPERTIES,
+    properties: GRUNDTONE_CSS_PROPERTIES,
   };
 }
 
 // Type-safe utility for getting property names
-export function usePropertyName(name: HaspenCSSPropertyName): string {
-  return HASPEN_CSS_PROPERTIES[name];
+export function usePropertyName(name: GrundtoneCSSPropertyName): string {
+  return GRUNDTONE_CSS_PROPERTIES[name];
 }
 
 /**
@@ -221,13 +221,13 @@ export function usePropertyName(name: HaspenCSSPropertyName): string {
  * ```
  */
 export function useCSSProperty(
-  name: HaspenCSSPropertyName,
+  name: GrundtoneCSSPropertyName,
   initialValue?: string,
 ): Ref<string> {
   const propertyValue = ref(initialValue || '');
 
   onMounted(() => {
-    const propertyName = HASPEN_CSS_PROPERTIES[name];
+    const propertyName = GRUNDTONE_CSS_PROPERTIES[name];
 
     // Set initial value from computed styles
     const computedValue = getComputedStyle(document.documentElement)

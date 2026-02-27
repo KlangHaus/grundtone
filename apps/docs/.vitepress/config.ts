@@ -1,8 +1,9 @@
 import { defineConfig } from 'vitepress';
 
 export default defineConfig({
-  title: 'Haspen UI',
-  description: 'Design system documentation for Haspen UI',
+  title: 'Grundtone',
+  description:
+    'Design system documentation for Grundtone - part of KlangHaus infrastructure',
 
   ignoreDeadLinks: true,
 
@@ -11,7 +12,7 @@ export default defineConfig({
       dedupe: ['vue'],
     },
     ssr: {
-      noExternal: ['@ipeeon/design-tokens'],
+      noExternal: ['@grundtone/design-tokens'],
     },
   },
 
@@ -23,12 +24,12 @@ export default defineConfig({
       {
         text: 'Packages',
         items: [
-          { text: '@haspen/design-tokens', link: '/packages/design-tokens' },
-          { text: '@haspen/core', link: '/packages/core' },
-          { text: '@haspen/shared', link: '/packages/shared' },
-          { text: '@haspen/composables', link: '/packages/composables' },
-          { text: '@haspen/ui', link: '/packages/ui' },
-          { text: '@haspen/nuxt', link: '/packages/nuxt' },
+          { text: '@grundtone/design-tokens', link: '/packages/design-tokens' },
+          { text: '@grundtone/core', link: '/packages/core' },
+          { text: '@grundtone/shared', link: '/packages/shared' },
+          { text: '@grundtone/composables', link: '/packages/composables' },
+          { text: '@grundtone/ui', link: '/packages/ui' },
+          { text: '@grundtone/nuxt', link: '/packages/nuxt' },
         ],
       },
     ],
@@ -97,19 +98,22 @@ export default defineConfig({
         {
           text: 'Packages',
           items: [
-            { text: '@haspen/design-tokens', link: '/packages/design-tokens' },
-            { text: '@haspen/core', link: '/packages/core' },
-            { text: '@haspen/shared', link: '/packages/shared' },
-            { text: '@haspen/composables', link: '/packages/composables' },
-            { text: '@haspen/ui', link: '/packages/ui' },
-            { text: '@haspen/nuxt', link: '/packages/nuxt' },
+            {
+              text: '@grundtone/design-tokens',
+              link: '/packages/design-tokens',
+            },
+            { text: '@grundtone/core', link: '/packages/core' },
+            { text: '@grundtone/shared', link: '/packages/shared' },
+            { text: '@grundtone/composables', link: '/packages/composables' },
+            { text: '@grundtone/ui', link: '/packages/ui' },
+            { text: '@grundtone/nuxt', link: '/packages/nuxt' },
           ],
         },
       ],
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/allanasp/haspen-ui' },
+      { icon: 'github', link: 'https://github.com/allanasp/grundtone' },
     ],
   },
 });

@@ -242,7 +242,7 @@ All spacing utilities support responsive breakpoints:
 ## SCSS Usage
 
 ```scss
-@use '@haspen/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 // Use spacing function
 .card {

@@ -1,6 +1,6 @@
-# Contributing to HäspenUI
+# Contributing to Grundtone
 
-Thank you for your interest in contributing to HäspenUI! This document provides guidelines and
+Thank you for your interest in contributing to Grundtone! This document provides guidelines and
 information to help you contribute effectively.
 
 ## Table of Contents
@@ -34,8 +34,8 @@ This project and everyone participating in it is governed by our
 1. **Fork and clone the repository**
 
    ```bash
-   git clone https://github.com/your-username/haspen-ui.git
-   cd haspen-ui
+   git clone https://github.com/your-username/grundtone.git
+   cd grundtone
    ```
 
 2. **Install dependencies**
@@ -62,7 +62,7 @@ This project and everyone participating in it is governed by our
 This is a monorepo using Turborepo and pnpm workspaces:
 
 ```
-haspen-ui/
+grundtone/
 ├── packages/
 │   ├── ui/              # Vue 3 components
 │   ├── design-tokens/   # Design system tokens
@@ -78,12 +78,12 @@ haspen-ui/
 
 ### Package Responsibilities
 
-- **@haspen/ui**: Vue 3 components following atomic design
-- **@haspen/design-tokens**: Colors, typography, spacing tokens
-- **@haspen/composables**: Reusable Vue composables
-- **@haspen/core**: Framework-agnostic utilities
-- **@haspen/shared**: Shared build tools and presets
-- **@haspen/nuxt**: Nuxt integration module
+- **@grundtone/ui**: Vue 3 components following atomic design
+- **@grundtone/design-tokens**: Colors, typography, spacing tokens
+- **@grundtone/composables**: Reusable Vue composables
+- **@grundtone/core**: Framework-agnostic utilities
+- **@grundtone/shared**: Shared build tools and presets
+- **@grundtone/nuxt**: Nuxt integration module
 
 ## Development Workflow
 
@@ -121,7 +121,7 @@ We follow atomic design methodology:
 
    - Components: PascalCase (`Button`, `FormField`)
    - Files: Match component name (`Button.vue`, `Button.test.ts`)
-   - CSS classes: kebab-case with prefix (`haspen-button`)
+   - CSS classes: kebab-case with prefix (`grundtone-button`)
 
 3. **Component requirements**
    - TypeScript support
@@ -344,9 +344,9 @@ Releases are automated using semantic versioning:
 
 ## Getting Help
 
-- 💬 [GitHub Discussions](https://github.com/haspenui/haspen-ui/discussions)
-- 🐛 [Issue Tracker](https://github.com/haspenui/haspen-ui/issues)
-- 📖 [Documentation](https://haspenui.dev)
+- 💬 [GitHub Discussions](https://github.com/grundtone/grundtone/discussions)
+- 🐛 [Issue Tracker](https://github.com/grundtone/grundtone/issues)
+- 📖 [Documentation](https://grundtone.dev)
 
 ## Recognition
 
@@ -356,4 +356,4 @@ Contributors are recognized in:
 - Release notes
 - GitHub contributor graph
 
-Thank you for contributing to HäspenUI! 🎉
+Thank you for contributing to Grundtone! 🎉

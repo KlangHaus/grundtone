@@ -1,6 +1,6 @@
 # Usage Guide
 
-Learn how to use Haspen UI design tokens in your projects with SCSS, TypeScript, CSS variables, and
+Learn how to use Grundtone design tokens in your projects with SCSS, TypeScript, CSS variables, and
 Vue 3 composables.
 
 ## Quick Start
@@ -8,7 +8,7 @@ Vue 3 composables.
 The most common way to use design tokens is through SCSS functions and mixins:
 
 ```scss
-@use '@ipeeon/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 .button {
   // Colors
@@ -41,13 +41,13 @@ The most common way to use design tokens is through SCSS functions and mixins:
 Import tokens at the top of your SCSS file:
 
 ```scss
-@use '@ipeeon/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 ```
 
 You can also use a custom namespace:
 
 ```scss
-@use '@ipeeon/design-tokens' as dt;
+@use '@grundtone/design-tokens' as dt;
 
 .element {
   color: dt.getColor('primary');
@@ -124,7 +124,7 @@ import {
   RADIUS,
   TRANSITIONS,
   BREAKPOINTS,
-} from '@ipeeon/design-tokens';
+} from '@grundtone/design-tokens';
 ```
 
 ### Using Color Tokens
@@ -178,7 +178,7 @@ const normalLineHeight = TYPOGRAPHY.lineHeight.normal; // 1.5
 All tokens have TypeScript definitions:
 
 ```typescript
-import type { ColorName, SpacingSize } from '@ipeeon/design-tokens';
+import type { ColorName, SpacingSize } from '@grundtone/design-tokens';
 
 function getButtonStyle(color: ColorName, padding: SpacingSize) {
   return {
@@ -194,19 +194,19 @@ getButtonStyle('invalid', 'wrong'); // ✗ Type error
 
 ## CSS Variables Usage
 
-Design tokens are available as CSS custom properties with the `--haspen-` prefix:
+Design tokens are available as CSS custom properties with the `--grundtone-` prefix:
 
 ### Colors
 
 ```css
 .button {
   /* Color palette */
-  background-color: var(--haspen-color-blue-500);
+  background-color: var(--grundtone-color-blue-500);
 
   /* Semantic colors */
-  background-color: var(--haspen-color-primary);
-  color: var(--haspen-color-text-primary);
-  border-color: var(--haspen-color-border);
+  background-color: var(--grundtone-color-primary);
+  color: var(--grundtone-color-text-primary);
+  border-color: var(--grundtone-color-border);
 }
 ```
 
@@ -214,9 +214,9 @@ Design tokens are available as CSS custom properties with the `--haspen-` prefix
 
 ```css
 .container {
-  padding: var(--haspen-spacing-md);
-  margin: var(--haspen-spacing-lg);
-  gap: var(--haspen-spacing-sm);
+  padding: var(--grundtone-spacing-md);
+  margin: var(--grundtone-spacing-lg);
+  gap: var(--grundtone-spacing-sm);
 }
 ```
 
@@ -224,10 +224,10 @@ Design tokens are available as CSS custom properties with the `--haspen-` prefix
 
 ```css
 .text {
-  font-family: var(--haspen-font-family-base);
-  font-size: var(--haspen-font-size-base);
-  font-weight: var(--haspen-font-weight-normal);
-  line-height: var(--haspen-line-height-normal);
+  font-family: var(--grundtone-font-family-base);
+  font-size: var(--grundtone-font-size-base);
+  font-weight: var(--grundtone-font-weight-normal);
+  line-height: var(--grundtone-line-height-normal);
 }
 ```
 
@@ -236,13 +236,14 @@ Design tokens are available as CSS custom properties with the `--haspen-` prefix
 ```css
 .card {
   /* Shadows */
-  box-shadow: var(--haspen-shadow-md);
+  box-shadow: var(--grundtone-shadow-md);
 
   /* Border radius */
-  border-radius: var(--haspen-radius-md);
+  border-radius: var(--grundtone-radius-md);
 
   /* Transitions */
-  transition: all var(--haspen-transition-duration-normal) var(--haspen-transition-timing-ease);
+  transition: all var(--grundtone-transition-duration-normal)
+    var(--grundtone-transition-timing-ease);
 }
 ```
 
@@ -254,7 +255,7 @@ For Vue 3 projects, use composables for reactive theme management:
 
 ```vue
 <script setup>
-  import { useTheme } from '@ipeeon/composables';
+  import { useTheme } from '@grundtone/composables';
 
   const { theme, mode, isDark, isLight, setMode, toggleMode } = useTheme();
 </script>
@@ -278,7 +279,7 @@ For Vue 3 projects, use composables for reactive theme management:
 
 ```vue
 <script setup>
-  import { useRegisteredProperties } from '@ipeeon/composables';
+  import { useRegisteredProperties } from '@grundtone/composables';
 
   const { isSupported, isRegistered, register, getProperty, setProperty } =
     useRegisteredProperties();
@@ -347,14 +348,14 @@ For Vue 3 projects, use composables for reactive theme management:
 ```css
 /* Light mode (default) */
 .card {
-  background-color: var(--haspen-color-surface);
-  color: var(--haspen-color-text-primary);
+  background-color: var(--grundtone-color-surface);
+  color: var(--grundtone-color-text-primary);
 }
 
 /* Dark mode */
 [data-theme='dark'] .card {
-  background-color: var(--haspen-color-surface-dark);
-  color: var(--haspen-color-text-primary-dark);
+  background-color: var(--grundtone-color-surface-dark);
+  color: var(--grundtone-color-text-primary-dark);
 }
 ```
 
@@ -400,10 +401,10 @@ Only import the tokens you need:
 
 ```typescript
 // ✓ Import specific tokens
-import { COLORS } from '@ipeeon/design-tokens';
+import { COLORS } from '@grundtone/design-tokens';
 
 // ✗ Import everything
-import * as tokens from '@ipeeon/design-tokens';
+import * as tokens from '@grundtone/design-tokens';
 ```
 
 ### CSS Custom Properties
@@ -432,7 +433,7 @@ For dynamic theming, use CSS custom properties:
 For better performance with transitions:
 
 ```typescript
-import { registerCSSProperties } from '@ipeeon/design-tokens';
+import { registerCSSProperties } from '@grundtone/design-tokens';
 
 // Register animated properties
 registerCSSProperties({
@@ -452,5 +453,5 @@ registerCSSProperties({
 
 ## Need Help?
 
-- **[GitHub Issues](https://github.com/allanasp/haspen-ui/issues)** - Report bugs
-- **[GitHub Discussions](https://github.com/allanasp/haspen-ui/discussions)** - Ask questions
+- **[GitHub Issues](https://github.com/allanasp/grundtone/issues)** - Report bugs
+- **[GitHub Discussions](https://github.com/allanasp/grundtone/discussions)** - Ask questions

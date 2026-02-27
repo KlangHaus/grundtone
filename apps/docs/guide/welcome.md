@@ -1,6 +1,6 @@
-# Welcome to Haspen UI Design Tokens
+# Welcome to Grundtone Design Tokens
 
-Haspen UI's design tokens provide a comprehensive foundation for building consistent, accessible,
+Grundtone's design tokens provide a comprehensive foundation for building consistent, accessible,
 and maintainable user interfaces. Design tokens are the visual design atoms of the design system -
 they define colors, typography, spacing, and other fundamental design decisions.
 
@@ -32,7 +32,7 @@ developer experience.
 
 ## Token Categories
 
-Haspen UI organizes tokens into logical categories:
+Grundtone organizes tokens into logical categories:
 
 ### Colors
 
@@ -95,7 +95,7 @@ While optimized for Vue 3, the core tokens work with any framework:
 
 ## Browser Support
 
-Haspen UI design tokens support all modern browsers:
+Grundtone design tokens support all modern browsers:
 
 - **Chrome**: Last 2 versions
 - **Firefox**: Last 2 versions
@@ -106,23 +106,23 @@ Advanced features like CSS registered properties gracefully degrade in older bro
 
 ## Getting Started
 
-Ready to start using Haspen UI design tokens? Follow these steps:
+Ready to start using Grundtone design tokens? Follow these steps:
 
-1. **[Install the Package](/guide/installation)** - Add @ipeeon/design-tokens to your project
+1. **[Install the Package](/guide/installation)** - Add @grundtone/design-tokens to your project
 2. **[Learn Basic Usage](/guide/usage)** - See how to use tokens in your code
 3. **[Explore Colors](/tokens/colors)** - Browse the full color palette
 4. **[View Typography](/tokens/typography)** - Discover the type scale
 
 ## Package Information
 
-- **Package**: `@ipeeon/design-tokens`
+- **Package**: `@grundtone/design-tokens`
 - **Version**: 1.0.0
 - **License**: MIT
-- **Repository**: [GitHub](https://github.com/allanasp/haspen-ui)
+- **Repository**: [GitHub](https://github.com/allanasp/grundtone)
 
 ## Philosophy
 
-Haspen UI design tokens are built on three core principles:
+Grundtone design tokens are built on three core principles:
 
 ### 1. Consistency Over Flexibility
 
@@ -144,9 +144,9 @@ development workflows. TypeScript support and comprehensive examples make adopti
 Need help? Have questions? Found a bug?
 
 - **Documentation**: Browse these docs for detailed guides
-- **GitHub Issues**: [Report bugs or request features](https://github.com/allanasp/haspen-ui/issues)
+- **GitHub Issues**: [Report bugs or request features](https://github.com/allanasp/grundtone/issues)
 - **GitHub Discussions**:
-  [Ask questions and share ideas](https://github.com/allanasp/haspen-ui/discussions)
+  [Ask questions and share ideas](https://github.com/allanasp/grundtone/discussions)
 
 ---
 

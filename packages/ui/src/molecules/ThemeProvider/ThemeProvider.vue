@@ -3,19 +3,19 @@
   
   PERFORMANCE NOTE: Theme transitions are now opt-in via utility classes.
   Instead of applying transitions to ALL elements (*), use these classes:
-  - .haspen-transition-colors: For background, border, text color transitions
-  - .haspen-transition-fill: For SVG fill/stroke transitions  
-  - .haspen-transition-shadow: For box-shadow transitions
-  - .haspen-transition-all: For all theme-related transitions
+  - .grundtone-transition-colors: For background, border, text color transitions
+  - .grundtone-transition-fill: For SVG fill/stroke transitions  
+  - .grundtone-transition-shadow: For box-shadow transitions
+  - .grundtone-transition-all: For all theme-related transitions
   
   This prevents performance issues on complex pages with many elements.
 -->
 <template>
   <div
     :class="[
-      'haspen-theme-provider',
+      'grundtone-theme-provider',
       {
-        'haspen-theme-provider--transitions': enableTransitions,
+        'grundtone-theme-provider--transitions': enableTransitions,
       },
     ]"
     :data-theme="theme.mode"
@@ -38,8 +38,8 @@
     ThemeProviderContext,
     ThemeMode,
     Theme,
-  } from '@ipeeon/core';
-  import { THEME_INJECTION_KEY } from '@ipeeon/core';
+  } from '@grundtone/core';
+  import { THEME_INJECTION_KEY } from '@grundtone/core';
   import { lightTheme, darkTheme } from './themes';
   import {
     applyThemeToDOM,
@@ -53,7 +53,7 @@
     mode: 'auto',
     enableTransitions: true,
     persistMode: true,
-    storageKey: 'haspen-ui-theme-mode',
+    storageKey: 'grundtone-theme-mode',
   });
 
   const currentMode = ref<ThemeMode>(props.mode);
@@ -157,44 +157,44 @@
 </script>
 
 <style lang="scss">
-  .haspen-theme-provider {
+  .grundtone-theme-provider {
     &--transitions {
       // Utility classes for theme transitions - apply only where needed
-      .haspen-transition-colors {
+      .grundtone-transition-colors {
         transition-property: background-color, border-color, color;
         transition-timing-function: var(
-          --haspen-transition-timing-ease,
+          --grundtone-transition-timing-ease,
           cubic-bezier(0.4, 0, 0.2, 1)
         );
-        transition-duration: var(--haspen-transition-duration-fast, 150ms);
+        transition-duration: var(--grundtone-transition-duration-fast, 150ms);
       }
 
-      .haspen-transition-fill {
+      .grundtone-transition-fill {
         transition-property: fill, stroke;
         transition-timing-function: var(
-          --haspen-transition-timing-ease,
+          --grundtone-transition-timing-ease,
           cubic-bezier(0.4, 0, 0.2, 1)
         );
-        transition-duration: var(--haspen-transition-duration-fast, 150ms);
+        transition-duration: var(--grundtone-transition-duration-fast, 150ms);
       }
 
-      .haspen-transition-shadow {
+      .grundtone-transition-shadow {
         transition-property: box-shadow;
         transition-timing-function: var(
-          --haspen-transition-timing-ease,
+          --grundtone-transition-timing-ease,
           cubic-bezier(0.4, 0, 0.2, 1)
         );
-        transition-duration: var(--haspen-transition-duration-fast, 150ms);
+        transition-duration: var(--grundtone-transition-duration-fast, 150ms);
       }
 
-      .haspen-transition-all {
+      .grundtone-transition-all {
         transition-property:
           background-color, border-color, color, fill, stroke, box-shadow;
         transition-timing-function: var(
-          --haspen-transition-timing-ease,
+          --grundtone-transition-timing-ease,
           cubic-bezier(0.4, 0, 0.2, 1)
         );
-        transition-duration: var(--haspen-transition-duration-fast, 150ms);
+        transition-duration: var(--grundtone-transition-duration-fast, 150ms);
       }
     }
   }
@@ -206,138 +206,138 @@
 
     // Modern light-dark() function for automatic theme switching
     // Colors - WCAG 2.1 AA compliant (4.5:1 normal text, 3:1 large text)
-    --haspen-color-primary: light-dark(#0059b3, #1565c0);
-    --haspen-color-secondary: light-dark(#6c757d, #adb5bd);
-    --haspen-color-tertiary: light-dark(#17a2b8, #26c6da);
-    --haspen-color-error: light-dark(#d32f2f, #f44336);
-    --haspen-color-warning: light-dark(#d84315, #ff9800);
-    --haspen-color-success: light-dark(#2e7d32, #4caf50);
-    --haspen-color-info: light-dark(#01579b, #03a9f4);
-    --haspen-color-neutral: light-dark(#757575, #9e9e9e);
-    --haspen-color-background: light-dark(#ffffff, #121212);
-    --haspen-color-surface: light-dark(#f5f5f5, #1e1e1e);
-    --haspen-color-text: light-dark(#212529, #ffffff);
-    --haspen-color-textSecondary: light-dark(#6c757d, #adb5bd);
-    --haspen-color-border: light-dark(#757575, #757575);
-    --haspen-color-divider: light-dark(#9e9e9e, #616161);
+    --grundtone-color-primary: light-dark(#0059b3, #1565c0);
+    --grundtone-color-secondary: light-dark(#6c757d, #adb5bd);
+    --grundtone-color-tertiary: light-dark(#17a2b8, #26c6da);
+    --grundtone-color-error: light-dark(#d32f2f, #f44336);
+    --grundtone-color-warning: light-dark(#d84315, #ff9800);
+    --grundtone-color-success: light-dark(#2e7d32, #4caf50);
+    --grundtone-color-info: light-dark(#01579b, #03a9f4);
+    --grundtone-color-neutral: light-dark(#757575, #9e9e9e);
+    --grundtone-color-background: light-dark(#ffffff, #121212);
+    --grundtone-color-surface: light-dark(#f5f5f5, #1e1e1e);
+    --grundtone-color-text: light-dark(#212529, #ffffff);
+    --grundtone-color-textSecondary: light-dark(#6c757d, #adb5bd);
+    --grundtone-color-border: light-dark(#757575, #757575);
+    --grundtone-color-divider: light-dark(#9e9e9e, #616161);
 
     // Spacing
-    --haspen-spacing-xs: 0.25rem;
-    --haspen-spacing-sm: 0.5rem;
-    --haspen-spacing-md: 1rem;
-    --haspen-spacing-lg: 1.5rem;
-    --haspen-spacing-xl: 2rem;
-    --haspen-spacing-2xl: 3rem;
-    --haspen-spacing-3xl: 4rem;
-    --haspen-spacing-4xl: 5rem;
+    --grundtone-spacing-xs: 0.25rem;
+    --grundtone-spacing-sm: 0.5rem;
+    --grundtone-spacing-md: 1rem;
+    --grundtone-spacing-lg: 1.5rem;
+    --grundtone-spacing-xl: 2rem;
+    --grundtone-spacing-2xl: 3rem;
+    --grundtone-spacing-3xl: 4rem;
+    --grundtone-spacing-4xl: 5rem;
 
     // Typography
-    --haspen-font-family-base:
+    --grundtone-font-family-base:
       'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica,
       Arial, sans-serif;
-    --haspen-font-family-heading:
+    --grundtone-font-family-heading:
       'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica,
       Arial, sans-serif;
-    --haspen-font-family-mono: 'IBM Plex Mono', 'Courier New', monospace;
+    --grundtone-font-family-mono: 'IBM Plex Mono', 'Courier New', monospace;
 
-    --haspen-font-size-xs: 0.75rem;
-    --haspen-font-size-sm: 0.875rem;
-    --haspen-font-size-base: 1rem;
-    --haspen-font-size-lg: 1.125rem;
-    --haspen-font-size-xl: 1.25rem;
-    --haspen-font-size-2xl: 1.5rem;
-    --haspen-font-size-3xl: 1.875rem;
-    --haspen-font-size-4xl: 2.25rem;
-    --haspen-font-size-5xl: 3rem;
+    --grundtone-font-size-xs: 0.75rem;
+    --grundtone-font-size-sm: 0.875rem;
+    --grundtone-font-size-base: 1rem;
+    --grundtone-font-size-lg: 1.125rem;
+    --grundtone-font-size-xl: 1.25rem;
+    --grundtone-font-size-2xl: 1.5rem;
+    --grundtone-font-size-3xl: 1.875rem;
+    --grundtone-font-size-4xl: 2.25rem;
+    --grundtone-font-size-5xl: 3rem;
 
-    --haspen-font-weight-thin: 100;
-    --haspen-font-weight-light: 300;
-    --haspen-font-weight-normal: 400;
-    --haspen-font-weight-medium: 500;
-    --haspen-font-weight-semibold: 600;
-    --haspen-font-weight-bold: 700;
-    --haspen-font-weight-extrabold: 800;
+    --grundtone-font-weight-thin: 100;
+    --grundtone-font-weight-light: 300;
+    --grundtone-font-weight-normal: 400;
+    --grundtone-font-weight-medium: 500;
+    --grundtone-font-weight-semibold: 600;
+    --grundtone-font-weight-bold: 700;
+    --grundtone-font-weight-extrabold: 800;
 
-    --haspen-line-height-none: 1;
-    --haspen-line-height-tight: 1.25;
-    --haspen-line-height-snug: 1.375;
-    --haspen-line-height-normal: 1.5;
-    --haspen-line-height-relaxed: 1.625;
-    --haspen-line-height-loose: 2;
+    --grundtone-line-height-none: 1;
+    --grundtone-line-height-tight: 1.25;
+    --grundtone-line-height-snug: 1.375;
+    --grundtone-line-height-normal: 1.5;
+    --grundtone-line-height-relaxed: 1.625;
+    --grundtone-line-height-loose: 2;
 
     // Shadows
-    --haspen-shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --haspen-shadow-sm:
+    --grundtone-shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --grundtone-shadow-sm:
       0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-    --haspen-shadow-md:
+    --grundtone-shadow-md:
       0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --haspen-shadow-lg:
+    --grundtone-shadow-lg:
       0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    --haspen-shadow-xl:
+    --grundtone-shadow-xl:
       0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    --haspen-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    --haspen-shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
-    --haspen-shadow-none: none;
+    --grundtone-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --grundtone-shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+    --grundtone-shadow-none: none;
 
     // Radius
-    --haspen-radius-none: 0;
-    --haspen-radius-xs: 0.125rem;
-    --haspen-radius-sm: 0.25rem;
-    --haspen-radius-md: 0.375rem;
-    --haspen-radius-lg: 0.5rem;
-    --haspen-radius-xl: 0.75rem;
-    --haspen-radius-2xl: 1rem;
-    --haspen-radius-3xl: 1.5rem;
-    --haspen-radius-full: 9999px;
+    --grundtone-radius-none: 0;
+    --grundtone-radius-xs: 0.125rem;
+    --grundtone-radius-sm: 0.25rem;
+    --grundtone-radius-md: 0.375rem;
+    --grundtone-radius-lg: 0.5rem;
+    --grundtone-radius-xl: 0.75rem;
+    --grundtone-radius-2xl: 1rem;
+    --grundtone-radius-3xl: 1.5rem;
+    --grundtone-radius-full: 9999px;
 
     // Transitions
-    --haspen-transition-duration-fast: 150ms;
-    --haspen-transition-duration-base: 300ms;
-    --haspen-transition-duration-slow: 500ms;
+    --grundtone-transition-duration-fast: 150ms;
+    --grundtone-transition-duration-base: 300ms;
+    --grundtone-transition-duration-slow: 500ms;
 
-    --haspen-transition-timing-ease: cubic-bezier(0.4, 0, 0.2, 1);
-    --haspen-transition-timing-easeIn: cubic-bezier(0.4, 0, 1, 1);
-    --haspen-transition-timing-easeOut: cubic-bezier(0, 0, 0.2, 1);
-    --haspen-transition-timing-easeInOut: cubic-bezier(0.4, 0, 0.2, 1);
-    --haspen-transition-timing-linear: linear;
+    --grundtone-transition-timing-ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --grundtone-transition-timing-easeIn: cubic-bezier(0.4, 0, 1, 1);
+    --grundtone-transition-timing-easeOut: cubic-bezier(0, 0, 0.2, 1);
+    --grundtone-transition-timing-easeInOut: cubic-bezier(0.4, 0, 0.2, 1);
+    --grundtone-transition-timing-linear: linear;
   }
 
   // Legacy data-attribute overrides for manual theme control
   // These provide fallback support for browsers without light-dark() and explicit theme switching
   [data-theme='dark'] {
     color-scheme: dark;
-    --haspen-color-primary: #1565c0;
-    --haspen-color-secondary: #adb5bd;
-    --haspen-color-tertiary: #26c6da;
-    --haspen-color-error: #f44336;
-    --haspen-color-warning: #ff9800;
-    --haspen-color-success: #4caf50;
-    --haspen-color-info: #03a9f4;
-    --haspen-color-neutral: #9e9e9e;
-    --haspen-color-background: #121212;
-    --haspen-color-surface: #1e1e1e;
-    --haspen-color-text: #ffffff;
-    --haspen-color-textSecondary: #adb5bd;
-    --haspen-color-border: #757575;
-    --haspen-color-divider: #616161;
+    --grundtone-color-primary: #1565c0;
+    --grundtone-color-secondary: #adb5bd;
+    --grundtone-color-tertiary: #26c6da;
+    --grundtone-color-error: #f44336;
+    --grundtone-color-warning: #ff9800;
+    --grundtone-color-success: #4caf50;
+    --grundtone-color-info: #03a9f4;
+    --grundtone-color-neutral: #9e9e9e;
+    --grundtone-color-background: #121212;
+    --grundtone-color-surface: #1e1e1e;
+    --grundtone-color-text: #ffffff;
+    --grundtone-color-textSecondary: #adb5bd;
+    --grundtone-color-border: #757575;
+    --grundtone-color-divider: #616161;
   }
 
   [data-theme='light'] {
     color-scheme: light;
-    --haspen-color-primary: #0059b3;
-    --haspen-color-secondary: #6c757d;
-    --haspen-color-tertiary: #17a2b8;
-    --haspen-color-error: #d32f2f;
-    --haspen-color-warning: #d84315;
-    --haspen-color-success: #2e7d32;
-    --haspen-color-info: #01579b;
-    --haspen-color-neutral: #757575;
-    --haspen-color-background: #ffffff;
-    --haspen-color-surface: #f5f5f5;
-    --haspen-color-text: #212529;
-    --haspen-color-textSecondary: #6c757d;
-    --haspen-color-border: #757575;
-    --haspen-color-divider: #9e9e9e;
+    --grundtone-color-primary: #0059b3;
+    --grundtone-color-secondary: #6c757d;
+    --grundtone-color-tertiary: #17a2b8;
+    --grundtone-color-error: #d32f2f;
+    --grundtone-color-warning: #d84315;
+    --grundtone-color-success: #2e7d32;
+    --grundtone-color-info: #01579b;
+    --grundtone-color-neutral: #757575;
+    --grundtone-color-background: #ffffff;
+    --grundtone-color-surface: #f5f5f5;
+    --grundtone-color-text: #212529;
+    --grundtone-color-textSecondary: #6c757d;
+    --grundtone-color-border: #757575;
+    --grundtone-color-divider: #9e9e9e;
   }
 
   // Auto mode: respects system preference via light-dark() function

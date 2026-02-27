@@ -315,7 +315,7 @@ All grid utilities support responsive variants:
 ## SCSS Usage
 
 ```scss
-@use '@haspen/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 // Custom grid
 .custom-grid {

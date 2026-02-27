@@ -1,15 +1,15 @@
-# @haspen/components
+# @grundtone/components
 
-Vue 3 komponenter for HäspenUI designsystemet, bygget med Atomic Design principper.
+Vue 3 komponenter for Grundtone designsystemet, bygget med Atomic Design principper.
 
 ## Installation
 
 ```bash
-npm install @haspen/components
+npm install @grundtone/components
 # eller
-yarn add @haspen/components
+yarn add @grundtone/components
 # eller
-pnpm add @haspen/components
+pnpm add @grundtone/components
 ```
 
 ## Brug
@@ -20,7 +20,7 @@ pnpm add @haspen/components
 </template>
 
 <script setup>
-  import { Button } from '@haspen/components';
+  import { Button } from '@grundtone/components';
 </script>
 ```
 
@@ -109,7 +109,7 @@ ComponentName/
 
 - Brug BEM metodologi
 - Hold styling i separate SCSS-filer
-- Brug CSS variabler fra @haspen/core
+- Brug CSS variabler fra @grundtone/core
 
 ### TypeScript
 

@@ -1,6 +1,6 @@
 # Changeset Workflow Guide
 
-Complete guide to using changesets in the Haspen UI monorepo.
+Complete guide to using changesets in the Grundtone monorepo.
 
 ## Table of Contents
 
@@ -52,16 +52,16 @@ Location: `.changeset/config.json`
 **Key Features:**
 
 - **Linked Packages**: All packages version together when any package changes
-  - `@haspen/core`
-  - `@haspen/shared`
-  - `@haspen/ui`
-  - `@haspen/composables`
-  - `@haspen/design-tokens`
-  - `@haspen/nuxt`
+  - `@grundtone/core`
+  - `@grundtone/shared`
+  - `@grundtone/ui`
+  - `@grundtone/composables`
+  - `@grundtone/design-tokens`
+  - `@grundtone/nuxt`
 - **Base Branch**: `develop` - changesets compare against this branch
 - **Access**: `public` - all packages publish publicly to npm
 - **Changelog**: GitHub integration shows commit links and PR references
-- **Ignored Packages**: `@haspen/playground` never publishes
+- **Ignored Packages**: `@grundtone/playground` never publishes
 
 ### What Are Linked Packages?
 
@@ -74,7 +74,7 @@ Linked packages maintain synchronized versions across the monorepo. When you:
 **Example:**
 
 - Current state: All packages at `0.1.0`
-- You change only `@haspen/ui` with a `minor` bump
+- You change only `@grundtone/ui` with a `minor` bump
 - After versioning: ALL packages become `0.2.0`
 
 **Benefits:**
@@ -157,9 +157,9 @@ pnpm changeset publish --tag feature-xyz --no-git-tag
 **Install snapshot:**
 
 ```bash
-npm install @haspen/ui@snapshot
+npm install @grundtone/ui@snapshot
 # or
-npm install @haspen/ui@feature-xyz
+npm install @grundtone/ui@feature-xyz
 ```
 
 **Configuration:**
@@ -230,7 +230,7 @@ git push --follow-tags
 
 - Use a separate branch (e.g., `next`, `beta`) for prereleases
 - Don't run prereleases from `develop` or `main`
-- Users install with: `npm install @haspen/ui@next`
+- Users install with: `npm install @grundtone/ui@next`
 - Document prerelease channels in README
 
 ### Internal Dependencies
@@ -239,23 +239,23 @@ Configuration: `"updateInternalDependencies": "patch"`
 
 **What it does:**
 
-When `@haspen/ui` depends on `@haspen/core` and `@haspen/core` gets bumped, `@haspen/ui`'s
-dependency range updates with a `patch` bump.
+When `@grundtone/ui` depends on `@grundtone/core` and `@grundtone/core` gets bumped,
+`@grundtone/ui`'s dependency range updates with a `patch` bump.
 
 **Example:**
 
 ```json
-// Before: @haspen/ui at 1.0.0
+// Before: @grundtone/ui at 1.0.0
 {
   "dependencies": {
-    "@haspen/core": "workspace:*"
+    "@grundtone/core": "workspace:*"
   }
 }
 
-// @haspen/core bumps from 1.0.0 to 1.1.0
+// @grundtone/core bumps from 1.0.0 to 1.1.0
 
 
-// After: @haspen/ui bumps to 1.0.1
+// After: @grundtone/ui bumps to 1.0.1
 ```
 
 ### Experimental Options

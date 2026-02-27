@@ -329,7 +329,7 @@ All containers include horizontal padding:
 ## SCSS Usage
 
 ```scss
-@use '@haspen/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 // Custom container
 .custom-container {

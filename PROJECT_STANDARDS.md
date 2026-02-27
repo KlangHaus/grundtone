@@ -2,7 +2,7 @@
 
 ## Development Standards
 
-This document outlines the mandatory standards for the Haspen UI Design System monorepo.
+This document outlines the mandatory standards for the Grundtone Design System monorepo.
 
 ## Architecture Requirements
 
@@ -86,7 +86,7 @@ ComponentName/
 - **Strict mode enabled** across all packages
 - **No `any` types** - all props, events, and methods must be properly typed
 - **Interface-based props** - use interfaces, never inline types
-- **Path aliases**: `@haspen/*` maps to `packages/*/src`
+- **Path aliases**: `@grundtone/*` maps to `packages/*/src`
 
 ### Testing Requirements (MANDATORY)
 

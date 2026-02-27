@@ -16,7 +16,7 @@ import {
   createHeroiconsConfig, 
   createLucideConfig,
   createHybridIconsConfig,
-  haspenIcons,
+  grundtoneIcons,
   iconMappings,
   mapIconName
 } from './dist/index.js';
@@ -49,13 +49,13 @@ switch(library) {
 function testCustomIcons() {
   console.log('📦 Custom Icons Configuration');
   
-  const config = createCustomIconsConfig(haspenIcons, {
+  const config = createCustomIconsConfig(grundtoneIcons, {
     prefix: 'my-icon',
     includeBuiltIn: true
   });
   
   console.log('✅ Configuration:', JSON.stringify(config, null, 2));
-  console.log('✅ Available icons:', Object.keys(haspenIcons));
+  console.log('✅ Available icons:', Object.keys(grundtoneIcons));
   console.log('✅ Bundle size: Minimal (only icons you use)');
   console.log('✅ Dependencies: None required');
   
@@ -69,11 +69,11 @@ function testCustomIcons() {
 </template>
 
 <script setup>
-import { IconProvider, Icon, createCustomIconsConfig, haspenIcons } from '@haspen/ui';
+import { IconProvider, Icon, createCustomIconsConfig, grundtoneIcons } from '@grundtone/ui';
 import MyCustomIcon from './MyCustomIcon.vue';
 
 const customConfig = createCustomIconsConfig({
-  ...haspenIcons,
+  ...grundtoneIcons,
   'my-custom': MyCustomIcon,
 });
 </script>`);
@@ -106,7 +106,7 @@ function testHeroicons() {
 </template>
 
 <script setup>
-import { IconProvider, Icon } from '@haspen/ui';
+import { IconProvider, Icon } from '@grundtone/ui';
 </script>`);
 
   console.log('\n🔗 Popular icons:');
@@ -142,7 +142,7 @@ function testLucide() {
 </template>
 
 <script setup>
-import { IconProvider, Icon } from '@haspen/ui';
+import { IconProvider, Icon } from '@grundtone/ui';
 </script>`);
 
   console.log('\n🔗 Popular icons:');
@@ -158,7 +158,7 @@ function testHybrid() {
     primary: 'heroicons',
     fallbackIcons: {
       'custom-logo': 'MyLogoComponent',
-      ...haspenIcons
+      ...grundtoneIcons
     }
   });
   
@@ -180,13 +180,13 @@ function testHybrid() {
 </template>
 
 <script setup>
-import { IconProvider, Icon, createHybridIconsConfig, haspenIcons } from '@haspen/ui';
+import { IconProvider, Icon, createHybridIconsConfig, grundtoneIcons } from '@grundtone/ui';
 import CustomLogo from './CustomLogo.vue';
 
 const hybridConfig = createHybridIconsConfig({
   primary: 'heroicons',
   fallbackIcons: {
-    ...haspenIcons,
+    ...grundtoneIcons,
     'custom-logo': CustomLogo,
   },
 });

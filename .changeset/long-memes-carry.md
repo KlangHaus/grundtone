@@ -1,10 +1,10 @@
 ---
-'@ipeeon/design-tokens': minor
-'@ipeeon/composables': patch
-'@ipeeon/shared': patch
-'@ipeeon/core': patch
-'@ipeeon/nuxt': patch
-'@ipeeon/ui': patch
+'@grundtone/design-tokens': minor
+'@grundtone/composables': patch
+'@grundtone/shared': patch
+'@grundtone/core': patch
+'@grundtone/nuxt': patch
+'@grundtone/ui': patch
 ---
 
 Add comprehensive platform-specific documentation and 12-column grid system

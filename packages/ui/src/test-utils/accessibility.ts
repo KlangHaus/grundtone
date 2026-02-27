@@ -1,5 +1,5 @@
 /**
- * Accessibility testing utilities for Haspen UI components
+ * Accessibility testing utilities for Grundtone UI components
  * Provides standardized A11Y testing across all components
  */
 
@@ -7,10 +7,10 @@ import { configureAxe } from 'vitest-axe';
 import type { AxeConfig } from 'vitest-axe';
 
 /**
- * Standard accessibility configuration for Haspen UI components
+ * Standard accessibility configuration for Grundtone UI components
  * Follows WCAG 2.1 AA guidelines
  */
-export const haspenA11yConfig: AxeConfig = {
+export const grundtoneA11yConfig: AxeConfig = {
   // Focus on WCAG 2.1 AA compliance
   tags: ['wcag2a', 'wcag2aa', 'wcag21aa'],
 
@@ -26,10 +26,10 @@ export const haspenA11yConfig: AxeConfig = {
 };
 
 /**
- * Configure axe with Haspen UI standards
+ * Configure axe with Grundtone UI standards
  */
-export const configureHaspenAxe = () => {
-  configureAxe(haspenA11yConfig);
+export const configureGrundtoneAxe = () => {
+  configureAxe(grundtoneA11yConfig);
 };
 
 /**
@@ -198,9 +198,9 @@ export async function testComponentAccessibility(
 
   // Configure axe for this test
   const config = {
-    ...haspenA11yConfig,
+    ...grundtoneA11yConfig,
     rules: {
-      ...haspenA11yConfig.rules,
+      ...grundtoneA11yConfig.rules,
       // Enable additional rules
       ...Object.fromEntries(
         additionalRules.map(rule => [rule, { enabled: true }]),

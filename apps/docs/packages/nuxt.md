@@ -1,17 +1,17 @@
-# @haspen/nuxt
+# @grundtone/nuxt
 
-[![npm version](https://img.shields.io/npm/v/@haspen/nuxt.svg?style=flat)](https://www.npmjs.com/package/@haspen/nuxt)
+[![npm version](https://img.shields.io/npm/v/@grundtone/nuxt.svg?style=flat)](https://www.npmjs.com/package/@grundtone/nuxt)
 
-Nuxt 3 module for seamless Haspen UI integration.
+Nuxt 3 module for seamless Grundtone integration.
 
 ## Coming Soon
 
-Documentation for `@haspen/nuxt` is coming soon.
+Documentation for `@grundtone/nuxt` is coming soon.
 
 ## Purpose & Intent
 
-The `@haspen/nuxt` package is a **Nuxt 3 module** that simplifies the integration of Haspen UI into
-Nuxt applications. Its purpose is to provide **zero-config setup** with automatic component
+The `@grundtone/nuxt` package is a **Nuxt 3 module** that simplifies the integration of Grundtone
+into Nuxt applications. Its purpose is to provide **zero-config setup** with automatic component
 registration, style importing, and composable availability.
 
 ### Key Principles
@@ -33,21 +33,21 @@ registration, style importing, and composable availability.
 ## Installation
 
 ```bash
-npx nuxi module add @haspen/nuxt
+npx nuxi module add @grundtone/nuxt
 # or
-npm install @haspen/nuxt
+npm install @grundtone/nuxt
 # or
-pnpm add @haspen/nuxt
+pnpm add @grundtone/nuxt
 # or
-yarn add @haspen/nuxt
+yarn add @grundtone/nuxt
 ```
 
 ## Architecture
 
 ### What This Module Does
 
-1. **Auto-registers** all `@haspen/ui` components globally
-2. **Auto-imports** all `@haspen/composables` composables
+1. **Auto-registers** all `@grundtone/ui` components globally
+2. **Auto-imports** all `@grundtone/composables` composables
 3. **Injects** design token styles automatically
 4. **Provides** TypeScript types for Nuxt auto-completion
 5. **Configures** SSR-safe component hydration
@@ -55,9 +55,9 @@ yarn add @haspen/nuxt
 ### Dependencies
 
 ```
-@haspen/nuxt
-├── @haspen/ui (Vue 3 components)
-├── @haspen/composables (Vue 3 composables)
+@grundtone/nuxt
+├── @grundtone/ui (Vue 3 components)
+├── @grundtone/composables (Vue 3 composables)
 └── Nuxt 3 (peer dependency)
 ```
 
@@ -66,14 +66,14 @@ yarn add @haspen/nuxt
 ### 1. Install the module
 
 ```bash
-npx nuxi module add @haspen/nuxt
+npx nuxi module add @grundtone/nuxt
 ```
 
 ### 2. Add to nuxt.config.ts
 
 ```typescript
 export default defineNuxtConfig({
-  modules: ['@haspen/nuxt'],
+  modules: ['@grundtone/nuxt'],
 });
 ```
 
@@ -101,7 +101,7 @@ export default defineNuxtConfig({
 
 ### Why This Package Exists
 
-**Without this module**, using Haspen UI in Nuxt requires:
+**Without this module**, using Grundtone in Nuxt requires:
 
 1. Manual component imports in every file
 2. Manual composable imports
@@ -130,7 +130,7 @@ export default defineNuxtConfig({
 
 ### Auto-Import Components
 
-All `@haspen/ui` components are globally available:
+All `@grundtone/ui` components are globally available:
 
 ```vue
 <template>
@@ -144,7 +144,7 @@ All `@haspen/ui` components are globally available:
 
 ### Auto-Import Composables
 
-All `@haspen/composables` composables are available:
+All `@grundtone/composables` composables are available:
 
 ```vue
 <script setup lang="ts">
@@ -186,11 +186,11 @@ All components are SSR-safe:
 ```typescript
 // nuxt.config.ts
 export default defineNuxtConfig({
-  modules: ['@haspen/nuxt'],
+  modules: ['@grundtone/nuxt'],
 
-  haspen: {
+  grundtone: {
     // Optional configuration
-    prefix: 'Haspen', // Component prefix (default: none)
+    prefix: 'Grundtone', // Component prefix (default: none)
     composables: true, // Auto-import composables (default: true)
     styles: true, // Auto-import styles (default: true)
   },
@@ -201,7 +201,7 @@ export default defineNuxtConfig({
 
 Works seamlessly with:
 
-- **Nuxt Content**: Use Haspen UI components in markdown
+- **Nuxt Content**: Use Grundtone components in markdown
 - **Nuxt I18n**: Components support internationalization
 - **Pinia**: State management integration via composables
 - **VueUse**: Composables compatible with VueUse patterns
@@ -220,11 +220,11 @@ Works seamlessly with:
 ```vue
 <script setup lang="ts">
   // Manual imports
-  import { Button, Card, Input } from '@haspen/ui';
-  import { useToggle, useMediaQuery } from '@haspen/composables';
+  import { Button, Card, Input } from '@grundtone/ui';
+  import { useToggle, useMediaQuery } from '@grundtone/composables';
 
   // Import styles
-  import '@haspen/design-tokens/dist/index.css';
+  import '@grundtone/design-tokens/dist/index.css';
 
   const [isOpen, toggle] = useToggle(false);
 </script>
@@ -258,8 +258,8 @@ Full documentation coming soon, including:
 
 In the meantime, explore the source code:
 
-- [View on GitHub](https://github.com/allanasp/haspen-ui/tree/main/packages/nuxt)
-- [View on npm](https://www.npmjs.com/package/@haspen/nuxt)
+- [View on GitHub](https://github.com/allanasp/grundtone/tree/main/packages/nuxt)
+- [View on npm](https://www.npmjs.com/package/@grundtone/nuxt)
 
 ## License
 

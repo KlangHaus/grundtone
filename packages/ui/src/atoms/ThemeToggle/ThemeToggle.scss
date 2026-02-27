@@ -2,18 +2,18 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: var(--haspen-space-sm); // 8px
-  padding: var(--haspen-space-xs); // 4px
+  gap: var(--grundtone-space-sm); // 8px
+  padding: var(--grundtone-space-xs); // 4px
   background: transparent;
   border: none;
-  border-radius: var(--haspen-radius-full);
+  border-radius: var(--grundtone-radius-full);
   cursor: pointer;
   font-family: inherit;
   font-size: inherit;
   transition: all 0.2s ease;
 
   &:focus {
-    outline: 2px solid var(--haspen-color-primary);
+    outline: 2px solid var(--grundtone-color-primary);
     outline-offset: 2px;
   }
 
@@ -33,7 +33,7 @@
   align-items: center;
   background: light-dark(#e5e7eb, #374151);
   border: 1px solid light-dark(#d1d5db, #4b5563);
-  border-radius: var(--haspen-radius-full);
+  border-radius: var(--grundtone-radius-full);
   transition: all 0.3s ease;
 
   .theme-toggle--sm & {
@@ -64,9 +64,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--haspen-color-surface);
-  border-radius: var(--haspen-radius-full);
-  box-shadow: var(--haspen-shadow-sm);
+  background: var(--grundtone-color-surface);
+  border-radius: var(--grundtone-radius-full);
+  box-shadow: var(--grundtone-shadow-sm);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   .theme-toggle--sm & {
@@ -103,14 +103,14 @@
 }
 
 .theme-toggle__label {
-  font-size: var(--haspen-font-size-sm);
-  font-weight: var(--haspen-font-weight-medium);
-  color: var(--haspen-color-text-secondary);
+  font-size: var(--grundtone-font-size-sm);
+  font-weight: var(--grundtone-font-weight-medium);
+  color: var(--grundtone-color-text-secondary);
   user-select: none;
   transition: color 0.2s ease;
 
   .theme-toggle:hover & {
-    color: var(--haspen-color-text-primary);
+    color: var(--grundtone-color-text-primary);
   }
 
   .theme-toggle--disabled & {
@@ -138,7 +138,7 @@
   }
 
   .theme-toggle__thumb {
-    background: var(--haspen-color-surface);
+    background: var(--grundtone-color-surface);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
 }
@@ -185,6 +185,6 @@
 
   .theme-toggle__thumb {
     box-shadow: none;
-    border: 1px solid var(--haspen-color-border);
+    border: 1px solid var(--grundtone-color-border);
   }
 }

@@ -1,4 +1,4 @@
-# Haspen UI - Design System
+# Grundtone - Design System
 
 A comprehensive Vue 3 design system monorepo built with TypeScript, featuring the complete Danish
 design system implementation, atomic design principles, and automated workflows.
@@ -7,13 +7,13 @@ design system implementation, atomic design principles, and automated workflows.
 
 ### Core Philosophy
 
-Haspen UI follows **atomic design methodology** and **design token-driven development**, providing a
+Grundtone follows **atomic design methodology** and **design token-driven development**, providing a
 scalable foundation for building consistent user interfaces with Danish government design standards.
 
 ### Monorepo Structure
 
 ```
-haspen-ui/
+grundtone/
 ├── packages/
 │   ├── core/              # Base styles and reset
 │   ├── design-tokens/     # Design tokens, functions, mixins
@@ -43,7 +43,7 @@ haspen-ui/
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd haspen-ui
+cd grundtone
 
 # Install dependencies
 pnpm install
@@ -75,8 +75,8 @@ pnpm lint                  # Lint all packages
 pnpm format                # Format all files
 
 # Package-specific commands
-pnpm test --filter=@haspen/ui  # Test specific package
-turbo run dev --filter=@haspen/ui  # Build specific package in watch mode
+pnpm test --filter=@grundtone/ui  # Test specific package
+turbo run dev --filter=@grundtone/ui  # Build specific package in watch mode
 ```
 
 ## 🏛️ Design System Features
@@ -107,38 +107,38 @@ Every component follows atomic design principles:
 ### Vue 3 Integration
 
 ```bash
-npm install @haspen/ui @haspen/design-tokens
+npm install @grundtone/ui @grundtone/design-tokens
 ```
 
 ```javascript
 // main.ts
 import { createApp } from 'vue';
-import HaspenUI from '@haspen/ui';
-import '@haspen/ui/dist/style.css';
+import GrundtoneUI from '@grundtone/ui';
+import '@grundtone/ui/dist/style.css';
 import App from './App.vue';
 
 const app = createApp(App);
-app.use(HaspenUI);
+app.use(GrundtoneUI);
 app.mount('#app');
 ```
 
 ### Nuxt 3 Integration
 
 ```bash
-npm install @haspen/nuxt
+npm install @grundtone/nuxt
 ```
 
 ```javascript
 // nuxt.config.ts
 export default defineNuxtConfig({
-  modules: ['@haspen/nuxt'],
+  modules: ['@grundtone/nuxt'],
 });
 ```
 
 ### Design Tokens Usage
 
 ```scss
-@use '@haspen/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 .my-component {
   color: tokens.color('primary');
@@ -153,14 +153,14 @@ export default defineNuxtConfig({
 ### CPR Number Validation
 
 ```typescript
-import { isValidCPR } from '@haspen/shared';
+import { isValidCPR } from '@grundtone/shared';
 isValidCPR('123456-7890'); // true
 ```
 
 ### Danish Currency & Date Formatting
 
 ```typescript
-import { formatCurrency, formatDanishDate } from '@haspen/shared';
+import { formatCurrency, formatDanishDate } from '@grundtone/shared';
 formatCurrency(1234.56); // '1.234,56 kr.'
 formatDanishDate(new Date()); // 'DD/MM/YYYY'
 ```
@@ -207,7 +207,7 @@ See [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) for detailed solutions.
 - **[Contributing Guide](./CONTRIBUTING.md)**: Development workflow and standards
 - **[Troubleshooting](./TROUBLESHOOTING.md)**: Common issues and solutions
 - **[Component API](./docs/api/)**: Generated API documentation
-- **[Documentation](https://haspen-ui.vercel.app)**: Design system documentation
+- **[Documentation](https://grundtone.vercel.app)**: Design system documentation
 
 ## 🤝 Contributing
 
@@ -223,7 +223,7 @@ We welcome contributions! Please read our [Contributing Guide](./CONTRIBUTING.md
 
 ```bash
 # 1. Fork and clone
-git clone https://github.com/yourusername/haspen-ui.git
+git clone https://github.com/yourusername/grundtone.git
 
 # 2. Create feature branch
 git checkout -b feature/new-component
@@ -239,13 +239,13 @@ git push origin feature/new-component
 
 ### Package Status
 
-- ✅ **@haspen/core**: Stable - CSS reset and base styles
-- ✅ **@haspen/design-tokens**: Stable - Complete design token implementation
-- ✅ **@haspen/shared**: Stable - Danish utilities and helpers
-- ✅ **@haspen/ui**: Stable - Vue 3 component library
-- ✅ **@haspen/composables**: Stable - Vue 3 composables
-- ✅ **@haspen/nuxt**: Stable - Nuxt 3 integration module
-- ✅ **@haspen/playground**: Development - Demo application
+- ✅ **@grundtone/core**: Stable - CSS reset and base styles
+- ✅ **@grundtone/design-tokens**: Stable - Complete design token implementation
+- ✅ **@grundtone/shared**: Stable - Danish utilities and helpers
+- ✅ **@grundtone/ui**: Stable - Vue 3 component library
+- ✅ **@grundtone/composables**: Stable - Vue 3 composables
+- ✅ **@grundtone/nuxt**: Stable - Nuxt 3 integration module
+- ✅ **@grundtone/playground**: Development - Demo application
 
 ### Build Status
 

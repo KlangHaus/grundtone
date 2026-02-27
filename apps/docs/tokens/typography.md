@@ -172,7 +172,7 @@ iOS, Android og React Native.
 ### Web (HTML/CSS/SCSS)
 
 ```scss
-@use '@haspen/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 // Headings
 h1,
@@ -324,7 +324,7 @@ extension Text {
 
 ```kotlin
 // Typography.kt - Design token constants
-package com.haspen.ui.theme
+package com.grundtone.ui.theme
 
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
@@ -589,7 +589,7 @@ Native apps skal definere deres egne TextStyle/Font systemer med typography toke
 **Complete Heading System**
 
 ```scss
-@use '@ipeeon/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 h1,
 .h1 {
@@ -936,7 +936,7 @@ p {
 ### TypeScript
 
 ```typescript
-import { typography } from '@ipeeon/design-tokens';
+import { typography } from '@grundtone/design-tokens';
 
 // Font families
 const baseFont = typography.fontFamily.sans;
@@ -955,7 +955,7 @@ const normalLineHeight = typography.lineHeight.normal; // 1.5
 ### SCSS
 
 ```scss
-@use '@ipeeon/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 .heading {
   font-size: tokens.font-size('2xl');
@@ -968,10 +968,10 @@ const normalLineHeight = typography.lineHeight.normal; // 1.5
 
 ```css
 .heading {
-  font-family: var(--haspen-font-family-base);
-  font-size: var(--haspen-font-size-2xl);
-  font-weight: var(--haspen-font-weight-bold);
-  line-height: var(--haspen-line-height-tight);
+  font-family: var(--grundtone-font-family-base);
+  font-size: var(--grundtone-font-size-2xl);
+  font-weight: var(--grundtone-font-weight-bold);
+  line-height: var(--grundtone-line-height-tight);
 }
 ```
 

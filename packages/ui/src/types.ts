@@ -11,4 +11,4 @@ export type {
   ThemeProviderContext,
   ThemeProviderProps,
   THEME_INJECTION_KEY,
-} from '@ipeeon/core';
+} from '@grundtone/core';

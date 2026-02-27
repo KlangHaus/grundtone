@@ -1,6 +1,6 @@
-# 🚀 Welcome to HäspenUI Design System
+# 🚀 Welcome to Grundtone Design System
 
-Welcome! This guide will help you get started with the HäspenUI Design System in less than 5
+Welcome! This guide will help you get started with the Grundtone Design System in less than 5
 minutes.
 
 ## 📋 Prerequisites
@@ -19,7 +19,7 @@ Before you begin, ensure you have:
 ```bash
 # Clone the repository
 git clone <your-repo-url>
-cd haspen-ui
+cd grundtone
 
 # Install dependencies
 pnpm install
@@ -42,16 +42,16 @@ pnpm dev
 
 ### Packages
 
-- **`@haspen/ui`** - Vue 3 components (buttons, forms, etc.)
-- **`@haspen/core`** - Core types and constants
-- **`@haspen/shared`** - Shared utilities and helpers
-- **`@haspen/composables`** - Vue composables (hooks)
-- **`@haspen/design-tokens`** - Design tokens (colors, spacing, typography)
-- **`@haspen/nuxt`** - Nuxt 3 module
+- **`@grundtone/ui`** - Vue 3 components (buttons, forms, etc.)
+- **`@grundtone/core`** - Core types and constants
+- **`@grundtone/shared`** - Shared utilities and helpers
+- **`@grundtone/composables`** - Vue composables (hooks)
+- **`@grundtone/design-tokens`** - Design tokens (colors, spacing, typography)
+- **`@grundtone/nuxt`** - Nuxt 3 module
 
 ### Applications
 
-- **`@haspen/playground`** - Interactive demo app
+- **`@grundtone/playground`** - Interactive demo app
 - **`apps/components-test`** - Component testing app
 
 ## 🎯 Common Tasks
@@ -76,7 +76,7 @@ pnpm test
 pnpm test:watch
 
 # Run specific package tests
-pnpm test --filter=@haspen/ui
+pnpm test --filter=@grundtone/ui
 ```
 
 ### Building for Production
@@ -86,7 +86,7 @@ pnpm test --filter=@haspen/ui
 pnpm build
 
 # Build specific package
-pnpm build --filter=@haspen/ui
+pnpm build --filter=@grundtone/ui
 ```
 
 ## 📚 Next Steps

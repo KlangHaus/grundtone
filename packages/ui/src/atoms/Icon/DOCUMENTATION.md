@@ -7,14 +7,14 @@ performance and accessibility.
 
 ```vue
 <template>
-  <IconProvider :icons="haspenIcons">
+  <IconProvider :icons="grundtoneIcons">
     <Icon name="sun" :size="24" />
     <Icon name="moon" :size="24" />
   </IconProvider>
 </template>
 
 <script setup>
-  import { Icon, IconProvider, haspenIcons } from '@haspen/ui';
+  import { Icon, IconProvider, grundtoneIcons } from '@grundtone/ui';
 </script>
 ```
 
@@ -29,7 +29,7 @@ performance and accessibility.
 
 ## 📦 Installation
 
-The icon system is included with `@haspen/ui`. For external icon libraries:
+The icon system is included with `@grundtone/ui`. For external icon libraries:
 
 ```bash
 # Optional: External icon libraries
@@ -42,14 +42,14 @@ pnpm add @heroicons/vue lucide-vue-next
 
 ```vue
 <template>
-  <IconProvider :icons="haspenIcons">
+  <IconProvider :icons="grundtoneIcons">
     <Icon name="sun" :size="24" />
     <Icon name="moon" :size="24" />
   </IconProvider>
 </template>
 
 <script setup>
-  import { Icon, IconProvider, haspenIcons } from '@haspen/ui';
+  import { Icon, IconProvider, grundtoneIcons } from '@grundtone/ui';
 </script>
 ```
 
@@ -64,7 +64,7 @@ pnpm add @heroicons/vue lucide-vue-next
 </template>
 
 <script setup>
-  import { Icon, IconProvider } from '@haspen/ui';
+  import { Icon, IconProvider } from '@grundtone/ui';
   import LogoIcon from './LogoIcon.vue';
   import StarIcon from './StarIcon.vue';
 
@@ -80,11 +80,11 @@ pnpm add @heroicons/vue lucide-vue-next
 ### Custom Icons Configuration
 
 ```typescript
-import { createCustomIconsConfig, haspenIcons } from '@haspen/ui';
+import { createCustomIconsConfig, grundtoneIcons } from '@grundtone/ui';
 
 const config = createCustomIconsConfig(
   {
-    ...haspenIcons,
+    ...grundtoneIcons,
     'custom-logo': MyLogoComponent,
   },
   {
@@ -97,7 +97,7 @@ const config = createCustomIconsConfig(
 ### Heroicons Configuration
 
 ```typescript
-import { createHeroiconsConfig } from '@haspen/ui';
+import { createHeroiconsConfig } from '@grundtone/ui';
 
 const config = createHeroiconsConfig({
   variant: 'outline', // 'outline' | 'solid' | 'mini'
@@ -108,7 +108,7 @@ const config = createHeroiconsConfig({
 ### Lucide Configuration
 
 ```typescript
-import { createLucideConfig } from '@haspen/ui';
+import { createLucideConfig } from '@grundtone/ui';
 
 const config = createLucideConfig({
   strokeWidth: 2,
@@ -119,12 +119,12 @@ const config = createLucideConfig({
 ### Hybrid Configuration
 
 ```typescript
-import { createHybridIconsConfig, haspenIcons } from '@haspen/ui';
+import { createHybridIconsConfig, grundtoneIcons } from '@grundtone/ui';
 
 const config = createHybridIconsConfig({
   primary: 'heroicons',
   fallbackIcons: {
-    ...haspenIcons,
+    ...grundtoneIcons,
     'custom-logo': CustomLogoComponent,
   },
 });
@@ -138,7 +138,7 @@ Best for: Full control, minimal bundle size, custom designs
 
 ```vue
 <template>
-  <IconProvider :icons="haspenIcons" library="custom">
+  <IconProvider :icons="grundtoneIcons" library="custom">
     <Icon name="sun" :size="24" />
     <Icon name="moon" :size="24" />
   </IconProvider>
@@ -269,7 +269,7 @@ Best for: Gradual migration, mixed requirements
 Convert between library naming conventions:
 
 ```typescript
-import { mapIconName } from '@haspen/ui';
+import { mapIconName } from '@grundtone/ui';
 
 // Heroicons → Lucide
 const lucideName = mapIconName('chevron-up', 'heroicons', 'lucide');
@@ -328,7 +328,7 @@ Get the current icon configuration:
 
 ```vue
 <script setup>
-  import { useIconConfig } from '@haspen/ui';
+  import { useIconConfig } from '@grundtone/ui';
 
   const config = useIconConfig();
   console.log(config.library); // 'custom'
@@ -342,7 +342,7 @@ Check if an icon exists in the current configuration:
 
 ```vue
 <script setup>
-  import { useIconExists } from '@haspen/ui';
+  import { useIconExists } from '@grundtone/ui';
 
   const sunExists = useIconExists('sun'); // true/false
 </script>
@@ -354,7 +354,7 @@ Get all available icon names:
 
 ```vue
 <script setup>
-  import { useAvailableIcons } from '@haspen/ui';
+  import { useAvailableIcons } from '@grundtone/ui';
 
   const icons = useAvailableIcons(); // ['sun', 'moon', ...]
 </script>
@@ -384,11 +384,11 @@ Only icons you use are included in your bundle:
 
 ```typescript
 // ✅ Good: Only SunIcon.vue is bundled
-import { Icon } from '@haspen/ui';
+import { Icon } from '@grundtone/ui';
 // Usage: <Icon name="sun" />
 
 // ❌ Bad: All icons bundled
-import * as icons from '@haspen/ui/icons';
+import * as icons from '@grundtone/ui/icons';
 ```
 
 ### Bundle Size Examples
@@ -406,7 +406,7 @@ import * as icons from '@haspen/ui/icons';
 Customize icon appearance with CSS:
 
 ```scss
-.haspen-icon {
+.grundtone-icon {
   --icon-color: currentColor;
   --icon-size: 1em;
   --icon-transition: all 0.2s ease;
@@ -426,9 +426,9 @@ Use the prefix for custom styling:
 
 ```vue
 <template>
-  <IconProvider prefix="my-app" :icons="haspenIcons">
+  <IconProvider prefix="my-app" :icons="grundtoneIcons">
     <Icon name="sun" :size="24" />
-    <!-- Generates: class="haspen-icon my-app-sun" -->
+    <!-- Generates: class="grundtone-icon my-app-sun" -->
   </IconProvider>
 </template>
 ```
@@ -474,7 +474,7 @@ Use the prefix for custom styling:
 <MoonIcon :size="24" />
 
 <!-- ✅ New way -->
-<IconProvider :icons="haspenIcons">
+<IconProvider :icons="grundtoneIcons">
   <Icon name="sun" :size="24" />
   <Icon name="moon" :size="24" />
 </IconProvider>
@@ -497,13 +497,13 @@ Use the prefix for custom styling:
 When adding new icons:
 
 1. Create the icon component in `/atoms/Icon/`
-2. Add to `haspenIcons` in `libraries.ts`
+2. Add to `grundtoneIcons` in `libraries.ts`
 3. Export from `index.ts`
 4. Update tests and documentation
 
 ## 📄 License
 
-Part of the Haspen UI design system. See main package license.
+Part of the Grundtone design system. See main package license.
 
 ## 🔗 Related
 

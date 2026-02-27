@@ -173,7 +173,7 @@ forskelligt på hver platform.
 ### Web (HTML/CSS/SCSS)
 
 ```scss
-@use '@haspen/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 // Card med shadow
 .card {
@@ -352,7 +352,7 @@ struct ModalView: View {
 
 ```kotlin
 // ShadowStyles.kt - Design token constants
-package com.haspen.ui.theme
+package com.grundtone.ui.theme
 
 import androidx.compose.ui.unit.dp
 
@@ -610,7 +610,7 @@ const Card = ({ children }) => (
 **Card med Hover Effect**
 
 ```scss
-@use '@ipeeon/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 .card {
   background: white;
@@ -1012,7 +1012,7 @@ const Card = ({ children }) => (
 ### SCSS
 
 ```scss
-@use '@ipeeon/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 .card {
   box-shadow: tokens.shadow('light');

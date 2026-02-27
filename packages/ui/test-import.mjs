@@ -2,7 +2,7 @@
 import { 
   Icon, 
   IconProvider, 
-  haspenIcons,
+  grundtoneIcons,
   createCustomIconsConfig,
   useIconConfig,
   SunIcon,
@@ -12,7 +12,7 @@ import {
 console.log('✅ All imports successful!');
 console.log('Icon:', typeof Icon);
 console.log('IconProvider:', typeof IconProvider);
-console.log('haspenIcons:', Object.keys(haspenIcons));
+console.log('grundtoneIcons:', Object.keys(grundtoneIcons));
 console.log('createCustomIconsConfig:', typeof createCustomIconsConfig);
 console.log('useIconConfig:', typeof useIconConfig);
 console.log('SunIcon:', typeof SunIcon);

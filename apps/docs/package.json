@@ -1,5 +1,5 @@
 {
-  "name": "@haspen/docs",
+  "name": "@grundtone/docs",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -9,7 +9,7 @@
     "preview": "vitepress preview"
   },
   "dependencies": {
-    "@ipeeon/design-tokens": "workspace:*"
+    "@grundtone/design-tokens": "workspace:*"
   },
   "devDependencies": {
     "vitepress": "^1.6.4"

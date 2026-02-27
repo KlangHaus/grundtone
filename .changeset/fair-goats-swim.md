@@ -1,10 +1,10 @@
 ---
-'@ipeeon/design-tokens': major
-'@ipeeon/composables': major
-'@ipeeon/shared': major
-'@ipeeon/core': major
-'@ipeeon/nuxt': major
-'@ipeeon/ui': major
+'@grundtone/design-tokens': major
+'@grundtone/composables': major
+'@grundtone/shared': major
+'@grundtone/core': major
+'@grundtone/nuxt': major
+'@grundtone/ui': major
 ---
 
 And it begins! The Ui library

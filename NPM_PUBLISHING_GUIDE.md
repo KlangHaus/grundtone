@@ -1,6 +1,6 @@
-# NPM Publishing Guide for Haspen UI
+# NPM Publishing Guide for Grundtone
 
-Komplet guide til at publicere Haspen UI packages til NPM.
+Complete guide to publishing Grundtone packages to NPM.
 
 ## Forudsætninger ✅
 
@@ -27,7 +27,7 @@ Gå til: https://www.npmjs.com/login
 
 ### 1.3 Konfigurer Token
 
-**Token navn:** `haspen-ui-github-actions`
+**Token navn:** `grundtone-github-actions`
 
 **Rettigheder:**
 
@@ -42,7 +42,7 @@ Gå til: https://www.npmjs.com/login
 
 ### 2.1 Gå til GitHub Repository Settings
 
-1. Gå til: https://github.com/allanasp/haspen-ui
+1. Gå til: https://github.com/allanasp/grundtone
 2. Klik på **Settings** (repository settings, ikke profile)
 3. I venstre menu, vælg **Secrets and variables** → **Actions**
 
@@ -133,12 +133,12 @@ Efter merge til `main`:
 Tjek at packages er publiceret:
 
 ```bash
-npm view @haspen/core
-npm view @haspen/ui
-npm view @haspen/composables
-npm view @haspen/shared
-npm view @haspen/design-tokens
-npm view @haspen/nuxt
+npm view @grundtone/core
+npm view @grundtone/ui
+npm view @grundtone/composables
+npm view @grundtone/shared
+npm view @grundtone/design-tokens
+npm view @grundtone/nuxt
 ```
 
 ## Metode B: Manuel Publicering (Backup) 🔧
@@ -233,14 +233,14 @@ git push --follow-tags
 ### 9. Verificer på NPM
 
 ```bash
-npm view @haspen/core
+npm view @grundtone/core
 ```
 
 ## Første Gang Publicering
 
-Hvis dette er første gang du publicerer `@haspen` scope:
+Hvis dette er første gang du publicerer `@grundtone` scope:
 
-### Verificer du har adgang til `@haspen` scope
+### Verificer du har adgang til `@grundtone` scope
 
 ```bash
 npm access ls-packages dubpirate
@@ -258,7 +258,7 @@ Alle packages skal have:
 
 ```json
 {
-  "name": "@haspen/package-name",
+  "name": "@grundtone/package-name",
   "private": false,
   "publishConfig": {
     "access": "public"
@@ -295,7 +295,7 @@ Dette opretter en version som: `0.1.0-snapshot-20250131123045`
 Test at installere den:
 
 ```bash
-npm install @haspen/ui@snapshot
+npm install @grundtone/ui@snapshot
 ```
 
 Hvis alt fungerer, kan du publicere rigtigt.
@@ -310,9 +310,9 @@ npm login
 npm whoami  # Verificer du er logget ind
 ```
 
-### "You do not have permission to publish @haspen/package"
+### "You do not have permission to publish @grundtone/package"
 
-Du skal være owner eller collaborator på `@haspen` scope.
+Du skal være owner eller collaborator på `@grundtone` scope.
 
 Løsning:
 
@@ -361,19 +361,19 @@ Tjek at `prepublishOnly` hook er defineret:
 
 Besøg:
 
-- https://www.npmjs.com/package/@haspen/core
-- https://www.npmjs.com/package/@haspen/ui
-- https://www.npmjs.com/package/@haspen/composables
-- https://www.npmjs.com/package/@haspen/shared
-- https://www.npmjs.com/package/@haspen/design-tokens
-- https://www.npmjs.com/package/@haspen/nuxt
+- https://www.npmjs.com/package/@grundtone/core
+- https://www.npmjs.com/package/@grundtone/ui
+- https://www.npmjs.com/package/@grundtone/composables
+- https://www.npmjs.com/package/@grundtone/shared
+- https://www.npmjs.com/package/@grundtone/design-tokens
+- https://www.npmjs.com/package/@grundtone/nuxt
 
 ### Tjek via CLI
 
 ```bash
-npm view @haspen/core version
-npm view @haspen/core
-npm info @haspen/ui
+npm view @grundtone/core version
+npm view @grundtone/core
+npm info @grundtone/ui
 ```
 
 ### Test installation
@@ -382,7 +382,7 @@ npm info @haspen/ui
 mkdir test-install
 cd test-install
 npm init -y
-npm install @haspen/ui
+npm install @grundtone/ui
 ```
 
 ## Sikkerhed Best Practices
@@ -425,7 +425,7 @@ Anbefalet at aktivere 2FA på NPM:
 | `pnpm version-packages`       | Bump versioner og generer CHANGELOGs  |
 | `pnpm release`                | Build og publicer til NPM             |
 | `pnpm release:snapshot`       | Publicer test/snapshot version        |
-| `npm view @haspen/core`       | Se package info på NPM                |
+| `npm view @grundtone/core`    | Se package info på NPM                |
 | `changeset publish --dry-run` | Simuler publicering uden at publicere |
 
 ## Support

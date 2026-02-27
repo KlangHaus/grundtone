@@ -34,7 +34,7 @@ Background utilities for quick background styling.
 ## SCSS Usage
 
 ```scss
-@use '@ipeeon/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 .custom-background {
   background-color: tokens.getColor('primary', 50);

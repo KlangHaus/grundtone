@@ -21,7 +21,7 @@ const logger = {
       process.env?.NODE_ENV === 'development'
     ) {
       // eslint-disable-next-line no-console
-      console.warn('[Haspen Design Tokens Warning]', {
+      console.warn('[Grundtone Design Tokens Warning]', {
         message,
         context,
         timestamp: new Date().toISOString(),
@@ -49,324 +49,324 @@ export interface RegisteredProperty {
 }
 
 // Color Properties
-export interface HaspenColorProperties {
-  '--haspen-color-primary': RegisteredProperty;
-  '--haspen-color-primary-hover': RegisteredProperty;
-  '--haspen-color-primary-active': RegisteredProperty;
-  '--haspen-color-secondary': RegisteredProperty;
-  '--haspen-color-success': RegisteredProperty;
-  '--haspen-color-warning': RegisteredProperty;
-  '--haspen-color-error': RegisteredProperty;
-  '--haspen-color-info': RegisteredProperty;
+export interface GrundtoneColorProperties {
+  '--grundtone-color-primary': RegisteredProperty;
+  '--grundtone-color-primary-hover': RegisteredProperty;
+  '--grundtone-color-primary-active': RegisteredProperty;
+  '--grundtone-color-secondary': RegisteredProperty;
+  '--grundtone-color-success': RegisteredProperty;
+  '--grundtone-color-warning': RegisteredProperty;
+  '--grundtone-color-error': RegisteredProperty;
+  '--grundtone-color-info': RegisteredProperty;
 }
 
 // Typography Properties
-export interface HaspenTypographyProperties {
-  '--haspen-font-size-base': RegisteredProperty;
-  '--haspen-font-size-sm': RegisteredProperty;
-  '--haspen-font-size-lg': RegisteredProperty;
-  '--haspen-font-size-xl': RegisteredProperty;
-  '--haspen-font-weight-normal': RegisteredProperty;
-  '--haspen-font-weight-medium': RegisteredProperty;
-  '--haspen-font-weight-semibold': RegisteredProperty;
-  '--haspen-font-weight-bold': RegisteredProperty;
-  '--haspen-line-height-normal': RegisteredProperty;
-  '--haspen-line-height-tight': RegisteredProperty;
-  '--haspen-line-height-relaxed': RegisteredProperty;
+export interface GrundtoneTypographyProperties {
+  '--grundtone-font-size-base': RegisteredProperty;
+  '--grundtone-font-size-sm': RegisteredProperty;
+  '--grundtone-font-size-lg': RegisteredProperty;
+  '--grundtone-font-size-xl': RegisteredProperty;
+  '--grundtone-font-weight-normal': RegisteredProperty;
+  '--grundtone-font-weight-medium': RegisteredProperty;
+  '--grundtone-font-weight-semibold': RegisteredProperty;
+  '--grundtone-font-weight-bold': RegisteredProperty;
+  '--grundtone-line-height-normal': RegisteredProperty;
+  '--grundtone-line-height-tight': RegisteredProperty;
+  '--grundtone-line-height-relaxed': RegisteredProperty;
 }
 
 // Spacing Properties
-export interface HaspenSpacingProperties {
-  '--haspen-space-xs': RegisteredProperty;
-  '--haspen-space-sm': RegisteredProperty;
-  '--haspen-space-md': RegisteredProperty;
-  '--haspen-space-lg': RegisteredProperty;
-  '--haspen-space-xl': RegisteredProperty;
-  '--haspen-space-2xl': RegisteredProperty;
+export interface GrundtoneSpacingProperties {
+  '--grundtone-space-xs': RegisteredProperty;
+  '--grundtone-space-sm': RegisteredProperty;
+  '--grundtone-space-md': RegisteredProperty;
+  '--grundtone-space-lg': RegisteredProperty;
+  '--grundtone-space-xl': RegisteredProperty;
+  '--grundtone-space-2xl': RegisteredProperty;
 }
 
 // Border Radius Properties
-export interface HaspenRadiusProperties {
-  '--haspen-radius-sm': RegisteredProperty;
-  '--haspen-radius-md': RegisteredProperty;
-  '--haspen-radius-lg': RegisteredProperty;
-  '--haspen-radius-xl': RegisteredProperty;
-  '--haspen-radius-full': RegisteredProperty;
+export interface GrundtoneRadiusProperties {
+  '--grundtone-radius-sm': RegisteredProperty;
+  '--grundtone-radius-md': RegisteredProperty;
+  '--grundtone-radius-lg': RegisteredProperty;
+  '--grundtone-radius-xl': RegisteredProperty;
+  '--grundtone-radius-full': RegisteredProperty;
 }
 
 // Animation Properties
-export interface HaspenAnimationProperties {
-  '--haspen-duration-fast': RegisteredProperty;
-  '--haspen-duration-normal': RegisteredProperty;
-  '--haspen-duration-slow': RegisteredProperty;
+export interface GrundtoneAnimationProperties {
+  '--grundtone-duration-fast': RegisteredProperty;
+  '--grundtone-duration-normal': RegisteredProperty;
+  '--grundtone-duration-slow': RegisteredProperty;
 }
 
 // Breakpoint Properties
-export interface HaspenBreakpointProperties {
-  '--haspen-breakpoint-sm': RegisteredProperty;
-  '--haspen-breakpoint-md': RegisteredProperty;
-  '--haspen-breakpoint-lg': RegisteredProperty;
-  '--haspen-breakpoint-xl': RegisteredProperty;
-  '--haspen-breakpoint-2xl': RegisteredProperty;
+export interface GrundtoneBreakpointProperties {
+  '--grundtone-breakpoint-sm': RegisteredProperty;
+  '--grundtone-breakpoint-md': RegisteredProperty;
+  '--grundtone-breakpoint-lg': RegisteredProperty;
+  '--grundtone-breakpoint-xl': RegisteredProperty;
+  '--grundtone-breakpoint-2xl': RegisteredProperty;
 }
 
 // Z-index Properties
-export interface HaspenZIndexProperties {
-  '--haspen-z-dropdown': RegisteredProperty;
-  '--haspen-z-sticky': RegisteredProperty;
-  '--haspen-z-fixed': RegisteredProperty;
-  '--haspen-z-modal-backdrop': RegisteredProperty;
-  '--haspen-z-modal': RegisteredProperty;
-  '--haspen-z-popover': RegisteredProperty;
-  '--haspen-z-tooltip': RegisteredProperty;
+export interface GrundtoneZIndexProperties {
+  '--grundtone-z-dropdown': RegisteredProperty;
+  '--grundtone-z-sticky': RegisteredProperty;
+  '--grundtone-z-fixed': RegisteredProperty;
+  '--grundtone-z-modal-backdrop': RegisteredProperty;
+  '--grundtone-z-modal': RegisteredProperty;
+  '--grundtone-z-popover': RegisteredProperty;
+  '--grundtone-z-tooltip': RegisteredProperty;
 }
 
 // All Registered Properties
-export interface HaspenRegisteredProperties
-  extends HaspenColorProperties,
-    HaspenTypographyProperties,
-    HaspenSpacingProperties,
-    HaspenRadiusProperties,
-    HaspenAnimationProperties,
-    HaspenBreakpointProperties,
-    HaspenZIndexProperties {}
+export interface GrundtoneRegisteredProperties
+  extends GrundtoneColorProperties,
+    GrundtoneTypographyProperties,
+    GrundtoneSpacingProperties,
+    GrundtoneRadiusProperties,
+    GrundtoneAnimationProperties,
+    GrundtoneBreakpointProperties,
+    GrundtoneZIndexProperties {}
 
 // Property Registration Configuration
-export const HASPEN_REGISTERED_PROPERTIES: HaspenRegisteredProperties = {
+export const GRUNDTONE_REGISTERED_PROPERTIES: GrundtoneRegisteredProperties = {
   // Color properties
-  '--haspen-color-primary': {
+  '--grundtone-color-primary': {
     syntax: '<color>',
     initialValue: '#0059b3',
     inherits: false,
   },
-  '--haspen-color-primary-hover': {
+  '--grundtone-color-primary-hover': {
     syntax: '<color>',
     initialValue: '#004a96',
     inherits: false,
   },
-  '--haspen-color-primary-active': {
+  '--grundtone-color-primary-active': {
     syntax: '<color>',
     initialValue: '#003a7a',
     inherits: false,
   },
-  '--haspen-color-secondary': {
+  '--grundtone-color-secondary': {
     syntax: '<color>',
     initialValue: '#6c757d',
     inherits: false,
   },
-  '--haspen-color-success': {
+  '--grundtone-color-success': {
     syntax: '<color>',
     initialValue: '#28a745',
     inherits: false,
   },
-  '--haspen-color-warning': {
+  '--grundtone-color-warning': {
     syntax: '<color>',
     initialValue: '#ffc107',
     inherits: false,
   },
-  '--haspen-color-error': {
+  '--grundtone-color-error': {
     syntax: '<color>',
     initialValue: '#dc3545',
     inherits: false,
   },
-  '--haspen-color-info': {
+  '--grundtone-color-info': {
     syntax: '<color>',
     initialValue: '#17a2b8',
     inherits: false,
   },
 
   // Typography properties
-  '--haspen-font-size-base': {
+  '--grundtone-font-size-base': {
     syntax: '<length>',
     initialValue: '1rem',
     inherits: true,
   },
-  '--haspen-font-size-sm': {
+  '--grundtone-font-size-sm': {
     syntax: '<length>',
     initialValue: '0.875rem',
     inherits: true,
   },
-  '--haspen-font-size-lg': {
+  '--grundtone-font-size-lg': {
     syntax: '<length>',
     initialValue: '1.125rem',
     inherits: true,
   },
-  '--haspen-font-size-xl': {
+  '--grundtone-font-size-xl': {
     syntax: '<length>',
     initialValue: '1.25rem',
     inherits: true,
   },
-  '--haspen-font-weight-normal': {
+  '--grundtone-font-weight-normal': {
     syntax: '<number>',
     initialValue: '400',
     inherits: true,
   },
-  '--haspen-font-weight-medium': {
+  '--grundtone-font-weight-medium': {
     syntax: '<number>',
     initialValue: '500',
     inherits: true,
   },
-  '--haspen-font-weight-semibold': {
+  '--grundtone-font-weight-semibold': {
     syntax: '<number>',
     initialValue: '600',
     inherits: true,
   },
-  '--haspen-font-weight-bold': {
+  '--grundtone-font-weight-bold': {
     syntax: '<number>',
     initialValue: '700',
     inherits: true,
   },
-  '--haspen-line-height-normal': {
+  '--grundtone-line-height-normal': {
     syntax: '<number>',
     initialValue: '1.5',
     inherits: true,
   },
-  '--haspen-line-height-tight': {
+  '--grundtone-line-height-tight': {
     syntax: '<number>',
     initialValue: '1.25',
     inherits: true,
   },
-  '--haspen-line-height-relaxed': {
+  '--grundtone-line-height-relaxed': {
     syntax: '<number>',
     initialValue: '1.75',
     inherits: true,
   },
 
   // Spacing properties
-  '--haspen-space-xs': {
+  '--grundtone-space-xs': {
     syntax: '<length>',
     initialValue: '0.25rem',
     inherits: false,
   },
-  '--haspen-space-sm': {
+  '--grundtone-space-sm': {
     syntax: '<length>',
     initialValue: '0.5rem',
     inherits: false,
   },
-  '--haspen-space-md': {
+  '--grundtone-space-md': {
     syntax: '<length>',
     initialValue: '1rem',
     inherits: false,
   },
-  '--haspen-space-lg': {
+  '--grundtone-space-lg': {
     syntax: '<length>',
     initialValue: '1.5rem',
     inherits: false,
   },
-  '--haspen-space-xl': {
+  '--grundtone-space-xl': {
     syntax: '<length>',
     initialValue: '2rem',
     inherits: false,
   },
-  '--haspen-space-2xl': {
+  '--grundtone-space-2xl': {
     syntax: '<length>',
     initialValue: '3rem',
     inherits: false,
   },
 
   // Border radius properties
-  '--haspen-radius-sm': {
+  '--grundtone-radius-sm': {
     syntax: '<length>',
     initialValue: '0.125rem',
     inherits: false,
   },
-  '--haspen-radius-md': {
+  '--grundtone-radius-md': {
     syntax: '<length>',
     initialValue: '0.25rem',
     inherits: false,
   },
-  '--haspen-radius-lg': {
+  '--grundtone-radius-lg': {
     syntax: '<length>',
     initialValue: '0.5rem',
     inherits: false,
   },
-  '--haspen-radius-xl': {
+  '--grundtone-radius-xl': {
     syntax: '<length>',
     initialValue: '1rem',
     inherits: false,
   },
-  '--haspen-radius-full': {
+  '--grundtone-radius-full': {
     syntax: '<length>',
     initialValue: '9999px',
     inherits: false,
   },
 
   // Animation properties
-  '--haspen-duration-fast': {
+  '--grundtone-duration-fast': {
     syntax: '<time>',
     initialValue: '150ms',
     inherits: false,
   },
-  '--haspen-duration-normal': {
+  '--grundtone-duration-normal': {
     syntax: '<time>',
     initialValue: '300ms',
     inherits: false,
   },
-  '--haspen-duration-slow': {
+  '--grundtone-duration-slow': {
     syntax: '<time>',
     initialValue: '500ms',
     inherits: false,
   },
 
   // Breakpoint properties
-  '--haspen-breakpoint-sm': {
+  '--grundtone-breakpoint-sm': {
     syntax: '<length>',
     initialValue: '640px',
     inherits: false,
   },
-  '--haspen-breakpoint-md': {
+  '--grundtone-breakpoint-md': {
     syntax: '<length>',
     initialValue: '768px',
     inherits: false,
   },
-  '--haspen-breakpoint-lg': {
+  '--grundtone-breakpoint-lg': {
     syntax: '<length>',
     initialValue: '1024px',
     inherits: false,
   },
-  '--haspen-breakpoint-xl': {
+  '--grundtone-breakpoint-xl': {
     syntax: '<length>',
     initialValue: '1280px',
     inherits: false,
   },
-  '--haspen-breakpoint-2xl': {
+  '--grundtone-breakpoint-2xl': {
     syntax: '<length>',
     initialValue: '1536px',
     inherits: false,
   },
 
   // Z-index properties
-  '--haspen-z-dropdown': {
+  '--grundtone-z-dropdown': {
     syntax: '<integer>',
     initialValue: '1000',
     inherits: false,
   },
-  '--haspen-z-sticky': {
+  '--grundtone-z-sticky': {
     syntax: '<integer>',
     initialValue: '1020',
     inherits: false,
   },
-  '--haspen-z-fixed': {
+  '--grundtone-z-fixed': {
     syntax: '<integer>',
     initialValue: '1030',
     inherits: false,
   },
-  '--haspen-z-modal-backdrop': {
+  '--grundtone-z-modal-backdrop': {
     syntax: '<integer>',
     initialValue: '1040',
     inherits: false,
   },
-  '--haspen-z-modal': {
+  '--grundtone-z-modal': {
     syntax: '<integer>',
     initialValue: '1050',
     inherits: false,
   },
-  '--haspen-z-popover': {
+  '--grundtone-z-popover': {
     syntax: '<integer>',
     initialValue: '1060',
     inherits: false,
   },
-  '--haspen-z-tooltip': {
+  '--grundtone-z-tooltip': {
     syntax: '<integer>',
     initialValue: '1070',
     inherits: false,
@@ -378,7 +378,7 @@ export const HASPEN_REGISTERED_PROPERTIES: HaspenRegisteredProperties = {
  * Useful for fallback support or dynamic registration
  */
 export function registerCSSProperties(
-  properties: Partial<HaspenRegisteredProperties> = HASPEN_REGISTERED_PROPERTIES,
+  properties: Partial<GrundtoneRegisteredProperties> = GRUNDTONE_REGISTERED_PROPERTIES,
 ): void {
   if (!CSS?.registerProperty) {
     logger.warn(
@@ -410,65 +410,65 @@ export function registerCSSProperties(
 }
 
 // Property name constants for type safety
-export const HASPEN_CSS_PROPERTIES = {
+export const GRUNDTONE_CSS_PROPERTIES = {
   // Colors
-  COLOR_PRIMARY: '--haspen-color-primary',
-  COLOR_PRIMARY_HOVER: '--haspen-color-primary-hover',
-  COLOR_PRIMARY_ACTIVE: '--haspen-color-primary-active',
-  COLOR_SECONDARY: '--haspen-color-secondary',
-  COLOR_SUCCESS: '--haspen-color-success',
-  COLOR_WARNING: '--haspen-color-warning',
-  COLOR_ERROR: '--haspen-color-error',
-  COLOR_INFO: '--haspen-color-info',
+  COLOR_PRIMARY: '--grundtone-color-primary',
+  COLOR_PRIMARY_HOVER: '--grundtone-color-primary-hover',
+  COLOR_PRIMARY_ACTIVE: '--grundtone-color-primary-active',
+  COLOR_SECONDARY: '--grundtone-color-secondary',
+  COLOR_SUCCESS: '--grundtone-color-success',
+  COLOR_WARNING: '--grundtone-color-warning',
+  COLOR_ERROR: '--grundtone-color-error',
+  COLOR_INFO: '--grundtone-color-info',
 
   // Typography
-  FONT_SIZE_BASE: '--haspen-font-size-base',
-  FONT_SIZE_SM: '--haspen-font-size-sm',
-  FONT_SIZE_LG: '--haspen-font-size-lg',
-  FONT_SIZE_XL: '--haspen-font-size-xl',
-  FONT_WEIGHT_NORMAL: '--haspen-font-weight-normal',
-  FONT_WEIGHT_MEDIUM: '--haspen-font-weight-medium',
-  FONT_WEIGHT_SEMIBOLD: '--haspen-font-weight-semibold',
-  FONT_WEIGHT_BOLD: '--haspen-font-weight-bold',
-  LINE_HEIGHT_NORMAL: '--haspen-line-height-normal',
-  LINE_HEIGHT_TIGHT: '--haspen-line-height-tight',
-  LINE_HEIGHT_RELAXED: '--haspen-line-height-relaxed',
+  FONT_SIZE_BASE: '--grundtone-font-size-base',
+  FONT_SIZE_SM: '--grundtone-font-size-sm',
+  FONT_SIZE_LG: '--grundtone-font-size-lg',
+  FONT_SIZE_XL: '--grundtone-font-size-xl',
+  FONT_WEIGHT_NORMAL: '--grundtone-font-weight-normal',
+  FONT_WEIGHT_MEDIUM: '--grundtone-font-weight-medium',
+  FONT_WEIGHT_SEMIBOLD: '--grundtone-font-weight-semibold',
+  FONT_WEIGHT_BOLD: '--grundtone-font-weight-bold',
+  LINE_HEIGHT_NORMAL: '--grundtone-line-height-normal',
+  LINE_HEIGHT_TIGHT: '--grundtone-line-height-tight',
+  LINE_HEIGHT_RELAXED: '--grundtone-line-height-relaxed',
 
   // Spacing
-  SPACE_XS: '--haspen-space-xs',
-  SPACE_SM: '--haspen-space-sm',
-  SPACE_MD: '--haspen-space-md',
-  SPACE_LG: '--haspen-space-lg',
-  SPACE_XL: '--haspen-space-xl',
-  SPACE_2XL: '--haspen-space-2xl',
+  SPACE_XS: '--grundtone-space-xs',
+  SPACE_SM: '--grundtone-space-sm',
+  SPACE_MD: '--grundtone-space-md',
+  SPACE_LG: '--grundtone-space-lg',
+  SPACE_XL: '--grundtone-space-xl',
+  SPACE_2XL: '--grundtone-space-2xl',
 
   // Border radius
-  RADIUS_SM: '--haspen-radius-sm',
-  RADIUS_MD: '--haspen-radius-md',
-  RADIUS_LG: '--haspen-radius-lg',
-  RADIUS_XL: '--haspen-radius-xl',
-  RADIUS_FULL: '--haspen-radius-full',
+  RADIUS_SM: '--grundtone-radius-sm',
+  RADIUS_MD: '--grundtone-radius-md',
+  RADIUS_LG: '--grundtone-radius-lg',
+  RADIUS_XL: '--grundtone-radius-xl',
+  RADIUS_FULL: '--grundtone-radius-full',
 
   // Animation
-  DURATION_FAST: '--haspen-duration-fast',
-  DURATION_NORMAL: '--haspen-duration-normal',
-  DURATION_SLOW: '--haspen-duration-slow',
+  DURATION_FAST: '--grundtone-duration-fast',
+  DURATION_NORMAL: '--grundtone-duration-normal',
+  DURATION_SLOW: '--grundtone-duration-slow',
 
   // Breakpoints
-  BREAKPOINT_SM: '--haspen-breakpoint-sm',
-  BREAKPOINT_MD: '--haspen-breakpoint-md',
-  BREAKPOINT_LG: '--haspen-breakpoint-lg',
-  BREAKPOINT_XL: '--haspen-breakpoint-xl',
-  BREAKPOINT_2XL: '--haspen-breakpoint-2xl',
+  BREAKPOINT_SM: '--grundtone-breakpoint-sm',
+  BREAKPOINT_MD: '--grundtone-breakpoint-md',
+  BREAKPOINT_LG: '--grundtone-breakpoint-lg',
+  BREAKPOINT_XL: '--grundtone-breakpoint-xl',
+  BREAKPOINT_2XL: '--grundtone-breakpoint-2xl',
 
   // Z-index
-  Z_DROPDOWN: '--haspen-z-dropdown',
-  Z_STICKY: '--haspen-z-sticky',
-  Z_FIXED: '--haspen-z-fixed',
-  Z_MODAL_BACKDROP: '--haspen-z-modal-backdrop',
-  Z_MODAL: '--haspen-z-modal',
-  Z_POPOVER: '--haspen-z-popover',
-  Z_TOOLTIP: '--haspen-z-tooltip',
+  Z_DROPDOWN: '--grundtone-z-dropdown',
+  Z_STICKY: '--grundtone-z-sticky',
+  Z_FIXED: '--grundtone-z-fixed',
+  Z_MODAL_BACKDROP: '--grundtone-z-modal-backdrop',
+  Z_MODAL: '--grundtone-z-modal',
+  Z_POPOVER: '--grundtone-z-popover',
+  Z_TOOLTIP: '--grundtone-z-tooltip',
 } as const;
 
-export type HaspenCSSPropertyName = keyof typeof HASPEN_CSS_PROPERTIES;
+export type GrundtoneCSSPropertyName = keyof typeof GRUNDTONE_CSS_PROPERTIES;

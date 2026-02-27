@@ -2,277 +2,277 @@
 // Using @property for type-safe, animatable custom properties
 
 // Color properties
-@property --haspen-color-primary {
+@property --grundtone-color-primary {
   syntax: '<color>';
   initial-value: #0059b3;
   inherits: false;
 }
 
-@property --haspen-color-primary-hover {
+@property --grundtone-color-primary-hover {
   syntax: '<color>';
   initial-value: #004a96;
   inherits: false;
 }
 
-@property --haspen-color-primary-active {
+@property --grundtone-color-primary-active {
   syntax: '<color>';
   initial-value: #003a7a;
   inherits: false;
 }
 
-@property --haspen-color-secondary {
+@property --grundtone-color-secondary {
   syntax: '<color>';
   initial-value: #6c757d;
   inherits: false;
 }
 
-@property --haspen-color-success {
+@property --grundtone-color-success {
   syntax: '<color>';
   initial-value: #28a745;
   inherits: false;
 }
 
-@property --haspen-color-warning {
+@property --grundtone-color-warning {
   syntax: '<color>';
   initial-value: #ffc107;
   inherits: false;
 }
 
-@property --haspen-color-error {
+@property --grundtone-color-error {
   syntax: '<color>';
   initial-value: #dc3545;
   inherits: false;
 }
 
-@property --haspen-color-info {
+@property --grundtone-color-info {
   syntax: '<color>';
   initial-value: #17a2b8;
   inherits: false;
 }
 
 // Typography properties
-@property --haspen-font-size-base {
+@property --grundtone-font-size-base {
   syntax: '<length>';
   initial-value: 1rem;
   inherits: true;
 }
 
-@property --haspen-font-size-sm {
+@property --grundtone-font-size-sm {
   syntax: '<length>';
   initial-value: 0.875rem;
   inherits: true;
 }
 
-@property --haspen-font-size-lg {
+@property --grundtone-font-size-lg {
   syntax: '<length>';
   initial-value: 1.125rem;
   inherits: true;
 }
 
-@property --haspen-font-size-xl {
+@property --grundtone-font-size-xl {
   syntax: '<length>';
   initial-value: 1.25rem;
   inherits: true;
 }
 
-@property --haspen-font-weight-normal {
+@property --grundtone-font-weight-normal {
   syntax: '<number>';
   initial-value: 400;
   inherits: true;
 }
 
-@property --haspen-font-weight-medium {
+@property --grundtone-font-weight-medium {
   syntax: '<number>';
   initial-value: 500;
   inherits: true;
 }
 
-@property --haspen-font-weight-semibold {
+@property --grundtone-font-weight-semibold {
   syntax: '<number>';
   initial-value: 600;
   inherits: true;
 }
 
-@property --haspen-font-weight-bold {
+@property --grundtone-font-weight-bold {
   syntax: '<number>';
   initial-value: 700;
   inherits: true;
 }
 
-@property --haspen-line-height-normal {
+@property --grundtone-line-height-normal {
   syntax: '<number>';
   initial-value: 1.5;
   inherits: true;
 }
 
-@property --haspen-line-height-tight {
+@property --grundtone-line-height-tight {
   syntax: '<number>';
   initial-value: 1.25;
   inherits: true;
 }
 
-@property --haspen-line-height-relaxed {
+@property --grundtone-line-height-relaxed {
   syntax: '<number>';
   initial-value: 1.75;
   inherits: true;
 }
 
 // Spacing properties
-@property --haspen-space-xs {
+@property --grundtone-space-xs {
   syntax: '<length>';
   initial-value: 0.25rem;
   inherits: false;
 }
 
-@property --haspen-space-sm {
+@property --grundtone-space-sm {
   syntax: '<length>';
   initial-value: 0.5rem;
   inherits: false;
 }
 
-@property --haspen-space-md {
+@property --grundtone-space-md {
   syntax: '<length>';
   initial-value: 1rem;
   inherits: false;
 }
 
-@property --haspen-space-lg {
+@property --grundtone-space-lg {
   syntax: '<length>';
   initial-value: 1.5rem;
   inherits: false;
 }
 
-@property --haspen-space-xl {
+@property --grundtone-space-xl {
   syntax: '<length>';
   initial-value: 2rem;
   inherits: false;
 }
 
-@property --haspen-space-2xl {
+@property --grundtone-space-2xl {
   syntax: '<length>';
   initial-value: 3rem;
   inherits: false;
 }
 
 // Border radius properties
-@property --haspen-radius-sm {
+@property --grundtone-radius-sm {
   syntax: '<length>';
   initial-value: 0.125rem;
   inherits: false;
 }
 
-@property --haspen-radius-md {
+@property --grundtone-radius-md {
   syntax: '<length>';
   initial-value: 0.25rem;
   inherits: false;
 }
 
-@property --haspen-radius-lg {
+@property --grundtone-radius-lg {
   syntax: '<length>';
   initial-value: 0.5rem;
   inherits: false;
 }
 
-@property --haspen-radius-xl {
+@property --grundtone-radius-xl {
   syntax: '<length>';
   initial-value: 1rem;
   inherits: false;
 }
 
-@property --haspen-radius-full {
+@property --grundtone-radius-full {
   syntax: '<length>';
   initial-value: 9999px;
   inherits: false;
 }
 
 // Animation properties
-@property --haspen-duration-fast {
+@property --grundtone-duration-fast {
   syntax: '<time>';
   initial-value: 150ms;
   inherits: false;
 }
 
-@property --haspen-duration-normal {
+@property --grundtone-duration-normal {
   syntax: '<time>';
   initial-value: 300ms;
   inherits: false;
 }
 
-@property --haspen-duration-slow {
+@property --grundtone-duration-slow {
   syntax: '<time>';
   initial-value: 500ms;
   inherits: false;
 }
 
 // Breakpoint properties (for container queries)
-@property --haspen-breakpoint-sm {
+@property --grundtone-breakpoint-sm {
   syntax: '<length>';
   initial-value: 640px;
   inherits: false;
 }
 
-@property --haspen-breakpoint-md {
+@property --grundtone-breakpoint-md {
   syntax: '<length>';
   initial-value: 768px;
   inherits: false;
 }
 
-@property --haspen-breakpoint-lg {
+@property --grundtone-breakpoint-lg {
   syntax: '<length>';
   initial-value: 1024px;
   inherits: false;
 }
 
-@property --haspen-breakpoint-xl {
+@property --grundtone-breakpoint-xl {
   syntax: '<length>';
   initial-value: 1280px;
   inherits: false;
 }
 
-@property --haspen-breakpoint-2xl {
+@property --grundtone-breakpoint-2xl {
   syntax: '<length>';
   initial-value: 1536px;
   inherits: false;
 }
 
 // Z-index properties
-@property --haspen-z-dropdown {
+@property --grundtone-z-dropdown {
   syntax: '<integer>';
   initial-value: 1000;
   inherits: false;
 }
 
-@property --haspen-z-sticky {
+@property --grundtone-z-sticky {
   syntax: '<integer>';
   initial-value: 1020;
   inherits: false;
 }
 
-@property --haspen-z-fixed {
+@property --grundtone-z-fixed {
   syntax: '<integer>';
   initial-value: 1030;
   inherits: false;
 }
 
-@property --haspen-z-modal-backdrop {
+@property --grundtone-z-modal-backdrop {
   syntax: '<integer>';
   initial-value: 1040;
   inherits: false;
 }
 
-@property --haspen-z-modal {
+@property --grundtone-z-modal {
   syntax: '<integer>';
   initial-value: 1050;
   inherits: false;
 }
 
-@property --haspen-z-popover {
+@property --grundtone-z-popover {
   syntax: '<integer>';
   initial-value: 1060;
   inherits: false;
 }
 
-@property --haspen-z-tooltip {
+@property --grundtone-z-tooltip {
   syntax: '<integer>';
   initial-value: 1070;
   inherits: false;

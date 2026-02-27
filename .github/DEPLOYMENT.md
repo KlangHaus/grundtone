@@ -1,6 +1,6 @@
 # Deployment Configuration
 
-This document describes the deployment setup for Haspen UI.
+This document describes the deployment setup for Grundtone.
 
 ## Vercel Deployment
 

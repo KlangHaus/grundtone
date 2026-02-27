@@ -1,7 +1,7 @@
 {
-  "name": "@ipeeon/composables",
+  "name": "@grundtone/composables",
   "version": "1.0.0",
-  "description": "Vue 3 composables for Haspen UI",
+  "description": "Vue 3 composables for Grundtone",
   "license": "MIT",
   "private": false,
   "type": "module",
@@ -20,7 +20,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/allanasp/haspen-ui.git",
+    "url": "https://github.com/allanasp/grundtone.git",
     "directory": "packages/composables"
   },
   "publishConfig": {
@@ -37,9 +37,9 @@
     "vue": "^3.5.13"
   },
   "dependencies": {
-    "@ipeeon/core": "workspace:*",
-    "@ipeeon/design-tokens": "workspace:*",
-    "@ipeeon/shared": "workspace:*"
+    "@grundtone/core": "workspace:*",
+    "@grundtone/design-tokens": "workspace:*",
+    "@grundtone/shared": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20.17.45",

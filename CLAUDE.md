@@ -9,7 +9,7 @@ repository.
 
 ```bash
 pnpm dev                    # Start all development servers
-pnpm dev:playground         # Start playground app only (@haspen/playground)
+pnpm dev:playground         # Start playground app only (@grundtone/playground)
 pnpm docs:dev               # Start documentation site (VitePress)
 ```
 
@@ -19,7 +19,7 @@ pnpm docs:dev               # Start documentation site (VitePress)
 pnpm build                 # Build all packages and apps
 pnpm build:packages        # Build only packages (excludes apps)
 pnpm test                  # Run all tests across monorepo
-pnpm test --filter=@haspen/ui  # Run tests for specific package
+pnpm test --filter=@grundtone/ui  # Run tests for specific package
 pnpm test:watch            # Run tests in watch mode
 pnpm typecheck             # TypeScript checking across all packages
 pnpm lint                  # Lint all packages
@@ -29,10 +29,10 @@ pnpm lint                  # Lint all packages
 
 ```bash
 # Build single package in watch mode
-turbo run dev --filter=@haspen/ui
+turbo run dev --filter=@grundtone/ui
 
 # Run tests for single package
-pnpm test --filter=@haspen/composables
+pnpm test --filter=@grundtone/composables
 ```
 
 ### Versioning and Publishing
@@ -108,7 +108,7 @@ Changelogs are created in each package's `CHANGELOG.md` file when running `pnpm 
 
 - **Always create a changeset** for user-facing changes
 - **Skip changesets** for internal refactoring that doesn't affect the public API
-- The `@haspen/playground` package is excluded from releases (demo app only)
+- The `@grundtone/playground` package is excluded from releases (demo app only)
 - Versioning follows [Semantic Versioning (semver)](https://semver.org/)
 - All packages in this monorepo are versioned independently
 
@@ -116,13 +116,13 @@ Changelogs are created in each package's `CHANGELOG.md` file when running `pnpm 
 
 ### Package Structure and Dependencies
 
-- **@haspen/core** - Foundation types, constants, base interfaces
-- **@haspen/shared** - Utilities, formatters, validation (depends on core)
-- **@haspen/design-tokens** - SCSS variables, colors, typography, spacing
-- **@haspen/ui** - Vue 3 components using atomic design (depends on core, shared)
-- **@haspen/composables** - Vue 3 composables/hooks (depends on core, shared)
-- **@haspen/nuxt** - Nuxt 3 module (depends on ui, composables)
-- **@haspen/playground** - Demo application (depends on all packages)
+- **@grundtone/core** - Foundation types, constants, base interfaces
+- **@grundtone/shared** - Utilities, formatters, validation (depends on core)
+- **@grundtone/design-tokens** - SCSS variables, colors, typography, spacing
+- **@grundtone/ui** - Vue 3 components using atomic design (depends on core, shared)
+- **@grundtone/composables** - Vue 3 composables/hooks (depends on core, shared)
+- **@grundtone/nuxt** - Nuxt 3 module (depends on ui, composables)
+- **@grundtone/playground** - Demo application (depends on all packages)
 
 ### Build Pipeline (Turborepo)
 
@@ -160,7 +160,7 @@ ComponentName/
 ### TypeScript Configuration
 
 - Strict mode enabled across all packages
-- Path aliases: `@haspen/*` maps to `packages/*/src`
+- Path aliases: `@grundtone/*` maps to `packages/*/src`
 - `tsconfig.build.json` excludes test files from production builds
 - Each package extends root config with package-specific overrides
 
@@ -168,7 +168,7 @@ ComponentName/
 
 This design system includes Danish-specific utilities:
 
-- CPR (Danish social security) number validation in `@haspen/shared`
+- CPR (Danish social security) number validation in `@grundtone/shared`
 - Danish phone number formatting and validation
 - Danish currency formatting (`formatCurrency` outputs "kr.")
 - Danish date formatting

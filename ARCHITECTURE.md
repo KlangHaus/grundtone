@@ -1,10 +1,10 @@
-# Haspen UI - Architecture Documentation
+# Grundtone - Architecture Documentation
 
 ## 🏗️ System Architecture Overview
 
 ### Design Philosophy
 
-Haspen UI is built on four core principles:
+Grundtone is built on four core principles:
 
 1. **Atomic Design Methodology**: Components are organized from atoms to pages
 2. **Design Token-Driven Development**: All styling decisions derive from centralized tokens
@@ -22,7 +22,7 @@ graph TB
         Node[Node.js 20+]
     end
 
-    subgraph "Haspen UI Ecosystem"
+    subgraph "Grundtone Ecosystem"
         subgraph "Core Layer"
             Core[core - Base styles]
             Tokens[design-tokens - Design token system]
@@ -70,16 +70,16 @@ graph TB
 
 ### Core Packages
 
-#### `@haspen/core`
+#### `@grundtone/core`
 
 **Purpose**: Foundation layer with CSS reset and base styles **Dependencies**: None **Exports**:
 
 ```typescript
 // CSS normalization and base styles
-import '@haspen/core/dist/index.css';
+import '@grundtone/core/dist/index.css';
 ```
 
-#### `@haspen/design-tokens`
+#### `@grundtone/design-tokens`
 
 **Purpose**: Complete design token implementation with tokens, functions, and utilities
 **Dependencies**: None **Architecture**:
@@ -106,9 +106,10 @@ src/
     └── _position.scss    # Position utilities
 ```
 
-#### `@haspen/shared`
+#### `@grundtone/shared`
 
-**Purpose**: Framework-agnostic utilities and helpers **Dependencies**: `@haspen/core` **Exports**:
+**Purpose**: Framework-agnostic utilities and helpers **Dependencies**: `@grundtone/core`
+**Exports**:
 
 ```typescript
 // Danish-specific utilities
@@ -122,10 +123,10 @@ export type { BaseComponent, ComponentSize } from './types';
 
 ### Component Layer
 
-#### `@haspen/ui`
+#### `@grundtone/ui`
 
-**Purpose**: Vue 3 component library following atomic design **Dependencies**: `@haspen/core`,
-`@haspen/shared` **Architecture**:
+**Purpose**: Vue 3 component library following atomic design **Dependencies**: `@grundtone/core`,
+`@grundtone/shared` **Architecture**:
 
 ```
 src/
@@ -162,10 +163,10 @@ ComponentName/
 └── README.md               # Component documentation
 ```
 
-#### `@haspen/composables`
+#### `@grundtone/composables`
 
-**Purpose**: Vue 3 composables for shared logic **Dependencies**: `@haspen/core`, `@haspen/shared`
-**Exports**:
+**Purpose**: Vue 3 composables for shared logic **Dependencies**: `@grundtone/core`,
+`@grundtone/shared` **Exports**:
 
 ```typescript
 // DOM utilities
@@ -183,17 +184,17 @@ export { useTheme } from './theme';
 
 ### Integration Layer
 
-#### `@haspen/nuxt`
+#### `@grundtone/nuxt`
 
-**Purpose**: Nuxt 3 module for seamless integration **Dependencies**: `@haspen/ui`,
-`@haspen/composables` **Features**:
+**Purpose**: Nuxt 3 module for seamless integration **Dependencies**: `@grundtone/ui`,
+`@grundtone/composables` **Features**:
 
 - Auto-imports for components and composables
 - SCSS preprocessing configuration
 - Build optimizations
 - SSR compatibility
 
-#### `@haspen/playground`
+#### `@grundtone/playground`
 
 **Purpose**: Development and demonstration application **Dependencies**: All packages **Features**:
 
@@ -372,7 +373,7 @@ export default defineConfig({
   external: ['vue'],
   esbuildOptions(options) {
     options.banner = {
-      js: '/* Haspen UI Component Library */',
+      js: '/* Grundtone Component Library */',
     };
   },
 });
@@ -387,7 +388,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: 'src/index.ts',
-      name: 'HaspenUI',
+      name: 'Grundtone',
       formats: ['es', 'umd'],
     },
     rollupOptions: {
@@ -677,5 +678,5 @@ export const useTranslation = (): {
 ```
 
 This architecture document provides the foundation for understanding, maintaining, and extending the
-Haspen UI design system. Each layer is designed for modularity, scalability, and maintainability
+Grundtone design system. Each layer is designed for modularity, scalability, and maintainability
 while adhering to Danish design standards and modern web development practices.

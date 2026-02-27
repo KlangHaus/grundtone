@@ -1,4 +1,4 @@
-import type { Theme } from '@ipeeon/core';
+import type { Theme } from '@grundtone/core';
 import { createStorageHandler } from '../../utils/error-handling';
 
 /**
@@ -15,48 +15,48 @@ export function applyThemeToDOM(theme: Theme): void {
 
     // Colors
     Object.entries(theme.colors).forEach(([key, value]) => {
-      properties[`--haspen-color-${key}`] = value;
+      properties[`--grundtone-color-${key}`] = value;
     });
 
     // Spacing
     Object.entries(theme.spacing).forEach(([key, value]) => {
-      properties[`--haspen-spacing-${key}`] = value;
+      properties[`--grundtone-spacing-${key}`] = value;
     });
 
     // Typography
     Object.entries(theme.typography.fontFamily).forEach(([key, value]) => {
-      properties[`--haspen-font-family-${key}`] = value;
+      properties[`--grundtone-font-family-${key}`] = value;
     });
 
     Object.entries(theme.typography.fontSize).forEach(([key, value]) => {
-      properties[`--haspen-font-size-${key}`] = value;
+      properties[`--grundtone-font-size-${key}`] = value;
     });
 
     Object.entries(theme.typography.fontWeight).forEach(([key, value]) => {
-      properties[`--haspen-font-weight-${key}`] = String(value);
+      properties[`--grundtone-font-weight-${key}`] = String(value);
     });
 
     Object.entries(theme.typography.lineHeight).forEach(([key, value]) => {
-      properties[`--haspen-line-height-${key}`] = String(value);
+      properties[`--grundtone-line-height-${key}`] = String(value);
     });
 
     // Shadows
     Object.entries(theme.shadows).forEach(([key, value]) => {
-      properties[`--haspen-shadow-${key}`] = value;
+      properties[`--grundtone-shadow-${key}`] = value;
     });
 
     // Radius
     Object.entries(theme.radius).forEach(([key, value]) => {
-      properties[`--haspen-radius-${key}`] = value;
+      properties[`--grundtone-radius-${key}`] = value;
     });
 
     // Transitions
     Object.entries(theme.transitions.duration).forEach(([key, value]) => {
-      properties[`--haspen-transition-duration-${key}`] = value;
+      properties[`--grundtone-transition-duration-${key}`] = value;
     });
 
     Object.entries(theme.transitions.timing).forEach(([key, value]) => {
-      properties[`--haspen-transition-timing-${key}`] = value;
+      properties[`--grundtone-transition-timing-${key}`] = value;
     });
 
     // Apply all properties in a single batch
@@ -69,7 +69,7 @@ export function applyThemeToDOM(theme: Theme): void {
     const existingStyles = root.getAttribute('style') || '';
     const cleanedExisting = existingStyles
       .split(';')
-      .filter(rule => rule.trim() && !rule.includes('--haspen-'))
+      .filter(rule => rule.trim() && !rule.includes('--grundtone-'))
       .join(';');
 
     root.setAttribute(

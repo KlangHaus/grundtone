@@ -7,35 +7,35 @@ Find and replace all on all files (CMD+SHIFT+F):
 - Description: My new Nuxt module
 -->
 
-# @haspen/nuxt
+# @grundtone/nuxt
 
-Nuxt 3 module for HäspenUI design system.
+Nuxt 3 module for Grundtone design system.
 
 ## Installation
 
 ```bash
 # Using pnpm
-pnpm add -D @haspen/nuxt
+pnpm add -D @grundtone/nuxt
 
 # Using npm
-npm install -D @haspen/nuxt
+npm install -D @grundtone/nuxt
 
 # Using yarn
-yarn add -D @haspen/nuxt
+yarn add -D @grundtone/nuxt
 ```
 
 ## Usage
 
-Add `@haspen/nuxt` to your Nuxt modules in `nuxt.config.ts`:
+Add `@grundtone/nuxt` to your Nuxt modules in `nuxt.config.ts`:
 
 ```ts
 export default defineNuxtConfig({
-  modules: ['@haspen/nuxt'],
-  haspen: {
+  modules: ['@grundtone/nuxt'],
+  grundtone: {
     // Module options
     components: true, // Auto-import components
     composables: true, // Auto-import composables
-    prefix: 'Haspen', // Component name prefix
+    prefix: 'Grundtone', // Component name prefix
   },
 });
 ```
@@ -49,11 +49,11 @@ export default defineNuxtConfig({
 
 ## Configuration
 
-| Option        | Type      | Default    | Description                                 |
-| ------------- | --------- | ---------- | ------------------------------------------- |
-| `components`  | `boolean` | `true`     | Whether to automatically import components  |
-| `composables` | `boolean` | `true`     | Whether to automatically import composables |
-| `prefix`      | `string`  | `'Haspen'` | Prefix for component names                  |
+| Option        | Type      | Default       | Description                                 |
+| ------------- | --------- | ------------- | ------------------------------------------- |
+| `components`  | `boolean` | `true`        | Whether to automatically import components  |
+| `composables` | `boolean` | `true`        | Whether to automatically import composables |
+| `prefix`      | `string`  | `'Grundtone'` | Prefix for component names                  |
 
 ## TypeScript-konfiguration
 

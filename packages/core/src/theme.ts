@@ -125,7 +125,7 @@ export interface ThemeProviderContext {
 }
 
 export const THEME_INJECTION_KEY: InjectionKey<ThemeProviderContext> =
-  Symbol('haspen-ui-theme');
+  Symbol('grundtone-theme');
 
 export interface ThemeProviderProps {
   mode?: ThemeMode;

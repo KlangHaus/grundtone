@@ -4,11 +4,11 @@ import { nextTick } from 'vue';
 import Button from './Button.vue';
 import {
   testComponentAccessibility,
-  configureHaspenAxe,
+  configureGrundtoneAxe,
 } from '../../test-utils/accessibility';
 
 // Configure axe for tests
-configureHaspenAxe();
+configureGrundtoneAxe();
 
 describe('Button', () => {
   beforeEach(() => {
@@ -159,7 +159,7 @@ describe('Button', () => {
           variant: 'secondary',
         },
       });
-      expect(wrapper.classes()).toContain('haspen-button--secondary');
+      expect(wrapper.classes()).toContain('grundtone-button--secondary');
     });
 
     it('applies size class', () => {
@@ -168,7 +168,7 @@ describe('Button', () => {
           size: 'lg',
         },
       });
-      expect(wrapper.classes()).toContain('haspen-button--lg');
+      expect(wrapper.classes()).toContain('grundtone-button--lg');
     });
 
     it('shows loader when loading', () => {
@@ -177,7 +177,7 @@ describe('Button', () => {
           loading: true,
         },
       });
-      expect(wrapper.find('.haspen-button__loader').exists()).toBe(true);
+      expect(wrapper.find('.grundtone-button__loader').exists()).toBe(true);
     });
 
     it('is disabled when disabled prop is true', () => {

@@ -1,10 +1,10 @@
 ---
-'@haspen/design-tokens': major
-'@haspen/composables': major
-'@haspen/shared': major
-'@haspen/core': major
-'@haspen/nuxt': major
-'@haspen/ui': major
+'@grundtone/design-tokens': major
+'@grundtone/composables': major
+'@grundtone/shared': major
+'@grundtone/core': major
+'@grundtone/nuxt': major
+'@grundtone/ui': major
 ---
 
-Complete v1.0.0 release of Haspen UI - a Vue 3 design system with:
+Complete v1.0.0 release of Grundtone - a Vue 3 design system with:

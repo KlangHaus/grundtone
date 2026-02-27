@@ -22,15 +22,15 @@ export interface ModuleOptions {
 
   /**
    * Prefix for component names
-   * @default 'Haspen'
+   * @default 'Grundtone'
    */
   prefix?: string;
 }
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: '@ipeeon/nuxt',
-    configKey: 'haspen',
+    name: '@grundtone/nuxt',
+    configKey: 'grundtone',
     compatibility: {
       nuxt: '^3.0.0',
     },
@@ -39,7 +39,7 @@ export default defineNuxtModule<ModuleOptions>({
   defaults: {
     components: true,
     composables: true,
-    prefix: 'Haspen',
+    prefix: 'Grundtone',
   },
   setup(options, nuxt) {
     const resolver = createResolver(import.meta.url);
@@ -77,10 +77,10 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     // Expose module options to runtime
-    nuxt.options.runtimeConfig.public.haspen = {
+    nuxt.options.runtimeConfig.public.grundtone = {
       components: options.components ?? true,
       composables: options.composables ?? true,
-      prefix: options.prefix ?? 'Haspen',
+      prefix: options.prefix ?? 'Grundtone',
     };
   },
 }) as NuxtModule<ModuleOptions>;

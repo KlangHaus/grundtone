@@ -106,7 +106,7 @@ updateContrast();
 
 # Colors
 
-Haspen UI provides a comprehensive color system with multiple color families, each containing 9
+Grundtone provides a comprehensive color system with multiple color families, each containing 9
 shades (50-900). The color palette is designed to work harmoniously together and meets WCAG 2.1
 accessibility standards.
 
@@ -304,7 +304,7 @@ Test color combinations for accessibility compliance.
 ### Web (HTML/CSS/SCSS)
 
 ```scss
-@use '@haspen/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 // Direkte brug i SCSS
 .button-primary {
@@ -318,7 +318,7 @@ Test color combinations for accessibility compliance.
 
 // Eller via CSS variabel
 .button-secondary {
-  background-color: var(--haspen-color-primary-600);
+  background-color: var(--grundtone-color-primary-600);
 }
 ```
 
@@ -425,7 +425,7 @@ Først skal du konvertere design tokens til Kotlin constants:
 
 ```kotlin
 // Colors.kt - Design token constants
-package com.haspen.ui.theme
+package com.grundtone.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
@@ -628,7 +628,7 @@ Hver farve har 9 shades (50-900). Her er hvordan du vælger den rigtige:
 **Baggrunde og Containers (50-200)**
 
 ```scss
-@use '@ipeeon/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 .page-background {
   background-color: tokens.getColor('gray', 50); // Meget lys baggrund
@@ -944,7 +944,7 @@ Hver farve har 9 shades (50-900). Her er hvordan du vælger den rigtige:
 
 ```typescript
 import { computed } from 'vue';
-import { colors } from '@ipeeon/design-tokens';
+import { colors } from '@grundtone/design-tokens';
 
 export function useButtonColors(variant: 'primary' | 'secondary' | 'danger') {
   const buttonColors = computed(() => {
@@ -981,7 +981,7 @@ export function useButtonColors(variant: 'primary' | 'secondary' | 'danger') {
 **React Styling Eksempel**
 
 ```typescript
-import { colors } from '@ipeeon/design-tokens';
+import { colors } from '@grundtone/design-tokens';
 
 export const buttonStyles = {
   primary: {
@@ -1008,7 +1008,7 @@ export const buttonStyles = {
 ### TypeScript
 
 ```typescript
-import { colors } from '@ipeeon/design-tokens';
+import { colors } from '@grundtone/design-tokens';
 
 // Access colors
 const primaryColor = colors.primary[600]; // '#2563eb'
@@ -1023,7 +1023,7 @@ Object.entries(colors.primary).forEach(([shade, hex]) => {
 ### SCSS
 
 ```scss
-@use '@ipeeon/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 .button {
   background-color: tokens.getColor('primary', 600);
@@ -1034,7 +1034,7 @@ Object.entries(colors.primary).forEach(([shade, hex]) => {
 
 ```css
 .button {
-  background-color: var(--haspen-color-blue-600);
-  color: var(--haspen-color-text-inverse);
+  background-color: var(--grundtone-color-blue-600);
+  color: var(--grundtone-color-text-inverse);
 }
 ```

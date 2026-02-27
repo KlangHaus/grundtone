@@ -278,7 +278,7 @@ Understanding which devices fall into each breakpoint range.
 ### SCSS
 
 ```scss
-@use '@ipeeon/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 .container {
   padding: 1rem;
@@ -328,7 +328,7 @@ Understanding which devices fall into each breakpoint range.
 ### TypeScript
 
 ```typescript
-import { tokens } from '@ipeeon/design-tokens';
+import { tokens } from '@grundtone/design-tokens';
 
 // Access breakpoint values
 const tabletBreakpoint = tokens.breakpoints.md; // '768px'

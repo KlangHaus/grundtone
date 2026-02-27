@@ -24,7 +24,7 @@
     "types": ["vitest", "node", "vue"],
     "baseUrl": ".",
     "paths": {
-      "@ipeeon/*": ["packages/*/src"]
+      "@grundtone/*": ["packages/*/src"]
     }
   },
   "include": [

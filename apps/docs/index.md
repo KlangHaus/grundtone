@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: Haspen UI
+  name: Grundtone
   text: Design System Documentation
   tagline: Comprehensive design tokens and components for building beautiful Vue applications
   actions:
@@ -11,7 +11,7 @@ hero:
       link: /guide/welcome
     - theme: alt
       text: View on GitHub
-      link: https://github.com/allanasp/haspen-ui
+      link: https://github.com/allanasp/grundtone
 
 features:
   - title: Design Tokens

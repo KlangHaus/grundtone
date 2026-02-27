@@ -1,16 +1,16 @@
-# @haspen/shared
+# @grundtone/shared
 
-[![npm version](https://img.shields.io/npm/v/@haspen/shared.svg?style=flat)](https://www.npmjs.com/package/@haspen/shared)
+[![npm version](https://img.shields.io/npm/v/@grundtone/shared.svg?style=flat)](https://www.npmjs.com/package/@grundtone/shared)
 
-Shared utilities, formatters, and validation functions for Haspen UI.
+Shared utilities, formatters, and validation functions for Grundtone.
 
 ## Coming Soon
 
-Documentation for `@haspen/shared` is coming soon.
+Documentation for `@grundtone/shared` is coming soon.
 
 ## Purpose & Intent
 
-The `@haspen/shared` package is the **utility layer** of Haspen UI. Its purpose is to provide
+The `@grundtone/shared` package is the **utility layer** of Grundtone. Its purpose is to provide
 **framework-agnostic helper functions** for common tasks like formatting, validation, and data
 manipulation - with a special focus on **Danish localization**.
 
@@ -25,7 +25,7 @@ manipulation - with a special focus on **Danish localization**.
 
 **Danish-First Approach**
 
-While supporting international use cases, `@haspen/shared` prioritizes Danish-specific needs:
+While supporting international use cases, `@grundtone/shared` prioritizes Danish-specific needs:
 
 - CPR number validation
 - Danish phone formatting
@@ -42,16 +42,16 @@ While supporting international use cases, `@haspen/shared` prioritizes Danish-sp
 ## Installation
 
 ```bash
-npm install @haspen/shared
+npm install @grundtone/shared
 # or
-pnpm add @haspen/shared
+pnpm add @grundtone/shared
 # or
-yarn add @haspen/shared
+yarn add @grundtone/shared
 ```
 
 ## Overview
 
-The `@haspen/shared` package provides:
+The `@grundtone/shared` package provides:
 
 - **Danish Utilities**: CPR validation, phone number formatting
 - **Formatters**: Currency, date, number formatting
@@ -62,7 +62,7 @@ The `@haspen/shared` package provides:
 ## Quick Usage
 
 ```typescript
-import { formatCurrency, isValidCPR, formatPhoneNumber } from '@haspen/shared';
+import { formatCurrency, isValidCPR, formatPhoneNumber } from '@grundtone/shared';
 
 // Format Danish currency
 formatCurrency(1234.56); // "1.234,56 kr."
@@ -94,8 +94,8 @@ formatPhoneNumber('12345678'); // "+45 12 34 56 78"
 
 Full documentation coming soon. In the meantime, explore the source code:
 
-- [View on GitHub](https://github.com/allanasp/haspen-ui/tree/main/packages/shared)
-- [View on npm](https://www.npmjs.com/package/@haspen/shared)
+- [View on GitHub](https://github.com/allanasp/grundtone/tree/main/packages/shared)
+- [View on npm](https://www.npmjs.com/package/@grundtone/shared)
 
 ## License
 

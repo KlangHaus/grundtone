@@ -215,7 +215,7 @@ forskellige implementationer.
 ### Web (HTML/CSS/SCSS)
 
 ```scss
-@use '@haspen/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 // Buttons med forskellige radius
 .button {
@@ -404,7 +404,7 @@ struct Avatar: View {
 
 ```kotlin
 // BorderRadius.kt - Design token constants
-package com.haspen.ui.theme
+package com.grundtone.ui.theme
 
 import androidx.compose.ui.unit.dp
 
@@ -734,7 +734,7 @@ const avatarStyles = StyleSheet.create({
 **Buttons med Forskellige Styles**
 
 ```scss
-@use '@ipeeon/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 // Standard button
 .button {
@@ -1146,7 +1146,7 @@ const avatarStyles = StyleSheet.create({
 ### SCSS
 
 ```scss
-@use '@ipeeon/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 .button {
   border-radius: tokens.radius('default'); // 6px

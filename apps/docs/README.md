@@ -1,6 +1,6 @@
-# Haspen UI Documentation
+# Grundtone Documentation
 
-Welcome to the Haspen UI design system documentation. This directory contains all documentation for
+Welcome to the Grundtone design system documentation. This directory contains all documentation for
 contributors, maintainers, and users of the design system.
 
 ## Documentation Structure
@@ -17,12 +17,12 @@ apps/docs/
 
 ### For Contributors
 
-- **[Contributing Guide](../CONTRIBUTING.md)** - How to contribute to Haspen UI
+- **[Contributing Guide](../CONTRIBUTING.md)** - How to contribute to Grundtone
 - **[Development Guide](../CLAUDE.md)** - Essential commands and development standards
 
 ### For Users
 
-- **[Documentation (Live)](https://haspen-ui.vercel.app)** - Design system documentation (when
+- **[Documentation (Live)](https://grundtone.vercel.app)** - Design system documentation (when
   deployed)
 - **[Installation Guide](../CONTRIBUTING.md#getting-started)** - How to install and use packages
 
@@ -35,9 +35,9 @@ apps/docs/
 
 ## Project Overview
 
-### What is Haspen UI?
+### What is Grundtone?
 
-Haspen UI is a comprehensive Vue 3 design system built with:
+Grundtone is a comprehensive Vue 3 design system built with:
 
 - **Design Tokens** - Colors, typography, spacing, and more
 - **Components** - Atomic design component library
@@ -47,14 +47,14 @@ Haspen UI is a comprehensive Vue 3 design system built with:
 
 ### Packages
 
-| Package                                             | Description              | Status       |
-| --------------------------------------------------- | ------------------------ | ------------ |
-| [@ipeeon/design-tokens](../packages/design-tokens/) | Design system tokens     | ✅ Published |
-| [@ipeeon/core](../packages/core/)                   | Core types and utilities | ✅ Published |
-| [@ipeeon/shared](../packages/shared/)               | Shared utilities         | ✅ Published |
-| [@ipeeon/composables](../packages/composables/)     | Vue 3 composables        | ✅ Published |
-| [@ipeeon/ui](../packages/ui/)                       | Component library        | ✅ Published |
-| [@ipeeon/nuxt](../packages/nuxt/)                   | Nuxt 3 module            | ✅ Published |
+| Package                                                | Description              | Status       |
+| ------------------------------------------------------ | ------------------------ | ------------ |
+| [@grundtone/design-tokens](../packages/design-tokens/) | Design system tokens     | ✅ Published |
+| [@grundtone/core](../packages/core/)                   | Core types and utilities | ✅ Published |
+| [@grundtone/shared](../packages/shared/)               | Shared utilities         | ✅ Published |
+| [@grundtone/composables](../packages/composables/)     | Vue 3 composables        | ✅ Published |
+| [@grundtone/ui](../packages/ui/)                       | Component library        | ✅ Published |
+| [@grundtone/nuxt](../packages/nuxt/)                   | Nuxt 3 module            | ✅ Published |
 
 ### Architecture
 
@@ -83,24 +83,24 @@ nuxt (Nuxt module using ui/composables)
 1. **Install packages**:
 
    ```bash
-   npm install @ipeeon/design-tokens @ipeeon/ui @ipeeon/composables
+   npm install @grundtone/design-tokens @grundtone/ui @grundtone/composables
    ```
 
 2. **Import and use**:
 
    ```typescript
    // Design tokens
-   import { COLORS, SPACING } from '@ipeeon/design-tokens';
+   import { COLORS, SPACING } from '@grundtone/design-tokens';
 
    // Components
-   import { Button, Input } from '@ipeeon/ui';
+   import { Button, Input } from '@grundtone/ui';
 
    // Composables
-   import { useTheme } from '@ipeeon/composables';
+   import { useTheme } from '@grundtone/composables';
    ```
 
 3. **Explore documentation**:
-   - Browse [Documentation](https://haspen-ui.vercel.app) (when deployed)
+   - Browse [Documentation](https://grundtone.vercel.app) (when deployed)
    - Read package READMEs
 
 ### For Contributors
@@ -108,8 +108,8 @@ nuxt (Nuxt module using ui/composables)
 1. **Clone repository**:
 
    ```bash
-   git clone https://github.com/your-username/haspen-ui.git
-   cd haspen-ui
+   git clone https://github.com/your-username/grundtone.git
+   cd grundtone
    ```
 
 2. **Install dependencies**:
@@ -164,12 +164,12 @@ See [Release Process](../CONTRIBUTING.md#release-process) for details.
 ### Recent Releases
 
 - **v1.0.0** (2026-01-29) - Initial release of all 6 packages
-  - @ipeeon/core
-  - @ipeeon/shared
-  - @ipeeon/design-tokens
-  - @ipeeon/composables
-  - @ipeeon/ui
-  - @ipeeon/nuxt
+  - @grundtone/core
+  - @grundtone/shared
+  - @grundtone/design-tokens
+  - @grundtone/composables
+  - @grundtone/ui
+  - @grundtone/nuxt
 
 ---
 
@@ -207,14 +207,14 @@ See [Release Process](../CONTRIBUTING.md#release-process) for details.
 ### Documentation
 
 - **Platform**: Vercel
-- **URL**: https://haspen-ui.vercel.app (when deployed)
+- **URL**: https://grundtone.vercel.app (when deployed)
 - **Configuration**: [vercel.json](../vercel.json)
 - **Automatic**: Deploy on push to `main`
 
 ### NPM Packages
 
 - **Registry**: npmjs.com
-- **Scope**: @ipeeon
+- **Scope**: @grundtone
 - **Automation**: GitHub Actions + Changesets
 - **Trigger**: Merge "Version Packages" PR
 
@@ -262,9 +262,9 @@ Documentation should be updated:
 
 ### Getting Help
 
-- **Questions**: Open a [Discussion](https://github.com/haspenui/haspen-ui/discussions)
-- **Bug Reports**: Create an [Issue](https://github.com/haspenui/haspen-ui/issues)
-- **Feature Requests**: Open a [Discussion](https://github.com/haspenui/haspen-ui/discussions)
+- **Questions**: Open a [Discussion](https://github.com/grundtone/grundtone/discussions)
+- **Bug Reports**: Create an [Issue](https://github.com/grundtone/grundtone/issues)
+- **Feature Requests**: Open a [Discussion](https://github.com/grundtone/grundtone/discussions)
 
 ### Contributing
 

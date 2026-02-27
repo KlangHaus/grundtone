@@ -1,16 +1,16 @@
-# @haspen/composables
+# @grundtone/composables
 
-[![npm version](https://img.shields.io/npm/v/@haspen/composables.svg?style=flat)](https://www.npmjs.com/package/@haspen/composables)
+[![npm version](https://img.shields.io/npm/v/@grundtone/composables.svg?style=flat)](https://www.npmjs.com/package/@grundtone/composables)
 
-Vue 3 Composition API utilities and composables for Haspen UI.
+Vue 3 Composition API utilities and composables for Grundtone.
 
 ## Coming Soon
 
-Documentation for `@haspen/composables` is coming soon.
+Documentation for `@grundtone/composables` is coming soon.
 
 ## Purpose & Intent
 
-The `@haspen/composables` package is the **stateful logic layer** for Vue 3 applications. Its
+The `@grundtone/composables` package is the **stateful logic layer** for Vue 3 applications. Its
 purpose is to provide **reusable, reactive utilities** that encapsulate common UI patterns and
 behaviors, allowing you to build features faster without writing repetitive state management code.
 
@@ -43,16 +43,16 @@ behaviors, allowing you to build features faster without writing repetitive stat
 ## Installation
 
 ```bash
-npm install @haspen/composables
+npm install @grundtone/composables
 # or
-pnpm add @haspen/composables
+pnpm add @grundtone/composables
 # or
-yarn add @haspen/composables
+yarn add @grundtone/composables
 ```
 
 ## Overview
 
-The `@haspen/composables` package provides Vue 3 composables for:
+The `@grundtone/composables` package provides Vue 3 composables for:
 
 - **UI State**: Loading states, toggles, modals
 - **Forms**: Form validation, input handling
@@ -65,7 +65,7 @@ The `@haspen/composables` package provides Vue 3 composables for:
 
 ```vue
 <script setup lang="ts">
-  import { useToggle, useMediaQuery, useClickOutside } from '@haspen/composables';
+  import { useToggle, useMediaQuery, useClickOutside } from '@grundtone/composables';
 
   // Toggle state
   const [isOpen, toggle] = useToggle(false);
@@ -112,8 +112,8 @@ The `@haspen/composables` package provides Vue 3 composables for:
 
 Full documentation coming soon. In the meantime, explore the source code:
 
-- [View on GitHub](https://github.com/allanasp/haspen-ui/tree/main/packages/composables)
-- [View on npm](https://www.npmjs.com/package/@haspen/composables)
+- [View on GitHub](https://github.com/allanasp/grundtone/tree/main/packages/composables)
+- [View on npm](https://www.npmjs.com/package/@grundtone/composables)
 
 ## License
 

@@ -7,7 +7,7 @@ export {
   Icon,
   IconProvider,
   // Utilities
-  haspenIcons,
+  grundtoneIcons,
   createHeroiconsConfig,
   createLucideConfig,
   createCustomIconsConfig,

@@ -1,5 +1,5 @@
 /**
- * Centralized error handling utilities for Haspen UI
+ * Centralized error handling utilities for Grundtone UI
  * Provides structured error reporting and user-friendly fallbacks
  */
 
@@ -61,7 +61,7 @@ export function createErrorBoundary(options: ErrorBoundaryOptions = {}) {
         // Log to console in development only
         if (process.env.NODE_ENV === 'development' && !silent) {
           // eslint-disable-next-line no-console
-          console.error('[Haspen UI Error]', {
+          console.error('[Grundtone UI Error]', {
             message: componentError.message,
             context: componentError.context,
             timestamp: componentError.timestamp,
@@ -90,7 +90,7 @@ export const logger = {
   warn(message: string, context?: ErrorContext) {
     if (process.env.NODE_ENV === 'development') {
       // eslint-disable-next-line no-console
-      console.warn('[Haspen UI Warning]', {
+      console.warn('[Grundtone UI Warning]', {
         message,
         context,
         timestamp: new Date().toISOString(),
@@ -103,7 +103,7 @@ export const logger = {
 
     if (process.env.NODE_ENV === 'development') {
       // eslint-disable-next-line no-console
-      console.error('[Haspen UI Error]', {
+      console.error('[Grundtone UI Error]', {
         message: error.message,
         context: error.context,
         timestamp: error.timestamp.toISOString(),
@@ -116,7 +116,7 @@ export const logger = {
   info(message: string, data?: Record<string, unknown>) {
     if (process.env.NODE_ENV === 'development') {
       // eslint-disable-next-line no-console
-      console.log('[Haspen UI Info]', {
+      console.log('[Grundtone UI Info]', {
         message,
         data,
         timestamp: new Date().toISOString(),

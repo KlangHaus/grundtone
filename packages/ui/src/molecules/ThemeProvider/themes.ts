@@ -1,4 +1,4 @@
-import type { Theme } from '@ipeeon/core';
+import type { Theme } from '@grundtone/core';
 
 export const lightTheme: Theme = {
   mode: 'light',

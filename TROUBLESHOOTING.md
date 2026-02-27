@@ -1,12 +1,12 @@
 # Troubleshooting Guide
 
-This guide covers common issues you might encounter when working with Haspen UI and their solutions.
+This guide covers common issues you might encounter when working with Grundtone and their solutions.
 
 ## 🚨 Build Issues
 
 ### Package Resolution Errors
 
-**Problem**: `Failed to resolve entry for package "@haspen/ui"`
+**Problem**: `Failed to resolve entry for package "@grundtone/ui"`
 
 **Causes**:
 
@@ -47,7 +47,7 @@ turbo run build --force  # Force rebuild without cache
 
 ### TypeScript Compilation Errors
 
-**Problem**: `Cannot find module '@haspen/design-tokens'`
+**Problem**: `Cannot find module '@grundtone/design-tokens'`
 
 **Causes**:
 
@@ -61,10 +61,10 @@ turbo run build --force  # Force rebuild without cache
 
 ```bash
 # Build foundation packages first
-turbo run build --filter=@haspen/core --filter=@haspen/design-tokens --filter=@haspen/shared
+turbo run build --filter=@grundtone/core --filter=@grundtone/design-tokens --filter=@grundtone/shared
 
 # Then build dependent packages
-turbo run build --filter=@haspen/ui --filter=@haspen/composables
+turbo run build --filter=@grundtone/ui --filter=@grundtone/composables
 ```
 
 2. **Verify TypeScript path mapping**:
@@ -74,7 +74,7 @@ turbo run build --filter=@haspen/ui --filter=@haspen/composables
 {
   "compilerOptions": {
     "paths": {
-      "@haspen/*": ["packages/*/src"]
+      "@grundtone/*": ["packages/*/src"]
     }
   }
 }
@@ -114,7 +114,7 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     deps: {
-      inline: ['@haspen/*'],
+      inline: ['@grundtone/*'],
     },
   },
 });
@@ -219,7 +219,7 @@ rules: {
 
 ### Design Token Import Errors
 
-**Problem**: `@use '@haspen/design-tokens' as tokens;` not resolving
+**Problem**: `@use '@grundtone/design-tokens' as tokens;` not resolving
 
 **Causes**:
 
@@ -232,7 +232,7 @@ rules: {
 1. **Build design-tokens package first**:
 
 ```bash
-turbo run build --filter=@haspen/design-tokens
+turbo run build --filter=@grundtone/design-tokens
 ```
 
 2. **Verify SCSS import in Vite config**:
@@ -243,7 +243,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@use '@haspen/design-tokens' as tokens;`,
+        additionalData: `@use '@grundtone/design-tokens' as tokens;`,
       },
     },
   },
@@ -270,7 +270,7 @@ export default defineConfig({
 1. **Follow strict BEM naming**:
 
 ```scss
-.haspen-component-name {
+.grundtone-component-name {
   &__element {
     // Element styles
   }
@@ -304,7 +304,7 @@ export default defineConfig({
 pnpm build
 
 # Use filters for specific packages
-turbo run build --filter=@haspen/ui
+turbo run build --filter=@grundtone/ui
 ```
 
 2. **Enable Turbo cache**:
@@ -413,8 +413,8 @@ turbo run build --verbosity=2
 
 If you're still having issues after trying these solutions:
 
-1. **Check existing issues**: [GitHub Issues](https://github.com/your-org/haspen-ui/issues)
-2. **Search discussions**: [GitHub Discussions](https://github.com/your-org/haspen-ui/discussions)
+1. **Check existing issues**: [GitHub Issues](https://github.com/your-org/grundtone/issues)
+2. **Search discussions**: [GitHub Discussions](https://github.com/your-org/grundtone/discussions)
 3. **Create a new issue**: Include:
    - Error messages (full stack traces)
    - Environment details (OS, Node.js version, etc.)

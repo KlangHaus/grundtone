@@ -1,9 +1,9 @@
 export default defineNuxtConfig({
   modules: ['../src/module'],
-  haspen: {
+  grundtone: {
     components: true,
     composables: true,
-    prefix: 'Haspen',
+    prefix: 'Grundtone',
   },
   devtools: { enabled: true },
 });

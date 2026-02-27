@@ -62,14 +62,14 @@
   import {
     Icon,
     IconProvider,
-    haspenIcons,
+    grundtoneIcons,
     useIconConfig,
     useIconExists,
     useAvailableIcons,
   } from './index';
 
   // Built-in icons
-  const builtInIcons = haspenIcons;
+  const builtInIcons = grundtoneIcons;
 
   // Custom test icons (simple SVG components)
   const HeartIcon = {

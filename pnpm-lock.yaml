@@ -130,7 +130,7 @@ importers:
 
   apps/docs:
     dependencies:
-      '@ipeeon/design-tokens':
+      '@grundtone/design-tokens':
         specifier: workspace:*
         version: link:../../packages/design-tokens
     devDependencies:
@@ -140,13 +140,13 @@ importers:
 
   packages/composables:
     dependencies:
-      '@ipeeon/core':
+      '@grundtone/core':
         specifier: workspace:*
         version: link:../core
-      '@ipeeon/design-tokens':
+      '@grundtone/design-tokens':
         specifier: workspace:*
         version: link:../design-tokens
-      '@ipeeon/shared':
+      '@grundtone/shared':
         specifier: workspace:*
         version: link:../shared
       vue:
@@ -202,10 +202,10 @@ importers:
 
   packages/nuxt:
     dependencies:
-      '@ipeeon/composables':
+      '@grundtone/composables':
         specifier: workspace:*
         version: link:../composables
-      '@ipeeon/ui':
+      '@grundtone/ui':
         specifier: workspace:*
         version: link:../ui
       '@nuxt/kit':
@@ -248,7 +248,7 @@ importers:
 
   packages/shared:
     dependencies:
-      '@ipeeon/core':
+      '@grundtone/core':
         specifier: workspace:*
         version: link:../core
       vue:
@@ -276,10 +276,10 @@ importers:
 
   packages/ui:
     dependencies:
-      '@ipeeon/core':
+      '@grundtone/core':
         specifier: workspace:*
         version: link:../core
-      '@ipeeon/shared':
+      '@grundtone/shared':
         specifier: workspace:*
         version: link:../shared
       vue:
@@ -289,7 +289,7 @@ importers:
       '@axe-core/playwright':
         specifier: ^4.10.2
         version: 4.11.0(playwright-core@1.58.1)
-      '@ipeeon/composables':
+      '@grundtone/composables':
         specifier: workspace:*
         version: link:../composables
       '@testing-library/jest-dom':

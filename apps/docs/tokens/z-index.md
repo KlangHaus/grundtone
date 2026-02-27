@@ -38,7 +38,7 @@ systemer til at styre view hierarki og lagdeling.
 `sticky`).
 
 ```scss
-@use '@haspen/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 // Dropdown menu
 .dropdown {
@@ -588,7 +588,7 @@ const styles = StyleSheet.create({
 ### Dropdown Menus
 
 ```scss
-@use '@ipeeon/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 .dropdown {
   position: relative;
@@ -797,7 +797,7 @@ const styles = StyleSheet.create({
 ### SCSS
 
 ```scss
-@use '@ipeeon/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 .modal {
   z-index: $z-index-modal;

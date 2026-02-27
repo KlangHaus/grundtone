@@ -6,10 +6,10 @@ import type { IconConfig } from './provider';
 import { SunIcon, MoonIcon } from './provider';
 
 /**
- * Built-in Haspen UI icons
+ * Built-in Grundtone icons
  * These are always available without external dependencies
  */
-export const haspenIcons = {
+export const grundtoneIcons = {
   sun: SunIcon,
   moon: MoonIcon,
 };
@@ -67,7 +67,7 @@ export function createCustomIconsConfig(
   } = {},
 ): Partial<IconConfig> {
   const allIcons = options.includeBuiltIn
-    ? { ...haspenIcons, ...icons }
+    ? { ...grundtoneIcons, ...icons }
     : icons;
 
   return {
@@ -89,7 +89,7 @@ export function createHybridIconsConfig(
   } = { primary: 'heroicons' },
 ): Partial<IconConfig> {
   const fallbacks = {
-    ...haspenIcons,
+    ...grundtoneIcons,
     ...options.fallbackIcons,
   };
 

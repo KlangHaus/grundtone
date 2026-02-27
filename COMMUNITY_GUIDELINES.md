@@ -2,7 +2,7 @@
 
 ## Overview
 
-Welcome to the Haspen UI Design System community! These guidelines help ensure our community remains
+Welcome to the Grundtone Design System community! These guidelines help ensure our community remains
 welcoming, productive, and focused on building high-quality UI components for Danish web
 applications.
 
@@ -99,7 +99,7 @@ Reports can be made by contacting the maintainers directly or opening a confiden
 
 ## Recognition
 
-We value all contributions to the Haspen UI community:
+We value all contributions to the Grundtone community:
 
 - Code contributions (components, fixes, improvements)
 - Documentation improvements

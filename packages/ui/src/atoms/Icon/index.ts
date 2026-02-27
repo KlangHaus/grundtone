@@ -17,7 +17,7 @@ export {
 
 // Library utilities
 export {
-  haspenIcons,
+  grundtoneIcons,
   createHeroiconsConfig,
   createLucideConfig,
   createCustomIconsConfig,

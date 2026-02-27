@@ -25,7 +25,7 @@ export interface IconConfig {
 }
 
 export const ICON_PROVIDER_KEY: InjectionKey<IconConfig> = Symbol(
-  'haspen-ui-icon-provider',
+  'grundtone-icon-provider',
 );
 
 /**

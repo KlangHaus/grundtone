@@ -1,5 +1,5 @@
 {
-  "name": "haspen-ui",
+  "name": "grundtone",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -19,9 +19,9 @@
     "lint:format": "prettier --check \"**/*.{ts,tsx,vue,scss,css,json,md,yml,yaml}\"",
     "commitlint": "commitlint --edit",
     "prepare": "husky",
-    "docs:dev": "pnpm --filter @haspen/docs dev",
-    "docs:build": "turbo build --filter=@haspen/docs",
-    "docs:preview": "pnpm --filter @haspen/docs preview",
+    "docs:dev": "pnpm --filter @grundtone/docs dev",
+    "docs:build": "turbo build --filter=@grundtone/docs",
+    "docs:preview": "pnpm --filter @grundtone/docs preview",
     "changeset": "changeset",
     "changeset:add": "changeset add",
     "changeset:status": "changeset status --verbose",
@@ -104,6 +104,6 @@
       "@octokit/plugin-paginate-rest": ">=9.2.2"
     }
   },
-  "repository": "allanasp/haspen-ui",
+  "repository": "allanasp/grundtone",
   "author": "Allan Asp <mail@allanasp.dk>"
 }

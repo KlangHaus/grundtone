@@ -1,23 +1,23 @@
-# @haspen/design-tokens
+# @grundtone/design-tokens
 
-[![npm version](https://img.shields.io/npm/v/@haspen/design-tokens.svg?style=flat)](https://www.npmjs.com/package/@haspen/design-tokens)
-[![npm downloads](https://img.shields.io/npm/dm/@haspen/design-tokens.svg?style=flat)](https://www.npmjs.com/package/@haspen/design-tokens)
+[![npm version](https://img.shields.io/npm/v/@grundtone/design-tokens.svg?style=flat)](https://www.npmjs.com/package/@grundtone/design-tokens)
+[![npm downloads](https://img.shields.io/npm/dm/@grundtone/design-tokens.svg?style=flat)](https://www.npmjs.com/package/@grundtone/design-tokens)
 
 Platform-agnostic design tokens and utility classes for building consistent user interfaces.
 
 ## Installation
 
 ```bash
-npm install @haspen/design-tokens
+npm install @grundtone/design-tokens
 # or
-pnpm add @haspen/design-tokens
+pnpm add @grundtone/design-tokens
 # or
-yarn add @haspen/design-tokens
+yarn add @grundtone/design-tokens
 ```
 
 ## Overview
 
-The `@haspen/design-tokens` package provides:
+The `@grundtone/design-tokens` package provides:
 
 - **Design Tokens**: Platform-agnostic design values (colors, typography, spacing, etc.)
 - **HTML Utilities**: CSS utility classes for rapid HTML/CSS development
@@ -54,25 +54,25 @@ CSS utility classes for HTML development:
 ### Import Everything
 
 ```scss
-@use '@haspen/design-tokens';
+@use '@grundtone/design-tokens';
 ```
 
 ### Import Design Tokens Only
 
 ```scss
-@use '@haspen/design-tokens/core';
+@use '@grundtone/design-tokens/core';
 ```
 
 ### Import HTML Utilities Only
 
 ```scss
-@use '@haspen/design-tokens/utilities';
+@use '@grundtone/design-tokens/utilities';
 ```
 
 ### Using Design Tokens in SCSS
 
 ```scss
-@use '@haspen/design-tokens' as tokens;
+@use '@grundtone/design-tokens' as tokens;
 
 .card {
   background-color: tokens.$color-primary;
@@ -116,7 +116,7 @@ CSS utility classes for HTML development:
 
 ```html
 <!-- Import compiled CSS -->
-<link rel="stylesheet" href="@haspen/design-tokens/dist/index.css" />
+<link rel="stylesheet" href="@grundtone/design-tokens/dist/index.css" />
 
 <!-- Use utility classes -->
 <div class="container">
@@ -131,11 +131,11 @@ CSS utility classes for HTML development:
 ```vue
 <script setup lang="ts">
   // TypeScript types for tokens
-  import type { ColorToken, SpacingToken } from '@haspen/design-tokens';
+  import type { ColorToken, SpacingToken } from '@grundtone/design-tokens';
 </script>
 
 <style lang="scss">
-  @use '@haspen/design-tokens' as tokens;
+  @use '@grundtone/design-tokens' as tokens;
 
   .component {
     color: tokens.$color-primary;
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
 ## Package Contents
 
 ```
-@haspen/design-tokens/
+@grundtone/design-tokens/
 ├── core/              # Design tokens (SCSS variables, functions)
 │   ├── _colors.scss
 │   ├── _typography.scss

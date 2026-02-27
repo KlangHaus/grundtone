@@ -1,18 +1,18 @@
-# @haspen/core
+# @grundtone/core
 
-Core package for the HäspenUI design system. This package contains the fundamental building blocks,
+Core package for the Grundtone design system. This package contains the fundamental building blocks,
 types, and utilities that form the foundation of the design system.
 
 ## Installation
 
 ```bash
-pnpm add @haspen/core
+pnpm add @grundtone/core
 ```
 
 ## Usage
 
 ```typescript
-import { DEFAULT_THEME, type ThemeConfig } from '@haspen/core';
+import { DEFAULT_THEME, type ThemeConfig } from '@grundtone/core';
 
 // Use the default theme
 const theme: ThemeConfig = DEFAULT_THEME;

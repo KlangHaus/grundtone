@@ -4,7 +4,7 @@
     :size="size"
     :aria-hidden="ariaHidden"
     :aria-label="ariaLabel"
-    :class="['haspen-icon', iconClass]"
+    :class="['grundtone-icon', iconClass]"
   />
 </template>
 
@@ -55,7 +55,7 @@
 
   // Generate CSS class for styling
   const iconClass = computed(() => {
-    const classes = [`haspen-icon--${name}`];
+    const classes = [`grundtone-icon--${name}`];
 
     if (iconConfig.prefix) {
       classes.push(`${iconConfig.prefix}-${name}`);
@@ -72,7 +72,7 @@
 </script>
 
 <style lang="scss" scoped>
-  .haspen-icon {
+  .grundtone-icon {
     display: inline-block;
     vertical-align: middle;
     color: currentColor;

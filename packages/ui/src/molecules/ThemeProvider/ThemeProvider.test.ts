@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
 import ThemeProvider from './ThemeProvider.vue';
-import { useTheme } from '@ipeeon/composables';
+import { useTheme } from '@grundtone/composables';
 
 // Mock localStorage
 const mockLocalStorage = {
@@ -82,8 +82,10 @@ describe('ThemeProvider', () => {
       });
 
       expect(wrapper.find('[data-testid="content"]').exists()).toBe(true);
-      expect(wrapper.classes()).toContain('haspen-theme-provider');
-      expect(wrapper.classes()).toContain('haspen-theme-provider--transitions');
+      expect(wrapper.classes()).toContain('grundtone-theme-provider');
+      expect(wrapper.classes()).toContain(
+        'grundtone-theme-provider--transitions',
+      );
     });
 
     it('applies correct CSS classes based on props', () => {
@@ -93,9 +95,9 @@ describe('ThemeProvider', () => {
         },
       });
 
-      expect(wrapper.classes()).toContain('haspen-theme-provider');
+      expect(wrapper.classes()).toContain('grundtone-theme-provider');
       expect(wrapper.classes()).not.toContain(
-        'haspen-theme-provider--transitions',
+        'grundtone-theme-provider--transitions',
       );
     });
 
@@ -351,16 +353,18 @@ describe('ThemeProvider', () => {
 
       // Test that theme properties are applied (regardless of light/dark specific values)
       expect(
-        root.style.getPropertyValue('--haspen-color-primary'),
+        root.style.getPropertyValue('--grundtone-color-primary'),
       ).toBeTruthy();
-      expect(root.style.getPropertyValue('--haspen-spacing-md')).toBe('1rem');
+      expect(root.style.getPropertyValue('--grundtone-spacing-md')).toBe(
+        '1rem',
+      );
       // Test that data-theme is set (accept either light or dark due to test isolation issues)
       const currentTheme = root.getAttribute('data-theme');
       expect(currentTheme).toMatch(/^(light|dark)$/);
 
       // Test that a color value is actually set (could be light or dark variant)
       const primaryColor = root.style.getPropertyValue(
-        '--haspen-color-primary',
+        '--grundtone-color-primary',
       );
       expect(primaryColor).toMatch(/^#[0-9a-f]{6}$/i); // Valid hex color
     });
@@ -391,7 +395,7 @@ describe('ThemeProvider', () => {
       });
 
       const initialBgColor = root.style.getPropertyValue(
-        '--haspen-color-background',
+        '--grundtone-color-background',
       );
       expect(initialBgColor).toBeTruthy(); // Should have some background color
       // Test that data-theme is set initially (accept any valid theme due to test isolation issues)
@@ -408,7 +412,7 @@ describe('ThemeProvider', () => {
       });
 
       const darkBgColor = root.style.getPropertyValue(
-        '--haspen-color-background',
+        '--grundtone-color-background',
       );
       expect(darkBgColor).toBeTruthy(); // Should have some background color
       // Test that theme actually changed to dark

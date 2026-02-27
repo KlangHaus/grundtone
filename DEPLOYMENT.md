@@ -1,13 +1,13 @@
 # Deployment Guide
 
-This guide covers how to deploy and publish the Haspen UI Design System across different
+This guide covers how to deploy and publish the Grundtone Design System across different
 environments and platforms.
 
 ## 📦 Package Publishing
 
 ### NPM Publishing Workflow
 
-Haspen UI uses automated publishing via GitHub Actions and Changesets. Here's how it works:
+Grundtone uses automated publishing via GitHub Actions and Changesets. Here's how it works:
 
 #### Automated Release Process
 
@@ -124,7 +124,7 @@ pnpm release:snapshot
 Install snapshot versions in consuming projects:
 
 ```bash
-npm install @haspen/ui@snapshot
+npm install @grundtone/ui@snapshot
 ```
 
 ### Package Configuration
@@ -133,7 +133,7 @@ Each package is configured for optimal distribution:
 
 ```json
 {
-  "name": "@haspen/ui",
+  "name": "@grundtone/ui",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.umd.cjs",
@@ -169,9 +169,9 @@ Each package is configured for optimal distribution:
 #### Installation
 
 ```bash
-npm install @haspen/ui @haspen/design-tokens
+npm install @grundtone/ui @grundtone/design-tokens
 # or
-pnpm add @haspen/ui @haspen/design-tokens
+pnpm add @grundtone/ui @grundtone/design-tokens
 ```
 
 #### Global Setup
@@ -179,12 +179,12 @@ pnpm add @haspen/ui @haspen/design-tokens
 ```typescript
 // main.ts
 import { createApp } from 'vue';
-import HaspenUI from '@haspen/ui';
-import '@haspen/ui/dist/style.css';
+import Grundtone from '@grundtone/ui';
+import '@grundtone/ui/dist/style.css';
 import App from './App.vue';
 
 const app = createApp(App);
-app.use(HaspenUI);
+app.use(Grundtone);
 app.mount('#app');
 ```
 
@@ -192,7 +192,7 @@ app.mount('#app');
 
 ```vue
 <script setup lang="ts">
-  import { Button } from '@haspen/ui';
+  import { Button } from '@grundtone/ui';
 </script>
 
 <template>
@@ -200,7 +200,7 @@ app.mount('#app');
 </template>
 
 <style lang="scss">
-  @use '@haspen/design-tokens' as tokens;
+  @use '@grundtone/design-tokens' as tokens;
 
   .custom-component {
     color: tokens.color('primary');
@@ -214,7 +214,7 @@ app.mount('#app');
 #### Module Installation
 
 ```bash
-npm install @haspen/nuxt
+npm install @grundtone/nuxt
 ```
 
 #### Configuration
@@ -222,10 +222,10 @@ npm install @haspen/nuxt
 ```typescript
 // nuxt.config.ts
 export default defineNuxtConfig({
-  modules: ['@haspen/nuxt'],
+  modules: ['@grundtone/nuxt'],
 
   // Optional: Configure module options
-  haspenUI: {
+  grundtone: {
     // Auto-import components (default: true)
     components: true,
 
@@ -235,8 +235,8 @@ export default defineNuxtConfig({
     // Include CSS (default: true)
     css: true,
 
-    // Prefix for auto-imported components (default: 'Haspen')
-    prefix: 'Haspen',
+    // Prefix for auto-imported components (default: 'Grundtone')
+    prefix: 'Grundtone',
   },
 });
 ```
@@ -251,13 +251,13 @@ export default defineNuxtConfig({
 
 <template>
   <!-- Components are auto-imported with prefix -->
-  <HaspenButton @click="toggle">
+  <GrundtoneButton @click="toggle">
     {{ isOpen ? 'Close' : 'Open' }}
-  </HaspenButton>
+  </GrundtoneButton>
 
-  <HaspenModal :show="isOpen">
+  <GrundtoneModal :show="isOpen">
     <p>Modal content</p>
-  </HaspenModal>
+  </GrundtoneModal>
 </template>
 ```
 
@@ -270,12 +270,12 @@ The design system is fully compatible with SSR:
 ```typescript
 // entry-server.js
 import { createSSRApp } from 'vue';
-import HaspenUI from '@haspen/ui';
+import Grundtone from '@grundtone/ui';
 import App from './App.vue';
 
 export function createApp() {
   const app = createSSRApp(App);
-  app.use(HaspenUI);
+  app.use(Grundtone);
   return { app };
 }
 ```
@@ -285,7 +285,7 @@ export function createApp() {
 ```typescript
 // nuxt.config.ts
 export default defineNuxtConfig({
-  modules: ['@haspen/nuxt'],
+  modules: ['@grundtone/nuxt'],
   ssr: true, // Default in Nuxt 3
 });
 ```
@@ -304,7 +304,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@use '@haspen/design-tokens' as tokens;`,
+        additionalData: `@use '@grundtone/design-tokens' as tokens;`,
       },
     },
   },
@@ -328,7 +328,7 @@ export default defineConfig({
 module.exports = {
   resolve: {
     alias: {
-      '@haspen': path.resolve(__dirname, 'node_modules/@haspen'),
+      '@grundtone': path.resolve(__dirname, 'node_modules/@grundtone'),
     },
   },
   module: {
@@ -341,7 +341,7 @@ module.exports = {
           {
             loader: 'sass-loader',
             options: {
-              additionalData: `@use '@haspen/design-tokens' as tokens;`,
+              additionalData: `@use '@grundtone/design-tokens' as tokens;`,
             },
           },
         ],
@@ -426,7 +426,7 @@ http {
 version: '3.8'
 
 services:
-  haspen-ui-docs:
+  grundtone-docs:
     build: .
     ports:
       - '3000:80'
@@ -535,7 +535,7 @@ jobs:
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-org/haspen-ui.git"
+    "url": "https://github.com/your-org/grundtone.git"
   }
 }
 ```
@@ -600,5 +600,5 @@ tracking scripts.
 
 ---
 
-This deployment guide ensures your Haspen UI design system reaches developers efficiently and
+This deployment guide ensures your Grundtone design system reaches developers efficiently and
 reliably across all platforms and environments. 🚀

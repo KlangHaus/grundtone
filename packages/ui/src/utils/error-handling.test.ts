@@ -118,7 +118,7 @@ describe('Error Handling Utilities', () => {
       logger.warn('Test warning', { component: 'TestComponent' });
 
       expect(console.warn).toHaveBeenCalledWith(
-        '[Haspen UI Warning]',
+        '[Grundtone UI Warning]',
         expect.objectContaining({
           message: 'Test warning',
           context: { component: 'TestComponent' },
@@ -160,7 +160,7 @@ describe('Error Handling Utilities', () => {
       logger.info('Test info', { key: 'value' });
 
       expect(console.log).toHaveBeenCalledWith(
-        '[Haspen UI Info]',
+        '[Grundtone UI Info]',
         expect.objectContaining({
           message: 'Test info',
           data: { key: 'value' },

@@ -1,16 +1,16 @@
-# @haspen/composables
+# @grundtone/composables
 
-Vue 3 composables for HäspenUI designsystemet. En samling af genbrugelige kompositionsfunktioner
+Vue 3 composables for Grundtone designsystemet. En samling af genbrugelige kompositionsfunktioner
 bygget med Vue Composition API.
 
 ## Installation
 
 ```bash
-npm install @haspen/composables
+npm install @grundtone/composables
 # eller
-yarn add @haspen/composables
+yarn add @grundtone/composables
 # eller
-pnpm add @haspen/composables
+pnpm add @grundtone/composables
 ```
 
 ## Brug
@@ -26,7 +26,7 @@ pnpm add @haspen/composables
 </template>
 
 <script setup lang="ts">
-  import { useToggle } from '@haspen/composables';
+  import { useToggle } from '@grundtone/composables';
 
   const { isOpen, toggle } = useToggle();
 </script>

@@ -1,16 +1,16 @@
-# @haspen/core
+# @grundtone/core
 
-[![npm version](https://img.shields.io/npm/v/@haspen/core.svg?style=flat)](https://www.npmjs.com/package/@haspen/core)
+[![npm version](https://img.shields.io/npm/v/@grundtone/core.svg?style=flat)](https://www.npmjs.com/package/@grundtone/core)
 
-Base styles and CSS reset for Haspen UI.
+Base styles and CSS reset for Grundtone.
 
 ## Coming Soon
 
-Documentation for `@haspen/core` is coming soon.
+Documentation for `@grundtone/core` is coming soon.
 
 ## Purpose & Intent
 
-The `@haspen/core` package is the **foundation layer** of Haspen UI. Its purpose is to provide a
+The `@grundtone/core` package is the **foundation layer** of Grundtone. Its purpose is to provide a
 **clean, consistent baseline** for all styles by normalizing browser defaults and establishing
 sensible base styles for HTML elements.
 
@@ -24,7 +24,7 @@ sensible base styles for HTML elements.
 
 **Foundation First**
 
-Core styles must be loaded **before** any other Haspen UI styles. It establishes:
+Core styles must be loaded **before** any other Grundtone styles. It establishes:
 
 - Consistent box-sizing (`border-box`)
 - Normalized margins and padding
@@ -35,11 +35,11 @@ Core styles must be loaded **before** any other Haspen UI styles. It establishes
 ## Installation
 
 ```bash
-npm install @haspen/core
+npm install @grundtone/core
 # or
-pnpm add @haspen/core
+pnpm add @grundtone/core
 # or
-yarn add @haspen/core
+yarn add @grundtone/core
 ```
 
 ## Architecture
@@ -54,9 +54,9 @@ yarn add @haspen/core
 ### Load Order
 
 ```
-1. @haspen/core         ← Base reset & defaults
-2. @haspen/design-tokens ← Design values & utilities
-3. @haspen/ui           ← Component styles
+1. @grundtone/core         ← Base reset & defaults
+2. @grundtone/design-tokens ← Design values & utilities
+3. @grundtone/ui           ← Component styles
 4. Your app styles      ← Custom overrides
 ```
 
@@ -66,10 +66,10 @@ yarn add @haspen/core
 
 ```scss
 // Import core reset first
-@use '@haspen/core';
+@use '@grundtone/core';
 
 // Then import design tokens
-@use '@haspen/design-tokens';
+@use '@grundtone/design-tokens';
 
 // Now your custom styles
 .my-component {
@@ -81,16 +81,16 @@ yarn add @haspen/core
 
 ```typescript
 // Import at app entry point
-import '@haspen/core/dist/index.css';
-import '@haspen/design-tokens/dist/index.css';
+import '@grundtone/core/dist/index.css';
+import '@grundtone/design-tokens/dist/index.css';
 ```
 
 ### Import in HTML
 
 ```html
 <!-- Load in order -->
-<link rel="stylesheet" href="node_modules/@haspen/core/dist/index.css" />
-<link rel="stylesheet" href="node_modules/@haspen/design-tokens/dist/index.css" />
+<link rel="stylesheet" href="node_modules/@grundtone/core/dist/index.css" />
+<link rel="stylesheet" href="node_modules/@grundtone/design-tokens/dist/index.css" />
 ```
 
 ## What's Included
@@ -129,7 +129,7 @@ import '@haspen/design-tokens/dist/index.css';
 - Inconsistent form element appearance
 - Different default fonts
 
-**With `@haspen/core`**:
+**With `@grundtone/core`**:
 
 - ✅ Consistent baseline across all browsers
 - ✅ Predictable element behavior
@@ -168,11 +168,11 @@ import '@haspen/design-tokens/dist/index.css';
 ## Integration with Design System
 
 ```
-@haspen/core                  ← Establishes baseline
+@grundtone/core                  ← Establishes baseline
     ↓
-@haspen/design-tokens         ← Applies design values
+@grundtone/design-tokens         ← Applies design values
     ↓
-@haspen/ui                    ← Builds components
+@grundtone/ui                    ← Builds components
     ↓
 Your Application              ← Uses components
 ```
@@ -184,7 +184,7 @@ Core provides the **foundation**, design tokens provide the **values**, and comp
 
 ::: tip Do
 
-- Import `@haspen/core` **first**, before any other styles
+- Import `@grundtone/core` **first**, before any other styles
 - Import once at the app entry point
 - Don't override core styles unless absolutely necessary
 - Use design tokens for styling instead of fighting core defaults
@@ -196,7 +196,7 @@ Core provides the **foundation**, design tokens provide the **values**, and comp
 - Don't skip core - it's essential for consistency
 - Don't import core multiple times
 - Don't heavily customize core - use design tokens instead
-- Don't load core after other Haspen UI packages
+- Don't load core after other Grundtone packages
 
 :::
 
@@ -204,8 +204,8 @@ Core provides the **foundation**, design tokens provide the **values**, and comp
 
 Full documentation coming soon. In the meantime, explore the source code:
 
-- [View on GitHub](https://github.com/allanasp/haspen-ui/tree/main/packages/core)
-- [View on npm](https://www.npmjs.com/package/@haspen/core)
+- [View on GitHub](https://github.com/allanasp/grundtone/tree/main/packages/core)
+- [View on npm](https://www.npmjs.com/package/@grundtone/core)
 
 ## License
 
