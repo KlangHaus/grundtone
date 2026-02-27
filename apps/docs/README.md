@@ -55,7 +55,7 @@ Grundtone is a comprehensive Vue 3 design system built with:
 | [@grundtone/core](../packages/core/)                   | Core types and utilities | ✅ Published |
 | [@grundtone/shared](../packages/shared/)               | Shared utilities         | ✅ Published |
 | [@grundtone/composables](../packages/composables/)     | Vue 3 composables        | ✅ Published |
-| [@grundtone/ui](../packages/ui/)                       | Component library        | ✅ Published |
+| [@grundtone/vue](../packages/vue/)                     | Component library        | ✅ Published |
 | [@grundtone/nuxt](../packages/nuxt/)                   | Nuxt 3 module            | ✅ Published |
 
 ### Architecture
@@ -85,7 +85,7 @@ nuxt (Nuxt module using ui/composables)
 1. **Install packages**:
 
    ```bash
-   npm install @grundtone/design-tokens @grundtone/ui @grundtone/composables
+   npm install @grundtone/design-tokens @grundtone/vue @grundtone/composables
    ```
 
 2. **Import and use**:
@@ -95,7 +95,7 @@ nuxt (Nuxt module using ui/composables)
    import { COLORS, SPACING } from '@grundtone/design-tokens';
 
    // Components
-   import { Button, Input } from '@grundtone/ui';
+   import { Button, Input } from '@grundtone/vue';
 
    // Composables
    import { useTheme } from '@grundtone/composables';
@@ -170,7 +170,7 @@ See [Release Process](../docs/CONTRIBUTING.md#release-process) for details.
   - @grundtone/shared
   - @grundtone/design-tokens
   - @grundtone/composables
-  - @grundtone/ui
+  - @grundtone/vue
   - @grundtone/nuxt
 
 ---

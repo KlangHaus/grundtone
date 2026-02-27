@@ -46,7 +46,7 @@ yarn add @grundtone/nuxt
 
 ### What This Module Does
 
-1. **Auto-registers** all `@grundtone/ui` components globally
+1. **Auto-registers** all `@grundtone/vue` components globally
 2. **Auto-imports** all `@grundtone/composables` composables
 3. **Injects** design token styles automatically
 4. **Provides** TypeScript types for Nuxt auto-completion
@@ -56,7 +56,7 @@ yarn add @grundtone/nuxt
 
 ```
 @grundtone/nuxt
-├── @grundtone/ui (Vue 3 components)
+├── @grundtone/vue (Vue 3 components)
 ├── @grundtone/composables (Vue 3 composables)
 └── Nuxt 3 (peer dependency)
 ```
@@ -130,7 +130,7 @@ export default defineNuxtConfig({
 
 ### Auto-Import Components
 
-All `@grundtone/ui` components are globally available:
+All `@grundtone/vue` components are globally available:
 
 ```vue
 <template>
@@ -220,7 +220,7 @@ Works seamlessly with:
 ```vue
 <script setup lang="ts">
   // Manual imports
-  import { Button, Card, Input } from '@grundtone/ui';
+  import { Button, Card, Input } from '@grundtone/vue';
   import { useToggle, useMediaQuery } from '@grundtone/composables';
 
   // Import styles

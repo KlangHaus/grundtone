@@ -1,7 +1,10 @@
 # Grundtone Design Tokens
 
-Modern SASS-based design token system following 2025 best practices with comprehensive color
-palette, semantic naming, and powerful helper functions.
+Web-only styling layer: SCSS utilities, CSS output, grid system, and mixins for the Grundtone design
+system.
+
+> **React Native?** Use `@grundtone/core` + `@grundtone/react-native` instead. This package is for
+> web (Vue, Vite, or any project using SCSS/CSS).
 
 ## Features
 

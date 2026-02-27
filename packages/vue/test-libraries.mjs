@@ -69,7 +69,7 @@ function testCustomIcons() {
 </template>
 
 <script setup>
-import { IconProvider, Icon, createCustomIconsConfig, grundtoneIcons } from '@grundtone/ui';
+import { IconProvider, Icon, createCustomIconsConfig, grundtoneIcons } from '@grundtone/vue';
 import MyCustomIcon from './MyCustomIcon.vue';
 
 const customConfig = createCustomIconsConfig({
@@ -106,7 +106,7 @@ function testHeroicons() {
 </template>
 
 <script setup>
-import { IconProvider, Icon } from '@grundtone/ui';
+import { IconProvider, Icon } from '@grundtone/vue';
 </script>`);
 
   console.log('\n🔗 Popular icons:');
@@ -142,7 +142,7 @@ function testLucide() {
 </template>
 
 <script setup>
-import { IconProvider, Icon } from '@grundtone/ui';
+import { IconProvider, Icon } from '@grundtone/vue';
 </script>`);
 
   console.log('\n🔗 Popular icons:');
@@ -180,7 +180,7 @@ function testHybrid() {
 </template>
 
 <script setup>
-import { IconProvider, Icon, createHybridIconsConfig, grundtoneIcons } from '@grundtone/ui';
+import { IconProvider, Icon, createHybridIconsConfig, grundtoneIcons } from '@grundtone/vue';
 import CustomLogo from './CustomLogo.vue';
 
 const hybridConfig = createHybridIconsConfig({

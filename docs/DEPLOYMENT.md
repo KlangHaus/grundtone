@@ -124,7 +124,7 @@ pnpm release:snapshot
 Install snapshot versions in consuming projects:
 
 ```bash
-npm install @grundtone/ui@snapshot
+npm install @grundtone/vue@snapshot
 ```
 
 ### Package Configuration
@@ -133,7 +133,7 @@ Each package is configured for optimal distribution:
 
 ```json
 {
-  "name": "@grundtone/ui",
+  "name": "@grundtone/vue",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.umd.cjs",
@@ -169,9 +169,9 @@ Each package is configured for optimal distribution:
 #### Installation
 
 ```bash
-npm install @grundtone/ui @grundtone/design-tokens
+npm install @grundtone/vue @grundtone/design-tokens
 # or
-pnpm add @grundtone/ui @grundtone/design-tokens
+pnpm add @grundtone/vue @grundtone/design-tokens
 ```
 
 #### Global Setup
@@ -179,8 +179,8 @@ pnpm add @grundtone/ui @grundtone/design-tokens
 ```typescript
 // main.ts
 import { createApp } from 'vue';
-import Grundtone from '@grundtone/ui';
-import '@grundtone/ui/dist/style.css';
+import Grundtone from '@grundtone/vue';
+import '@grundtone/vue/dist/style.css';
 import App from './App.vue';
 
 const app = createApp(App);
@@ -192,7 +192,7 @@ app.mount('#app');
 
 ```vue
 <script setup lang="ts">
-  import { Button } from '@grundtone/ui';
+  import { Button } from '@grundtone/vue';
 </script>
 
 <template>
@@ -270,7 +270,7 @@ The design system is fully compatible with SSR:
 ```typescript
 // entry-server.js
 import { createSSRApp } from 'vue';
-import Grundtone from '@grundtone/ui';
+import Grundtone from '@grundtone/vue';
 import App from './App.vue';
 
 export function createApp() {
@@ -556,7 +556,7 @@ pnpm add -D vite-bundle-analyzer
 
 # Analyze bundles
 pnpm build
-npx vite-bundle-analyzer packages/ui/dist
+npx vite-bundle-analyzer packages/vue/dist
 ```
 
 ### Performance Monitoring

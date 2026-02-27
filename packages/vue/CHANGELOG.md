@@ -1,4 +1,4 @@
-# @grundtone/ui
+# @grundtone/vue
 
 ## 1.0.0
 

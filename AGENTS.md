@@ -18,7 +18,7 @@ pnpm docs:dev               # Start documentation site (VitePress)
 pnpm build                 # Build all packages and apps
 pnpm build:packages        # Build only packages (excludes apps)
 pnpm test                  # Run all tests across monorepo
-pnpm test --filter=@grundtone/ui  # Run tests for specific package
+pnpm test --filter=@grundtone/vue  # Run tests for specific package
 pnpm test:watch            # Run tests in watch mode
 pnpm typecheck             # TypeScript checking across all packages
 pnpm lint                  # Lint all packages
@@ -28,7 +28,7 @@ pnpm lint                  # Lint all packages
 
 ```bash
 # Build single package in watch mode
-turbo run dev --filter=@grundtone/ui
+turbo run dev --filter=@grundtone/vue
 
 # Run tests for single package
 pnpm test --filter=@grundtone/composables
@@ -117,10 +117,11 @@ Changelogs are created in each package's `CHANGELOG.md` file when running `pnpm 
 
 - **@grundtone/core** - Foundation types, constants, base interfaces
 - **@grundtone/shared** - Utilities, formatters, validation (depends on core)
-- **@grundtone/design-tokens** - SCSS variables, colors, typography, spacing
-- **@grundtone/ui** - Vue 3 components using atomic design (depends on core, shared)
+- **@grundtone/design-tokens** - SCSS variables, colors, typography, spacing (web only)
+- **@grundtone/vue** - Vue 3 components using atomic design (depends on core, shared)
 - **@grundtone/composables** - Vue 3 composables/hooks (depends on core, shared)
-- **@grundtone/nuxt** - Nuxt 3 module (depends on ui, composables)
+- **@grundtone/nuxt** - Nuxt 3 module (depends on vue, composables)
+- **@grundtone/react-native** - React Native theme provider (depends on core)
 - **@grundtone/playground** - Demo application (depends on all packages)
 
 ### Build Pipeline (Turborepo)
@@ -137,7 +138,7 @@ Tests depend on build completion. Turborepo caches outputs based on file changes
 
 ### Atomic Design Structure
 
-Components are organized in `/packages/ui/src/`:
+Components are organized in `/packages/vue/src/`:
 
 - `atoms/` - Basic building blocks (Button, Input)
 - `molecules/` - Component combinations (FormField, Card)
@@ -192,31 +193,31 @@ This design system includes Danish-specific utilities:
 
 Components MUST follow atomic design principles:
 
-**Atoms** (`packages/ui/src/atoms/`)
+**Atoms** (`packages/vue/src/atoms/`)
 
 - Single-purpose, indivisible UI elements (Button, Input, Icon, Label)
 - No business logic, only presentation logic
 - Highly reusable across the system
 
-**Molecules** (`packages/ui/src/molecules/`)
+**Molecules** (`packages/vue/src/molecules/`)
 
 - Combinations of atoms that work together (FormField = Label + Input + ErrorMessage)
 - Simple, focused functionality
 - Can contain local state management
 
-**Organisms** (`packages/ui/src/organisms/`)
+**Organisms** (`packages/vue/src/organisms/`)
 
 - Complex components combining molecules/atoms (Header, DataTable, Form)
 - Can contain business logic and complex interactions
 - May connect to external data sources
 
-**Templates** (`packages/ui/src/templates/`)
+**Templates** (`packages/vue/src/templates/`)
 
 - Page-level layouts defining content structure
 - Placeholder content, no real data
 - Focus on layout and component placement
 
-**Pages** (`packages/ui/src/pages/`)
+**Pages** (`packages/vue/src/pages/`)
 
 - Real content instances of templates
 - Actual data and final implementation

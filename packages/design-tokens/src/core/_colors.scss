@@ -1,80 +1,8 @@
-// Modern Grundtone UI Color System
-// Uses light-dark() function for automatic theme switching
+// Grundtone Color System
+// Colors come from theme config (createTheme) – this provides SCSS helpers only.
+// See @grundtone/core theme-preset for semantic token definitions.
 
-// Core Colors - Brand & Status
-$color-primary: #0059b3;
-$color-primary-hover: #004a96;
-$color-primary-active: #003a7a;
-
-$color-secondary: #6c757d;
-$color-secondary-hover: #5a6268;
-$color-secondary-active: #494f54;
-
-$color-success: #28a745;
-$color-warning: #ffc107;
-$color-error: #dc3545;
-$color-info: #17a2b8;
-
-// Export as CSS custom properties using light-dark()
-:root {
-  // Set color scheme for automatic light-dark() switching
-  color-scheme: light dark;
-
-  // Core Brand Colors (same in both themes)
-  --grundtone-color-primary: #{$color-primary};
-  --grundtone-color-primary-hover: #{$color-primary-hover};
-  --grundtone-color-primary-active: #{$color-primary-active};
-
-  --grundtone-color-secondary: #{$color-secondary};
-  --grundtone-color-secondary-hover: #{$color-secondary-hover};
-  --grundtone-color-secondary-active: #{$color-secondary-active};
-
-  --grundtone-color-success: #{$color-success};
-  --grundtone-color-warning: #{$color-warning};
-  --grundtone-color-error: #{$color-error};
-  --grundtone-color-info: #{$color-info};
-
-  // Semantic Colors with automatic light/dark switching
-  --grundtone-color-background: light-dark(#ffffff, #121212);
-  --grundtone-color-surface: light-dark(#f8f9fa, #1e1e1e);
-  --grundtone-color-surface-hover: light-dark(#e9ecef, #2a2a2a);
-
-  --grundtone-color-text-primary: light-dark(#212529, #ffffff);
-  --grundtone-color-text-secondary: light-dark(#6c757d, #b0b0b0);
-  --grundtone-color-text-tertiary: light-dark(#adb5bd, #808080);
-
-  --grundtone-color-border: light-dark(#dee2e6, #404040);
-  --grundtone-color-border-hover: light-dark(#adb5bd, #606060);
-
-  // Status Background Colors
-  --grundtone-color-success-background: light-dark(#d4edda, #1a3d20);
-  --grundtone-color-warning-background: light-dark(#fff3cd, #3d3a1a);
-  --grundtone-color-error-background: light-dark(#f8d7da, #3d1a1c);
-  --grundtone-color-info-background: light-dark(#d1ecf1, #1a2e3d);
-  --grundtone-color-primary-background: light-dark(#cce7ff, #1a2a3d);
-
-  // Code Colors
-  --grundtone-color-code-background: light-dark(#f8f9fa, #1a1a1a);
-
-  // Focus Colors (accessibility)
-  --grundtone-color-focus: light-dark(#0066cc, #4da6ff);
-  --grundtone-color-focus-outline: light-dark(
-    rgba(0, 102, 204, 0.3),
-    rgba(77, 166, 255, 0.3)
-  );
-}
-
-// SCSS Variables for programmatic access (if needed)
-$grundtone-colors: (
-  'primary': $color-primary,
-  'secondary': $color-secondary,
-  'success': $color-success,
-  'warning': $color-warning,
-  'error': $color-error,
-  'info': $color-info,
-);
-
-// Helper function for accessing colors
-@function color($key) {
-  @return map-get($grundtone-colors, $key);
+// color() returns CSS var – use kebab-case keys (e.g. 'primary', 'text-secondary')
+@function color($key: 'primary') {
+  @return var(--grundtone-color-#{$key});
 }

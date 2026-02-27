@@ -6,42 +6,39 @@
 @use 'aspect-ratio';
 
 // Import all design token CSS
+// Fallback values when ThemeProvider has not yet applied theme
 :root {
-  // Core Colors
   --grundtone-color-primary: #0059b3;
   --grundtone-color-primary-hover: #004a96;
   --grundtone-color-primary-active: #003a7a;
+  --grundtone-color-on-primary: #ffffff;
 
   --grundtone-color-secondary: #6c757d;
   --grundtone-color-secondary-hover: #5a6268;
   --grundtone-color-secondary-active: #494f54;
 
-  --grundtone-color-success: #28a745;
+  --grundtone-color-success: #198754;
+  --grundtone-color-success-bg: #d1e7dd;
   --grundtone-color-warning: #ffc107;
+  --grundtone-color-warning-bg: #fff3cd;
   --grundtone-color-error: #dc3545;
-  --grundtone-color-info: #17a2b8;
+  --grundtone-color-error-bg: #f8d7da;
+  --grundtone-color-info: #0dcaf0;
+  --grundtone-color-info-bg: #cff4fc;
 
-  // Semantic Colors
   --grundtone-color-background: light-dark(#ffffff, #121212);
   --grundtone-color-surface: light-dark(#f8f9fa, #1e1e1e);
   --grundtone-color-surface-hover: light-dark(#e9ecef, #2a2a2a);
 
-  --grundtone-color-text-primary: light-dark(#212529, #ffffff);
+  --grundtone-color-text: light-dark(#212529, #ffffff);
   --grundtone-color-text-secondary: light-dark(#6c757d, #b0b0b0);
   --grundtone-color-text-tertiary: light-dark(#adb5bd, #808080);
 
   --grundtone-color-border: light-dark(#dee2e6, #404040);
   --grundtone-color-border-hover: light-dark(#adb5bd, #606060);
-
-  // Status Colors Backgrounds
-  --grundtone-color-success-background: light-dark(#d4edda, #1a3d20);
-  --grundtone-color-warning-background: light-dark(#fff3cd, #3d3a1a);
-  --grundtone-color-error-background: light-dark(#f8d7da, #3d1a1c);
-  --grundtone-color-info-background: light-dark(#d1ecf1, #1a2e3d);
-  --grundtone-color-primary-background: light-dark(#cce7ff, #1a2a3d);
-
-  // Code Colors
-  --grundtone-color-code-background: light-dark(#f8f9fa, #1a1a1a);
+  --grundtone-color-focus: #0059b3;
+  --grundtone-color-focus-ring: rgba(0, 89, 179, 0.25);
+  --grundtone-color-neutral: #6c757d;
 
   // Typography
   --grundtone-font-family-base:
@@ -170,7 +167,7 @@ body {
   font-family: var(--grundtone-font-family-base);
   font-size: var(--grundtone-font-size-base);
   line-height: var(--grundtone-line-height-normal);
-  color: var(--grundtone-color-text-primary);
+  color: var(--grundtone-color-text);
   background-color: var(--grundtone-color-background);
   margin: 0;
   padding: 0;

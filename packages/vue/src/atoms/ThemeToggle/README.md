@@ -27,8 +27,8 @@ themes.
 </template>
 
 <script setup>
-  import { ThemeProvider } from '@grundtone/ui';
-  import { ThemeToggle } from '@grundtone/ui';
+  import { ThemeProvider } from '@grundtone/vue';
+  import { ThemeToggle } from '@grundtone/vue';
 </script>
 ```
 

@@ -6,7 +6,7 @@ This guide covers common issues you might encounter when working with Grundtone 
 
 ### Package Resolution Errors
 
-**Problem**: `Failed to resolve entry for package "@grundtone/ui"`
+**Problem**: `Failed to resolve entry for package "@grundtone/vue"`
 
 **Causes**:
 
@@ -64,7 +64,7 @@ turbo run build --force  # Force rebuild without cache
 turbo run build --filter=@grundtone/core --filter=@grundtone/design-tokens --filter=@grundtone/shared
 
 # Then build dependent packages
-turbo run build --filter=@grundtone/ui --filter=@grundtone/composables
+turbo run build --filter=@grundtone/vue --filter=@grundtone/composables
 ```
 
 2. **Verify TypeScript path mapping**:
@@ -304,7 +304,7 @@ export default defineConfig({
 pnpm build
 
 # Use filters for specific packages
-turbo run build --filter=@grundtone/ui
+turbo run build --filter=@grundtone/vue
 ```
 
 2. **Enable Turbo cache**:
@@ -333,7 +333,7 @@ pnpm dev  # Faster than full builds
 
 ```bash
 pnpm add -D vite-bundle-analyzer
-npx vite-bundle-analyzer packages/ui/dist
+npx vite-bundle-analyzer packages/vue/dist
 ```
 
 2. **Enable tree-shaking**:

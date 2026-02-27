@@ -14,7 +14,7 @@ performance and accessibility.
 </template>
 
 <script setup>
-  import { Icon, IconProvider, grundtoneIcons } from '@grundtone/ui';
+  import { Icon, IconProvider, grundtoneIcons } from '@grundtone/vue';
 </script>
 ```
 
@@ -29,7 +29,7 @@ performance and accessibility.
 
 ## 📦 Installation
 
-The icon system is included with `@grundtone/ui`. For external icon libraries:
+The icon system is included with `@grundtone/vue`. For external icon libraries:
 
 ```bash
 # Optional: External icon libraries
@@ -49,7 +49,7 @@ pnpm add @heroicons/vue lucide-vue-next
 </template>
 
 <script setup>
-  import { Icon, IconProvider, grundtoneIcons } from '@grundtone/ui';
+  import { Icon, IconProvider, grundtoneIcons } from '@grundtone/vue';
 </script>
 ```
 
@@ -64,7 +64,7 @@ pnpm add @heroicons/vue lucide-vue-next
 </template>
 
 <script setup>
-  import { Icon, IconProvider } from '@grundtone/ui';
+  import { Icon, IconProvider } from '@grundtone/vue';
   import LogoIcon from './LogoIcon.vue';
   import StarIcon from './StarIcon.vue';
 
@@ -80,7 +80,7 @@ pnpm add @heroicons/vue lucide-vue-next
 ### Custom Icons Configuration
 
 ```typescript
-import { createCustomIconsConfig, grundtoneIcons } from '@grundtone/ui';
+import { createCustomIconsConfig, grundtoneIcons } from '@grundtone/vue';
 
 const config = createCustomIconsConfig(
   {
@@ -97,7 +97,7 @@ const config = createCustomIconsConfig(
 ### Heroicons Configuration
 
 ```typescript
-import { createHeroiconsConfig } from '@grundtone/ui';
+import { createHeroiconsConfig } from '@grundtone/vue';
 
 const config = createHeroiconsConfig({
   variant: 'outline', // 'outline' | 'solid' | 'mini'
@@ -108,7 +108,7 @@ const config = createHeroiconsConfig({
 ### Lucide Configuration
 
 ```typescript
-import { createLucideConfig } from '@grundtone/ui';
+import { createLucideConfig } from '@grundtone/vue';
 
 const config = createLucideConfig({
   strokeWidth: 2,
@@ -119,7 +119,7 @@ const config = createLucideConfig({
 ### Hybrid Configuration
 
 ```typescript
-import { createHybridIconsConfig, grundtoneIcons } from '@grundtone/ui';
+import { createHybridIconsConfig, grundtoneIcons } from '@grundtone/vue';
 
 const config = createHybridIconsConfig({
   primary: 'heroicons',
@@ -269,7 +269,7 @@ Best for: Gradual migration, mixed requirements
 Convert between library naming conventions:
 
 ```typescript
-import { mapIconName } from '@grundtone/ui';
+import { mapIconName } from '@grundtone/vue';
 
 // Heroicons → Lucide
 const lucideName = mapIconName('chevron-up', 'heroicons', 'lucide');
@@ -328,7 +328,7 @@ Get the current icon configuration:
 
 ```vue
 <script setup>
-  import { useIconConfig } from '@grundtone/ui';
+  import { useIconConfig } from '@grundtone/vue';
 
   const config = useIconConfig();
   console.log(config.library); // 'custom'
@@ -342,7 +342,7 @@ Check if an icon exists in the current configuration:
 
 ```vue
 <script setup>
-  import { useIconExists } from '@grundtone/ui';
+  import { useIconExists } from '@grundtone/vue';
 
   const sunExists = useIconExists('sun'); // true/false
 </script>
@@ -354,7 +354,7 @@ Get all available icon names:
 
 ```vue
 <script setup>
-  import { useAvailableIcons } from '@grundtone/ui';
+  import { useAvailableIcons } from '@grundtone/vue';
 
   const icons = useAvailableIcons(); // ['sun', 'moon', ...]
 </script>
@@ -384,11 +384,11 @@ Only icons you use are included in your bundle:
 
 ```typescript
 // ✅ Good: Only SunIcon.vue is bundled
-import { Icon } from '@grundtone/ui';
+import { Icon } from '@grundtone/vue';
 // Usage: <Icon name="sun" />
 
 // ❌ Bad: All icons bundled
-import * as icons from '@grundtone/ui/icons';
+import * as icons from '@grundtone/vue/icons';
 ```
 
 ### Bundle Size Examples

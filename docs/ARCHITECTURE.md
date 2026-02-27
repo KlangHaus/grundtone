@@ -123,7 +123,7 @@ export type { BaseComponent, ComponentSize } from './types';
 
 ### Component Layer
 
-#### `@grundtone/ui`
+#### `@grundtone/vue`
 
 **Purpose**: Vue 3 component library following atomic design **Dependencies**: `@grundtone/core`,
 `@grundtone/shared` **Architecture**:
@@ -186,7 +186,7 @@ export { useTheme } from './theme';
 
 #### `@grundtone/nuxt`
 
-**Purpose**: Nuxt 3 module for seamless integration **Dependencies**: `@grundtone/ui`,
+**Purpose**: Nuxt 3 module for seamless integration **Dependencies**: `@grundtone/vue`,
 `@grundtone/composables` **Features**:
 
 - Auto-imports for components and composables

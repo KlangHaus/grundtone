@@ -54,7 +54,7 @@ Location: `.changeset/config.json`
 - **Linked Packages**: All packages version together when any package changes
   - `@grundtone/core`
   - `@grundtone/shared`
-  - `@grundtone/ui`
+  - `@grundtone/vue`
   - `@grundtone/composables`
   - `@grundtone/design-tokens`
   - `@grundtone/nuxt`
@@ -74,7 +74,7 @@ Linked packages maintain synchronized versions across the monorepo. When you:
 **Example:**
 
 - Current state: All packages at `0.1.0`
-- You change only `@grundtone/ui` with a `minor` bump
+- You change only `@grundtone/vue` with a `minor` bump
 - After versioning: ALL packages become `0.2.0`
 
 **Benefits:**
@@ -157,9 +157,9 @@ pnpm changeset publish --tag feature-xyz --no-git-tag
 **Install snapshot:**
 
 ```bash
-npm install @grundtone/ui@snapshot
+npm install @grundtone/vue@snapshot
 # or
-npm install @grundtone/ui@feature-xyz
+npm install @grundtone/vue@feature-xyz
 ```
 
 **Configuration:**
@@ -230,7 +230,7 @@ git push --follow-tags
 
 - Use a separate branch (e.g., `next`, `beta`) for prereleases
 - Don't run prereleases from `develop` or `main`
-- Users install with: `npm install @grundtone/ui@next`
+- Users install with: `npm install @grundtone/vue@next`
 - Document prerelease channels in README
 
 ### Internal Dependencies
@@ -239,13 +239,13 @@ Configuration: `"updateInternalDependencies": "patch"`
 
 **What it does:**
 
-When `@grundtone/ui` depends on `@grundtone/core` and `@grundtone/core` gets bumped,
-`@grundtone/ui`'s dependency range updates with a `patch` bump.
+When `@grundtone/vue` depends on `@grundtone/core` and `@grundtone/core` gets bumped,
+`@grundtone/vue`'s dependency range updates with a `patch` bump.
 
 **Example:**
 
 ```json
-// Before: @grundtone/ui at 1.0.0
+// Before: @grundtone/vue at 1.0.0
 {
   "dependencies": {
     "@grundtone/core": "workspace:*"
@@ -255,7 +255,7 @@ When `@grundtone/ui` depends on `@grundtone/core` and `@grundtone/core` gets bum
 // @grundtone/core bumps from 1.0.0 to 1.1.0
 
 
-// After: @grundtone/ui bumps to 1.0.1
+// After: @grundtone/vue bumps to 1.0.1
 ```
 
 ### Experimental Options

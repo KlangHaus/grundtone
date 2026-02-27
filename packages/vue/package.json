@@ -1,5 +1,5 @@
 {
-  "name": "@grundtone/ui",
+  "name": "@grundtone/vue",
   "version": "1.0.0",
   "description": "Vue 3 UI components for Grundtone",
   "license": "MIT",
@@ -22,7 +22,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/allanasp/grundtone.git",
-    "directory": "packages/ui"
+    "directory": "packages/vue"
   },
   "publishConfig": {
     "access": "public"
@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "@grundtone/core": "workspace:*",
+    "@grundtone/design-tokens": "workspace:*",
     "@grundtone/shared": "workspace:*"
   },
   "devDependencies": {

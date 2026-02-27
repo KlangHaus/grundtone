@@ -1,16 +1,16 @@
-# @grundtone/ui
+# @grundtone/vue
 
-[![npm version](https://img.shields.io/npm/v/@grundtone/ui.svg?style=flat)](https://www.npmjs.com/package/@grundtone/ui)
+[![npm version](https://img.shields.io/npm/v/@grundtone/vue.svg?style=flat)](https://www.npmjs.com/package/@grundtone/vue)
 
 Vue 3 component library for Grundtone following atomic design principles.
 
 ## Coming Soon
 
-Documentation for `@grundtone/ui` is coming soon.
+Documentation for `@grundtone/vue` is coming soon.
 
 ## Purpose & Intent
 
-The `@grundtone/ui` package is the **component implementation layer** of Grundtone. Its purpose is
+The `@grundtone/vue` package is the **component implementation layer** of Grundtone. Its purpose is
 to provide production-ready, accessible, and tested Vue 3 components that implement the design
 system defined by `@grundtone/design-tokens`.
 
@@ -37,11 +37,11 @@ Components are organized hierarchically following atomic design methodology:
 ## Installation
 
 ```bash
-npm install @grundtone/ui vue
+npm install @grundtone/vue vue
 # or
-pnpm add @grundtone/ui vue
+pnpm add @grundtone/vue vue
 # or
-yarn add @grundtone/ui vue
+yarn add @grundtone/vue vue
 ```
 
 ## Architecture
@@ -49,7 +49,7 @@ yarn add @grundtone/ui vue
 ### Dependencies
 
 ```
-@grundtone/ui
+@grundtone/vue
 ├── @grundtone/core (base styles)
 ├── @grundtone/shared (utilities)
 └── Vue 3 (peer dependency)
@@ -76,7 +76,7 @@ ComponentName/
 
 ```vue
 <script setup lang="ts">
-  import { Button, Input, Card } from '@grundtone/ui';
+  import { Button, Input, Card } from '@grundtone/vue';
 </script>
 
 <template>
@@ -93,7 +93,7 @@ ComponentName/
 
 ### Why This Package Exists
 
-`@grundtone/ui` bridges the gap between **design tokens** (abstract values) and **application UI**
+`@grundtone/vue` bridges the gap between **design tokens** (abstract values) and **application UI**
 (concrete components). It provides:
 
 1. **Consistency**: All components use the same design tokens
@@ -112,7 +112,8 @@ leading to:
 - Accessibility gaps
 - High maintenance cost
 
-`@grundtone/ui` solves this by providing **one canonical implementation** of each component pattern.
+`@grundtone/vue` solves this by providing **one canonical implementation** of each component
+pattern.
 
 ## Component Categories
 
@@ -154,7 +155,7 @@ Structural layouts for pages:
 
 ```vue
 <script setup lang="ts">
-  import { Button } from '@grundtone/ui';
+  import { Button } from '@grundtone/vue';
   import type { ColorToken } from '@grundtone/design-tokens';
 
   // Components use design tokens internally
@@ -190,8 +191,8 @@ Full component documentation coming soon, including:
 
 In the meantime, explore the source code:
 
-- [View on GitHub](https://github.com/allanasp/grundtone/tree/main/packages/ui)
-- [View on npm](https://www.npmjs.com/package/@grundtone/ui)
+- [View on GitHub](https://github.com/allanasp/grundtone/tree/main/packages/vue)
+- [View on npm](https://www.npmjs.com/package/@grundtone/vue)
 
 ## License
 

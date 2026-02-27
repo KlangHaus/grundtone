@@ -362,6 +362,6 @@ import '@grundtone/core'; // loads CSS custom properties
 - `@grundtone/design-tokens` - SCSS variables, utility CSS classes, 12-column grid system
 - `@grundtone/shared` - Validation (CPR, phone), formatters (currency, dates), Danish locale
   utilities
-- `@grundtone/ui` - Vue 3 components (Button, Icon, ThemeToggle, etc.)
+- `@grundtone/vue` - Vue 3 components (Button, Icon, ThemeToggle, etc.)
 - `@grundtone/composables` - Vue 3 composables (useToggle, etc.)
 - `@grundtone/nuxt` - Nuxt 3 module that auto-imports everything

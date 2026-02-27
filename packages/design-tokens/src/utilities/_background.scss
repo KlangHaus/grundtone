@@ -1,13 +1,12 @@
 // Background Utilities
-@use '../core/colors' as *;
+// Uses semantic color tokens from theme
 
-// Background colors
 .bg-normal {
-  background-color: $color-white !important;
+  background-color: var(--grundtone-color-background) !important;
 }
 
 .bg-alternative {
-  background-color: $color-gray-100 !important;
+  background-color: var(--grundtone-color-surface) !important;
 }
 
 .bg-modal {

@@ -4,7 +4,7 @@
 '@grundtone/shared': patch
 '@grundtone/core': patch
 '@grundtone/nuxt': patch
-'@grundtone/ui': patch
+'@grundtone/vue': patch
 ---
 
 Add comprehensive platform-specific documentation and 12-column grid system

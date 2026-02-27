@@ -35,34 +35,34 @@ The build pipeline follows strict dependency order:
 
 All UI components must follow atomic design principles:
 
-**Atoms** (`packages/ui/src/atoms/`)
+**Atoms** (`packages/vue/src/atoms/`)
 
 - Single-purpose, indivisible UI elements
 - Examples: Button, Input, Icon, Label
 - No business logic, only presentation logic
 - Maximum complexity: 100 lines
 
-**Molecules** (`packages/ui/src/molecules/`)
+**Molecules** (`packages/vue/src/molecules/`)
 
 - Combinations of atoms working together
 - Examples: FormField (Label + Input + ErrorMessage)
 - Simple, focused functionality
 - Maximum complexity: 150 lines
 
-**Organisms** (`packages/ui/src/organisms/`)
+**Organisms** (`packages/vue/src/organisms/`)
 
 - Complex components combining molecules/atoms
 - Examples: Header, DataTable, NavigationMenu
 - Can contain business logic
 - Maximum complexity: 300 lines
 
-**Templates** (`packages/ui/src/templates/`)
+**Templates** (`packages/vue/src/templates/`)
 
 - Page-level layouts defining structure
 - No real data, only placeholder content
 - Focus on layout and component placement
 
-**Pages** (`packages/ui/src/pages/`)
+**Pages** (`packages/vue/src/pages/`)
 
 - Real content instances of templates
 - Actual data and final implementation

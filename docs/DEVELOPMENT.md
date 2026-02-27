@@ -51,7 +51,7 @@ Components follow atomic design principles:
 #### 1. Component File Structure
 
 ```
-packages/ui/src/atoms/ComponentName/
+packages/vue/src/atoms/ComponentName/
 ├── ComponentName.vue        # Component implementation
 ├── ComponentName.test.ts    # Unit tests
 ├── ComponentName.scss       # Styles (optional)
@@ -136,7 +136,7 @@ pnpm test:watch
 pnpm test:coverage
 
 # Run tests for specific package
-pnpm test --filter=@grundtone/ui
+pnpm test --filter=@grundtone/vue
 ```
 
 ### Test Structure
@@ -197,7 +197,7 @@ chore: update dependencies
 pnpm build
 
 # Build specific package
-pnpm build --filter=@grundtone/ui
+pnpm build --filter=@grundtone/vue
 
 # Build in watch mode
 pnpm dev

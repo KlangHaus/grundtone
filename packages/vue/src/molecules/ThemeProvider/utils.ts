@@ -13,9 +13,11 @@ export function applyThemeToDOM(theme: Theme): void {
     // Build all properties as key-value pairs
     const properties: Record<string, string> = {};
 
-    // Colors
+    // Colors (camelCase → kebab-case for CSS vars)
     Object.entries(theme.colors).forEach(([key, value]) => {
-      properties[`--grundtone-color-${key}`] = value;
+      if (value === undefined) return;
+      const cssKey = key.replace(/([A-Z])/g, '-$1').toLowerCase();
+      properties[`--grundtone-color-${cssKey}`] = value;
     });
 
     // Spacing

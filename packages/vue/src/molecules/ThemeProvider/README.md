@@ -26,7 +26,7 @@ provide/inject pattern.
 </template>
 
 <script setup lang="ts">
-  import { ThemeProvider } from '@grundtone/ui';
+  import { ThemeProvider } from '@grundtone/vue';
 </script>
 ```
 
@@ -68,7 +68,7 @@ provide/inject pattern.
 </template>
 
 <script setup lang="ts">
-  import { ThemeProvider } from '@grundtone/ui';
+  import { ThemeProvider } from '@grundtone/vue';
 
   const customTheme = {
     colors: {

@@ -78,7 +78,7 @@ grundtone/
 
 ### Package Responsibilities
 
-- **@grundtone/ui**: Vue 3 components following atomic design
+- **@grundtone/vue**: Vue 3 components following atomic design
 - **@grundtone/design-tokens**: Colors, typography, spacing tokens
 - **@grundtone/composables**: Reusable Vue composables
 - **@grundtone/core**: Framework-agnostic utilities
@@ -109,7 +109,7 @@ We follow atomic design methodology:
 1. **Create component structure**
 
    ```
-   packages/ui/src/atoms/NewComponent/
+   packages/vue/src/atoms/NewComponent/
    ├── NewComponent.vue      # Main component
    ├── NewComponent.scss     # Styles
    ├── NewComponent.test.ts  # Unit tests

@@ -4,7 +4,7 @@
 '@grundtone/shared': major
 '@grundtone/core': major
 '@grundtone/nuxt': major
-'@grundtone/ui': major
+'@grundtone/vue': major
 ---
 
 And it begins! The Ui library

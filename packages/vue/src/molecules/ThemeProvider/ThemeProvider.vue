@@ -199,27 +199,40 @@
     }
   }
 
-  // Base theme variables with modern CSS light-dark() support
+  // Base theme variables – overridden by applyThemeToDOM when ThemeProvider mounts
+  // These are fallbacks from defaultColorPreset for initial paint / SSR
   :root {
-    // Set color scheme preference for better native support
     color-scheme: light dark;
 
-    // Modern light-dark() function for automatic theme switching
-    // Colors - WCAG 2.1 AA compliant (4.5:1 normal text, 3:1 large text)
-    --grundtone-color-primary: light-dark(#0059b3, #1565c0);
+    --grundtone-color-primary: light-dark(#0059b3, #4dabf7);
+    --grundtone-color-primary-hover: light-dark(#004a96, #74c0fc);
+    --grundtone-color-primary-active: light-dark(#003a7a, #339af0);
+    --grundtone-color-on-primary: light-dark(#ffffff, #121212);
     --grundtone-color-secondary: light-dark(#6c757d, #adb5bd);
-    --grundtone-color-tertiary: light-dark(#17a2b8, #26c6da);
-    --grundtone-color-error: light-dark(#d32f2f, #f44336);
-    --grundtone-color-warning: light-dark(#d84315, #ff9800);
-    --grundtone-color-success: light-dark(#2e7d32, #4caf50);
-    --grundtone-color-info: light-dark(#01579b, #03a9f4);
-    --grundtone-color-neutral: light-dark(#757575, #9e9e9e);
+    --grundtone-color-secondary-hover: light-dark(#5a6268, #ced4da);
+    --grundtone-color-secondary-active: light-dark(#494f54, #868e96);
+    --grundtone-color-success: light-dark(#198754, #51cf66);
+    --grundtone-color-success-bg: light-dark(#d1e7dd, #1a3d20);
+    --grundtone-color-warning: light-dark(#ffc107, #ffd43b);
+    --grundtone-color-warning-bg: light-dark(#fff3cd, #3d3a1a);
+    --grundtone-color-error: light-dark(#dc3545, #ff6b6b);
+    --grundtone-color-error-bg: light-dark(#f8d7da, #3d1a1c);
+    --grundtone-color-info: light-dark(#0dcaf0, #4dabf7);
+    --grundtone-color-info-bg: light-dark(#cff4fc, #1a2e3d);
     --grundtone-color-background: light-dark(#ffffff, #121212);
-    --grundtone-color-surface: light-dark(#f5f5f5, #1e1e1e);
+    --grundtone-color-surface: light-dark(#f8f9fa, #1e1e1e);
+    --grundtone-color-surface-hover: light-dark(#e9ecef, #2a2a2a);
     --grundtone-color-text: light-dark(#212529, #ffffff);
-    --grundtone-color-textSecondary: light-dark(#6c757d, #adb5bd);
-    --grundtone-color-border: light-dark(#757575, #757575);
-    --grundtone-color-divider: light-dark(#9e9e9e, #616161);
+    --grundtone-color-text-secondary: light-dark(#6c757d, #b0b0b0);
+    --grundtone-color-text-tertiary: light-dark(#adb5bd, #808080);
+    --grundtone-color-border: light-dark(#dee2e6, #404040);
+    --grundtone-color-border-hover: light-dark(#adb5bd, #606060);
+    --grundtone-color-focus: light-dark(#0059b3, #4dabf7);
+    --grundtone-color-focus-ring: light-dark(
+      rgba(0, 89, 179, 0.25),
+      rgba(77, 171, 247, 0.25)
+    );
+    --grundtone-color-neutral: light-dark(#6c757d, #9e9e9e);
 
     // Spacing
     --grundtone-spacing-xs: 0.25rem;
@@ -302,47 +315,15 @@
     --grundtone-transition-timing-linear: linear;
   }
 
-  // Legacy data-attribute overrides for manual theme control
-  // These provide fallback support for browsers without light-dark() and explicit theme switching
   [data-theme='dark'] {
     color-scheme: dark;
-    --grundtone-color-primary: #1565c0;
-    --grundtone-color-secondary: #adb5bd;
-    --grundtone-color-tertiary: #26c6da;
-    --grundtone-color-error: #f44336;
-    --grundtone-color-warning: #ff9800;
-    --grundtone-color-success: #4caf50;
-    --grundtone-color-info: #03a9f4;
-    --grundtone-color-neutral: #9e9e9e;
-    --grundtone-color-background: #121212;
-    --grundtone-color-surface: #1e1e1e;
-    --grundtone-color-text: #ffffff;
-    --grundtone-color-textSecondary: #adb5bd;
-    --grundtone-color-border: #757575;
-    --grundtone-color-divider: #616161;
   }
 
   [data-theme='light'] {
     color-scheme: light;
-    --grundtone-color-primary: #0059b3;
-    --grundtone-color-secondary: #6c757d;
-    --grundtone-color-tertiary: #17a2b8;
-    --grundtone-color-error: #d32f2f;
-    --grundtone-color-warning: #d84315;
-    --grundtone-color-success: #2e7d32;
-    --grundtone-color-info: #01579b;
-    --grundtone-color-neutral: #757575;
-    --grundtone-color-background: #ffffff;
-    --grundtone-color-surface: #f5f5f5;
-    --grundtone-color-text: #212529;
-    --grundtone-color-textSecondary: #6c757d;
-    --grundtone-color-border: #757575;
-    --grundtone-color-divider: #9e9e9e;
   }
 
-  // Auto mode: respects system preference via light-dark() function
   [data-theme='auto'] {
     color-scheme: light dark;
-    // light-dark() values are already set in :root, no overrides needed
   }
 </style>

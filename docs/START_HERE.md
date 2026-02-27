@@ -42,7 +42,7 @@ pnpm dev
 
 ### Packages
 
-- **`@grundtone/ui`** - Vue 3 components (buttons, forms, etc.)
+- **`@grundtone/vue`** - Vue 3 components (buttons, forms, etc.)
 - **`@grundtone/core`** - Core types and constants
 - **`@grundtone/shared`** - Shared utilities and helpers
 - **`@grundtone/composables`** - Vue composables (hooks)
@@ -58,7 +58,7 @@ pnpm dev
 
 ### Creating a New Component
 
-1. Navigate to `packages/ui/src/atoms/` (or molecules/organisms)
+1. Navigate to `packages/vue/src/atoms/` (or molecules/organisms)
 2. Create a new folder with your component name
 3. Add these files:
    - `ComponentName.vue` - Component implementation
@@ -76,7 +76,7 @@ pnpm test
 pnpm test:watch
 
 # Run specific package tests
-pnpm test --filter=@grundtone/ui
+pnpm test --filter=@grundtone/vue
 ```
 
 ### Building for Production
@@ -86,7 +86,7 @@ pnpm test --filter=@grundtone/ui
 pnpm build
 
 # Build specific package
-pnpm build --filter=@grundtone/ui
+pnpm build --filter=@grundtone/vue
 ```
 
 ## 📚 Next Steps
@@ -108,7 +108,7 @@ pnpm build --filter=@grundtone/ui
 You're all set! Start by:
 
 1. Running `pnpm docs:dev` to see the design system documentation
-2. Exploring the `packages/ui/src/atoms/Button` folder to understand the structure
+2. Exploring the `packages/vue/src/atoms/Button` folder to understand the structure
 3. Creating your first component or improving an existing one
 
 Happy coding! 🚀

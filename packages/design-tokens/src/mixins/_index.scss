@@ -107,7 +107,7 @@
 @mixin form-hint-text {
   font-size: type.$font-size-form-hint;
   line-height: type.$line-height-base;
-  color: func.color('ink-light');
+  color: func.color('text-secondary');
 }
 
 @mixin form-error-text {
@@ -160,31 +160,31 @@
   @include button-base;
   background-color: func.color('primary');
   border-color: func.color('primary');
-  color: func.color('white');
+  color: func.color('on-primary');
 
   &:hover:not(:disabled) {
-    background-color: func.color('primary-dark');
-    border-color: func.color('primary-dark');
+    background-color: func.color('primary-hover');
+    border-color: func.color('primary-hover');
   }
 
   &:active:not(:disabled) {
-    background-color: func.color('primary-darker');
-    border-color: func.color('primary-darker');
+    background-color: func.color('primary-active');
+    border-color: func.color('primary-active');
   }
 }
 
 @mixin button-secondary {
   @include button-base;
-  background-color: func.color('white');
+  background-color: func.color('background');
   border-color: func.color('primary');
   color: func.color('primary');
 
   &:hover:not(:disabled) {
-    background-color: func.color('gray-100');
+    background-color: func.color('surface');
   }
 
   &:active:not(:disabled) {
-    background-color: func.color('gray-200');
+    background-color: func.color('surface-hover');
   }
 }
 

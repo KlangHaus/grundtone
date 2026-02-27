@@ -56,7 +56,7 @@ yarn add @grundtone/core
 ```
 1. @grundtone/core         ← Base reset & defaults
 2. @grundtone/design-tokens ← Design values & utilities
-3. @grundtone/ui           ← Component styles
+3. @grundtone/vue           ← Component styles
 4. Your app styles      ← Custom overrides
 ```
 
@@ -172,7 +172,7 @@ import '@grundtone/design-tokens/dist/index.css';
     ↓
 @grundtone/design-tokens         ← Applies design values
     ↓
-@grundtone/ui                    ← Builds components
+@grundtone/vue                    ← Builds components
     ↓
 Your Application              ← Uses components
 ```

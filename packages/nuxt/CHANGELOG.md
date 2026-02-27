@@ -13,4 +13,4 @@
 - Updated dependencies
   [[`8174960`](https://github.com/allanasp/grundtone/commit/817496074311a1eee4da2f14603eb79e633636e5)]:
   - @grundtone/composables@1.0.0
-  - @grundtone/ui@1.0.0
+  - @grundtone/vue@1.0.0

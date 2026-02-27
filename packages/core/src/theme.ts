@@ -2,21 +2,37 @@ import type { InjectionKey, Ref } from 'vue';
 
 export type ThemeMode = 'light' | 'dark' | 'auto';
 
+/**
+ * Semantic color tokens – configure these to match your brand.
+ * All keys map to CSS var: --grundtone-color-{kebab-case-key}
+ */
 export interface ThemeColors {
   primary: string;
+  primaryHover?: string;
+  primaryActive?: string;
+  onPrimary?: string;
   secondary: string;
-  tertiary: string;
-  error: string;
-  warning: string;
+  secondaryHover?: string;
+  secondaryActive?: string;
   success: string;
+  successBg?: string;
+  warning: string;
+  warningBg?: string;
+  error: string;
+  errorBg?: string;
   info: string;
-  neutral: string;
+  infoBg?: string;
+  neutral?: string;
   background: string;
   surface: string;
+  surfaceHover?: string;
   text: string;
   textSecondary: string;
+  textTertiary?: string;
   border: string;
-  divider: string;
+  borderHover?: string;
+  focus?: string;
+  focusRing?: string;
 }
 
 export interface ThemeSpacing {

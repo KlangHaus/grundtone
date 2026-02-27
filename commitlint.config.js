@@ -22,11 +22,12 @@ export default {
       2,
       'always',
       [
-        'ui',           // @grundtone/ui package
+        'vue',          // @grundtone/vue package
         'core',         // @grundtone/core package
         'shared',       // @grundtone/shared package
         'composables',  // @grundtone/composables package
-        'design-tokens',// @grundtone/design-tokens package
+        'design-tokens', // @grundtone/design-tokens package
+        'react-native', // @grundtone/react-native package
         'nuxt',         // @grundtone/nuxt package
         'deps',         // Dependencies
         'config',       // Configuration files

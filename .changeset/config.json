@@ -12,10 +12,11 @@
     [
       "@grundtone/core",
       "@grundtone/shared",
-      "@grundtone/ui",
+      "@grundtone/vue",
       "@grundtone/composables",
       "@grundtone/design-tokens",
-      "@grundtone/nuxt"
+      "@grundtone/nuxt",
+      "@grundtone/react-native"
     ]
   ],
   "access": "public",

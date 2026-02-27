@@ -75,8 +75,8 @@ pnpm lint                  # Lint all packages
 pnpm format                # Format all files
 
 # Package-specific commands
-pnpm test --filter=@grundtone/ui  # Test specific package
-turbo run dev --filter=@grundtone/ui  # Build specific package in watch mode
+pnpm test --filter=@grundtone/vue  # Test specific package
+turbo run dev --filter=@grundtone/vue  # Build specific package in watch mode
 ```
 
 ## 🏛️ Design System Features
@@ -107,14 +107,14 @@ Every component follows atomic design principles:
 ### Vue 3 Integration
 
 ```bash
-npm install @grundtone/ui @grundtone/design-tokens
+npm install @grundtone/vue @grundtone/design-tokens
 ```
 
 ```javascript
 // main.ts
 import { createApp } from 'vue';
-import GrundtoneUI from '@grundtone/ui';
-import '@grundtone/ui/dist/style.css';
+import GrundtoneUI from '@grundtone/vue';
+import '@grundtone/vue/dist/style.css';
 import App from './App.vue';
 
 const app = createApp(App);
@@ -242,7 +242,7 @@ git push origin feature/new-component
 - ✅ **@grundtone/core**: Stable - CSS reset and base styles
 - ✅ **@grundtone/design-tokens**: Stable - Complete design token implementation
 - ✅ **@grundtone/shared**: Stable - Danish utilities and helpers
-- ✅ **@grundtone/ui**: Stable - Vue 3 component library
+- ✅ **@grundtone/vue**: Stable - Vue 3 component library
 - ✅ **@grundtone/composables**: Stable - Vue 3 composables
 - ✅ **@grundtone/nuxt**: Stable - Nuxt 3 integration module
 - ✅ **@grundtone/playground**: Development - Demo application

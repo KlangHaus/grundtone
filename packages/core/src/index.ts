@@ -6,6 +6,7 @@ export * from './constants';
 
 // Theme
 export * from './theme';
+export * from './theme-preset';
 
 // Components will be exported here as they are created
 

@@ -24,7 +24,7 @@ A flexible, configurable icon system that supports multiple icon libraries and c
 </template>
 
 <script setup>
-  import { IconProvider, Icon, grundtoneIcons } from '@grundtone/ui';
+  import { IconProvider, Icon, grundtoneIcons } from '@grundtone/vue';
 
   const customIcons = {
     ...grundtoneIcons,
@@ -44,7 +44,7 @@ A flexible, configurable icon system that supports multiple icon libraries and c
 </template>
 
 <script setup>
-  import { IconProvider, Icon } from '@grundtone/ui';
+  import { IconProvider, Icon } from '@grundtone/vue';
 </script>
 ```
 
@@ -59,7 +59,7 @@ A flexible, configurable icon system that supports multiple icon libraries and c
 </template>
 
 <script setup>
-  import { IconProvider, Icon } from '@grundtone/ui';
+  import { IconProvider, Icon } from '@grundtone/vue';
 </script>
 ```
 
@@ -75,7 +75,7 @@ A flexible, configurable icon system that supports multiple icon libraries and c
 </template>
 
 <script setup>
-  import { createHeroiconsConfig } from '@grundtone/ui';
+  import { createHeroiconsConfig } from '@grundtone/vue';
 
   const iconConfig = createHeroiconsConfig({
     variant: 'outline',
@@ -99,7 +99,7 @@ Use external libraries with custom fallbacks:
 </template>
 
 <script setup>
-  import { createHybridIconsConfig } from '@grundtone/ui';
+  import { createHybridIconsConfig } from '@grundtone/vue';
   import CustomLogo from './icons/CustomLogo.vue';
 
   const hybridConfig = createHybridIconsConfig({
@@ -153,7 +153,7 @@ Access the current icon configuration:
 
 ```vue
 <script setup>
-  import { useIconConfig } from '@grundtone/ui';
+  import { useIconConfig } from '@grundtone/vue';
 
   const config = useIconConfig();
   console.log('Current library:', config.library);
@@ -166,7 +166,7 @@ Check if an icon exists:
 
 ```vue
 <script setup>
-  import { useIconExists } from '@grundtone/ui';
+  import { useIconExists } from '@grundtone/vue';
 
   const iconExists = useIconExists('sun');
   console.log('Sun icon exists:', iconExists.value);
@@ -179,7 +179,7 @@ Dynamically manage custom icons:
 
 ```vue
 <script setup>
-  import { createIconRegistry } from '@grundtone/ui';
+  import { createIconRegistry } from '@grundtone/vue';
 
   const registry = createIconRegistry();
 
@@ -196,7 +196,7 @@ Dynamically manage custom icons:
 Convert between library naming conventions:
 
 ```javascript
-import { mapIconName } from '@grundtone/ui';
+import { mapIconName } from '@grundtone/vue';
 
 // Convert Heroicons to Lucide
 const lucideName = mapIconName('chevron-up', 'heroicons', 'lucide');
@@ -212,7 +212,7 @@ const heroName = mapIconName('ChevronUp', 'lucide', 'heroicons');
 Full type safety with interfaces:
 
 ```typescript
-import type { IconConfig, IconLibrary } from '@grundtone/ui';
+import type { IconConfig, IconLibrary } from '@grundtone/vue';
 
 const config: IconConfig = {
   library: 'heroicons',

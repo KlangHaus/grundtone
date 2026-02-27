@@ -134,7 +134,7 @@ Tjek at packages er publiceret:
 
 ```bash
 npm view @grundtone/core
-npm view @grundtone/ui
+npm view @grundtone/vue
 npm view @grundtone/composables
 npm view @grundtone/shared
 npm view @grundtone/design-tokens
@@ -295,7 +295,7 @@ Dette opretter en version som: `0.1.0-snapshot-20250131123045`
 Test at installere den:
 
 ```bash
-npm install @grundtone/ui@snapshot
+npm install @grundtone/vue@snapshot
 ```
 
 Hvis alt fungerer, kan du publicere rigtigt.
@@ -362,7 +362,7 @@ Tjek at `prepublishOnly` hook er defineret:
 Besøg:
 
 - https://www.npmjs.com/package/@grundtone/core
-- https://www.npmjs.com/package/@grundtone/ui
+- https://www.npmjs.com/package/@grundtone/vue
 - https://www.npmjs.com/package/@grundtone/composables
 - https://www.npmjs.com/package/@grundtone/shared
 - https://www.npmjs.com/package/@grundtone/design-tokens
@@ -373,7 +373,7 @@ Besøg:
 ```bash
 npm view @grundtone/core version
 npm view @grundtone/core
-npm info @grundtone/ui
+npm info @grundtone/vue
 ```
 
 ### Test installation
@@ -382,7 +382,7 @@ npm info @grundtone/ui
 mkdir test-install
 cd test-install
 npm init -y
-npm install @grundtone/ui
+npm install @grundtone/vue
 ```
 
 ## Sikkerhed Best Practices

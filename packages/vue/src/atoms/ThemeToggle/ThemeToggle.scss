@@ -110,7 +110,7 @@
   transition: color 0.2s ease;
 
   .theme-toggle:hover & {
-    color: var(--grundtone-color-text-primary);
+    color: var(--grundtone-color-text);
   }
 
   .theme-toggle--disabled & {
