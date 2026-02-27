@@ -499,8 +499,7 @@ When adding new icons:
 1. Create the icon component in `/atoms/Icon/`
 2. Add to `haspenIcons` in `libraries.ts`
 3. Export from `index.ts`
-4. Add to Storybook examples
-5. Update tests and documentation
+4. Update tests and documentation
 
 ## 📄 License
 
@@ -510,4 +509,3 @@ Part of the Haspen UI design system. See main package license.
 
 - [Button Component](../Button/README.md) - Uses icons for loading states
 - [ThemeToggle Component](../ThemeToggle/README.md) - Uses sun/moon icons
-- [Storybook Documentation](./Icon.stories.ts) - Interactive examples

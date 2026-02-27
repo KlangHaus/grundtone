@@ -65,7 +65,6 @@ Each component follows a consistent structure:
 ```
 ComponentName/
 ├── ComponentName.vue        # Implementation with <script setup>
-├── ComponentName.stories.ts # Storybook documentation
 ├── ComponentName.test.ts    # Vitest unit tests
 ├── ComponentName.scss       # Component-specific styles (optional)
 ├── types.ts                # TypeScript interfaces
@@ -187,7 +186,7 @@ Full component documentation coming soon, including:
 - Usage examples for each component
 - Accessibility features
 - Customization options
-- Storybook interactive demos
+- Interactive demos in documentation
 
 In the meantime, explore the source code:
 

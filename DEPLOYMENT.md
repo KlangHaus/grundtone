@@ -162,119 +162,6 @@ Each package is configured for optimal distribution:
 - **Tree-shaking**: `sideEffects: false` enables optimization
 - **CSS exports**: Separate CSS imports available
 
-## 📚 Storybook Deployment
-
-### Static Site Generation
-
-Build Storybook for deployment to static hosting:
-
-```bash
-# Build static Storybook site
-pnpm build-storybook
-
-# Output directory: ./storybook-static/
-# Contains: index.html, assets/, and all stories
-```
-
-### Deployment Platforms
-
-#### Netlify
-
-1. **Connect repository** to Netlify
-2. **Configure build settings**:
-
-   - Build command: `pnpm build-storybook`
-   - Publish directory: `storybook-static`
-   - Node version: `20`
-
-3. **Environment variables**:
-
-```
-NODE_VERSION=20
-NPM_VERSION=latest
-```
-
-4. **netlify.toml** configuration:
-
-```toml
-[build]
-  command = "pnpm build-storybook"
-  publish = "storybook-static"
-
-[build.environment]
-  NODE_VERSION = "20"
-  NPM_FLAGS = "--prefix=/opt/buildhome/.pnpm"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-```
-
-#### Vercel
-
-1. **Import project** in Vercel dashboard
-2. **Configure settings**:
-
-   - Framework Preset: Other
-   - Build Command: `pnpm build-storybook`
-   - Output Directory: `storybook-static`
-   - Install Command: `pnpm install`
-
-3. **vercel.json** configuration:
-
-```json
-{
-  "buildCommand": "pnpm build-storybook",
-  "outputDirectory": "storybook-static",
-  "installCommand": "pnpm install",
-  "framework": null,
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
-}
-```
-
-#### GitHub Pages
-
-1. **GitHub Actions workflow** (`.github/workflows/storybook.yml`):
-
-```yaml
-name: Deploy Storybook
-on:
-  push:
-    branches: [main]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-      - run: corepack enable
-      - run: pnpm install
-      - run: pnpm build
-      - run: pnpm build-storybook
-      - uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./storybook-static
-```
-
-2. **Enable GitHub Pages** in repository settings
-3. **Configure source** to use GitHub Actions
-
-### Custom Domain Setup
-
-For custom domains, add a `CNAME` file to the storybook static output:
-
-```bash
-# .storybook/public/CNAME
-design-system.yourcompany.com
-```
-
-Or configure in your hosting platform's settings.
-
 ## 🏗️ Application Integration
 
 ### Vue 3 Applications
@@ -491,8 +378,8 @@ RUN pnpm build
 # Production stage
 FROM nginx:alpine
 
-# Copy built Storybook
-COPY --from=builder /app/storybook-static /usr/share/nginx/html
+# Copy built documentation
+COPY --from=builder /app/apps/docs/.vitepress/dist /usr/share/nginx/html
 
 # Copy nginx config
 COPY nginx.conf /etc/nginx/nginx.conf
@@ -626,36 +513,6 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  deploy-storybook:
-    needs: test
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Setup pnpm
-        run: corepack enable
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Build packages
-        run: pnpm build
-
-      - name: Build Storybook
-        run: pnpm build-storybook
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./storybook-static
 ```
 
 ## 🔐 Security Considerations
@@ -685,11 +542,7 @@ jobs:
 
 ### Content Security Policy
 
-For Storybook deployments, configure CSP headers:
-
-```
-Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;
-```
+For documentation deployments, configure CSP headers as needed for your hosting platform.
 
 ## 📊 Monitoring and Analytics
 
@@ -717,21 +570,8 @@ Track key metrics:
 
 ### Usage Analytics
 
-For Storybook sites, consider adding analytics:
-
-```html
-<!-- .storybook/preview-head.html -->
-<!-- Google Analytics, Plausible, or other analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-  gtag('js', new Date());
-  gtag('config', 'GA_MEASUREMENT_ID');
-</script>
-```
+For documentation sites, consider adding analytics via your hosting platform or by injecting
+tracking scripts.
 
 ## 🏆 Best Practices
 

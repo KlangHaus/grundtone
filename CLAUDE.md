@@ -10,7 +10,7 @@ repository.
 ```bash
 pnpm dev                    # Start all development servers
 pnpm dev:playground         # Start playground app only (@haspen/playground)
-pnpm storybook             # Start Storybook component documentation (port 6006)
+pnpm docs:dev               # Start documentation site (VitePress)
 ```
 
 ### Building and Testing
@@ -151,7 +151,6 @@ Components are organized in `/packages/ui/src/`:
 ```
 ComponentName/
 ├── ComponentName.vue        # Vue 3 Composition API with <script setup>
-├── ComponentName.stories.ts # Storybook documentation
 ├── ComponentName.test.ts    # Vitest unit tests
 ├── ComponentName.scss       # SCSS with BEM naming (optional)
 ├── types.ts                # TypeScript interfaces
@@ -174,19 +173,11 @@ This design system includes Danish-specific utilities:
 - Danish currency formatting (`formatCurrency` outputs "kr.")
 - Danish date formatting
 
-## Storybook Integration
-
-- Stories auto-discover from `packages/*/src/**/*.stories.ts`
-- Configured with accessibility, docs, and Vitest addons
-- Component props auto-documented via TypeScript interfaces
-- Visual regression testing via Chromatic integration
-
 ## Testing Strategy
 
 - **Vitest** for unit testing with jsdom environment
 - **@vue/test-utils** for Vue component testing
 - **Playwright** for browser/E2E testing
-- **Storybook + Chromatic** for visual regression
 - Tests must pass before builds in CI pipeline
 
 ## Build Output and Publishing
@@ -238,7 +229,6 @@ Components MUST follow atomic design principles:
 ```
 ComponentName/
 ├── ComponentName.vue        # Implementation
-├── ComponentName.stories.ts # Storybook documentation
 ├── ComponentName.test.ts    # Unit tests (MANDATORY)
 ├── ComponentName.scss       # Styles (if needed)
 ├── types.ts                # TypeScript interfaces
@@ -250,7 +240,7 @@ ComponentName/
 
 - MANDATORY: Every component must have comprehensive unit tests covering all props, slots, and
   interactions
-- MANDATORY: All components must have Storybook stories demonstrating all variants and states
+- MANDATORY: All components must have comprehensive documentation
 - MANDATORY: TypeScript interfaces for all props, events, and exposed methods
 - Single responsibility principle - one component does one thing well
 - Props must be typed with interfaces, never `any` types
@@ -329,7 +319,7 @@ Brief description of the component's purpose and use case.
 
 ## Examples
 
-[Link to Storybook examples]
+[Link to component examples]
 
 ## Accessibility
 
@@ -368,41 +358,6 @@ export function isValidCPR(cpr: string): boolean {
 - Accessibility considerations (contrast ratios for colors)
 - Responsive behavior (for spacing/typography)
 
-### Storybook Documentation Standards
-
-**Story Structure (MANDATORY for all components)**
-
-```typescript
-// ComponentName.stories.ts
-import type { Meta, StoryObj } from '@storybook/vue3';
-import ComponentName from './ComponentName.vue';
-
-const meta: Meta<typeof ComponentName> = {
-  title: 'Atoms/ComponentName', // Correct atomic design path
-  component: ComponentName,
-  parameters: {
-    docs: {
-      description: {
-        component: 'Detailed component description with use cases',
-      },
-    },
-  },
-  tags: ['autodocs'],
-  argTypes: {
-    // Define all prop controls with descriptions
-  },
-};
-
-export default meta;
-
-// MANDATORY stories:
-export const Default: StoryObj<typeof meta> = {};
-export const AllVariants: StoryObj<typeof meta> = {};
-export const InteractiveStates: StoryObj<typeof meta> = {};
-export const AccessibilityDemo: StoryObj<typeof meta> = {};
-export const ErrorStates: StoryObj<typeof meta> = {};
-```
-
 ### Code Enforcement and Quality Standards
 
 **Linting and Formatting (MANDATORY)**
@@ -426,7 +381,7 @@ export const ErrorStates: StoryObj<typeof meta> = {};
   - Valid types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`,
     `revert`
   - Valid scopes: `ui`, `core`, `shared`, `composables`, `design-tokens`, `nuxt`, `playground`,
-    `storybook`, `deps`, `config`, `ci`, `docs`, `release`
+    `deps`, `config`, `ci`, `docs`, `release`
   - Example: `feat(ui): add new button variant`
 
 **Pre-commit Hooks (AUTOMATIC)**
@@ -434,13 +389,13 @@ export const ErrorStates: StoryObj<typeof meta> = {};
 - **Husky**: Runs quality checks before each commit
   - Pre-commit: Formats staged files with Prettier
   - Commit-msg: Validates commit message format
-  - Files processed: Only staged files in packages/, apps/, .storybook/ directories
+  - Files processed: Only staged files in packages/, apps/ directories
   - TEMPLATES directory excluded from all processing
 
 **File Organization Rules**
 
 - **TEMPLATES/ directory**: Completely ignored by all linting, formatting, and git hooks
-- **Linting scope**: Only `{packages,apps,.storybook}/` directories are processed
+- **Linting scope**: Only `{packages,apps}/` directories are processed
 - **Module system**: Project uses ES modules (`"type": "module"` in package.json)
 - **Node.js compatibility**: Minimum version 20.0.0 required
 
@@ -449,7 +404,7 @@ export const ErrorStates: StoryObj<typeof meta> = {};
 1. **Before committing**:
    - Pre-commit hooks automatically format your staged files
    - Commit message must follow conventional commit format
-   - Only files in packages/apps/.storybook are processed
+   - Only files in packages/apps are processed
 2. **Manual quality checks**:
 
    ```bash
@@ -463,7 +418,7 @@ export const ErrorStates: StoryObj<typeof meta> = {};
    - Pre-commit hooks ensure all tests pass
    - CI fails if test coverage drops below 90%
    - Linting rules enforce clean code standards
-   - Storybook build fails if components lack stories
+   - Documentation must be kept up to date
    - TypeScript strict mode catches type issues
    - Commit messages must follow conventional format
 

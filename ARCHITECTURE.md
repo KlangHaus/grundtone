@@ -8,7 +8,7 @@ Haspen UI is built on four core principles:
 
 1. **Atomic Design Methodology**: Components are organized from atoms to pages
 2. **Design Token-Driven Development**: All styling decisions derive from centralized tokens
-3. **DKFDS Compliance**: Full implementation of Danish government design standards
+3. **Design Standards**: Full implementation of design system standards
 4. **Developer Experience**: Modern tooling with TypeScript, Vue 3, and automated workflows
 
 ### System Boundaries
@@ -25,7 +25,7 @@ graph TB
     subgraph "Haspen UI Ecosystem"
         subgraph "Core Layer"
             Core[core - Base styles]
-            Tokens[design-tokens - DKFDS system]
+            Tokens[design-tokens - Design token system]
             Shared[shared - Utilities]
         end
 
@@ -81,8 +81,8 @@ import '@haspen/core/dist/index.css';
 
 #### `@haspen/design-tokens`
 
-**Purpose**: Complete DKFDS implementation with tokens, functions, and utilities **Dependencies**:
-None **Architecture**:
+**Purpose**: Complete design token implementation with tokens, functions, and utilities
+**Dependencies**: None **Architecture**:
 
 ```
 src/

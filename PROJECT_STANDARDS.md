@@ -72,7 +72,6 @@ All UI components must follow atomic design principles:
 ```
 ComponentName/
 ├── ComponentName.vue        # Vue 3 Composition API with <script setup>
-├── ComponentName.stories.ts # Storybook documentation (MANDATORY)
 ├── ComponentName.test.ts    # Vitest unit tests (MANDATORY)
 ├── ComponentName.scss       # SCSS with BEM naming (optional)
 ├── types.ts                # TypeScript interfaces (MANDATORY)
@@ -103,15 +102,7 @@ ComponentName/
 
 Every component must include:
 
-1. **Storybook Stories** demonstrating:
-
-   - Default state
-   - All variants and sizes
-   - Interactive states (hover, focus, disabled)
-   - Error states
-   - Accessibility examples
-
-2. **Component README** with:
+1. **Component README** with:
 
    - Purpose and use cases
    - Props table with types and defaults
@@ -120,7 +111,7 @@ Every component must include:
    - Usage examples
    - Accessibility notes
 
-3. **JSDoc Comments** for all:
+2. **JSDoc Comments** for all:
    - Public methods and properties
    - Complex logic or algorithms
    - Utility functions with examples
@@ -219,7 +210,7 @@ Every component must include:
 - **Linting**: `pnpm lint` with zero warnings policy
 - **Testing**: `pnpm test` with 90% coverage requirement
 - **Building**: `pnpm build` for all packages
-- **Visual regression**: Chromatic integration for Storybook
+- **Visual regression**: E2E testing with Playwright
 
 ### Quality Gates
 

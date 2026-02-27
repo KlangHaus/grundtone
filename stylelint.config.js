@@ -43,7 +43,6 @@ export default {
     'dist/**/*',
     'coverage/**/*',
     '.turbo/**/*',
-    'storybook-static/**/*',
     'TEMPLATES/**/*',
   ],
 };

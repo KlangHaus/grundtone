@@ -12,7 +12,6 @@ export default defineConfig({
       exclude: [
         'node_modules/',
         'dist/',
-        '**/*.stories.{js,ts}',
         '**/*.test.{js,ts}',
         '**/*.config.{js,ts}',
       ],

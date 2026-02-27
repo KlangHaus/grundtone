@@ -47,7 +47,5 @@ coverage
 # Volta
 .volta
 
-*storybook.log
-storybook-static
 
 TEMPLATES/*

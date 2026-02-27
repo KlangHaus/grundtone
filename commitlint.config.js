@@ -28,7 +28,6 @@ export default {
         'composables',  // @ipeeon/composables package
         'design-tokens',// @ipeeon/design-tokens package
         'nuxt',         // @ipeeon/nuxt package
-        'storybook',    // Storybook configuration
         'deps',         // Dependencies
         'config',       // Configuration files
         'ci',           // CI/CD

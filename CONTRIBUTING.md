@@ -47,11 +47,11 @@ This project and everyone participating in it is governed by our
 3. **Start development environment**
 
    ```bash
-   # Start Storybook (component development)
-   pnpm storybook
-
    # Start playground app
    pnpm dev:playground
+
+   # Start documentation site
+   pnpm docs:dev
 
    # Run tests in watch mode
    pnpm test:watch
@@ -112,7 +112,6 @@ We follow atomic design methodology:
    packages/ui/src/atoms/NewComponent/
    ├── NewComponent.vue      # Main component
    ├── NewComponent.scss     # Styles
-   ├── NewComponent.stories.ts # Storybook stories
    ├── NewComponent.test.ts  # Unit tests
    ├── types.ts             # TypeScript types
    └── index.ts             # Exports
@@ -121,7 +120,7 @@ We follow atomic design methodology:
 2. **Follow naming conventions**
 
    - Components: PascalCase (`Button`, `FormField`)
-   - Files: Match component name (`Button.vue`, `Button.stories.ts`)
+   - Files: Match component name (`Button.vue`, `Button.test.ts`)
    - CSS classes: kebab-case with prefix (`haspen-button`)
 
 3. **Component requirements**
@@ -130,7 +129,6 @@ We follow atomic design methodology:
    - Proper props typing
    - SCSS for styling
    - Unit tests
-   - Storybook stories
    - Accessibility compliance
 
 ## Coding Standards
@@ -259,43 +257,10 @@ describe('NewComponent', () => {
 
 ## Documentation
 
-### Storybook Stories
+### Component Documentation
 
-All components must have Storybook stories:
-
-```typescript
-// NewComponent.stories.ts
-import type { Meta, StoryObj } from '@storybook/vue3';
-import NewComponent from './NewComponent.vue';
-
-const meta: Meta<typeof NewComponent> = {
-  title: 'Atoms/NewComponent',
-  component: NewComponent,
-  parameters: {
-    docs: {
-      description: {
-        component: 'Component description here',
-      },
-    },
-  },
-};
-
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {
-  args: {
-    title: 'Default',
-  },
-};
-
-export const WithIcon: Story = {
-  args: {
-    title: 'With Icon',
-    icon: 'star',
-  },
-};
-```
+All components must have documentation including a README with purpose, props, events, slots, and
+usage examples.
 
 ### TypeScript Documentation
 
@@ -382,7 +347,6 @@ Releases are automated using semantic versioning:
 - 💬 [GitHub Discussions](https://github.com/haspenui/haspen-ui/discussions)
 - 🐛 [Issue Tracker](https://github.com/haspenui/haspen-ui/issues)
 - 📖 [Documentation](https://haspenui.dev)
-- 🎨 [Storybook](https://storybook.haspenui.dev)
 
 ## Recognition
 

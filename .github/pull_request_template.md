@@ -71,7 +71,7 @@
 
 - [ ] Component follows atomic design principles
 - [ ] Component is properly typed with TypeScript
-- [ ] Component has Storybook stories
+- [ ] Component has documentation
 - [ ] Component has unit tests
 - [ ] Component is accessible (ARIA compliant)
 - [ ] Component is responsive

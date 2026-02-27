@@ -1,15 +1,13 @@
-// DKFDS Typography System
-// Complete typography from Det Fælles Designsystem
+// Typography System
+// Complete typography system
 
 // Font Family
-$font-family-system:
-  -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
+$font-family-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
   sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol' !default;
 $font-family-primary: 'IBM Plex Sans', $font-family-system !default;
 $font-family-sans-serif: $font-family-primary !default;
 $font-family-serif: Georgia, Cambria, 'Times New Roman', Times, serif !default;
-$font-family-monospace:
-  SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Courier, monospace !default;
+$font-family-monospace: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Courier, monospace !default;
 
 // Font Sizes (rem-based)
 $font-sizes: (
@@ -39,15 +37,15 @@ $font-sizes: (
 );
 
 // Font Weights
-$font-weight-thin: false !default; // Not used in DKFDS
-$font-weight-extralight: false !default; // Not used in DKFDS
-$font-weight-light: false !default; // Not used in DKFDS
+$font-weight-thin: false !default; // Not used in design system
+$font-weight-extralight: false !default; // Not used in design system
+$font-weight-light: false !default; // Not used in design system
 $font-weight-normal: 400 !default;
 $font-weight-medium: 500 !default;
 $font-weight-semibold: 600 !default;
 $font-weight-bold: 700 !default;
-$font-weight-extrabold: false !default; // Not used in DKFDS
-$font-weight-black: false !default; // Not used in DKFDS
+$font-weight-extrabold: false !default; // Not used in design system
+$font-weight-black: false !default; // Not used in design system
 
 // Line Heights
 $line-heights: (

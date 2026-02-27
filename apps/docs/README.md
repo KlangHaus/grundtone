@@ -6,14 +6,11 @@ contributors, maintainers, and users of the design system.
 ## Documentation Structure
 
 ```
-docs/
+apps/docs/
 ├── README.md           # This file - main documentation index
-└── storybook/          # Storybook documentation structure and implementation
-    ├── INDEX.md                      # Quick navigation and overview
-    ├── README.md                     # Complete structure documentation
-    ├── IMPLEMENTATION_PLAN.md        # Phased implementation plan
-    ├── HELPER_COMPONENTS.md          # Helper component specifications
-    └── STORY_TEMPLATES.md            # Story templates and examples
+├── guide/              # User guides
+├── tokens/             # Design token documentation
+└── packages/           # Package-specific documentation
 ```
 
 ## Quick Links
@@ -22,41 +19,17 @@ docs/
 
 - **[Contributing Guide](../CONTRIBUTING.md)** - How to contribute to Haspen UI
 - **[Development Guide](../CLAUDE.md)** - Essential commands and development standards
-- **[Storybook Documentation](./storybook/INDEX.md)** - Storybook implementation guide
 
 ### For Users
 
-- **[Storybook (Live)](https://haspen-ui.vercel.app)** - Interactive component documentation (when
+- **[Documentation (Live)](https://haspen-ui.vercel.app)** - Design system documentation (when
   deployed)
-- **[Installation Guide](./storybook/README.md#installation)** - How to install and use packages
-- **[Design Tokens](./storybook/README.md#01-foundation)** - Design token documentation
+- **[Installation Guide](../CONTRIBUTING.md#getting-started)** - How to install and use packages
 
 ### For Maintainers
 
-- **[Implementation Plan](./storybook/IMPLEMENTATION_PLAN.md)** - Roadmap and phases
 - **[Release Process](../CONTRIBUTING.md#release-process)** - Version management with Changesets
-- **[Deployment](./storybook/README.md#deployment)** - Vercel deployment configuration
-
----
-
-## Documentation Sections
-
-### 📚 Storybook Documentation
-
-**Location**: [docs/storybook/](./storybook/)
-
-**Purpose**: Comprehensive guide for creating and maintaining Storybook documentation for the design
-system.
-
-**Contents**:
-
-- Documentation structure and philosophy
-- 4-week phased implementation plan
-- Helper component specifications (7 components)
-- Story templates for all story types
-- Testing and deployment strategies
-
-**Start Here**: [storybook/INDEX.md](./storybook/INDEX.md)
+- **[Deployment](../DEPLOYMENT.md)** - Deployment configuration
 
 ---
 
@@ -127,7 +100,7 @@ nuxt (Nuxt module using ui/composables)
    ```
 
 3. **Explore documentation**:
-   - Browse [Storybook](https://haspen-ui.vercel.app) (when deployed)
+   - Browse [Documentation](https://haspen-ui.vercel.app) (when deployed)
    - Read package READMEs
 
 ### For Contributors
@@ -148,14 +121,13 @@ nuxt (Nuxt module using ui/composables)
 3. **Start development**:
 
    ```bash
-   pnpm storybook      # Start Storybook
+   pnpm docs:dev       # Start documentation site (VitePress)
    pnpm test:watch     # Run tests in watch mode
    ```
 
 4. **Read guides**:
    - [Contributing Guide](../CONTRIBUTING.md)
    - [Development Guide](../CLAUDE.md)
-   - [Storybook Docs](./storybook/INDEX.md)
 
 ---
 
@@ -166,16 +138,13 @@ nuxt (Nuxt module using ui/composables)
 1. Follow [atomic design principles](../CONTRIBUTING.md#atomic-design-principles)
 2. Use [component structure template](../CONTRIBUTING.md#component-development)
 3. Write tests (minimum 90% coverage)
-4. Create Storybook stories
+4. Add component documentation (README)
 5. Submit pull request
 
 ### Writing Documentation
 
-1. Review [Storybook documentation structure](./storybook/README.md)
-2. Choose appropriate [story template](./storybook/STORY_TEMPLATES.md)
-3. Use [helper components](./storybook/HELPER_COMPONENTS.md) when needed
-4. Follow [writing guidelines](./storybook/README.md#writing-guidelines)
-5. Test locally with `pnpm storybook`
+1. Add or update content in the appropriate docs section (guide/, tokens/, packages/)
+2. Build and preview with `pnpm docs:dev`
 
 ### Publishing Changes
 
@@ -191,24 +160,6 @@ See [Release Process](../CONTRIBUTING.md#release-process) for details.
 ---
 
 ## Project Status
-
-### Current Phase: Documentation
-
-**Focus**: Creating comprehensive Storybook documentation for @ipeeon/design-tokens
-
-**Progress**:
-
-- ✅ Documentation structure planned
-- ✅ Implementation plan created
-- ✅ Helper component specs written
-- ✅ Story templates documented
-- ⏳ Helper component implementation (Phase 1)
-- ⏳ Foundation token stories (Phase 1)
-- ⏳ Functions/mixins documentation (Phase 2)
-- ⏳ Advanced features (Phase 3)
-- ⏳ Testing and deployment (Phase 4)
-
-**Timeline**: 4-5 weeks (see [Implementation Plan](./storybook/IMPLEMENTATION_PLAN.md))
 
 ### Recent Releases
 
@@ -232,15 +183,15 @@ See [Release Process](../CONTRIBUTING.md#release-process) for details.
 
 ### Visual Regression
 
-- **Tool**: Chromatic
-- **Coverage**: All Storybook stories
+- **Tool**: Playwright for E2E testing
+- **Coverage**: Critical user flows
 - **Automated**: On every PR
 
 ### Accessibility
 
 - **Tool**: axe DevTools
 - **Standard**: WCAG 2.1 AA (minimum)
-- **Automated**: In Storybook
+- **Automated**: In component tests
 
 ### Browser Testing
 
@@ -253,7 +204,7 @@ See [Release Process](../CONTRIBUTING.md#release-process) for details.
 
 ## Deployment
 
-### Storybook
+### Documentation
 
 - **Platform**: Vercel
 - **URL**: https://haspen-ui.vercel.app (when deployed)
@@ -280,10 +231,10 @@ Documentation should be updated:
 - **When changing APIs** - Update examples and migration guides
 - **Quarterly** - Review and improve based on feedback
 
-### Storybook Maintenance
+### Documentation Maintenance
 
-- **Monthly** - Review and update stories for accuracy
-- **Per release** - Add stories for new features
+- **Monthly** - Review and update documentation for accuracy
+- **Per release** - Document new features
 - **Quarterly** - Analyze usage and improve unclear sections
 
 ---
@@ -295,12 +246,10 @@ Documentation should be updated:
 - [Root README](../README.md) - Project overview
 - [Contributing Guide](../CONTRIBUTING.md) - How to contribute
 - [Development Guide](../CLAUDE.md) - Essential commands
-- [Storybook Docs](./storybook/INDEX.md) - Storybook implementation
 
 ### External Resources
 
 - [Vue 3 Documentation](https://vuejs.org/)
-- [Storybook Documentation](https://storybook.js.org/docs)
 - [Turborepo Documentation](https://turbo.build/repo/docs)
 - [pnpm Documentation](https://pnpm.io/)
 - [Changesets Documentation](https://github.com/changesets/changesets)
@@ -338,7 +287,7 @@ MIT License - see [LICENSE](../LICENSE) file for details.
 This design system is built with:
 
 - Vue 3 - Progressive JavaScript framework
-- Storybook - Component development environment
+- VitePress - Documentation site
 - Turborepo - Monorepo build system
 - pnpm - Fast, disk space efficient package manager
 - Changesets - Version management and changelogs

@@ -1,5 +1,5 @@
 // Haspen UI Design Tokens
-// Complete DKFDS system implementation
+// Complete design token system implementation
 
 // Core design tokens (must be imported first)
 @forward 'core/color-palette' hide color;
@@ -17,5 +17,5 @@
 @forward 'functions' hide color, border;
 @forward 'mixins';
 
-// Utility classes (depend on functions/mixins) - Temporarily disabled during DKFDS migration
+// Utility classes (depend on functions/mixins) - Temporarily disabled during migration
 // @forward 'utilities' hide $spacers;

@@ -6,6 +6,3 @@ contact_links:
   - name: 📖 Documentation
     url: https://haspenui.dev
     about: Check our documentation for guides and examples
-  - name: 🎨 Storybook
-    url: https://storybook.haspenui.dev
-    about: Explore our component library and examples

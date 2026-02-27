@@ -1,7 +1,7 @@
 # Haspen UI - Design System
 
 A comprehensive Vue 3 design system monorepo built with TypeScript, featuring the complete Danish
-Design System (DKFDS) implementation, atomic design principles, and automated workflows.
+design system implementation, atomic design principles, and automated workflows.
 
 ## 🏗️ Architecture Overview
 
@@ -16,7 +16,7 @@ scalable foundation for building consistent user interfaces with Danish governme
 haspen-ui/
 ├── packages/
 │   ├── core/              # Base styles and reset
-│   ├── design-tokens/     # DKFDS tokens, functions, mixins
+│   ├── design-tokens/     # Design tokens, functions, mixins
 │   ├── shared/            # Utilities and helpers
 │   ├── ui/                # Vue 3 components (atoms → organisms)
 │   ├── composables/       # Vue 3 composables/hooks
@@ -81,11 +81,11 @@ turbo run dev --filter=@haspen/ui  # Build specific package in watch mode
 
 ## 🏛️ Design System Features
 
-### DKFDS (Det Fælles Designsystem) Integration
+### Design System Integration
 
-Complete implementation of the Danish government design system:
+Complete implementation of the design system:
 
-- **100+ DKFDS colors** with semantic naming
+- **100+ colors** with semantic naming
 - **IBM Plex Sans typography** with responsive scales
 - **8px-based spacing** system
 - **Complete utility classes** for rapid development
@@ -217,7 +217,7 @@ We welcome contributions! Please read our [Contributing Guide](./CONTRIBUTING.md
 - Component creation standards
 - Testing requirements
 - Code review process
-- DKFDS compliance guidelines
+- Design system compliance guidelines
 
 ### Development Workflow
 
@@ -240,7 +240,7 @@ git push origin feature/new-component
 ### Package Status
 
 - ✅ **@haspen/core**: Stable - CSS reset and base styles
-- ✅ **@haspen/design-tokens**: Stable - Complete DKFDS implementation
+- ✅ **@haspen/design-tokens**: Stable - Complete design token implementation
 - ✅ **@haspen/shared**: Stable - Danish utilities and helpers
 - ✅ **@haspen/ui**: Stable - Vue 3 component library
 - ✅ **@haspen/composables**: Stable - Vue 3 composables
@@ -259,7 +259,7 @@ git push origin feature/new-component
 
 ### Design System
 
-- ✅ Complete DKFDS color system (100+ colors)
+- ✅ Complete color system (100+ colors)
 - ✅ Responsive typography with IBM Plex Sans
 - ✅ 8px-based spacing scale
 - ✅ Comprehensive utility classes
@@ -289,7 +289,7 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE) fi
 
 ## 🙏 Acknowledgments
 
-- **[DKFDS Team](https://designsystem.dk/)**: For the comprehensive Danish Design System
+- **Design system inspiration**: For comprehensive design standards
 - **[Vue.js Team](https://vuejs.org/)**: For the amazing Vue 3 framework
 - **[TypeScript Team](https://www.typescriptlang.org/)**: For robust type safety
 - **Contributors**: Everyone who has contributed to this project
@@ -299,4 +299,4 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE) fi
 **Built with ❤️ for the Danish development community**
 
 _This design system provides modern Vue 3 components following Danish government design standards
-(DKFDS) with comprehensive tooling for scalable application development._
+with comprehensive tooling for scalable application development._

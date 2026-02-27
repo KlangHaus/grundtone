@@ -46,7 +46,7 @@ We are committed to providing a friendly, safe, and welcoming environment for al
 - Follow the atomic design principles outlined in `CLAUDE.md`
 - Write comprehensive tests for all components (minimum 90% coverage)
 - Include proper TypeScript interfaces for all props and events
-- Document components with Storybook stories and README files
+- Document components with README files and usage examples
 - Follow the established code style and linting rules
 
 ### Danish Localization

@@ -427,7 +427,6 @@ If you're still having issues after trying these solutions:
 - [Vitest Documentation](https://vitest.dev/)
 - [Vue 3 Documentation](https://vuejs.org/)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
-- [DKFDS Documentation](https://designsystem.dk/)
 
 ---
 
