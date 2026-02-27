@@ -40,7 +40,7 @@ graph TB
         end
 
         subgraph "Tooling Layer"
-            Storybook[Storybook - Documentation]
+            Docs[VitePress - Documentation]
             Tests[Vitest - Testing]
             Build[Turbo - Build system]
         end
@@ -155,7 +155,6 @@ src/
 ```
 ComponentName/
 ├── ComponentName.vue        # Vue SFC with Composition API
-├── ComponentName.stories.ts # Storybook documentation
 ├── ComponentName.test.ts    # Vitest unit tests
 ├── ComponentName.scss       # Component-specific styles
 ├── types.ts                # TypeScript interfaces
@@ -434,10 +433,10 @@ graph TB
         C3[Performance]
     end
 
-    subgraph "Visual Regression (Storybook)"
-        E1[Component screenshots]
-        E2[State comparisons]
-        E3[Responsive testing]
+    subgraph "Visual Regression (VitePress)"
+        E1[Component documentation]
+        E2[Design token reference]
+        E3[Utility examples]
     end
 ```
 

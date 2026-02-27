@@ -28,8 +28,8 @@ pnpm install
 ### 2. Start Development
 
 ```bash
-# Run Storybook (component documentation)
-pnpm storybook
+# Run documentation site
+pnpm docs:dev
 
 # Run playground app
 pnpm dev:playground
@@ -62,7 +62,6 @@ pnpm dev
 2. Create a new folder with your component name
 3. Add these files:
    - `ComponentName.vue` - Component implementation
-   - `ComponentName.stories.ts` - Storybook stories
    - `ComponentName.test.ts` - Unit tests
    - `index.ts` - Export file
    - `types.ts` - TypeScript types
@@ -93,8 +92,8 @@ pnpm build --filter=@haspen/ui
 ## 📚 Next Steps
 
 1. **[Read DEVELOPMENT.md](./DEVELOPMENT.md)** - Detailed development guide
-2. **[View Storybook](http://localhost:6006)** - Component documentation (after running
-   `pnpm storybook`)
+2. **[View Docs](http://localhost:5173)** - Design system documentation (after running
+   `pnpm docs:dev`)
 3. **[Explore Playground](http://localhost:5173)** - Live demo (after running `pnpm dev:playground`)
 
 ## 🆘 Need Help?
@@ -108,7 +107,7 @@ pnpm build --filter=@haspen/ui
 
 You're all set! Start by:
 
-1. Running `pnpm storybook` to see all components
+1. Running `pnpm docs:dev` to see the design system documentation
 2. Exploring the `packages/ui/src/atoms/Button` folder to understand the structure
 3. Creating your first component or improving an existing one
 

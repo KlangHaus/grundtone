@@ -26,8 +26,8 @@ haspen-ui/
 │   ├── core-test/         # Testing app for core package
 │   ├── shared-test/       # Testing app for shared utilities
 │   └── components-test/   # Component integration testing
-├── .storybook/            # Storybook configuration
-└── docs/                  # Generated documentation
+├── apps/docs/             # VitePress documentation
+└── docs/                  # Additional documentation
 ```
 
 ## 🚀 Quick Start
@@ -61,7 +61,7 @@ pnpm dev
 # Development servers
 pnpm dev                    # Start all development servers
 pnpm dev:playground         # Start playground app only
-pnpm storybook             # Start Storybook (port 6006)
+pnpm docs:dev              # Start documentation site
 
 # Building
 pnpm build                 # Build all packages and apps
@@ -90,7 +90,7 @@ Complete implementation of the Danish government design system:
 - **8px-based spacing** system
 - **Complete utility classes** for rapid development
 - **SCSS functions and mixins** for advanced styling
-- **Comprehensive Storybook documentation**
+- **Comprehensive VitePress documentation**
 
 ### Component Architecture
 
@@ -171,7 +171,7 @@ formatDanishDate(new Date()); // 'DD/MM/YYYY'
 
 - **90% minimum test coverage** across all packages
 - **Unit tests** with Vitest and Vue Test Utils
-- **Component documentation** with Storybook
+- **Design system documentation** with VitePress
 - **E2E testing** with Playwright
 - **Accessibility compliance** with WCAG 2.1 AA
 
@@ -192,19 +192,12 @@ formatDanishDate(new Date()); // 'DD/MM/YYYY'
 - **GitHub Actions** for CI/CD pipeline
 - **NPM publishing** with proper package distribution
 
-### Storybook Deployment
-
-```bash
-pnpm build-storybook  # Build for static hosting
-```
-
 ## 🔧 Troubleshooting
 
 ### Common Issues
 
 **Build Failures**: Ensure correct package.json exports **TypeScript Errors**: Build packages in
-dependency order **Storybook Issues**: Check addon compatibility **Test Failures**: Verify vitest
-configuration
+dependency order **Test Failures**: Verify vitest configuration
 
 See [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) for detailed solutions.
 
@@ -214,7 +207,7 @@ See [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) for detailed solutions.
 - **[Contributing Guide](./CONTRIBUTING.md)**: Development workflow and standards
 - **[Troubleshooting](./TROUBLESHOOTING.md)**: Common issues and solutions
 - **[Component API](./docs/api/)**: Generated API documentation
-- **[Storybook](http://localhost:6006)**: Interactive component documentation
+- **[Documentation](https://haspen-ui.vercel.app)**: Design system documentation
 
 ## 🤝 Contributing
 
@@ -260,7 +253,7 @@ git push origin feature/new-component
 - ✅ Tests passing (90%+ coverage)
 - ✅ TypeScript compilation clean
 - ✅ Linting and formatting consistent
-- ✅ Storybook documentation complete
+- ✅ VitePress documentation deployed
 
 ## 🌟 Features
 
@@ -279,7 +272,7 @@ git push origin feature/new-component
 - ✅ Vue 3 Composition API
 - ✅ Hot module replacement
 - ✅ Automated testing with Vitest
-- ✅ Interactive Storybook documentation
+- ✅ VitePress documentation site
 - ✅ Automated releases with conventional commits
 
 ### Accessibility & Compliance

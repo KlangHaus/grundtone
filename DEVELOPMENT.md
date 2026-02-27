@@ -16,8 +16,8 @@ haspen-ui/
 │   ├── design-tokens/    # Design tokens
 │   └── nuxt/             # Nuxt module
 ├── apps/                 # Demo applications
-├── .storybook/           # Storybook configuration
-└── docs/                 # Documentation
+├── apps/docs/            # VitePress documentation
+└── docs/                 # Additional documentation
 ```
 
 ### Package Dependencies
@@ -53,7 +53,6 @@ Components follow atomic design principles:
 ```
 packages/ui/src/atoms/ComponentName/
 ├── ComponentName.vue        # Component implementation
-├── ComponentName.stories.ts # Storybook stories
 ├── ComponentName.test.ts    # Unit tests
 ├── ComponentName.scss       # Styles (optional)
 ├── types.ts                # TypeScript types
@@ -102,39 +101,7 @@ export interface ComponentNameProps {
 }
 ```
 
-#### 4. Storybook Stories
-
-```typescript
-// ComponentName.stories.ts
-import type { Meta, StoryObj } from '@storybook/vue3';
-import ComponentName from './ComponentName.vue';
-
-const meta: Meta<typeof ComponentName> = {
-  title: 'Atoms/ComponentName',
-  component: ComponentName,
-  parameters: {
-    layout: 'centered',
-  },
-  tags: ['autodocs'],
-  argTypes: {
-    variant: {
-      control: 'select',
-      options: ['primary', 'secondary'],
-    },
-  },
-};
-
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {
-  args: {
-    default: 'Component content',
-  },
-};
-```
-
-#### 5. Unit Tests
+#### 4. Unit Tests
 
 ```typescript
 // ComponentName.test.ts
@@ -176,7 +143,7 @@ pnpm test --filter=@haspen/ui
 
 - Unit tests: Test individual components in isolation
 - Integration tests: Test component interactions
-- Visual tests: Storybook + Chromatic for visual regression
+- Visual documentation: VitePress for design system docs
 
 ## 📏 Code Standards
 
@@ -275,7 +242,6 @@ pnpm clean
 
 - [Vue 3 Documentation](https://vuejs.org/)
 - [TypeScript Documentation](https://www.typescriptlang.org/)
-- [Storybook Documentation](https://storybook.js.org/)
 - [Atomic Design Methodology](https://atomicdesign.bradfrost.com/)
 
 ## 🤝 Contributing
@@ -291,18 +257,11 @@ pnpm clean
 - Include tests for new features
 - Update documentation
 - Follow code standards
-- Add Storybook stories
 - Ensure CI passes
 
 ## 🐛 Debugging
 
 ### Common Issues
-
-**Issue**: Component not showing in Storybook
-
-- Check story file naming (`.stories.ts`)
-- Verify story exports
-- Restart Storybook server
 
 **Issue**: TypeScript errors
 
@@ -328,7 +287,6 @@ pnpm clean
 
 ### Monitoring
 
-- Use Storybook's performance addon
 - Check bundle sizes with `pnpm build`
 - Monitor component render times
 - Use Vue DevTools for debugging

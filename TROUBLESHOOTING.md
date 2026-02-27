@@ -113,7 +113,6 @@ export default defineConfig({
   plugins: [vue()],
   test: {
     environment: 'jsdom',
-    setupFiles: ['.storybook/vitest.setup.ts'],
     deps: {
       inline: ['@haspen/*'],
     },
@@ -129,122 +128,6 @@ lsof -i :63315
 
 # Kill process if needed
 kill -9 <PID>
-```
-
-### Storybook Test Integration Issues
-
-**Problem**: `TypeError: Failed to fetch dynamically imported module`
-
-**Causes**:
-
-- Missing Storybook addon dependencies
-- Incorrect setup files
-- Module resolution issues
-
-**Solutions**:
-
-1. **Fix vitest.setup.ts**:
-
-```typescript
-import { setProjectAnnotations } from '@storybook/vue3-vite';
-import * as projectAnnotations from './preview';
-
-setProjectAnnotations([projectAnnotations]);
-```
-
-2. **Verify Storybook addons**:
-
-```typescript
-// .storybook/main.ts
-addons: [
-  '@storybook/addon-docs',
-  '@storybook/addon-vitest',
-  // Remove problematic addons if needed
-];
-```
-
-## 📦 Storybook Issues
-
-### Build Failures
-
-**Problem**: `Could not resolve "@storybook/global"` or similar dependency errors
-
-**Causes**:
-
-- Yarn PnP resolution conflicts
-- Version mismatches between Storybook packages
-- Missing peer dependencies
-
-**Solutions**:
-
-1. **Install missing peer dependencies**:
-
-```bash
-pnpm add -w -D @storybook/global filesize strip-ansi
-```
-
-2. **Use consistent Storybook versions**:
-
-```bash
-# Check current versions
-pnpm list @storybook/*
-
-# Update to consistent version
-pnpm add -w -D @storybook/addon-docs@^9.1.1
-```
-
-3. **Simplify addon configuration**:
-
-```typescript
-// .storybook/main.ts - Remove problematic addons
-addons: [
-  '@storybook/addon-docs',
-  '@storybook/addon-vitest',
-  // Comment out: '@chromatic-com/storybook',
-  // Comment out: '@storybook/addon-a11y',
-];
-```
-
-4. **Alternative: Use dev server instead of build**:
-
-```bash
-pnpm storybook  # Works better than build for development
-```
-
-### Component Documentation Issues
-
-**Problem**: Components not appearing in Storybook
-
-**Causes**:
-
-- Incorrect story file paths
-- Missing story exports
-- Build configuration issues
-
-**Solutions**:
-
-1. **Verify story file patterns**:
-
-```typescript
-// .storybook/main.ts
-stories: ['../packages/*/src/**/*.stories.@(js|jsx|mjs|ts|tsx)'];
-```
-
-2. **Check story file structure**:
-
-```typescript
-// Component.stories.ts
-import type { Meta, StoryObj } from '@storybook/vue3';
-import Component from './Component.vue';
-
-const meta: Meta<typeof Component> = {
-  title: 'Atoms/Component',
-  component: Component,
-  tags: ['autodocs'],
-};
-
-export default meta;
-export const Default: StoryObj<typeof meta> = {};
 ```
 
 ## 🔧 ESLint and Linting Issues
@@ -301,7 +184,7 @@ export default [
 
 ```javascript
 {
-  ignores: ['dist/**', 'node_modules/**', '.nuxt/**', 'storybook-static/**', '**/*.d.ts'];
+  ignores: ['dist/**', 'node_modules/**', '.nuxt/**', '**/*.d.ts'];
 }
 ```
 
@@ -542,7 +425,6 @@ If you're still having issues after trying these solutions:
 
 - [Turborepo Documentation](https://turbo.build/repo/docs)
 - [Vitest Documentation](https://vitest.dev/)
-- [Storybook Documentation](https://storybook.js.org/docs)
 - [Vue 3 Documentation](https://vuejs.org/)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
 - [DKFDS Documentation](https://designsystem.dk/)

@@ -35,11 +35,8 @@
     "prepublishOnly": "pnpm run build"
   },
   "devDependencies": {
-    "@storybook/csf": "^0.1.13",
-    "@storybook/global": "^5.0.0",
     "@types/node": "^20.17.45",
     "sass": "^1.87.0",
-    "storybook": "^9.1.8",
     "tsup": "^8.0.2"
   }
 }
