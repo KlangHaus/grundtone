@@ -41,7 +41,8 @@ export default defineConfig({
           text: 'Getting Started',
           items: [
             { text: 'Welcome', link: '/guide/welcome' },
-            { text: 'Installation', link: '/guide/installation' },
+            { text: 'Installation by Platform', link: '/guide/installation' },
+            { text: 'Theme Configuration', link: '/guide/theme-configuration' },
             { text: 'Usage', link: '/guide/usage' },
           ],
         },
@@ -55,6 +56,10 @@ export default defineConfig({
             {
               text: 'Package Architecture',
               link: '/guide/package-architecture',
+            },
+            {
+              text: 'Self-Hosting & Customization',
+              link: '/guide/self-hosting-customization',
             },
           ],
         },

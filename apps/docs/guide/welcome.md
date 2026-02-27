@@ -1,153 +1,83 @@
-# Welcome to Grundtone Design Tokens
+# Welcome to Grundtone
 
-Grundtone's design tokens provide a comprehensive foundation for building consistent, accessible,
-and maintainable user interfaces. Design tokens are the visual design atoms of the design system -
-they define colors, typography, spacing, and other fundamental design decisions.
+Grundtone is a **platform-agnostic** design system. The same semantic tokens (colors, spacing,
+typography) power your UI whether you build with **Vue**, **Nuxt**, or **React Native**.
 
-## What are Design Tokens?
+## How It Works
 
-Design tokens are named entities that store visual design attributes. Instead of hard-coding values
-like `#0059b3` or `16px` throughout your application, you use semantic names like `primary` or
-`spacing-md`. This approach provides several key benefits:
+### One Theme, Many Platforms
 
-### Single Source of Truth
+You configure your brand once with `createTheme()` from `@grundtone/core`:
 
-All design decisions are centralized in one place, making it easy to maintain consistency across
-your entire application.
+```typescript
+import { createTheme } from '@grundtone/core';
 
-### Easy Updates
+const { light, dark } = createTheme({
+  light: { primary: '#your-brand' },
+  dark: { primary: '#your-brand-dark' },
+});
+```
 
-Change a token value once, and it updates everywhere it's used. No more hunting through code to
-update colors or spacing.
+Then you pass that theme to the right provider for your platform:
 
-### Platform Agnostic
+- **Web (Vue/Nuxt)**: ThemeProvider writes CSS variables to the DOM; components use
+  `var(--grundtone-color-primary)`.
+- **React Native**: GrundtoneThemeProvider exposes the theme object; you use `theme.colors.primary`
+  in StyleSheet.
 
-Export tokens to any platform - web, iOS, Android, or design tools like Figma - ensuring consistency
-across all touchpoints.
+### Package Overview
 
-### Type Safety
+| Package                  | Platform     | What it does                                  |
+| ------------------------ | ------------ | --------------------------------------------- |
+| @grundtone/core          | All          | Theme data, createTheme(), types              |
+| @grundtone/design-tokens | Web only     | SCSS, CSS utilities, grid (not needed for RN) |
+| @grundtone/vue           | Vue web      | Components (Button, Icon, ThemeProvider)      |
+| @grundtone/nuxt          | Nuxt 3       | Auto-setup for Vue + theme                    |
+| @grundtone/react-native  | React Native | ThemeProvider, useGrundtoneTheme hook         |
 
-Full TypeScript support with autocomplete and type checking helps prevent errors and improves
-developer experience.
+See [Package Architecture](/guide/package-architecture) for a full breakdown.
 
-## Token Categories
+## Choose Your Platform
 
-Grundtone organizes tokens into logical categories:
+Install Grundtone for your stack:
 
-### Colors
+### Vue 3 (standalone)
 
-- **10-shade palettes**: Each color has 10 shades from 50 (lightest) to 900 (darkest)
-- **Semantic colors**: Primary, secondary, success, warning, error, info
-- **Neutral colors**: Comprehensive grayscale palette
-- **WCAG compliant**: All color combinations meet accessibility standards
+Use Vue components and design tokens on web.
 
-### Typography
+→ [Install for Vue](/guide/installation#vue-3)
 
-- **Font families**: System fonts with fallbacks
-- **Font sizes**: Harmonious type scale from xs to 5xl
-- **Font weights**: Light, normal, medium, semibold, bold
-- **Line heights**: Optimized for readability
+### Nuxt 3
 
-### Spacing
+Automatic setup: components, composables, and theme config.
 
-- **Consistent scale**: 4px-based spacing system
-- **Semantic names**: xs, sm, md, lg, xl, 2xl, etc.
-- **Layout utilities**: Margin, padding, and gap values
+→ [Install for Nuxt](/guide/installation#nuxt-3)
 
-### Visual Effects
+### React Native
 
-- **Shadows**: Elevation system with sm, md, lg shadows
-- **Border radius**: Consistent corner rounding from none to full
-- **Transitions**: Animation timing and easing functions
+Theme provider and hook. No SCSS or CSS.
 
-### Responsive
+→ [Install for React Native](/guide/installation#react-native)
 
-- **Breakpoints**: Mobile-first responsive design
-- **Container widths**: Optimized for different screen sizes
+### Plain Web (no framework)
 
-## Key Features
+Design tokens only: SCSS and CSS. No Vue components.
 
-### WCAG Accessibility Built-in
+→ [Install for Plain Web](/guide/installation#plain-web)
 
-All color tokens include contrast ratio calculations and WCAG compliance indicators. The system
-automatically validates that text colors meet AA or AAA standards against their backgrounds.
+## Next Steps
 
-### Performance Optimized
-
-Uses CSS registered properties (`@property`) for enhanced performance with transitions and
-animations. Falls back gracefully in browsers that don't support it.
-
-### Developer Experience
-
-- Full TypeScript definitions with IntelliSense
-- Comprehensive documentation with interactive examples
-- SCSS functions and mixins for easy usage
-- Vue 3 composables for reactive theme management
-
-### Framework Agnostic
-
-While optimized for Vue 3, the core tokens work with any framework:
-
-- **SCSS**: Import and use directly in your stylesheets
-- **TypeScript**: Import token objects for programmatic access
-- **CSS Variables**: Auto-generated custom properties
-- **JSON**: Export tokens for design tools
-
-## Browser Support
-
-Grundtone design tokens support all modern browsers:
-
-- **Chrome**: Last 2 versions
-- **Firefox**: Last 2 versions
-- **Safari**: Last 2 versions
-- **Edge**: Last 2 versions
-
-Advanced features like CSS registered properties gracefully degrade in older browsers.
-
-## Getting Started
-
-Ready to start using Grundtone design tokens? Follow these steps:
-
-1. **[Install the Package](/guide/installation)** - Add @grundtone/design-tokens to your project
-2. **[Learn Basic Usage](/guide/usage)** - See how to use tokens in your code
-3. **[Explore Colors](/tokens/colors)** - Browse the full color palette
-4. **[View Typography](/tokens/typography)** - Discover the type scale
-
-## Package Information
-
-- **Package**: `@grundtone/design-tokens`
-- **Version**: 1.0.0
-- **License**: MIT
-- **Repository**: [GitHub](https://github.com/allanasp/grundtone)
+1. **[Install for your platform](/guide/installation)** – Follow the guide for Vue, Nuxt, React
+   Native, or plain web.
+2. **[Configure your theme](/guide/theme-configuration)** – Customize colors with createTheme().
+3. **[Explore tokens](/tokens/colors)** – Colors, typography, spacing.
+4. **[Browse packages](/packages/vue)** – Components and APIs.
+5. **[Self-host & customize](/guide/self-hosting-customization)** – Fork, rebrand, or host on your
+   own registry.
 
 ## Philosophy
 
-Grundtone design tokens are built on three core principles:
-
-### 1. Consistency Over Flexibility
-
-We provide a carefully curated set of tokens that work together harmoniously. While you can
-customize values, the default tokens ensure visual consistency out of the box.
-
-### 2. Accessibility First
-
-Every design decision prioritizes accessibility. Color contrasts meet WCAG standards, font sizes are
-readable, and spacing provides clear visual hierarchy.
-
-### 3. Developer Happiness
-
-Tokens are named semantically, documented thoroughly, and integrate seamlessly with modern
-development workflows. TypeScript support and comprehensive examples make adoption easy.
-
-## Support
-
-Need help? Have questions? Found a bug?
-
-- **Documentation**: Browse these docs for detailed guides
-- **GitHub Issues**: [Report bugs or request features](https://github.com/allanasp/grundtone/issues)
-- **GitHub Discussions**:
-  [Ask questions and share ideas](https://github.com/allanasp/grundtone/discussions)
-
----
-
-**Let's build something beautiful together.**
+- **Open source (MIT)**: Fork, self-host, and adapt to your brand and infrastructure.
+- **Explicit theme config**: You choose colors. No passive defaults.
+- **Semantic tokens**: Use `primary`, `text`, `surface` – not raw hex values.
+- **Platform-agnostic core**: Same theme structure everywhere.

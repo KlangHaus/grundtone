@@ -1,62 +1,40 @@
-# Installation
+# Installation by Platform
 
-Get started with Grundtone design tokens by installing the package and configuring your build tools.
-
-## Package Installation
-
-Install `@grundtone/design-tokens` using your preferred package manager:
-
-### npm
-
-```bash
-npm install @grundtone/design-tokens
-```
-
-### pnpm (Recommended)
-
-```bash
-pnpm add @grundtone/design-tokens
-```
-
-### yarn
-
-```bash
-yarn add @grundtone/design-tokens
-```
+Grundtone is platform-agnostic. Install the packages for your stack and configure your theme.
 
 ## Requirements
 
-### Minimum Versions
-
 - **Node.js**: ≥ 20.0.0
-- **Sass/SCSS**: ≥ 1.50.0 (if using SCSS features)
-- **TypeScript**: ≥ 5.0.0 (if using TypeScript)
+- **Vue 3**: ≥ 3.5.0 (for Vue/Nuxt)
+- **React Native**: ≥ 0.72.0 (for React Native)
 
-### Peer Dependencies
+---
 
-The design tokens package has no required peer dependencies. However, if you want to use the Vue 3
-composables, you'll also need:
+## Vue 3
+
+Use Vue components (Button, Icon, ThemeToggle) and design tokens on web.
+
+### 1. Install packages
 
 ```bash
-pnpm add @grundtone/composables vue@^3.5.0
+pnpm add @grundtone/vue @grundtone/design-tokens @grundtone/core
+# or
+npm install @grundtone/vue @grundtone/design-tokens @grundtone/core
 ```
 
-## SCSS Setup
-
-To use design tokens in SCSS files, configure your build tool to resolve the package:
-
-### Vite
+### 2. Configure Vite (SCSS)
 
 ```typescript
 // vite.config.ts
 import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
+  plugins: [vue()],
   css: {
     preprocessorOptions: {
       scss: {
         additionalData: `@use '@grundtone/design-tokens' as tokens;`,
-        // Silence Sass deprecation warnings
         silenceDeprecations: ['if-function'],
       },
     },
@@ -64,289 +42,249 @@ export default defineConfig({
 });
 ```
 
-### Webpack
+### 3. Wrap app with ThemeProvider
 
-```javascript
-// webpack.config.js
-module.exports = {
-  module: {
-    rules: [
-      {
-        test: /\.scss$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          {
-            loader: 'sass-loader',
-            options: {
-              additionalData: `@use '@grundtone/design-tokens' as tokens;`,
-            },
-          },
-        ],
-      },
-    ],
-  },
-};
+```vue
+<!-- App.vue -->
+<template>
+  <ThemeProvider :theme="theme">
+    <router-view />
+  </ThemeProvider>
+</template>
+
+<script setup lang="ts">
+  import { ThemeProvider } from '@grundtone/vue';
+  import { createTheme } from '@grundtone/core';
+
+  const { light } = createTheme({
+    light: { primary: '#your-brand' },
+  });
+  const theme = light;
+</script>
 ```
 
-### Nuxt 3
-
-```typescript
-// nuxt.config.ts
-export default defineNuxtConfig({
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: `@use '@grundtone/design-tokens' as tokens;`,
-          silenceDeprecations: ['if-function'],
-        },
-      },
-    },
-  },
-});
-```
-
-### Next.js
-
-```javascript
-// next.config.js
-module.exports = {
-  sassOptions: {
-    additionalData: `@use '@grundtone/design-tokens' as tokens;`,
-  },
-};
-```
-
-## TypeScript Setup
-
-The package includes TypeScript definitions out of the box. No additional configuration is needed!
-
-```typescript
-// TypeScript imports work automatically
-import { COLORS, SPACING, TYPOGRAPHY } from '@grundtone/design-tokens';
-```
-
-### Path Aliases (Optional)
-
-For cleaner imports, you can configure TypeScript path aliases:
-
-```json
-// tsconfig.json
-{
-  "compilerOptions": {
-    "paths": {
-      "@tokens/*": ["node_modules/@grundtone/design-tokens/*"]
-    }
-  }
-}
-```
-
-Then use:
-
-```typescript
-import { COLORS } from '@tokens';
-```
-
-## CSS Variables Setup
-
-Design tokens automatically generate CSS custom properties. To use them, import the CSS file in your
-entry point:
-
-### JavaScript/TypeScript Entry
-
-```typescript
-// main.ts or index.ts
-import '@grundtone/design-tokens/dist/index.css';
-```
-
-### HTML Entry
-
-```html
-<!-- index.html -->
-<link rel="stylesheet" href="node_modules/@grundtone/design-tokens/dist/index.css" />
-```
-
-### Vue 3
+### 4. Import styles
 
 ```typescript
 // main.ts
 import { createApp } from 'vue';
-import '@grundtone/design-tokens/dist/index.css';
 import App from './App.vue';
+import '@grundtone/vue/dist/style.css';
 
 createApp(App).mount('#app');
 ```
 
-### Nuxt 3
+### 5. Use components
+
+```vue
+<template>
+  <GrundtoneButton variant="primary">Click me</GrundtoneButton>
+</template>
+```
+
+Components are imported manually, or use
+[auto-import](https://unplugin-vue-components.netlify.app/).
+
+---
+
+## Nuxt 3
+
+Automatic setup: components, composables, theme, and SCSS.
+
+### 1. Install the module
+
+```bash
+pnpm add @grundtone/nuxt
+# or
+npm install @grundtone/nuxt
+```
+
+### 2. Add module and theme to config
 
 ```typescript
 // nuxt.config.ts
+import { createTheme } from '@grundtone/core';
+
 export default defineNuxtConfig({
-  css: ['@grundtone/design-tokens/dist/index.css'],
-});
-```
-
-## Registering CSS Properties (Optional)
-
-For enhanced performance with CSS animations and transitions, register CSS custom properties:
-
-```typescript
-import { registerCSSProperties } from '@grundtone/design-tokens';
-
-// Register all properties
-registerCSSProperties();
-
-// Or register specific properties
-registerCSSProperties({
-  COLOR_PRIMARY: {
-    syntax: '<color>',
-    inherits: true,
-    initialValue: '#0059b3',
+  modules: ['@grundtone/nuxt'],
+  grundtone: {
+    theme: createTheme({
+      light: {
+        primary: '#0059b3',
+        primaryHover: '#004a96',
+        primaryActive: '#003a7a',
+      },
+      dark: {
+        primary: '#4dabf7',
+        primaryHover: '#74c0fc',
+        primaryActive: '#339af0',
+      },
+    }),
+    components: true,
+    composables: true,
+    prefix: 'Grundtone',
   },
 });
 ```
 
-::: tip Note CSS property registration is only supported in Chromium-based browsers (Chrome, Edge,
-Opera). It gracefully degrades in other browsers. :::
+### 3. Use components
 
-## Vue 3 Integration
-
-If you're using Vue 3, install the composables package for reactive theme management:
-
-```bash
-pnpm add @grundtone/composables
-```
-
-Then use the theme provider:
+All Grundtone Vue components are auto-imported with the `Grundtone` prefix:
 
 ```vue
 <template>
-  <ThemeProvider>
-    <App />
-  </ThemeProvider>
+  <GrundtoneButton variant="primary">Click me</GrundtoneButton>
+  <GrundtoneThemeToggle />
 </template>
-
-<script setup>
-  import { ThemeProvider } from '@grundtone/composables';
-</script>
 ```
 
-## Nuxt 3 Module
+---
 
-For Nuxt 3 projects, use the official Nuxt module for automatic setup:
+## React Native
+
+Theme provider and hook. No SCSS or CSS – use the theme object in StyleSheet.
+
+### 1. Install packages
 
 ```bash
-pnpm add @grundtone/nuxt
+pnpm add @grundtone/react-native @grundtone/core
+# or
+npm install @grundtone/react-native @grundtone/core
 ```
 
-Add to your `nuxt.config.ts`:
+::: info No design-tokens for RN You do **not** need `@grundtone/design-tokens` for React Native. It
+is web-only (SCSS/CSS). :::
 
-```typescript
-export default defineNuxtConfig({
-  modules: ['@grundtone/nuxt'],
+### 2. Wrap app with GrundtoneThemeProvider
+
+```tsx
+// App.tsx
+import { GrundtoneThemeProvider } from '@grundtone/react-native';
+import { createTheme } from '@grundtone/core';
+
+const { light, dark } = createTheme({
+  light: { primary: '#007aff' },
+  dark: { primary: '#0a84ff' },
+});
+
+export default function App() {
+  return (
+    <GrundtoneThemeProvider light={light} dark={dark}>
+      <RootNavigator />
+    </GrundtoneThemeProvider>
+  );
+}
+```
+
+### 3. Use the theme in components
+
+```tsx
+import { View, Text, StyleSheet } from 'react-native';
+import { useGrundtoneTheme } from '@grundtone/react-native';
+
+function MyScreen() {
+  const { theme } = useGrundtoneTheme();
+
+  return (
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Text style={{ color: theme.colors.text }}>Hello</Text>
+      <View style={[styles.button, { backgroundColor: theme.colors.primary }]}>
+        <Text style={{ color: theme.colors.onPrimary }}>Submit</Text>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 16 },
+  button: { padding: 12, borderRadius: 8 },
 });
 ```
 
-The module automatically:
+### Metro config (optional)
 
-- Imports design tokens globally
-- Sets up SCSS configuration
-- Registers CSS custom properties
-- Provides auto-imports for composables
+If you see errors about `@grundtone/core` importing `.css`, add to `metro.config.js`:
 
-## Verification
+```javascript
+const { getDefaultConfig } = require('expo/metro-config');
+const config = getDefaultConfig(__dirname);
+config.resolver.blockList = [/\.css$/];
+module.exports = config;
+```
 
-Verify the installation by importing and using a token:
+---
 
-### SCSS
+## Plain Web (no framework)
+
+Use design tokens only – SCSS and CSS. No Vue components.
+
+### 1. Install packages
+
+```bash
+pnpm add @grundtone/design-tokens @grundtone/core
+```
+
+### 2. Import CSS
+
+```typescript
+// main.ts or entry
+import '@grundtone/design-tokens/dist/index.css';
+```
+
+### 3. Use in SCSS
 
 ```scss
 @use '@grundtone/design-tokens' as tokens;
 
 .button {
-  background-color: tokens.getColor('primary');
-  padding: tokens.spacing('md');
+  background-color: tokens.color('primary');
+  padding: tokens.space('md');
 }
 ```
 
-### TypeScript
-
-```typescript
-import { COLORS, SPACING } from '@grundtone/design-tokens';
-
-console.log(COLORS.primary); // '#0059b3'
-console.log(SPACING.md); // '1rem'
-```
-
-### CSS Variables
+### 4. Or use CSS variables
 
 ```css
 .button {
   background-color: var(--grundtone-color-primary);
-  padding: var(--grundtone-spacing-md);
+  padding: var(--grundtone-space-md);
 }
 ```
 
-## Troubleshooting
+For theming (light/dark), use ThemeProvider from `@grundtone/vue` or apply theme programmatically.
+See [theme configuration](/guide/theme-configuration).
 
-### SCSS Import Errors
+---
 
-**Error**: `Can't find stylesheet to import`
+## Verification
 
-**Solution**: Ensure your build tool is configured to resolve node_modules. Add to your SCSS loader
-configuration:
+### Vue / Nuxt
 
-```javascript
-{
-  includePaths: ['node_modules'];
+Use a component and check the DOM for `--grundtone-color-primary`:
+
+```vue
+<GrundtoneButton variant="primary">Test</GrundtoneButton>
+```
+
+### React Native
+
+```tsx
+const { theme } = useGrundtoneTheme();
+console.log(theme.colors.primary); // Your configured color
+```
+
+### Plain Web
+
+```css
+.test {
+  color: var(--grundtone-color-text);
 }
 ```
 
-### TypeScript Errors
-
-**Error**: `Cannot find module '@grundtone/design-tokens'`
-
-**Solution**: Ensure TypeScript can resolve the package:
-
-1. Check that `node_modules/@grundtone/design-tokens` exists
-2. Run `pnpm install` to reinstall dependencies
-3. Restart your TypeScript server
-
-### CSS Variables Not Working
-
-**Error**: CSS custom properties show `undefined` values
-
-**Solution**: Import the CSS file in your entry point:
-
-```typescript
-import '@grundtone/design-tokens/dist/index.css';
-```
-
-### Sass Deprecation Warnings
-
-**Warning**: `if() function deprecation warnings`
-
-**Solution**: Add silence flag to Sass configuration:
-
-```typescript
-{
-  silenceDeprecations: ['if-function'];
-}
-```
+---
 
 ## Next Steps
 
-Now that you've installed the package, learn how to use it:
-
-- **[Basic Usage](/guide/usage)** - Learn how to use tokens in your code
-- **[Color Tokens](/tokens/colors)** - Explore the color palette
-- **[Typography](/tokens/typography)** - Discover typography tokens
-
-## Need Help?
-
-If you encounter any issues during installation:
-
-- Check the [GitHub Issues](https://github.com/allanasp/grundtone/issues) for known problems
-- Search [GitHub Discussions](https://github.com/allanasp/grundtone/discussions) for solutions
-- Open a new issue if you've found a bug
+- **[Theme configuration](/guide/theme-configuration)** – Customize colors
+- **[Package architecture](/guide/package-architecture)** – Understand package roles
+- **[Usage](/guide/usage)** – SCSS, TypeScript, CSS usage (web)

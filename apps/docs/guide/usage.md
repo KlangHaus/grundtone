@@ -1,7 +1,8 @@
-# Usage Guide
+# Usage Guide (Web)
 
-Learn how to use Grundtone design tokens in your projects with SCSS, TypeScript, CSS variables, and
-Vue 3 composables.
+Learn how to use Grundtone design tokens on **web** with SCSS, TypeScript, and CSS variables. For
+React Native, use `useGrundtoneTheme()` and the theme object – see
+[React Native package](/packages/react-native).
 
 ## Quick Start
 
