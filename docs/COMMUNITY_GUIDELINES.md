@@ -43,7 +43,7 @@ We are committed to providing a friendly, safe, and welcoming environment for al
 
 ### Quality Standards
 
-- Follow the atomic design principles outlined in `CLAUDE.md`
+- Follow the atomic design principles outlined in [AGENTS.md](../AGENTS.md)
 - Write comprehensive tests for all components (minimum 90% coverage)
 - Include proper TypeScript interfaces for all props and events
 - Document components with README files and usage examples
@@ -82,7 +82,7 @@ We are committed to providing a friendly, safe, and welcoming environment for al
 
 ### Getting Help
 
-- Check the documentation in `CLAUDE.md` and component README files first
+- Check the documentation in [AGENTS.md](../AGENTS.md) and component README files first
 - Search existing issues and discussions
 - Ask specific questions with code examples when possible
 - Be patient waiting for responses - maintainers contribute in their free time

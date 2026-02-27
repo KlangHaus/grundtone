@@ -433,7 +433,7 @@ Anbefalet at aktivere 2FA på NPM:
 Hvis du støder på problemer:
 
 1. Tjek denne guide først
-2. Læs CHANGESETS.md for detaljer om workflow
+2. See [CHANGESETS.md](./CHANGESETS.md) for workflow details
 3. Se official Changesets docs: https://github.com/changesets/changesets
 4. Opret et issue i dette repository
 

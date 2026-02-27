@@ -17,19 +17,21 @@ apps/docs/
 
 ### For Contributors
 
-- **[Contributing Guide](../CONTRIBUTING.md)** - How to contribute to Grundtone
-- **[Development Guide](../CLAUDE.md)** - Essential commands and development standards
+- **[Contributing Guide](../docs/CONTRIBUTING.md)** - How to contribute to Grundtone
+- **[Development Guide](../AGENTS.md)** - Essential commands and development standards
 
 ### For Users
 
 - **[Documentation (Live)](https://grundtone.vercel.app)** - Design system documentation (when
   deployed)
-- **[Installation Guide](../CONTRIBUTING.md#getting-started)** - How to install and use packages
+- **[Installation Guide](../docs/CONTRIBUTING.md#getting-started)** - How to install and use
+  packages
 
 ### For Maintainers
 
-- **[Release Process](../CONTRIBUTING.md#release-process)** - Version management with Changesets
-- **[Deployment](../DEPLOYMENT.md)** - Deployment configuration
+- **[Release Process](../docs/CONTRIBUTING.md#release-process)** - Version management with
+  Changesets
+- **[Deployment](../docs/DEPLOYMENT.md)** - Deployment configuration
 
 ---
 
@@ -126,8 +128,8 @@ nuxt (Nuxt module using ui/composables)
    ```
 
 4. **Read guides**:
-   - [Contributing Guide](../CONTRIBUTING.md)
-   - [Development Guide](../CLAUDE.md)
+   - [Contributing Guide](../docs/CONTRIBUTING.md)
+   - [Development Guide](../AGENTS.md)
 
 ---
 
@@ -135,8 +137,8 @@ nuxt (Nuxt module using ui/composables)
 
 ### Creating Components
 
-1. Follow [atomic design principles](../CONTRIBUTING.md#atomic-design-principles)
-2. Use [component structure template](../CONTRIBUTING.md#component-development)
+1. Follow [atomic design principles](../docs/CONTRIBUTING.md#atomic-design-principles)
+2. Use [component structure template](../docs/CONTRIBUTING.md#component-development)
 3. Write tests (minimum 90% coverage)
 4. Add component documentation (README)
 5. Submit pull request
@@ -155,7 +157,7 @@ nuxt (Nuxt module using ui/composables)
 5. Merge to `main`
 6. Automated release via GitHub Actions
 
-See [Release Process](../CONTRIBUTING.md#release-process) for details.
+See [Release Process](../docs/CONTRIBUTING.md#release-process) for details.
 
 ---
 
@@ -244,8 +246,8 @@ Documentation should be updated:
 ### Internal Documentation
 
 - [Root README](../README.md) - Project overview
-- [Contributing Guide](../CONTRIBUTING.md) - How to contribute
-- [Development Guide](../CLAUDE.md) - Essential commands
+- [Contributing Guide](../docs/CONTRIBUTING.md) - How to contribute
+- [Development Guide](../AGENTS.md) - Essential commands
 
 ### External Resources
 
@@ -270,9 +272,9 @@ Documentation should be updated:
 
 We welcome contributions! See:
 
-- [Contributing Guide](../CONTRIBUTING.md) - Detailed contribution guidelines
+- [Contributing Guide](../docs/CONTRIBUTING.md) - Detailed contribution guidelines
 - [Code of Conduct](../CODE_OF_CONDUCT.md) - Community standards
-- [Development Guide](../CLAUDE.md) - Development setup and commands
+- [Development Guide](../AGENTS.md) - Development setup and commands
 
 ---
 

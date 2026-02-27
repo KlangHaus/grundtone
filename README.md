@@ -199,19 +199,19 @@ formatDanishDate(new Date()); // 'DD/MM/YYYY'
 **Build Failures**: Ensure correct package.json exports **TypeScript Errors**: Build packages in
 dependency order **Test Failures**: Verify vitest configuration
 
-See [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) for detailed solutions.
+See [TROUBLESHOOTING.md](./docs/TROUBLESHOOTING.md) for detailed solutions.
 
 ## 📖 Documentation
 
-- **[Architecture Guide](./ARCHITECTURE.md)**: System design and patterns
-- **[Contributing Guide](./CONTRIBUTING.md)**: Development workflow and standards
-- **[Troubleshooting](./TROUBLESHOOTING.md)**: Common issues and solutions
+- **[Architecture Guide](./docs/ARCHITECTURE.md)**: System design and patterns
+- **[Contributing Guide](./docs/CONTRIBUTING.md)**: Development workflow and standards
+- **[Troubleshooting](./docs/TROUBLESHOOTING.md)**: Common issues and solutions
 - **[Component API](./docs/api/)**: Generated API documentation
 - **[Documentation](https://grundtone.vercel.app)**: Design system documentation
 
 ## 🤝 Contributing
 
-We welcome contributions! Please read our [Contributing Guide](./CONTRIBUTING.md) for:
+We welcome contributions! Please read our [Contributing Guide](./docs/CONTRIBUTING.md) for:
 
 - Development setup and workflow
 - Component creation standards
