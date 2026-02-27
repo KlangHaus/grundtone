@@ -1,5 +1,4 @@
 {
-  "installCommand": "corepack enable && corepack prepare pnpm@10.14.0 --activate && pnpm install",
   "buildCommand": "pnpm run docs:build",
   "outputDirectory": "apps/docs/.vitepress/dist"
 }
