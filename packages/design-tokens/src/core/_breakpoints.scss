@@ -4,21 +4,23 @@
 @use 'sass:map';
 @use 'sass:string';
 
-// Grid breakpoints
+// Grid breakpoints (align with scss/_variables.scss and tokens)
 $grid-breakpoints: (
   xs: 0,
-  sm: 576px,
+  sm: 640px,
   md: 768px,
-  lg: 992px,
-  xl: 1200px,
+  lg: 1024px,
+  xl: 1280px,
+  2xl: 1536px,
 ) !default;
 
 // Container max widths
 $container-max-widths: (
-  sm: 540px,
-  md: 720px,
-  lg: 960px,
-  xl: 1140px,
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  2xl: 1536px,
 ) !default;
 
 // Grid configuration
@@ -125,8 +127,8 @@ $grid-gutter-width: 32px !default;
 @mixin responsive-font-size(
   $min-font-size,
   $max-font-size,
-  $min-vw: 576px,
-  $max-vw: 1200px
+  $min-vw: 640px,
+  $max-vw: 1280px
 ) {
   font-size: $min-font-size;
 
@@ -199,6 +201,7 @@ $grid-gutter-width: 32px !default;
   --breakpoint-md: #{map.get($grid-breakpoints, md)};
   --breakpoint-lg: #{map.get($grid-breakpoints, lg)};
   --breakpoint-xl: #{map.get($grid-breakpoints, xl)};
+  --breakpoint-2xl: #{map.get($grid-breakpoints, 2xl)};
   --grid-gutter-width: #{$grid-gutter-width};
   --grid-columns: #{$grid-columns};
 }

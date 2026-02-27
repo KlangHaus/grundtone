@@ -4,7 +4,7 @@ export type ThemeMode = 'light' | 'dark' | 'auto';
 
 /**
  * Semantic color tokens – configure these to match your brand.
- * All keys map to CSS var: --grundtone-color-{kebab-case-key}
+ * All keys map to CSS var: --color-{kebab-case-key}
  */
 export interface ThemeColors {
   primary: string;

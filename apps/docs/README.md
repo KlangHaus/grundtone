@@ -7,10 +7,14 @@ contributors, maintainers, and users of the design system.
 
 ```
 apps/docs/
-├── README.md           # This file - main documentation index
-├── guide/              # User guides
-├── tokens/             # Design token documentation
-└── packages/           # Package-specific documentation
+├── README.md               # This file - main documentation index
+├── index.md                # Homepage
+└── guide/                  # User guides
+    ├── welcome.md          # Introduction
+    ├── installation.md     # Step-by-step install for Vue, Nuxt, React Native, Plain Web
+    ├── theme-configuration.md # Color system and theme customization per package
+    ├── package-architecture.md # Package dependencies and structure
+    └── open-source.md      # MIT license, self-hosting, customization
 ```
 
 ## Quick Links
@@ -24,8 +28,10 @@ apps/docs/
 
 - **[Documentation (Live)](https://grundtone.vercel.app)** - Design system documentation (when
   deployed)
-- **[Installation Guide](../docs/CONTRIBUTING.md#getting-started)** - How to install and use
-  packages
+- **[Installation Guide](guide/installation)** - Step-by-step setup for Vue, Nuxt, React Native,
+  Plain Web
+- **[Theme Configuration](guide/theme-configuration)** - Color system and how to customize theme per
+  package
 
 ### For Maintainers
 
@@ -41,7 +47,7 @@ apps/docs/
 
 Grundtone is a comprehensive Vue 3 design system built with:
 
-- **Design Tokens** - Colors, typography, spacing, and more
+- **Foundation** - Design tokens (colors, typography, spacing, etc.)
 - **Components** - Atomic design component library
 - **Composables** - Reusable Vue 3 composables
 - **Utilities** - Shared utilities and helpers

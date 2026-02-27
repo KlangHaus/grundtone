@@ -79,9 +79,9 @@ packages/vue/src/atoms/ComponentName/
   });
 
   const classes = computed(() => [
-    'grundtone-component-name',
-    `grundtone-component-name--${props.variant}`,
-    `grundtone-component-name--${props.size}`,
+    'component-name',
+    `component-name--${props.variant}`,
+    `component-name--${props.size}`,
   ]);
 </script>
 

@@ -2,19 +2,19 @@
   <button
     type="button"
     :class="[
-      'grundtone-button',
-      `grundtone-button--${variant}`,
-      `grundtone-button--${size}`,
-      { 'grundtone-button--loading': loading },
-      { 'grundtone-button--disabled': disabled },
+      'button',
+      `button--${variant}`,
+      `button--${size}`,
+      { 'button--loading': loading },
+      { 'button--disabled': disabled },
     ]"
     :disabled="disabled || loading"
     :aria-disabled="disabled"
     :aria-busy="loading"
     v-bind="$attrs"
   >
-    <span v-if="loading" class="grundtone-button__loader"></span>
-    <span v-else class="grundtone-button__content">
+    <span v-if="loading" class="button__loader"></span>
+    <span v-else class="button__content">
       <slot></slot>
     </span>
   </button>

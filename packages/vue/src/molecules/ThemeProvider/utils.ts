@@ -17,48 +17,48 @@ export function applyThemeToDOM(theme: Theme): void {
     Object.entries(theme.colors).forEach(([key, value]) => {
       if (value === undefined) return;
       const cssKey = key.replace(/([A-Z])/g, '-$1').toLowerCase();
-      properties[`--grundtone-color-${cssKey}`] = value;
+      properties[`--color-${cssKey}`] = value;
     });
 
     // Spacing
     Object.entries(theme.spacing).forEach(([key, value]) => {
-      properties[`--grundtone-spacing-${key}`] = value;
+      properties[`--spacing-${key}`] = value;
     });
 
     // Typography
     Object.entries(theme.typography.fontFamily).forEach(([key, value]) => {
-      properties[`--grundtone-font-family-${key}`] = value;
+      properties[`--font-family-${key}`] = value;
     });
 
     Object.entries(theme.typography.fontSize).forEach(([key, value]) => {
-      properties[`--grundtone-font-size-${key}`] = value;
+      properties[`--font-size-${key}`] = value;
     });
 
     Object.entries(theme.typography.fontWeight).forEach(([key, value]) => {
-      properties[`--grundtone-font-weight-${key}`] = String(value);
+      properties[`--font-weight-${key}`] = String(value);
     });
 
     Object.entries(theme.typography.lineHeight).forEach(([key, value]) => {
-      properties[`--grundtone-line-height-${key}`] = String(value);
+      properties[`--line-height-${key}`] = String(value);
     });
 
     // Shadows
     Object.entries(theme.shadows).forEach(([key, value]) => {
-      properties[`--grundtone-shadow-${key}`] = value;
+      properties[`--shadow-${key}`] = value;
     });
 
     // Radius
     Object.entries(theme.radius).forEach(([key, value]) => {
-      properties[`--grundtone-radius-${key}`] = value;
+      properties[`--radius-${key}`] = value;
     });
 
     // Transitions
     Object.entries(theme.transitions.duration).forEach(([key, value]) => {
-      properties[`--grundtone-transition-duration-${key}`] = value;
+      properties[`--transition-duration-${key}`] = value;
     });
 
     Object.entries(theme.transitions.timing).forEach(([key, value]) => {
-      properties[`--grundtone-transition-timing-${key}`] = value;
+      properties[`--transition-timing-${key}`] = value;
     });
 
     // Apply all properties in a single batch
@@ -71,7 +71,18 @@ export function applyThemeToDOM(theme: Theme): void {
     const existingStyles = root.getAttribute('style') || '';
     const cleanedExisting = existingStyles
       .split(';')
-      .filter(rule => rule.trim() && !rule.includes('--grundtone-'))
+      .filter(
+        rule =>
+          rule.trim() &&
+          !rule.includes('--color-') &&
+          !rule.includes('--spacing-') &&
+          !rule.includes('--font-') &&
+          !rule.includes('--space-') &&
+          !rule.includes('--radius-') &&
+          !rule.includes('--shadow-') &&
+          !rule.includes('--duration-') &&
+          !rule.includes('--ease-'),
+      )
       .join(';');
 
     root.setAttribute(

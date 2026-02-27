@@ -2,18 +2,18 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: var(--grundtone-space-sm); // 8px
-  padding: var(--grundtone-space-xs); // 4px
+  gap: var(--space-sm); // 8px
+  padding: var(--space-xs); // 4px
   background: transparent;
   border: none;
-  border-radius: var(--grundtone-radius-full);
+  border-radius: var(--radius-full);
   cursor: pointer;
   font-family: inherit;
   font-size: inherit;
   transition: all 0.2s ease;
 
   &:focus {
-    outline: 2px solid var(--grundtone-color-primary);
+    outline: 2px solid var(--color-primary);
     outline-offset: 2px;
   }
 
@@ -33,7 +33,7 @@
   align-items: center;
   background: light-dark(#e5e7eb, #374151);
   border: 1px solid light-dark(#d1d5db, #4b5563);
-  border-radius: var(--grundtone-radius-full);
+  border-radius: var(--radius-full);
   transition: all 0.3s ease;
 
   .theme-toggle--sm & {
@@ -64,9 +64,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--grundtone-color-surface);
-  border-radius: var(--grundtone-radius-full);
-  box-shadow: var(--grundtone-shadow-sm);
+  background: var(--color-surface);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-sm);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   .theme-toggle--sm & {
@@ -103,14 +103,14 @@
 }
 
 .theme-toggle__label {
-  font-size: var(--grundtone-font-size-sm);
-  font-weight: var(--grundtone-font-weight-medium);
-  color: var(--grundtone-color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
   user-select: none;
   transition: color 0.2s ease;
 
   .theme-toggle:hover & {
-    color: var(--grundtone-color-text);
+    color: var(--color-text);
   }
 
   .theme-toggle--disabled & {
@@ -138,7 +138,7 @@
   }
 
   .theme-toggle__thumb {
-    background: var(--grundtone-color-surface);
+    background: var(--color-surface);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
 }
@@ -185,6 +185,6 @@
 
   .theme-toggle__thumb {
     box-shadow: none;
-    border: 1px solid var(--grundtone-color-border);
+    border: 1px solid var(--color-border);
   }
 }

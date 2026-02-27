@@ -10,8 +10,11 @@ hero:
       text: Get Started
       link: /guide/welcome
     - theme: alt
-      text: Installation by Platform
+      text: Installation
       link: /guide/installation
+    - theme: alt
+      text: Theme Configuration
+      link: /guide/theme-configuration
     - theme: alt
       text: View on GitHub
       link: https://github.com/allanasp/grundtone
@@ -23,8 +26,8 @@ features:
       follow the setup guide.
   - title: Theme-First
     details:
-      Configure your brand colors once with createTheme(). Tokens flow to CSS vars (web) or
-      StyleSheet (RN).
+      Semantic color tokens (primary, background, text). Configure once with createTheme() – see
+      Theme Configuration. Tokens flow to CSS vars (web) or StyleSheet (RN).
   - title: Type Safe
     details:
       Full TypeScript support with autocomplete. Theme types, color presets, and component props all
@@ -33,5 +36,6 @@ features:
     details: Accessibility built-in. Semantic colors, contrast checking, and ARIA support.
   - title: Open Source
     details:
-      MIT licensed. Fork, self-host, and tailor the design system to your brand and infrastructure.
+      MIT licensed. Fork the repo, self-host on your own registry, and customize colors, spacing,
+      and components to match your brand.
 ---

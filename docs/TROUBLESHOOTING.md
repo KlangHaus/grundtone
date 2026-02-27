@@ -270,7 +270,7 @@ export default defineConfig({
 1. **Follow strict BEM naming**:
 
 ```scss
-.grundtone-component-name {
+.component-name {
   &__element {
     // Element styles
   }

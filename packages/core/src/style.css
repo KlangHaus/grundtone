@@ -1,36 +1,36 @@
 :root {
   /* Colors */
-  --grundtone-color-primary: #007aff;
-  --grundtone-color-secondary: #5856d6;
-  --grundtone-color-success: #34c759;
-  --grundtone-color-warning: #ff9500;
-  --grundtone-color-danger: #ff3b30;
-  --grundtone-color-info: #5ac8fa;
+  --color-primary: #007aff;
+  --color-secondary: #5856d6;
+  --color-success: #34c759;
+  --color-warning: #ff9500;
+  --color-danger: #ff3b30;
+  --color-info: #5ac8fa;
 
   /* Typography */
-  --grundtone-font-family:
+  --font-family-base:
     -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, oxygen, ubuntu,
     cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  --grundtone-font-size-base: 16px;
-  --grundtone-line-height-base: 1.5;
+  --font-size-base: 16px;
+  --line-height-base: 1.5;
 
   /* Spacing */
-  --grundtone-spacing-unit: 8px;
-  --grundtone-spacing-xs: calc(var(--grundtone-spacing-unit) * 0.5);
-  --grundtone-spacing-sm: var(--grundtone-spacing-unit);
-  --grundtone-spacing-md: calc(var(--grundtone-spacing-unit) * 2);
-  --grundtone-spacing-lg: calc(var(--grundtone-spacing-unit) * 3);
-  --grundtone-spacing-xl: calc(var(--grundtone-spacing-unit) * 4);
+  --spacing-unit: 8px;
+  --spacing-xs: calc(var(--spacing-unit) * 0.5);
+  --spacing-sm: var(--spacing-unit);
+  --spacing-md: calc(var(--spacing-unit) * 2);
+  --spacing-lg: calc(var(--spacing-unit) * 3);
+  --spacing-xl: calc(var(--spacing-unit) * 4);
 
   /* Border Radius */
-  --grundtone-border-radius-sm: 4px;
-  --grundtone-border-radius-md: 8px;
-  --grundtone-border-radius-lg: 12px;
-  --grundtone-border-radius-full: 9999px;
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-full: 9999px;
 
   /* Transitions */
-  --grundtone-transition-duration: 0.2s;
-  --grundtone-transition-timing: ease-in-out;
+  --transition-duration: 0.2s;
+  --transition-timing: ease-in-out;
 }
 
 /* Reset */
@@ -43,9 +43,9 @@
 }
 
 body {
-  font-family: var(--grundtone-font-family);
-  font-size: var(--grundtone-font-size-base);
-  line-height: var(--grundtone-line-height-base);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

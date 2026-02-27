@@ -36,8 +36,8 @@ provide/inject pattern.
 <template>
   <div
     :style="{
-      backgroundColor: 'var(--grundtone-color-background)',
-      color: 'var(--grundtone-color-text)',
+      backgroundColor: 'var(--color-background)',
+      color: 'var(--color-text)',
     }"
   >
     <h1>Current theme: {{ mode }}</h1>
@@ -120,26 +120,26 @@ The ThemeProvider generates CSS custom properties that can be used throughout yo
 
 ### Colors
 
-- `--grundtone-color-primary`
-- `--grundtone-color-secondary`
-- `--grundtone-color-background`
-- `--grundtone-color-surface`
-- `--grundtone-color-text`
+- `--color-primary`
+- `--color-secondary`
+- `--color-background`
+- `--color-surface`
+- `--color-text`
 - And many more...
 
 ### Spacing
 
-- `--grundtone-spacing-xs` through `--grundtone-spacing-4xl`
+- `--spacing-xs` through `--spacing-4xl`
 
 ### Typography
 
-- `--grundtone-font-family-base`, `-heading`, `-mono`
-- `--grundtone-font-size-xs` through `--grundtone-font-size-5xl`
-- `--grundtone-font-weight-thin` through `--grundtone-font-weight-extrabold`
+- `--font-family-base`, `-heading`, `-mono`
+- `--font-size-xs` through `--font-size-5xl`
+- `--font-weight-thin` through `--font-weight-extrabold`
 
 ### Shadows, Radius, Transitions
 
-- `--grundtone-shadow-*`, `--grundtone-radius-*`, `--grundtone-transition-*`
+- `--shadow-*`, `--radius-*`, `--transition-*`
 
 ## Theme Structure
 
@@ -190,14 +190,13 @@ When set to `auto` mode:
   const { isDark, toggleMode } = useTheme();
 
   const buttonStyles = computed(() => ({
-    backgroundColor: 'var(--grundtone-color-primary)',
+    backgroundColor: 'var(--color-primary)',
     color: '#ffffff',
-    padding: 'var(--grundtone-spacing-sm) var(--grundtone-spacing-md)',
+    padding: 'var(--spacing-sm) var(--spacing-md)',
     border: 'none',
-    borderRadius: 'var(--grundtone-radius-md)',
+    borderRadius: 'var(--radius-md)',
     cursor: 'pointer',
-    transition:
-      'all var(--grundtone-transition-duration-fast) var(--grundtone-transition-timing-ease)',
+    transition: 'all var(--transition-duration-fast) var(--transition-timing-ease)',
   }));
 </script>
 ```
@@ -214,14 +213,13 @@ When set to `auto` mode:
 
 <style scoped>
   .themed-card {
-    background: var(--grundtone-color-surface);
-    color: var(--grundtone-color-text);
-    padding: var(--grundtone-spacing-lg);
-    border-radius: var(--grundtone-radius-lg);
-    box-shadow: var(--grundtone-shadow-md);
-    border: 1px solid var(--grundtone-color-border);
-    transition: all var(--grundtone-transition-duration-base)
-      var(--grundtone-transition-timing-ease);
+    background: var(--color-surface);
+    color: var(--color-text);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-duration-base) var(--transition-timing-ease);
   }
 </style>
 ```

@@ -121,7 +121,7 @@ We follow atomic design methodology:
 
    - Components: PascalCase (`Button`, `FormField`)
    - Files: Match component name (`Button.vue`, `Button.test.ts`)
-   - CSS classes: kebab-case with prefix (`grundtone-button`)
+   - CSS classes: kebab-case with prefix (`button`)
 
 3. **Component requirements**
    - TypeScript support

@@ -4,7 +4,7 @@
     :size="size"
     :aria-hidden="ariaHidden"
     :aria-label="ariaLabel"
-    :class="['grundtone-icon', iconClass]"
+    :class="['icon', iconClass]"
   />
 </template>
 
@@ -55,7 +55,7 @@
 
   // Generate CSS class for styling
   const iconClass = computed(() => {
-    const classes = [`grundtone-icon--${name}`];
+    const classes = [`icon--${name}`];
 
     if (iconConfig.prefix) {
       classes.push(`${iconConfig.prefix}-${name}`);
@@ -72,7 +72,7 @@
 </script>
 
 <style lang="scss" scoped>
-  .grundtone-icon {
+  .icon {
     display: inline-block;
     vertical-align: middle;
     color: currentColor;

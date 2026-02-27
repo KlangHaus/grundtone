@@ -238,47 +238,46 @@ Importing `@grundtone/core` adds these CSS variables to `:root`:
 ### Colors
 
 ```css
---grundtone-color-primary: #007aff;
---grundtone-color-secondary: #5856d6;
---grundtone-color-success: #34c759;
---grundtone-color-warning: #ff9500;
---grundtone-color-danger: #ff3b30;
---grundtone-color-info: #5ac8fa;
+--color-primary: #007aff;
+--color-secondary: #5856d6;
+--color-success: #34c759;
+--color-warning: #ff9500;
+--color-danger: #ff3b30;
+--color-info: #5ac8fa;
 ```
 
 ### Typography
 
 ```css
---grundtone-font-family:
-  system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
---grundtone-font-size-base: 16px;
---grundtone-line-height-base: 1.5;
+--font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+--font-size-base: 16px;
+--line-height-base: 1.5;
 ```
 
 ### Spacing (8px base unit)
 
 ```css
---grundtone-spacing-xs: 4px;
---grundtone-spacing-sm: 8px;
---grundtone-spacing-md: 16px;
---grundtone-spacing-lg: 24px;
---grundtone-spacing-xl: 32px;
+--spacing-xs: 4px;
+--spacing-sm: 8px;
+--spacing-md: 16px;
+--spacing-lg: 24px;
+--spacing-xl: 32px;
 ```
 
 ### Border Radius
 
 ```css
---grundtone-border-radius-sm: 4px;
---grundtone-border-radius-md: 8px;
---grundtone-border-radius-lg: 12px;
---grundtone-border-radius-full: 9999px;
+--border-radius-sm: 4px;
+--border-radius-md: 8px;
+--border-radius-lg: 12px;
+--border-radius-full: 9999px;
 ```
 
 ### Transitions
 
 ```css
---grundtone-transition-duration: 0.2s;
---grundtone-transition-timing: ease-in-out;
+--transition-duration: 0.2s;
+--transition-timing: ease-in-out;
 ```
 
 ## Usage in a Web Project
@@ -294,11 +293,11 @@ import '@grundtone/core'; // loads CSS custom properties
 
 ```css
 .card {
-  background: var(--grundtone-color-primary);
-  padding: var(--grundtone-spacing-md);
-  border-radius: var(--grundtone-border-radius-md);
-  font-family: var(--grundtone-font-family);
-  transition: all var(--grundtone-transition-duration) var(--grundtone-transition-timing);
+  background: var(--color-primary);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  font-family: var(--font-family);
+  transition: all var(--transition-duration) var(--transition-timing);
 }
 ```
 

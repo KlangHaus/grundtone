@@ -2,277 +2,277 @@
 // Using @property for type-safe, animatable custom properties
 
 // Color properties
-@property --grundtone-color-primary {
+@property --color-primary {
   syntax: '<color>';
   initial-value: #0059b3;
   inherits: false;
 }
 
-@property --grundtone-color-primary-hover {
+@property --color-primary-hover {
   syntax: '<color>';
   initial-value: #004a96;
   inherits: false;
 }
 
-@property --grundtone-color-primary-active {
+@property --color-primary-active {
   syntax: '<color>';
   initial-value: #003a7a;
   inherits: false;
 }
 
-@property --grundtone-color-secondary {
+@property --color-secondary {
   syntax: '<color>';
   initial-value: #6c757d;
   inherits: false;
 }
 
-@property --grundtone-color-success {
+@property --color-success {
   syntax: '<color>';
   initial-value: #28a745;
   inherits: false;
 }
 
-@property --grundtone-color-warning {
+@property --color-warning {
   syntax: '<color>';
   initial-value: #ffc107;
   inherits: false;
 }
 
-@property --grundtone-color-error {
+@property --color-error {
   syntax: '<color>';
   initial-value: #dc3545;
   inherits: false;
 }
 
-@property --grundtone-color-info {
+@property --color-info {
   syntax: '<color>';
   initial-value: #17a2b8;
   inherits: false;
 }
 
 // Typography properties
-@property --grundtone-font-size-base {
+@property --font-size-base {
   syntax: '<length>';
   initial-value: 1rem;
   inherits: true;
 }
 
-@property --grundtone-font-size-sm {
+@property --font-size-sm {
   syntax: '<length>';
   initial-value: 0.875rem;
   inherits: true;
 }
 
-@property --grundtone-font-size-lg {
+@property --font-size-lg {
   syntax: '<length>';
   initial-value: 1.125rem;
   inherits: true;
 }
 
-@property --grundtone-font-size-xl {
+@property --font-size-xl {
   syntax: '<length>';
   initial-value: 1.25rem;
   inherits: true;
 }
 
-@property --grundtone-font-weight-normal {
+@property --font-weight-normal {
   syntax: '<number>';
   initial-value: 400;
   inherits: true;
 }
 
-@property --grundtone-font-weight-medium {
+@property --font-weight-medium {
   syntax: '<number>';
   initial-value: 500;
   inherits: true;
 }
 
-@property --grundtone-font-weight-semibold {
+@property --font-weight-semibold {
   syntax: '<number>';
   initial-value: 600;
   inherits: true;
 }
 
-@property --grundtone-font-weight-bold {
+@property --font-weight-bold {
   syntax: '<number>';
   initial-value: 700;
   inherits: true;
 }
 
-@property --grundtone-line-height-normal {
+@property --line-height-normal {
   syntax: '<number>';
   initial-value: 1.5;
   inherits: true;
 }
 
-@property --grundtone-line-height-tight {
+@property --line-height-tight {
   syntax: '<number>';
   initial-value: 1.25;
   inherits: true;
 }
 
-@property --grundtone-line-height-relaxed {
+@property --line-height-relaxed {
   syntax: '<number>';
   initial-value: 1.75;
   inherits: true;
 }
 
 // Spacing properties
-@property --grundtone-space-xs {
+@property --space-xs {
   syntax: '<length>';
   initial-value: 0.25rem;
   inherits: false;
 }
 
-@property --grundtone-space-sm {
+@property --space-sm {
   syntax: '<length>';
   initial-value: 0.5rem;
   inherits: false;
 }
 
-@property --grundtone-space-md {
+@property --space-md {
   syntax: '<length>';
   initial-value: 1rem;
   inherits: false;
 }
 
-@property --grundtone-space-lg {
+@property --space-lg {
   syntax: '<length>';
   initial-value: 1.5rem;
   inherits: false;
 }
 
-@property --grundtone-space-xl {
+@property --space-xl {
   syntax: '<length>';
   initial-value: 2rem;
   inherits: false;
 }
 
-@property --grundtone-space-2xl {
+@property --space-2xl {
   syntax: '<length>';
   initial-value: 3rem;
   inherits: false;
 }
 
 // Border radius properties
-@property --grundtone-radius-sm {
+@property --radius-sm {
   syntax: '<length>';
   initial-value: 0.125rem;
   inherits: false;
 }
 
-@property --grundtone-radius-md {
+@property --radius-md {
   syntax: '<length>';
   initial-value: 0.25rem;
   inherits: false;
 }
 
-@property --grundtone-radius-lg {
+@property --radius-lg {
   syntax: '<length>';
   initial-value: 0.5rem;
   inherits: false;
 }
 
-@property --grundtone-radius-xl {
+@property --radius-xl {
   syntax: '<length>';
   initial-value: 1rem;
   inherits: false;
 }
 
-@property --grundtone-radius-full {
+@property --radius-full {
   syntax: '<length>';
   initial-value: 9999px;
   inherits: false;
 }
 
 // Animation properties
-@property --grundtone-duration-fast {
+@property --duration-fast {
   syntax: '<time>';
   initial-value: 150ms;
   inherits: false;
 }
 
-@property --grundtone-duration-normal {
+@property --duration-normal {
   syntax: '<time>';
   initial-value: 300ms;
   inherits: false;
 }
 
-@property --grundtone-duration-slow {
+@property --duration-slow {
   syntax: '<time>';
   initial-value: 500ms;
   inherits: false;
 }
 
 // Breakpoint properties (for container queries)
-@property --grundtone-breakpoint-sm {
+@property --breakpoint-sm {
   syntax: '<length>';
   initial-value: 640px;
   inherits: false;
 }
 
-@property --grundtone-breakpoint-md {
+@property --breakpoint-md {
   syntax: '<length>';
   initial-value: 768px;
   inherits: false;
 }
 
-@property --grundtone-breakpoint-lg {
+@property --breakpoint-lg {
   syntax: '<length>';
   initial-value: 1024px;
   inherits: false;
 }
 
-@property --grundtone-breakpoint-xl {
+@property --breakpoint-xl {
   syntax: '<length>';
   initial-value: 1280px;
   inherits: false;
 }
 
-@property --grundtone-breakpoint-2xl {
+@property --breakpoint-2xl {
   syntax: '<length>';
   initial-value: 1536px;
   inherits: false;
 }
 
 // Z-index properties
-@property --grundtone-z-dropdown {
+@property --z-dropdown {
   syntax: '<integer>';
   initial-value: 1000;
   inherits: false;
 }
 
-@property --grundtone-z-sticky {
+@property --z-sticky {
   syntax: '<integer>';
   initial-value: 1020;
   inherits: false;
 }
 
-@property --grundtone-z-fixed {
+@property --z-fixed {
   syntax: '<integer>';
   initial-value: 1030;
   inherits: false;
 }
 
-@property --grundtone-z-modal-backdrop {
+@property --z-modal-backdrop {
   syntax: '<integer>';
   initial-value: 1040;
   inherits: false;
 }
 
-@property --grundtone-z-modal {
+@property --z-modal {
   syntax: '<integer>';
   initial-value: 1050;
   inherits: false;
 }
 
-@property --grundtone-z-popover {
+@property --z-popover {
   syntax: '<integer>';
   initial-value: 1060;
   inherits: false;
 }
 
-@property --grundtone-z-tooltip {
+@property --z-tooltip {
   syntax: '<integer>';
   initial-value: 1070;
   inherits: false;

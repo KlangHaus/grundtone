@@ -1,160 +1,161 @@
 // Design Tokens Main CSS Entry Point
 @use 'variables';
 @use 'registered-properties';
-@use 'grid-utilities';
+@use 'grid';
 @use 'container-queries';
 @use 'aspect-ratio';
 
 // Import all design token CSS
 // Fallback values when ThemeProvider has not yet applied theme
 :root {
-  --grundtone-color-primary: #0059b3;
-  --grundtone-color-primary-hover: #004a96;
-  --grundtone-color-primary-active: #003a7a;
-  --grundtone-color-on-primary: #ffffff;
+  --color-primary: #0059b3;
+  --color-primary-hover: #004a96;
+  --color-primary-active: #003a7a;
+  --color-on-primary: #ffffff;
 
-  --grundtone-color-secondary: #6c757d;
-  --grundtone-color-secondary-hover: #5a6268;
-  --grundtone-color-secondary-active: #494f54;
+  --color-secondary: #6c757d;
+  --color-secondary-hover: #5a6268;
+  --color-secondary-active: #494f54;
 
-  --grundtone-color-success: #198754;
-  --grundtone-color-success-bg: #d1e7dd;
-  --grundtone-color-warning: #ffc107;
-  --grundtone-color-warning-bg: #fff3cd;
-  --grundtone-color-error: #dc3545;
-  --grundtone-color-error-bg: #f8d7da;
-  --grundtone-color-info: #0dcaf0;
-  --grundtone-color-info-bg: #cff4fc;
+  --color-success: #198754;
+  --color-success-bg: #d1e7dd;
+  --color-warning: #ffc107;
+  --color-warning-bg: #fff3cd;
+  --color-error: #dc3545;
+  --color-error-bg: #f8d7da;
+  --color-info: #0dcaf0;
+  --color-info-bg: #cff4fc;
 
-  --grundtone-color-background: light-dark(#ffffff, #121212);
-  --grundtone-color-surface: light-dark(#f8f9fa, #1e1e1e);
-  --grundtone-color-surface-hover: light-dark(#e9ecef, #2a2a2a);
+  --color-background: light-dark(#ffffff, #121212);
+  --color-surface: light-dark(#f8f9fa, #1e1e1e);
+  --color-surface-hover: light-dark(#e9ecef, #2a2a2a);
 
-  --grundtone-color-text: light-dark(#212529, #ffffff);
-  --grundtone-color-text-secondary: light-dark(#6c757d, #b0b0b0);
-  --grundtone-color-text-tertiary: light-dark(#adb5bd, #808080);
+  --color-text: light-dark(#212529, #ffffff);
+  --color-text-secondary: light-dark(#6c757d, #b0b0b0);
+  --color-text-tertiary: light-dark(#adb5bd, #808080);
 
-  --grundtone-color-border: light-dark(#dee2e6, #404040);
-  --grundtone-color-border-hover: light-dark(#adb5bd, #606060);
-  --grundtone-color-focus: #0059b3;
-  --grundtone-color-focus-ring: rgba(0, 89, 179, 0.25);
-  --grundtone-color-neutral: #6c757d;
+  --color-border: light-dark(#dee2e6, #404040);
+  --color-border-hover: light-dark(#adb5bd, #606060);
+  --color-focus: #0059b3;
+  --color-focus-ring: rgba(0, 89, 179, 0.25);
+  --color-neutral: #6c757d;
 
   // Typography
-  --grundtone-font-family-base:
-    'IBM Plex Sans', system-ui, -apple-system, sans-serif;
-  --grundtone-font-family-mono:
-    'IBM Plex Mono', 'Monaco', 'Consolas', monospace;
+  --font-family-base: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --font-family-mono: 'IBM Plex Mono', 'Monaco', 'Consolas', monospace;
 
-  --grundtone-font-size-xs: 0.75rem; // 12px
-  --grundtone-font-size-sm: 0.875rem; // 14px
-  --grundtone-font-size-base: 1rem; // 16px
-  --grundtone-font-size-lg: 1.125rem; // 18px
-  --grundtone-font-size-xl: 1.25rem; // 20px
-  --grundtone-font-size-2xl: 1.5rem; // 24px
-  --grundtone-font-size-3xl: 1.875rem; // 30px
-  --grundtone-font-size-4xl: 2.25rem; // 36px
+  --font-size-xs: 0.75rem; // 12px
+  --font-size-sm: 0.875rem; // 14px
+  --font-size-base: 1rem; // 16px
+  --font-size-lg: 1.125rem; // 18px
+  --font-size-xl: 1.25rem; // 20px
+  --font-size-2xl: 1.5rem; // 24px
+  --font-size-3xl: 1.875rem; // 30px
+  --font-size-4xl: 2.25rem; // 36px
 
-  --grundtone-font-weight-light: 300;
-  --grundtone-font-weight-normal: 400;
-  --grundtone-font-weight-medium: 500;
-  --grundtone-font-weight-semibold: 600;
-  --grundtone-font-weight-bold: 700;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
 
-  --grundtone-line-height-tight: 1.25;
-  --grundtone-line-height-normal: 1.5;
-  --grundtone-line-height-relaxed: 1.75;
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
 
   // Spacing (8px base)
-  --grundtone-space-xs: 0.25rem; // 4px
-  --grundtone-space-sm: 0.5rem; // 8px
-  --grundtone-space-md: 1rem; // 16px
-  --grundtone-space-lg: 1.5rem; // 24px
-  --grundtone-space-xl: 2rem; // 32px
-  --grundtone-space-2xl: 3rem; // 48px
-  --grundtone-space-3xl: 4rem; // 64px
-  --grundtone-space-4xl: 6rem; // 96px
+  --space-xs: 0.25rem; // 4px
+  --space-sm: 0.5rem; // 8px
+  --space-md: 1rem; // 16px
+  --space-lg: 1.5rem; // 24px
+  --space-xl: 2rem; // 32px
+  --space-2xl: 3rem; // 48px
+  --space-3xl: 4rem; // 64px
+  --space-4xl: 6rem; // 96px
 
   // Border Radius
-  --grundtone-radius-none: 0;
-  --grundtone-radius-sm: 0.125rem; // 2px
-  --grundtone-radius-md: 0.25rem; // 4px
-  --grundtone-radius-lg: 0.5rem; // 8px
-  --grundtone-radius-xl: 1rem; // 16px
-  --grundtone-radius-full: 9999px;
+  --radius-none: 0;
+  --radius-sm: 0.125rem; // 2px
+  --radius-md: 0.25rem; // 4px
+  --radius-lg: 0.5rem; // 8px
+  --radius-xl: 1rem; // 16px
+  --radius-full: 9999px;
 
   // Shadows
-  --grundtone-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --grundtone-shadow-md:
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md:
     0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --grundtone-shadow-lg:
+  --shadow-lg:
     0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --grundtone-shadow-xl:
+  --shadow-xl:
     0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
   // Z-index layers
-  --grundtone-z-dropdown: 1000;
-  --grundtone-z-sticky: 1020;
-  --grundtone-z-fixed: 1030;
-  --grundtone-z-modal-backdrop: 1040;
-  --grundtone-z-modal: 1050;
-  --grundtone-z-popover: 1060;
-  --grundtone-z-tooltip: 1070;
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
 
   // Breakpoints (for CSS container queries)
-  --grundtone-breakpoint-sm: 640px;
-  --grundtone-breakpoint-md: 768px;
-  --grundtone-breakpoint-lg: 1024px;
-  --grundtone-breakpoint-xl: 1280px;
-  --grundtone-breakpoint-2xl: 1536px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+
+  // Grid auto-fit min column width (override for custom layouts)
+  --grid-auto-fit-min: 250px;
 
   // Animation
-  --grundtone-duration-fast: 150ms;
-  --grundtone-duration-normal: 300ms;
-  --grundtone-duration-slow: 500ms;
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
 
-  --grundtone-ease-out: cubic-bezier(0, 0, 0.2, 1);
-  --grundtone-ease-in: cubic-bezier(0.4, 0, 1, 1);
-  --grundtone-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 // Performance-optimized transition utility classes
 // Use these instead of 'transition: all' for better performance
-.grundtone-transition-colors {
+.transition-colors {
   transition-property: background-color, border-color, color;
-  transition-duration: var(--grundtone-duration-fast);
-  transition-timing-function: var(--grundtone-ease-out);
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-out);
 }
 
-.grundtone-transition-fill {
+.transition-fill {
   transition-property: fill, stroke;
-  transition-duration: var(--grundtone-duration-fast);
-  transition-timing-function: var(--grundtone-ease-out);
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-out);
 }
 
-.grundtone-transition-shadow {
+.transition-shadow {
   transition-property: box-shadow;
-  transition-duration: var(--grundtone-duration-fast);
-  transition-timing-function: var(--grundtone-ease-out);
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-out);
 }
 
-.grundtone-transition-transform {
+.transition-transform {
   transition-property: transform;
-  transition-duration: var(--grundtone-duration-fast);
-  transition-timing-function: var(--grundtone-ease-out);
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-out);
 }
 
-.grundtone-transition-opacity {
+.transition-opacity {
   transition-property: opacity;
-  transition-duration: var(--grundtone-duration-fast);
-  transition-timing-function: var(--grundtone-ease-out);
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-out);
 }
 
 // Only use if absolutely necessary - prefer specific transitions above
-.grundtone-transition-all {
+.transition-all {
   transition-property: all;
-  transition-duration: var(--grundtone-duration-fast);
-  transition-timing-function: var(--grundtone-ease-out);
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-out);
 }
 
 // Set color scheme for automatic light-dark() function
@@ -164,17 +165,17 @@
 
 // Base body styles
 body {
-  font-family: var(--grundtone-font-family-base);
-  font-size: var(--grundtone-font-size-base);
-  line-height: var(--grundtone-line-height-normal);
-  color: var(--grundtone-color-text);
-  background-color: var(--grundtone-color-background);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-text);
+  background-color: var(--color-background);
   margin: 0;
   padding: 0;
 }
 
 // Utility classes
-.grundtone-sr-only {
+.sr-only {
   position: absolute;
   width: 1px;
   height: 1px;

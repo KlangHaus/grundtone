@@ -406,7 +406,7 @@ import * as icons from '@grundtone/vue/icons';
 Customize icon appearance with CSS:
 
 ```scss
-.grundtone-icon {
+.icon {
   --icon-color: currentColor;
   --icon-size: 1em;
   --icon-transition: all 0.2s ease;

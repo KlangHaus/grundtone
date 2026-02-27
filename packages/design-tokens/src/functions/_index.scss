@@ -6,62 +6,62 @@
 
 // Modern color function - returns CSS custom property
 @function color($key: 'primary') {
-  @return var(--grundtone-color-#{$key});
+  @return var(--color-#{$key});
 }
 
 // Font size function using modern CSS custom properties
 @function font-size($size: 'base') {
-  @return var(--grundtone-font-size-#{$size});
+  @return var(--font-size-#{$size});
 }
 
 // Font weight function
 @function font-weight($weight: 'normal') {
-  @return var(--grundtone-font-weight-#{$weight});
+  @return var(--font-weight-#{$weight});
 }
 
 // Font family function
 @function font-family($family: 'base') {
-  @return var(--grundtone-font-family-#{$family});
+  @return var(--font-family-#{$family});
 }
 
 // Line height function
 @function line-height($height: 'normal') {
-  @return var(--grundtone-line-height-#{$height});
+  @return var(--line-height-#{$height});
 }
 
 // Spacing function using modern units
 @function space($size: 'md') {
-  @return var(--grundtone-space-#{$size});
+  @return var(--space-#{$size});
 }
 
 // Border radius function
 @function radius($size: 'md') {
-  @return var(--grundtone-radius-#{$size});
+  @return var(--radius-#{$size});
 }
 
 // Shadow function
 @function shadow($level: 'md') {
-  @return var(--grundtone-shadow-#{$level});
+  @return var(--shadow-#{$level});
 }
 
 // Z-index function
 @function z-index($layer: 'modal') {
-  @return var(--grundtone-z-#{$layer});
+  @return var(--z-#{$layer});
 }
 
 // Animation duration function
 @function duration($speed: 'normal') {
-  @return var(--grundtone-duration-#{$speed});
+  @return var(--duration-#{$speed});
 }
 
 // Animation easing function
 @function ease($type: 'out') {
-  @return var(--grundtone-ease-#{$type});
+  @return var(--ease-#{$type});
 }
 
 // Breakpoint function (for consistency, though container queries are preferred)
 @function breakpoint($name) {
-  @return var(--grundtone-breakpoint-#{$name});
+  @return var(--breakpoint-#{$name});
 }
 
 // Legacy compatibility function - maps old color() calls to modern ones

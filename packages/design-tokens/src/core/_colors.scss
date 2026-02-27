@@ -4,5 +4,5 @@
 
 // color() returns CSS var – use kebab-case keys (e.g. 'primary', 'text-secondary')
 @function color($key: 'primary') {
-  @return var(--grundtone-color-#{$key});
+  @return var(--color-#{$key});
 }

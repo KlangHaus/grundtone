@@ -50,75 +50,75 @@ export interface RegisteredProperty {
 
 // Color Properties
 export interface GrundtoneColorProperties {
-  '--grundtone-color-primary': RegisteredProperty;
-  '--grundtone-color-primary-hover': RegisteredProperty;
-  '--grundtone-color-primary-active': RegisteredProperty;
-  '--grundtone-color-secondary': RegisteredProperty;
-  '--grundtone-color-success': RegisteredProperty;
-  '--grundtone-color-warning': RegisteredProperty;
-  '--grundtone-color-error': RegisteredProperty;
-  '--grundtone-color-info': RegisteredProperty;
+  '--color-primary': RegisteredProperty;
+  '--color-primary-hover': RegisteredProperty;
+  '--color-primary-active': RegisteredProperty;
+  '--color-secondary': RegisteredProperty;
+  '--color-success': RegisteredProperty;
+  '--color-warning': RegisteredProperty;
+  '--color-error': RegisteredProperty;
+  '--color-info': RegisteredProperty;
 }
 
 // Typography Properties
 export interface GrundtoneTypographyProperties {
-  '--grundtone-font-size-base': RegisteredProperty;
-  '--grundtone-font-size-sm': RegisteredProperty;
-  '--grundtone-font-size-lg': RegisteredProperty;
-  '--grundtone-font-size-xl': RegisteredProperty;
-  '--grundtone-font-weight-normal': RegisteredProperty;
-  '--grundtone-font-weight-medium': RegisteredProperty;
-  '--grundtone-font-weight-semibold': RegisteredProperty;
-  '--grundtone-font-weight-bold': RegisteredProperty;
-  '--grundtone-line-height-normal': RegisteredProperty;
-  '--grundtone-line-height-tight': RegisteredProperty;
-  '--grundtone-line-height-relaxed': RegisteredProperty;
+  '--font-size-base': RegisteredProperty;
+  '--font-size-sm': RegisteredProperty;
+  '--font-size-lg': RegisteredProperty;
+  '--font-size-xl': RegisteredProperty;
+  '--font-weight-normal': RegisteredProperty;
+  '--font-weight-medium': RegisteredProperty;
+  '--font-weight-semibold': RegisteredProperty;
+  '--font-weight-bold': RegisteredProperty;
+  '--line-height-normal': RegisteredProperty;
+  '--line-height-tight': RegisteredProperty;
+  '--line-height-relaxed': RegisteredProperty;
 }
 
 // Spacing Properties
 export interface GrundtoneSpacingProperties {
-  '--grundtone-space-xs': RegisteredProperty;
-  '--grundtone-space-sm': RegisteredProperty;
-  '--grundtone-space-md': RegisteredProperty;
-  '--grundtone-space-lg': RegisteredProperty;
-  '--grundtone-space-xl': RegisteredProperty;
-  '--grundtone-space-2xl': RegisteredProperty;
+  '--space-xs': RegisteredProperty;
+  '--space-sm': RegisteredProperty;
+  '--space-md': RegisteredProperty;
+  '--space-lg': RegisteredProperty;
+  '--space-xl': RegisteredProperty;
+  '--space-2xl': RegisteredProperty;
 }
 
 // Border Radius Properties
 export interface GrundtoneRadiusProperties {
-  '--grundtone-radius-sm': RegisteredProperty;
-  '--grundtone-radius-md': RegisteredProperty;
-  '--grundtone-radius-lg': RegisteredProperty;
-  '--grundtone-radius-xl': RegisteredProperty;
-  '--grundtone-radius-full': RegisteredProperty;
+  '--radius-sm': RegisteredProperty;
+  '--radius-md': RegisteredProperty;
+  '--radius-lg': RegisteredProperty;
+  '--radius-xl': RegisteredProperty;
+  '--radius-full': RegisteredProperty;
 }
 
 // Animation Properties
 export interface GrundtoneAnimationProperties {
-  '--grundtone-duration-fast': RegisteredProperty;
-  '--grundtone-duration-normal': RegisteredProperty;
-  '--grundtone-duration-slow': RegisteredProperty;
+  '--duration-fast': RegisteredProperty;
+  '--duration-normal': RegisteredProperty;
+  '--duration-slow': RegisteredProperty;
 }
 
 // Breakpoint Properties
 export interface GrundtoneBreakpointProperties {
-  '--grundtone-breakpoint-sm': RegisteredProperty;
-  '--grundtone-breakpoint-md': RegisteredProperty;
-  '--grundtone-breakpoint-lg': RegisteredProperty;
-  '--grundtone-breakpoint-xl': RegisteredProperty;
-  '--grundtone-breakpoint-2xl': RegisteredProperty;
+  '--breakpoint-sm': RegisteredProperty;
+  '--breakpoint-md': RegisteredProperty;
+  '--breakpoint-lg': RegisteredProperty;
+  '--breakpoint-xl': RegisteredProperty;
+  '--breakpoint-2xl': RegisteredProperty;
 }
 
 // Z-index Properties
 export interface GrundtoneZIndexProperties {
-  '--grundtone-z-dropdown': RegisteredProperty;
-  '--grundtone-z-sticky': RegisteredProperty;
-  '--grundtone-z-fixed': RegisteredProperty;
-  '--grundtone-z-modal-backdrop': RegisteredProperty;
-  '--grundtone-z-modal': RegisteredProperty;
-  '--grundtone-z-popover': RegisteredProperty;
-  '--grundtone-z-tooltip': RegisteredProperty;
+  '--z-dropdown': RegisteredProperty;
+  '--z-sticky': RegisteredProperty;
+  '--z-fixed': RegisteredProperty;
+  '--z-modal-backdrop': RegisteredProperty;
+  '--z-modal': RegisteredProperty;
+  '--z-popover': RegisteredProperty;
+  '--z-tooltip': RegisteredProperty;
 }
 
 // All Registered Properties
@@ -134,239 +134,239 @@ export interface GrundtoneRegisteredProperties
 // Property Registration Configuration
 export const GRUNDTONE_REGISTERED_PROPERTIES: GrundtoneRegisteredProperties = {
   // Color properties
-  '--grundtone-color-primary': {
+  '--color-primary': {
     syntax: '<color>',
     initialValue: '#0059b3',
     inherits: false,
   },
-  '--grundtone-color-primary-hover': {
+  '--color-primary-hover': {
     syntax: '<color>',
     initialValue: '#004a96',
     inherits: false,
   },
-  '--grundtone-color-primary-active': {
+  '--color-primary-active': {
     syntax: '<color>',
     initialValue: '#003a7a',
     inherits: false,
   },
-  '--grundtone-color-secondary': {
+  '--color-secondary': {
     syntax: '<color>',
     initialValue: '#6c757d',
     inherits: false,
   },
-  '--grundtone-color-success': {
+  '--color-success': {
     syntax: '<color>',
     initialValue: '#28a745',
     inherits: false,
   },
-  '--grundtone-color-warning': {
+  '--color-warning': {
     syntax: '<color>',
     initialValue: '#ffc107',
     inherits: false,
   },
-  '--grundtone-color-error': {
+  '--color-error': {
     syntax: '<color>',
     initialValue: '#dc3545',
     inherits: false,
   },
-  '--grundtone-color-info': {
+  '--color-info': {
     syntax: '<color>',
     initialValue: '#17a2b8',
     inherits: false,
   },
 
   // Typography properties
-  '--grundtone-font-size-base': {
+  '--font-size-base': {
     syntax: '<length>',
     initialValue: '1rem',
     inherits: true,
   },
-  '--grundtone-font-size-sm': {
+  '--font-size-sm': {
     syntax: '<length>',
     initialValue: '0.875rem',
     inherits: true,
   },
-  '--grundtone-font-size-lg': {
+  '--font-size-lg': {
     syntax: '<length>',
     initialValue: '1.125rem',
     inherits: true,
   },
-  '--grundtone-font-size-xl': {
+  '--font-size-xl': {
     syntax: '<length>',
     initialValue: '1.25rem',
     inherits: true,
   },
-  '--grundtone-font-weight-normal': {
+  '--font-weight-normal': {
     syntax: '<number>',
     initialValue: '400',
     inherits: true,
   },
-  '--grundtone-font-weight-medium': {
+  '--font-weight-medium': {
     syntax: '<number>',
     initialValue: '500',
     inherits: true,
   },
-  '--grundtone-font-weight-semibold': {
+  '--font-weight-semibold': {
     syntax: '<number>',
     initialValue: '600',
     inherits: true,
   },
-  '--grundtone-font-weight-bold': {
+  '--font-weight-bold': {
     syntax: '<number>',
     initialValue: '700',
     inherits: true,
   },
-  '--grundtone-line-height-normal': {
+  '--line-height-normal': {
     syntax: '<number>',
     initialValue: '1.5',
     inherits: true,
   },
-  '--grundtone-line-height-tight': {
+  '--line-height-tight': {
     syntax: '<number>',
     initialValue: '1.25',
     inherits: true,
   },
-  '--grundtone-line-height-relaxed': {
+  '--line-height-relaxed': {
     syntax: '<number>',
     initialValue: '1.75',
     inherits: true,
   },
 
   // Spacing properties
-  '--grundtone-space-xs': {
+  '--space-xs': {
     syntax: '<length>',
     initialValue: '0.25rem',
     inherits: false,
   },
-  '--grundtone-space-sm': {
+  '--space-sm': {
     syntax: '<length>',
     initialValue: '0.5rem',
     inherits: false,
   },
-  '--grundtone-space-md': {
+  '--space-md': {
     syntax: '<length>',
     initialValue: '1rem',
     inherits: false,
   },
-  '--grundtone-space-lg': {
+  '--space-lg': {
     syntax: '<length>',
     initialValue: '1.5rem',
     inherits: false,
   },
-  '--grundtone-space-xl': {
+  '--space-xl': {
     syntax: '<length>',
     initialValue: '2rem',
     inherits: false,
   },
-  '--grundtone-space-2xl': {
+  '--space-2xl': {
     syntax: '<length>',
     initialValue: '3rem',
     inherits: false,
   },
 
   // Border radius properties
-  '--grundtone-radius-sm': {
+  '--radius-sm': {
     syntax: '<length>',
     initialValue: '0.125rem',
     inherits: false,
   },
-  '--grundtone-radius-md': {
+  '--radius-md': {
     syntax: '<length>',
     initialValue: '0.25rem',
     inherits: false,
   },
-  '--grundtone-radius-lg': {
+  '--radius-lg': {
     syntax: '<length>',
     initialValue: '0.5rem',
     inherits: false,
   },
-  '--grundtone-radius-xl': {
+  '--radius-xl': {
     syntax: '<length>',
     initialValue: '1rem',
     inherits: false,
   },
-  '--grundtone-radius-full': {
+  '--radius-full': {
     syntax: '<length>',
     initialValue: '9999px',
     inherits: false,
   },
 
   // Animation properties
-  '--grundtone-duration-fast': {
+  '--duration-fast': {
     syntax: '<time>',
     initialValue: '150ms',
     inherits: false,
   },
-  '--grundtone-duration-normal': {
+  '--duration-normal': {
     syntax: '<time>',
     initialValue: '300ms',
     inherits: false,
   },
-  '--grundtone-duration-slow': {
+  '--duration-slow': {
     syntax: '<time>',
     initialValue: '500ms',
     inherits: false,
   },
 
   // Breakpoint properties
-  '--grundtone-breakpoint-sm': {
+  '--breakpoint-sm': {
     syntax: '<length>',
     initialValue: '640px',
     inherits: false,
   },
-  '--grundtone-breakpoint-md': {
+  '--breakpoint-md': {
     syntax: '<length>',
     initialValue: '768px',
     inherits: false,
   },
-  '--grundtone-breakpoint-lg': {
+  '--breakpoint-lg': {
     syntax: '<length>',
     initialValue: '1024px',
     inherits: false,
   },
-  '--grundtone-breakpoint-xl': {
+  '--breakpoint-xl': {
     syntax: '<length>',
     initialValue: '1280px',
     inherits: false,
   },
-  '--grundtone-breakpoint-2xl': {
+  '--breakpoint-2xl': {
     syntax: '<length>',
     initialValue: '1536px',
     inherits: false,
   },
 
   // Z-index properties
-  '--grundtone-z-dropdown': {
+  '--z-dropdown': {
     syntax: '<integer>',
     initialValue: '1000',
     inherits: false,
   },
-  '--grundtone-z-sticky': {
+  '--z-sticky': {
     syntax: '<integer>',
     initialValue: '1020',
     inherits: false,
   },
-  '--grundtone-z-fixed': {
+  '--z-fixed': {
     syntax: '<integer>',
     initialValue: '1030',
     inherits: false,
   },
-  '--grundtone-z-modal-backdrop': {
+  '--z-modal-backdrop': {
     syntax: '<integer>',
     initialValue: '1040',
     inherits: false,
   },
-  '--grundtone-z-modal': {
+  '--z-modal': {
     syntax: '<integer>',
     initialValue: '1050',
     inherits: false,
   },
-  '--grundtone-z-popover': {
+  '--z-popover': {
     syntax: '<integer>',
     initialValue: '1060',
     inherits: false,
   },
-  '--grundtone-z-tooltip': {
+  '--z-tooltip': {
     syntax: '<integer>',
     initialValue: '1070',
     inherits: false,
@@ -412,63 +412,63 @@ export function registerCSSProperties(
 // Property name constants for type safety
 export const GRUNDTONE_CSS_PROPERTIES = {
   // Colors
-  COLOR_PRIMARY: '--grundtone-color-primary',
-  COLOR_PRIMARY_HOVER: '--grundtone-color-primary-hover',
-  COLOR_PRIMARY_ACTIVE: '--grundtone-color-primary-active',
-  COLOR_SECONDARY: '--grundtone-color-secondary',
-  COLOR_SUCCESS: '--grundtone-color-success',
-  COLOR_WARNING: '--grundtone-color-warning',
-  COLOR_ERROR: '--grundtone-color-error',
-  COLOR_INFO: '--grundtone-color-info',
+  COLOR_PRIMARY: '--color-primary',
+  COLOR_PRIMARY_HOVER: '--color-primary-hover',
+  COLOR_PRIMARY_ACTIVE: '--color-primary-active',
+  COLOR_SECONDARY: '--color-secondary',
+  COLOR_SUCCESS: '--color-success',
+  COLOR_WARNING: '--color-warning',
+  COLOR_ERROR: '--color-error',
+  COLOR_INFO: '--color-info',
 
   // Typography
-  FONT_SIZE_BASE: '--grundtone-font-size-base',
-  FONT_SIZE_SM: '--grundtone-font-size-sm',
-  FONT_SIZE_LG: '--grundtone-font-size-lg',
-  FONT_SIZE_XL: '--grundtone-font-size-xl',
-  FONT_WEIGHT_NORMAL: '--grundtone-font-weight-normal',
-  FONT_WEIGHT_MEDIUM: '--grundtone-font-weight-medium',
-  FONT_WEIGHT_SEMIBOLD: '--grundtone-font-weight-semibold',
-  FONT_WEIGHT_BOLD: '--grundtone-font-weight-bold',
-  LINE_HEIGHT_NORMAL: '--grundtone-line-height-normal',
-  LINE_HEIGHT_TIGHT: '--grundtone-line-height-tight',
-  LINE_HEIGHT_RELAXED: '--grundtone-line-height-relaxed',
+  FONT_SIZE_BASE: '--font-size-base',
+  FONT_SIZE_SM: '--font-size-sm',
+  FONT_SIZE_LG: '--font-size-lg',
+  FONT_SIZE_XL: '--font-size-xl',
+  FONT_WEIGHT_NORMAL: '--font-weight-normal',
+  FONT_WEIGHT_MEDIUM: '--font-weight-medium',
+  FONT_WEIGHT_SEMIBOLD: '--font-weight-semibold',
+  FONT_WEIGHT_BOLD: '--font-weight-bold',
+  LINE_HEIGHT_NORMAL: '--line-height-normal',
+  LINE_HEIGHT_TIGHT: '--line-height-tight',
+  LINE_HEIGHT_RELAXED: '--line-height-relaxed',
 
   // Spacing
-  SPACE_XS: '--grundtone-space-xs',
-  SPACE_SM: '--grundtone-space-sm',
-  SPACE_MD: '--grundtone-space-md',
-  SPACE_LG: '--grundtone-space-lg',
-  SPACE_XL: '--grundtone-space-xl',
-  SPACE_2XL: '--grundtone-space-2xl',
+  SPACE_XS: '--space-xs',
+  SPACE_SM: '--space-sm',
+  SPACE_MD: '--space-md',
+  SPACE_LG: '--space-lg',
+  SPACE_XL: '--space-xl',
+  SPACE_2XL: '--space-2xl',
 
   // Border radius
-  RADIUS_SM: '--grundtone-radius-sm',
-  RADIUS_MD: '--grundtone-radius-md',
-  RADIUS_LG: '--grundtone-radius-lg',
-  RADIUS_XL: '--grundtone-radius-xl',
-  RADIUS_FULL: '--grundtone-radius-full',
+  RADIUS_SM: '--radius-sm',
+  RADIUS_MD: '--radius-md',
+  RADIUS_LG: '--radius-lg',
+  RADIUS_XL: '--radius-xl',
+  RADIUS_FULL: '--radius-full',
 
   // Animation
-  DURATION_FAST: '--grundtone-duration-fast',
-  DURATION_NORMAL: '--grundtone-duration-normal',
-  DURATION_SLOW: '--grundtone-duration-slow',
+  DURATION_FAST: '--duration-fast',
+  DURATION_NORMAL: '--duration-normal',
+  DURATION_SLOW: '--duration-slow',
 
   // Breakpoints
-  BREAKPOINT_SM: '--grundtone-breakpoint-sm',
-  BREAKPOINT_MD: '--grundtone-breakpoint-md',
-  BREAKPOINT_LG: '--grundtone-breakpoint-lg',
-  BREAKPOINT_XL: '--grundtone-breakpoint-xl',
-  BREAKPOINT_2XL: '--grundtone-breakpoint-2xl',
+  BREAKPOINT_SM: '--breakpoint-sm',
+  BREAKPOINT_MD: '--breakpoint-md',
+  BREAKPOINT_LG: '--breakpoint-lg',
+  BREAKPOINT_XL: '--breakpoint-xl',
+  BREAKPOINT_2XL: '--breakpoint-2xl',
 
   // Z-index
-  Z_DROPDOWN: '--grundtone-z-dropdown',
-  Z_STICKY: '--grundtone-z-sticky',
-  Z_FIXED: '--grundtone-z-fixed',
-  Z_MODAL_BACKDROP: '--grundtone-z-modal-backdrop',
-  Z_MODAL: '--grundtone-z-modal',
-  Z_POPOVER: '--grundtone-z-popover',
-  Z_TOOLTIP: '--grundtone-z-tooltip',
+  Z_DROPDOWN: '--z-dropdown',
+  Z_STICKY: '--z-sticky',
+  Z_FIXED: '--z-fixed',
+  Z_MODAL_BACKDROP: '--z-modal-backdrop',
+  Z_MODAL: '--z-modal',
+  Z_POPOVER: '--z-popover',
+  Z_TOOLTIP: '--z-tooltip',
 } as const;
 
 export type GrundtoneCSSPropertyName = keyof typeof GRUNDTONE_CSS_PROPERTIES;

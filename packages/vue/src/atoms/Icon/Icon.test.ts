@@ -168,8 +168,8 @@ describe('Icon (Simplified)', () => {
     });
 
     const iconWrapper = wrapper.findComponent(Icon);
-    expect(iconWrapper.classes()).toContain('grundtone-icon');
-    expect(iconWrapper.classes()).toContain('grundtone-icon--test');
+    expect(iconWrapper.classes()).toContain('icon');
+    expect(iconWrapper.classes()).toContain('icon--test');
     expect(iconWrapper.classes()).toContain('my-prefix-test');
   });
 
