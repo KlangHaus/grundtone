@@ -89,6 +89,9 @@
     ],
     "*.{js,jsx,ts,tsx,vue}": [
       "eslint --fix"
+    ],
+    "*.{scss,css,vue}": [
+      "stylelint --fix"
     ]
   },
   "pnpm": {
