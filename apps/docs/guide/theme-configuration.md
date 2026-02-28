@@ -84,12 +84,14 @@ Use them in your styles:
 
 **Where:** `ThemeProvider` in `App.vue`
 
-**How:** Pass a `theme` prop with partial overrides. The same overrides apply to both light and dark
-mode (merged with the built-in light/dark base).
+**How:** Pass a `theme` prop. Use separate `light` and `dark` overrides for proper dark mode
+support, or a single partial theme if both modes should share the same overrides.
+
+**Recommended: separate light and dark themes** (same pattern as Nuxt/React Native):
 
 ```vue
 <template>
-  <ThemeProvider :theme="myTheme">
+  <ThemeProvider :theme="myTheme" mode="auto">
     <RouterView />
   </ThemeProvider>
 </template>
@@ -98,19 +100,29 @@ mode (merged with the built-in light/dark base).
   import { ThemeProvider } from '@grundtone/vue';
   import { createTheme } from '@grundtone/core';
 
-  const { light } = createTheme({
+  const { light, dark } = createTheme({
     light: {
-      primary: '#e91e63',
-      primaryHover: '#c2185b',
+      primary: '#0059b3',
+      primaryHover: '#004a96',
+      primaryActive: '#003a7a',
       onPrimary: '#ffffff',
+    },
+    dark: {
+      primary: '#4dabf7',
+      primaryHover: '#74c0fc',
+      primaryActive: '#339af0',
+      onPrimary: '#121212',
     },
   });
 
-  const myTheme = { colors: light.colors };
+  const myTheme = {
+    light: { colors: light.colors },
+    dark: { colors: dark.colors },
+  };
 </script>
 ```
 
-Or override more of the theme (spacing, typography, etc.):
+**Alternative: single theme** (same overrides for both modes):
 
 ```vue
 <script setup lang="ts">
@@ -135,6 +147,8 @@ Or override more of the theme (spacing, typography, etc.):
   </ThemeProvider>
 </template>
 ```
+
+Use `ThemeToggle` from `@grundtone/vue` or `useTheme().toggleMode()` to let users switch themes.
 
 ---
 
@@ -307,9 +321,9 @@ $grid-breakpoints: (
 
 ## Summary
 
-| Package          | Where to configure                   | API                                            |
-| ---------------- | ------------------------------------ | ---------------------------------------------- |
-| **Vue**          | `ThemeProvider` in App.vue           | `theme` prop (Partial&lt;Theme&gt;)            |
-| **Nuxt**         | `nuxt.config.ts` → `grundtone.theme` | `createTheme({ light, dark })`                 |
-| **React Native** | `GrundtoneThemeProvider` in App      | `light` and `dark` props from `createTheme()`  |
-| **Plain Web**    | Your own CSS                         | Override `:root` after importing design-tokens |
+| Package          | Where to configure                   | API                                                       |
+| ---------------- | ------------------------------------ | --------------------------------------------------------- |
+| **Vue**          | `ThemeProvider` in App.vue           | `theme` prop: `{ light?, dark? }` or Partial&lt;Theme&gt; |
+| **Nuxt**         | `nuxt.config.ts` → `grundtone.theme` | `createTheme({ light, dark })`                            |
+| **React Native** | `GrundtoneThemeProvider` in App      | `light` and `dark` props from `createTheme()`             |
+| **Plain Web**    | Your own CSS                         | Override `:root` after importing design-tokens            |

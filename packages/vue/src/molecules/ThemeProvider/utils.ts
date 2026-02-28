@@ -1,5 +1,24 @@
-import type { Theme } from '@grundtone/core';
+import type { Theme, ThemeConfig } from '@grundtone/core';
 import { createStorageHandler } from '../../utils/error-handling';
+
+/**
+ * Returns the theme override for the current mode.
+ * Handles both single-theme (applies to both) and separate light/dark configs.
+ */
+export function getThemeOverrideForMode(
+  config: ThemeConfig | undefined,
+  mode: 'light' | 'dark',
+): Partial<Theme> | undefined {
+  if (!config || typeof config !== 'object') return undefined;
+
+  const hasLightDark = 'light' in config || 'dark' in config;
+  if (hasLightDark) {
+    const modeConfig = config[mode];
+    return modeConfig;
+  }
+
+  return config as Partial<Theme>;
+}
 
 /**
  * Apply theme to DOM with optimized batch updates
@@ -20,9 +39,9 @@ export function applyThemeToDOM(theme: Theme): void {
       properties[`--color-${cssKey}`] = value;
     });
 
-    // Spacing
+    // Spacing (output --space-* to match design-tokens; components use var(--space-sm) etc.)
     Object.entries(theme.spacing).forEach(([key, value]) => {
-      properties[`--spacing-${key}`] = value;
+      properties[`--space-${key}`] = value;
     });
 
     // Typography
@@ -75,9 +94,8 @@ export function applyThemeToDOM(theme: Theme): void {
         rule =>
           rule.trim() &&
           !rule.includes('--color-') &&
-          !rule.includes('--spacing-') &&
-          !rule.includes('--font-') &&
           !rule.includes('--space-') &&
+          !rule.includes('--font-') &&
           !rule.includes('--radius-') &&
           !rule.includes('--shadow-') &&
           !rule.includes('--duration-') &&

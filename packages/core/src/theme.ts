@@ -143,9 +143,17 @@ export interface ThemeProviderContext {
 export const THEME_INJECTION_KEY: InjectionKey<ThemeProviderContext> =
   Symbol('grundtone-theme');
 
+/**
+ * Theme configuration: either a single partial theme (applies to both modes)
+ * or separate light/dark overrides for proper dark mode support.
+ */
+export type ThemeConfig =
+  | Partial<Theme>
+  | { light?: Partial<Theme>; dark?: Partial<Theme> };
+
 export interface ThemeProviderProps {
   mode?: ThemeMode;
-  theme?: Partial<Theme>;
+  theme?: ThemeConfig;
   enableTransitions?: boolean;
   persistMode?: boolean;
   storageKey?: string;

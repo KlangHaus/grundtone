@@ -52,7 +52,44 @@ provide/inject pattern.
 </script>
 ```
 
-### Advanced Configuration
+### Separate Light and Dark Themes (recommended)
+
+Pass `{ light, dark }` for proper dark mode support:
+
+```vue
+<template>
+  <ThemeProvider :theme="themeConfig" mode="auto">
+    <App />
+  </ThemeProvider>
+</template>
+
+<script setup lang="ts">
+  import { ThemeProvider } from '@grundtone/vue';
+  import { createTheme } from '@grundtone/core';
+
+  const { light, dark } = createTheme({
+    light: {
+      primary: '#0059b3',
+      primaryHover: '#004a96',
+      onPrimary: '#ffffff',
+    },
+    dark: {
+      primary: '#4dabf7',
+      primaryHover: '#74c0fc',
+      onPrimary: '#121212',
+    },
+  });
+
+  const themeConfig = {
+    light: { colors: light.colors },
+    dark: { colors: dark.colors },
+  };
+</script>
+```
+
+### Single Theme (applies to both modes)
+
+Pass a single partial theme when both modes share the same overrides:
 
 ```vue
 <template>
@@ -88,10 +125,15 @@ provide/inject pattern.
 | Prop              | Type                          | Default                  | Description                              |
 | ----------------- | ----------------------------- | ------------------------ | ---------------------------------------- |
 | mode              | `'light' \| 'dark' \| 'auto'` | `'auto'`                 | Initial theme mode                       |
-| theme             | `Partial<Theme>`              | `undefined`              | Custom theme overrides                   |
+| theme             | `ThemeConfig`                 | `undefined`              | Custom theme overrides – see below       |
 | enableTransitions | `boolean`                     | `true`                   | Enable smooth transitions between themes |
 | persistMode       | `boolean`                     | `true`                   | Persist theme mode in localStorage       |
 | storageKey        | `string`                      | `'grundtone-theme-mode'` | localStorage key for persistence         |
+
+**ThemeConfig** – either:
+
+- `{ light?: Partial<Theme>; dark?: Partial<Theme> }` – separate overrides per mode (recommended)
+- `Partial<Theme>` – single override applied to both modes
 
 ## Theme Context API
 
@@ -129,7 +171,7 @@ The ThemeProvider generates CSS custom properties that can be used throughout yo
 
 ### Spacing
 
-- `--spacing-xs` through `--spacing-4xl`
+- `--space-xs` through `--space-4xl`
 
 ### Typography
 
@@ -192,7 +234,7 @@ When set to `auto` mode:
   const buttonStyles = computed(() => ({
     backgroundColor: 'var(--color-primary)',
     color: '#ffffff',
-    padding: 'var(--spacing-sm) var(--spacing-md)',
+    padding: 'var(--space-sm) var(--space-md)',
     border: 'none',
     borderRadius: 'var(--radius-md)',
     cursor: 'pointer',
@@ -215,7 +257,7 @@ When set to `auto` mode:
   .themed-card {
     background: var(--color-surface);
     color: var(--color-text);
-    padding: var(--spacing-lg);
+    padding: var(--space-lg);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
     border: 1px solid var(--color-border);

@@ -52,6 +52,7 @@ const TestComponent = {
 describe('ThemeProvider', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mockLocalStorage.getItem.mockReturnValue(null);
     mockMatchMedia.mockReturnValue({
       matches: false, // System prefers light mode
       addEventListener: vi.fn(),
@@ -293,7 +294,7 @@ describe('ThemeProvider', () => {
   });
 
   describe('Custom Themes', () => {
-    it('merges custom theme with base theme', async () => {
+    it('merges custom theme with base theme (single theme applies to both)', async () => {
       const customTheme = {
         colors: {
           primary: '#custom-primary',
@@ -317,6 +318,74 @@ describe('ThemeProvider', () => {
 
       expect(wrapper.find('[data-testid="primary-color"]').text()).toBe(
         '#custom-primary',
+      );
+    });
+
+    it('applies light theme override when theme has separate light/dark config', async () => {
+      const themeConfig = {
+        light: {
+          colors: {
+            primary: '#0059b3',
+            primaryHover: '#004a96',
+            onPrimary: '#ffffff',
+          },
+        },
+        dark: {
+          colors: {
+            primary: '#4dabf7',
+            primaryHover: '#74c0fc',
+            onPrimary: '#121212',
+          },
+        },
+      };
+
+      const wrapper = mount(ThemeProvider, {
+        props: {
+          mode: 'light',
+          theme: themeConfig,
+        },
+        slots: {
+          default: TestComponent,
+        },
+      });
+      await nextTick();
+
+      expect(wrapper.find('[data-testid="primary-color"]').text()).toBe(
+        '#0059b3',
+      );
+    });
+
+    it('applies dark theme override when theme has separate light/dark config', async () => {
+      const themeConfig = {
+        light: {
+          colors: {
+            primary: '#0059b3',
+            primaryHover: '#004a96',
+            onPrimary: '#ffffff',
+          },
+        },
+        dark: {
+          colors: {
+            primary: '#4dabf7',
+            primaryHover: '#74c0fc',
+            onPrimary: '#121212',
+          },
+        },
+      };
+
+      const wrapper = mount(ThemeProvider, {
+        props: {
+          mode: 'dark',
+          theme: themeConfig,
+        },
+        slots: {
+          default: TestComponent,
+        },
+      });
+      await nextTick();
+
+      expect(wrapper.find('[data-testid="primary-color"]').text()).toBe(
+        '#4dabf7',
       );
     });
   });
@@ -349,7 +418,7 @@ describe('ThemeProvider', () => {
 
       // Test that theme properties are applied (regardless of light/dark specific values)
       expect(root.style.getPropertyValue('--color-primary')).toBeTruthy();
-      expect(root.style.getPropertyValue('--spacing-md')).toBe('1rem');
+      expect(root.style.getPropertyValue('--space-md')).toBe('1rem');
       // Test that data-theme is set (accept either light or dark due to test isolation issues)
       const currentTheme = root.getAttribute('data-theme');
       expect(currentTheme).toMatch(/^(light|dark)$/);

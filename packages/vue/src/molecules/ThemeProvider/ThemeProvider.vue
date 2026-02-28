@@ -47,6 +47,7 @@
     getStoredThemeMode,
     storeThemeMode,
     mergeThemes,
+    getThemeOverrideForMode,
   } from './utils';
 
   const props = withDefaults(defineProps<ThemeProviderProps>(), {
@@ -67,8 +68,10 @@
   });
 
   const theme = computed<Theme>(() => {
-    const baseTheme = resolvedMode.value === 'dark' ? darkTheme : lightTheme;
-    return mergeThemes(baseTheme, props.theme);
+    const mode = resolvedMode.value;
+    const baseTheme = mode === 'dark' ? darkTheme : lightTheme;
+    const override = getThemeOverrideForMode(props.theme, mode);
+    return mergeThemes(baseTheme, override);
   });
 
   const isDark = computed(() => resolvedMode.value === 'dark');
@@ -234,15 +237,15 @@
     );
     --color-neutral: light-dark(#6c757d, #9e9e9e);
 
-    // Spacing
-    --spacing-xs: 0.25rem;
-    --spacing-sm: 0.5rem;
-    --spacing-md: 1rem;
-    --spacing-lg: 1.5rem;
-    --spacing-xl: 2rem;
-    --spacing-2xl: 3rem;
-    --spacing-3xl: 4rem;
-    --spacing-4xl: 5rem;
+    // Spacing (--space-* matches design-tokens; overridden by applyThemeToDOM)
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 3rem;
+    --space-3xl: 4rem;
+    --space-4xl: 6rem;
 
     // Typography
     --font-family-base:

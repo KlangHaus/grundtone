@@ -44,19 +44,30 @@ export default defineConfig({
 
 ### Step 4: Wrap app with ThemeProvider
 
-Add theme customization via the `theme` prop – see
+Add theme customization via the `theme` prop. Configure both light and dark themes – see
 [Theme Configuration](/guide/theme-configuration#vue-3).
 
 ```vue
 <!-- App.vue -->
 <template>
-  <ThemeProvider mode="auto">
+  <ThemeProvider :theme="themeConfig" mode="auto">
     <RouterView />
   </ThemeProvider>
 </template>
 
 <script setup lang="ts">
   import { ThemeProvider } from '@grundtone/vue';
+  import { createTheme } from '@grundtone/core';
+
+  const { light, dark } = createTheme({
+    light: { primary: '#0059b3', primaryHover: '#004a96', onPrimary: '#ffffff' },
+    dark: { primary: '#4dabf7', primaryHover: '#74c0fc', onPrimary: '#121212' },
+  });
+
+  const themeConfig = {
+    light: { colors: light.colors },
+    dark: { colors: dark.colors },
+  };
 </script>
 ```
 
