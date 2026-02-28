@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync, existsSync } from 'fs';
+import { readFileSync, readdirSync, existsSync, statSync } from 'fs';
 import { resolve, basename } from 'path';
 
 export interface ChangesetEntry {
@@ -85,7 +85,12 @@ export default {
     if (existsSync(changesetDir)) {
       const files = readdirSync(changesetDir)
         .filter(f => f.endsWith('.md') && f !== 'README.md')
-        .sort();
+        .sort((a, b) => {
+          // Newest first by file modification time
+          const mtimeA = statSync(resolve(changesetDir, a)).mtimeMs;
+          const mtimeB = statSync(resolve(changesetDir, b)).mtimeMs;
+          return mtimeB - mtimeA;
+        });
 
       for (const file of files) {
         const entry = parseChangeset(resolve(changesetDir, file));
