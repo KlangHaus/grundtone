@@ -1,29 +1,88 @@
-// Display Utilities
-@use 'sass:map';
+// Display & Flex Utilities
+// Modern naming, no !important. Responsive via {bp}: prefix.
+
 @use '../core/breakpoints' as *;
 
-// Display values
-$displays: none, inline, inline-block, block, table, table-row, table-cell, flex,
-  inline-flex;
-
-// Generate display utilities
-@each $breakpoint in map.keys($grid-breakpoints) {
-  @include media-breakpoint-up($breakpoint) {
-    $infix: breakpoint-infix($breakpoint);
-
-    @each $display in $displays {
-      .d#{$infix}-#{$display} {
-        display: $display !important;
-      }
-    }
+@include responsive-variants using ($p) {
+  // Display modes
+  .#{$p}block {
+    display: block;
   }
-}
+  .#{$p}inline-block {
+    display: inline-block;
+  }
+  .#{$p}inline {
+    display: inline;
+  }
+  .#{$p}flex {
+    display: flex;
+  }
+  .#{$p}inline-flex {
+    display: inline-flex;
+  }
+  .#{$p}grid {
+    display: grid;
+  }
+  .#{$p}inline-grid {
+    display: inline-grid;
+  }
+  .#{$p}contents {
+    display: contents;
+  }
+  .#{$p}hidden {
+    display: none;
+  }
 
-// Print utilities
-@media print {
-  @each $display in $displays {
-    .d-print-#{$display} {
-      display: $display !important;
-    }
+  // Flex direction
+  .#{$p}flex-row {
+    flex-direction: row;
+  }
+  .#{$p}flex-col {
+    flex-direction: column;
+  }
+  .#{$p}flex-row-reverse {
+    flex-direction: row-reverse;
+  }
+  .#{$p}flex-col-reverse {
+    flex-direction: column-reverse;
+  }
+
+  // Flex wrap
+  .#{$p}flex-wrap {
+    flex-wrap: wrap;
+  }
+  .#{$p}flex-nowrap {
+    flex-wrap: nowrap;
+  }
+  .#{$p}flex-wrap-reverse {
+    flex-wrap: wrap-reverse;
+  }
+
+  // Flex item sizing
+  .#{$p}flex-1 {
+    flex: 1 1 0%;
+  }
+  .#{$p}flex-auto {
+    flex: 1 1 auto;
+  }
+  .#{$p}flex-initial {
+    flex: 0 1 auto;
+  }
+  .#{$p}flex-none {
+    flex: none;
+  }
+
+  // Grow & shrink
+  .#{$p}grow {
+    flex-grow: 1;
+  }
+  .#{$p}grow-0 {
+    flex-grow: 0;
+  }
+  .#{$p}shrink {
+    flex-shrink: 1;
+  }
+  .#{$p}shrink-0 {
+    flex-shrink: 0;
   }
 }

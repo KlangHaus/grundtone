@@ -1,13 +1,16 @@
 import { defineConfig } from 'vitepress';
+import { withMermaid } from 'vitepress-plugin-mermaid';
 import { createHighlighter } from 'shiki';
 import type { Plugin } from 'vite';
 import { gridExamples } from './theme/grid-examples';
 import { containerExamples } from './theme/container-examples';
+import { columnExamples } from './theme/column-examples';
 
-/** All code examples merged — grid + containers */
+/** All code examples merged — grid + containers + columns */
 const allExamples: Record<string, string> = {
   ...gridExamples,
   ...containerExamples,
+  ...columnExamples,
 };
 
 /**
@@ -52,75 +55,69 @@ function codePreviewHighlightPlugin(): Plugin {
   };
 }
 
-export default defineConfig({
-  title: 'Grundtone',
-  description:
-    'Design system documentation for Grundtone - part of KlangHaus infrastructure',
+export default withMermaid(
+  defineConfig({
+    title: 'Grundtone',
+    description:
+      'Design system documentation for Grundtone - part of KlangHaus infrastructure',
 
-  ignoreDeadLinks: true,
+    ignoreDeadLinks: true,
 
-  vite: {
-    plugins: [codePreviewHighlightPlugin()],
-    resolve: {
-      dedupe: ['vue'],
+    vite: {
+      plugins: [codePreviewHighlightPlugin()],
+      resolve: {
+        dedupe: ['vue'],
+      },
+      ssr: {
+        noExternal: ['@grundtone/design-tokens'],
+      },
     },
-    ssr: {
-      noExternal: ['@grundtone/design-tokens'],
-    },
-  },
 
-  themeConfig: {
-    nav: [
-      { text: 'Getting Started', link: '/guide/welcome' },
-      { text: 'Installation', link: '/guide/installation' },
-      { text: 'Theme Configuration', link: '/guide/theme-configuration' },
-      { text: 'Package Architecture', link: '/guide/package-architecture' },
-      {
-        text: 'Layout',
-        items: [
-          { text: 'Breakpoints', link: '/guide/breakpoints' },
-          { text: 'Containers', link: '/guide/containers' },
-          { text: 'Grid', link: '/guide/grid-utility' },
+    themeConfig: {
+      nav: [{ text: 'Changelog', link: '/changelog' }],
+
+      sidebar: {
+        '/guide/': [
+          {
+            text: 'Getting Started',
+            items: [
+              { text: 'Welcome', link: '/guide/welcome' },
+              { text: 'Installation', link: '/guide/installation' },
+              {
+                text: 'Theme Configuration',
+                link: '/guide/theme-configuration',
+              },
+              {
+                text: 'Package Architecture',
+                link: '/guide/package-architecture',
+              },
+            ],
+          },
+          {
+            text: 'Layout',
+            items: [
+              { text: 'Breakpoints', link: '/guide/breakpoints' },
+              { text: 'Containers', link: '/guide/containers' },
+              { text: 'Grid', link: '/guide/grid-utility' },
+              { text: 'Columns & Layout', link: '/guide/columns' },
+            ],
+          },
+          {
+            text: 'Resources',
+            items: [
+              {
+                text: 'Open Source & Self-Hosting',
+                link: '/guide/open-source',
+              },
+              { text: 'Changelog', link: '/changelog' },
+            ],
+          },
         ],
       },
-      { text: 'Open Source', link: '/guide/open-source' },
-      { text: 'Changelog', link: '/changelog' },
-    ],
 
-    sidebar: {
-      '/guide/': [
-        {
-          text: 'Getting Started',
-          items: [
-            { text: 'Welcome', link: '/guide/welcome' },
-            { text: 'Installation', link: '/guide/installation' },
-            { text: 'Theme Configuration', link: '/guide/theme-configuration' },
-            {
-              text: 'Package Architecture',
-              link: '/guide/package-architecture',
-            },
-          ],
-        },
-        {
-          text: 'Layout',
-          items: [
-            { text: 'Breakpoints', link: '/guide/breakpoints' },
-            { text: 'Containers', link: '/guide/containers' },
-            { text: 'Grid', link: '/guide/grid-utility' },
-          ],
-        },
-        {
-          text: 'Resources',
-          items: [
-            { text: 'Open Source & Self-Hosting', link: '/guide/open-source' },
-            { text: 'Changelog', link: '/changelog' },
-          ],
-        },
+      socialLinks: [
+        { icon: 'github', link: 'https://github.com/allanasp/grundtone' },
       ],
     },
-
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/allanasp/grundtone' },
-    ],
-  },
-});
+  }),
+);

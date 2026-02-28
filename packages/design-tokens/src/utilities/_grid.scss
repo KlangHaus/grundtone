@@ -1,6 +1,7 @@
 // CSS Grid Utilities
 // Modern grid layout utilities — single source of truth for grid system.
 // All repetitive classes are generated via loops to avoid duplication.
+// Note: .grid { display: grid } is in _display.scss alongside other display utilities.
 
 @use 'sass:map';
 @use 'sass:string';
@@ -45,13 +46,18 @@ $_gap-scale: (
   '24': 6rem,
 );
 
-// ---------------------------------------------------------------------------
-// Grid container
-// ---------------------------------------------------------------------------
+$_gap-props: (
+  'gap': gap,
+  'gap-x': column-gap,
+  'gap-y': row-gap,
+);
 
-.grid {
-  display: grid;
-}
+$_auto-sizing: (
+  'auto': auto,
+  'min': min-content,
+  'max': max-content,
+  'fr': minmax(0, 1fr),
+);
 
 // ---------------------------------------------------------------------------
 // Grid template columns (1–12) + special values
@@ -168,60 +174,44 @@ $_gap-scale: (
 }
 
 // ---------------------------------------------------------------------------
-// Gap utilities — generated from $_gap-scale for gap, gap-x, gap-y
+// Gap, grid flow, auto sizing — base + responsive via responsive-variants
 // ---------------------------------------------------------------------------
 
-$_gap-props: (
-  'gap': gap,
-  'gap-x': column-gap,
-  'gap-y': row-gap,
-);
-
-@each $prefix, $prop in $_gap-props {
-  @each $suffix, $value in $_gap-scale {
-    .#{$prefix}-#{$suffix} {
-      #{$prop}: #{$value};
+@include responsive-variants using ($p) {
+  // Gap
+  @each $prefix, $prop in $_gap-props {
+    @each $suffix, $value in $_gap-scale {
+      .#{$p}#{$prefix}-#{$suffix} {
+        #{$prop}: #{$value};
+      }
     }
   }
-}
 
-// ---------------------------------------------------------------------------
-// Grid auto flow
-// ---------------------------------------------------------------------------
-
-.grid-flow-row {
-  grid-auto-flow: row;
-}
-.grid-flow-col {
-  grid-auto-flow: column;
-}
-.grid-flow-dense {
-  grid-auto-flow: dense;
-}
-.grid-flow-row-dense {
-  grid-auto-flow: row dense;
-}
-.grid-flow-col-dense {
-  grid-auto-flow: column dense;
-}
-
-// ---------------------------------------------------------------------------
-// Grid auto columns / rows sizing
-// ---------------------------------------------------------------------------
-
-$_auto-sizing: (
-  'auto': auto,
-  'min': min-content,
-  'max': max-content,
-  'fr': minmax(0, 1fr),
-);
-
-@each $suffix, $value in $_auto-sizing {
-  .auto-cols-#{$suffix} {
-    grid-auto-columns: #{$value};
+  // Grid auto flow
+  .#{$p}grid-flow-row {
+    grid-auto-flow: row;
   }
-  .auto-rows-#{$suffix} {
-    grid-auto-rows: #{$value};
+  .#{$p}grid-flow-col {
+    grid-auto-flow: column;
+  }
+  .#{$p}grid-flow-dense {
+    grid-auto-flow: dense;
+  }
+  .#{$p}grid-flow-row-dense {
+    grid-auto-flow: row dense;
+  }
+  .#{$p}grid-flow-col-dense {
+    grid-auto-flow: column dense;
+  }
+
+  // Grid auto columns / rows sizing
+  @each $suffix, $value in $_auto-sizing {
+    .#{$p}auto-cols-#{$suffix} {
+      grid-auto-columns: #{$value};
+    }
+    .#{$p}auto-rows-#{$suffix} {
+      grid-auto-rows: #{$value};
+    }
   }
 }
 
@@ -326,12 +316,10 @@ $_card-sizes: (
 }
 
 // ---------------------------------------------------------------------------
-// Responsive grid utilities
-// Uses $grid-breakpoints via media-breakpoint-up mixin.
-// To customize breakpoints, override $grid-breakpoints before importing.
+// Responsive grid utilities (column/row counts vary per breakpoint)
+// Gap, flow, and auto-sizing are handled by responsive-variants above.
 // ---------------------------------------------------------------------------
 
-// Max responsive columns per breakpoint (sm is limited to 6)
 $_responsive-grid-cols: (
   sm: 6,
   md: 12,
@@ -339,57 +327,121 @@ $_responsive-grid-cols: (
   xl: 12,
 ) !default;
 
-// sm through xl: prefix is simple (sm\:, md\:, etc.)
 @each $bp, $max-cols in $_responsive-grid-cols {
   @include media-breakpoint-up($bp) {
     $p: '#{$bp}\\:';
 
-    .#{$p}grid {
-      display: grid;
-    }
-
+    // Grid template columns
     @for $i from 1 through $max-cols {
       .#{$p}grid-cols-#{$i} {
         grid-template-columns: repeat(#{$i}, minmax(0, 1fr));
       }
     }
 
+    // Column span
     @for $i from 1 through $max-cols {
       .#{$p}col-span-#{$i} {
         grid-column: span #{$i} / span #{$i};
       }
     }
-
     .#{$p}col-span-full {
       grid-column: 1 / -1;
+    }
+
+    // Column start / end
+    @for $i from 1 through ($max-cols + 1) {
+      .#{$p}col-start-#{$i} {
+        grid-column-start: #{$i};
+      }
+      .#{$p}col-end-#{$i} {
+        grid-column-end: #{$i};
+      }
+    }
+    .#{$p}col-start-auto {
+      grid-column-start: auto;
+    }
+    .#{$p}col-end-auto {
+      grid-column-end: auto;
+    }
+
+    // Row span
+    @for $i from 1 through $_grid-rows {
+      .#{$p}row-span-#{$i} {
+        grid-row: span #{$i} / span #{$i};
+      }
+    }
+    .#{$p}row-span-full {
+      grid-row: 1 / -1;
+    }
+
+    // Row start / end
+    @for $i from 1 through ($_grid-rows + 1) {
+      .#{$p}row-start-#{$i} {
+        grid-row-start: #{$i};
+      }
+      .#{$p}row-end-#{$i} {
+        grid-row-end: #{$i};
+      }
     }
   }
 }
 
 // 2xl: handled separately because CSS class names starting with a digit
 // need unicode escaping (\32 = "2") which can't be generated via SCSS interpolation.
-// We iterate $grid-breakpoints to get the native key type for map lookup.
 @each $key, $val in $grid-breakpoints {
   @if $val == 1536px {
     @include media-breakpoint-up($key) {
-      .\32 xl\:grid {
-        display: grid;
-      }
-
+      // Grid template columns
       @for $i from 1 through 12 {
         .\32 xl\:grid-cols-#{$i} {
           grid-template-columns: repeat(#{$i}, minmax(0, 1fr));
         }
       }
 
+      // Column span
       @for $i from 1 through 12 {
         .\32 xl\:col-span-#{$i} {
           grid-column: span #{$i} / span #{$i};
         }
       }
-
       .\32 xl\:col-span-full {
         grid-column: 1 / -1;
+      }
+
+      // Column start / end
+      @for $i from 1 through 13 {
+        .\32 xl\:col-start-#{$i} {
+          grid-column-start: #{$i};
+        }
+        .\32 xl\:col-end-#{$i} {
+          grid-column-end: #{$i};
+        }
+      }
+      .\32 xl\:col-start-auto {
+        grid-column-start: auto;
+      }
+      .\32 xl\:col-end-auto {
+        grid-column-end: auto;
+      }
+
+      // Row span
+      @for $i from 1 through 6 {
+        .\32 xl\:row-span-#{$i} {
+          grid-row: span #{$i} / span #{$i};
+        }
+      }
+      .\32 xl\:row-span-full {
+        grid-row: 1 / -1;
+      }
+
+      // Row start / end
+      @for $i from 1 through 7 {
+        .\32 xl\:row-start-#{$i} {
+          grid-row-start: #{$i};
+        }
+        .\32 xl\:row-end-#{$i} {
+          grid-row-end: #{$i};
+        }
       }
     }
   }

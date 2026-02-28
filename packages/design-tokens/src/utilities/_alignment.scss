@@ -1,0 +1,199 @@
+// Alignment Utilities
+// Works for both flex and grid layouts. No !important.
+// Short naming: .justify-center, .items-start, .self-center etc.
+
+@use '../core/breakpoints' as *;
+
+@include responsive-variants using ($p) {
+  // ---------------------------------------------------------------------------
+  // justify-content (flex & grid containers)
+  // ---------------------------------------------------------------------------
+  .#{$p}justify-start {
+    justify-content: flex-start;
+  }
+  .#{$p}justify-end {
+    justify-content: flex-end;
+  }
+  .#{$p}justify-center {
+    justify-content: center;
+  }
+  .#{$p}justify-between {
+    justify-content: space-between;
+  }
+  .#{$p}justify-around {
+    justify-content: space-around;
+  }
+  .#{$p}justify-evenly {
+    justify-content: space-evenly;
+  }
+  .#{$p}justify-normal {
+    justify-content: normal;
+  }
+  .#{$p}justify-stretch {
+    justify-content: stretch;
+  }
+
+  // ---------------------------------------------------------------------------
+  // justify-items (grid containers)
+  // ---------------------------------------------------------------------------
+  .#{$p}justify-items-start {
+    justify-items: start;
+  }
+  .#{$p}justify-items-end {
+    justify-items: end;
+  }
+  .#{$p}justify-items-center {
+    justify-items: center;
+  }
+  .#{$p}justify-items-stretch {
+    justify-items: stretch;
+  }
+
+  // ---------------------------------------------------------------------------
+  // justify-self (grid items)
+  // ---------------------------------------------------------------------------
+  .#{$p}justify-self-auto {
+    justify-self: auto;
+  }
+  .#{$p}justify-self-start {
+    justify-self: start;
+  }
+  .#{$p}justify-self-end {
+    justify-self: end;
+  }
+  .#{$p}justify-self-center {
+    justify-self: center;
+  }
+  .#{$p}justify-self-stretch {
+    justify-self: stretch;
+  }
+
+  // ---------------------------------------------------------------------------
+  // align-items (flex & grid containers)
+  // ---------------------------------------------------------------------------
+  .#{$p}items-start {
+    align-items: flex-start;
+  }
+  .#{$p}items-end {
+    align-items: flex-end;
+  }
+  .#{$p}items-center {
+    align-items: center;
+  }
+  .#{$p}items-baseline {
+    align-items: baseline;
+  }
+  .#{$p}items-stretch {
+    align-items: stretch;
+  }
+
+  // ---------------------------------------------------------------------------
+  // align-content
+  // ---------------------------------------------------------------------------
+  .#{$p}content-start {
+    align-content: flex-start;
+  }
+  .#{$p}content-end {
+    align-content: flex-end;
+  }
+  .#{$p}content-center {
+    align-content: center;
+  }
+  .#{$p}content-between {
+    align-content: space-between;
+  }
+  .#{$p}content-around {
+    align-content: space-around;
+  }
+  .#{$p}content-evenly {
+    align-content: space-evenly;
+  }
+  .#{$p}content-stretch {
+    align-content: stretch;
+  }
+  .#{$p}content-normal {
+    align-content: normal;
+  }
+
+  // ---------------------------------------------------------------------------
+  // align-self
+  // ---------------------------------------------------------------------------
+  .#{$p}self-auto {
+    align-self: auto;
+  }
+  .#{$p}self-start {
+    align-self: flex-start;
+  }
+  .#{$p}self-end {
+    align-self: flex-end;
+  }
+  .#{$p}self-center {
+    align-self: center;
+  }
+  .#{$p}self-baseline {
+    align-self: baseline;
+  }
+  .#{$p}self-stretch {
+    align-self: stretch;
+  }
+
+  // ---------------------------------------------------------------------------
+  // place-content (shorthand: align-content + justify-content)
+  // ---------------------------------------------------------------------------
+  .#{$p}place-content-start {
+    place-content: start;
+  }
+  .#{$p}place-content-end {
+    place-content: end;
+  }
+  .#{$p}place-content-center {
+    place-content: center;
+  }
+  .#{$p}place-content-between {
+    place-content: space-between;
+  }
+  .#{$p}place-content-around {
+    place-content: space-around;
+  }
+  .#{$p}place-content-evenly {
+    place-content: space-evenly;
+  }
+  .#{$p}place-content-stretch {
+    place-content: stretch;
+  }
+
+  // ---------------------------------------------------------------------------
+  // place-items (shorthand: align-items + justify-items)
+  // ---------------------------------------------------------------------------
+  .#{$p}place-items-start {
+    place-items: start;
+  }
+  .#{$p}place-items-end {
+    place-items: end;
+  }
+  .#{$p}place-items-center {
+    place-items: center;
+  }
+  .#{$p}place-items-stretch {
+    place-items: stretch;
+  }
+
+  // ---------------------------------------------------------------------------
+  // place-self (shorthand: align-self + justify-self)
+  // ---------------------------------------------------------------------------
+  .#{$p}place-self-auto {
+    place-self: auto;
+  }
+  .#{$p}place-self-start {
+    place-self: start;
+  }
+  .#{$p}place-self-end {
+    place-self: end;
+  }
+  .#{$p}place-self-center {
+    place-self: center;
+  }
+  .#{$p}place-self-stretch {
+    place-self: stretch;
+  }
+}

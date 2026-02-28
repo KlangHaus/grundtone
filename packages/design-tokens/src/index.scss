@@ -12,6 +12,9 @@ $grid-breakpoints: def.$grid-breakpoints-default !default;
 @use 'utilities/grid' with (
   $grid-breakpoints-config: $grid-breakpoints
 );
+@use 'utilities/display';
+@use 'utilities/alignment';
+@use 'utilities/order';
 @use 'utilities/containers';
 @use 'utilities/container-queries';
 @use 'utilities/aspect-ratio';

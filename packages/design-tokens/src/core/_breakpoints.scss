@@ -107,6 +107,32 @@ $grid-gutter-width: 32px !default;
   }
 }
 
+// ---------------------------------------------------------------------------
+// Responsive utility variant generator
+// Generates base + responsive classes for all breakpoints including 2xl.
+// Usage: @include responsive-variants using ($p) { .#{$p}flex { display: flex; } }
+// ---------------------------------------------------------------------------
+@mixin responsive-variants {
+  // Base (no prefix)
+  @content ('');
+
+  // sm through xl
+  @each $bp in (sm, md, lg, xl) {
+    @include media-breakpoint-up($bp) {
+      @content ('#{$bp}\\:');
+    }
+  }
+
+  // 2xl — CSS class names starting with a digit need unicode escaping (\32 = "2")
+  @each $key, $val in $grid-breakpoints {
+    @if $val == 1536px {
+      @include media-breakpoint-up($key) {
+        @content ('\\32 xl\\:');
+      }
+    }
+  }
+}
+
 // Responsive font size mixin
 @mixin responsive-font-size(
   $min-font-size,

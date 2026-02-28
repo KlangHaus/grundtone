@@ -4,43 +4,23 @@ Grundtone is a monorepo of packages. Each package has a clear purpose and depend
 
 ## Overview
 
-```
-                    ┌─────────────────┐
-                    │ @grundtone/core │  Theme types, createTheme(), defaults
-                    └────────┬────────┘
-                             │
-          ┌──────────────────┼──────────────────┐
-          │                  │                  │
-          ▼                  ▼                  ▼
-┌─────────────────┐ ┌─────────────────┐ ┌─────────────────────┐
-│ @grundtone/     │ │ @grundtone/     │ │ @grundtone/         │
-│ design-tokens   │ │ shared          │ │ react-native         │
-│ (Web only)      │ │                 │ │ (RN only)           │
-│ SCSS, CSS vars  │ │ Utilities       │ │ ThemeProvider, hook │
-└────────┬────────┘ └────────┬────────┘ └─────────────────────┘
-         │                   │
-         └─────────┬─────────┘
-                   │
-                   ▼
-         ┌─────────────────────┐
-         │ @grundtone/         │
-         │ composables         │
-         │ Vue hooks (useTheme)│
-         └─────────┬───────────┘
-                   │
-                   ▼
-         ┌─────────────────────┐
-         │ @grundtone/vue      │
-         │ Components,         │
-         │ ThemeProvider       │
-         └─────────┬───────────┘
-                   │
-                   ▼
-         ┌─────────────────────┐
-         │ @grundtone/nuxt     │
-         │ Nuxt module,        │
-         │ auto-imports        │
-         └─────────────────────┘
+```mermaid
+graph TD
+    core["@grundtone/core<br/><small>Theme types, createTheme(), defaults</small>"]
+    tokens["@grundtone/design-tokens<br/><small>Web only — SCSS, CSS vars</small>"]
+    shared["@grundtone/shared<br/><small>Utilities</small>"]
+    rn["@grundtone/react-native<br/><small>RN only — ThemeProvider, hook</small>"]
+    composables["@grundtone/composables<br/><small>Vue hooks (useTheme)</small>"]
+    vue["@grundtone/vue<br/><small>Components, ThemeProvider</small>"]
+    nuxt["@grundtone/nuxt<br/><small>Nuxt module, auto-imports</small>"]
+
+    core --> tokens
+    core --> shared
+    core --> rn
+    tokens --> composables
+    shared --> composables
+    composables --> vue
+    vue --> nuxt
 ```
 
 ## Packages

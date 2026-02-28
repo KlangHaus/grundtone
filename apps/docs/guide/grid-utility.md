@@ -115,8 +115,10 @@ Format: `{breakpoint}:` + class, e.g. `md:grid-cols-3` or `lg:col-span-6`.
 up. Example: `grid-cols-1 md:grid-cols-2 lg:grid-cols-3` = 1 column by default, 2 from 768px, 3 from
 1024px.
 
-> **Note:** `sm:` supports `grid-cols-1`–`grid-cols-6` and `col-span-1`–`col-span-6`. The `md:`,
-> `lg:`, `xl:`, and `2xl:` breakpoints support the full 1–12 range.
+> **Note:** `sm:` supports `grid-cols-1`–`grid-cols-6`, `col-span-1`–`col-span-6`, and
+> `col-start/end-1`–`col-start/end-7`. The `md:`, `lg:`, `xl:`, and `2xl:` breakpoints support the
+> full 1–12/13 range. Gap, grid-flow, and auto-cols/rows also have responsive variants at all
+> breakpoints.
 
 <CodePreview name="responsive" />
 
@@ -272,8 +274,10 @@ See [gap scale](#_3-add-gap-between-items) for all available values.
 ### Responsive prefix
 
 Prepend `{breakpoint}:` to any class to apply it from that viewport width up. Works with grid-cols,
-col-span, gap, etc. `sm:` supports 1–6 columns/spans; `md:` and above support 1–12. See
-[Responsive Grid](#responsive-grid) for details.
+col-span, col-start/end, row-span/start/end, gap, and grid-flow. `sm:` supports 1–6 columns/spans;
+`md:` and above support 1–12. See [Responsive Grid](#responsive-grid) for details.
+
+For alignment, ordering, and display utilities, see [Columns & Layout](/guide/columns).
 
 ---
 
