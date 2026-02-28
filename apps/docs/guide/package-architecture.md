@@ -65,11 +65,13 @@ Install when: You use themes, ThemeProvider, or GrundtoneThemeProvider
 **Platform:** Web only
 
 **What it provides:** SCSS variables and functions, compiled CSS with `:root` variables, utility
-classes. For Plain Web, override `:root` to customize colors – see
-[Theme Configuration](/guide/theme-configuration#plain-web-no-framework).
+classes (grid, gap, display, flexbox, spacing, container queries). For Plain Web, override `:root`
+to customize colors – see [Theme Configuration](/guide/theme-configuration#plain-web-no-framework).
 
 - No Grundtone dependencies
 - Used by Vue and Plain Web projects that need SCSS or CSS
+- All breakpoint values come from a single source of truth (`_breakpoints-defaults.scss`) — see
+  [Breakpoints](/guide/breakpoints#architecture)
 
 ```
 Install when: You use Vue, Nuxt, or Plain Web and need tokens in SCSS/CSS

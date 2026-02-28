@@ -69,6 +69,7 @@ export default defineConfig({
       { text: 'Theme Configuration', link: '/guide/theme-configuration' },
       { text: 'Package Architecture', link: '/guide/package-architecture' },
       { text: 'Grid Utility', link: '/guide/grid-utility' },
+      { text: 'Breakpoints', link: '/guide/breakpoints' },
       { text: 'Open Source', link: '/guide/open-source' },
     ],
 
@@ -85,6 +86,7 @@ export default defineConfig({
               link: '/guide/package-architecture',
             },
             { text: 'Grid Utility', link: '/guide/grid-utility' },
+            { text: 'Breakpoints', link: '/guide/breakpoints' },
             { text: 'Open Source & Self-Hosting', link: '/guide/open-source' },
           ],
         },

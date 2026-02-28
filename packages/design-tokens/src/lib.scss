@@ -1,0 +1,20 @@
+// Grundtone UI Design Tokens
+// Complete design token system implementation
+
+// Core design tokens (must be imported first)
+@forward 'core/color-palette' hide color;
+@forward 'core/accessibility';
+@forward 'core/colors';
+@forward 'core/typography';
+@forward 'core/spacing';
+@forward 'core/breakpoints';
+@forward 'core/shadows';
+@forward 'core/radius';
+@forward 'core/z-index';
+
+// Functions and mixins (depend on core)
+@forward 'functions' hide color, border;
+@forward 'mixins';
+
+// Utility classes (depend on functions/mixins) - Temporarily disabled during migration
+// @forward 'utilities' hide $spacers;

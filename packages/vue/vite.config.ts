@@ -13,7 +13,7 @@ export default defineConfig({
           resolve(__dirname, 'node_modules'),
         ],
         // Global SCSS variables/mixins available in all components
-        additionalData: `@use "${resolve(__dirname, '../design-tokens/src/index.scss')}" as tokens;`,
+        additionalData: `@use "${resolve(__dirname, '../design-tokens/src/lib.scss')}" as tokens;`,
         // Silence Sass deprecation warnings
         silenceDeprecations: ['if-function'],
       },

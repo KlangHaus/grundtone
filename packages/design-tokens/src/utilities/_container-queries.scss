@@ -1,0 +1,458 @@
+// Container Queries Utilities
+// Modern responsive design based on container size instead of viewport size.
+// Utility classes generated via loops from $container-breakpoints map.
+
+@use 'sass:map';
+
+// ---------------------------------------------------------------------------
+// Container type utilities
+// ---------------------------------------------------------------------------
+
+.container {
+  container-type: inline-size;
+}
+
+.container-normal {
+  container-type: normal;
+}
+
+.container-size {
+  container-type: size;
+}
+
+// Named containers
+$_named-containers: card, sidebar, main, modal;
+
+@each $name in $_named-containers {
+  .container-#{$name} {
+    container-name: #{$name};
+    container-type: inline-size;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Container query breakpoints — single source of truth for CQ sizes
+// ---------------------------------------------------------------------------
+
+$container-breakpoints: (
+  sm: 24rem,
+  // 384px
+  md: 32rem,
+  // 512px
+  lg: 48rem,
+  // 768px
+  xl: 64rem,
+  // 1024px
+  2xl: 80rem, // 1280px
+);
+
+// ---------------------------------------------------------------------------
+// Display utilities (sm–xl)
+// ---------------------------------------------------------------------------
+
+$_cq-displays: block, inline-block, inline, flex, inline-flex, grid, inline-grid;
+$_cq-display-breakpoints: sm, md, lg, xl;
+
+@each $bp in $_cq-display-breakpoints {
+  $width: map.get($container-breakpoints, $bp);
+
+  @container (min-width: #{$width}) {
+    @each $display in $_cq-displays {
+      .cq-#{$bp}\:#{$display} {
+        display: #{$display};
+      }
+    }
+    .cq-#{$bp}\:hidden {
+      display: none;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Grid-cols utilities (sm–lg) — columns 1, 2, 3, 4, 6, 12
+// ---------------------------------------------------------------------------
+
+$_cq-grid-cols: 1, 2, 3, 4, 6, 12;
+$_cq-grid-breakpoints: sm, md, lg;
+
+@each $bp in $_cq-grid-breakpoints {
+  $width: map.get($container-breakpoints, $bp);
+
+  @container (min-width: #{$width}) {
+    @each $n in $_cq-grid-cols {
+      .cq-#{$bp}\:grid-cols-#{$n} {
+        grid-template-columns: repeat(#{$n}, minmax(0, 1fr));
+      }
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Flexbox utilities (sm–lg)
+// ---------------------------------------------------------------------------
+
+$_cq-flex-props: (
+  'flex-row': (
+    flex-direction,
+    row,
+  ),
+  'flex-col': (
+    flex-direction,
+    column,
+  ),
+  'flex-wrap': (
+    flex-wrap,
+    wrap,
+  ),
+  'flex-nowrap': (
+    flex-wrap,
+    nowrap,
+  ),
+  'justify-start': (
+    justify-content,
+    flex-start,
+  ),
+  'justify-center': (
+    justify-content,
+    center,
+  ),
+  'justify-end': (
+    justify-content,
+    flex-end,
+  ),
+  'justify-between': (
+    justify-content,
+    space-between,
+  ),
+  'items-start': (
+    align-items,
+    flex-start,
+  ),
+  'items-center': (
+    align-items,
+    center,
+  ),
+  'items-end': (
+    align-items,
+    flex-end,
+  ),
+);
+
+@each $bp in $_cq-grid-breakpoints {
+  $width: map.get($container-breakpoints, $bp);
+
+  @container (min-width: #{$width}) {
+    @each $cls, $pair in $_cq-flex-props {
+      .cq-#{$bp}\:#{$cls} {
+        #{nth($pair, 1)}: #{nth($pair, 2)};
+      }
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Spacing utilities (sm–lg) — each breakpoint has its own scale
+// ---------------------------------------------------------------------------
+
+$_cq-spacing: (
+  sm: (
+    'p-0': (
+      padding,
+      0,
+    ),
+    'p-2': (
+      padding,
+      var(--space-sm),
+    ),
+    'p-4': (
+      padding,
+      var(--space-md),
+    ),
+    'p-6': (
+      padding,
+      var(--space-lg),
+    ),
+    'p-8': (
+      padding,
+      var(--space-xl),
+    ),
+    'm-0': (
+      margin,
+      0,
+    ),
+    'm-2': (
+      margin,
+      var(--space-sm),
+    ),
+    'm-4': (
+      margin,
+      var(--space-md),
+    ),
+    'm-6': (
+      margin,
+      var(--space-lg),
+    ),
+    'm-8': (
+      margin,
+      var(--space-xl),
+    ),
+  ),
+  md: (
+    'p-0': (
+      padding,
+      0,
+    ),
+    'p-2': (
+      padding,
+      var(--space-sm),
+    ),
+    'p-4': (
+      padding,
+      var(--space-md),
+    ),
+    'p-6': (
+      padding,
+      var(--space-lg),
+    ),
+    'p-8': (
+      padding,
+      var(--space-xl),
+    ),
+    'p-10': (
+      padding,
+      var(--space-2xl),
+    ),
+    'm-0': (
+      margin,
+      0,
+    ),
+    'm-2': (
+      margin,
+      var(--space-sm),
+    ),
+    'm-4': (
+      margin,
+      var(--space-md),
+    ),
+    'm-6': (
+      margin,
+      var(--space-lg),
+    ),
+    'm-8': (
+      margin,
+      var(--space-xl),
+    ),
+  ),
+  lg: (
+    'p-0': (
+      padding,
+      0,
+    ),
+    'p-4': (
+      padding,
+      var(--space-md),
+    ),
+    'p-6': (
+      padding,
+      var(--space-lg),
+    ),
+    'p-8': (
+      padding,
+      var(--space-xl),
+    ),
+    'p-12': (
+      padding,
+      var(--space-3xl),
+    ),
+    'm-0': (
+      margin,
+      0,
+    ),
+    'm-4': (
+      margin,
+      var(--space-md),
+    ),
+    'm-6': (
+      margin,
+      var(--space-lg),
+    ),
+    'm-8': (
+      margin,
+      var(--space-xl),
+    ),
+    'm-12': (
+      margin,
+      var(--space-3xl),
+    ),
+  ),
+);
+
+@each $bp, $utils in $_cq-spacing {
+  $width: map.get($container-breakpoints, $bp);
+
+  @container (min-width: #{$width}) {
+    @each $cls, $pair in $utils {
+      .cq-#{$bp}\:#{$cls} {
+        #{nth($pair, 1)}: #{nth($pair, 2)};
+      }
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Text size utilities (sm–lg) — each breakpoint has its own scale
+// ---------------------------------------------------------------------------
+
+$_cq-text: (
+  sm: (
+    xs,
+    sm,
+    base,
+    lg,
+    xl,
+  ),
+  md: (
+    sm,
+    base,
+    lg,
+    xl,
+    2xl,
+  ),
+  lg: (
+    base,
+    lg,
+    xl,
+    2xl,
+    3xl,
+  ),
+);
+
+@each $bp, $sizes in $_cq-text {
+  $width: map.get($container-breakpoints, $bp);
+
+  @container (min-width: #{$width}) {
+    @each $size in $sizes {
+      .cq-#{$bp}\:text-#{$size} {
+        font-size: var(--font-size-#{$size});
+      }
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Component patterns (these use specific container-relative breakpoints)
+// ---------------------------------------------------------------------------
+
+.card-container {
+  container-type: inline-size;
+
+  .card {
+    padding: var(--space-md);
+
+    @container (min-width: 20rem) {
+      padding: var(--space-lg);
+    }
+
+    @container (min-width: 30rem) {
+      padding: var(--space-xl);
+    }
+  }
+
+  .card-title {
+    font-size: var(--font-size-lg);
+
+    @container (min-width: 25rem) {
+      font-size: var(--font-size-xl);
+    }
+
+    @container (min-width: 40rem) {
+      font-size: var(--font-size-2xl);
+    }
+  }
+}
+
+.responsive-card {
+  container-type: inline-size;
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+
+    @container (min-width: 30rem) {
+      flex-direction: row;
+      gap: var(--space-lg);
+    }
+  }
+
+  .card-image {
+    width: 100%;
+    height: 200px;
+
+    @container (min-width: 30rem) {
+      width: 150px;
+      height: 150px;
+    }
+
+    @container (min-width: 45rem) {
+      width: 200px;
+      height: 200px;
+    }
+  }
+}
+
+// Named container patterns
+@container card (min-width: 20rem) {
+  .card-compact {
+    padding: var(--space-sm);
+    font-size: var(--font-size-sm);
+  }
+}
+
+@container card (min-width: 30rem) {
+  .card-normal {
+    padding: var(--space-md);
+    font-size: var(--font-size-base);
+  }
+}
+
+@container card (min-width: 40rem) {
+  .card-spacious {
+    padding: var(--space-lg);
+    font-size: var(--font-size-lg);
+  }
+}
+
+// Sidebar responsive patterns
+@container sidebar (max-width: 15rem) {
+  .sidebar-collapsed {
+    .sidebar-text {
+      display: none;
+    }
+    .sidebar-icon {
+      margin: 0 auto;
+    }
+  }
+}
+
+@container sidebar (min-width: 15rem) {
+  .sidebar-expanded {
+    .sidebar-text {
+      display: inline;
+    }
+    .sidebar-icon {
+      margin-right: var(--space-sm);
+    }
+  }
+}
+
+// Browser support fallback
+@supports not (container-type: inline-size) {
+  .container-fallback {
+    .cq-sm\:hidden,
+    .cq-md\:hidden,
+    .cq-lg\:hidden {
+      display: none !important;
+    }
+  }
+}

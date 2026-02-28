@@ -3,25 +3,13 @@
 
 @use 'sass:map';
 @use 'sass:string';
+@use 'breakpoints-defaults' as defaults;
 
-// Grid breakpoints (align with scss/_variables.scss and tokens)
-$grid-breakpoints: (
-  xs: 0,
-  sm: 640px,
-  md: 768px,
-  lg: 1024px,
-  xl: 1280px,
-  2xl: 1536px,
-) !default;
+$grid-breakpoints: defaults.$grid-breakpoints-default !default;
 
-// Container max widths
-$container-max-widths: (
-  sm: 640px,
-  md: 768px,
-  lg: 1024px,
-  xl: 1280px,
-  2xl: 1536px,
-) !default;
+// Container max widths — derived from $grid-breakpoints to avoid duplication.
+// Remove xs (0) since it has no max-width meaning.
+$container-max-widths: map.remove($grid-breakpoints, xs) !default;
 
 // Grid configuration
 $grid-columns: 12 !default;

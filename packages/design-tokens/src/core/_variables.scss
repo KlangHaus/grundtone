@@ -42,10 +42,5 @@ $space-16: 4rem;
 $space-20: 5rem;
 $space-24: 6rem;
 
-// Breakpoints
-$breakpoint-xs: 0;
-$breakpoint-sm: 640px;
-$breakpoint-md: 768px;
-$breakpoint-lg: 1024px;
-$breakpoint-xl: 1280px;
-$breakpoint-2xl: 1536px;
+// Breakpoints — use $grid-breakpoints map from @grundtone/design-tokens/scss/breakpoints instead.
+// Individual $breakpoint-X variables have been removed to avoid duplication.

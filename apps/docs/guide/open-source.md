@@ -95,7 +95,7 @@ Use this theme in your app (Vue, Nuxt, or React Native) – see
 
 To change spacing, typography, breakpoints, or component structure:
 
-1. **Design tokens** – Edit `packages/design-tokens/scss/index.scss` and
+1. **Design tokens** – Edit `packages/design-tokens/src/index.scss` and
    `packages/design-tokens/src/core/`
 2. **Default theme** – Edit `packages/core/src/theme-preset.ts`
 3. **Components** – Edit Vue components in `packages/vue/src/`

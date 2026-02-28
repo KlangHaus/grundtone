@@ -1,6 +1,9 @@
 // CSS Registered Properties for Enhanced Performance
 // Using @property for type-safe, animatable custom properties
 
+@use 'sass:map';
+@use 'breakpoints-defaults' as bp-def;
+
 // Color properties
 @property --color-primary {
   syntax: '<color>';
@@ -204,35 +207,15 @@
   inherits: false;
 }
 
-// Breakpoint properties (for container queries)
-@property --breakpoint-sm {
-  syntax: '<length>';
-  initial-value: 640px;
-  inherits: false;
-}
-
-@property --breakpoint-md {
-  syntax: '<length>';
-  initial-value: 768px;
-  inherits: false;
-}
-
-@property --breakpoint-lg {
-  syntax: '<length>';
-  initial-value: 1024px;
-  inherits: false;
-}
-
-@property --breakpoint-xl {
-  syntax: '<length>';
-  initial-value: 1280px;
-  inherits: false;
-}
-
-@property --breakpoint-2xl {
-  syntax: '<length>';
-  initial-value: 1536px;
-  inherits: false;
+// Breakpoint properties — generated from the single source of truth
+@each $name, $value in bp-def.$grid-breakpoints-default {
+  @if $value != 0 {
+    @property --breakpoint-#{$name} {
+      syntax: '<length>';
+      initial-value: #{$value};
+      inherits: false;
+    }
+  }
 }
 
 // Z-index properties

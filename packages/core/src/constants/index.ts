@@ -1,5 +1,12 @@
 import type { ThemeConfig } from '../types';
 
+export {
+  BREAKPOINTS,
+  MEDIA_QUERIES,
+  MEDIA_QUERIES_MAX,
+  type BreakpointKey,
+} from './breakpoints';
+
 export const DEFAULT_THEME: ThemeConfig = {
   colors: {
     primary: '#0066CC',

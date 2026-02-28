@@ -14,11 +14,23 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./dist/index.css": "./dist/index.css"
+    "./dist/index.css": "./dist/index.css",
+    "./scss": {
+      "sass": "./src/index.scss",
+      "default": "./src/index.scss"
+    },
+    "./scss/lib": {
+      "sass": "./src/lib.scss",
+      "default": "./src/lib.scss"
+    },
+    "./scss/breakpoints": {
+      "sass": "./src/breakpoints.scss",
+      "default": "./src/breakpoints.scss"
+    }
   },
   "files": [
     "dist",
-    "scss"
+    "src"
   ],
   "repository": {
     "type": "git",
@@ -29,7 +41,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsup && sass --silence-deprecation=if-function scss/index.scss dist/index.css",
+    "build": "tsup && sass --silence-deprecation=if-function src/index.scss dist/index.css",
     "dev": "tsup --watch",
     "clean": "rm -rf .turbo node_modules dist",
     "prepublishOnly": "pnpm run build"
