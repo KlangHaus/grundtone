@@ -279,6 +279,32 @@ media queries or a class:
 
 ---
 
+## Custom Breakpoints
+
+Breakpoints are compiled into `@media` queries at build time via SCSS. Override `$grid-breakpoints`
+**before** importing design-tokens to customize them:
+
+```scss
+// Override breakpoints before importing
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  2xl: 1400px,
+);
+
+@use '@grundtone/design-tokens';
+```
+
+**Defaults:** sm 640px, md 768px, lg 1024px, xl 1280px, 2xl 1536px.
+
+> The CSS custom properties `--breakpoint-sm` etc. are exported to `:root` for informational use
+> (e.g. in JavaScript) but do not affect the compiled media queries.
+
+---
+
 ## Summary
 
 | Package          | Where to configure                   | API                                            |

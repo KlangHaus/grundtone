@@ -1,10 +1,8 @@
 export const gridExamples: Record<string, string> = {
-  'holy-grail': `<div class="grid-holy-grail">
-  <header class="grid-header">Header</header>
-  <nav class="grid-nav">Nav</nav>
-  <main class="grid-main">Main</main>
-  <aside class="grid-aside">Aside</aside>
-  <footer class="grid-footer">Footer</footer>
+  container: `<div class="grid">
+  <div>Item 1</div>
+  <div>Item 2</div>
+  <div>Item 3</div>
 </div>`,
   basic: `<div class="grid grid-cols-3 gap-4">
   <div>1</div>
@@ -14,9 +12,23 @@ export const gridExamples: Record<string, string> = {
   <div>5</div>
   <div>6</div>
 </div>`,
+  gap: `<div class="grid grid-cols-3 gap-8">
+  <div>gap-8</div>
+  <div>gap-8</div>
+  <div>gap-8</div>
+  <div>gap-8</div>
+  <div>gap-8</div>
+  <div>gap-8</div>
+</div>`,
   'col-span': `<div class="grid grid-cols-12 gap-4">
   <div class="col-span-8">Main content (8 cols)</div>
   <div class="col-span-4">Sidebar (4 cols)</div>
+</div>`,
+  'col-span-full': `<div class="grid grid-cols-3 gap-4">
+  <div class="col-span-full">Full width (col-span-full)</div>
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
 </div>`,
   'row-span': `<div class="grid grid-cols-3 grid-rows-3 gap-4">
   <div class="row-span-2">A (2 rows)</div>
@@ -33,6 +45,32 @@ export const gridExamples: Record<string, string> = {
   <div>3</div>
   <div>4</div>
   <div>5</div>
+</div>`,
+  'col-start-end': `<div class="grid grid-cols-6 gap-4">
+  <div class="col-start-2 col-end-6">col-start-2 col-end-6</div>
+  <div class="col-start-1 col-end-4">col-start-1 col-end-4</div>
+  <div class="col-start-4 col-end-7">col-start-4 col-end-7</div>
+</div>`,
+  'flow-col': `<div class="grid grid-rows-3 grid-flow-col gap-4">
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
+  <div>4</div>
+  <div>5</div>
+  <div>6</div>
+</div>`,
+  'grid-center': `<div class="grid-center" style="min-height: 120px">
+  <div>Centered</div>
+</div>`,
+  'auto-fill': `<div class="grid-auto-fill gap-4">
+  <div>1</div>
+  <div>2</div>
+</div>`,
+  'auto-fit-custom': `<div class="grid-auto-fit gap-4" style="--grid-auto-fit-min: 150px">
+  <div>150px min</div>
+  <div>150px min</div>
+  <div>150px min</div>
+  <div>150px min</div>
 </div>`,
   'sidebar-left': `<div class="grid-sidebar-left">
   <aside>Sidebar (auto width)</aside>
@@ -51,6 +89,13 @@ export const gridExamples: Record<string, string> = {
   <div class="card">Card 1</div>
   <div class="card">Card 2</div>
   <div class="card">Card 3</div>
+</div>`,
+  'holy-grail': `<div class="grid-holy-grail">
+  <header class="grid-header">Header</header>
+  <nav class="grid-nav">Nav</nav>
+  <main class="grid-main">Main</main>
+  <aside class="grid-aside">Aside</aside>
+  <footer class="grid-footer">Footer</footer>
 </div>`,
   responsive: `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
   <div>1</div>

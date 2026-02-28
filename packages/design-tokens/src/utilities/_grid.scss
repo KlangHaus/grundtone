@@ -1,8 +1,9 @@
 // CSS Grid Utilities
 // Modern grid layout utilities - single source of truth for grid system
 
-// Breakpoints use CSS variables so they can be overridden in :root
-// Override with: :root { --breakpoint-sm: 720px; --breakpoint-md: 900px; ... }
+@use 'sass:map';
+@use 'sass:string';
+@use '../core/breakpoints' as *;
 
 // Grid container utilities
 .grid {
@@ -628,376 +629,69 @@
 }
 
 // Responsive grid utilities
-@media (min-width: var(--breakpoint-sm, 640px)) {
-  .sm\:grid {
-    display: grid;
-  }
-  .sm\:grid-cols-1 {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
-  .sm\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .sm\:grid-cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .sm\:grid-cols-4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-  .sm\:grid-cols-5 {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
-  .sm\:grid-cols-6 {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
+// Uses $grid-breakpoints from _breakpoints.scss via media-breakpoint-up mixin.
+// To customize breakpoints, override $grid-breakpoints before importing design-tokens.
 
-  .sm\:col-span-1 {
-    grid-column: span 1 / span 1;
-  }
-  .sm\:col-span-2 {
-    grid-column: span 2 / span 2;
-  }
-  .sm\:col-span-3 {
-    grid-column: span 3 / span 3;
-  }
-  .sm\:col-span-4 {
-    grid-column: span 4 / span 4;
-  }
-  .sm\:col-span-5 {
-    grid-column: span 5 / span 5;
-  }
-  .sm\:col-span-6 {
-    grid-column: span 6 / span 6;
-  }
-  .sm\:col-span-full {
-    grid-column: 1 / -1;
+// Max responsive columns per breakpoint (sm is limited to 6)
+$_responsive-grid-cols: (
+  sm: 6,
+  md: 12,
+  lg: 12,
+  xl: 12,
+) !default;
+
+// sm through xl: prefix is simple (sm\:, md\:, etc.)
+@each $bp, $max-cols in $_responsive-grid-cols {
+  @include media-breakpoint-up($bp) {
+    $p: '#{$bp}\\:';
+
+    .#{$p}grid {
+      display: grid;
+    }
+
+    @for $i from 1 through $max-cols {
+      .#{$p}grid-cols-#{$i} {
+        grid-template-columns: repeat(#{$i}, minmax(0, 1fr));
+      }
+    }
+
+    @for $i from 1 through $max-cols {
+      .#{$p}col-span-#{$i} {
+        grid-column: span #{$i} / span #{$i};
+      }
+    }
+
+    .#{$p}col-span-full {
+      grid-column: 1 / -1;
+    }
   }
 }
 
-@media (min-width: var(--breakpoint-md, 768px)) {
-  .md\:grid {
-    display: grid;
-  }
-  .md\:grid-cols-1 {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
-  .md\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .md\:grid-cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .md\:grid-cols-4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-  .md\:grid-cols-5 {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
-  .md\:grid-cols-6 {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-  .md\:grid-cols-7 {
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-  }
-  .md\:grid-cols-8 {
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-  }
-  .md\:grid-cols-9 {
-    grid-template-columns: repeat(9, minmax(0, 1fr));
-  }
-  .md\:grid-cols-10 {
-    grid-template-columns: repeat(10, minmax(0, 1fr));
-  }
-  .md\:grid-cols-11 {
-    grid-template-columns: repeat(11, minmax(0, 1fr));
-  }
-  .md\:grid-cols-12 {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-  }
+// 2xl: handled separately because CSS class names starting with a digit
+// need unicode escaping (\32 = "2") which can't be generated via SCSS interpolation.
+// We iterate $grid-breakpoints to get the native key type for map lookup.
+@each $key, $val in $grid-breakpoints {
+  @if $val == 1536px {
+    @include media-breakpoint-up($key) {
+      .\32 xl\:grid {
+        display: grid;
+      }
 
-  .md\:col-span-1 {
-    grid-column: span 1 / span 1;
-  }
-  .md\:col-span-2 {
-    grid-column: span 2 / span 2;
-  }
-  .md\:col-span-3 {
-    grid-column: span 3 / span 3;
-  }
-  .md\:col-span-4 {
-    grid-column: span 4 / span 4;
-  }
-  .md\:col-span-5 {
-    grid-column: span 5 / span 5;
-  }
-  .md\:col-span-6 {
-    grid-column: span 6 / span 6;
-  }
-  .md\:col-span-7 {
-    grid-column: span 7 / span 7;
-  }
-  .md\:col-span-8 {
-    grid-column: span 8 / span 8;
-  }
-  .md\:col-span-9 {
-    grid-column: span 9 / span 9;
-  }
-  .md\:col-span-10 {
-    grid-column: span 10 / span 10;
-  }
-  .md\:col-span-11 {
-    grid-column: span 11 / span 11;
-  }
-  .md\:col-span-12 {
-    grid-column: span 12 / span 12;
-  }
-  .md\:col-span-full {
-    grid-column: 1 / -1;
-  }
-}
+      @for $i from 1 through 12 {
+        .\32 xl\:grid-cols-#{$i} {
+          grid-template-columns: repeat(#{$i}, minmax(0, 1fr));
+        }
+      }
 
-@media (min-width: var(--breakpoint-lg, 1024px)) {
-  .lg\:grid {
-    display: grid;
-  }
-  .lg\:grid-cols-1 {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
-  .lg\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .lg\:grid-cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .lg\:grid-cols-4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-  .lg\:grid-cols-5 {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
-  .lg\:grid-cols-6 {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-  .lg\:grid-cols-7 {
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-  }
-  .lg\:grid-cols-8 {
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-  }
-  .lg\:grid-cols-9 {
-    grid-template-columns: repeat(9, minmax(0, 1fr));
-  }
-  .lg\:grid-cols-10 {
-    grid-template-columns: repeat(10, minmax(0, 1fr));
-  }
-  .lg\:grid-cols-11 {
-    grid-template-columns: repeat(11, minmax(0, 1fr));
-  }
-  .lg\:grid-cols-12 {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-  }
+      @for $i from 1 through 12 {
+        .\32 xl\:col-span-#{$i} {
+          grid-column: span #{$i} / span #{$i};
+        }
+      }
 
-  .lg\:col-span-1 {
-    grid-column: span 1 / span 1;
-  }
-  .lg\:col-span-2 {
-    grid-column: span 2 / span 2;
-  }
-  .lg\:col-span-3 {
-    grid-column: span 3 / span 3;
-  }
-  .lg\:col-span-4 {
-    grid-column: span 4 / span 4;
-  }
-  .lg\:col-span-5 {
-    grid-column: span 5 / span 5;
-  }
-  .lg\:col-span-6 {
-    grid-column: span 6 / span 6;
-  }
-  .lg\:col-span-7 {
-    grid-column: span 7 / span 7;
-  }
-  .lg\:col-span-8 {
-    grid-column: span 8 / span 8;
-  }
-  .lg\:col-span-9 {
-    grid-column: span 9 / span 9;
-  }
-  .lg\:col-span-10 {
-    grid-column: span 10 / span 10;
-  }
-  .lg\:col-span-11 {
-    grid-column: span 11 / span 11;
-  }
-  .lg\:col-span-12 {
-    grid-column: span 12 / span 12;
-  }
-  .lg\:col-span-full {
-    grid-column: 1 / -1;
-  }
-}
-
-@media (min-width: var(--breakpoint-xl, 1280px)) {
-  .xl\:grid {
-    display: grid;
-  }
-  .xl\:grid-cols-1 {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
-  .xl\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .xl\:grid-cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .xl\:grid-cols-4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-  .xl\:grid-cols-5 {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
-  .xl\:grid-cols-6 {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-  .xl\:grid-cols-7 {
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-  }
-  .xl\:grid-cols-8 {
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-  }
-  .xl\:grid-cols-9 {
-    grid-template-columns: repeat(9, minmax(0, 1fr));
-  }
-  .xl\:grid-cols-10 {
-    grid-template-columns: repeat(10, minmax(0, 1fr));
-  }
-  .xl\:grid-cols-11 {
-    grid-template-columns: repeat(11, minmax(0, 1fr));
-  }
-  .xl\:grid-cols-12 {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-  }
-
-  .xl\:col-span-1 {
-    grid-column: span 1 / span 1;
-  }
-  .xl\:col-span-2 {
-    grid-column: span 2 / span 2;
-  }
-  .xl\:col-span-3 {
-    grid-column: span 3 / span 3;
-  }
-  .xl\:col-span-4 {
-    grid-column: span 4 / span 4;
-  }
-  .xl\:col-span-5 {
-    grid-column: span 5 / span 5;
-  }
-  .xl\:col-span-6 {
-    grid-column: span 6 / span 6;
-  }
-  .xl\:col-span-7 {
-    grid-column: span 7 / span 7;
-  }
-  .xl\:col-span-8 {
-    grid-column: span 8 / span 8;
-  }
-  .xl\:col-span-9 {
-    grid-column: span 9 / span 9;
-  }
-  .xl\:col-span-10 {
-    grid-column: span 10 / span 10;
-  }
-  .xl\:col-span-11 {
-    grid-column: span 11 / span 11;
-  }
-  .xl\:col-span-12 {
-    grid-column: span 12 / span 12;
-  }
-  .xl\:col-span-full {
-    grid-column: 1 / -1;
-  }
-}
-
-@media (min-width: var(--breakpoint-2xl, 1536px)) {
-  .\32 xl\:grid {
-    display: grid;
-  }
-  .\32 xl\:grid-cols-1 {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
-  .\32 xl\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .\32 xl\:grid-cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .\32 xl\:grid-cols-4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-  .\32 xl\:grid-cols-5 {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
-  .\32 xl\:grid-cols-6 {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-  .\32 xl\:grid-cols-7 {
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-  }
-  .\32 xl\:grid-cols-8 {
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-  }
-  .\32 xl\:grid-cols-9 {
-    grid-template-columns: repeat(9, minmax(0, 1fr));
-  }
-  .\32 xl\:grid-cols-10 {
-    grid-template-columns: repeat(10, minmax(0, 1fr));
-  }
-  .\32 xl\:grid-cols-11 {
-    grid-template-columns: repeat(11, minmax(0, 1fr));
-  }
-  .\32 xl\:grid-cols-12 {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-  }
-
-  .\32 xl\:col-span-1 {
-    grid-column: span 1 / span 1;
-  }
-  .\32 xl\:col-span-2 {
-    grid-column: span 2 / span 2;
-  }
-  .\32 xl\:col-span-3 {
-    grid-column: span 3 / span 3;
-  }
-  .\32 xl\:col-span-4 {
-    grid-column: span 4 / span 4;
-  }
-  .\32 xl\:col-span-5 {
-    grid-column: span 5 / span 5;
-  }
-  .\32 xl\:col-span-6 {
-    grid-column: span 6 / span 6;
-  }
-  .\32 xl\:col-span-7 {
-    grid-column: span 7 / span 7;
-  }
-  .\32 xl\:col-span-8 {
-    grid-column: span 8 / span 8;
-  }
-  .\32 xl\:col-span-9 {
-    grid-column: span 9 / span 9;
-  }
-  .\32 xl\:col-span-10 {
-    grid-column: span 10 / span 10;
-  }
-  .\32 xl\:col-span-11 {
-    grid-column: span 11 / span 11;
-  }
-  .\32 xl\:col-span-12 {
-    grid-column: span 12 / span 12;
-  }
-  .\32 xl\:col-span-full {
-    grid-column: 1 / -1;
+      .\32 xl\:col-span-full {
+        grid-column: 1 / -1;
+      }
+    }
   }
 }

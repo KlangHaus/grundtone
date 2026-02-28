@@ -1,11 +1,8 @@
 # Grid Utility
 
-The grid utility provides CSS classes for layout with CSS Grid. Use these classes in HTML when using
-`@grundtone/design-tokens` or `@grundtone/vue`. The grid is included in the design-tokens CSS
-output.
-
-The grid utility is included when you import the design-tokens CSS – see
-[Installation](/guide/installation) for setup. Examples below have a **Code** / **Preview** tab.
+CSS Grid layout classes included in `@grundtone/design-tokens`. Import the design-tokens CSS to use
+them – see [Installation](/guide/installation) for setup. Examples below have a **Code** /
+**Preview** tab.
 
 ---
 
@@ -13,15 +10,9 @@ The grid utility is included when you import the design-tokens CSS – see
 
 ### 1. Create a grid container
 
-Add `grid` to enable grid layout:
+Add `grid` to enable grid layout. Without `grid-cols-N`, items stack vertically:
 
-```html
-<div class="grid">
-  <div>Item 1</div>
-  <div>Item 2</div>
-  <div>Item 3</div>
-</div>
-```
+<CodePreview name="container" />
 
 ### 2. Set number of columns
 
@@ -33,51 +24,21 @@ Use `grid-cols-N` (1–12):
 
 Use `gap-N` for both row and column gap:
 
-```html
-<div class="grid grid-cols-2 gap-4">
-  <div>Item 1</div>
-  <div>Item 2</div>
-  <div>Item 3</div>
-  <div>Item 4</div>
-</div>
-```
+<CodePreview name="gap" />
 
-**Both axes (row + column)** – `gap-N`:
+The gap scale is shared by `gap-N`, `gap-x-N` (column only), and `gap-y-N` (row only):
 
-- `gap-0` (0)
-- `gap-px` (1px)
-- `gap-0-5` (0.125rem)
-- `gap-1` (0.25rem)
-- `gap-1-5` (0.375rem)
-- `gap-2` (0.5rem)
-- `gap-2-5` (0.625rem)
-- `gap-3` (0.75rem)
-- `gap-3-5` (0.875rem)
-- `gap-4` (1rem)
-- `gap-5` (1.25rem)
-- `gap-6` (1.5rem)
-- `gap-7` (1.75rem)
-- `gap-8` (2rem)
-- `gap-9` (2.25rem)
-- `gap-10` (2.5rem)
-- `gap-11` (2.75rem)
-- `gap-12` (3rem)
-- `gap-14` (3.5rem)
-- `gap-16` (4rem)
-- `gap-20` (5rem)
-- `gap-24` (6rem)
-
-**X-axis (column only)** – `gap-x-N`:
-
-- `gap-x-0`, `gap-x-px`, `gap-x-0-5`, `gap-x-1`, `gap-x-1-5`, `gap-x-2`, `gap-x-2-5`, `gap-x-3`,
-  `gap-x-3-5`, `gap-x-4`, `gap-x-5`, `gap-x-6`, `gap-x-7`, `gap-x-8`, `gap-x-9`, `gap-x-10`,
-  `gap-x-11`, `gap-x-12`, `gap-x-14`, `gap-x-16`, `gap-x-20`, `gap-x-24`
-
-**Y-axis (row only)** – `gap-y-N`:
-
-- `gap-y-0`, `gap-y-px`, `gap-y-0-5`, `gap-y-1`, `gap-y-1-5`, `gap-y-2`, `gap-y-2-5`, `gap-y-3`,
-  `gap-y-3-5`, `gap-y-4`, `gap-y-5`, `gap-y-6`, `gap-y-7`, `gap-y-8`, `gap-y-9`, `gap-y-10`,
-  `gap-y-11`, `gap-y-12`, `gap-y-14`, `gap-y-16`, `gap-y-20`, `gap-y-24`
+| Suffix | Value    | Suffix | Value   | Suffix | Value   |
+| ------ | -------- | ------ | ------- | ------ | ------- |
+| `0`    | 0        | `4`    | 1rem    | `11`   | 2.75rem |
+| `px`   | 1px      | `5`    | 1.25rem | `12`   | 3rem    |
+| `0-5`  | 0.125rem | `6`    | 1.5rem  | `14`   | 3.5rem  |
+| `1`    | 0.25rem  | `7`    | 1.75rem | `16`   | 4rem    |
+| `1-5`  | 0.375rem | `8`    | 2rem    | `20`   | 5rem    |
+| `2`    | 0.5rem   | `9`    | 2.25rem | `24`   | 6rem    |
+| `2-5`  | 0.625rem | `10`   | 2.5rem  |        |         |
+| `3`    | 0.75rem  |        |         |        |         |
+| `3-5`  | 0.875rem |        |         |        |         |
 
 ---
 
@@ -110,7 +71,36 @@ Make an item span multiple columns with `col-span-N`:
 
 <CodePreview name="col-span" />
 
-Full width: `col-span-full` (spans all columns).
+Full width with `col-span-full`:
+
+<CodePreview name="col-span-full" />
+
+---
+
+## Column Start / End
+
+Place items at specific column lines with `col-start-N` and `col-end-N` (1–13):
+
+<CodePreview name="col-start-end" />
+
+---
+
+## Auto Flow
+
+Control how items are placed in the grid. Default is row flow (left-to-right, top-to-bottom). Use
+`grid-flow-col` to flow by column instead:
+
+<CodePreview name="flow-col" />
+
+Add `grid-flow-dense` to fill gaps when items have varying spans.
+
+---
+
+## Centering
+
+`grid-center` places all items at the center of their cell:
+
+<CodePreview name="grid-center" />
 
 ---
 
@@ -125,6 +115,9 @@ Format: `{breakpoint}:` + class, e.g. `md:grid-cols-3` or `lg:col-span-6`.
 up. Example: `grid-cols-1 md:grid-cols-2 lg:grid-cols-3` = 1 column by default, 2 from 768px, 3 from
 1024px.
 
+> **Note:** `sm:` supports `grid-cols-1`–`grid-cols-6` and `col-span-1`–`col-span-6`. The `md:`,
+> `lg:`, `xl:`, and `2xl:` breakpoints support the full 1–12 range.
+
 <CodePreview name="responsive" />
 
 **Responsive column span** – full width on mobile, then 8 cols, then 6:
@@ -135,6 +128,9 @@ up. Example: `grid-cols-1 md:grid-cols-2 lg:grid-cols-3` = 1 column by default, 
 
 ## Preset Layouts
 
+Preset layouts use spacing variables (`--space-md`, `--space-lg`, `--space-xl`) for their built-in
+gap. Override these in `:root` to adjust spacing globally.
+
 ### Auto-fit (responsive columns)
 
 Columns grow/shrink with viewport. Min column width is configurable via `--grid-auto-fit-min`
@@ -142,15 +138,21 @@ Columns grow/shrink with viewport. Min column width is configurable via `--grid-
 
 <CodePreview name="auto-fit" />
 
+`grid-auto-fill` works the same way but uses `auto-fill` instead of `auto-fit` — empty tracks are
+preserved rather than collapsed:
+
+<CodePreview name="auto-fill" />
+
 ### Card grid
 
-Predefined auto-fit for cards:
+Predefined auto-fit for cards. Style the card children yourself — the grid only controls column
+width and gap.
 
-| Class           | Min column width |
-| --------------- | ---------------- |
-| `grid-cards-sm` | 200px            |
-| `grid-cards`    | 280px            |
-| `grid-cards-lg` | 360px            |
+| Class           | Min column width | Gap          |
+| --------------- | ---------------- | ------------ |
+| `grid-cards-sm` | 200px            | `--space-md` |
+| `grid-cards`    | 280px            | `--space-lg` |
+| `grid-cards-lg` | 360px            | `--space-xl` |
 
 <CodePreview name="cards" />
 
@@ -164,7 +166,8 @@ Predefined auto-fit for cards:
 
 ### Holy grail layout
 
-Header, nav, main, aside, footer:
+Header, nav, main, aside, footer. Uses named grid areas (`grid-header`, `grid-nav`, `grid-main`,
+`grid-aside`, `grid-footer`):
 
 <CodePreview name="holy-grail" />
 
@@ -178,9 +181,11 @@ Header, nav, main, aside, footer:
 | ------------------------------ | ------------------- |
 | `grid`                         | `display: grid`     |
 | `grid-cols-1` … `grid-cols-12` | Column count        |
-| `grid-rows-1` … `grid-rows-6`  | Row count           |
 | `grid-cols-none`               | No explicit columns |
 | `grid-cols-subgrid`            | Subgrid columns     |
+| `grid-rows-1` … `grid-rows-6`  | Row count           |
+| `grid-rows-none`               | No explicit rows    |
+| `grid-rows-subgrid`            | Subgrid rows        |
 
 ### Gap
 
@@ -190,6 +195,8 @@ Header, nav, main, aside, footer:
 | `gap-x-N`          | Column gap only    |
 | `gap-y-N`          | Row gap only       |
 
+See [gap scale](#_3-add-gap-between-items) for all available values.
+
 ### Column span
 
 | Class                        | Description         |
@@ -197,6 +204,15 @@ Header, nav, main, aside, footer:
 | `col-span-1` … `col-span-12` | Span N columns      |
 | `col-span-full`              | Full width (1 / -1) |
 | `col-auto`                   | Auto placement      |
+
+### Column start / end
+
+| Class                          | Description            |
+| ------------------------------ | ---------------------- |
+| `col-start-1` … `col-start-13` | Start at column line N |
+| `col-start-auto`               | Auto start             |
+| `col-end-1` … `col-end-13`     | End at column line N   |
+| `col-end-auto`                 | Auto end               |
 
 ### Row span
 
@@ -206,44 +222,70 @@ Header, nav, main, aside, footer:
 | `row-span-full`             | Full height    |
 | `row-auto`                  | Auto placement |
 
+### Row start / end
+
+| Class                         | Description         |
+| ----------------------------- | ------------------- |
+| `row-start-1` … `row-start-7` | Start at row line N |
+| `row-start-auto`              | Auto start          |
+| `row-end-1` … `row-end-7`     | End at row line N   |
+| `row-end-auto`                | Auto end            |
+
+### Auto flow
+
+| Class                 | Description                    |
+| --------------------- | ------------------------------ |
+| `grid-flow-row`       | Flow items by row (default)    |
+| `grid-flow-col`       | Flow items by column           |
+| `grid-flow-dense`     | Dense packing                  |
+| `grid-flow-row-dense` | Row flow with dense packing    |
+| `grid-flow-col-dense` | Column flow with dense packing |
+
+### Auto columns / rows
+
+| Class            | Description                         |
+| ---------------- | ----------------------------------- |
+| `auto-cols-auto` | `grid-auto-columns: auto`           |
+| `auto-cols-min`  | `grid-auto-columns: min-content`    |
+| `auto-cols-max`  | `grid-auto-columns: max-content`    |
+| `auto-cols-fr`   | `grid-auto-columns: minmax(0, 1fr)` |
+| `auto-rows-auto` | `grid-auto-rows: auto`              |
+| `auto-rows-min`  | `grid-auto-rows: min-content`       |
+| `auto-rows-max`  | `grid-auto-rows: max-content`       |
+| `auto-rows-fr`   | `grid-auto-rows: minmax(0, 1fr)`    |
+
+### Preset layouts
+
+| Class                | Description                                 |
+| -------------------- | ------------------------------------------- |
+| `grid-auto-fit`      | Responsive columns (auto-fit, min 250px)    |
+| `grid-auto-fill`     | Same as auto-fit but preserves empty tracks |
+| `grid-cards-sm`      | Card grid, min 200px                        |
+| `grid-cards`         | Card grid, min 280px                        |
+| `grid-cards-lg`      | Card grid, min 360px                        |
+| `grid-sidebar-left`  | Sidebar (auto) + main (1fr)                 |
+| `grid-sidebar-right` | Main (1fr) + sidebar (auto)                 |
+| `grid-holy-grail`    | Header, nav, main, aside, footer            |
+| `grid-center`        | `place-items: center`                       |
+| `grid-stretch`       | `place-items: stretch`                      |
+
 ### Responsive prefix
 
 Prepend `{breakpoint}:` to any class to apply it from that viewport width up. Works with grid-cols,
-col-span, gap, etc. See [Responsive Grid](#responsive-grid) for examples.
+col-span, gap, etc. `sm:` supports 1–6 columns/spans; `md:` and above support 1–12. See
+[Responsive Grid](#responsive-grid) for details.
 
 ---
 
 ## Custom breakpoints
 
-Override breakpoints via CSS variables in `:root` (after importing design-tokens):
-
-```css
-:root {
-  --breakpoint-sm: 576px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 992px;
-  --breakpoint-xl: 1200px;
-  --breakpoint-2xl: 1400px;
-}
-```
-
-This affects responsive grid utilities (`sm:`, `md:`, `lg:`, etc.). Defaults: sm 640px, md 768px, lg
-1024px, xl 1280px, 2xl 1536px.
+The default breakpoints can be overridden via CSS variables. See
+[Theme Configuration](/guide/theme-configuration#custom-breakpoints) for details.
 
 ---
 
 ## Custom min width (auto-fit)
 
-Override the default 250px:
+Override the default 250px globally in `:root` or inline per element:
 
-```css
-:root {
-  --grid-auto-fit-min: 300px;
-}
-```
-
-Or inline:
-
-```html
-<div class="grid-auto-fit" style="--grid-auto-fit-min: 200px">...</div>
-```
+<CodePreview name="auto-fit-custom" />
