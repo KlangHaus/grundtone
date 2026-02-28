@@ -5,12 +5,14 @@ import type { Plugin } from 'vite';
 import { gridExamples } from './theme/grid-examples';
 import { containerExamples } from './theme/container-examples';
 import { columnExamples } from './theme/column-examples';
+import { spacingExamples } from './theme/spacing-examples';
 
-/** All code examples merged — grid + containers + columns */
+/** All code examples merged */
 const allExamples: Record<string, string> = {
   ...gridExamples,
   ...containerExamples,
   ...columnExamples,
+  ...spacingExamples,
 };
 
 /**
@@ -100,6 +102,7 @@ export default withMermaid(
               { text: 'Containers', link: '/guide/containers' },
               { text: 'Grid', link: '/guide/grid-utility' },
               { text: 'Columns & Layout', link: '/guide/columns' },
+              { text: 'Spacing & Visibility', link: '/guide/spacing' },
             ],
           },
           {

@@ -85,4 +85,12 @@
   .#{$p}shrink-0 {
     flex-shrink: 0;
   }
+
+  // Visibility (keeps layout space, unlike .hidden)
+  .#{$p}visible {
+    visibility: visible;
+  }
+  .#{$p}invisible {
+    visibility: hidden;
+  }
 }

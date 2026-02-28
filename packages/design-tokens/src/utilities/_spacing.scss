@@ -1,71 +1,67 @@
 // Spacing Utilities
-@use 'sass:map';
+// Margin and padding with logical properties for RTL support. No !important.
+// Naming: .m-{n}, .mx-{n}, .mt-{n}, .ms-{n}, .p-{n}, .px-{n}, .pt-{n}, .ps-{n}
+// x/s/e use logical properties (RTL-aware). t/b use physical properties.
+
 @use '../core/breakpoints' as *;
 
-// Standard spacing scale (0-6)
-$spacers: (
-  0: 0,
-  1: 0.25rem,
-  // 4px
-  2: 0.5rem,
-  // 8px
-  3: 0.75rem,
-  // 12px
-  4: 1rem,
-  // 16px
-  5: 1.25rem,
-  // 20px
-  6: 1.5rem, // 24px
+// Same scale as gap utilities for consistency
+$_spacing-scale: (
+  '0': 0,
+  'px': 1px,
+  '0-5': 0.125rem,
+  '1': 0.25rem,
+  '1-5': 0.375rem,
+  '2': 0.5rem,
+  '2-5': 0.625rem,
+  '3': 0.75rem,
+  '3-5': 0.875rem,
+  '4': 1rem,
+  '5': 1.25rem,
+  '6': 1.5rem,
+  '7': 1.75rem,
+  '8': 2rem,
+  '9': 2.25rem,
+  '10': 2.5rem,
+  '11': 2.75rem,
+  '12': 3rem,
+  '14': 3.5rem,
+  '16': 4rem,
+  '20': 5rem,
+  '24': 6rem,
 );
 
-// Generate margin and padding utilities
-@each $breakpoint in map.keys($grid-breakpoints) {
-  @include media-breakpoint-up($breakpoint) {
-    $infix: breakpoint-infix($breakpoint);
+// Direction abbreviation → CSS property suffix
+$_directions: (
+  '': '',
+  // all sides
+  'x': '-inline',
+  // inline axis (left+right, RTL-aware)
+  'y': '-block',
+  // block axis (top+bottom)
+  't': '-top',
+  'b': '-bottom',
+  's': '-inline-start',
+  // start (left in LTR, right in RTL)
+  'e': '-inline-end', // end (right in LTR, left in RTL)
+);
 
-    @each $prop, $abbrev in (margin: m, padding: p) {
-      @each $size, $length in $spacers {
-        .#{$abbrev}#{$infix}-#{$size} {
-          #{$prop}: $length !important;
-        }
-        .#{$abbrev}t#{$infix}-#{$size},
-        .#{$abbrev}y#{$infix}-#{$size} {
-          #{$prop}-top: $length !important;
-        }
-        .#{$abbrev}r#{$infix}-#{$size},
-        .#{$abbrev}x#{$infix}-#{$size} {
-          #{$prop}-right: $length !important;
-        }
-        .#{$abbrev}b#{$infix}-#{$size},
-        .#{$abbrev}y#{$infix}-#{$size} {
-          #{$prop}-bottom: $length !important;
-        }
-        .#{$abbrev}l#{$infix}-#{$size},
-        .#{$abbrev}x#{$infix}-#{$size} {
-          #{$prop}-left: $length !important;
+@include responsive-variants using ($p) {
+  // Margin and padding scale
+  @each $prop-abbrev, $prop in ('m': margin, 'p': padding) {
+    @each $dir, $suffix in $_directions {
+      @each $size, $value in $_spacing-scale {
+        .#{$p}#{$prop-abbrev}#{$dir}-#{$size} {
+          #{$prop}#{$suffix}: #{$value};
         }
       }
     }
+  }
 
-    // Auto margins
-    .m#{$infix}-auto {
-      margin: auto !important;
-    }
-    .mt#{$infix}-auto,
-    .my#{$infix}-auto {
-      margin-top: auto !important;
-    }
-    .mr#{$infix}-auto,
-    .mx#{$infix}-auto {
-      margin-right: auto !important;
-    }
-    .mb#{$infix}-auto,
-    .my#{$infix}-auto {
-      margin-bottom: auto !important;
-    }
-    .ml#{$infix}-auto,
-    .mx#{$infix}-auto {
-      margin-left: auto !important;
+  // Auto margins (padding doesn't support auto)
+  @each $dir, $suffix in $_directions {
+    .#{$p}m#{$dir}-auto {
+      margin#{$suffix}: auto;
     }
   }
 }
