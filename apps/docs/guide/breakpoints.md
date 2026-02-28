@@ -204,7 +204,8 @@ Spacing, display, flexbox, text-align, width, and grid utilities use these break
 - `sm:`, `md:`, `lg:`, `xl:`, `2xl:` for media query variants (e.g. `md:p-4`, `lg:flex`)
 - `cq-sm:`, `cq-md:`, `cq-lg:`, `cq-xl:` for container query variants
 
-See [Grid Utility](/guide/grid-utility) for grid-specific breakpoint usage.
+See [Grid Utility](/guide/grid-utility) for grid-specific breakpoint usage and
+[Containers](/guide/containers) for container-specific breakpoint usage.
 
 ---
 
@@ -220,9 +221,11 @@ All files live in `src/` — there is no separate `scss/` directory.
 | `src/core/_breakpoints.scss`           | Mixins (`media-breakpoint-up`, etc.), functions, `:root` CSS var export   |
 | `src/breakpoints.scss`                 | Public entry point for `@use '@grundtone/design-tokens/scss/breakpoints'` |
 | `src/utilities/_grid.scss`             | Responsive grid classes (`sm:grid-cols-N`, etc.)                          |
+| `src/utilities/_containers.scss`       | Layout containers (`.container`, `.container-{bp}`, etc.)                 |
 | `src/core/_registered-properties.scss` | `@property --breakpoint-*` declarations (generated from map)              |
 | `src/index.scss`                       | Full CSS entry point (compiles to `dist/index.css`)                       |
 | `src/lib.scss`                         | SCSS-only API (mixins, functions, variables — no CSS output)              |
 
-Container max-widths (`$container-max-widths`) are derived from `$grid-breakpoints` automatically —
-no separate map to maintain.
+Container max-widths are computed dynamically from `$grid-breakpoints` via
+`calc(breakpoint - gutter * 2)` — no separate map to maintain. See [Containers](/guide/containers)
+for details.

@@ -7,10 +7,6 @@
 
 $grid-breakpoints: defaults.$grid-breakpoints-default !default;
 
-// Container max widths — derived from $grid-breakpoints to avoid duplication.
-// Remove xs (0) since it has no max-width meaning.
-$container-max-widths: map.remove($grid-breakpoints, xs) !default;
-
 // Grid configuration
 $grid-columns: 12 !default;
 $grid-gutter-width: 32px !default;

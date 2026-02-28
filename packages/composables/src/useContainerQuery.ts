@@ -47,7 +47,7 @@ export interface UseContainerQueryReturn {
  * @example
  * ```vue
  * <template>
- *   <div ref="containerRef" class="container">
+ *   <div ref="containerRef" class="cq-contain">
  *     <div v-if="matches">Large container content</div>
  *     <div v-else>Small container content</div>
  *   </div>

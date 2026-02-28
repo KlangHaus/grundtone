@@ -2,6 +2,13 @@ import { defineConfig } from 'vitepress';
 import { createHighlighter } from 'shiki';
 import type { Plugin } from 'vite';
 import { gridExamples } from './theme/grid-examples';
+import { containerExamples } from './theme/container-examples';
+
+/** All code examples merged — grid + containers */
+const allExamples: Record<string, string> = {
+  ...gridExamples,
+  ...containerExamples,
+};
 
 /**
  * Vite plugin that provides a virtual module with pre-highlighted code examples.
@@ -26,7 +33,7 @@ function codePreviewHighlightPlugin(): Plugin {
       });
 
       const highlighted: Record<string, { dark: string; light: string }> = {};
-      for (const [name, code] of Object.entries(gridExamples)) {
+      for (const [name, code] of Object.entries(allExamples)) {
         highlighted[name] = {
           dark: highlighter.codeToHtml(code, {
             lang: 'html',
@@ -68,8 +75,14 @@ export default defineConfig({
       { text: 'Installation', link: '/guide/installation' },
       { text: 'Theme Configuration', link: '/guide/theme-configuration' },
       { text: 'Package Architecture', link: '/guide/package-architecture' },
-      { text: 'Grid Utility', link: '/guide/grid-utility' },
-      { text: 'Breakpoints', link: '/guide/breakpoints' },
+      {
+        text: 'Layout',
+        items: [
+          { text: 'Breakpoints', link: '/guide/breakpoints' },
+          { text: 'Containers', link: '/guide/containers' },
+          { text: 'Grid', link: '/guide/grid-utility' },
+        ],
+      },
       { text: 'Open Source', link: '/guide/open-source' },
     ],
 
@@ -85,8 +98,19 @@ export default defineConfig({
               text: 'Package Architecture',
               link: '/guide/package-architecture',
             },
-            { text: 'Grid Utility', link: '/guide/grid-utility' },
+          ],
+        },
+        {
+          text: 'Layout',
+          items: [
             { text: 'Breakpoints', link: '/guide/breakpoints' },
+            { text: 'Containers', link: '/guide/containers' },
+            { text: 'Grid', link: '/guide/grid-utility' },
+          ],
+        },
+        {
+          text: 'Resources',
+          items: [
             { text: 'Open Source & Self-Hosting', link: '/guide/open-source' },
           ],
         },

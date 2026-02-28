@@ -65,8 +65,9 @@ Install when: You use themes, ThemeProvider, or GrundtoneThemeProvider
 **Platform:** Web only
 
 **What it provides:** SCSS variables and functions, compiled CSS with `:root` variables, utility
-classes (grid, gap, display, flexbox, spacing, container queries). For Plain Web, override `:root`
-to customize colors – see [Theme Configuration](/guide/theme-configuration#plain-web-no-framework).
+classes (containers, grid, gap, display, flexbox, spacing, container queries). For Plain Web,
+override `:root` to customize colors – see
+[Theme Configuration](/guide/theme-configuration#plain-web-no-framework).
 
 - No Grundtone dependencies
 - Used by Vue and Plain Web projects that need SCSS or CSS

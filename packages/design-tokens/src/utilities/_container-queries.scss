@@ -5,18 +5,18 @@
 @use 'sass:map';
 
 // ---------------------------------------------------------------------------
-// Container type utilities
+// Container type utilities (cq- prefix to avoid conflict with layout .container)
 // ---------------------------------------------------------------------------
 
-.container {
+.cq-contain {
   container-type: inline-size;
 }
 
-.container-normal {
+.cq-normal {
   container-type: normal;
 }
 
-.container-size {
+.cq-size {
   container-type: size;
 }
 
@@ -24,7 +24,7 @@
 $_named-containers: card, sidebar, main, modal;
 
 @each $name in $_named-containers {
-  .container-#{$name} {
+  .cq-#{$name} {
     container-name: #{$name};
     container-type: inline-size;
   }
