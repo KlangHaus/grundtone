@@ -84,6 +84,7 @@ export default defineConfig({
         ],
       },
       { text: 'Open Source', link: '/guide/open-source' },
+      { text: 'Changelog', link: '/changelog' },
     ],
 
     sidebar: {
@@ -112,6 +113,7 @@ export default defineConfig({
           text: 'Resources',
           items: [
             { text: 'Open Source & Self-Hosting', link: '/guide/open-source' },
+            { text: 'Changelog', link: '/changelog' },
           ],
         },
       ],
