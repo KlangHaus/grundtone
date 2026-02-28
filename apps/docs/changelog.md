@@ -39,9 +39,9 @@ All notable changes to Grundtone are documented here. This page is generated aut
 
 <div v-if="data.pending.length">
 
-## Upcoming
+## Unreleased
 
-These changes are merged but not yet released. They will be included in the next version.
+Changes that are merged and will be included in the next version.
 
 <div v-for="entry in data.pending" :key="entry.id" class="changeset-entry">
 
