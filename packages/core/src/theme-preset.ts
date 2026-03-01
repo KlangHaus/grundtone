@@ -122,15 +122,21 @@ export const defaultColorPresetDark: ColorPreset = {
   neutral: '#9e9e9e',
 };
 
+/**
+ * 8px base unit spacing system.
+ * All values are multiples of the 8px grid (4px = 0.5×, 8px = 1×, 16px = 2×, etc.).
+ * Web: used as rem via CSS custom properties (--space-*).
+ * React Native: convert to numbers (4, 8, 16, 24, 32, 48, 64, 80).
+ */
 const defaultSpacing = {
-  xs: '0.25rem',
-  sm: '0.5rem',
-  md: '1rem',
-  lg: '1.5rem',
-  xl: '2rem',
-  '2xl': '3rem',
-  '3xl': '4rem',
-  '4xl': '5rem',
+  xs: '0.25rem', // 4px  — 0.5× base
+  sm: '0.5rem', //  8px  — 1× base
+  md: '1rem', //    16px — 2× base
+  lg: '1.5rem', //  24px — 3× base
+  xl: '2rem', //    32px — 4× base
+  '2xl': '3rem', // 48px — 6× base
+  '3xl': '4rem', // 64px — 8× base
+  '4xl': '6rem', // 96px — 12× base
 } as const;
 
 const defaultTypography = {
