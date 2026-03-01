@@ -1,41 +1,68 @@
 // Position Utilities
+// Position values, inset shortcuts, and fixed/sticky helpers.
+// Uses CSS custom properties for z-index. No !important.
+// Inset uses logical properties (start/end) for RTL support.
 
-// Position values
-.position-static {
-  position: static !important;
-}
-.position-relative {
-  position: relative !important;
-}
-.position-absolute {
-  position: absolute !important;
-}
-.position-fixed {
-  position: fixed !important;
-}
-.position-sticky {
-  position: sticky !important;
+@use '../core/breakpoints' as *;
+
+@include responsive-variants using ($p) {
+  .#{$p}static {
+    position: static;
+  }
+  .#{$p}relative {
+    position: relative;
+  }
+  .#{$p}absolute {
+    position: absolute;
+  }
+  .#{$p}fixed {
+    position: fixed;
+  }
+  .#{$p}sticky {
+    position: sticky;
+  }
+
+  // Inset (edge pinning)
+  .#{$p}inset-0 {
+    inset: 0;
+  }
+  .#{$p}inset-x-0 {
+    inset-inline: 0;
+  }
+  .#{$p}inset-y-0 {
+    inset-block: 0;
+  }
+  .#{$p}top-0 {
+    top: 0;
+  }
+  .#{$p}bottom-0 {
+    bottom: 0;
+  }
+  .#{$p}start-0 {
+    inset-inline-start: 0;
+  }
+  .#{$p}end-0 {
+    inset-inline-end: 0;
+  }
 }
 
-// Position shortcuts
+// Position shortcuts — combine position + inset + z-index
 .fixed-top {
-  position: fixed !important;
-  top: 0 !important;
-  right: 0 !important;
-  left: 0 !important;
-  z-index: 1030 !important;
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  z-index: var(--z-fixed);
 }
 
 .fixed-bottom {
-  position: fixed !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  left: 0 !important;
-  z-index: 1030 !important;
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: var(--z-fixed);
 }
 
 .sticky-top {
-  position: sticky !important;
-  top: 0 !important;
-  z-index: 1020 !important;
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
 }

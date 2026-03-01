@@ -1,59 +1,14 @@
-// Z-Index System
-// Layering and stacking context management
+// Z-Index Tokens
+// Two-tier system: utility scale (0–50) for layout, semantic tokens (1000+) for components.
+// CSS custom properties (--z-*) are defined in index.scss and registered-properties.
+// This file provides SCSS variables for SCSS consumers via lib.scss.
 
-// Z-index scale
-$z-index-negative: -1 !default;
-$z-index-default: 0 !default;
-$z-index-above: 100 !default;
+// Semantic component layers
+$z-index-dropdown: 1000 !default;
 $z-index-sticky: 1020 !default;
 $z-index-fixed: 1030 !default;
 $z-index-modal-backdrop: 1040 !default;
 $z-index-modal: 1050 !default;
 $z-index-popover: 1060 !default;
 $z-index-tooltip: 1070 !default;
-$z-index-notification: 1080 !default;
-$z-index-top: 9999 !default;
-
-// Component z-index values
-$z-index-dropdown: 1000 !default;
-$z-index-header: 1010 !default;
-$z-index-sidebar: 1020 !default;
-$z-index-overlay: 1030 !default;
-
-// Z-index map
-$z-indexes: (
-  'negative': $z-index-negative,
-  'default': $z-index-default,
-  'above': $z-index-above,
-  'dropdown': $z-index-dropdown,
-  'header': $z-index-header,
-  'sidebar': $z-index-sidebar,
-  'sticky': $z-index-sticky,
-  'fixed': $z-index-fixed,
-  'overlay': $z-index-overlay,
-  'modal-backdrop': $z-index-modal-backdrop,
-  'modal': $z-index-modal,
-  'popover': $z-index-popover,
-  'tooltip': $z-index-tooltip,
-  'notification': $z-index-notification,
-  'top': $z-index-top,
-) !default;
-
-// Export for CSS custom properties
-:root {
-  --z-index-negative: #{$z-index-negative};
-  --z-index-default: #{$z-index-default};
-  --z-index-above: #{$z-index-above};
-  --z-index-dropdown: #{$z-index-dropdown};
-  --z-index-header: #{$z-index-header};
-  --z-index-sidebar: #{$z-index-sidebar};
-  --z-index-sticky: #{$z-index-sticky};
-  --z-index-fixed: #{$z-index-fixed};
-  --z-index-overlay: #{$z-index-overlay};
-  --z-index-modal-backdrop: #{$z-index-modal-backdrop};
-  --z-index-modal: #{$z-index-modal};
-  --z-index-popover: #{$z-index-popover};
-  --z-index-tooltip: #{$z-index-tooltip};
-  --z-index-notification: #{$z-index-notification};
-  --z-index-top: #{$z-index-top};
-}
+$z-index-toast: 1080 !default;

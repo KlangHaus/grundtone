@@ -6,6 +6,7 @@ import { gridExamples } from './theme/grid-examples';
 import { containerExamples } from './theme/container-examples';
 import { columnExamples } from './theme/column-examples';
 import { spacingExamples } from './theme/spacing-examples';
+import { zIndexExamples } from './theme/z-index-examples';
 
 /** All code examples merged */
 const allExamples: Record<string, string> = {
@@ -13,6 +14,7 @@ const allExamples: Record<string, string> = {
   ...containerExamples,
   ...columnExamples,
   ...spacingExamples,
+  ...zIndexExamples,
 };
 
 /**
@@ -102,7 +104,14 @@ export default withMermaid(
               { text: 'Containers', link: '/guide/containers' },
               { text: 'Grid', link: '/guide/grid-utility' },
               { text: 'Columns & Layout', link: '/guide/columns' },
+            ],
+          },
+          {
+            text: 'Utilities',
+            items: [
               { text: 'Spacing & Visibility', link: '/guide/spacing' },
+              { text: 'Position', link: '/guide/position' },
+              { text: 'Z-Index', link: '/guide/z-index' },
             ],
           },
           {

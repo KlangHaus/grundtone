@@ -260,3 +260,9 @@
   initial-value: 1070;
   inherits: false;
 }
+
+@property --z-toast {
+  syntax: '<integer>';
+  initial-value: 1080;
+  inherits: false;
+}

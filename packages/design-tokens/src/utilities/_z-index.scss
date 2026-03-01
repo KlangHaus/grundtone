@@ -1,0 +1,41 @@
+// Z-Index Utilities
+// Utility scale (.z-0 to .z-50) for layout, semantic classes (.z-modal etc.) for components.
+// Semantic classes use CSS custom properties, so themes can override component layering.
+// All support responsive variants via {bp}: prefix. No !important.
+
+@use '../core/breakpoints' as *;
+
+$_z-scale: (
+  'auto': auto,
+  '0': 0,
+  '10': 10,
+  '20': 20,
+  '30': 30,
+  '40': 40,
+  '50': 50,
+);
+
+$_z-semantic: (
+  'dropdown': var(--z-dropdown),
+  'sticky': var(--z-sticky),
+  'fixed': var(--z-fixed),
+  'modal-backdrop': var(--z-modal-backdrop),
+  'modal': var(--z-modal),
+  'popover': var(--z-popover),
+  'tooltip': var(--z-tooltip),
+  'toast': var(--z-toast),
+);
+
+@include responsive-variants using ($p) {
+  @each $name, $value in $_z-scale {
+    .#{$p}z-#{$name} {
+      z-index: #{$value};
+    }
+  }
+
+  @each $name, $value in $_z-semantic {
+    .#{$p}z-#{$name} {
+      z-index: #{$value};
+    }
+  }
+}

@@ -19,6 +19,8 @@ $grid-breakpoints: def.$grid-breakpoints-default !default;
 @use 'utilities/containers';
 @use 'utilities/container-queries';
 @use 'utilities/aspect-ratio';
+@use 'utilities/z-index';
+@use 'utilities/position';
 
 // Fallback values when ThemeProvider has not yet applied theme
 :root {
@@ -112,6 +114,7 @@ $grid-breakpoints: def.$grid-breakpoints-default !default;
   --z-modal: 1050;
   --z-popover: 1060;
   --z-tooltip: 1070;
+  --z-toast: 1080;
 
   // Breakpoints — emitted by _breakpoints.scss :root from $grid-breakpoints map.
   // Do not duplicate here; override via $grid-breakpoints instead.

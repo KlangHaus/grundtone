@@ -119,6 +119,7 @@ export interface GrundtoneZIndexProperties {
   '--z-modal': RegisteredProperty;
   '--z-popover': RegisteredProperty;
   '--z-tooltip': RegisteredProperty;
+  '--z-toast': RegisteredProperty;
 }
 
 // All Registered Properties
@@ -371,6 +372,11 @@ export const GRUNDTONE_REGISTERED_PROPERTIES: GrundtoneRegisteredProperties = {
     initialValue: '1070',
     inherits: false,
   },
+  '--z-toast': {
+    syntax: '<integer>',
+    initialValue: '1080',
+    inherits: false,
+  },
 };
 
 /**
@@ -469,6 +475,7 @@ export const GRUNDTONE_CSS_PROPERTIES = {
   Z_MODAL: '--z-modal',
   Z_POPOVER: '--z-popover',
   Z_TOOLTIP: '--z-tooltip',
+  Z_TOAST: '--z-toast',
 } as const;
 
 export type GrundtoneCSSPropertyName = keyof typeof GRUNDTONE_CSS_PROPERTIES;
