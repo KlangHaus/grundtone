@@ -34,8 +34,12 @@ features:
       typed.
   - title: WCAG Compliant
     details: Accessibility built-in. Semantic colors, contrast checking, and ARIA support.
+  - title: Self-Hosting
+    details:
+      Fork the repo, change the default colors in theme-preset.ts, rebuild, and every package ships
+      your brand out of the box. See Theme Configuration.
   - title: Open Source
     details:
-      MIT licensed. Fork the repo, self-host on your own registry, and customize colors, spacing,
-      and components to match your brand.
+      MIT licensed. Self-host on your own registry and customize colors, spacing, and components to
+      match your brand.
 ---

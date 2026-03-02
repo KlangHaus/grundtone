@@ -2,6 +2,10 @@ import { defineConfig } from 'vitepress';
 import { withMermaid } from 'vitepress-plugin-mermaid';
 import { createHighlighter } from 'shiki';
 import type { Plugin } from 'vite';
+import {
+  colorPreviewPlugin,
+  colorPreviewTransformer,
+} from 'vitepress-plugin-color-preview';
 import { gridExamples } from './theme/grid-examples';
 import { containerExamples } from './theme/container-examples';
 import { columnExamples } from './theme/column-examples';
@@ -67,6 +71,13 @@ export default withMermaid(
 
     ignoreDeadLinks: true,
 
+    markdown: {
+      config(md) {
+        md.use(colorPreviewPlugin);
+      },
+      codeTransformers: [colorPreviewTransformer()],
+    },
+
     vite: {
       plugins: [codePreviewHighlightPlugin()],
       resolve: {
@@ -78,7 +89,13 @@ export default withMermaid(
     },
 
     themeConfig: {
-      nav: [{ text: 'Changelog', link: '/changelog' }],
+      nav: [
+        { text: 'Getting Started', link: '/guide/welcome' },
+        { text: 'Web', link: '/web/colors' },
+        { text: 'React Native', link: '/react-native/colors' },
+        { text: 'Core Concepts', link: '/core/package-architecture' },
+        { text: 'Changelog', link: '/changelog' },
+      ],
 
       sidebar: {
         '/guide/': [
@@ -93,33 +110,55 @@ export default withMermaid(
               },
               {
                 text: 'Package Architecture',
-                link: '/guide/package-architecture',
+                link: '/core/package-architecture',
               },
             ],
+          },
+        ],
+        '/web/': [
+          {
+            text: 'Colors & Theming',
+            items: [{ text: 'Colors & Theming', link: '/web/colors' }],
           },
           {
             text: 'Layout',
             items: [
-              { text: 'Breakpoints', link: '/guide/breakpoints' },
-              { text: 'Containers', link: '/guide/containers' },
-              { text: 'Grid', link: '/guide/grid-utility' },
-              { text: 'Columns & Layout', link: '/guide/columns' },
+              { text: 'Breakpoints', link: '/web/breakpoints' },
+              { text: 'Containers', link: '/web/containers' },
+              { text: 'Grid', link: '/web/grid-utility' },
+              { text: 'Columns & Layout', link: '/web/columns' },
             ],
           },
           {
             text: 'Utilities',
             items: [
-              { text: 'Spacing & Visibility', link: '/guide/spacing' },
-              { text: 'Position', link: '/guide/position' },
-              { text: 'Z-Index', link: '/guide/z-index' },
+              { text: 'Spacing & Visibility', link: '/web/spacing' },
+              { text: 'Position', link: '/web/position' },
+              { text: 'Z-Index', link: '/web/z-index' },
             ],
           },
+        ],
+        '/react-native/': [
           {
-            text: 'Resources',
+            text: 'React Native',
+            items: [
+              { text: 'Colors', link: '/react-native/colors' },
+              { text: 'Spacing', link: '/react-native/spacing' },
+              { text: 'Position', link: '/react-native/position' },
+            ],
+          },
+        ],
+        '/core/': [
+          {
+            text: 'Core Concepts',
             items: [
               {
+                text: 'Package Architecture',
+                link: '/core/package-architecture',
+              },
+              {
                 text: 'Open Source & Self-Hosting',
-                link: '/guide/open-source',
+                link: '/core/open-source',
               },
               { text: 'Changelog', link: '/changelog' },
             ],
