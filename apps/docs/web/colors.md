@@ -14,37 +14,52 @@ etc. This is more flexible and consistent across the system.
 
 ## Brand
 
-:::colors | Color | Token | CSS Variable | Purpose | |---|---|---|---| | #0059b3 | primary |
---color-primary | Primary brand color | | #3381cc | primaryLight | --color-primary-light | Lighter
-shade (hover, tints) | | #003a7a | primaryDark | --color-primary-dark | Darker shade (active,
-pressed) | | #ffffff | onPrimary | --color-on-primary | Text on primary background | | #6c757d |
-secondary | --color-secondary | Secondary brand color | | #868e96 | secondaryLight |
---color-secondary-light | Lighter secondary shade | | #494f54 | secondaryDark |
---color-secondary-dark | Darker secondary shade | :::
+:::colors
+| Color | Token | CSS Variable | Purpose |
+|---|---|---|---|
+| #0059b3 | primary | --color-primary | Primary brand color |
+| #3381cc | primaryLight | --color-primary-light | Lighter shade (hover, tints) |
+| #003a7a | primaryDark | --color-primary-dark | Darker shade (active, pressed) |
+| #ffffff | onPrimary | --color-on-primary | Text on primary background |
+| #6c757d | secondary | --color-secondary | Secondary brand color |
+| #868e96 | secondaryLight | --color-secondary-light | Lighter secondary shade |
+| #494f54 | secondaryDark | --color-secondary-dark | Darker secondary shade |
+:::
 
 ---
 
 ## Status
 
-:::colors | Color | Token | CSS Variable | Purpose | |---|---|---|---| | #198754 | success |
---color-success | Success state | | #d1e7dd | successLight | --color-success-light | Success
-background tint | | #146c43 | successDark | --color-success-dark | Darker success shade | | #ffc107
-| warning | --color-warning | Warning state | | #fff3cd | warningLight | --color-warning-light |
-Warning background tint | | #cc9a06 | warningDark | --color-warning-dark | Darker warning shade | |
-#dc3545 | error | --color-error | Error state | | #f8d7da | errorLight | --color-error-light | Error
-background tint | | #b02a37 | errorDark | --color-error-dark | Darker error shade | | #0dcaf0 | info
-| --color-info | Info state | | #cff4fc | infoLight | --color-info-light | Info background tint | |
-#0aa2c0 | infoDark | --color-info-dark | Darker info shade | :::
+:::colors
+| Color | Token | CSS Variable | Purpose |
+|---|---|---|---|
+| #198754 | success | --color-success | Success state |
+| #d1e7dd | successLight | --color-success-light | Success background tint |
+| #146c43 | successDark | --color-success-dark | Darker success shade |
+| #ffc107 | warning | --color-warning | Warning state |
+| #fff3cd | warningLight | --color-warning-light | Warning background tint |
+| #cc9a06 | warningDark | --color-warning-dark | Darker warning shade |
+| #dc3545 | error | --color-error | Error state |
+| #f8d7da | errorLight | --color-error-light | Error background tint |
+| #b02a37 | errorDark | --color-error-dark | Darker error shade |
+| #0dcaf0 | info | --color-info | Info state |
+| #cff4fc | infoLight | --color-info-light | Info background tint |
+| #0aa2c0 | infoDark | --color-info-dark | Darker info shade |
+:::
 
 ---
 
 ## Surface
 
-:::colors | Color | Token | CSS Variable | Purpose | |---|---|---|---| | #ffffff | background |
---color-background | Page background | | #fafafa | backgroundAlt | --color-background-alt |
-Alternate sections, zebra rows | | #f8f9fa | surface | --color-surface | Cards, panels | | #f0f1f2 |
-surfaceAlt | --color-surface-alt | Hover state, zebra | | #ffffff | surfaceRaised |
---color-surface-raised | Modals, FABs | :::
+:::colors
+| Color | Token | CSS Variable | Purpose |
+|---|---|---|---|
+| #ffffff | background | --color-background | Page background |
+| #fafafa | backgroundAlt | --color-background-alt | Alternate sections, zebra rows |
+| #f8f9fa | surface | --color-surface | Cards, panels |
+| #f0f1f2 | surfaceAlt | --color-surface-alt | Hover state, zebra |
+| #ffffff | surfaceRaised | --color-surface-raised | Modals, FABs |
+:::
 
 `surfaceOverlay` uses `rgba(255,255,255,0.95)` (semi-transparent).
 
@@ -52,20 +67,28 @@ surfaceAlt | --color-surface-alt | Hover state, zebra | | #ffffff | surfaceRaise
 
 ## Text
 
-:::colors | Color | Token | CSS Variable | Purpose | |---|---|---|---| | #212529 | text |
---color-text | Primary text | | #6c757d | textSecondary | --color-text-secondary | Secondary text |
-| #adb5bd | textTertiary | --color-text-tertiary | Tertiary / hint text | | #ffffff | textInverse |
---color-text-inverse | Text on dark backgrounds | | #a3a3a3 | textPlaceholder |
---color-text-placeholder | Input placeholders | | #d4d4d4 | textDisabled | --color-text-disabled |
-Disabled elements | :::
+:::colors
+| Color | Token | CSS Variable | Purpose |
+|---|---|---|---|
+| #212529 | text | --color-text | Primary text |
+| #6c757d | textSecondary | --color-text-secondary | Secondary text |
+| #adb5bd | textTertiary | --color-text-tertiary | Tertiary / hint text |
+| #ffffff | textInverse | --color-text-inverse | Text on dark backgrounds |
+| #a3a3a3 | textPlaceholder | --color-text-placeholder | Input placeholders |
+| #d4d4d4 | textDisabled | --color-text-disabled | Disabled elements |
+:::
 
 ---
 
 ## Border
 
-:::colors | Color | Token | CSS Variable | Purpose | |---|---|---|---| | #dee2e6 | borderLight |
---color-border-light | Subtle dividers | | #ced4da | borderMedium | --color-border-medium | Default
-inputs | | #adb5bd | borderStrong | --color-border-strong | Focus, emphasized | :::
+:::colors
+| Color | Token | CSS Variable | Purpose |
+|---|---|---|---|
+| #dee2e6 | borderLight | --color-border-light | Subtle dividers |
+| #ced4da | borderMedium | --color-border-medium | Default inputs |
+| #adb5bd | borderStrong | --color-border-strong | Focus, emphasized |
+:::
 
 `borderInverse` uses `rgba(255,255,255,0.2)` (on dark backgrounds).
 
@@ -73,8 +96,12 @@ inputs | | #adb5bd | borderStrong | --color-border-strong | Focus, emphasized | 
 
 ## Focus & Neutral
 
-:::colors | Color | Token | CSS Variable | Purpose | |---|---|---|---| | #0059b3 | focus |
---color-focus | Focus indicator | | #6c757d | neutral | --color-neutral | Neutral UI elements | :::
+:::colors
+| Color | Token | CSS Variable | Purpose |
+|---|---|---|---|
+| #0059b3 | focus | --color-focus | Focus indicator |
+| #6c757d | neutral | --color-neutral | Neutral UI elements |
+:::
 
 `focusRing` uses `rgba(0,89,179,0.25)` (focus ring shadow).
 
@@ -86,39 +113,71 @@ When dark mode is active, tokens resolve to these values:
 
 ### Brand (dark)
 
-:::colors | Color | Token | CSS Variable | |---|---|---| | #4dabf7 | primary | --color-primary | |
-#74c0fc | primaryLight | --color-primary-light | | #339af0 | primaryDark | --color-primary-dark | |
-#121212 | onPrimary | --color-on-primary | | #adb5bd | secondary | --color-secondary | | #ced4da |
-secondaryLight | --color-secondary-light | | #868e96 | secondaryDark | --color-secondary-dark | :::
+:::colors
+| Color | Token | CSS Variable |
+|---|---|---|
+| #4dabf7 | primary | --color-primary |
+| #74c0fc | primaryLight | --color-primary-light |
+| #339af0 | primaryDark | --color-primary-dark |
+| #121212 | onPrimary | --color-on-primary |
+| #adb5bd | secondary | --color-secondary |
+| #ced4da | secondaryLight | --color-secondary-light |
+| #868e96 | secondaryDark | --color-secondary-dark |
+:::
 
 ### Status (dark)
 
-:::colors | Color | Token | CSS Variable | |---|---|---| | #51cf66 | success | --color-success | |
-#1a3d20 | successLight | --color-success-light | | #40c057 | successDark | --color-success-dark | |
-#ffd43b | warning | --color-warning | | #3d3a1a | warningLight | --color-warning-light | | #fab005 |
-warningDark | --color-warning-dark | | #ff6b6b | error | --color-error | | #3d1a1c | errorLight |
---color-error-light | | #fa5252 | errorDark | --color-error-dark | | #4dabf7 | info | --color-info |
-| #1a2e3d | infoLight | --color-info-light | | #339af0 | infoDark | --color-info-dark | :::
+:::colors
+| Color | Token | CSS Variable |
+|---|---|---|
+| #51cf66 | success | --color-success |
+| #1a3d20 | successLight | --color-success-light |
+| #40c057 | successDark | --color-success-dark |
+| #ffd43b | warning | --color-warning |
+| #3d3a1a | warningLight | --color-warning-light |
+| #fab005 | warningDark | --color-warning-dark |
+| #ff6b6b | error | --color-error |
+| #3d1a1c | errorLight | --color-error-light |
+| #fa5252 | errorDark | --color-error-dark |
+| #4dabf7 | info | --color-info |
+| #1a2e3d | infoLight | --color-info-light |
+| #339af0 | infoDark | --color-info-dark |
+:::
 
 ### Surface (dark)
 
-:::colors | Color | Token | CSS Variable | |---|---|---| | #121212 | background | --color-background
-| | #1a1a1a | backgroundAlt | --color-background-alt | | #1e1e1e | surface | --color-surface | |
-#252525 | surfaceAlt | --color-surface-alt | | #2a2a2a | surfaceRaised | --color-surface-raised |
+:::colors
+| Color | Token | CSS Variable |
+|---|---|---|
+| #121212 | background | --color-background |
+| #1a1a1a | backgroundAlt | --color-background-alt |
+| #1e1e1e | surface | --color-surface |
+| #252525 | surfaceAlt | --color-surface-alt |
+| #2a2a2a | surfaceRaised | --color-surface-raised |
 :::
 
 ### Text (dark)
 
-:::colors | Color | Token | CSS Variable | |---|---|---| | #ffffff | text | --color-text | | #b0b0b0
-| textSecondary | --color-text-secondary | | #808080 | textTertiary | --color-text-tertiary | |
-#121212 | textInverse | --color-text-inverse | | #666666 | textPlaceholder |
---color-text-placeholder | | #4a4a4a | textDisabled | --color-text-disabled | :::
+:::colors
+| Color | Token | CSS Variable |
+|---|---|---|
+| #ffffff | text | --color-text |
+| #b0b0b0 | textSecondary | --color-text-secondary |
+| #808080 | textTertiary | --color-text-tertiary |
+| #121212 | textInverse | --color-text-inverse |
+| #666666 | textPlaceholder | --color-text-placeholder |
+| #4a4a4a | textDisabled | --color-text-disabled |
+:::
 
 ### Border (dark)
 
-:::colors | Color | Token | CSS Variable | |---|---|---| | #404040 | borderLight |
---color-border-light | | #505050 | borderMedium | --color-border-medium | | #606060 | borderStrong |
---color-border-strong | :::
+:::colors
+| Color | Token | CSS Variable |
+|---|---|---|
+| #404040 | borderLight | --color-border-light |
+| #505050 | borderMedium | --color-border-medium |
+| #606060 | borderStrong | --color-border-strong |
+:::
 
 ---
 
