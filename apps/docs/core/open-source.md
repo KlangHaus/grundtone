@@ -78,7 +78,7 @@ import { createTheme } from '@grundtone/core';
 const { light, dark } = createTheme({
   light: {
     primary: '#your-brand-color',
-    primaryHover: '#your-brand-hover',
+    primaryLight: '#your-brand-light',
     // Override any semantic color
   },
   dark: {

@@ -60,8 +60,8 @@ Add theme customization via the `theme` prop. Configure both light and dark them
   import { createTheme } from '@grundtone/core';
 
   const { light, dark } = createTheme({
-    light: { primary: '#0059b3', primaryHover: '#004a96', onPrimary: '#ffffff' },
-    dark: { primary: '#4dabf7', primaryHover: '#74c0fc', onPrimary: '#121212' },
+    light: { primary: '#0059b3', primaryLight: '#3381cc', onPrimary: '#ffffff' },
+    dark: { primary: '#4dabf7', primaryLight: '#74c0fc', onPrimary: '#121212' },
   });
 
   const themeConfig = {
@@ -79,7 +79,7 @@ Add theme customization via the `theme` prop. Configure both light and dark them
 </template>
 ```
 
-Grid and other utilities are available – see [Grid Utility](/guide/grid-utility).
+Grid and other utilities are available – see [Grid Utility](/web/grid-utility).
 
 Or import explicitly:
 
@@ -120,13 +120,13 @@ export default defineNuxtConfig({
     theme: createTheme({
       light: {
         primary: '#0059b3',
-        primaryHover: '#004a96',
-        primaryActive: '#003a7a',
+        primaryLight: '#3381cc',
+        primaryDark: '#003a7a',
       },
       dark: {
         primary: '#4dabf7',
-        primaryHover: '#74c0fc',
-        primaryActive: '#339af0',
+        primaryLight: '#74c0fc',
+        primaryDark: '#339af0',
       },
     }),
     components: true,
@@ -139,7 +139,7 @@ export default defineNuxtConfig({
 ### Step 3: Use components and utilities
 
 Components and composables are auto-imported. Grid utilities are included – see
-[Grid Utility](/guide/grid-utility).
+[Grid Utility](/web/grid-utility).
 
 ```vue
 <template>
@@ -276,7 +276,7 @@ Override colors in `:root` to match your brand – see
 }
 ```
 
-For grid layouts, use the utility classes – see [Grid Utility](/guide/grid-utility).
+For grid layouts, use the utility classes – see [Grid Utility](/web/grid-utility).
 
 ---
 

@@ -45,7 +45,7 @@ properties for RTL support:
 ## Sticky header
 
 Create a header that stays visible while scrolling, layered above content with
-[z-index](/guide/z-index):
+[z-index](/web/z-index):
 
 <CodePreview name="zi-sticky-header" />
 
@@ -58,7 +58,7 @@ Create a header that stays visible while scrolling, layered above content with
 ## Position shortcuts
 
 Pre-composed classes for common fixed/sticky patterns. Z-index values use CSS custom properties from
-the [z-index token system](/guide/z-index):
+the [z-index token system](/web/z-index):
 
 | Class           | Position | Edges                           | Z-index           |
 | --------------- | -------- | ------------------------------- | ----------------- |

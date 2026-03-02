@@ -3,9 +3,18 @@
 // For SCSS-only API (mixins, functions, variables), use lib.scss instead.
 //
 // Override breakpoints: @use '@grundtone/design-tokens/scss' with ($grid-breakpoints: (...));
+// Override colors:      @use '@grundtone/design-tokens/scss' with ($color-overrides-light: (...), $color-overrides-dark: (...));
 
-@use 'core/breakpoints-defaults' as def;
-$grid-breakpoints: def.$grid-breakpoints-default !default;
+@use 'sass:map';
+@use 'core/breakpoints-defaults' as bp-def;
+@use 'core/color-defaults' as c-def;
+
+$grid-breakpoints: bp-def.$grid-breakpoints-default !default;
+$color-overrides-light: () !default;
+$color-overrides-dark: () !default;
+
+$_colors-light: map.merge(c-def.$colors-light, $color-overrides-light);
+$_colors-dark: map.merge(c-def.$colors-dark, $color-overrides-dark);
 
 @use 'core/variables';
 @use 'core/registered-properties';
@@ -22,39 +31,18 @@ $grid-breakpoints: def.$grid-breakpoints-default !default;
 @use 'utilities/z-index';
 @use 'utilities/position';
 
-// Fallback values when ThemeProvider has not yet applied theme
+// Semantic color tokens — generated from defaults + overrides.
+// Source of truth: @grundtone/core theme-preset.ts
 :root {
-  --color-primary: #0059b3;
-  --color-primary-hover: #004a96;
-  --color-primary-active: #003a7a;
-  --color-on-primary: #ffffff;
+  @each $name, $light-value in $_colors-light {
+    $dark-value: map.get($_colors-dark, $name);
 
-  --color-secondary: #6c757d;
-  --color-secondary-hover: #5a6268;
-  --color-secondary-active: #494f54;
-
-  --color-success: #198754;
-  --color-success-bg: #d1e7dd;
-  --color-warning: #ffc107;
-  --color-warning-bg: #fff3cd;
-  --color-error: #dc3545;
-  --color-error-bg: #f8d7da;
-  --color-info: #0dcaf0;
-  --color-info-bg: #cff4fc;
-
-  --color-background: light-dark(#ffffff, #121212);
-  --color-surface: light-dark(#f8f9fa, #1e1e1e);
-  --color-surface-hover: light-dark(#e9ecef, #2a2a2a);
-
-  --color-text: light-dark(#212529, #ffffff);
-  --color-text-secondary: light-dark(#6c757d, #b0b0b0);
-  --color-text-tertiary: light-dark(#adb5bd, #808080);
-
-  --color-border: light-dark(#dee2e6, #404040);
-  --color-border-hover: light-dark(#adb5bd, #606060);
-  --color-focus: #0059b3;
-  --color-focus-ring: rgba(0, 89, 179, 0.25);
-  --color-neutral: #6c757d;
+    @if $dark-value {
+      --color-#{$name}: light-dark(#{$light-value}, #{$dark-value});
+    } @else {
+      --color-#{$name}: #{$light-value};
+    }
+  }
 
   // Typography
   --font-family-base: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;

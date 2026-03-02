@@ -35,3 +35,13 @@ export { GrundtoneThemeProvider, GrundtoneThemeContext } from './ThemeContext';
 export type { GrundtoneThemeContextValue, ThemeMode } from './ThemeContext';
 export { useGrundtoneTheme } from './useGrundtoneTheme';
 export type { Theme } from '@grundtone/core';
+
+// Branding
+export {
+  defaultLogoSource,
+  getLogoSource,
+  defaultBranding,
+  createBranding,
+  LOGO_VARIANT_SIZES,
+} from './branding';
+export type { BrandingConfig, LogoVariants } from './branding';

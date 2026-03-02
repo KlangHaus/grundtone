@@ -277,7 +277,7 @@ Prepend `{breakpoint}:` to any class to apply it from that viewport width up. Wo
 col-span, col-start/end, row-span/start/end, gap, and grid-flow. `sm:` supports 1–6 columns/spans;
 `md:` and above support 1–12. See [Responsive Grid](#responsive-grid) for details.
 
-For alignment, ordering, and display utilities, see [Columns & Layout](/guide/columns).
+For alignment, ordering, and display utilities, see [Columns & Layout](/web/columns).
 
 ---
 

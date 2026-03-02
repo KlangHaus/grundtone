@@ -52,7 +52,7 @@ override `:root` to customize colors – see
 - No Grundtone dependencies
 - Used by Vue and Plain Web projects that need SCSS or CSS
 - All breakpoint values come from a single source of truth (`_breakpoints-defaults.scss`) — see
-  [Breakpoints](/guide/breakpoints#architecture)
+  [Breakpoints](/web/breakpoints#architecture)
 
 ```
 Install when: You use Vue, Nuxt, or Plain Web and need tokens in SCSS/CSS

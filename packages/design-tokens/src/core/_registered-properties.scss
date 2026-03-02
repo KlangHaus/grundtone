@@ -4,22 +4,29 @@
 @use 'sass:map';
 @use 'breakpoints-defaults' as bp-def;
 
-// Color properties
+// Color properties — aligned with @grundtone/core semantic tokens
+// Brand
 @property --color-primary {
   syntax: '<color>';
   initial-value: #0059b3;
   inherits: false;
 }
 
-@property --color-primary-hover {
+@property --color-primary-light {
   syntax: '<color>';
-  initial-value: #004a96;
+  initial-value: #3381cc;
   inherits: false;
 }
 
-@property --color-primary-active {
+@property --color-primary-dark {
   syntax: '<color>';
   initial-value: #003a7a;
+  inherits: false;
+}
+
+@property --color-on-primary {
+  syntax: '<color>';
+  initial-value: #ffffff;
   inherits: false;
 }
 
@@ -29,9 +36,34 @@
   inherits: false;
 }
 
+@property --color-secondary-light {
+  syntax: '<color>';
+  initial-value: #868e96;
+  inherits: false;
+}
+
+@property --color-secondary-dark {
+  syntax: '<color>';
+  initial-value: #494f54;
+  inherits: false;
+}
+
+// Status
 @property --color-success {
   syntax: '<color>';
-  initial-value: #28a745;
+  initial-value: #198754;
+  inherits: false;
+}
+
+@property --color-success-light {
+  syntax: '<color>';
+  initial-value: #d1e7dd;
+  inherits: false;
+}
+
+@property --color-success-dark {
+  syntax: '<color>';
+  initial-value: #146c43;
   inherits: false;
 }
 
@@ -41,15 +73,121 @@
   inherits: false;
 }
 
+@property --color-warning-light {
+  syntax: '<color>';
+  initial-value: #fff3cd;
+  inherits: false;
+}
+
+@property --color-warning-dark {
+  syntax: '<color>';
+  initial-value: #cc9a06;
+  inherits: false;
+}
+
 @property --color-error {
   syntax: '<color>';
   initial-value: #dc3545;
   inherits: false;
 }
 
+@property --color-error-light {
+  syntax: '<color>';
+  initial-value: #f8d7da;
+  inherits: false;
+}
+
+@property --color-error-dark {
+  syntax: '<color>';
+  initial-value: #b02a37;
+  inherits: false;
+}
+
 @property --color-info {
   syntax: '<color>';
-  initial-value: #17a2b8;
+  initial-value: #0dcaf0;
+  inherits: false;
+}
+
+@property --color-info-light {
+  syntax: '<color>';
+  initial-value: #cff4fc;
+  inherits: false;
+}
+
+@property --color-info-dark {
+  syntax: '<color>';
+  initial-value: #0aa2c0;
+  inherits: false;
+}
+
+// Surface
+@property --color-background-alt {
+  syntax: '<color>';
+  initial-value: #fafafa;
+  inherits: false;
+}
+
+@property --color-surface-alt {
+  syntax: '<color>';
+  initial-value: #f0f1f2;
+  inherits: false;
+}
+
+@property --color-surface-raised {
+  syntax: '<color>';
+  initial-value: #ffffff;
+  inherits: false;
+}
+
+// Text
+@property --color-text-inverse {
+  syntax: '<color>';
+  initial-value: #ffffff;
+  inherits: false;
+}
+
+@property --color-text-placeholder {
+  syntax: '<color>';
+  initial-value: #a3a3a3;
+  inherits: false;
+}
+
+@property --color-text-disabled {
+  syntax: '<color>';
+  initial-value: #d4d4d4;
+  inherits: false;
+}
+
+// Border
+@property --color-border-light {
+  syntax: '<color>';
+  initial-value: #dee2e6;
+  inherits: false;
+}
+
+@property --color-border-medium {
+  syntax: '<color>';
+  initial-value: #ced4da;
+  inherits: false;
+}
+
+@property --color-border-strong {
+  syntax: '<color>';
+  initial-value: #adb5bd;
+  inherits: false;
+}
+
+// Focus
+@property --color-focus {
+  syntax: '<color>';
+  initial-value: #0059b3;
+  inherits: false;
+}
+
+@property --color-neutral {
+  syntax: '<color>';
+  initial-value: #6c757d;
   inherits: false;
 }
 

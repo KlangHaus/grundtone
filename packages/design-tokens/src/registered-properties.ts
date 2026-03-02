@@ -48,16 +48,44 @@ export interface RegisteredProperty {
   inherits: boolean;
 }
 
-// Color Properties
+// Color Properties — aligned with @grundtone/core semantic tokens
 export interface GrundtoneColorProperties {
+  // Brand
   '--color-primary': RegisteredProperty;
-  '--color-primary-hover': RegisteredProperty;
-  '--color-primary-active': RegisteredProperty;
+  '--color-primary-light': RegisteredProperty;
+  '--color-primary-dark': RegisteredProperty;
+  '--color-on-primary': RegisteredProperty;
   '--color-secondary': RegisteredProperty;
+  '--color-secondary-light': RegisteredProperty;
+  '--color-secondary-dark': RegisteredProperty;
+  // Status
   '--color-success': RegisteredProperty;
+  '--color-success-light': RegisteredProperty;
+  '--color-success-dark': RegisteredProperty;
   '--color-warning': RegisteredProperty;
+  '--color-warning-light': RegisteredProperty;
+  '--color-warning-dark': RegisteredProperty;
   '--color-error': RegisteredProperty;
+  '--color-error-light': RegisteredProperty;
+  '--color-error-dark': RegisteredProperty;
   '--color-info': RegisteredProperty;
+  '--color-info-light': RegisteredProperty;
+  '--color-info-dark': RegisteredProperty;
+  // Surface
+  '--color-background-alt': RegisteredProperty;
+  '--color-surface-alt': RegisteredProperty;
+  '--color-surface-raised': RegisteredProperty;
+  // Text
+  '--color-text-inverse': RegisteredProperty;
+  '--color-text-placeholder': RegisteredProperty;
+  '--color-text-disabled': RegisteredProperty;
+  // Border
+  '--color-border-light': RegisteredProperty;
+  '--color-border-medium': RegisteredProperty;
+  '--color-border-strong': RegisteredProperty;
+  // Focus & Neutral
+  '--color-focus': RegisteredProperty;
+  '--color-neutral': RegisteredProperty;
 }
 
 // Typography Properties
@@ -134,20 +162,26 @@ export interface GrundtoneRegisteredProperties
 
 // Property Registration Configuration
 export const GRUNDTONE_REGISTERED_PROPERTIES: GrundtoneRegisteredProperties = {
-  // Color properties
+  // Color properties — aligned with @grundtone/core semantic tokens
+  // Brand
   '--color-primary': {
     syntax: '<color>',
     initialValue: '#0059b3',
     inherits: false,
   },
-  '--color-primary-hover': {
+  '--color-primary-light': {
     syntax: '<color>',
-    initialValue: '#004a96',
+    initialValue: '#3381cc',
     inherits: false,
   },
-  '--color-primary-active': {
+  '--color-primary-dark': {
     syntax: '<color>',
     initialValue: '#003a7a',
+    inherits: false,
+  },
+  '--color-on-primary': {
+    syntax: '<color>',
+    initialValue: '#ffffff',
     inherits: false,
   },
   '--color-secondary': {
@@ -155,9 +189,30 @@ export const GRUNDTONE_REGISTERED_PROPERTIES: GrundtoneRegisteredProperties = {
     initialValue: '#6c757d',
     inherits: false,
   },
+  '--color-secondary-light': {
+    syntax: '<color>',
+    initialValue: '#868e96',
+    inherits: false,
+  },
+  '--color-secondary-dark': {
+    syntax: '<color>',
+    initialValue: '#494f54',
+    inherits: false,
+  },
+  // Status
   '--color-success': {
     syntax: '<color>',
-    initialValue: '#28a745',
+    initialValue: '#198754',
+    inherits: false,
+  },
+  '--color-success-light': {
+    syntax: '<color>',
+    initialValue: '#d1e7dd',
+    inherits: false,
+  },
+  '--color-success-dark': {
+    syntax: '<color>',
+    initialValue: '#146c43',
     inherits: false,
   },
   '--color-warning': {
@@ -165,14 +220,103 @@ export const GRUNDTONE_REGISTERED_PROPERTIES: GrundtoneRegisteredProperties = {
     initialValue: '#ffc107',
     inherits: false,
   },
+  '--color-warning-light': {
+    syntax: '<color>',
+    initialValue: '#fff3cd',
+    inherits: false,
+  },
+  '--color-warning-dark': {
+    syntax: '<color>',
+    initialValue: '#cc9a06',
+    inherits: false,
+  },
   '--color-error': {
     syntax: '<color>',
     initialValue: '#dc3545',
     inherits: false,
   },
+  '--color-error-light': {
+    syntax: '<color>',
+    initialValue: '#f8d7da',
+    inherits: false,
+  },
+  '--color-error-dark': {
+    syntax: '<color>',
+    initialValue: '#b02a37',
+    inherits: false,
+  },
   '--color-info': {
     syntax: '<color>',
-    initialValue: '#17a2b8',
+    initialValue: '#0dcaf0',
+    inherits: false,
+  },
+  '--color-info-light': {
+    syntax: '<color>',
+    initialValue: '#cff4fc',
+    inherits: false,
+  },
+  '--color-info-dark': {
+    syntax: '<color>',
+    initialValue: '#0aa2c0',
+    inherits: false,
+  },
+  // Surface
+  '--color-background-alt': {
+    syntax: '<color>',
+    initialValue: '#fafafa',
+    inherits: false,
+  },
+  '--color-surface-alt': {
+    syntax: '<color>',
+    initialValue: '#f0f1f2',
+    inherits: false,
+  },
+  '--color-surface-raised': {
+    syntax: '<color>',
+    initialValue: '#ffffff',
+    inherits: false,
+  },
+  // Text
+  '--color-text-inverse': {
+    syntax: '<color>',
+    initialValue: '#ffffff',
+    inherits: false,
+  },
+  '--color-text-placeholder': {
+    syntax: '<color>',
+    initialValue: '#a3a3a3',
+    inherits: false,
+  },
+  '--color-text-disabled': {
+    syntax: '<color>',
+    initialValue: '#d4d4d4',
+    inherits: false,
+  },
+  // Border
+  '--color-border-light': {
+    syntax: '<color>',
+    initialValue: '#dee2e6',
+    inherits: false,
+  },
+  '--color-border-medium': {
+    syntax: '<color>',
+    initialValue: '#ced4da',
+    inherits: false,
+  },
+  '--color-border-strong': {
+    syntax: '<color>',
+    initialValue: '#adb5bd',
+    inherits: false,
+  },
+  // Focus & Neutral
+  '--color-focus': {
+    syntax: '<color>',
+    initialValue: '#0059b3',
+    inherits: false,
+  },
+  '--color-neutral': {
+    syntax: '<color>',
+    initialValue: '#6c757d',
     inherits: false,
   },
 
@@ -417,15 +561,42 @@ export function registerCSSProperties(
 
 // Property name constants for type safety
 export const GRUNDTONE_CSS_PROPERTIES = {
-  // Colors
+  // Colors — Brand
   COLOR_PRIMARY: '--color-primary',
-  COLOR_PRIMARY_HOVER: '--color-primary-hover',
-  COLOR_PRIMARY_ACTIVE: '--color-primary-active',
+  COLOR_PRIMARY_LIGHT: '--color-primary-light',
+  COLOR_PRIMARY_DARK: '--color-primary-dark',
+  COLOR_ON_PRIMARY: '--color-on-primary',
   COLOR_SECONDARY: '--color-secondary',
+  COLOR_SECONDARY_LIGHT: '--color-secondary-light',
+  COLOR_SECONDARY_DARK: '--color-secondary-dark',
+  // Colors — Status
   COLOR_SUCCESS: '--color-success',
+  COLOR_SUCCESS_LIGHT: '--color-success-light',
+  COLOR_SUCCESS_DARK: '--color-success-dark',
   COLOR_WARNING: '--color-warning',
+  COLOR_WARNING_LIGHT: '--color-warning-light',
+  COLOR_WARNING_DARK: '--color-warning-dark',
   COLOR_ERROR: '--color-error',
+  COLOR_ERROR_LIGHT: '--color-error-light',
+  COLOR_ERROR_DARK: '--color-error-dark',
   COLOR_INFO: '--color-info',
+  COLOR_INFO_LIGHT: '--color-info-light',
+  COLOR_INFO_DARK: '--color-info-dark',
+  // Colors — Surface
+  COLOR_BACKGROUND_ALT: '--color-background-alt',
+  COLOR_SURFACE_ALT: '--color-surface-alt',
+  COLOR_SURFACE_RAISED: '--color-surface-raised',
+  // Colors — Text
+  COLOR_TEXT_INVERSE: '--color-text-inverse',
+  COLOR_TEXT_PLACEHOLDER: '--color-text-placeholder',
+  COLOR_TEXT_DISABLED: '--color-text-disabled',
+  // Colors — Border
+  COLOR_BORDER_LIGHT: '--color-border-light',
+  COLOR_BORDER_MEDIUM: '--color-border-medium',
+  COLOR_BORDER_STRONG: '--color-border-strong',
+  // Colors — Focus & Neutral
+  COLOR_FOCUS: '--color-focus',
+  COLOR_NEUTRAL: '--color-neutral',
 
   // Typography
   FONT_SIZE_BASE: '--font-size-base',

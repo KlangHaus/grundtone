@@ -5,34 +5,57 @@ export type ThemeMode = 'light' | 'dark' | 'auto';
 /**
  * Semantic color tokens – configure these to match your brand.
  * All keys map to CSS var: --color-{kebab-case-key}
+ *
+ * Shade-based naming: `primaryLight`/`primaryDark` instead of state-based
+ * (`primaryHover`/`primaryActive`). Components decide which shade to use
+ * for hover, active, tint, etc.
  */
 export interface ThemeColors {
+  // Brand
   primary: string;
-  primaryHover?: string;
-  primaryActive?: string;
-  onPrimary?: string;
+  primaryLight: string;
+  primaryDark: string;
+  onPrimary: string;
   secondary: string;
-  secondaryHover?: string;
-  secondaryActive?: string;
+  secondaryLight: string;
+  secondaryDark: string;
+  // Status
   success: string;
-  successBg?: string;
+  successLight: string;
+  successDark: string;
   warning: string;
-  warningBg?: string;
+  warningLight: string;
+  warningDark: string;
   error: string;
-  errorBg?: string;
+  errorLight: string;
+  errorDark: string;
   info: string;
-  infoBg?: string;
-  neutral?: string;
+  infoLight: string;
+  infoDark: string;
+  // Surface
   background: string;
+  backgroundAlt: string;
   surface: string;
-  surfaceHover?: string;
+  surfaceAlt: string;
+  surfaceRaised: string;
+  surfaceOverlay: string;
+  // Text
   text: string;
   textSecondary: string;
-  textTertiary?: string;
-  border: string;
-  borderHover?: string;
-  focus?: string;
-  focusRing?: string;
+  textTertiary: string;
+  textInverse: string;
+  textPlaceholder: string;
+  textDisabled: string;
+  // Border
+  borderLight: string;
+  borderMedium: string;
+  borderStrong: string;
+  borderInverse: string;
+  // Focus
+  focus: string;
+  focusRing: string;
+  // Neutral
+  neutral: string;
 }
 
 export interface ThemeSpacing {

@@ -109,8 +109,8 @@ export default withMermaid(
                 link: '/guide/theme-configuration',
               },
               {
-                text: 'Package Architecture',
-                link: '/core/package-architecture',
+                text: 'Branding Configuration',
+                link: '/guide/branding-configuration',
               },
             ],
           },
@@ -118,7 +118,10 @@ export default withMermaid(
         '/web/': [
           {
             text: 'Colors & Theming',
-            items: [{ text: 'Colors & Theming', link: '/web/colors' }],
+            items: [
+              { text: 'Colors & Theming', link: '/web/colors' },
+              { text: 'Branding', link: '/web/branding' },
+            ],
           },
           {
             text: 'Layout',
@@ -143,6 +146,7 @@ export default withMermaid(
             text: 'React Native',
             items: [
               { text: 'Colors', link: '/react-native/colors' },
+              { text: 'Branding', link: '/react-native/branding' },
               { text: 'Spacing', link: '/react-native/spacing' },
               { text: 'Position', link: '/react-native/position' },
             ],

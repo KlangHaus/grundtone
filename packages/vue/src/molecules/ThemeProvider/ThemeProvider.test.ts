@@ -326,14 +326,14 @@ describe('ThemeProvider', () => {
         light: {
           colors: {
             primary: '#0059b3',
-            primaryHover: '#004a96',
+            primaryLight: '#004a96',
             onPrimary: '#ffffff',
           },
         },
         dark: {
           colors: {
             primary: '#4dabf7',
-            primaryHover: '#74c0fc',
+            primaryLight: '#74c0fc',
             onPrimary: '#121212',
           },
         },
@@ -360,14 +360,14 @@ describe('ThemeProvider', () => {
         light: {
           colors: {
             primary: '#0059b3',
-            primaryHover: '#004a96',
+            primaryLight: '#004a96',
             onPrimary: '#ffffff',
           },
         },
         dark: {
           colors: {
             primary: '#4dabf7',
-            primaryHover: '#74c0fc',
+            primaryLight: '#74c0fc',
             onPrimary: '#121212',
           },
         },

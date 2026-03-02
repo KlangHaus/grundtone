@@ -260,7 +260,7 @@ When set to `auto` mode:
     padding: var(--space-lg);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--color-border-light);
     transition: all var(--transition-duration-base) var(--transition-timing-ease);
   }
 </style>

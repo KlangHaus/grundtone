@@ -7,13 +7,13 @@ export default defineNuxtConfig({
     theme: createTheme({
       light: {
         primary: '#0059b3',
-        primaryHover: '#004a96',
-        primaryActive: '#003a7a',
+        primaryLight: '#3381cc',
+        primaryDark: '#003a7a',
       },
       dark: {
         primary: '#4dabf7',
-        primaryHover: '#74c0fc',
-        primaryActive: '#339af0',
+        primaryLight: '#74c0fc',
+        primaryDark: '#339af0',
       },
     }),
     components: true,

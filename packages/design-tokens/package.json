@@ -26,6 +26,19 @@
     "./scss/breakpoints": {
       "sass": "./src/breakpoints.scss",
       "default": "./src/breakpoints.scss"
+    },
+    "./scss/colors": {
+      "sass": "./src/colors.scss",
+      "default": "./src/colors.scss"
+    },
+    "./scss/color-palette": {
+      "sass": "./src/core/_color-palette.scss",
+      "default": "./src/core/_color-palette.scss"
+    },
+    "./branding": {
+      "types": "./dist/branding.d.ts",
+      "import": "./dist/branding.js",
+      "require": "./dist/branding.cjs"
     }
   },
   "files": [
@@ -45,6 +58,9 @@
     "dev": "tsup --watch",
     "clean": "rm -rf .turbo node_modules dist",
     "prepublishOnly": "pnpm run build"
+  },
+  "dependencies": {
+    "@grundtone/core": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20.17.45",

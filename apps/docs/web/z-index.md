@@ -68,7 +68,7 @@ properties. This ensures a consistent, predictable stacking order across your en
 
 ## Modal overlay
 
-Combine z-index and [position](/guide/position) utilities for a modal with backdrop:
+Combine z-index and [position](/web/position) utilities for a modal with backdrop:
 
 <CodePreview name="zi-overlay" />
 

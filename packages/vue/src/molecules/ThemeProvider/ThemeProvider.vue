@@ -207,34 +207,59 @@
   :root {
     color-scheme: light dark;
 
+    // Brand
     --color-primary: light-dark(#0059b3, #4dabf7);
-    --color-primary-hover: light-dark(#004a96, #74c0fc);
-    --color-primary-active: light-dark(#003a7a, #339af0);
+    --color-primary-light: light-dark(#3381cc, #74c0fc);
+    --color-primary-dark: light-dark(#003a7a, #339af0);
     --color-on-primary: light-dark(#ffffff, #121212);
     --color-secondary: light-dark(#6c757d, #adb5bd);
-    --color-secondary-hover: light-dark(#5a6268, #ced4da);
-    --color-secondary-active: light-dark(#494f54, #868e96);
+    --color-secondary-light: light-dark(#868e96, #ced4da);
+    --color-secondary-dark: light-dark(#494f54, #868e96);
+    // Status
     --color-success: light-dark(#198754, #51cf66);
-    --color-success-bg: light-dark(#d1e7dd, #1a3d20);
+    --color-success-light: light-dark(#d1e7dd, #1a3d20);
+    --color-success-dark: light-dark(#146c43, #40c057);
     --color-warning: light-dark(#ffc107, #ffd43b);
-    --color-warning-bg: light-dark(#fff3cd, #3d3a1a);
+    --color-warning-light: light-dark(#fff3cd, #3d3a1a);
+    --color-warning-dark: light-dark(#cc9a06, #fab005);
     --color-error: light-dark(#dc3545, #ff6b6b);
-    --color-error-bg: light-dark(#f8d7da, #3d1a1c);
+    --color-error-light: light-dark(#f8d7da, #3d1a1c);
+    --color-error-dark: light-dark(#b02a37, #fa5252);
     --color-info: light-dark(#0dcaf0, #4dabf7);
-    --color-info-bg: light-dark(#cff4fc, #1a2e3d);
+    --color-info-light: light-dark(#cff4fc, #1a2e3d);
+    --color-info-dark: light-dark(#0aa2c0, #339af0);
+    // Surface
     --color-background: light-dark(#ffffff, #121212);
+    --color-background-alt: light-dark(#fafafa, #1a1a1a);
     --color-surface: light-dark(#f8f9fa, #1e1e1e);
-    --color-surface-hover: light-dark(#e9ecef, #2a2a2a);
+    --color-surface-alt: light-dark(#f0f1f2, #252525);
+    --color-surface-raised: light-dark(#ffffff, #2a2a2a);
+    --color-surface-overlay: light-dark(
+      rgba(255, 255, 255, 0.95),
+      rgba(30, 30, 30, 0.95)
+    );
+    // Text
     --color-text: light-dark(#212529, #ffffff);
     --color-text-secondary: light-dark(#6c757d, #b0b0b0);
     --color-text-tertiary: light-dark(#adb5bd, #808080);
-    --color-border: light-dark(#dee2e6, #404040);
-    --color-border-hover: light-dark(#adb5bd, #606060);
+    --color-text-inverse: light-dark(#ffffff, #121212);
+    --color-text-placeholder: light-dark(#a3a3a3, #666666);
+    --color-text-disabled: light-dark(#d4d4d4, #4a4a4a);
+    // Border
+    --color-border-light: light-dark(#dee2e6, #404040);
+    --color-border-medium: light-dark(#ced4da, #505050);
+    --color-border-strong: light-dark(#adb5bd, #606060);
+    --color-border-inverse: light-dark(
+      rgba(255, 255, 255, 0.2),
+      rgba(0, 0, 0, 0.3)
+    );
+    // Focus
     --color-focus: light-dark(#0059b3, #4dabf7);
     --color-focus-ring: light-dark(
       rgba(0, 89, 179, 0.25),
       rgba(77, 171, 247, 0.25)
     );
+    // Neutral
     --color-neutral: light-dark(#6c757d, #9e9e9e);
 
     // Spacing (--space-* matches design-tokens; overridden by applyThemeToDOM)

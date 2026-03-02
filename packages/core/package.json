@@ -9,8 +9,17 @@
   "types": "./dist/index.d.ts",
   "sideEffects": false,
   "files": [
-    "dist/**"
+    "dist/**",
+    "assets/**"
   ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./assets/*": "./assets/*"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/allanasp/grundtone.git",

@@ -204,8 +204,8 @@ Spacing, display, flexbox, text-align, width, and grid utilities use these break
 - `sm:`, `md:`, `lg:`, `xl:`, `2xl:` for media query variants (e.g. `md:p-4`, `lg:flex`)
 - `cq-sm:`, `cq-md:`, `cq-lg:`, `cq-xl:` for container query variants
 
-See [Grid Utility](/guide/grid-utility) for grid-specific breakpoint usage and
-[Containers](/guide/containers) for container-specific breakpoint usage.
+See [Grid Utility](/web/grid-utility) for grid-specific breakpoint usage and
+[Containers](/web/containers) for container-specific breakpoint usage.
 
 ---
 
@@ -227,5 +227,5 @@ All files live in `src/` — there is no separate `scss/` directory.
 | `src/lib.scss`                         | SCSS-only API (mixins, functions, variables — no CSS output)              |
 
 Container max-widths are computed dynamically from `$grid-breakpoints` via
-`calc(breakpoint - gutter * 2)` — no separate map to maintain. See [Containers](/guide/containers)
-for details.
+`calc(breakpoint - gutter * 2)` — no separate map to maintain. See [Containers](/web/containers) for
+details.

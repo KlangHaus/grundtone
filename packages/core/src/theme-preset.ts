@@ -28,31 +28,50 @@ export type ColorPreset = Theme['colors'];
  * Semantic color keys – all colors your app should configure.
  */
 export const SEMANTIC_COLOR_KEYS = [
+  // Brand
   'primary',
-  'primaryHover',
-  'primaryActive',
+  'primaryLight',
+  'primaryDark',
   'onPrimary',
   'secondary',
-  'secondaryHover',
-  'secondaryActive',
+  'secondaryLight',
+  'secondaryDark',
+  // Status
   'success',
-  'successBg',
+  'successLight',
+  'successDark',
   'warning',
-  'warningBg',
+  'warningLight',
+  'warningDark',
   'error',
-  'errorBg',
+  'errorLight',
+  'errorDark',
   'info',
-  'infoBg',
+  'infoLight',
+  'infoDark',
+  // Surface
   'background',
+  'backgroundAlt',
   'surface',
-  'surfaceHover',
+  'surfaceAlt',
+  'surfaceRaised',
+  'surfaceOverlay',
+  // Text
   'text',
   'textSecondary',
   'textTertiary',
-  'border',
-  'borderHover',
+  'textInverse',
+  'textPlaceholder',
+  'textDisabled',
+  // Border
+  'borderLight',
+  'borderMedium',
+  'borderStrong',
+  'borderInverse',
+  // Focus
   'focus',
   'focusRing',
+  // Neutral
   'neutral',
 ] as const;
 
@@ -61,31 +80,50 @@ export const SEMANTIC_COLOR_KEYS = [
  * Copy and customize – do not use passively without reviewing.
  */
 export const defaultColorPreset: ColorPreset = {
+  // Brand
   primary: '#0059b3',
-  primaryHover: '#004a96',
-  primaryActive: '#003a7a',
+  primaryLight: '#3381cc',
+  primaryDark: '#003a7a',
   onPrimary: '#ffffff',
   secondary: '#6c757d',
-  secondaryHover: '#5a6268',
-  secondaryActive: '#494f54',
+  secondaryLight: '#868e96',
+  secondaryDark: '#494f54',
+  // Status
   success: '#198754',
-  successBg: '#d1e7dd',
+  successLight: '#d1e7dd',
+  successDark: '#146c43',
   warning: '#ffc107',
-  warningBg: '#fff3cd',
+  warningLight: '#fff3cd',
+  warningDark: '#cc9a06',
   error: '#dc3545',
-  errorBg: '#f8d7da',
+  errorLight: '#f8d7da',
+  errorDark: '#b02a37',
   info: '#0dcaf0',
-  infoBg: '#cff4fc',
+  infoLight: '#cff4fc',
+  infoDark: '#0aa2c0',
+  // Surface
   background: '#ffffff',
+  backgroundAlt: '#fafafa',
   surface: '#f8f9fa',
-  surfaceHover: '#e9ecef',
+  surfaceAlt: '#f0f1f2',
+  surfaceRaised: '#ffffff',
+  surfaceOverlay: 'rgba(255,255,255,0.95)',
+  // Text
   text: '#212529',
   textSecondary: '#6c757d',
   textTertiary: '#adb5bd',
-  border: '#dee2e6',
-  borderHover: '#adb5bd',
+  textInverse: '#ffffff',
+  textPlaceholder: '#a3a3a3',
+  textDisabled: '#d4d4d4',
+  // Border
+  borderLight: '#dee2e6',
+  borderMedium: '#ced4da',
+  borderStrong: '#adb5bd',
+  borderInverse: 'rgba(255,255,255,0.2)',
+  // Focus
   focus: '#0059b3',
-  focusRing: 'rgba(0, 89, 179, 0.25)',
+  focusRing: 'rgba(0,89,179,0.25)',
+  // Neutral
   neutral: '#6c757d',
 };
 
@@ -93,32 +131,50 @@ export const defaultColorPreset: ColorPreset = {
  * Dark mode preset (standard reference).
  */
 export const defaultColorPresetDark: ColorPreset = {
-  ...defaultColorPreset,
+  // Brand
   primary: '#4dabf7',
-  primaryHover: '#74c0fc',
-  primaryActive: '#339af0',
+  primaryLight: '#74c0fc',
+  primaryDark: '#339af0',
   onPrimary: '#121212',
   secondary: '#adb5bd',
-  secondaryHover: '#ced4da',
-  secondaryActive: '#868e96',
+  secondaryLight: '#ced4da',
+  secondaryDark: '#868e96',
+  // Status
   success: '#51cf66',
-  successBg: '#1a3d20',
+  successLight: '#1a3d20',
+  successDark: '#40c057',
   warning: '#ffd43b',
-  warningBg: '#3d3a1a',
+  warningLight: '#3d3a1a',
+  warningDark: '#fab005',
   error: '#ff6b6b',
-  errorBg: '#3d1a1c',
+  errorLight: '#3d1a1c',
+  errorDark: '#fa5252',
   info: '#4dabf7',
-  infoBg: '#1a2e3d',
+  infoLight: '#1a2e3d',
+  infoDark: '#339af0',
+  // Surface
   background: '#121212',
+  backgroundAlt: '#1a1a1a',
   surface: '#1e1e1e',
-  surfaceHover: '#2a2a2a',
+  surfaceAlt: '#252525',
+  surfaceRaised: '#2a2a2a',
+  surfaceOverlay: 'rgba(30,30,30,0.95)',
+  // Text
   text: '#ffffff',
   textSecondary: '#b0b0b0',
   textTertiary: '#808080',
-  border: '#404040',
-  borderHover: '#606060',
+  textInverse: '#121212',
+  textPlaceholder: '#666666',
+  textDisabled: '#4a4a4a',
+  // Border
+  borderLight: '#404040',
+  borderMedium: '#505050',
+  borderStrong: '#606060',
+  borderInverse: 'rgba(0,0,0,0.3)',
+  // Focus
   focus: '#4dabf7',
-  focusRing: 'rgba(77, 171, 247, 0.25)',
+  focusRing: 'rgba(77,171,247,0.25)',
+  // Neutral
   neutral: '#9e9e9e',
 };
 

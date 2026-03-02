@@ -5,8 +5,24 @@
   background-color: var(--color-background) !important;
 }
 
-.bg-alternative {
+.bg-alt {
+  background-color: var(--color-background-alt) !important;
+}
+
+.bg-surface {
   background-color: var(--color-surface) !important;
+}
+
+.bg-surface-alt {
+  background-color: var(--color-surface-alt) !important;
+}
+
+.bg-surface-raised {
+  background-color: var(--color-surface-raised) !important;
+}
+
+.bg-overlay {
+  background-color: var(--color-surface-overlay) !important;
 }
 
 .bg-modal {
