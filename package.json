@@ -26,7 +26,7 @@
     "changeset:add": "changeset add",
     "changeset:status": "changeset status --verbose",
     "changeset:empty": "changeset add --empty",
-    "version-packages": "changeset version && pnpm install --lockfile-only",
+    "version-packages": "changeset version && npx tsx scripts/add-changelog-dates.ts && pnpm install --lockfile-only",
     "release": "pnpm build:packages && changeset publish",
     "release:snapshot": "pnpm build:packages && changeset version --snapshot && changeset publish --tag snapshot --no-git-tag",
     "release:snapshot:tagged": "pnpm build:packages && changeset version --snapshot",
