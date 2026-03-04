@@ -187,6 +187,10 @@ export default withMermaid(
                 text: 'Open Source & Self-Hosting',
                 link: '/core/open-source',
               },
+              {
+                text: 'Third-Party Acknowledgements',
+                link: '/core/third-party',
+              },
               { text: 'Changelog', link: '/changelog' },
             ],
           },

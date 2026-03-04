@@ -134,21 +134,92 @@ for hero images, full-width banners, or edge-to-edge sections inside a narrow co
 
 ---
 
-## Container query integration
+## Container queries
 
-Every layout container automatically sets `container-type: inline-size`. This means children can use
-container query utility classes without needing a separate `.cq-contain` wrapper:
+Every layout container automatically sets `container-type: inline-size`, making it a container query context. Children can use `cq-` prefixed utility classes that respond to the **container's** width instead of the viewport.
 
-<CodePreview name="ct-cq" />
+This is the key difference from viewport breakpoints (`sm:`, `md:`): a sidebar card at 300px should show single-column layout even on a 1440px screen. Viewport classes can't do that — container queries can.
+
+### CQ vs viewport
+
+Same markup, same `cq-md:grid-cols-2` class — the narrow container stays single-column while the wide one switches to two columns:
+
+<CodePreview name="ct-cq-vs-viewport" />
+
+### CQ breakpoints
+
+| Prefix | Min-width | Pixels |
+|---|---|---|
+| `cq-sm:` | 24rem | 384px |
+| `cq-md:` | 32rem | 512px |
+| `cq-lg:` | 48rem | 768px |
+| `cq-xl:` | 64rem | 1024px |
+| `cq-2xl:` | 80rem | 1280px |
+
+### Grid columns
+
+`cq-sm:grid-cols-2`, `cq-lg:grid-cols-4` — same classes as the [grid utilities](/web/grid-utility), just container-relative:
+
+<CodePreview name="ct-cq-grid" />
+
+### Flex direction
+
+Stack vertically in narrow containers, go horizontal when there's room:
+
+<CodePreview name="ct-cq-flex" />
+
+### Show/hide elements
+
+`cq-md:block` with `hidden` — the label only appears when the container is wide enough:
+
+<CodePreview name="ct-cq-display" />
+
+### Available CQ utilities
+
+All CQ utilities mirror their viewport equivalents with a `cq-{bp}:` prefix:
+
+| Category | Classes | Breakpoints |
+|---|---|---|
+| Display | `block`, `inline-block`, `inline`, `flex`, `inline-flex`, `grid`, `inline-grid`, `hidden` | sm–xl |
+| Grid columns | `grid-cols-1`, `grid-cols-2`, `grid-cols-3`, `grid-cols-4`, `grid-cols-6`, `grid-cols-12` | sm–lg |
+| Flexbox | `flex-row`, `flex-col`, `flex-wrap`, `flex-nowrap`, `justify-start/center/end/between`, `items-start/center/end` | sm–lg |
+| Spacing | `p-0` – `p-12`, `m-0` – `m-12` (scale varies per breakpoint) | sm–lg |
+| Text size | `text-xs` – `text-3xl` (scale varies per breakpoint) | sm–lg |
+
+### Named containers
+
+For component-level container queries, use named containers instead of relying on the nearest ancestor:
+
+<CodePreview name="ct-cq-named" />
 
 ```html
-<!-- No extra class needed — .container IS a CQ context -->
-<div class="container">
-  <div class="cq-md:grid-cols-2 cq-lg:grid-cols-3">
-    Responds to the container's width, not the viewport.
+<div class="cq-card">   <!-- container-name: card -->
+  <div class="card-compact card-normal card-spacious">
+    Content adapts to the card's own width
   </div>
 </div>
 ```
+
+| Class | container-name |
+|---|---|
+| `.cq-card` | `card` |
+| `.cq-sidebar` | `sidebar` |
+| `.cq-main` | `main` |
+| `.cq-modal` | `modal` |
+
+### Container type utilities
+
+If you need a CQ context without a layout container, use these:
+
+| Class | container-type |
+|---|---|
+| `.cq-contain` | `inline-size` |
+| `.cq-size` | `size` |
+| `.cq-normal` | `normal` (reset) |
+
+### Browser support
+
+Container queries are supported in all modern browsers. For older browsers, a `@supports` fallback hides `cq-*:hidden` elements by default.
 
 ---
 
