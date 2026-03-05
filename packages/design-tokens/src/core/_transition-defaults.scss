@@ -1,0 +1,26 @@
+// AUTO-GENERATED — do not edit. Source: @grundtone/core theme-preset.ts
+// Run: pnpm generate:tokens
+
+$duration-fast: 150ms !default;
+$duration-base: 300ms !default;
+$duration-slow: 500ms !default;
+
+$durations: (
+  'fast': 150ms,
+  'base': 300ms,
+  'slow': 500ms,
+);
+
+$ease-ease: cubic-bezier(0.4, 0, 0.2, 1) !default;
+$ease-ease-in: cubic-bezier(0.4, 0, 1, 1) !default;
+$ease-ease-out: cubic-bezier(0, 0, 0.2, 1) !default;
+$ease-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1) !default;
+$ease-linear: linear !default;
+
+$timings: (
+  'ease': cubic-bezier(0.4, 0, 0.2, 1),
+  'ease-in': cubic-bezier(0.4, 0, 1, 1),
+  'ease-out': cubic-bezier(0, 0, 0.2, 1),
+  'ease-in-out': cubic-bezier(0.4, 0, 0.2, 1),
+  'linear': linear,
+);

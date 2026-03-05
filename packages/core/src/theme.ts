@@ -144,6 +144,17 @@ export interface ThemeTransitions {
   };
 }
 
+export interface ThemeZIndex {
+  dropdown: number;
+  sticky: number;
+  fixed: number;
+  modalBackdrop: number;
+  modal: number;
+  popover: number;
+  tooltip: number;
+  toast: number;
+}
+
 export interface Theme {
   mode: ThemeMode;
   colors: ThemeColors;
@@ -152,6 +163,7 @@ export interface Theme {
   shadows: ThemeShadows;
   radius: ThemeRadius;
   transitions: ThemeTransitions;
+  zIndex: ThemeZIndex;
 }
 
 export interface ThemeProviderContext {

@@ -187,7 +187,7 @@ export const defaultColorPresetDark: ColorPreset = {
  * Web: used as rem via CSS custom properties (--space-*).
  * React Native: convert to numbers (4, 8, 16, 24, 32, 48, 64, 80).
  */
-const defaultSpacing = {
+export const defaultSpacing = {
   xs: '0.25rem', // 4px  — 0.5× base
   sm: '0.5rem', //  8px  — 1× base
   md: '1rem', //    16px — 2× base
@@ -198,7 +198,7 @@ const defaultSpacing = {
   '4xl': '6rem', // 96px — 12× base
 } as const;
 
-const defaultTypography = {
+export const defaultTypography = {
   fontFamily: {
     base: "'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif",
     heading:
@@ -235,7 +235,7 @@ const defaultTypography = {
   },
 } as const;
 
-const defaultShadows = {
+export const defaultShadows = {
   xs: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
   sm: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
   md: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
@@ -246,7 +246,7 @@ const defaultShadows = {
   none: 'none',
 } as const;
 
-const defaultRadius = {
+export const defaultRadius = {
   none: '0',
   xs: '0.125rem',
   sm: '0.25rem',
@@ -258,7 +258,7 @@ const defaultRadius = {
   full: '9999px',
 } as const;
 
-const defaultTransitions = {
+export const defaultTransitions = {
   duration: { fast: '150ms', base: '300ms', slow: '500ms' },
   timing: {
     ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
@@ -267,6 +267,17 @@ const defaultTransitions = {
     easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
     linear: 'linear',
   },
+} as const;
+
+export const defaultZIndex = {
+  dropdown: 1000,
+  sticky: 1020,
+  fixed: 1030,
+  modalBackdrop: 1040,
+  modal: 1050,
+  popover: 1060,
+  tooltip: 1070,
+  toast: 1080,
 } as const;
 
 function buildLightTheme(colors: Partial<ColorPreset>): Theme {
@@ -279,6 +290,7 @@ function buildLightTheme(colors: Partial<ColorPreset>): Theme {
     shadows: { ...defaultShadows },
     radius: { ...defaultRadius },
     transitions: { ...defaultTransitions },
+    zIndex: { ...defaultZIndex },
   };
 }
 

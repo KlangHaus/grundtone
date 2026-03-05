@@ -1,51 +1,13 @@
 @use 'sass:map';
+@use 'shadow-defaults' as *;
 
-// Shadow System
-// Box shadows for depth and elevation
-
-// Shadow levels
-$shadows: (
-  'none': none,
-  'subtle': 0 1px 3px rgba(0, 0, 0, 0.1),
-  'light': 0 2px 4px rgba(0, 0, 0, 0.1),
-  'medium': (
-    0 4px 8px rgba(0, 0, 0, 0.12),
-    0 2px 4px rgba(0, 0, 0, 0.08),
-  ),
-  'large': (
-    0 8px 16px rgba(0, 0, 0, 0.15),
-    0 4px 8px rgba(0, 0, 0, 0.1),
-  ),
-  'extra-large': (
-    0 16px 32px rgba(0, 0, 0, 0.15),
-    0 8px 16px rgba(0, 0, 0, 0.1),
-  ),
-  'inner': inset 0 2px 4px rgba(0, 0, 0, 0.1),
-) !default;
-
-// Component specific shadows
-$shadow-card: map.get($shadows, 'light') !default;
-$shadow-modal: map.get($shadows, 'large') !default;
-$shadow-dropdown: map.get($shadows, 'medium') !default;
-$shadow-tooltip: map.get($shadows, 'light') !default;
-$shadow-button-hover: map.get($shadows, 'subtle') !default;
+// Component specific shadows (using generated defaults from core TS)
+$shadow-card: map.get($shadows, 'sm') !default;
+$shadow-modal: map.get($shadows, 'lg') !default;
+$shadow-dropdown: map.get($shadows, 'md') !default;
+$shadow-tooltip: map.get($shadows, 'sm') !default;
+$shadow-button-hover: map.get($shadows, 'xs') !default;
 $shadow-button-active: map.get($shadows, 'inner') !default;
 
 // Focus shadow
 $shadow-focus: 0 0 0 3px rgba(116, 116, 116, 0.5) !default;
-
-// Export for CSS custom properties
-:root {
-  --shadow-none: #{map.get($shadows, 'none')};
-  --shadow-subtle: #{map.get($shadows, 'subtle')};
-  --shadow-light: #{map.get($shadows, 'light')};
-  --shadow-medium: #{map.get($shadows, 'medium')};
-  --shadow-large: #{map.get($shadows, 'large')};
-  --shadow-extra-large: #{map.get($shadows, 'extra-large')};
-  --shadow-inner: #{map.get($shadows, 'inner')};
-  --shadow-focus: #{$shadow-focus};
-  --shadow-card: #{$shadow-card};
-  --shadow-modal: #{$shadow-modal};
-  --shadow-dropdown: #{$shadow-dropdown};
-  --shadow-tooltip: #{$shadow-tooltip};
-}

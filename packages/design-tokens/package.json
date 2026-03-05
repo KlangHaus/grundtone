@@ -54,8 +54,8 @@
     "access": "public"
   },
   "scripts": {
-    "generate:colors": "tsx scripts/generate-color-defaults.ts",
-    "build": "pnpm generate:colors && tsup && sass --silence-deprecation=if-function src/index.scss dist/index.css",
+    "generate:tokens": "tsx scripts/generate-token-defaults.ts",
+    "build": "pnpm generate:tokens && tsup && sass --silence-deprecation=if-function src/index.scss dist/index.css",
     "dev": "tsup --watch",
     "clean": "rm -rf .turbo node_modules dist",
     "prepublishOnly": "pnpm run build"
