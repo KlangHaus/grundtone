@@ -23,7 +23,6 @@ $color-overrides-dark: () !default;
 $_colors-light: map.merge(c-def.$colors-light, $color-overrides-light);
 $_colors-dark: map.merge(c-def.$colors-dark, $color-overrides-dark);
 
-@use 'core/registered-properties';
 @use 'utilities/grid' with (
   $grid-breakpoints-config: $grid-breakpoints
 );
