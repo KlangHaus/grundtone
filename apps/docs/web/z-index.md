@@ -74,11 +74,14 @@ Combine z-index and [position](/web/position) utilities for a modal with backdro
 
 ```html
 <!-- Backdrop covers entire viewport -->
-<div class="fixed inset-0 z-modal-backdrop" style="background: rgba(0,0,0,0.4)">
+<div class="fixed inset-0 z-modal-backdrop bg-modal">
   <!-- Modal dialog centered on top -->
   <div class="z-modal">...</div>
 </div>
 ```
+
+> `.bg-modal` uses the `--color-modal-backdrop` token. See [Colors](/web/colors#background-utilities)
+> for all background utilities.
 
 ---
 

@@ -56,6 +56,7 @@ export const SEMANTIC_COLOR_KEYS = [
   'surfaceAlt',
   'surfaceRaised',
   'surfaceOverlay',
+  'modalBackdrop',
   // Text
   'text',
   'textSecondary',
@@ -108,6 +109,7 @@ export const defaultColorPreset: ColorPreset = {
   surfaceAlt: '#f0f1f2',
   surfaceRaised: '#ffffff',
   surfaceOverlay: 'rgba(255,255,255,0.95)',
+  modalBackdrop: 'rgba(0,0,0,0.5)',
   // Text
   text: '#212529',
   textSecondary: '#6c757d',
@@ -159,6 +161,7 @@ export const defaultColorPresetDark: ColorPreset = {
   surfaceAlt: '#252525',
   surfaceRaised: '#2a2a2a',
   surfaceOverlay: 'rgba(30,30,30,0.95)',
+  modalBackdrop: 'rgba(0,0,0,0.7)',
   // Text
   text: '#ffffff',
   textSecondary: '#b0b0b0',

@@ -39,6 +39,7 @@ export interface ThemeColors {
   surfaceAlt: string;
   surfaceRaised: string;
   surfaceOverlay: string;
+  modalBackdrop: string;
   // Text
   text: string;
   textSecondary: string;

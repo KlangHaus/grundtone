@@ -1,7 +1,14 @@
 # Colors (React Native)
 
-React Native uses the same **37 semantic color tokens** as Web, but accessed via the theme object
-instead of CSS custom properties.
+React Native uses the same **38 semantic color tokens** as Web, but accessed via the theme object
+instead of CSS custom properties. All values come from `@grundtone/core` — the single source of
+truth for both platforms.
+
+## Naming Convention
+
+Tokens use **shade-based** naming (`primaryLight`, `primaryDark`) instead of state-based
+(`primaryHover`, `primaryActive`). Components decide which shade to use for hover, active, tint,
+etc.
 
 ---
 
@@ -70,25 +77,83 @@ function Card({ title, children }) {
 
 ---
 
-## Available Tokens
+## Brand
 
-All 37 tokens from `theme.colors`:
-
-| Category    | Tokens                                                                                                                                                  |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Brand**   | `primary`, `primaryLight`, `primaryDark`, `onPrimary`, `secondary`, `secondaryLight`, `secondaryDark`                                                   |
-| **Status**  | `success`, `successLight`, `successDark`, `warning`, `warningLight`, `warningDark`, `error`, `errorLight`, `errorDark`, `info`, `infoLight`, `infoDark` |
-| **Surface** | `background`, `backgroundAlt`, `surface`, `surfaceAlt`, `surfaceRaised`, `surfaceOverlay`                                                               |
-| **Text**    | `text`, `textSecondary`, `textTertiary`, `textInverse`, `textPlaceholder`, `textDisabled`                                                               |
-| **Border**  | `borderLight`, `borderMedium`, `borderStrong`, `borderInverse`                                                                                          |
-| **Focus**   | `focus`, `focusRing`                                                                                                                                    |
-| **Neutral** | `neutral`                                                                                                                                               |
-
-See [Colors (Web)](/web/colors) for the full reference with hex values and swatches.
+<ColorTokens category="brand" mode="light" />
 
 ---
 
-## Dark Mode
+## Status
+
+<ColorTokens category="status" mode="light" />
+
+---
+
+## Surface
+
+<ColorTokens category="surface" mode="light" />
+
+```tsx
+// Modal backdrop example
+function ModalBackdrop({ visible, children }) {
+  const { theme } = useGrundtoneTheme();
+  if (!visible) return null;
+
+  return (
+    <View style={[StyleSheet.absoluteFill, { backgroundColor: theme.colors.modalBackdrop }]}>
+      {children}
+    </View>
+  );
+}
+```
+
+---
+
+## Text
+
+<ColorTokens category="text" mode="light" />
+
+---
+
+## Border
+
+<ColorTokens category="border" mode="light" />
+
+---
+
+## Focus & Neutral
+
+<ColorTokens category="focus" mode="light" />
+
+---
+
+## Light vs Dark Comparison
+
+Side-by-side comparison of all tokens across modes.
+
+### Brand
+
+<ColorTokens category="brand" mode="compare" />
+
+### Status
+
+<ColorTokens category="status" mode="compare" />
+
+### Surface
+
+<ColorTokens category="surface" mode="compare" />
+
+### Text
+
+<ColorTokens category="text" mode="compare" />
+
+### Border
+
+<ColorTokens category="border" mode="compare" />
+
+---
+
+## Dark Mode Control
 
 The hook provides `isDark` and `setMode` for manual control:
 
@@ -99,12 +164,10 @@ const { theme, isDark, setMode } = useGrundtoneTheme();
 setMode(isDark ? 'light' : 'dark');
 
 // Use in styles
-<View
-  style={{
-    backgroundColor: theme.colors.background,
-  }}
->
-  <Text style={{ color: theme.colors.text }}>{isDark ? 'Dark mode' : 'Light mode'}</Text>
+<View style={{ backgroundColor: theme.colors.background }}>
+  <Text style={{ color: theme.colors.text }}>
+    {isDark ? 'Dark mode' : 'Light mode'}
+  </Text>
 </View>;
 ```
 
@@ -116,7 +179,19 @@ Override only what you need in `createTheme()` — the rest uses defaults:
 
 ```tsx
 const { light, dark } = createTheme({
-  light: { primary: '#e91e63' },
-  dark: { primary: '#f48fb1' },
+  light: {
+    primary: '#e91e63',
+    primaryLight: '#f06292',
+    primaryDark: '#c2185b',
+    onPrimary: '#ffffff',
+  },
+  dark: {
+    primary: '#f48fb1',
+    primaryLight: '#f8bbd0',
+    primaryDark: '#ec407a',
+    onPrimary: '#121212',
+  },
 });
 ```
+
+You can override any of the 38 tokens. Unspecified tokens keep their defaults.

@@ -30,6 +30,7 @@ $_colors-dark: map.merge(c-def.$colors-dark, $color-overrides-dark);
 @use 'utilities/aspect-ratio';
 @use 'utilities/z-index';
 @use 'utilities/position';
+@use 'utilities/background';
 
 // Semantic color tokens — generated from defaults + overrides.
 // Source of truth: @grundtone/core theme-preset.ts
