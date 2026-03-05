@@ -42,6 +42,7 @@ $_colors-dark: map.merge(c-def.$colors-dark, $color-overrides-dark);
 @use 'utilities/rounded';
 @use 'utilities/overflow';
 @use 'utilities/width';
+@use 'utilities/transition';
 
 // All CSS custom properties — generated from @grundtone/core defaults + overrides.
 :root {
@@ -100,44 +101,6 @@ $_colors-dark: map.merge(c-def.$colors-dark, $color-overrides-dark);
   @each $key, $val in tr.$timings {
     --#{$key}: #{$val};
   }
-}
-
-// Performance-optimized transition utility classes
-.transition-colors {
-  transition-property: background-color, border-color, color;
-  transition-duration: var(--duration-fast);
-  transition-timing-function: var(--ease-out);
-}
-
-.transition-fill {
-  transition-property: fill, stroke;
-  transition-duration: var(--duration-fast);
-  transition-timing-function: var(--ease-out);
-}
-
-.transition-shadow {
-  transition-property: box-shadow;
-  transition-duration: var(--duration-fast);
-  transition-timing-function: var(--ease-out);
-}
-
-.transition-transform {
-  transition-property: transform;
-  transition-duration: var(--duration-fast);
-  transition-timing-function: var(--ease-out);
-}
-
-.transition-opacity {
-  transition-property: opacity;
-  transition-duration: var(--duration-fast);
-  transition-timing-function: var(--ease-out);
-}
-
-// Only use if absolutely necessary - prefer specific transitions above
-.transition-all {
-  transition-property: all;
-  transition-duration: var(--duration-fast);
-  transition-timing-function: var(--ease-out);
 }
 
 // Set color scheme for automatic light-dark() function
