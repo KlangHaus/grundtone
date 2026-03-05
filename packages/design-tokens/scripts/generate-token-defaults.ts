@@ -2,6 +2,7 @@
 // Source of truth: @grundtone/core theme-preset.ts
 
 import { writeFileSync } from 'node:fs';
+import { execSync } from 'node:child_process';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
@@ -33,21 +34,26 @@ function formatValue(v: string): string {
   return v;
 }
 
+/** Build a SCSS map — no trailing comma (matches stylelint/prettier output) */
 function buildMap(
   name: string,
   entries: Record<string, string | number>,
 ): string {
-  const lines = Object.entries(entries).map(([key, val]) => {
-    return `  '${toKebab(key)}': ${val}`;
+  const items = Object.entries(entries);
+  const lines = items.map(([key, val], i) => {
+    const comma = i < items.length - 1 ? ',' : '';
+    return `  '${toKebab(key)}': ${val}${comma}`;
   });
-  return `$${name}: (\n${lines.join(',\n')}\n);`;
+  return `$${name}: (\n${lines.join('\n')}\n);`;
 }
 
 function buildColorMap(name: string, colors: Record<string, string>): string {
-  const lines = Object.entries(colors).map(([key, val]) => {
-    return `  '${toKebab(key)}': ${formatValue(val)}`;
+  const items = Object.entries(colors);
+  const lines = items.map(([key, val], i) => {
+    const comma = i < items.length - 1 ? ',' : '';
+    return `  '${toKebab(key)}': ${formatValue(val)}${comma}`;
   });
-  return `$${name}: (\n${lines.join(',\n')}\n);`;
+  return `$${name}: (\n${lines.join('\n')}\n);`;
 }
 
 function writeFile(filename: string, content: string): void {
@@ -85,12 +91,13 @@ writeFile(
 
 // ─── Shadows ──────────────────────────────────────────────────────────────────
 {
-  // Shadow values need quoting for multi-value shadows in SCSS maps
-  const lines = Object.entries(defaultShadows).map(([key, val]) => {
+  const items = Object.entries(defaultShadows);
+  const lines = items.map(([key, val], i) => {
     const scssVal = val === 'none' ? 'none' : `(${val})`;
-    return `  '${toKebab(key)}': ${scssVal}`;
+    const comma = i < items.length - 1 ? ',' : '';
+    return `  '${toKebab(key)}': ${scssVal}${comma}`;
   });
-  const map = `$shadows: (\n${lines.join(',\n')}\n);`;
+  const map = `$shadows: (\n${lines.join('\n')}\n);`;
   writeFile('_shadow-defaults.scss', [HEADER, map, ''].join('\n'));
 }
 
@@ -213,5 +220,11 @@ writeFile(
     ].join('\n'),
   );
 }
+
+// ─── Format generated files to match prettier/stylelint ──────────────────────
+execSync(`prettier --write "${resolve(coreDir, '_*-defaults.scss')}"`, {
+  stdio: 'inherit',
+  cwd: resolve(__dirname, '..'),
+});
 
 console.log('\nAll token defaults generated.');
