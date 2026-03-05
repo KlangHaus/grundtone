@@ -1,123 +1,109 @@
 // Design System Mixins
-// Complete mixin library
+// Only genuinely useful, non-trivial abstractions.
+// Broken/dead mixins removed — see git history for old button, container, grid mixins.
 
 @use 'sass:map';
 @use '../core/breakpoints' as *;
 @use '../core/typography' as type;
-@use '../core/colors' as colors;
 @use '../functions' as func;
 
-// Typography Mixins
+// ─── Typography ──────────────────────────────────────────────────────────────
+
+/// Responsive heading styles (h1–h6).
+/// Uses the $responsive-typography map from _typography.scss so sizes are
+/// defined once and this mixin just applies them.
+///
+/// @param {String} $level - 'h1' through 'h6'
+/// @example @include heading('h2');
+@mixin heading($level) {
+  $sizes: map.get(type.$responsive-typography, $level);
+
+  @if not $sizes {
+    @error "heading(): unknown level '#{$level}'. Use h1–h6.";
+  }
+
+  $weight: if(
+    $level == 'h1' or $level == 'h2' or $level == 'h3',
+    func.font-weight('bold'),
+    func.font-weight('semibold')
+  );
+
+  font-size: map.get($sizes, 'base');
+  font-weight: $weight;
+  line-height: type.$line-height-heading;
+
+  @each $bp in ('md', 'lg', 'xl') {
+    $size: map.get($sizes, $bp);
+    @if $size {
+      @include media-breakpoint-up($bp) {
+        font-size: $size;
+      }
+    }
+  }
+}
+
+// Shorthand aliases
 @mixin h1 {
-  font-size: type.$h1-font-size;
-  font-weight: type.$font-weight-bold;
-  line-height: type.$line-height-heading;
-
-  @include media-breakpoint-up(md) {
-    font-size: type.$h1-font-size-md;
-  }
-  @include media-breakpoint-up(lg) {
-    font-size: type.$h1-font-size-lg;
-  }
-  @include media-breakpoint-up(xl) {
-    font-size: type.$h1-font-size-xl;
-  }
+  @include heading('h1');
 }
-
 @mixin h2 {
-  font-size: type.$h2-font-size;
-  font-weight: type.$font-weight-bold;
-  line-height: type.$line-height-heading;
-
-  @include media-breakpoint-up(md) {
-    font-size: type.$h2-font-size-md;
-  }
-  @include media-breakpoint-up(lg) {
-    font-size: type.$h2-font-size-lg;
-  }
+  @include heading('h2');
 }
-
 @mixin h3 {
-  font-size: type.$h3-font-size;
-  font-weight: type.$font-weight-bold;
-  line-height: type.$line-height-heading;
-
-  @include media-breakpoint-up(md) {
-    font-size: type.$h3-font-size-md;
-  }
-  @include media-breakpoint-up(lg) {
-    font-size: type.$h3-font-size-lg;
-  }
+  @include heading('h3');
 }
-
 @mixin h4 {
-  font-size: type.$h4-font-size;
-  font-weight: type.$font-weight-semibold;
-  line-height: type.$line-height-heading;
-
-  @include media-breakpoint-up(md) {
-    font-size: type.$h4-font-size-md;
-  }
+  @include heading('h4');
 }
-
 @mixin h5 {
-  font-size: type.$h5-font-size;
-  font-weight: type.$font-weight-semibold;
-  line-height: type.$line-height-heading;
-
-  @include media-breakpoint-up(md) {
-    font-size: type.$h5-font-size-md;
-  }
+  @include heading('h5');
 }
-
 @mixin h6 {
-  font-size: type.$h6-font-size;
-  font-weight: type.$font-weight-semibold;
-  line-height: type.$line-height-heading;
-
-  @include media-breakpoint-up(md) {
-    font-size: type.$h6-font-size-md;
-  }
+  @include heading('h6');
 }
 
-// Body text mixins
-@mixin body-copy-text {
-  font-size: type.$font-size-base;
-  line-height: type.$line-height-base;
+/// Body copy — standard paragraph text.
+@mixin body-text {
+  font-size: func.font-size('base');
+  line-height: func.line-height('normal');
 }
 
+/// Small/secondary text.
 @mixin small-text {
-  font-size: type.$font-size-small;
-  line-height: type.$line-height-base;
+  font-size: func.font-size('sm');
+  line-height: func.line-height('normal');
 }
 
+/// Lead paragraph — slightly larger intro text.
 @mixin lead-text {
-  font-size: type.$font-size-lead;
-  line-height: type.$line-height-base;
-  font-weight: type.$font-weight-normal;
+  font-size: func.font-size('xl');
+  line-height: func.line-height('normal');
+  font-weight: func.font-weight('normal');
 }
 
-// Form typography
-@mixin form-label-text {
-  font-size: type.$font-size-form-label;
-  font-weight: type.$font-weight-semibold;
-  line-height: type.$line-height-base;
+// ─── Form typography ─────────────────────────────────────────────────────────
+
+@mixin form-label {
+  font-size: func.font-size('lg');
+  font-weight: func.font-weight('semibold');
+  line-height: func.line-height('normal');
 }
 
-@mixin form-hint-text {
-  font-size: type.$font-size-form-hint;
-  line-height: type.$line-height-base;
+@mixin form-hint {
+  font-size: func.font-size('sm');
+  line-height: func.line-height('normal');
   color: func.color('text-secondary');
 }
 
-@mixin form-error-text {
-  font-size: type.$font-size-form-error;
-  line-height: type.$line-height-base;
+@mixin form-error {
+  font-size: func.font-size('sm');
+  line-height: func.line-height('normal');
   color: func.color('error');
-  font-weight: type.$font-weight-semibold;
+  font-weight: func.font-weight('semibold');
 }
 
-// Focus styles
+// ─── Focus ───────────────────────────────────────────────────────────────────
+
 @mixin focus {
   outline: 3px solid func.color('focus');
   outline-offset: 1px;
@@ -128,111 +114,8 @@
   outline-offset: 0;
 }
 
-// Button mixins
-@mixin button-base {
-  display: inline-block;
-  font-family: type.$font-family-primary;
-  font-size: type.$font-size-button;
-  font-weight: type.$font-weight-medium;
-  line-height: type.$line-height-base;
-  text-align: center;
-  text-decoration: none;
-  vertical-align: middle;
-  cursor: pointer;
-  user-select: none;
-  border: 2px solid transparent;
-  padding: func.units(2) func.units(4);
-  border-radius: func.radius('default');
-  transition: all 0.2s ease-in-out;
+// ─── Accessibility ───────────────────────────────────────────────────────────
 
-  &:focus {
-    @include focus;
-  }
-
-  &:disabled,
-  &.disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-}
-
-@mixin button-primary {
-  @include button-base;
-  background-color: func.color('primary');
-  border-color: func.color('primary');
-  color: func.color('on-primary');
-
-  &:hover:not(:disabled) {
-    background-color: func.color('primary-hover');
-    border-color: func.color('primary-hover');
-  }
-
-  &:active:not(:disabled) {
-    background-color: func.color('primary-active');
-    border-color: func.color('primary-active');
-  }
-}
-
-@mixin button-secondary {
-  @include button-base;
-  background-color: func.color('background');
-  border-color: func.color('primary');
-  color: func.color('primary');
-
-  &:hover:not(:disabled) {
-    background-color: func.color('surface');
-  }
-
-  &:active:not(:disabled) {
-    background-color: func.color('surface-hover');
-  }
-}
-
-// Layout mixins
-@mixin container {
-  width: 100%;
-  padding-right: func.gutter();
-  padding-left: func.gutter();
-  margin-right: auto;
-  margin-left: auto;
-
-  @include media-breakpoint-up(sm) {
-    max-width: func.container-width('sm');
-  }
-
-  @include media-breakpoint-up(md) {
-    max-width: func.container-width('md');
-  }
-
-  @include media-breakpoint-up(lg) {
-    max-width: func.container-width('lg');
-  }
-
-  @include media-breakpoint-up(xl) {
-    max-width: func.container-width('xl');
-  }
-}
-
-@mixin grid-row {
-  display: flex;
-  flex-wrap: wrap;
-  margin-right: calc(func.gutter() / -2);
-  margin-left: calc(func.gutter() / -2);
-}
-
-@mixin grid-col($size: false, $columns: 12) {
-  position: relative;
-  width: 100%;
-  padding-right: calc(func.gutter() / 2);
-  padding-left: calc(func.gutter() / 2);
-
-  @if $size {
-    flex: 0 0 percentage($size / $columns);
-    max-width: percentage($size / $columns);
-  }
-}
-
-// Utility mixins
 @mixin sr-only {
   position: absolute !important;
   width: 1px !important;
@@ -257,12 +140,12 @@
   }
 }
 
-@mixin clearfix {
-  &::after {
-    display: block;
-    clear: both;
-    content: '';
-  }
+// ─── Text ────────────────────────────────────────────────────────────────────
+
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 @mixin unstyled-list {
@@ -270,64 +153,8 @@
   list-style: none;
 }
 
-// State mixins
-@mixin hover {
-  &:hover {
-    @content;
-  }
-}
+// ─── Print ───────────────────────────────────────────────────────────────────
 
-@mixin hover-focus {
-  &:hover,
-  &:focus {
-    @content;
-  }
-}
-
-@mixin plain-hover-focus {
-  &,
-  &:hover,
-  &:focus {
-    @content;
-  }
-}
-
-@mixin hover-focus-active {
-  &:hover,
-  &:focus,
-  &:active {
-    @content;
-  }
-}
-
-// Truncate text
-@mixin text-truncate {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-// Aspect ratio
-@mixin aspect-ratio($width, $height) {
-  position: relative;
-
-  &::before {
-    display: block;
-    content: '';
-    width: 100%;
-    padding-top: percentage($height / $width);
-  }
-
-  > * {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
-}
-
-// Print styles
 @mixin print-only {
   @media print {
     @content;

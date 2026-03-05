@@ -19,7 +19,7 @@
 @forward 'core/radius';
 
 // Functions and mixins (depend on core)
-@forward 'functions' hide color, border;
+@forward 'functions' hide color;
 @forward 'mixins';
 
 // Utility classes (depend on functions/mixins) - Temporarily disabled during migration

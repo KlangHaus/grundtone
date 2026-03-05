@@ -41,6 +41,7 @@ $_colors-dark: map.merge(c-def.$colors-dark, $color-overrides-dark);
 @use 'utilities/border';
 @use 'utilities/rounded';
 @use 'utilities/overflow';
+@use 'utilities/width';
 
 // All CSS custom properties — generated from @grundtone/core defaults + overrides.
 :root {
