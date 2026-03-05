@@ -161,6 +161,7 @@ export default withMermaid(
               { text: 'Spacing & Visibility', link: '/web/spacing' },
               { text: 'Position', link: '/web/position' },
               { text: 'Z-Index', link: '/web/z-index' },
+              { text: 'Text Alignment', link: '/web/text-align' },
             ],
           },
         ],
