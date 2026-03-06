@@ -20,7 +20,7 @@
  * <ThemeProvider :theme="defaultTheme" />
  */
 
-import type { Theme } from './theme';
+import type { ShadowLayer, Theme, ThemeShadows } from './theme';
 
 export type ColorPreset = Theme['colors'];
 
@@ -235,16 +235,78 @@ export const defaultTypography = {
   },
 } as const;
 
-export const defaultShadows = {
-  xs: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-  sm: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-  md: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-  lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-  xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-  '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-  inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
+/**
+ * Structured shadow definitions — single source of truth.
+ * Web: converted to CSS box-shadow strings via shadowLayersToCSS().
+ * React Native: converted to iOS/Android shadow styles via shadowToRN().
+ */
+export const defaultShadowDefinitions: Record<string, ShadowLayer[]> = {
+  xs: [{ x: 0, y: 1, blur: 2, spread: 0, color: '#000000', opacity: 0.05 }],
+  sm: [
+    { x: 0, y: 1, blur: 3, spread: 0, color: '#000000', opacity: 0.1 },
+    { x: 0, y: 1, blur: 2, spread: 0, color: '#000000', opacity: 0.06 },
+  ],
+  md: [
+    { x: 0, y: 4, blur: 6, spread: -1, color: '#000000', opacity: 0.1 },
+    { x: 0, y: 2, blur: 4, spread: -1, color: '#000000', opacity: 0.06 },
+  ],
+  lg: [
+    { x: 0, y: 10, blur: 15, spread: -3, color: '#000000', opacity: 0.1 },
+    { x: 0, y: 4, blur: 6, spread: -2, color: '#000000', opacity: 0.05 },
+  ],
+  xl: [
+    { x: 0, y: 20, blur: 25, spread: -5, color: '#000000', opacity: 0.1 },
+    { x: 0, y: 10, blur: 10, spread: -5, color: '#000000', opacity: 0.04 },
+  ],
+  '2xl': [
+    { x: 0, y: 25, blur: 50, spread: -12, color: '#000000', opacity: 0.25 },
+  ],
+  inner: [
+    {
+      x: 0,
+      y: 2,
+      blur: 4,
+      spread: 0,
+      color: '#000000',
+      opacity: 0.06,
+      inset: true,
+    },
+  ],
+};
+
+/** Parse a hex color string (#RGB or #RRGGBB) to { r, g, b }. */
+export function hexToRgb(hex: string): { r: number; g: number; b: number } {
+  const h = hex.replace('#', '');
+  const full = h.length === 3 ? h[0] + h[0] + h[1] + h[1] + h[2] + h[2] : h;
+  return {
+    r: parseInt(full.slice(0, 2), 16),
+    g: parseInt(full.slice(2, 4), 16),
+    b: parseInt(full.slice(4, 6), 16),
+  };
+}
+
+/** Convert structured shadow layers to a CSS box-shadow string. */
+export function shadowLayersToCSS(layers: ShadowLayer[]): string {
+  return layers
+    .map(l => {
+      const inset = l.inset ? 'inset ' : '';
+      const px = (n: number) => (n === 0 ? '0' : `${n}px`);
+      const { r, g, b } = hexToRgb(l.color);
+      return `${inset}${px(l.x)} ${px(l.y)} ${px(l.blur)} ${px(l.spread)} rgba(${r}, ${g}, ${b}, ${l.opacity})`;
+    })
+    .join(', ');
+}
+
+/** CSS shadow strings derived from structured definitions. */
+export const defaultShadows: ThemeShadows = {
+  ...(Object.fromEntries(
+    Object.entries(defaultShadowDefinitions).map(([k, layers]) => [
+      k,
+      shadowLayersToCSS(layers),
+    ]),
+  ) as Omit<ThemeShadows, 'none'>),
   none: 'none',
-} as const;
+};
 
 export const defaultRadius = {
   none: '0',
@@ -288,6 +350,7 @@ function buildLightTheme(colors: Partial<ColorPreset>): Theme {
     spacing: { ...defaultSpacing },
     typography: { ...defaultTypography },
     shadows: { ...defaultShadows },
+    shadowDefinitions: { ...defaultShadowDefinitions },
     radius: { ...defaultRadius },
     transitions: { ...defaultTransitions },
     zIndex: { ...defaultZIndex },

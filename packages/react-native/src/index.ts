@@ -36,6 +36,10 @@ export type { GrundtoneThemeContextValue, ThemeMode } from './ThemeContext';
 export { useGrundtoneTheme } from './useGrundtoneTheme';
 export type { Theme } from '@grundtone/core';
 
+// Shadows
+export { shadowToRN } from './shadows';
+export type { RNShadowStyle } from './shadows';
+
 // Branding
 export {
   defaultLogoSource,

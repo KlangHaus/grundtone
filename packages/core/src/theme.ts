@@ -117,6 +117,21 @@ export interface ThemeShadows {
   none: string;
 }
 
+/**
+ * Structured shadow layer — platform-agnostic description of a single
+ * CSS box-shadow layer. Web converts to CSS string; React Native converts
+ * to iOS shadowColor/Offset/Opacity/Radius + Android elevation.
+ */
+export interface ShadowLayer {
+  x: number;
+  y: number;
+  blur: number;
+  spread: number;
+  color: string;
+  opacity: number;
+  inset?: boolean;
+}
+
 export interface ThemeRadius {
   none: string;
   xs: string;
@@ -161,6 +176,7 @@ export interface Theme {
   spacing: ThemeSpacing;
   typography: ThemeTypography;
   shadows: ThemeShadows;
+  shadowDefinitions: Record<string, ShadowLayer[]>;
   radius: ThemeRadius;
   transitions: ThemeTransitions;
   zIndex: ThemeZIndex;

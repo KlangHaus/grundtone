@@ -11,6 +11,10 @@ import { containerExamples } from './theme/container-examples';
 import { columnExamples } from './theme/column-examples';
 import { spacingExamples } from './theme/spacing-examples';
 import { zIndexExamples } from './theme/z-index-examples';
+import { borderExamples } from './theme/border-examples';
+import { aspectRatioExamples } from './theme/aspect-ratio-examples';
+import { transitionExamples } from './theme/transition-examples';
+import { shadowExamples } from './theme/shadow-examples';
 
 /** All code examples merged */
 const allExamples: Record<string, string> = {
@@ -19,6 +23,10 @@ const allExamples: Record<string, string> = {
   ...columnExamples,
   ...spacingExamples,
   ...zIndexExamples,
+  ...borderExamples,
+  ...aspectRatioExamples,
+  ...transitionExamples,
+  ...shadowExamples,
 };
 
 /**
@@ -163,7 +171,16 @@ export default withMermaid(
               { text: 'Z-Index', link: '/web/z-index' },
               { text: 'Text Alignment', link: '/web/text-align' },
               { text: 'Width', link: '/web/width' },
+              { text: 'Border & Radius', link: '/web/border' },
+              { text: 'Aspect Ratio', link: '/web/aspect-ratio' },
+              { text: 'Shadow', link: '/web/shadow' },
               { text: 'Transitions', link: '/web/transitions' },
+            ],
+          },
+          {
+            text: 'SCSS & Reference',
+            items: [
+              { text: 'CSS Custom Properties', link: '/web/custom-properties' },
               { text: 'SCSS Functions', link: '/web/functions' },
               { text: 'SCSS Mixins', link: '/web/mixins' },
               { text: 'Accessibility', link: '/web/accessibility' },
@@ -176,7 +193,12 @@ export default withMermaid(
             items: [
               { text: 'Colors', link: '/react-native/colors' },
               { text: 'Branding', link: '/react-native/branding' },
+              { text: 'Typography', link: '/react-native/typography' },
               { text: 'Spacing', link: '/react-native/spacing' },
+              { text: 'Border Radius', link: '/react-native/radius' },
+              { text: 'Shadows', link: '/react-native/shadows' },
+              { text: 'Z-Index', link: '/react-native/z-index' },
+              { text: 'Transitions', link: '/react-native/transitions' },
               { text: 'Position', link: '/react-native/position' },
             ],
           },

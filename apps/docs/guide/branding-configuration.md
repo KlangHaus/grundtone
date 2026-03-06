@@ -4,6 +4,8 @@ Grundtone ships a single source of truth for logos and brand identity. The `crea
 factory centralises your brand name, tagline, and every logo variant so they stay consistent across
 web and React Native.
 
+---
+
 ## Logo Variants
 
 Six PNG variants are generated from one high-resolution source file:
@@ -19,6 +21,8 @@ Six PNG variants are generated from one high-resolution source file:
 
 All assets live in `packages/core/assets/` and are referenced by default at
 `@grundtone/core/assets/<file>`.
+
+---
 
 ## `createBranding()`
 
@@ -42,6 +46,8 @@ const branding = createBranding({
 
 Only the properties you provide are overridden — everything else keeps its default value.
 
+---
+
 ## Types
 
 ```ts
@@ -64,6 +70,8 @@ interface BrandingConfig {
 `createBranding()` accepts an optional `Partial<BrandingConfig>` and returns a full
 `BrandingConfig`.
 
+---
+
 ## Regenerating Variants
 
 If you replace the source logo at `assets/logo/logo.png`, regenerate every variant with:
@@ -75,8 +83,11 @@ npx tsx scripts/generate-logo-variants.ts
 The script uses [sharp](https://sharp.pixelplumbing.com/) to resize the 1080 × 1080 source into the
 five smaller variants and copies them into `packages/core/assets/`.
 
+---
+
 ## Platform Integration
 
-- **Web** — see [Branding](/web/branding) for `brandingHeadTags()` and favicon injection
-- **React Native** — see [Branding](/react-native/branding) for `getLogoSource()` and `<Image>`
-  usage
+| Platform         | What to use                              | Docs                                     |
+| ---------------- | ---------------------------------------- | ---------------------------------------- |
+| **Web**          | `brandingHeadTags()` for favicon injection | [Web Branding](/web/branding)            |
+| **React Native** | `getLogoSource()` for `<Image>` usage     | [RN Branding](/react-native/branding)    |
