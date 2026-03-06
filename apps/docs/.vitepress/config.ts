@@ -15,6 +15,14 @@ import { borderExamples } from './theme/border-examples';
 import { aspectRatioExamples } from './theme/aspect-ratio-examples';
 import { transitionExamples } from './theme/transition-examples';
 import { shadowExamples } from './theme/shadow-examples';
+import { backgroundExamples } from './theme/background-examples';
+import { textColorExamples } from './theme/text-color-examples';
+import { typographyExamples } from './theme/typography-examples';
+import { sizingExamples } from './theme/sizing-examples';
+import { opacityExamples } from './theme/opacity-examples';
+import { interactivityExamples } from './theme/interactivity-examples';
+import { elementExamples } from './theme/element-examples';
+import { componentExamples } from './theme/component-examples';
 
 /** All code examples merged */
 const allExamples: Record<string, string> = {
@@ -27,6 +35,14 @@ const allExamples: Record<string, string> = {
   ...aspectRatioExamples,
   ...transitionExamples,
   ...shadowExamples,
+  ...backgroundExamples,
+  ...textColorExamples,
+  ...typographyExamples,
+  ...sizingExamples,
+  ...opacityExamples,
+  ...interactivityExamples,
+  ...elementExamples,
+  ...componentExamples,
 };
 
 /**
@@ -169,12 +185,44 @@ export default withMermaid(
               { text: 'Spacing & Visibility', link: '/web/spacing' },
               { text: 'Position', link: '/web/position' },
               { text: 'Z-Index', link: '/web/z-index' },
+              { text: 'Typography', link: '/web/typography' },
+              { text: 'Text Color', link: '/web/text-color' },
               { text: 'Text Alignment', link: '/web/text-align' },
+              { text: 'Background', link: '/web/background' },
               { text: 'Width', link: '/web/width' },
+              { text: 'Sizing', link: '/web/sizing' },
               { text: 'Border & Radius', link: '/web/border' },
               { text: 'Aspect Ratio', link: '/web/aspect-ratio' },
               { text: 'Shadow', link: '/web/shadow' },
+              { text: 'Opacity', link: '/web/opacity' },
+              { text: 'Interactivity', link: '/web/interactivity' },
               { text: 'Transitions', link: '/web/transitions' },
+            ],
+          },
+          {
+            text: 'Elements',
+            collapsed: true,
+            items: [
+              { text: 'Body', link: '/web/el-body' },
+              { text: 'Header', link: '/web/el-header' },
+              { text: 'Footer', link: '/web/el-footer' },
+              { text: 'Blockquote', link: '/web/el-blockquote' },
+              { text: 'Hr', link: '/web/el-hr' },
+            ],
+          },
+          {
+            text: 'Components',
+            collapsed: true,
+            items: [
+              { text: 'Prose', link: '/web/c-prose' },
+              { text: 'Callout', link: '/web/c-callout' },
+              { text: 'Article Card', link: '/web/c-article-card' },
+              { text: 'Article Meta', link: '/web/c-article-meta' },
+              { text: 'Breadcrumb', link: '/web/c-breadcrumb' },
+              { text: 'Skip Link', link: '/web/c-skip-link' },
+              { text: 'Author Card', link: '/web/c-author-card' },
+              { text: 'Back Link', link: '/web/c-back-link' },
+              { text: 'Blockquote Variants', link: '/web/c-blockquote' },
             ],
           },
           {

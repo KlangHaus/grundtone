@@ -1,0 +1,24 @@
+// Component: .callout
+// Info/warning boxes for supplementary content.
+
+.callout {
+  display: flex;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  margin: var(--space-lg) 0;
+
+  p {
+    margin: 0;
+  }
+}
+
+.callout--info {
+  background: var(--color-info-light);
+  border: 1px solid var(--color-info);
+}
+
+.callout--warning {
+  background: var(--color-warning-light);
+  border: 1px solid var(--color-warning);
+}

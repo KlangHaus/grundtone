@@ -1,0 +1,38 @@
+// Opacity Utilities
+@use '../core/breakpoints' as *;
+
+@include responsive-variants using ($p) {
+  .#{$p}opacity-0 {
+    opacity: 0;
+  }
+  .#{$p}opacity-5 {
+    opacity: 0.05;
+  }
+  .#{$p}opacity-10 {
+    opacity: 0.1;
+  }
+  .#{$p}opacity-15 {
+    opacity: 0.15;
+  }
+  .#{$p}opacity-20 {
+    opacity: 0.2;
+  }
+  .#{$p}opacity-25 {
+    opacity: 0.25;
+  }
+  .#{$p}opacity-50 {
+    opacity: 0.5;
+  }
+  .#{$p}opacity-75 {
+    opacity: 0.75;
+  }
+  .#{$p}opacity-85 {
+    opacity: 0.85;
+  }
+  .#{$p}opacity-90 {
+    opacity: 0.9;
+  }
+  .#{$p}opacity-100 {
+    opacity: 1;
+  }
+}

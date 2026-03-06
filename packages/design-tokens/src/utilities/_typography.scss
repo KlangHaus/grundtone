@@ -1,0 +1,49 @@
+// Typography Utilities
+// Font size, font weight, and line height from theme tokens.
+@use '../core/breakpoints' as *;
+
+$_font-sizes: ('xs', 'sm', 'base', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl');
+$_font-weights: (
+  'thin',
+  'light',
+  'normal',
+  'medium',
+  'semibold',
+  'bold',
+  'extrabold'
+);
+$_line-heights: ('none', 'tight', 'snug', 'normal', 'relaxed', 'loose');
+
+@include responsive-variants using ($p) {
+  // Font size
+  @each $key in $_font-sizes {
+    .#{$p}text-#{$key} {
+      font-size: var(--font-size-#{$key});
+    }
+  }
+
+  // Font weight
+  @each $key in $_font-weights {
+    .#{$p}font-#{$key} {
+      font-weight: var(--font-weight-#{$key});
+    }
+  }
+
+  // Line height
+  @each $key in $_line-heights {
+    .#{$p}leading-#{$key} {
+      line-height: var(--line-height-#{$key});
+    }
+  }
+
+  // Font family
+  .#{$p}font-base {
+    font-family: var(--font-family-base);
+  }
+  .#{$p}font-heading {
+    font-family: var(--font-family-heading);
+  }
+  .#{$p}font-mono {
+    font-family: var(--font-family-mono);
+  }
+}

@@ -2,13 +2,16 @@
 @use '../core/breakpoints' as *;
 
 @include responsive-variants using ($p) {
-  .#{$p}align-text-left {
+  .#{$p}text-left {
     text-align: left;
   }
-  .#{$p}align-text-right {
+  .#{$p}text-right {
     text-align: right;
   }
-  .#{$p}align-text-center {
+  .#{$p}text-center {
     text-align: center;
+  }
+  .#{$p}text-justify {
+    text-align: justify;
   }
 }

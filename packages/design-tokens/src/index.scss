@@ -23,6 +23,13 @@ $color-overrides-dark: () !default;
 $_colors-light: map.merge(c-def.$colors-light, $color-overrides-light);
 $_colors-dark: map.merge(c-def.$colors-dark, $color-overrides-dark);
 
+// Element styles (tag selectors, specificity 0,0,1)
+@use 'elements';
+
+// Component styles (class selectors, specificity 0,1,0)
+@use 'components';
+
+// Utility classes (class selectors, later in cascade so they win over components)
 @use 'utilities/grid' with (
   $grid-breakpoints-config: $grid-breakpoints
 );
@@ -41,8 +48,14 @@ $_colors-dark: map.merge(c-def.$colors-dark, $color-overrides-dark);
 @use 'utilities/rounded';
 @use 'utilities/overflow';
 @use 'utilities/width';
+@use 'utilities/sizing';
+@use 'utilities/text-color';
+@use 'utilities/typography';
+@use 'utilities/opacity';
+@use 'utilities/interactivity';
 @use 'utilities/transition';
 @use 'utilities/shadow';
+@use 'utilities/accessibility';
 
 // All CSS custom properties — generated from @grundtone/core defaults + overrides.
 :root {
@@ -106,28 +119,4 @@ $_colors-dark: map.merge(c-def.$colors-dark, $color-overrides-dark);
 // Set color scheme for automatic light-dark() function
 :root {
   color-scheme: light dark;
-}
-
-// Base body styles
-body {
-  font-family: var(--font-family-base);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-normal);
-  color: var(--color-text);
-  background-color: var(--color-background);
-  margin: 0;
-  padding: 0;
-}
-
-// Utility classes
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
 }

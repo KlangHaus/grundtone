@@ -1,0 +1,51 @@
+// Text Color Utilities
+// Semantic text colors from theme tokens.
+@use '../core/breakpoints' as *;
+
+@include responsive-variants using ($p) {
+  .#{$p}text-default {
+    color: var(--color-text);
+  }
+  .#{$p}text-secondary {
+    color: var(--color-text-secondary);
+  }
+  .#{$p}text-tertiary {
+    color: var(--color-text-tertiary);
+  }
+  .#{$p}text-inverse {
+    color: var(--color-text-inverse);
+  }
+  .#{$p}text-placeholder {
+    color: var(--color-text-placeholder);
+  }
+  .#{$p}text-disabled {
+    color: var(--color-text-disabled);
+  }
+
+  // Brand
+  .#{$p}text-primary {
+    color: var(--color-primary);
+  }
+  .#{$p}text-on-primary {
+    color: var(--color-on-primary);
+  }
+
+  // Status
+  .#{$p}text-success {
+    color: var(--color-success);
+  }
+  .#{$p}text-warning {
+    color: var(--color-warning);
+  }
+  .#{$p}text-error {
+    color: var(--color-error);
+  }
+  .#{$p}text-info {
+    color: var(--color-info);
+  }
+
+  // Inherit
+  .#{$p}text-inherit {
+    color: inherit;
+  }
+}

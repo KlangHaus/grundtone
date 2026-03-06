@@ -1,30 +1,73 @@
-// Background Utilities
-// Uses semantic color tokens from theme
+// Background Color Utilities
+// Semantic background colors from theme tokens.
+@use '../core/breakpoints' as *;
 
-.bg-normal {
-  background-color: var(--color-background) !important;
-}
+@include responsive-variants using ($p) {
+  // Surface / layout backgrounds
+  .#{$p}bg-background {
+    background-color: var(--color-background);
+  }
+  .#{$p}bg-background-alt {
+    background-color: var(--color-background-alt);
+  }
+  .#{$p}bg-surface {
+    background-color: var(--color-surface);
+  }
+  .#{$p}bg-surface-alt {
+    background-color: var(--color-surface-alt);
+  }
+  .#{$p}bg-surface-raised {
+    background-color: var(--color-surface-raised);
+  }
+  .#{$p}bg-overlay {
+    background-color: var(--color-surface-overlay);
+  }
+  .#{$p}bg-backdrop {
+    background-color: var(--color-modal-backdrop);
+  }
 
-.bg-alt {
-  background-color: var(--color-background-alt) !important;
-}
+  // Brand
+  .#{$p}bg-primary {
+    background-color: var(--color-primary);
+  }
+  .#{$p}bg-primary-light {
+    background-color: var(--color-primary-light);
+  }
+  .#{$p}bg-primary-dark {
+    background-color: var(--color-primary-dark);
+  }
+  .#{$p}bg-secondary {
+    background-color: var(--color-secondary);
+  }
 
-.bg-surface {
-  background-color: var(--color-surface) !important;
-}
+  // Status
+  .#{$p}bg-success {
+    background-color: var(--color-success);
+  }
+  .#{$p}bg-success-light {
+    background-color: var(--color-success-light);
+  }
+  .#{$p}bg-warning {
+    background-color: var(--color-warning);
+  }
+  .#{$p}bg-warning-light {
+    background-color: var(--color-warning-light);
+  }
+  .#{$p}bg-error {
+    background-color: var(--color-error);
+  }
+  .#{$p}bg-error-light {
+    background-color: var(--color-error-light);
+  }
+  .#{$p}bg-info {
+    background-color: var(--color-info);
+  }
+  .#{$p}bg-info-light {
+    background-color: var(--color-info-light);
+  }
 
-.bg-surface-alt {
-  background-color: var(--color-surface-alt) !important;
-}
-
-.bg-surface-raised {
-  background-color: var(--color-surface-raised) !important;
-}
-
-.bg-overlay {
-  background-color: var(--color-surface-overlay) !important;
-}
-
-.bg-modal {
-  background-color: var(--color-modal-backdrop) !important;
+  // Transparent
+  .#{$p}bg-transparent {
+    background-color: transparent;
+  }
 }

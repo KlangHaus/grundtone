@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="da">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog — Grundtone</title>
+    <link rel="stylesheet" href="./node_modules/@grundtone/design-tokens/dist/index.css" />
+    <style>
+      body {
+        max-width: 780px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <a href="#main" class="skip-link">Spring til indhold</a>
+
+    <!-- ─── Header ─── -->
+    <header role="banner">
+      <a href="blog.html" aria-label="Blog forside">Grundtone Blog</a>
+      <nav aria-label="Primær navigation">
+        <a href="index.html">Playground</a>
+        <a href="blog.html" aria-current="page">Blog</a>
+      </nav>
+    </header>
+
+    <!-- ─── Main ─── -->
+    <main id="main">
+      <section aria-labelledby="blog-heading">
+        <h1 id="blog-heading" class="text-3xl font-bold mb-1">Blog</h1>
+        <p class="text-secondary mb-5">
+          Seneste artikler om design systems, tilgængelighed og frontend-arkitektur.
+        </p>
+
+        <div class="flex flex-col gap-3" role="feed" aria-label="Blogindlæg">
+
+          <!-- Article 1 -->
+          <article class="article-card shadow-sm" aria-labelledby="post-1-title">
+            <div class="article-meta text-xs text-tertiary">
+              <span class="article-tag text-xs font-medium">Design</span>
+              <time datetime="2026-03-01">1. marts 2026</time>
+              <span aria-hidden="true">&middot;</span>
+              <span>6 min læsetid</span>
+            </div>
+            <h2 id="post-1-title" class="text-xl font-semibold">
+              <a href="blog-post.html">Semantiske farvetokens i praksis</a>
+            </h2>
+            <p class="article-excerpt text-secondary text-sm leading-relaxed">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
+              consequat lacus at nisi lobortis, vel malesuada felis tincidunt.
+              Phasellus auctor libero in urna facilisis, at dictum sapien viverra.
+              Nulla facilisi morbi tempus iaculis urna id volutpat lacus.
+            </p>
+          </article>
+
+          <!-- Article 2 -->
+          <article class="article-card shadow-sm" aria-labelledby="post-2-title">
+            <div class="article-meta text-xs text-tertiary">
+              <span class="article-tag text-xs font-medium">Tilgængelighed</span>
+              <time datetime="2026-02-22">22. februar 2026</time>
+              <span aria-hidden="true">&middot;</span>
+              <span>8 min læsetid</span>
+            </div>
+            <h2 id="post-2-title" class="text-xl font-semibold">
+              <a href="blog-post.html">WCAG 2.2 og komponentbiblioteker</a>
+            </h2>
+            <p class="article-excerpt text-secondary text-sm leading-relaxed">
+              Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore.
+            </p>
+          </article>
+
+          <!-- Article 3 -->
+          <article class="article-card shadow-sm" aria-labelledby="post-3-title">
+            <div class="article-meta text-xs text-tertiary">
+              <span class="article-tag text-xs font-medium">Arkitektur</span>
+              <time datetime="2026-02-14">14. februar 2026</time>
+              <span aria-hidden="true">&middot;</span>
+              <span>5 min læsetid</span>
+            </div>
+            <h2 id="post-3-title" class="text-xl font-semibold">
+              <a href="blog-post.html">Cross-platform design tokens med strukturerede shadows</a>
+            </h2>
+            <p class="article-excerpt text-secondary text-sm leading-relaxed">
+              Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
+              suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur.
+              Quis autem vel eum iure reprehenderit qui in ea voluptate velit
+              esse quam nihil molestiae consequatur.
+            </p>
+          </article>
+
+          <!-- Article 4 -->
+          <article class="article-card shadow-sm" aria-labelledby="post-4-title">
+            <div class="article-meta text-xs text-tertiary">
+              <span class="article-tag text-xs font-medium">Frontend</span>
+              <time datetime="2026-02-05">5. februar 2026</time>
+              <span aria-hidden="true">&middot;</span>
+              <span>4 min læsetid</span>
+            </div>
+            <h2 id="post-4-title" class="text-xl font-semibold">
+              <a href="blog-post.html">Utility-first CSS uden Tailwind</a>
+            </h2>
+            <p class="article-excerpt text-secondary text-sm leading-relaxed">
+              At vero eos et accusamus et iusto odio dignissimos ducimus qui
+              blanditiis praesentium voluptatum deleniti atque corrupti quos
+              dolores et quas molestias excepturi sint occaecati cupiditate non
+              provident, similique sunt in culpa.
+            </p>
+          </article>
+
+          <!-- Article 5 -->
+          <article class="article-card shadow-sm" aria-labelledby="post-5-title">
+            <div class="article-meta text-xs text-tertiary">
+              <span class="article-tag text-xs font-medium">Design</span>
+              <time datetime="2026-01-28">28. januar 2026</time>
+              <span aria-hidden="true">&middot;</span>
+              <span>7 min læsetid</span>
+            </div>
+            <h2 id="post-5-title" class="text-xl font-semibold">
+              <a href="blog-post.html">Spacing-skalaer og det visuelle hierarki</a>
+            </h2>
+            <p class="article-excerpt text-secondary text-sm leading-relaxed">
+              Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit
+              aut fugit, sed quia consequuntur magni dolores eos qui ratione
+              voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem
+              ipsum quia dolor sit amet.
+            </p>
+          </article>
+
+        </div>
+      </section>
+    </main>
+
+    <footer class="text-xs text-tertiary text-center" role="contentinfo">
+      <p>&copy; 2026 Grundtone. Bygget med semantiske design tokens.</p>
+    </footer>
+  </body>
+</html>

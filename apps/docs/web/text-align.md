@@ -11,11 +11,12 @@ All utilities support responsive prefixes: `sm:`, `md:`, `lg:`, `xl:`, `2xl:`.
 
 <CodePreview name="ta-basic" />
 
-| Class                | CSS                        |
-| -------------------- | -------------------------- |
-| `.align-text-left`   | `text-align: left`         |
-| `.align-text-center` | `text-align: center`       |
-| `.align-text-right`  | `text-align: right`        |
+| Class          | CSS                  |
+| -------------- | -------------------- |
+| `.text-left`   | `text-align: left`   |
+| `.text-center` | `text-align: center` |
+| `.text-right`  | `text-align: right`  |
+| `.text-justify` | `text-align: justify` |
 
 ---
 
@@ -27,21 +28,21 @@ Change alignment at different breakpoints using the `{breakpoint}:` prefix:
 
 ```html
 <!-- Left on mobile, centered from md up -->
-<h1 class="align-text-left md:align-text-center">Responsive heading</h1>
+<h1 class="text-left md:text-center">Responsive heading</h1>
 
 <!-- Centered on mobile, right-aligned from lg up -->
-<p class="align-text-center lg:align-text-right">Responsive paragraph</p>
+<p class="text-center lg:text-right">Responsive paragraph</p>
 ```
 
-| Class                        | Applies from |
-| ---------------------------- | ------------ |
-| `.align-text-center`         | All sizes    |
-| `.sm:align-text-center`      | ≥ 640px      |
-| `.md:align-text-center`      | ≥ 768px      |
-| `.lg:align-text-center`      | ≥ 1024px     |
-| `.xl:align-text-center`      | ≥ 1280px     |
-| `.2xl:align-text-center`     | ≥ 1536px     |
+| Class               | Applies from |
+| ------------------- | ------------ |
+| `.text-center`      | All sizes    |
+| `.sm:text-center`   | ≥ 640px      |
+| `.md:text-center`   | ≥ 768px      |
+| `.lg:text-center`   | ≥ 1024px     |
+| `.xl:text-center`   | ≥ 1280px     |
+| `.2xl:text-center`  | ≥ 1536px     |
 
-The same breakpoint prefixes work for `-left` and `-right`.
+The same breakpoint prefixes work for `-left`, `-right`, and `-justify`.
 
 See [Breakpoints](/web/breakpoints) for the full breakpoint scale and customisation.

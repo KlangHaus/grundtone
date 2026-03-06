@@ -1,0 +1,8 @@
+// Element: <hr>
+// Subtle horizontal divider.
+
+hr {
+  border: none;
+  border-top: 1px solid var(--color-border-light);
+  margin: var(--space-2xl) 0;
+}

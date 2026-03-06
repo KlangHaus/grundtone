@@ -1,0 +1,105 @@
+// Sizing Utilities
+// Fixed sizes, min/max width and height.
+@use '../core/breakpoints' as *;
+
+// Fixed pixel sizes used across the system
+$_fixed-sizes: (
+  '0': 0,
+  '4': 1rem,
+  '6': 1.5rem,
+  '8': 2rem,
+  '10': 2.5rem,
+  '12': 3rem,
+  '14': 3.5rem,
+  '16': 4rem,
+  '20': 5rem,
+  '24': 6rem,
+  '32': 8rem,
+  '40': 10rem,
+  '48': 12rem,
+  '56': 14rem,
+  '64': 16rem,
+  '72': 18rem,
+  '80': 20rem,
+  '96': 24rem,
+);
+
+@include responsive-variants using ($p) {
+  // ── Height ──
+  .#{$p}h-auto {
+    height: auto;
+  }
+  .#{$p}h-full {
+    height: 100%;
+  }
+  .#{$p}h-screen {
+    height: 100vh;
+  }
+  .#{$p}h-min {
+    height: min-content;
+  }
+  .#{$p}h-max {
+    height: max-content;
+  }
+  .#{$p}h-fit {
+    height: fit-content;
+  }
+
+  @each $key, $val in $_fixed-sizes {
+    .#{$p}h-#{$key} {
+      height: $val;
+    }
+  }
+
+  // ── Min-width ──
+  .#{$p}min-w-0 {
+    min-width: 0;
+  }
+  .#{$p}min-w-full {
+    min-width: 100%;
+  }
+  .#{$p}min-w-min {
+    min-width: min-content;
+  }
+  .#{$p}min-w-max {
+    min-width: max-content;
+  }
+  .#{$p}min-w-fit {
+    min-width: fit-content;
+  }
+
+  // ── Max-width ──
+  .#{$p}max-w-none {
+    max-width: none;
+  }
+  .#{$p}max-w-xs {
+    max-width: 20rem;
+  }
+  .#{$p}max-w-sm {
+    max-width: 24rem;
+  }
+  .#{$p}max-w-md {
+    max-width: 28rem;
+  }
+  .#{$p}max-w-lg {
+    max-width: 32rem;
+  }
+  .#{$p}max-w-xl {
+    max-width: 36rem;
+  }
+  .#{$p}max-w-2xl {
+    max-width: 42rem;
+  }
+  .#{$p}max-w-3xl {
+    max-width: 48rem;
+  }
+  .#{$p}max-w-4xl {
+    max-width: 56rem;
+  }
+  .#{$p}max-w-full {
+    max-width: 100%;
+  }
+  .#{$p}max-w-prose {
+    max-width: 65ch;
+  }
+}
