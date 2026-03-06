@@ -55,15 +55,28 @@ export const componentExamples: Record<string, string> = {
 
   'c-back-link': `<a href="#" class="back-link" style="font-size: var(--font-size-sm); color: var(--color-primary); font-weight: var(--font-weight-medium)">&larr; All posts</a>`,
 
-  'c-bq-quotes': `<blockquote class="blockquote--quotes">
-  <p>Tokens are contracts between design and implementation. Name them by function — not color.</p>
-</blockquote>`,
+  'c-product-card': `<a href="#" class="product-card shadow-sm" style="max-width: 280px; text-decoration: none">
+  <div style="width: 100%; aspect-ratio: 1/1; background: var(--color-surface-alt); border-radius: var(--radius-md)"></div>
+  <div class="product-card__body">
+    <div style="font-size: var(--font-size-xs); font-weight: var(--font-weight-medium); color: var(--color-primary)">T-shirt</div>
+    <div style="font-size: var(--font-size-base); font-weight: var(--font-weight-semibold)">Design Tokens Tee</div>
+    <div style="font-size: var(--font-size-sm); color: var(--color-text-secondary)">Organic cotton with semantic color print.</div>
+    <div class="product-card__price" style="font-size: var(--font-size-lg); font-weight: var(--font-weight-bold)">349 kr</div>
+  </div>
+</a>`,
 
-  'c-bq-gradient': `<blockquote class="blockquote--gradient">
-  <p>Tokens are contracts between design and implementation. Name them by function — not color.</p>
-</blockquote>`,
+  'c-product-gallery': `<div class="product-gallery" style="max-width: 400px">
+  <div class="product-gallery__main" style="background: var(--color-surface-alt)"></div>
+  <div class="product-gallery__thumbs">
+    <div class="product-gallery__thumb product-gallery__thumb--active" style="background: var(--color-surface-alt)"></div>
+    <div class="product-gallery__thumb" style="background: var(--color-surface-alt)"></div>
+    <div class="product-gallery__thumb" style="background: var(--color-surface-alt)"></div>
+    <div class="product-gallery__thumb" style="background: var(--color-surface-alt)"></div>
+  </div>
+</div>`,
 
-  'c-bq-pull': `<blockquote class="blockquote--pull">
-  <p>Tokens are contracts between design and implementation.</p>
-</blockquote>`,
+  'c-price': `<div>
+  <span style="font-size: var(--font-size-lg); font-weight: var(--font-weight-bold)">199 kr</span>
+  <span class="price-old" style="font-size: var(--font-size-sm); color: var(--color-text-tertiary); margin-left: 0.25rem">299 kr</span>
+</div>`,
 };
