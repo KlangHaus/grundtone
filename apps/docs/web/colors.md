@@ -144,17 +144,63 @@ Or import colors standalone:
 
 ### SCSS — Raw Palette
 
-```scss
-// Raw palette access (for SCSS-only use cases)
-@use '@grundtone/design-tokens/scss/color-palette' as palette;
+For compile-time access to raw palette colors (not CSS custom properties), import the palette
+module. This is useful for generating static styles, calculating contrast, or building component
+variants.
 
-.custom {
-  // Use CSS vars for semantic tokens
-  color: var(--color-text);
-  // Use palette functions for raw shade access
-  border-color: palette.color('blue', 300);
-}
+```scss
+@use '@grundtone/design-tokens/scss/color-palette' as palette;
 ```
+
+#### `palette.color($family, $shade)`
+
+Get a specific shade from a color family.
+
+```scss
+border-color: palette.color('blue', 300);   // #93c5fd
+background: palette.color('gray', 50);      // #fafafa
+color: palette.color('red', 700);           // #b91c1c
+```
+
+Available families: `gray`, `blue`, `green`, `red`, `yellow`, `indigo`.
+Available shades: `50`, `100`, `200`, `300`, `400`, `500`, `600`, `700`, `800`, `900`.
+
+#### `palette.lighter($family, $shade, $steps)`
+
+Move up (lighter) in the shade scale by N steps. Clamps at `50`.
+
+```scss
+$base: palette.color('blue', 500);      // #3b82f6
+$light: palette.lighter('blue', 500);   // #60a5fa (one step = 400)
+$lighter: palette.lighter('blue', 500, 3); // #bfdbfe (three steps = 200)
+```
+
+#### `palette.darker($family, $shade, $steps)`
+
+Move down (darker) in the shade scale by N steps. Clamps at `900`.
+
+```scss
+$base: palette.color('blue', 500);      // #3b82f6
+$dark: palette.darker('blue', 500);     // #2563eb (one step = 600)
+$darker: palette.darker('blue', 500, 3); // #1e40af (three steps = 800)
+```
+
+#### `palette.alpha($family, $shade, $alpha)`
+
+Create a semi-transparent variant of a palette color.
+
+```scss
+background: palette.alpha('blue', 500, 0.1);  // rgba(59, 130, 246, 0.1)
+box-shadow: 0 4px 12px palette.alpha('gray', 900, 0.15);
+border-color: palette.alpha('red', 500, 0.3);
+```
+
+::: tip When to use palette vs CSS custom properties
+Use **CSS custom properties** (`var(--color-primary)`) for all runtime styles — they respect
+theming and dark mode. Use **palette functions** only when you need a static color value at compile
+time, such as SCSS calculations, contrast checks, or generating component variants that don't
+change with theme.
+:::
 
 ### React Native
 

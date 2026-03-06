@@ -3,24 +3,6 @@
 Performance-optimised transition classes that target specific CSS properties instead of `all`.
 All transition classes respect `prefers-reduced-motion` automatically.
 
-## Usage
-
-```html
-<button class="transition-colors">Hover me</button>
-<div class="transition-opacity">Fade element</div>
-```
-
-```scss
-@use '@grundtone/design-tokens/scss/lib' as gt;
-
-// Or use the SCSS function for custom transitions:
-.custom {
-  transition: opacity gt.duration('base') gt.ease('ease-out');
-}
-```
-
----
-
 ## Available Classes
 
 | Class                  | Transition properties                       |
@@ -33,6 +15,14 @@ All transition classes respect `prefers-reduced-motion` automatically.
 | `transition-none`      | Disables transitions                        |
 
 All classes use `--duration-fast` (150ms) and `--ease-out` by default.
+
+### Color & Shadow
+
+<CodePreview name="tr-colors" />
+
+### Opacity & Transform
+
+<CodePreview name="tr-opacity" />
 
 ::: tip Prefer specific transitions
 `transition-all` animates every property change, which can cause layout jank and unexpected visual
