@@ -20,6 +20,11 @@
     margin: 0 0 var(--space-md);
   }
 
+  > p:first-child {
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-normal);
+  }
+
   ul,
   ol {
     margin: 0 0 var(--space-md);

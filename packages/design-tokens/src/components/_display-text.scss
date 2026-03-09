@@ -1,0 +1,8 @@
+// Component: Display Text (Stor tekst)
+// Large text for highlighting key numbers or results.
+
+.display-text {
+  font-size: var(--font-size-4xl);
+  line-height: var(--line-height-tight);
+  font-weight: var(--font-weight-bold);
+}

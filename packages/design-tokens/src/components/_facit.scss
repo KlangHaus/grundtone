@@ -1,0 +1,8 @@
+// Component: Facit
+// Result/answer text with double underline — marks the final result of a calculation.
+
+.facit {
+  text-decoration: underline;
+  text-decoration-style: double;
+  font-weight: var(--font-weight-bold);
+}

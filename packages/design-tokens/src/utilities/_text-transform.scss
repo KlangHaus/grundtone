@@ -1,0 +1,21 @@
+// Text Transform Utilities
+// Uppercase, lowercase, capitalize, and normal-case.
+@use '../core/breakpoints' as *;
+
+@include responsive-variants using ($p) {
+  .#{$p}uppercase {
+    text-transform: uppercase;
+  }
+
+  .#{$p}lowercase {
+    text-transform: lowercase;
+  }
+
+  .#{$p}capitalize {
+    text-transform: capitalize;
+  }
+
+  .#{$p}normal-case {
+    text-transform: none;
+  }
+}

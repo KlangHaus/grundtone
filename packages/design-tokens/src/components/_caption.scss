@@ -1,0 +1,8 @@
+// Component: Caption (Billedtekst)
+// Descriptive text accompanying an image or figure.
+
+.caption {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-secondary);
+}

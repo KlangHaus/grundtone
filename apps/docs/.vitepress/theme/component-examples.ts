@@ -1,4 +1,66 @@
 export const componentExamples: Record<string, string> = {
+  'c-external-link': `<div class="flex flex-col gap-2">
+  <a href="#" class="external-link">Read more on borger.dk</a>
+  <a href="#" class="external-link">Self-service guide (pdf)</a>
+</div>`,
+
+  'c-function-link': `<div class="flex flex-col gap-2">
+  <button type="button" class="function-link"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/></svg> Add another person</button>
+  <button type="button" class="function-link"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2zm6 4H5v7a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2z"/></svg> Print receipt</button>
+</div>`,
+
+  'c-display-text': `<div class="flex flex-col gap-1">
+  <p class="body-text-sm text-secondary">Your tax statement</p>
+  <p class="display-text">23,450 kr</p>
+</div>`,
+
+  'c-facit': `<div class="flex flex-col gap-1" style="max-width: 280px">
+  <div class="flex justify-between body-text"><span>Subtotal</span><span>1,200 kr</span></div>
+  <div class="flex justify-between body-text"><span>VAT (25%)</span><span>300 kr</span></div>
+  <hr style="margin: var(--space-xs) 0" />
+  <div class="flex justify-between body-text"><span>Total</span><span class="facit">1,500 kr</span></div>
+</div>`,
+
+  'c-error-text': `<div class="flex flex-col gap-1" style="max-width: 360px">
+  <label style="font-size: var(--font-size-lg); font-weight: var(--font-weight-medium)">Email</label>
+  <input type="email" value="user@" style="padding: var(--space-sm) var(--space-md); border: 2px solid var(--color-error); border-radius: var(--radius-md); font-size: var(--font-size-base)" />
+  <p class="error-text">Please enter a valid email address, e.g. name@example.com</p>
+</div>`,
+
+  'c-error-text-required': `<div class="flex flex-col gap-1" style="max-width: 360px">
+  <label style="font-size: var(--font-size-lg); font-weight: var(--font-weight-medium)">Phone number</label>
+  <input type="tel" style="padding: var(--space-sm) var(--space-md); border: 2px solid var(--color-error); border-radius: var(--radius-md); font-size: var(--font-size-base)" />
+  <p class="error-text">Please enter your phone number</p>
+</div>`,
+
+  'c-caption': `<figure style="max-width: 360px">
+  <div style="width: 100%; aspect-ratio: 16/9; background: var(--color-surface-alt); border-radius: var(--radius-md)"></div>
+  <figcaption class="caption" style="margin-top: var(--space-xs)">Grundtone color palette in light and dark mode.</figcaption>
+</figure>`,
+
+  'c-body-text': `<div class="flex flex-col gap-2">
+  <p class="body-text">Body text — standard (1rem / 16px, normal weight)</p>
+  <p class="body-text-sm">Small body text — secondary text (0.875rem / 14px)</p>
+  <p class="body-text-bold">Bold body text — emphasized text (1rem / 16px, bold)</p>
+</div>`,
+
+  'c-body-text-usage': `<div class="flex flex-col gap-2">
+  <p class="body-text">Fill out the form below to create your account. You can always change your details later under <span class="body-text-bold">Settings</span>.</p>
+  <p class="body-text-sm text-secondary">All fields marked with * are required.</p>
+</div>`,
+
+  'c-help-text': `<div class="flex flex-col gap-1" style="max-width: 360px">
+  <label style="font-size: var(--font-size-lg); font-weight: var(--font-weight-medium)">Social security number</label>
+  <p class="help-text">We need your social security number to verify your identity.</p>
+  <input type="text" placeholder="000000-0000" style="padding: var(--space-sm) var(--space-md); border: 1px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--font-size-base)" />
+</div>`,
+
+  'c-help-text-field': `<div class="flex flex-col gap-1" style="max-width: 360px">
+  <label style="font-size: var(--font-size-lg); font-weight: var(--font-weight-medium)">Email</label>
+  <input type="email" placeholder="you@email.com" style="padding: var(--space-sm) var(--space-md); border: 1px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--font-size-base)" />
+  <p class="help-text">We will send a confirmation to this address.</p>
+</div>`,
+
   'c-skip-link': `<div style="position: relative; height: 60px; overflow: hidden; background: var(--color-surface); border-radius: 8px">
   <a href="#" class="skip-link" style="left: 1rem">Skip to content</a>
 </div>`,
@@ -75,8 +137,25 @@ export const componentExamples: Record<string, string> = {
   </div>
 </div>`,
 
-  'c-price': `<div>
-  <span style="font-size: var(--font-size-lg); font-weight: var(--font-weight-bold)">199 kr</span>
-  <span class="price-old" style="font-size: var(--font-size-sm); color: var(--color-text-tertiary); margin-left: 0.25rem">299 kr</span>
+  'c-lead': `<div>
+  <h2 style="font-size: var(--font-size-2xl); font-weight: var(--font-weight-bold); margin: 0 0 var(--space-sm)">Page Title</h2>
+  <p class="lead">A short introductory paragraph that sets the context for the content below.</p>
 </div>`,
+
+  'c-lead-prose': `<div class="prose">
+  <p>This first paragraph is automatically styled as a lead inside .prose — no extra class needed.</p>
+  <p>Subsequent paragraphs use the normal body text size and line height.</p>
+</div>`,
+
+  'c-header': `<header class="header">
+  <a href="#">Brand</a>
+  <nav>
+    <a href="#">About</a>
+    <a href="#">Blog</a>
+  </nav>
+</header>`,
+
+  'c-footer': `<footer class="footer text-xs text-tertiary text-center">
+  <p>&copy; 2026 Example. All rights reserved.</p>
+</footer>`,
 };

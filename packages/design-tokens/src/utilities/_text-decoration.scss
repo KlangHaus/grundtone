@@ -1,0 +1,17 @@
+// Text Decoration Utilities
+// Underline, line-through, and no-underline from theme tokens.
+@use '../core/breakpoints' as *;
+
+$_text-decorations: ('underline', 'line-through');
+
+@include responsive-variants using ($p) {
+  @each $key in $_text-decorations {
+    .#{$p}#{$key} {
+      text-decoration: #{$key};
+    }
+  }
+
+  .#{$p}no-underline {
+    text-decoration: none;
+  }
+}

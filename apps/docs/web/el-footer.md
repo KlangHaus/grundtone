@@ -1,29 +1,24 @@
 # Footer
 
-Element styles for `<footer>`. Adds a top border and spacing to separate from main content.
-
----
-
-## Styling
-
-| Property | Value |
-| --- | --- |
-| `margin-top` | `var(--space-2xl)` |
-| `padding-top` | `var(--space-md)` |
-| `border-top` | `1px solid var(--color-border-light)` |
-
-### Preview
-
-<CodePreview name="el-footer" />
+Semantic reference for `<footer>`. Reset to `display: block`.
 
 ---
 
 ## Usage
 
 ```html
-<footer class="text-xs text-tertiary text-center" role="contentinfo">
-  <p>&copy; 2026 Brand. All rights reserved.</p>
-</footer>
+<article>
+  <p>Content here...</p>
+  <footer>
+    <small>Published 1 March 2026</small>
+  </footer>
+</article>
 ```
 
-Combine with utility classes for font-size, color, and alignment.
+The `<footer>` element represents a footer for its nearest sectioning content — typically metadata, copyright, or related links. It can appear inside `<article>`, `<section>`, or at page level.
+
+For page-level footer with border and spacing, use the [`.footer` component](/web/c-footer).
+
+## Accessibility
+
+- A `<footer>` that is not nested inside `<article>`, `<section>`, or `<aside>` automatically maps to the `contentinfo` landmark role.

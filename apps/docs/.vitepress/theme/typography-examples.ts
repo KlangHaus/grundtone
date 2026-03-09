@@ -20,4 +20,26 @@ export const typographyExamples: Record<string, string> = {
   <p class="font-bold">.font-bold — 700</p>
   <p class="font-extrabold">.font-extrabold — 800</p>
 </div>`,
+
+  'ty-tracking': `<div class="flex flex-col gap-1 text-lg">
+  <p class="tracking-tighter">.tracking-tighter — −0.05em</p>
+  <p class="tracking-tight">.tracking-tight — −0.025em</p>
+  <p class="tracking-normal">.tracking-normal — 0</p>
+  <p class="tracking-wide">.tracking-wide — 0.025em</p>
+  <p class="tracking-wider">.tracking-wider — 0.05em</p>
+  <p class="tracking-widest">.tracking-widest — 0.1em</p>
+</div>`,
+
+  'ty-decoration': `<div class="flex flex-col gap-1 text-lg">
+  <p class="underline">.underline</p>
+  <p class="line-through">.line-through</p>
+  <p class="no-underline">.no-underline</p>
+</div>`,
+
+  'ty-transform': `<div class="flex flex-col gap-1 text-lg">
+  <p class="uppercase">.uppercase</p>
+  <p class="lowercase">.lowercase</p>
+  <p class="capitalize">.capitalize — example text</p>
+  <p class="normal-case">.normal-case</p>
+</div>`,
 };

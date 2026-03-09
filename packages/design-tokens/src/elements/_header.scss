@@ -1,31 +1,6 @@
 // Element: <header>
-// Flex layout with brand link and nav styling.
+// Minimal reset — block display for predictable behavior.
 
 header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: var(--space-md);
-  margin-bottom: var(--space-xl);
-  border-bottom: 1px solid var(--color-border-light);
-
-  > a {
-    color: var(--color-text);
-    text-decoration: none;
-    font-weight: var(--font-weight-bold);
-    font-size: var(--font-size-lg);
-  }
-
-  nav a {
-    font-weight: var(--font-weight-normal);
-    font-size: var(--font-size-sm);
-    color: var(--color-text-secondary);
-    margin-left: var(--space-md);
-    text-decoration: none;
-
-    &:hover,
-    &:focus-visible {
-      color: var(--color-primary);
-    }
-  }
+  display: block;
 }
