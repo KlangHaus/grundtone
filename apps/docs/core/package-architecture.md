@@ -16,6 +16,7 @@ graph TD
     core --> tokens
     core --> shared
     core --> rn
+    shared --> rn
     tokens --> vue
     shared --> vue
     vue --> nuxt

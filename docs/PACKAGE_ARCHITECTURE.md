@@ -36,18 +36,25 @@ Use in: Vue, Nuxt, React Native, or any platform that needs design tokens.
 - React Native – use `@grundtone/core` + `@grundtone/react-native` instead
 - Projects that only use Vue components (Vue package already depends on it)
 
+### @grundtone/utils
+
+Shared utilities, formatters, and validation helpers.
+
+- Depends on: core
+- CPR validation, phone formatting, currency formatting, date formatting
+
 ### @grundtone/vue
 
-Vue 3 components: Button, Icon, ThemeToggle, ThemeProvider, etc.
+Vue 3 components and composables.
 
-- Depends on: core, design-system, shared, composables
+- Depends on: core, design-system, utils
 - Applies theme to DOM via CSS custom properties
 
 ### @grundtone/nuxt
 
-Nuxt 3 module: auto-imports Vue components, theme setup.
+Nuxt 3 module: auto-imports Vue components and composables.
 
-- Depends on: vue, composables
+- Depends on: vue
 
 ## React Native
 
@@ -55,16 +62,17 @@ Nuxt 3 module: auto-imports Vue components, theme setup.
 
 Theme provider and `useGrundtoneTheme()` hook.
 
-- Depends on: core only
+- Depends on: core, utils
 - No design-system (RN does not use CSS/SCSS)
 - Use `theme.colors.primary`, `theme.spacing.md` etc. in `StyleSheet`
 
 ## Summary
 
-| Package                  | Platform | Purpose                          |
-| ------------------------ | -------- | -------------------------------- |
-| @grundtone/core          | All      | Theme data, types, createTheme   |
-| @grundtone/design-system | Web      | SCSS utilities, CSS, grid        |
-| @grundtone/vue           | Web      | Vue components                   |
-| @grundtone/nuxt          | Web      | Nuxt module                      |
-| @grundtone/react-native  | RN       | ThemeProvider, useGrundtoneTheme |
+| Package                  | Platform | Purpose                           |
+| ------------------------ | -------- | --------------------------------- |
+| @grundtone/core          | All      | Theme data, types, createTheme    |
+| @grundtone/utils         | All      | Utilities, formatters, validation |
+| @grundtone/design-system | Web      | SCSS functions, mixins, CSS, grid |
+| @grundtone/vue           | Web      | Vue 3 components and composables  |
+| @grundtone/nuxt          | Web      | Nuxt 3 module with auto-imports   |
+| @grundtone/react-native  | RN       | ThemeProvider, useGrundtoneTheme  |

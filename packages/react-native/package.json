@@ -36,7 +36,8 @@
     "react-native": ">=0.72.0"
   },
   "dependencies": {
-    "@grundtone/core": "workspace:*"
+    "@grundtone/core": "workspace:*",
+    "@grundtone/utils": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^18.2.0",
