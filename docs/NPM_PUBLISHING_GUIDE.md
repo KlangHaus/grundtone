@@ -136,7 +136,7 @@ Tjek at packages er publiceret:
 npm view @grundtone/core
 npm view @grundtone/vue
 npm view @grundtone/composables
-npm view @grundtone/shared
+npm view @grundtone/utils
 npm view @grundtone/design-system
 npm view @grundtone/nuxt
 ```
@@ -364,7 +364,7 @@ Besøg:
 - https://www.npmjs.com/package/@grundtone/core
 - https://www.npmjs.com/package/@grundtone/vue
 - https://www.npmjs.com/package/@grundtone/composables
-- https://www.npmjs.com/package/@grundtone/shared
+- https://www.npmjs.com/package/@grundtone/utils
 - https://www.npmjs.com/package/@grundtone/design-system
 - https://www.npmjs.com/package/@grundtone/nuxt
 

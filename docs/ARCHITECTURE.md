@@ -106,7 +106,7 @@ src/
     └── _position.scss    # Position utilities
 ```
 
-#### `@grundtone/shared`
+#### `@grundtone/utils`
 
 **Purpose**: Framework-agnostic utilities and helpers **Dependencies**: `@grundtone/core`
 **Exports**:
@@ -126,7 +126,7 @@ export type { BaseComponent, ComponentSize } from './types';
 #### `@grundtone/vue`
 
 **Purpose**: Vue 3 component library following atomic design **Dependencies**: `@grundtone/core`,
-`@grundtone/shared` **Architecture**:
+`@grundtone/utils` **Architecture**:
 
 ```
 src/
@@ -166,7 +166,7 @@ ComponentName/
 #### `@grundtone/composables`
 
 **Purpose**: Vue 3 composables for shared logic **Dependencies**: `@grundtone/core`,
-`@grundtone/shared` **Exports**:
+`@grundtone/utils` **Exports**:
 
 ```typescript
 // DOM utilities

@@ -53,7 +53,7 @@ Location: `.changeset/config.json`
 
 - **Linked Packages**: All packages version together when any package changes
   - `@grundtone/core`
-  - `@grundtone/shared`
+  - `@grundtone/utils`
   - `@grundtone/vue`
   - `@grundtone/composables`
   - `@grundtone/design-system`

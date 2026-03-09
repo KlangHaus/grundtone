@@ -8,7 +8,7 @@ Grundtone is a monorepo of packages. Each package has a clear purpose and depend
 graph TD
     core["@grundtone/core<br/><small>Theme types, createTheme(), defaults</small>"]
     tokens["@grundtone/design-system<br/><small>Web only — SCSS, CSS vars</small>"]
-    shared["@grundtone/shared<br/><small>Utilities</small>"]
+    shared["@grundtone/utils<br/><small>Utilities</small>"]
     rn["@grundtone/react-native<br/><small>RN only — ThemeProvider, hook</small>"]
     composables["@grundtone/composables<br/><small>Vue hooks (useTheme)</small>"]
     vue["@grundtone/vue<br/><small>Components, ThemeProvider</small>"]
@@ -59,7 +59,7 @@ Install when: You use Vue, Nuxt, or Plain Web and need tokens in SCSS/CSS
 Skip when: React Native (no CSS/SCSS)
 ```
 
-### @grundtone/shared
+### @grundtone/utils
 
 **Platform:** All (utilities)
 

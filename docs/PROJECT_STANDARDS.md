@@ -26,7 +26,7 @@ apps/
 The build pipeline follows strict dependency order:
 
 1. **core** and **shared** (no dependencies)
-2. **design-system**, **ui**, **composables** (depend on core/shared)
+2. **design-system**, **ui**, **composables** (depend on core/utils)
 3. **nuxt** and **playground** (depend on ui/composables)
 
 ## Component Architecture

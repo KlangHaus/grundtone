@@ -1,4 +1,4 @@
-# @grundtone/shared
+# @grundtone/utils
 
 ## 2.0.0 - 2026-03-09
 

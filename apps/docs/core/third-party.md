@@ -39,7 +39,7 @@ No external runtime dependencies. Produces standalone CSS/SCSS output.
 |---|---|---|
 | [Vue](https://vuejs.org/) | MIT | Peer dependency — composition API |
 
-### @grundtone/shared
+### @grundtone/utils
 
 | Library | License | Purpose |
 |---|---|---|

@@ -93,7 +93,7 @@
   [`b538711`](https://github.com/grundtone/grundtone/commit/b538711d025c26a6eaaf7f56e2abdb3e003def1c)]:
   - @grundtone/design-system@2.0.0
   - @grundtone/core@2.0.0
-  - @grundtone/shared@2.0.0
+  - @grundtone/utils@2.0.0
 
 ## 1.0.0 - 2025-12-31
 
@@ -108,4 +108,4 @@
 - Updated dependencies
   [[`8174960`](https://github.com/allanasp/grundtone/commit/817496074311a1eee4da2f14603eb79e633636e5)]:
   - @grundtone/core@1.0.0
-  - @grundtone/shared@1.0.0
+  - @grundtone/utils@1.0.0

@@ -61,7 +61,7 @@ turbo run build --force  # Force rebuild without cache
 
 ```bash
 # Build foundation packages first
-turbo run build --filter=@grundtone/core --filter=@grundtone/design-system --filter=@grundtone/shared
+turbo run build --filter=@grundtone/core --filter=@grundtone/design-system --filter=@grundtone/utils
 
 # Then build dependent packages
 turbo run build --filter=@grundtone/vue --filter=@grundtone/composables
