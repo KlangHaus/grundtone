@@ -64,15 +64,15 @@ This is a monorepo using Turborepo and pnpm workspaces:
 ```
 grundtone/
 ├── packages/
-│   ├── ui/              # Vue 3 components
-│   ├── design-system/   # Design system tokens
-│   ├── composables/     # Vue composables
-│   ├── core/           # Core utilities
-│   ├── shared/         # Shared utilities
-│   └── nuxt/           # Nuxt module
+│   ├── core/            # Core types and constants
+│   ├── design-system/   # SCSS functions, mixins, CSS utilities
+│   ├── utils/           # Shared utilities, formatters, validation
+│   ├── vue/             # Vue 3 components and composables
+│   ├── nuxt/            # Nuxt 3 module
+│   └── react-native/   # React Native theme provider
 ├── apps/
-│   └── playground/     # Demo application
-├── TEMPLATES/          # Component templates (excluded from linting)
+│   ├── docs/           # Documentation site (VitePress)
+│   └── html-test/      # Plain HTML test pages
 └── .github/            # GitHub workflows and templates
 ```
 
