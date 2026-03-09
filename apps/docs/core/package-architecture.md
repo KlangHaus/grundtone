@@ -10,16 +10,14 @@ graph TD
     tokens["@grundtone/design-system<br/><small>Web only — SCSS, CSS vars</small>"]
     shared["@grundtone/utils<br/><small>Utilities</small>"]
     rn["@grundtone/react-native<br/><small>RN only — ThemeProvider, hook</small>"]
-    composables["@grundtone/composables<br/><small>Vue hooks (useTheme)</small>"]
-    vue["@grundtone/vue<br/><small>Components, ThemeProvider</small>"]
+    vue["@grundtone/vue<br/><small>Components, composables</small>"]
     nuxt["@grundtone/nuxt<br/><small>Nuxt module, auto-imports</small>"]
 
     core --> tokens
     core --> shared
     core --> rn
-    tokens --> composables
-    shared --> composables
-    composables --> vue
+    tokens --> vue
+    shared --> vue
     vue --> nuxt
 ```
 
@@ -72,28 +70,14 @@ Install when: You use Vue or Nuxt (pulled in automatically)
 Usually not installed directly
 ```
 
-### @grundtone/composables
-
-**Platform:** Vue / Nuxt
-
-**What it provides:** Vue 3 composables (`useTheme`, etc.).
-
-- Depends on core, design-system, shared
-
-```
-Install when: You use Vue or Nuxt (pulled in automatically)
-```
-
 ### @grundtone/vue
 
 **Platform:** Vue (web)
 
-**What it provides:** Vue components (Button, ThemeProvider, ThemeToggle, Icon), theme application
-to DOM. Customize via ThemeProvider `theme` prop – see
-[Theme Configuration](/guide/theme-configuration#vue-3).
+**What it provides:** Vue 3 components and composables. Customize via ThemeProvider `theme` prop –
+see [Theme Configuration](/guide/theme-configuration#vue-3).
 
-- Depends on core, design-system, shared
-- Uses composables (you add it for hooks)
+- Depends on core, design-system, utils
 
 ```
 Install when: You use Vue 3 with Vite
@@ -145,8 +129,7 @@ Turborepo builds in dependency order:
 
 1. **core** – no deps
 2. **design-system** – no Grundtone deps
-3. **shared** – after core
-4. **composables** – after core, design-system, shared
-5. **vue** – after core, design-system, shared
-6. **nuxt** – after vue, composables
-7. **react-native** – after core
+3. **utils** – after core
+4. **vue** – after core, design-system, utils
+5. **nuxt** – after vue
+6. **react-native** – after core

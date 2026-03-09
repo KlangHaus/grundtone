@@ -80,9 +80,8 @@ grundtone/
 
 - **@grundtone/vue**: Vue 3 components following atomic design
 - **@grundtone/design-system**: Colors, typography, spacing tokens
-- **@grundtone/composables**: Reusable Vue composables
-- **@grundtone/core**: Framework-agnostic utilities
-- **@grundtone/utils**: Shared build tools and presets
+- **@grundtone/core**: Framework-agnostic types and constants
+- **@grundtone/utils**: Shared utilities, formatters, validation
 - **@grundtone/nuxt**: Nuxt integration module
 
 ## Development Workflow

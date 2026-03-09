@@ -33,12 +33,6 @@ No external runtime dependencies. Produces standalone CSS/SCSS output.
 |---|---|---|
 | [@nuxt/kit](https://nuxt.com/) | MIT | Nuxt module API |
 
-### @grundtone/composables
-
-| Library | License | Purpose |
-|---|---|---|
-| [Vue](https://vuejs.org/) | MIT | Peer dependency — composition API |
-
 ### @grundtone/utils
 
 | Library | License | Purpose |

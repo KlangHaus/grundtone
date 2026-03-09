@@ -64,7 +64,7 @@ turbo run build --force  # Force rebuild without cache
 turbo run build --filter=@grundtone/core --filter=@grundtone/design-system --filter=@grundtone/utils
 
 # Then build dependent packages
-turbo run build --filter=@grundtone/vue --filter=@grundtone/composables
+turbo run build --filter=@grundtone/vue --filter=@grundtone/nuxt
 ```
 
 2. **Verify TypeScript path mapping**:

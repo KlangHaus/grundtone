@@ -163,31 +163,11 @@ ComponentName/
 └── README.md               # Component documentation
 ```
 
-#### `@grundtone/composables`
-
-**Purpose**: Vue 3 composables for shared logic **Dependencies**: `@grundtone/core`,
-`@grundtone/utils` **Exports**:
-
-```typescript
-// DOM utilities
-export { useClickOutside } from './clickOutside';
-export { useLocalStorage } from './localStorage';
-
-// Form utilities
-export { useFormValidation } from './formValidation';
-export { useDanishValidation } from './danishValidation';
-
-// UI utilities
-export { useBreakpoints } from './breakpoints';
-export { useTheme } from './theme';
-```
-
 ### Integration Layer
 
 #### `@grundtone/nuxt`
 
-**Purpose**: Nuxt 3 module for seamless integration **Dependencies**: `@grundtone/vue`,
-`@grundtone/composables` **Features**:
+**Purpose**: Nuxt 3 module for seamless integration **Dependencies**: `@grundtone/vue` **Features**:
 
 - Auto-imports for components and composables
 - SCSS preprocessing configuration

@@ -55,7 +55,6 @@ Location: `.changeset/config.json`
   - `@grundtone/core`
   - `@grundtone/utils`
   - `@grundtone/vue`
-  - `@grundtone/composables`
   - `@grundtone/design-system`
   - `@grundtone/nuxt`
 - **Base Branch**: `develop` - changesets compare against this branch
