@@ -8,7 +8,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".nuxt/**", ".output/**"],
+      "outputs": ["dist/**", ".nuxt/**", ".output/**", ".vitepress/dist/**"],
       "outputLogs": "new-only",
       "cache": true
     },

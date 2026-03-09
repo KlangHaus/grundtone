@@ -1,7 +1,7 @@
 {
-  "name": "@ipeeon/shared",
-  "version": "1.0.0",
-  "description": "Shared utilities and helpers for Haspen UI",
+  "name": "@grundtone/shared",
+  "version": "2.0.0",
+  "description": "Shared utilities and helpers for Grundtone",
   "license": "MIT",
   "private": false,
   "main": "./dist/index.js",
@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/allanasp/haspen-ui.git",
+    "url": "https://github.com/grundtone/grundtone.git",
     "directory": "packages/shared"
   },
   "publishConfig": {
@@ -25,10 +25,10 @@
     "lint": "eslint src",
     "test": "vitest --passWithNoTests",
     "clean": "rimraf .turbo node_modules dist",
-    "prepublishOnly": "pnpm run build"
+    "prepublishOnly": "test -d dist || pnpm run build"
   },
   "dependencies": {
-    "@ipeeon/core": "workspace:*"
+    "@grundtone/core": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20.17.45",

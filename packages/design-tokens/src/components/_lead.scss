@@ -1,0 +1,9 @@
+// Component: Lead (Manchet)
+// Introductory paragraph — slightly larger than body text.
+// Use for short intro text (max ~3 lines) below a heading.
+
+.lead {
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-normal);
+  font-weight: var(--font-weight-normal);
+}

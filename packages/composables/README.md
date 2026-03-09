@@ -1,124 +1,77 @@
-# @haspen/composables
+# @grundtone/composables
 
-Vue 3 composables for HäspenUI designsystemet. En samling af genbrugelige kompositionsfunktioner
-bygget med Vue Composition API.
+Vue 3 composables for the [Grundtone](https://grundtone.com) design system.
 
 ## Installation
 
 ```bash
-npm install @haspen/composables
-# eller
-yarn add @haspen/composables
-# eller
-pnpm add @haspen/composables
+npm install @grundtone/composables
 ```
 
-## Brug
+## Usage
 
 ```vue
-<template>
-  <div>
-    <button @click="toggle">
-      {{ isOpen ? 'Luk' : 'Åbn' }}
-    </button>
-    <div v-if="isOpen">Indhold</div>
-  </div>
-</template>
-
 <script setup lang="ts">
-  import { useToggle } from '@haspen/composables';
+  import { useToggle } from '@grundtone/composables';
 
-  const { isOpen, toggle } = useToggle();
+  const { isOpen, toggle, open, close } = useToggle();
 </script>
+
+<template>
+  <button @click="toggle">{{ isOpen ? 'Close' : 'Open' }}</button>
+  <div v-if="isOpen">Content</div>
+</template>
 ```
 
-## Tilgængelige Composables
+## Composables
+
+### useTheme
+
+Access the current Grundtone theme.
+
+```typescript
+const { theme, mode, setMode, isDark } = useTheme();
+```
 
 ### useToggle
 
-En simpel toggle-funktion til at håndtere boolean tilstande.
-
-```typescript
-interface UseToggleOptions {
-  initialValue?: boolean;
-}
-
-interface UseToggleReturn {
-  isOpen: Readonly<boolean>;
-  toggle: () => void;
-  open: () => void;
-  close: () => void;
-}
-```
-
-#### Eksempel
+Manage boolean state.
 
 ```typescript
 const { isOpen, toggle, open, close } = useToggle({ initialValue: false });
 ```
 
-## Udvikling
+### useClickOutside
 
-1. Installer dependencies:
+Detect clicks outside an element.
 
-```bash
-pnpm install
+```typescript
+const target = ref<HTMLElement>();
+useClickOutside(target, () => {
+  // clicked outside
+});
 ```
 
-2. Start udviklingsserver:
+### useContainerQuery
 
-```bash
-pnpm dev
+Responsive container queries.
+
+```typescript
+const { width, matches } = useContainerQuery(containerRef);
 ```
 
-3. Byg pakken:
+### useResponsiveCard
 
-```bash
-pnpm build
+Responsive card layout detection.
+
+```typescript
+const { size } = useResponsiveCard(cardRef);
 ```
 
-## Konventioner
+## Documentation
 
-### Navngivning
+See [grundtone.com](https://grundtone.com) for full API reference and examples.
 
-- Brug `use` prefix for alle composables
-- Brug camelCase for funktionsnavne
-- Brug PascalCase for interface navne
-
-### TypeScript
-
-- Definer interfaces for options og return værdier
-- Eksporter typer når de kan være nyttige for brugeren
-- Brug generics når det giver mening
-
-### Testing
-
-- Skriv tests for alle composables
-- Test edge cases og fejlhåndtering
-- Brug Vitest for testing
-
-### Dokumentation
-
-- Dokumenter alle parametre og return værdier
-- Inkluder brugseksempler
-- Beskriv eventuelle begrænsninger eller kendte problemer
-
-## Licens
+## License
 
 MIT
-
-## TypeScript-konfiguration
-
-Denne pakke bruger en specifik `tsconfig.json`, som udvider rodens `tsconfig.build.json`.
-Konfigurationen sikrer at kildekoden i `src/` og types i `types/` bliver korrekt transpileret og at
-types genereres i `dist/types`.
-
-- outDir: `dist`
-- rootDir: `src`
-- Types genereres automatisk ved build
-
-Byg pakken med:
-
-```sh
-pnpm build
-```

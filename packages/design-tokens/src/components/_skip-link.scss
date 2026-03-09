@@ -1,0 +1,19 @@
+// Component: .skip-link
+// Offscreen accessible link, visible on focus.
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  padding: 0.75rem 1.25rem;
+  background: var(--color-text);
+  color: var(--color-background);
+  font-weight: var(--font-weight-semibold);
+  z-index: var(--z-toast);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  text-decoration: none;
+
+  &:focus {
+    left: 1rem;
+  }
+}

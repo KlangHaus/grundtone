@@ -1,0 +1,12 @@
+// Element: <body>
+// Base typography, color, and reset for the document body.
+
+body {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-text);
+  background-color: var(--color-background);
+  margin: 0;
+  padding: 0;
+}

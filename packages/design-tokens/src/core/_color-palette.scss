@@ -169,60 +169,9 @@ $colors: (
     )
 );
 
-// Semantic color aliases for easier usage
-$semantic-colors: (
-  'primary': $blue-600,
-  'primary-light': $blue-500,
-  'primary-dark': $blue-700,
-
-  'secondary': $gray-600,
-  'secondary-light': $gray-500,
-  'secondary-dark': $gray-700,
-
-  'success': $green-600,
-  'success-light': $green-500,
-  'success-dark': $green-700,
-
-  'warning': $yellow-500,
-  'warning-light': $yellow-400,
-  'warning-dark': $yellow-600,
-
-  'error': $red-600,
-  'error-light': $red-500,
-  'error-dark': $red-700,
-
-  'info': $blue-500,
-  'info-light': $blue-400,
-  'info-dark': $blue-600,
-);
-
-// Surface colors for backgrounds and containers
-$surface-colors: (
-  'background': #ffffff,
-  'background-alt': $gray-50,
-  'surface': #ffffff,
-  'surface-alt': $gray-100,
-  'surface-raised': #ffffff,
-  'surface-overlay': rgba(255, 255, 255, 0.95),
-);
-
-// Text colors for different content types
-$text-colors: (
-  'primary': $gray-900,
-  'secondary': $gray-700,
-  'tertiary': $gray-500,
-  'inverse': #ffffff,
-  'placeholder': $gray-400,
-  'disabled': $gray-300,
-);
-
-// Border colors for different emphasis levels
-$border-colors: (
-  'light': $gray-200,
-  'medium': $gray-300,
-  'strong': $gray-400,
-  'inverse': rgba(255, 255, 255, 0.2),
-);
+// Semantic color tokens are defined in @grundtone/core (theme-preset.ts).
+// Use CSS custom properties (--color-*) for semantic colors.
+// The maps and functions below provide raw palette access for SCSS only.
 
 // =============================================================================
 // HELPER FUNCTIONS FOR COLOR ACCESS
@@ -250,66 +199,6 @@ $border-colors: (
 
   @if not $color {
     @error 'Shade "#{$shade}" not found in "#{$family}" family. Available shades: #{map.keys($family-map)}';
-  }
-
-  @return $color;
-}
-
-/// Get a semantic color
-/// @param {String} $name - Semantic color name
-/// @return {Color} The requested semantic color
-/// @example
-///   color: semantic('primary'); // Returns primary color
-@function semantic($name) {
-  $color: map.get($semantic-colors, $name);
-
-  @if not $color {
-    @error 'Semantic color "#{$name}" not found. Available colors: #{map.keys($semantic-colors)}';
-  }
-
-  @return $color;
-}
-
-/// Get a surface color
-/// @param {String} $name - Surface color name
-/// @return {Color} The requested surface color
-/// @example
-///   background-color: surface('background-alt');
-@function surface($name) {
-  $color: map.get($surface-colors, $name);
-
-  @if not $color {
-    @error 'Surface color "#{$name}" not found. Available colors: #{map.keys($surface-colors)}';
-  }
-
-  @return $color;
-}
-
-/// Get a text color
-/// @param {String} $name - Text color name
-/// @return {Color} The requested text color
-/// @example
-///   color: text('secondary');
-@function text($name) {
-  $color: map.get($text-colors, $name);
-
-  @if not $color {
-    @error 'Text color "#{$name}" not found. Available colors: #{map.keys($text-colors)}';
-  }
-
-  @return $color;
-}
-
-/// Get a border color
-/// @param {String} $name - Border color name
-/// @return {Color} The requested border color
-/// @example
-///   border-color: border('medium');
-@function border($name) {
-  $color: map.get($border-colors, $name);
-
-  @if not $color {
-    @error 'Border color "#{$name}" not found. Available colors: #{map.keys($border-colors)}';
   }
 
   @return $color;

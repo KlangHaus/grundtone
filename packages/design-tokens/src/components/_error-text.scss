@@ -1,0 +1,9 @@
+// Component: Error Text (Fejlmeddelelse)
+// Validation error message for form fields.
+
+.error-text {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  color: var(--color-error);
+  font-weight: var(--font-weight-semibold);
+}

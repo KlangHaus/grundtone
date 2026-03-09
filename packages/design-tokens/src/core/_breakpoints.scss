@@ -1,25 +1,11 @@
-// DKFDS Breakpoint System
+// Breakpoint System
 // Responsive breakpoints for mobile-first design
 
 @use 'sass:map';
 @use 'sass:string';
+@use 'breakpoints-defaults' as defaults;
 
-// Grid breakpoints
-$grid-breakpoints: (
-  xs: 0,
-  sm: 576px,
-  md: 768px,
-  lg: 992px,
-  xl: 1200px,
-) !default;
-
-// Container max widths
-$container-max-widths: (
-  sm: 540px,
-  md: 720px,
-  lg: 960px,
-  xl: 1140px,
-) !default;
+$grid-breakpoints: defaults.$grid-breakpoints-default !default;
 
 // Grid configuration
 $grid-columns: 12 !default;
@@ -121,12 +107,38 @@ $grid-gutter-width: 32px !default;
   }
 }
 
+// ---------------------------------------------------------------------------
+// Responsive utility variant generator
+// Generates base + responsive classes for all breakpoints including 2xl.
+// Usage: @include responsive-variants using ($p) { .#{$p}flex { display: flex; } }
+// ---------------------------------------------------------------------------
+@mixin responsive-variants {
+  // Base (no prefix)
+  @content ('');
+
+  // sm through xl
+  @each $bp in (sm, md, lg, xl) {
+    @include media-breakpoint-up($bp) {
+      @content ('#{$bp}\\:');
+    }
+  }
+
+  // 2xl — CSS class names starting with a digit need unicode escaping (\32 = "2")
+  @each $key, $val in $grid-breakpoints {
+    @if $val == 1536px {
+      @include media-breakpoint-up($key) {
+        @content ('\\32 xl\\:');
+      }
+    }
+  }
+}
+
 // Responsive font size mixin
 @mixin responsive-font-size(
   $min-font-size,
   $max-font-size,
-  $min-vw: 576px,
-  $max-vw: 1200px
+  $min-vw: 640px,
+  $max-vw: 1280px
 ) {
   font-size: $min-font-size;
 
@@ -199,6 +211,7 @@ $grid-gutter-width: 32px !default;
   --breakpoint-md: #{map.get($grid-breakpoints, md)};
   --breakpoint-lg: #{map.get($grid-breakpoints, lg)};
   --breakpoint-xl: #{map.get($grid-breakpoints, xl)};
+  --breakpoint-2xl: #{map.get($grid-breakpoints, 2xl)};
   --grid-gutter-width: #{$grid-gutter-width};
   --grid-columns: #{$grid-columns};
 }

@@ -1,0 +1,37 @@
+// Component: Product Gallery
+// Image gallery with main image and thumbnail strip.
+
+.product-gallery {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-sm);
+}
+.product-gallery__main {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-alt);
+}
+.product-gallery__thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-sm);
+}
+.product-gallery__thumb {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity var(--duration-fast) var(--ease-out);
+  border: 2px solid transparent;
+}
+.product-gallery__thumb:hover,
+.product-gallery__thumb--active {
+  opacity: 1;
+}
+.product-gallery__thumb--active {
+  border-color: var(--color-primary);
+}

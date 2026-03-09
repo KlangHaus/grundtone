@@ -1,13 +1,30 @@
-// DKFDS Utilities
+// Design System Utilities
 // Import all utility classes
 
 @forward 'spacing';
 @forward 'display';
-@forward 'flexbox';
+@forward 'alignment';
+@forward 'order';
 @forward 'grid';
+@forward 'containers';
+@forward 'container-queries';
 @forward 'width';
+@forward 'sizing';
 @forward 'background';
-@forward 'position';
+@forward 'text-color';
 @forward 'text-align';
+@forward 'typography';
+@forward 'text-decoration';
+@forward 'text-transform';
+@forward 'letter-spacing';
+@forward 'position';
+@forward 'z-index';
+@forward 'border';
+@forward 'rounded';
+@forward 'overflow';
+@forward 'opacity';
+@forward 'shadow';
+@forward 'transition';
+@forward 'interactivity';
 @forward 'accessibility';
 @forward 'aspect-ratio';

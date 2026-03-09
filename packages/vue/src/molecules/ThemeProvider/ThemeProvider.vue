@@ -1,0 +1,357 @@
+<!--
+  ThemeProvider Component
+  
+  PERFORMANCE NOTE: Theme transitions are now opt-in via utility classes.
+  Instead of applying transitions to ALL elements (*), use these classes:
+  - .transition-colors: For background, border, text color transitions
+  - .transition-fill: For SVG fill/stroke transitions  
+  - .transition-shadow: For box-shadow transitions
+  - .transition-all: For all theme-related transitions
+  
+  This prevents performance issues on complex pages with many elements.
+-->
+<template>
+  <div
+    :class="[
+      'theme-provider',
+      {
+        'theme-provider--transitions': enableTransitions,
+      },
+    ]"
+    :data-theme="theme.mode"
+  >
+    <slot />
+  </div>
+</template>
+
+<script setup lang="ts">
+  import {
+    computed,
+    onBeforeUnmount,
+    onMounted,
+    provide,
+    ref,
+    watch,
+  } from 'vue';
+  import type {
+    ThemeProviderProps,
+    ThemeProviderContext,
+    ThemeMode,
+    Theme,
+  } from '@grundtone/core';
+  import { THEME_INJECTION_KEY } from '@grundtone/core';
+  import { lightTheme, darkTheme } from './themes';
+  import {
+    applyThemeToDOM,
+    getSystemThemeMode,
+    getStoredThemeMode,
+    storeThemeMode,
+    mergeThemes,
+    getThemeOverrideForMode,
+  } from './utils';
+
+  const props = withDefaults(defineProps<ThemeProviderProps>(), {
+    mode: 'auto',
+    enableTransitions: true,
+    persistMode: true,
+    storageKey: 'grundtone-theme-mode',
+  });
+
+  const currentMode = ref<ThemeMode>(props.mode);
+  const mediaQueryList = ref<MediaQueryList>();
+
+  const resolvedMode = computed<'light' | 'dark'>(() => {
+    if (currentMode.value === 'auto') {
+      return getSystemThemeMode();
+    }
+    return currentMode.value;
+  });
+
+  const theme = computed<Theme>(() => {
+    const mode = resolvedMode.value;
+    const baseTheme = mode === 'dark' ? darkTheme : lightTheme;
+    const override = getThemeOverrideForMode(props.theme, mode);
+    return mergeThemes(baseTheme, override);
+  });
+
+  const isDark = computed(() => resolvedMode.value === 'dark');
+  const isLight = computed(() => resolvedMode.value === 'light');
+
+  function setMode(mode: ThemeMode): void {
+    currentMode.value = mode;
+
+    if (props.persistMode) {
+      storeThemeMode(props.storageKey, mode);
+    }
+  }
+
+  function toggleMode(): void {
+    if (currentMode.value === 'auto') {
+      setMode(resolvedMode.value === 'dark' ? 'light' : 'dark');
+    } else {
+      setMode(currentMode.value === 'dark' ? 'light' : 'dark');
+    }
+  }
+
+  function applyTheme(): void {
+    applyThemeToDOM(theme.value);
+  }
+
+  function handleSystemThemeChange(_event: MediaQueryListEvent): void {
+    // Only apply changes if we're in auto mode
+    if (currentMode.value === 'auto') {
+      applyTheme();
+    }
+  }
+
+  // Initialize theme on mount
+  onMounted(() => {
+    // Load persisted theme mode
+    if (props.persistMode) {
+      const storedMode = getStoredThemeMode(props.storageKey);
+      if (storedMode) {
+        currentMode.value = storedMode;
+      }
+    }
+
+    // Listen to system theme changes
+    if (typeof window !== 'undefined') {
+      mediaQueryList.value = window.matchMedia('(prefers-color-scheme: dark)');
+      mediaQueryList.value.addEventListener('change', handleSystemThemeChange);
+    }
+
+    // Apply initial theme
+    applyTheme();
+  });
+
+  onBeforeUnmount(() => {
+    if (mediaQueryList.value) {
+      mediaQueryList.value.removeEventListener(
+        'change',
+        handleSystemThemeChange,
+      );
+    }
+  });
+
+  // Watch for theme changes and apply to DOM
+  watch(theme, applyTheme, { deep: true, immediate: false });
+
+  // Watch for prop changes and update current mode
+  watch(
+    () => props.mode,
+    newMode => {
+      currentMode.value = newMode;
+    },
+    { immediate: true },
+  );
+
+  // Provide theme context
+  const themeContext: ThemeProviderContext = {
+    theme: computed(() => theme.value),
+    mode: computed(() => currentMode.value),
+    isDark,
+    isLight,
+    setMode,
+    toggleMode,
+    applyTheme,
+  };
+
+  provide(THEME_INJECTION_KEY, themeContext);
+</script>
+
+<style lang="scss">
+  .theme-provider {
+    &--transitions {
+      // Utility classes for theme transitions - apply only where needed
+      .transition-colors {
+        transition-property: background-color, border-color, color;
+        transition-timing-function: var(
+          --transition-timing-ease,
+          cubic-bezier(0.4, 0, 0.2, 1)
+        );
+        transition-duration: var(--transition-duration-fast, 150ms);
+      }
+
+      .transition-fill {
+        transition-property: fill, stroke;
+        transition-timing-function: var(
+          --transition-timing-ease,
+          cubic-bezier(0.4, 0, 0.2, 1)
+        );
+        transition-duration: var(--transition-duration-fast, 150ms);
+      }
+
+      .transition-shadow {
+        transition-property: box-shadow;
+        transition-timing-function: var(
+          --transition-timing-ease,
+          cubic-bezier(0.4, 0, 0.2, 1)
+        );
+        transition-duration: var(--transition-duration-fast, 150ms);
+      }
+
+      .transition-all {
+        transition-property:
+          background-color, border-color, color, fill, stroke, box-shadow;
+        transition-timing-function: var(
+          --transition-timing-ease,
+          cubic-bezier(0.4, 0, 0.2, 1)
+        );
+        transition-duration: var(--transition-duration-fast, 150ms);
+      }
+    }
+  }
+
+  // Base theme variables – overridden by applyThemeToDOM when ThemeProvider mounts
+  // These are fallbacks from defaultColorPreset for initial paint / SSR
+  :root {
+    color-scheme: light dark;
+
+    // Brand
+    --color-primary: light-dark(#0059b3, #4dabf7);
+    --color-primary-light: light-dark(#3381cc, #74c0fc);
+    --color-primary-dark: light-dark(#003a7a, #339af0);
+    --color-on-primary: light-dark(#ffffff, #121212);
+    --color-secondary: light-dark(#6c757d, #adb5bd);
+    --color-secondary-light: light-dark(#868e96, #ced4da);
+    --color-secondary-dark: light-dark(#494f54, #868e96);
+    // Status
+    --color-success: light-dark(#198754, #51cf66);
+    --color-success-light: light-dark(#d1e7dd, #1a3d20);
+    --color-success-dark: light-dark(#146c43, #40c057);
+    --color-warning: light-dark(#ffc107, #ffd43b);
+    --color-warning-light: light-dark(#fff3cd, #3d3a1a);
+    --color-warning-dark: light-dark(#cc9a06, #fab005);
+    --color-error: light-dark(#dc3545, #ff6b6b);
+    --color-error-light: light-dark(#f8d7da, #3d1a1c);
+    --color-error-dark: light-dark(#b02a37, #fa5252);
+    --color-info: light-dark(#0dcaf0, #4dabf7);
+    --color-info-light: light-dark(#cff4fc, #1a2e3d);
+    --color-info-dark: light-dark(#0aa2c0, #339af0);
+    // Surface
+    --color-background: light-dark(#ffffff, #121212);
+    --color-background-alt: light-dark(#fafafa, #1a1a1a);
+    --color-surface: light-dark(#f8f9fa, #1e1e1e);
+    --color-surface-alt: light-dark(#f0f1f2, #252525);
+    --color-surface-raised: light-dark(#ffffff, #2a2a2a);
+    --color-surface-overlay: light-dark(
+      rgba(255, 255, 255, 0.95),
+      rgba(30, 30, 30, 0.95)
+    );
+    // Text
+    --color-text: light-dark(#212529, #ffffff);
+    --color-text-secondary: light-dark(#6c757d, #b0b0b0);
+    --color-text-tertiary: light-dark(#adb5bd, #808080);
+    --color-text-inverse: light-dark(#ffffff, #121212);
+    --color-text-placeholder: light-dark(#a3a3a3, #666666);
+    --color-text-disabled: light-dark(#d4d4d4, #4a4a4a);
+    // Border
+    --color-border-light: light-dark(#dee2e6, #404040);
+    --color-border-medium: light-dark(#ced4da, #505050);
+    --color-border-strong: light-dark(#adb5bd, #606060);
+    --color-border-inverse: light-dark(
+      rgba(255, 255, 255, 0.2),
+      rgba(0, 0, 0, 0.3)
+    );
+    // Focus
+    --color-focus: light-dark(#0059b3, #4dabf7);
+    --color-focus-ring: light-dark(
+      rgba(0, 89, 179, 0.25),
+      rgba(77, 171, 247, 0.25)
+    );
+    // Neutral
+    --color-neutral: light-dark(#6c757d, #9e9e9e);
+
+    // Spacing (--space-* matches design-tokens; overridden by applyThemeToDOM)
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 3rem;
+    --space-3xl: 4rem;
+    --space-4xl: 6rem;
+
+    // Typography
+    --font-family-base:
+      'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica,
+      Arial, sans-serif;
+    --font-family-heading:
+      'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica,
+      Arial, sans-serif;
+    --font-family-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+    --font-size-4xl: 2.25rem;
+    --font-size-5xl: 3rem;
+
+    --font-weight-thin: 100;
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extrabold: 800;
+
+    --line-height-none: 1;
+    --line-height-tight: 1.25;
+    --line-height-snug: 1.375;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.625;
+    --line-height-loose: 2;
+
+    // Shadows
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-sm:
+      0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-md:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg:
+      0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl:
+      0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+    --shadow-none: none;
+
+    // Radius
+    --radius-none: 0;
+    --radius-xs: 0.125rem;
+    --radius-sm: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    --radius-2xl: 1rem;
+    --radius-3xl: 1.5rem;
+    --radius-full: 9999px;
+
+    // Transitions
+    --transition-duration-fast: 150ms;
+    --transition-duration-base: 300ms;
+    --transition-duration-slow: 500ms;
+
+    --transition-timing-ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-timing-easeIn: cubic-bezier(0.4, 0, 1, 1);
+    --transition-timing-easeOut: cubic-bezier(0, 0, 0.2, 1);
+    --transition-timing-easeInOut: cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-timing-linear: linear;
+  }
+
+  [data-theme='dark'] {
+    color-scheme: dark;
+  }
+
+  [data-theme='light'] {
+    color-scheme: light;
+  }
+
+  [data-theme='auto'] {
+    color-scheme: light dark;
+  }
+</style>

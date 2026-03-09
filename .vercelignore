@@ -5,7 +5,6 @@ coverage
 .cache
 *.log
 .DS_Store
-apps/
 TEMPLATES/
 *.test.ts
 *.test.tsx

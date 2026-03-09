@@ -1,21 +1,125 @@
-// Haspen UI Design Tokens
-// Complete DKFDS system implementation
+// Design Tokens — Main CSS Entry Point
+// Compiles to dist/index.css. Includes all CSS custom properties, utility classes, and base styles.
+// For SCSS-only API (mixins, functions, variables), use lib.scss instead.
+//
+// Override breakpoints: @use '@grundtone/design-tokens/scss' with ($grid-breakpoints: (...));
+// Override colors:      @use '@grundtone/design-tokens/scss' with ($color-overrides-light: (...), $color-overrides-dark: (...));
 
-// Core design tokens (must be imported first)
-@forward 'core/color-palette' hide color;
-@forward 'core/accessibility';
-@forward 'core/semantic-colors';
-@forward 'core/colors';
-@forward 'core/typography';
-@forward 'core/spacing';
-@forward 'core/breakpoints';
-@forward 'core/shadows';
-@forward 'core/radius';
-@forward 'core/z-index';
+@use 'sass:map';
+@use 'sass:meta';
+@use 'core/breakpoints-defaults' as bp-def;
+@use 'core/color-defaults' as c-def;
+@use 'core/spacing-defaults' as sp;
+@use 'core/radius-defaults' as rad;
+@use 'core/shadow-defaults' as shd;
+@use 'core/z-index-defaults' as zi;
+@use 'core/transition-defaults' as tr;
+@use 'core/typography-defaults' as typ;
 
-// Functions and mixins (depend on core)
-@forward 'functions' hide color, border;
-@forward 'mixins';
+$grid-breakpoints: bp-def.$grid-breakpoints-default !default;
+$color-overrides-light: () !default;
+$color-overrides-dark: () !default;
 
-// Utility classes (depend on functions/mixins) - Temporarily disabled during DKFDS migration
-// @forward 'utilities' hide $spacers;
+$_colors-light: map.merge(c-def.$colors-light, $color-overrides-light);
+$_colors-dark: map.merge(c-def.$colors-dark, $color-overrides-dark);
+
+// Element styles (tag selectors, specificity 0,0,1)
+@use 'elements';
+
+// Component styles (class selectors, specificity 0,1,0)
+@use 'components';
+
+// Utility classes (class selectors, later in cascade so they win over components)
+@use 'utilities/grid' with (
+  $grid-breakpoints-config: $grid-breakpoints
+);
+@use 'utilities/display';
+@use 'utilities/alignment';
+@use 'utilities/order';
+@use 'utilities/spacing';
+@use 'utilities/containers';
+@use 'utilities/container-queries';
+@use 'utilities/aspect-ratio';
+@use 'utilities/z-index';
+@use 'utilities/position';
+@use 'utilities/background';
+@use 'utilities/text-align';
+@use 'utilities/border';
+@use 'utilities/rounded';
+@use 'utilities/overflow';
+@use 'utilities/width';
+@use 'utilities/sizing';
+@use 'utilities/text-color';
+@use 'utilities/typography';
+@use 'utilities/text-decoration';
+@use 'utilities/text-transform';
+@use 'utilities/letter-spacing';
+@use 'utilities/opacity';
+@use 'utilities/interactivity';
+@use 'utilities/transition';
+@use 'utilities/shadow';
+@use 'utilities/accessibility';
+
+// All CSS custom properties — generated from @grundtone/core defaults + overrides.
+:root {
+  // Colors
+  @each $name, $light-value in $_colors-light {
+    $dark-value: map.get($_colors-dark, $name);
+
+    @if $dark-value {
+      --color-#{$name}: light-dark(#{$light-value}, #{$dark-value});
+    } @else {
+      --color-#{$name}: #{$light-value};
+    }
+  }
+
+  // Typography — font families use meta.inspect() to preserve quoted font names
+  @each $key, $val in typ.$font-families {
+    --font-family-#{$key}: #{meta.inspect($val)};
+  }
+  @each $key, $val in typ.$font-sizes {
+    --font-size-#{$key}: #{$val};
+  }
+  @each $key, $val in typ.$font-weights {
+    --font-weight-#{$key}: #{$val};
+  }
+  @each $key, $val in typ.$line-heights {
+    --line-height-#{$key}: #{$val};
+  }
+
+  // Spacing
+  @each $key, $val in sp.$spacing {
+    --space-#{$key}: #{$val};
+  }
+
+  // Border Radius
+  @each $key, $val in rad.$radii {
+    --radius-#{$key}: #{$val};
+  }
+
+  // Shadows
+  @each $key, $val in shd.$shadows {
+    --shadow-#{$key}: #{$val};
+  }
+
+  // Z-index layers
+  @each $key, $val in zi.$z-indices {
+    --z-#{$key}: #{$val};
+  }
+
+  // Grid auto-fit min column width (override for custom layouts)
+  --grid-auto-fit-min: 250px;
+
+  // Animation
+  @each $key, $val in tr.$durations {
+    --duration-#{$key}: #{$val};
+  }
+  @each $key, $val in tr.$timings {
+    --#{$key}: #{$val};
+  }
+}
+
+// Set color scheme for automatic light-dark() function
+:root {
+  color-scheme: light dark;
+}

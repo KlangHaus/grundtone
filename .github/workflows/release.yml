@@ -11,6 +11,7 @@ permissions:
   contents: write
   pull-requests: write
   id-token: write
+  deployments: write
 
 jobs:
   release:
@@ -40,6 +41,20 @@ jobs:
 
       - name: Build Packages
         run: pnpm build:packages
+
+      - name: Build Docs
+        run: pnpm docs:build
+
+      - name: Deploy to Vercel Production
+        uses: amondnet/vercel-action@v25
+        id: vercel-deploy
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
+          working-directory: ./
+          scope: ${{ secrets.VERCEL_ORG_ID }}
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets

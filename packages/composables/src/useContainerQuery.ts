@@ -47,7 +47,7 @@ export interface UseContainerQueryReturn {
  * @example
  * ```vue
  * <template>
- *   <div ref="containerRef" class="haspen-container">
+ *   <div ref="containerRef" class="cq-contain">
  *     <div v-if="matches">Large container content</div>
  *     <div v-else>Small container content</div>
  *   </div>
@@ -55,7 +55,7 @@ export interface UseContainerQueryReturn {
  *
  * <script setup>
  * import { ref } from 'vue'
- * import { useContainerQuery } from '@ipeeon/composables'
+ * import { useContainerQuery } from '@grundtone/composables'
  *
  * const containerRef = ref()
  * const { matches } = useContainerQuery({

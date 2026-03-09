@@ -1,9 +1,3 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "pnpm docs:build",
-  "outputDirectory": "docs/.vitepress/dist",
-  "framework": null,
-  "installCommand": "pnpm install",
-  "devCommand": "pnpm docs:dev",
-  "ignoreCommand": "git diff HEAD^ HEAD --quiet . docs/ packages/"
+  "buildCommand": "pnpm -w run docs:build"
 }

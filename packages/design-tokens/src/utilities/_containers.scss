@@ -1,0 +1,121 @@
+// Container Utilities — Modern, fluid containers
+//
+// Improvements over Bootstrap:
+//   1. Fluid gutters via clamp() — smooth scaling, no breakpoint jumps
+//   2. CSS custom properties — runtime-configurable (--container-max, --container-gutter)
+//   3. Logical properties — automatic RTL support
+//   4. Auto container-type — CQ utilities work without extra classes
+//   5. .container-prose — optimal reading width (65ch)
+//   6. .breakout — full-viewport-width children inside containers
+//   7. Computed max-widths — derived from $grid-breakpoints, no separate map
+//
+// Classes:
+//   .container           — steps up max-width at each breakpoint
+//   .container-fluid     — always 100%
+//   .container-{bp}      — 100% until bp, then steps up
+//   .container-narrow    — 768px
+//   .container-tight     — 640px
+//   .container-wide      — 1400px
+//   .container-ultrawide — 1600px
+//   .container-prose     — 65ch (optimal reading width)
+//   .breakout            — break out of container to full viewport width
+
+@use 'sass:map';
+@use '../core/breakpoints' as *;
+
+// ---------------------------------------------------------------------------
+// make-container mixin — shared base for all container types
+// ---------------------------------------------------------------------------
+
+@mixin make-container() {
+  --container-gutter: clamp(1rem, 4vw, 2rem);
+  width: 100%;
+  max-width: var(--container-max, 100%);
+  padding-inline: var(--container-gutter);
+  margin-inline: auto;
+  container-type: inline-size;
+}
+
+// ---------------------------------------------------------------------------
+// .container — fluid gutters, max-width steps up at each breakpoint
+// Max-width = breakpoint - 2 * gutter, computed automatically.
+// ---------------------------------------------------------------------------
+
+.container {
+  @include make-container;
+
+  @each $bp, $width in $grid-breakpoints {
+    @if $width != 0 {
+      @include media-breakpoint-up($bp) {
+        --container-max: calc(#{$width} - var(--container-gutter) * 2);
+      }
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// .container-fluid — always 100%, no max-width cap
+// ---------------------------------------------------------------------------
+
+.container-fluid {
+  @include make-container;
+}
+
+// ---------------------------------------------------------------------------
+// Responsive containers — .container-{bp}
+// 100% until the named breakpoint, then steps up from there.
+// Generated via loop from $grid-breakpoints.
+// ---------------------------------------------------------------------------
+
+@each $bp, $width in $grid-breakpoints {
+  @if $width != 0 {
+    .container-#{$bp} {
+      @include make-container;
+
+      // From this breakpoint upward, step up max-widths
+      @each $inner-bp, $inner-width in $grid-breakpoints {
+        @if $inner-width >= $width {
+          @include media-breakpoint-up($inner-bp) {
+            --container-max: calc(
+              #{$inner-width} - var(--container-gutter) * 2
+            );
+          }
+        }
+      }
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Content-width containers
+// ---------------------------------------------------------------------------
+
+$_custom-containers: (
+  'narrow': 768px,
+  'tight': 640px,
+  'wide': 1400px,
+  'ultrawide': 1600px,
+);
+
+@each $name, $max in $_custom-containers {
+  .container-#{$name} {
+    @include make-container;
+    --container-max: #{$max};
+  }
+}
+
+// Optimal reading width — 65ch is the typographic standard for line length
+.container-prose {
+  @include make-container;
+  --container-max: 65ch;
+}
+
+// ---------------------------------------------------------------------------
+// .breakout — full-viewport-width child inside a container
+// Note: 100vw includes scrollbar width; add overflow-x: hidden on body if needed.
+// ---------------------------------------------------------------------------
+
+.breakout {
+  width: 100vw;
+  margin-inline: calc(-50vw + 50%);
+}

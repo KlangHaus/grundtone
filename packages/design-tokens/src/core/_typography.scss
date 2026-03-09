@@ -1,63 +1,16 @@
-// DKFDS Typography System
-// Complete typography from Det Fælles Designsystem
+// Typography System
+// Generated defaults imported from @grundtone/core via _typography-defaults.scss
+// This file adds responsive headings, component-specific typography, and SCSS-only extras.
 
-// Font Family
-$font-family-system:
-  -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
-  sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol' !default;
-$font-family-primary: 'IBM Plex Sans', $font-family-system !default;
-$font-family-sans-serif: $font-family-primary !default;
-$font-family-serif: Georgia, Cambria, 'Times New Roman', Times, serif !default;
-$font-family-monospace:
-  SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Courier, monospace !default;
+@use 'typography-defaults' as *;
 
-// Font Sizes (rem-based)
-$font-sizes: (
-  '2xs': 1.2rem,
-  // 12px
-  'xs': 1.3rem,
-  // 13px
-  'sm': 1.4rem,
-  // 14px
-  'md': 1.6rem,
-  // 16px (base)
-  'lg': 1.8rem,
-  // 18px
-  'xl': 2rem,
-  // 20px
-  '2xl': 2.2rem,
-  // 22px
-  '3xl': 2.4rem,
-  // 24px
-  '4xl': 2.8rem,
-  // 28px
-  '5xl': 3.2rem,
-  // 32px
-  '6xl': 4rem,
-  // 40px
-  '7xl': 4.8rem, // 48px
-);
+// Re-export generated defaults
+// (variables and maps from _typography-defaults.scss are available via @use 'typography' or @forward)
 
-// Font Weights
-$font-weight-thin: false !default; // Not used in DKFDS
-$font-weight-extralight: false !default; // Not used in DKFDS
-$font-weight-light: false !default; // Not used in DKFDS
-$font-weight-normal: 400 !default;
-$font-weight-medium: 500 !default;
-$font-weight-semibold: 600 !default;
-$font-weight-bold: 700 !default;
-$font-weight-extrabold: false !default; // Not used in DKFDS
-$font-weight-black: false !default; // Not used in DKFDS
-
-// Line Heights
-$line-heights: (
-  'none': 1,
-  'tight': 1.25,
-  'snug': 1.375,
-  'normal': 1.5,
-  'relaxed': 1.625,
-  'loose': 2,
-);
+// Font family aliases (for backward-compat consumers)
+$font-family-primary: $font-family-base !default;
+$font-family-sans-serif: $font-family-base !default;
+$font-family-monospace: $font-family-mono !default;
 
 // Letter Spacing
 $letter-spacings: (
@@ -69,57 +22,54 @@ $letter-spacings: (
   'widest': 0.1em,
 );
 
-// Heading Sizes (Responsive)
-$h1-font-size: 3.2rem !default; // 32px
-$h1-font-size-md: 3.6rem !default; // 36px
-$h1-font-size-lg: 4rem !default; // 40px
-$h1-font-size-xl: 4.8rem !default; // 48px
-
-$h2-font-size: 2.4rem !default; // 24px
-$h2-font-size-md: 2.8rem !default; // 28px
-$h2-font-size-lg: 3.2rem !default; // 32px
-
-$h3-font-size: 2rem !default; // 20px
-$h3-font-size-md: 2.2rem !default; // 22px
-$h3-font-size-lg: 2.4rem !default; // 24px
-
-$h4-font-size: 1.8rem !default; // 18px
-$h4-font-size-md: 2rem !default; // 20px
-
-$h5-font-size: 1.6rem !default; // 16px
-$h5-font-size-md: 1.8rem !default; // 18px
-
-$h6-font-size: 1.3rem !default; // 13px
-$h6-font-size-md: 1.6rem !default; // 16px
-
-// Display Sizes (Larger than headings)
-$display-font-sizes: (
-  '1': 5.6rem,
-  // 56px
-  '2': 4.8rem,
-  // 48px
-  '3': 4rem,
-  // 40px
-  '4': 3.2rem, // 32px
-);
-
-// Text Configuration
-$font-size-base: 1.6rem !default; // 16px
-$font-size-small: 1.4rem !default; // 14px
-$font-size-xs: 1.2rem !default; // 12px
-
-$line-height-base: 1.5 !default;
+// Line height aliases
+$line-height-base: $line-height-normal !default;
 $line-height-heading: 1.2 !default;
 $line-height-display: 1.2 !default;
 
+// Heading Sizes (Responsive) — standard rem
+$h1-font-size: $font-size-4xl !default; // 2.25rem = 36px
+$h1-font-size-md: 2.5rem !default; // 40px
+$h1-font-size-lg: 2.75rem !default; // 44px
+$h1-font-size-xl: $font-size-5xl !default; // 3rem = 48px
+
+$h2-font-size: $font-size-3xl !default; // 1.875rem = 30px
+$h2-font-size-md: $font-size-4xl !default; // 2.25rem = 36px
+$h2-font-size-lg: 2.5rem !default; // 40px
+
+$h3-font-size: $font-size-2xl !default; // 1.5rem = 24px
+$h3-font-size-md: $font-size-3xl !default; // 1.875rem = 30px
+$h3-font-size-lg: $font-size-4xl !default; // 2.25rem = 36px
+
+$h4-font-size: $font-size-xl !default; // 1.25rem = 20px
+$h4-font-size-md: $font-size-2xl !default; // 1.5rem = 24px
+
+$h5-font-size: $font-size-lg !default; // 1.125rem = 18px
+$h5-font-size-md: $font-size-xl !default; // 1.25rem = 20px
+
+$h6-font-size: $font-size-base !default; // 1rem = 16px
+$h6-font-size-md: $font-size-lg !default; // 1.125rem = 18px
+
+// Display Sizes
+$display-font-sizes: (
+  '1': 3.5rem,
+  // 56px
+  '2': 3rem,
+  // 48px
+  '3': 2.5rem,
+  // 40px
+  '4': 2rem, // 32px
+);
+
 // Component-specific Typography
-$font-size-lead: 2rem !default; // 20px
-$font-size-form-label: 1.8rem !default; // 18px
-$font-size-form-hint: 1.4rem !default; // 14px
-$font-size-form-error: 1.4rem !default; // 14px
-$font-size-button: 1.6rem !default; // 16px
-$font-size-tag: 1.3rem !default; // 13px
-$font-size-badge: 1.2rem !default; // 12px
+$font-size-small: $font-size-sm !default;
+$font-size-lead: $font-size-xl !default; // 1.25rem = 20px
+$font-size-form-label: $font-size-lg !default; // 1.125rem = 18px
+$font-size-form-hint: $font-size-sm !default; // 0.875rem = 14px
+$font-size-form-error: $font-size-sm !default; // 0.875rem = 14px
+$font-size-button: $font-size-base !default; // 1rem = 16px
+$font-size-tag: $font-size-xs !default; // 0.75rem = 12px
+$font-size-badge: $font-size-xs !default; // 0.75rem = 12px
 
 // Responsive Typography Map
 $responsive-typography: (
@@ -167,47 +117,3 @@ $text-decorations: (
   'underline': underline,
   'line-through': line-through,
 );
-
-// Export for CSS custom properties
-:root {
-  // Font families
-  --font-family-primary: #{$font-family-primary};
-  --font-family-sans-serif: #{$font-family-sans-serif};
-  --font-family-serif: #{$font-family-serif};
-  --font-family-monospace: #{$font-family-monospace};
-
-  // Font sizes
-  --font-size-base: #{$font-size-base};
-  --font-size-small: #{$font-size-small};
-  --font-size-xs: #{$font-size-xs};
-
-  // Font weights
-  --font-weight-normal: #{$font-weight-normal};
-  --font-weight-medium: #{$font-weight-medium};
-  --font-weight-semibold: #{$font-weight-semibold};
-  --font-weight-bold: #{$font-weight-bold};
-
-  // Line heights
-  --line-height-base: #{$line-height-base};
-  --line-height-heading: #{$line-height-heading};
-
-  // Heading sizes
-  --h1-font-size: #{$h1-font-size};
-  --h2-font-size: #{$h2-font-size};
-  --h3-font-size: #{$h3-font-size};
-  --h4-font-size: #{$h4-font-size};
-  --h5-font-size: #{$h5-font-size};
-  --h6-font-size: #{$h6-font-size};
-}
-
-// Base HTML font-size setup (62.5% = 10px)
-html {
-  font-size: 62.5%;
-}
-
-body {
-  font-family: $font-family-primary;
-  font-size: $font-size-base;
-  line-height: $line-height-base;
-  font-weight: $font-weight-normal;
-}

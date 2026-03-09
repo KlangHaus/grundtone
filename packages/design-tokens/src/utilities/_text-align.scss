@@ -1,20 +1,17 @@
 // Text Alignment Utilities
-@use 'sass:map';
 @use '../core/breakpoints' as *;
 
-// Text alignment
-@each $breakpoint in map.keys($grid-breakpoints) {
-  @include media-breakpoint-up($breakpoint) {
-    $infix: breakpoint-infix($breakpoint);
-
-    .align-text#{$infix}-left {
-      text-align: left !important;
-    }
-    .align-text#{$infix}-right {
-      text-align: right !important;
-    }
-    .align-text#{$infix}-center {
-      text-align: center !important;
-    }
+@include responsive-variants using ($p) {
+  .#{$p}text-left {
+    text-align: left;
+  }
+  .#{$p}text-right {
+    text-align: right;
+  }
+  .#{$p}text-center {
+    text-align: center;
+  }
+  .#{$p}text-justify {
+    text-align: justify;
   }
 }

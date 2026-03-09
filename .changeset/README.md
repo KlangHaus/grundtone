@@ -28,7 +28,7 @@ pnpm changeset:status
 
 For comprehensive documentation on using changesets in this project, see:
 
-- **[CHANGESETS.md](../CHANGESETS.md)** - Complete workflow guide, best practices, and examples
+- **[CHANGESETS.md](../docs/CHANGESETS.md)** - Complete workflow guide, best practices, and examples
 - [Official Changesets Docs](https://github.com/changesets/changesets/tree/main/docs) - Full
   changesets documentation
 - [Common Questions](https://github.com/changesets/changesets/blob/main/docs/common-questions.md) -

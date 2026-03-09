@@ -1,0 +1,197 @@
+import type { Theme, ThemeConfig } from '@grundtone/core';
+import { createStorageHandler } from '../../utils/error-handling';
+
+/**
+ * Returns the theme override for the current mode.
+ * Handles both single-theme (applies to both) and separate light/dark configs.
+ */
+export function getThemeOverrideForMode(
+  config: ThemeConfig | undefined,
+  mode: 'light' | 'dark',
+): Partial<Theme> | undefined {
+  if (!config || typeof config !== 'object') return undefined;
+
+  const hasLightDark = 'light' in config || 'dark' in config;
+  if (hasLightDark) {
+    const modeConfig = config[mode];
+    return modeConfig;
+  }
+
+  return config as Partial<Theme>;
+}
+
+/**
+ * Apply theme to DOM with optimized batch updates
+ * PERFORMANCE: Uses requestAnimationFrame and batch updates to prevent DOM thrashing
+ */
+export function applyThemeToDOM(theme: Theme): void {
+  // Use requestAnimationFrame to batch DOM updates in the next frame
+  requestAnimationFrame(() => {
+    const root = document.documentElement;
+
+    // Build all properties as key-value pairs
+    const properties: Record<string, string> = {};
+
+    // Colors (camelCase → kebab-case for CSS vars)
+    Object.entries(theme.colors).forEach(([key, value]) => {
+      if (value === undefined) return;
+      const cssKey = key.replace(/([A-Z])/g, '-$1').toLowerCase();
+      properties[`--color-${cssKey}`] = value;
+    });
+
+    // Spacing (output --space-* to match design-tokens; components use var(--space-sm) etc.)
+    Object.entries(theme.spacing).forEach(([key, value]) => {
+      properties[`--space-${key}`] = value;
+    });
+
+    // Typography
+    Object.entries(theme.typography.fontFamily).forEach(([key, value]) => {
+      properties[`--font-family-${key}`] = value;
+    });
+
+    Object.entries(theme.typography.fontSize).forEach(([key, value]) => {
+      properties[`--font-size-${key}`] = value;
+    });
+
+    Object.entries(theme.typography.fontWeight).forEach(([key, value]) => {
+      properties[`--font-weight-${key}`] = String(value);
+    });
+
+    Object.entries(theme.typography.lineHeight).forEach(([key, value]) => {
+      properties[`--line-height-${key}`] = String(value);
+    });
+
+    // Shadows
+    Object.entries(theme.shadows).forEach(([key, value]) => {
+      properties[`--shadow-${key}`] = value;
+    });
+
+    // Radius
+    Object.entries(theme.radius).forEach(([key, value]) => {
+      properties[`--radius-${key}`] = value;
+    });
+
+    // Transitions
+    Object.entries(theme.transitions.duration).forEach(([key, value]) => {
+      properties[`--transition-duration-${key}`] = value;
+    });
+
+    Object.entries(theme.transitions.timing).forEach(([key, value]) => {
+      properties[`--transition-timing-${key}`] = value;
+    });
+
+    // Apply all properties in a single batch
+    // This is the most efficient way to update multiple CSS properties
+    const cssText = Object.entries(properties)
+      .map(([key, value]) => `${key}: ${value}`)
+      .join('; ');
+
+    // Preserve existing inline styles while adding theme properties
+    const existingStyles = root.getAttribute('style') || '';
+    const cleanedExisting = existingStyles
+      .split(';')
+      .filter(
+        rule =>
+          rule.trim() &&
+          !rule.includes('--color-') &&
+          !rule.includes('--space-') &&
+          !rule.includes('--font-') &&
+          !rule.includes('--radius-') &&
+          !rule.includes('--shadow-') &&
+          !rule.includes('--duration-') &&
+          !rule.includes('--ease-'),
+      )
+      .join(';');
+
+    root.setAttribute(
+      'style',
+      cleanedExisting ? `${cleanedExisting}; ${cssText}` : cssText,
+    );
+
+    // Set theme mode attribute after style update
+    root.setAttribute('data-theme', theme.mode);
+  });
+}
+
+export function getSystemThemeMode(): 'light' | 'dark' {
+  if (typeof window === 'undefined') {
+    return 'light';
+  }
+
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light';
+}
+
+export function getStoredThemeMode(
+  storageKey: string,
+): 'light' | 'dark' | 'auto' | null {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  const storage = createStorageHandler('localStorage');
+  const stored = storage.get(storageKey);
+
+  if (stored === 'light' || stored === 'dark' || stored === 'auto') {
+    return stored;
+  }
+
+  return null;
+}
+
+export function storeThemeMode(
+  storageKey: string,
+  mode: 'light' | 'dark' | 'auto',
+): void {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  const storage = createStorageHandler('localStorage');
+  storage.set(storageKey, mode);
+}
+
+export function mergeThemes(base: Theme, override?: Partial<Theme>): Theme {
+  if (!override) {
+    return base;
+  }
+
+  return {
+    ...base,
+    ...override,
+    colors: { ...base.colors, ...override.colors },
+    spacing: { ...base.spacing, ...override.spacing },
+    typography: {
+      ...base.typography,
+      ...override.typography,
+      fontFamily: {
+        ...base.typography.fontFamily,
+        ...override.typography?.fontFamily,
+      },
+      fontSize: {
+        ...base.typography.fontSize,
+        ...override.typography?.fontSize,
+      },
+      fontWeight: {
+        ...base.typography.fontWeight,
+        ...override.typography?.fontWeight,
+      },
+      lineHeight: {
+        ...base.typography.lineHeight,
+        ...override.typography?.lineHeight,
+      },
+    },
+    shadows: { ...base.shadows, ...override.shadows },
+    radius: { ...base.radius, ...override.radius },
+    transitions: {
+      ...base.transitions,
+      ...override.transitions,
+      duration: {
+        ...base.transitions.duration,
+        ...override.transitions?.duration,
+      },
+      timing: { ...base.transitions.timing, ...override.transitions?.timing },
+    },
+  };
+}

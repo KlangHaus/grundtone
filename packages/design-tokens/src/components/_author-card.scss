@@ -1,0 +1,21 @@
+// Component: .author-card, .author-avatar
+// Author bio card with circular avatar.
+
+.author-card {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  margin-top: var(--space-2xl);
+}
+
+.author-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}

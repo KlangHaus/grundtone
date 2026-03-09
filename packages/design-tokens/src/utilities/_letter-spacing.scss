@@ -1,0 +1,12 @@
+// Letter Spacing Utilities
+// Tracking utilities from the letter-spacings scale.
+@use '../core/breakpoints' as *;
+@use '../core/typography' as *;
+
+@include responsive-variants using ($p) {
+  @each $key, $value in $letter-spacings {
+    .#{$p}tracking-#{$key} {
+      letter-spacing: #{$value};
+    }
+  }
+}

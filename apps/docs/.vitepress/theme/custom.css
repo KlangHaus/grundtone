@@ -1,0 +1,5 @@
+/* Theme overrides if needed */
+:root {
+  --vp-c-brand-1: var(--color-primary, #646cff);
+  --vp-c-brand-2: var(--color-primary-light, #747bff);
+}

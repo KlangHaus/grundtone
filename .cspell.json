@@ -2,14 +2,11 @@
   "version": "0.2",
   "language": "en",
   "words": [
-    "haspen",
-    "Haspen",
+    "grundtone",
+    "Grundtone",
     "nuxt",
     "Nuxt",
     "Turborepo",
-    "autodocs",
-    "storybook",
-    "Storybook",
     "composables",
     "pnpm",
     "monorepo",
@@ -22,11 +19,5 @@
     "stylelint",
     "commitlint"
   ],
-  "ignorePaths": [
-    "node_modules/**",
-    "dist/**",
-    "coverage/**",
-    ".turbo/**",
-    "storybook-static/**"
-  ]
+  "ignorePaths": ["node_modules/**", "dist/**", "coverage/**", ".turbo/**"]
 }

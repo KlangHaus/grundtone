@@ -2,21 +2,61 @@ import type { InjectionKey, Ref } from 'vue';
 
 export type ThemeMode = 'light' | 'dark' | 'auto';
 
+/**
+ * Semantic color tokens – configure these to match your brand.
+ * All keys map to CSS var: --color-{kebab-case-key}
+ *
+ * Shade-based naming: `primaryLight`/`primaryDark` instead of state-based
+ * (`primaryHover`/`primaryActive`). Components decide which shade to use
+ * for hover, active, tint, etc.
+ */
 export interface ThemeColors {
+  // Brand
   primary: string;
+  primaryLight: string;
+  primaryDark: string;
+  onPrimary: string;
   secondary: string;
-  tertiary: string;
-  error: string;
-  warning: string;
+  secondaryLight: string;
+  secondaryDark: string;
+  // Status
   success: string;
+  successLight: string;
+  successDark: string;
+  warning: string;
+  warningLight: string;
+  warningDark: string;
+  error: string;
+  errorLight: string;
+  errorDark: string;
   info: string;
-  neutral: string;
+  infoLight: string;
+  infoDark: string;
+  // Surface
   background: string;
+  backgroundAlt: string;
   surface: string;
+  surfaceAlt: string;
+  surfaceRaised: string;
+  surfaceOverlay: string;
+  modalBackdrop: string;
+  // Text
   text: string;
   textSecondary: string;
-  border: string;
-  divider: string;
+  textTertiary: string;
+  textInverse: string;
+  textPlaceholder: string;
+  textDisabled: string;
+  // Border
+  borderLight: string;
+  borderMedium: string;
+  borderStrong: string;
+  borderInverse: string;
+  // Focus
+  focus: string;
+  focusRing: string;
+  // Neutral
+  neutral: string;
 }
 
 export interface ThemeSpacing {
@@ -77,6 +117,21 @@ export interface ThemeShadows {
   none: string;
 }
 
+/**
+ * Structured shadow layer — platform-agnostic description of a single
+ * CSS box-shadow layer. Web converts to CSS string; React Native converts
+ * to iOS shadowColor/Offset/Opacity/Radius + Android elevation.
+ */
+export interface ShadowLayer {
+  x: number;
+  y: number;
+  blur: number;
+  spread: number;
+  color: string;
+  opacity: number;
+  inset?: boolean;
+}
+
 export interface ThemeRadius {
   none: string;
   xs: string;
@@ -104,14 +159,27 @@ export interface ThemeTransitions {
   };
 }
 
+export interface ThemeZIndex {
+  dropdown: number;
+  sticky: number;
+  fixed: number;
+  modalBackdrop: number;
+  modal: number;
+  popover: number;
+  tooltip: number;
+  toast: number;
+}
+
 export interface Theme {
   mode: ThemeMode;
   colors: ThemeColors;
   spacing: ThemeSpacing;
   typography: ThemeTypography;
   shadows: ThemeShadows;
+  shadowDefinitions: Record<string, ShadowLayer[]>;
   radius: ThemeRadius;
   transitions: ThemeTransitions;
+  zIndex: ThemeZIndex;
 }
 
 export interface ThemeProviderContext {
@@ -125,11 +193,19 @@ export interface ThemeProviderContext {
 }
 
 export const THEME_INJECTION_KEY: InjectionKey<ThemeProviderContext> =
-  Symbol('haspen-ui-theme');
+  Symbol('grundtone-theme');
+
+/**
+ * Theme configuration: either a single partial theme (applies to both modes)
+ * or separate light/dark overrides for proper dark mode support.
+ */
+export type ThemeConfig =
+  | Partial<Theme>
+  | { light?: Partial<Theme>; dark?: Partial<Theme> };
 
 export interface ThemeProviderProps {
   mode?: ThemeMode;
-  theme?: Partial<Theme>;
+  theme?: ThemeConfig;
   enableTransitions?: boolean;
   persistMode?: boolean;
   storageKey?: string;

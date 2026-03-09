@@ -8,7 +8,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for your interest in improving HäspenUI! Please fill out this template to help us understand your feature request.
+        Thanks for your interest in improving Grundtone! Please fill out this template to help us understand your feature request.
 
   - type: checkboxes
     attributes:
@@ -17,7 +17,7 @@ body:
       options:
         - label: I have searched existing issues to make sure this feature hasn't been requested before
           required: true
-        - label: I have read the [Contributing Guidelines](../CONTRIBUTING.md)
+        - label: I have read the [Contributing Guidelines](../docs/CONTRIBUTING.md)
           required: true
 
   - type: textarea

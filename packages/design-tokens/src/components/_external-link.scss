@@ -1,0 +1,12 @@
+// Component: .external-link
+// Link that opens in a new tab, with trailing arrow icon.
+
+.external-link {
+  &::after {
+    content: ' \2197'; // ↗
+    font-size: 0.75em;
+    text-decoration: none;
+    display: inline-block;
+    margin-left: 0.125em;
+  }
+}

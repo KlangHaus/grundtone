@@ -1,87 +1,41 @@
-# @haspen/shared
+# @grundtone/shared
 
-Shared utilities package for the HäspenUI design system. This package contains common helper
-functions, formatters, and validators used across the design system.
+Shared formatting and validation utilities for the [Grundtone](https://grundtone.com) design system.
 
 ## Installation
 
 ```bash
-pnpm add @haspen/shared
+npm install @grundtone/shared
 ```
 
 ## Usage
 
 ```typescript
-import { formatCurrency, isValidEmail } from '@haspen/shared';
+import { formatCurrency, formatDanishDate, isValidCPR } from '@grundtone/shared';
 
-// Format currency
-const price = formatCurrency(199.99); // "199,99 kr."
-
-// Validate email
-const isValid = isValidEmail('test@example.com'); // true
+formatCurrency(1234.56); // '1.234,56 kr.'
+formatDanishDate(new Date()); // 'DD/MM/YYYY'
+isValidCPR('123456-7890'); // true
 ```
 
-## Available Utilities
+## API
 
 ### Formatting
 
-- `formatCurrency(amount: number, currency?: string)` - Format number as currency
-- `formatDate(date: Date | string)` - Format date in Danish locale
-- `formatPhoneNumber(phone: string)` - Format phone number in Danish format
+- `formatCurrency(amount, currency?)` - Format as Danish currency
+- `formatDanishDate(date)` - Format date in Danish locale
+- `formatPhoneNumber(phone)` - Format Danish phone number
 
 ### Validation
 
-- `isValidCPR(cpr: string)` - Validate Danish CPR number
-- `isValidEmail(email: string)` - Validate email address
-- `isValidPhoneNumber(phone: string)` - Validate Danish phone number
+- `isValidCPR(cpr)` - Validate Danish CPR number
+- `isValidEmail(email)` - Validate email address
+- `isValidPhoneNumber(phone)` - Validate Danish phone number
 
-## Dependencies
+## Documentation
 
-- `@haspen/core` - Core package with types and constants
-- `vue` - Vue.js framework
+See [grundtone.com](https://grundtone.com) for full documentation.
 
-## Development
+## License
 
-1. Install dependencies:
-
-```bash
-pnpm install
-```
-
-2. Start development server:
-
-```bash
-pnpm dev
-```
-
-3. Build package:
-
-```bash
-pnpm build
-```
-
-4. Run tests:
-
-```bash
-pnpm test
-```
-
-## Contributing
-
-Please refer to the main project README for contribution guidelines.
-
-## TypeScript-konfiguration
-
-Denne pakke bruger en specifik `tsconfig.json`, som udvider rodens `tsconfig.build.json`.
-Konfigurationen sikrer at kildekoden i `src/` og types i `types/` bliver korrekt transpileret og at
-types genereres i `dist/types`.
-
-- outDir: `dist`
-- rootDir: `src`
-- Types genereres automatisk ved build
-
-Byg pakken med:
-
-```sh
-pnpm build
-```
+MIT

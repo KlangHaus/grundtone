@@ -1,0 +1,33 @@
+// Border Radius Utilities
+// Values from @grundtone/core defaultRadius, emitted as --radius-* custom properties.
+@use '../core/breakpoints' as *;
+
+@include responsive-variants using ($p) {
+  .#{$p}rounded-none {
+    border-radius: 0;
+  }
+  .#{$p}rounded-xs {
+    border-radius: var(--radius-xs);
+  }
+  .#{$p}rounded-sm {
+    border-radius: var(--radius-sm);
+  }
+  .#{$p}rounded-md {
+    border-radius: var(--radius-md);
+  }
+  .#{$p}rounded-lg {
+    border-radius: var(--radius-lg);
+  }
+  .#{$p}rounded-xl {
+    border-radius: var(--radius-xl);
+  }
+  .#{$p}rounded-2xl {
+    border-radius: var(--radius-2xl);
+  }
+  .#{$p}rounded-3xl {
+    border-radius: var(--radius-3xl);
+  }
+  .#{$p}rounded-full {
+    border-radius: var(--radius-full);
+  }
+}

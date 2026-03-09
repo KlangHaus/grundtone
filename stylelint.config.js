@@ -15,7 +15,12 @@ export default {
     'block-no-empty': true,
     'color-no-invalid-hex': true,
     'declaration-block-no-duplicate-properties': true,
-    'selector-pseudo-class-no-unknown': true,
+    'selector-pseudo-class-no-unknown': [
+      true,
+      {
+        ignorePseudoClasses: ['deep', 'global', 'slotted'],
+      },
+    ],
     'selector-pseudo-element-no-unknown': [
       true,
       {
@@ -43,7 +48,6 @@ export default {
     'dist/**/*',
     'coverage/**/*',
     '.turbo/**/*',
-    'storybook-static/**/*',
     'TEMPLATES/**/*',
   ],
 };

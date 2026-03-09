@@ -30,6 +30,7 @@ pnpm-debug.log*
 # Testing
 coverage
 .nyc_output
+**/test-results.xml
 
 # Environment files
 .env
@@ -43,11 +44,10 @@ coverage
 .cache
 .temp
 .eslintcache
+packages/*/apps/
 
 # Volta
 .volta
 
-*storybook.log
-storybook-static
 
 TEMPLATES/*

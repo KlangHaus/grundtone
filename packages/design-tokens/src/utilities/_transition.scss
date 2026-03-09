@@ -1,0 +1,51 @@
+// Transition Utilities
+// Performance-optimised: each class targets specific properties instead of `all`.
+// Respects prefers-reduced-motion for accessibility.
+@use '../core/breakpoints' as *;
+
+@include responsive-variants using ($p) {
+  .#{$p}transition-colors {
+    transition-property: background-color, border-color, color;
+    transition-duration: var(--duration-fast);
+    transition-timing-function: var(--ease-out);
+  }
+
+  .#{$p}transition-shadow {
+    transition-property: box-shadow;
+    transition-duration: var(--duration-fast);
+    transition-timing-function: var(--ease-out);
+  }
+
+  .#{$p}transition-transform {
+    transition-property: transform;
+    transition-duration: var(--duration-fast);
+    transition-timing-function: var(--ease-out);
+  }
+
+  .#{$p}transition-opacity {
+    transition-property: opacity;
+    transition-duration: var(--duration-fast);
+    transition-timing-function: var(--ease-out);
+  }
+
+  .#{$p}transition-all {
+    transition-property: all;
+    transition-duration: var(--duration-fast);
+    transition-timing-function: var(--ease-out);
+  }
+
+  .#{$p}transition-none {
+    transition-property: none;
+  }
+}
+
+// Accessibility: disable transitions for users who prefer reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .transition-colors,
+  .transition-shadow,
+  .transition-transform,
+  .transition-opacity,
+  .transition-all {
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,17 @@
+// Shadow Utilities
+// Uses shadow tokens from @grundtone/core.
+@use '../core/breakpoints' as *;
+
+$_shadow-keys: ('xs', 'sm', 'md', 'lg', 'xl', '2xl', 'inner');
+
+@include responsive-variants using ($p) {
+  @each $key in $_shadow-keys {
+    .#{$p}shadow-#{$key} {
+      box-shadow: var(--shadow-#{$key});
+    }
+  }
+
+  .#{$p}shadow-none {
+    box-shadow: none;
+  }
+}

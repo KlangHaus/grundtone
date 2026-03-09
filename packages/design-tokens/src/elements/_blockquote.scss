@@ -1,0 +1,70 @@
+// Element: <blockquote>
+// Clean default with left accent border.
+
+blockquote {
+  position: relative;
+  margin: var(--space-xl) 0;
+  padding: var(--space-lg) var(--space-xl);
+  border-left: 3px solid var(--color-primary);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  font-style: italic;
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+
+  p {
+    margin: 0;
+  }
+}
+
+// --- Variants ---
+
+// Decorative typographic quote marks
+.blockquote--quotes {
+  padding-left: var(--space-2xl);
+
+  &::before {
+    content: '\201c';
+    position: absolute;
+    top: -0.25rem;
+    left: 0.75rem;
+    font-size: 3.5rem;
+    font-style: normal;
+    line-height: 1;
+    color: var(--color-primary);
+    opacity: 0.3;
+    font-family: Georgia, serif;
+    pointer-events: none;
+  }
+}
+
+// Gradient left accent
+.blockquote--gradient {
+  border-left: none;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--color-primary), transparent);
+    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+  }
+}
+
+// Magazine-style pull-quote
+.blockquote--pull {
+  border-left: none;
+  border-top: 2px solid var(--color-border);
+  border-bottom: 2px solid var(--color-border);
+  background: none;
+  border-radius: 0;
+  padding: var(--space-lg) 0;
+  margin: var(--space-2xl) 0;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  text-align: center;
+}

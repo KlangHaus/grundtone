@@ -1,6 +1,6 @@
-import type { ThemeProviderContext } from '@ipeeon/core';
+import type { ThemeProviderContext } from '@grundtone/core';
 export declare function useTheme(): ThemeProviderContext;
-export { THEME_INJECTION_KEY } from '@ipeeon/core';
+export { THEME_INJECTION_KEY } from '@grundtone/core';
 export type {
   ThemeMode,
   Theme,
@@ -12,4 +12,4 @@ export type {
   ThemeTransitions,
   ThemeProviderContext,
   ThemeProviderProps,
-} from '@ipeeon/core';
+} from '@grundtone/core';

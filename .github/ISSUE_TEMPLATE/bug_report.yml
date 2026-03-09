@@ -17,14 +17,14 @@ body:
       options:
         - label: I have searched existing issues to make sure this bug hasn't been reported before
           required: true
-        - label: I have read the [Contributing Guidelines](../CONTRIBUTING.md)
+        - label: I have read the [Contributing Guidelines](../docs/CONTRIBUTING.md)
           required: true
 
   - type: input
     id: version
     attributes:
       label: Version
-      description: What version of HäspenUI are you using?
+      description: What version of Grundtone are you using?
       placeholder: e.g., 1.0.0
     validations:
       required: true
@@ -121,7 +121,7 @@ body:
     id: framework
     attributes:
       label: Framework
-      description: What framework are you using with HäspenUI?
+      description: What framework are you using with Grundtone?
       options:
         - Vue 3
         - Nuxt 3

@@ -1,0 +1,274 @@
+# ThemeProvider
+
+A Vue 3 component that initializes and provides theme context throughout the application using Vue's
+provide/inject pattern.
+
+## Features
+
+- **Multi-mode Support**: Light, Dark, and Auto (system preference) themes
+- **CSS Custom Properties**: Global theme variables applied to document root
+- **Persistence**: Optional localStorage persistence of theme preferences
+- **System Integration**: Automatic detection and response to system theme changes
+- **Smooth Transitions**: Configurable theme transition animations
+- **SSR Compatible**: Provides fallback styles for server-side rendering
+- **TypeScript Support**: Full type safety with comprehensive interfaces
+- **Custom Themes**: Support for theme customization and overrides
+
+## Usage
+
+### Basic Setup
+
+```vue
+<template>
+  <ThemeProvider mode="light">
+    <App />
+  </ThemeProvider>
+</template>
+
+<script setup lang="ts">
+  import { ThemeProvider } from '@grundtone/vue';
+</script>
+```
+
+### Using Theme Context in Child Components
+
+```vue
+<template>
+  <div
+    :style="{
+      backgroundColor: 'var(--color-background)',
+      color: 'var(--color-text)',
+    }"
+  >
+    <h1>Current theme: {{ mode }}</h1>
+    <button @click="toggleMode">Switch to {{ isDark ? 'Light' : 'Dark' }} Mode</button>
+  </div>
+</template>
+
+<script setup lang="ts">
+  import { useTheme } from '@grundtone/composables';
+
+  const { mode, isDark, toggleMode, setMode } = useTheme();
+</script>
+```
+
+### Separate Light and Dark Themes (recommended)
+
+Pass `{ light, dark }` for proper dark mode support:
+
+```vue
+<template>
+  <ThemeProvider :theme="themeConfig" mode="auto">
+    <App />
+  </ThemeProvider>
+</template>
+
+<script setup lang="ts">
+  import { ThemeProvider } from '@grundtone/vue';
+  import { createTheme } from '@grundtone/core';
+
+  const { light, dark } = createTheme({
+    light: {
+      primary: '#0059b3',
+      primaryHover: '#004a96',
+      onPrimary: '#ffffff',
+    },
+    dark: {
+      primary: '#4dabf7',
+      primaryHover: '#74c0fc',
+      onPrimary: '#121212',
+    },
+  });
+
+  const themeConfig = {
+    light: { colors: light.colors },
+    dark: { colors: dark.colors },
+  };
+</script>
+```
+
+### Single Theme (applies to both modes)
+
+Pass a single partial theme when both modes share the same overrides:
+
+```vue
+<template>
+  <ThemeProvider
+    mode="auto"
+    :enable-transitions="true"
+    :persist-mode="true"
+    storage-key="my-app-theme"
+    :theme="customTheme"
+  >
+    <App />
+  </ThemeProvider>
+</template>
+
+<script setup lang="ts">
+  import { ThemeProvider } from '@grundtone/vue';
+
+  const customTheme = {
+    colors: {
+      primary: '#e91e63',
+      secondary: '#9c27b0',
+    },
+    spacing: {
+      xs: '0.125rem',
+      sm: '0.25rem',
+    },
+  };
+</script>
+```
+
+## Props
+
+| Prop              | Type                          | Default                  | Description                              |
+| ----------------- | ----------------------------- | ------------------------ | ---------------------------------------- |
+| mode              | `'light' \| 'dark' \| 'auto'` | `'auto'`                 | Initial theme mode                       |
+| theme             | `ThemeConfig`                 | `undefined`              | Custom theme overrides – see below       |
+| enableTransitions | `boolean`                     | `true`                   | Enable smooth transitions between themes |
+| persistMode       | `boolean`                     | `true`                   | Persist theme mode in localStorage       |
+| storageKey        | `string`                      | `'grundtone-theme-mode'` | localStorage key for persistence         |
+
+**ThemeConfig** – either:
+
+- `{ light?: Partial<Theme>; dark?: Partial<Theme> }` – separate overrides per mode (recommended)
+- `Partial<Theme>` – single override applied to both modes
+
+## Theme Context API
+
+The `useTheme` composable provides access to:
+
+### Properties
+
+| Property | Type                       | Description                    |
+| -------- | -------------------------- | ------------------------------ |
+| theme    | `Readonly<Ref<Theme>>`     | Current theme object           |
+| mode     | `Readonly<Ref<ThemeMode>>` | Current theme mode             |
+| isDark   | `Readonly<Ref<boolean>>`   | Whether current theme is dark  |
+| isLight  | `Readonly<Ref<boolean>>`   | Whether current theme is light |
+
+### Methods
+
+| Method     | Signature                   | Description                         |
+| ---------- | --------------------------- | ----------------------------------- |
+| setMode    | `(mode: ThemeMode) => void` | Set specific theme mode             |
+| toggleMode | `() => void`                | Toggle between light and dark modes |
+| applyTheme | `() => void`                | Manually apply theme to DOM         |
+
+## CSS Custom Properties
+
+The ThemeProvider generates CSS custom properties that can be used throughout your application:
+
+### Colors
+
+- `--color-primary`
+- `--color-secondary`
+- `--color-background`
+- `--color-surface`
+- `--color-text`
+- And many more...
+
+### Spacing
+
+- `--space-xs` through `--space-4xl`
+
+### Typography
+
+- `--font-family-base`, `-heading`, `-mono`
+- `--font-size-xs` through `--font-size-5xl`
+- `--font-weight-thin` through `--font-weight-extrabold`
+
+### Shadows, Radius, Transitions
+
+- `--shadow-*`, `--radius-*`, `--transition-*`
+
+## Theme Structure
+
+```typescript
+interface Theme {
+  mode: ThemeMode;
+  colors: ThemeColors;
+  spacing: ThemeSpacing;
+  typography: ThemeTypography;
+  shadows: ThemeShadows;
+  radius: ThemeRadius;
+  transitions: ThemeTransitions;
+}
+```
+
+## Auto Mode Behavior
+
+When set to `auto` mode:
+
+- Detects system color scheme preference
+- Automatically updates when system preference changes
+- Respects user's OS-level dark/light mode settings
+- Falls back to light theme if system preference cannot be determined
+
+## SSR Considerations
+
+- Provides fallback CSS custom properties in `:root` for initial render
+- Handles client-side hydration gracefully
+- Prevents flash of unstyled content (FOUC)
+- Compatible with Nuxt 3 and other SSR frameworks
+
+## Examples
+
+### Theme Toggle Button
+
+```vue
+<template>
+  <button @click="toggleMode" :style="buttonStyles">
+    {{ isDark ? '🌙' : '☀️' }}
+    {{ isDark ? 'Dark' : 'Light' }} Mode
+  </button>
+</template>
+
+<script setup lang="ts">
+  import { computed } from 'vue';
+  import { useTheme } from '@grundtone/composables';
+
+  const { isDark, toggleMode } = useTheme();
+
+  const buttonStyles = computed(() => ({
+    backgroundColor: 'var(--color-primary)',
+    color: '#ffffff',
+    padding: 'var(--space-sm) var(--space-md)',
+    border: 'none',
+    borderRadius: 'var(--radius-md)',
+    cursor: 'pointer',
+    transition: 'all var(--transition-duration-fast) var(--transition-timing-ease)',
+  }));
+</script>
+```
+
+### Theme-aware Component
+
+```vue
+<template>
+  <div class="themed-card">
+    <h2>Themed Card</h2>
+    <p>This card adapts to the current theme automatically.</p>
+  </div>
+</template>
+
+<style scoped>
+  .themed-card {
+    background: var(--color-surface);
+    color: var(--color-text);
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-border-light);
+    transition: all var(--transition-duration-base) var(--transition-timing-ease);
+  }
+</style>
+```
+
+## Accessibility
+
+- Respects user's system color scheme preference
+- Provides sufficient color contrast in both themes
+- Maintains focus indicators across theme changes
+- Compatible with screen readers and assistive technologies

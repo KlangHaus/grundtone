@@ -1,5 +1,5 @@
 export const tokens = {
-  prefix: 'haspen',
+  prefix: 'grundtone',
   breakpoints: {
     xs: '0px',
     sm: '640px',

@@ -2,7 +2,6 @@ node_modules
 dist
 coverage
 .turbo
-storybook-static
 *.log
 .env
 .env.*
@@ -10,3 +9,4 @@ pnpm-lock.yaml
 package-lock.json
 yarn.lock
 TEMPLATES
+apps/docs/**/*.md

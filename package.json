@@ -1,5 +1,5 @@
 {
-  "name": "haspen-ui",
+  "name": "grundtone",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -19,14 +19,14 @@
     "lint:format": "prettier --check \"**/*.{ts,tsx,vue,scss,css,json,md,yml,yaml}\"",
     "commitlint": "commitlint --edit",
     "prepare": "husky",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs",
+    "docs:dev": "pnpm --filter @grundtone/docs dev",
+    "docs:build": "turbo build --filter=@grundtone/docs",
+    "docs:preview": "pnpm --filter @grundtone/docs preview",
     "changeset": "changeset",
     "changeset:add": "changeset add",
     "changeset:status": "changeset status --verbose",
     "changeset:empty": "changeset add --empty",
-    "version-packages": "changeset version && pnpm install --lockfile-only",
+    "version-packages": "changeset version && npx tsx scripts/add-changelog-dates.ts && pnpm install --lockfile-only",
     "release": "pnpm build:packages && changeset publish",
     "release:snapshot": "pnpm build:packages && changeset version --snapshot && changeset publish --tag snapshot --no-git-tag",
     "release:snapshot:tagged": "pnpm build:packages && changeset version --snapshot",
@@ -61,6 +61,7 @@
     "postcss-scss": "^4.0.9",
     "prettier": "3.5.3",
     "rimraf": "6.0.1",
+    "sharp": "^0.34.5",
     "strip-ansi": "^7.1.0",
     "stylelint": "^16.23.1",
     "stylelint-config-prettier-scss": "^1.0.0",
@@ -77,10 +78,10 @@
   },
   "packageManager": "pnpm@10.14.0",
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=24.0.0"
   },
   "volta": {
-    "node": "22.12.0",
+    "node": "24.13.0",
     "pnpm": "10.14.0"
   },
   "lint-staged": {
@@ -89,6 +90,9 @@
     ],
     "*.{js,jsx,ts,tsx,vue}": [
       "eslint --fix"
+    ],
+    "*.{scss,css,vue}": [
+      "stylelint --fix"
     ]
   },
   "pnpm": {
@@ -101,6 +105,6 @@
       "@octokit/plugin-paginate-rest": ">=9.2.2"
     }
   },
-  "repository": "allanasp/haspen-ui",
+  "repository": "grundtone/grundtone",
   "author": "Allan Asp <mail@allanasp.dk>"
 }

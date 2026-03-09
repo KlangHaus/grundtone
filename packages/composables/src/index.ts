@@ -25,17 +25,6 @@ export type {
   UseClickOutsideReturn,
 } from './clickOutside/useClickOutside';
 
-// Registered Properties
-export {
-  useRegisteredProperties,
-  usePropertyName,
-  useCSSProperty,
-} from './useRegisteredProperties';
-export type {
-  UseRegisteredPropertiesOptions,
-  UseRegisteredPropertiesReturn,
-} from './useRegisteredProperties';
-
 // Container Queries
 export {
   useContainerQuery,

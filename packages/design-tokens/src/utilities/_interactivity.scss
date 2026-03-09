@@ -1,0 +1,21 @@
+// Interactivity Utilities
+// Cursor and pointer-events.
+@use '../core/breakpoints' as *;
+
+@include responsive-variants using ($p) {
+  .#{$p}cursor-pointer {
+    cursor: pointer;
+  }
+  .#{$p}cursor-default {
+    cursor: default;
+  }
+  .#{$p}cursor-not-allowed {
+    cursor: not-allowed;
+  }
+  .#{$p}pointer-events-none {
+    pointer-events: none;
+  }
+  .#{$p}pointer-events-auto {
+    pointer-events: auto;
+  }
+}

@@ -71,7 +71,7 @@
 
 - [ ] Component follows atomic design principles
 - [ ] Component is properly typed with TypeScript
-- [ ] Component has Storybook stories
+- [ ] Component has documentation
 - [ ] Component has unit tests
 - [ ] Component is accessible (ARIA compliant)
 - [ ] Component is responsive
@@ -107,7 +107,7 @@
 ---
 
 <!--
-Thanks for contributing to HäspenUI! 🎉
+Thanks for contributing to Grundtone! 🎉
 
 Before submitting this PR, please make sure you have:
 1. Read our Contributing Guidelines

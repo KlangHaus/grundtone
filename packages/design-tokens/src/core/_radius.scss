@@ -1,25 +1,8 @@
 @use 'sass:map';
+@use 'radius-defaults' as *;
 
-// DKFDS Border Radius System
-// Rounded corner definitions
-
-// Border radius values
-$radii: (
-  'none': 0,
-  'xs': 2px,
-  'sm': 4px,
-  'default': 6px,
-  'md': 8px,
-  'lg': 12px,
-  'xl': 16px,
-  '2xl': 20px,
-  '3xl': 24px,
-  'round': 50%,
-  'full': 9999px,
-) !default;
-
-// Component specific radii
-$border-radius-base: map.get($radii, 'default') !default;
+// Component specific radii (using generated defaults from core TS)
+$border-radius-base: map.get($radii, 'md') !default;
 $border-radius-sm: map.get($radii, 'sm') !default;
 $border-radius-lg: map.get($radii, 'lg') !default;
 
@@ -37,22 +20,3 @@ $border-radius-tooltip: $border-radius-sm !default;
 // Badges and tags
 $border-radius-badge: map.get($radii, 'sm') !default;
 $border-radius-tag: $border-radius-base !default;
-
-// Export for CSS custom properties
-:root {
-  --radius-none: #{map.get($radii, 'none')};
-  --radius-xs: #{map.get($radii, 'xs')};
-  --radius-sm: #{map.get($radii, 'sm')};
-  --radius-default: #{map.get($radii, 'default')};
-  --radius-md: #{map.get($radii, 'md')};
-  --radius-lg: #{map.get($radii, 'lg')};
-  --radius-xl: #{map.get($radii, 'xl')};
-  --radius-2xl: #{map.get($radii, '2xl')};
-  --radius-3xl: #{map.get($radii, '3xl')};
-  --radius-round: #{map.get($radii, 'round')};
-  --radius-full: #{map.get($radii, 'full')};
-  --border-radius-base: #{$border-radius-base};
-  --border-radius-input: #{$border-radius-input};
-  --border-radius-button: #{$border-radius-button};
-  --border-radius-card: #{$border-radius-card};
-}

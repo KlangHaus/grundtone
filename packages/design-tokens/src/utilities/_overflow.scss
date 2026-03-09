@@ -1,0 +1,23 @@
+// Overflow Utilities
+@use '../core/breakpoints' as *;
+
+@include responsive-variants using ($p) {
+  .#{$p}overflow-auto {
+    overflow: auto;
+  }
+  .#{$p}overflow-hidden {
+    overflow: hidden;
+  }
+  .#{$p}overflow-visible {
+    overflow: visible;
+  }
+  .#{$p}overflow-scroll {
+    overflow: scroll;
+  }
+  .#{$p}overflow-x-auto {
+    overflow-x: auto;
+  }
+  .#{$p}overflow-y-auto {
+    overflow-y: auto;
+  }
+}

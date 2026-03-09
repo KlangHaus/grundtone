@@ -1,0 +1,18 @@
+// Component: .article-meta, .article-tag
+// Metadata row and pill badge for articles.
+
+.article-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+  margin-bottom: var(--space-sm);
+}
+
+.article-tag {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}

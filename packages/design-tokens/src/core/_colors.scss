@@ -1,80 +1,8 @@
-// Modern Haspen UI Color System
-// Uses light-dark() function for automatic theme switching
+// Grundtone Color System
+// Colors come from theme config (createTheme) – this provides SCSS helpers only.
+// See @grundtone/core theme-preset for semantic token definitions.
 
-// Core Colors - Brand & Status
-$color-primary: #0059b3;
-$color-primary-hover: #004a96;
-$color-primary-active: #003a7a;
-
-$color-secondary: #6c757d;
-$color-secondary-hover: #5a6268;
-$color-secondary-active: #494f54;
-
-$color-success: #28a745;
-$color-warning: #ffc107;
-$color-error: #dc3545;
-$color-info: #17a2b8;
-
-// Export as CSS custom properties using light-dark()
-:root {
-  // Set color scheme for automatic light-dark() switching
-  color-scheme: light dark;
-
-  // Core Brand Colors (same in both themes)
-  --haspen-color-primary: #{$color-primary};
-  --haspen-color-primary-hover: #{$color-primary-hover};
-  --haspen-color-primary-active: #{$color-primary-active};
-
-  --haspen-color-secondary: #{$color-secondary};
-  --haspen-color-secondary-hover: #{$color-secondary-hover};
-  --haspen-color-secondary-active: #{$color-secondary-active};
-
-  --haspen-color-success: #{$color-success};
-  --haspen-color-warning: #{$color-warning};
-  --haspen-color-error: #{$color-error};
-  --haspen-color-info: #{$color-info};
-
-  // Semantic Colors with automatic light/dark switching
-  --haspen-color-background: light-dark(#ffffff, #121212);
-  --haspen-color-surface: light-dark(#f8f9fa, #1e1e1e);
-  --haspen-color-surface-hover: light-dark(#e9ecef, #2a2a2a);
-
-  --haspen-color-text-primary: light-dark(#212529, #ffffff);
-  --haspen-color-text-secondary: light-dark(#6c757d, #b0b0b0);
-  --haspen-color-text-tertiary: light-dark(#adb5bd, #808080);
-
-  --haspen-color-border: light-dark(#dee2e6, #404040);
-  --haspen-color-border-hover: light-dark(#adb5bd, #606060);
-
-  // Status Background Colors
-  --haspen-color-success-background: light-dark(#d4edda, #1a3d20);
-  --haspen-color-warning-background: light-dark(#fff3cd, #3d3a1a);
-  --haspen-color-error-background: light-dark(#f8d7da, #3d1a1c);
-  --haspen-color-info-background: light-dark(#d1ecf1, #1a2e3d);
-  --haspen-color-primary-background: light-dark(#cce7ff, #1a2a3d);
-
-  // Code Colors
-  --haspen-color-code-background: light-dark(#f8f9fa, #1a1a1a);
-
-  // Focus Colors (accessibility)
-  --haspen-color-focus: light-dark(#0066cc, #4da6ff);
-  --haspen-color-focus-outline: light-dark(
-    rgba(0, 102, 204, 0.3),
-    rgba(77, 166, 255, 0.3)
-  );
-}
-
-// SCSS Variables for programmatic access (if needed)
-$haspen-colors: (
-  'primary': $color-primary,
-  'secondary': $color-secondary,
-  'success': $color-success,
-  'warning': $color-warning,
-  'error': $color-error,
-  'info': $color-info,
-);
-
-// Helper function for accessing colors
-@function color($key) {
-  @return map-get($haspen-colors, $key);
+// color() returns CSS var – use kebab-case keys (e.g. 'primary', 'text-secondary')
+@function color($key: 'primary') {
+  @return var(--color-#{$key});
 }

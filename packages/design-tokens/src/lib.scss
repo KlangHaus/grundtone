@@ -1,0 +1,26 @@
+// Grundtone UI Design Tokens
+// Complete design token system implementation
+
+// Generated defaults (source of truth: @grundtone/core theme-preset.ts)
+@forward 'core/spacing-defaults';
+@forward 'core/radius-defaults';
+@forward 'core/shadow-defaults';
+@forward 'core/z-index-defaults';
+@forward 'core/transition-defaults';
+@forward 'core/typography-defaults';
+
+// Core design tokens (must be imported first)
+@forward 'core/color-palette' hide color;
+@forward 'core/accessibility';
+@forward 'core/colors';
+@forward 'core/typography';
+@forward 'core/breakpoints';
+@forward 'core/shadows';
+@forward 'core/radius';
+
+// Functions and mixins (depend on core)
+@forward 'functions' hide color;
+@forward 'mixins';
+
+// Utility classes (depend on functions/mixins) - Temporarily disabled during migration
+// @forward 'utilities' hide $spacers;

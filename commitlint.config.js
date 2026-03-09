@@ -22,13 +22,13 @@ export default {
       2,
       'always',
       [
-        'ui',           // @ipeeon/ui package
-        'core',         // @ipeeon/core package
-        'shared',       // @ipeeon/shared package
-        'composables',  // @ipeeon/composables package
-        'design-tokens',// @ipeeon/design-tokens package
-        'nuxt',         // @ipeeon/nuxt package
-        'storybook',    // Storybook configuration
+        'vue',          // @grundtone/vue package
+        'core',         // @grundtone/core package
+        'shared',       // @grundtone/shared package
+        'composables',  // @grundtone/composables package
+        'design-tokens', // @grundtone/design-tokens package
+        'react-native', // @grundtone/react-native package
+        'nuxt',         // @grundtone/nuxt package
         'deps',         // Dependencies
         'config',       // Configuration files
         'ci',           // CI/CD

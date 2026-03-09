@@ -8,5 +8,5 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   treeshake: true,
-  external: ['vue', '@ipeeon/core'],
+  external: ['vue', '@grundtone/core'],
 });
