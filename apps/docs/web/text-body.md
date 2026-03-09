@@ -53,7 +53,7 @@ Inside `.prose`, the first `<p>` is automatically styled as a lead paragraph —
 ### SCSS
 
 ```scss
-@use '@grundtone/design-tokens/scss/lib' as gt;
+@use '@grundtone/design-system/scss/lib' as gt;
 
 .intro {
   @include gt.lead-text;
@@ -111,7 +111,7 @@ Three variants: standard, small, and bold.
 ### SCSS
 
 ```scss
-@use '@grundtone/design-tokens/scss/lib' as gt;
+@use '@grundtone/design-system/scss/lib' as gt;
 
 .custom-text {
   @include gt.body-text;

@@ -18,7 +18,7 @@ typography) powers your UI on **Vue**, **Nuxt**, and **React Native**.
 | **Vue 3**        | @grundtone/vue           | Components, ThemeProvider, design tokens, SCSS |
 | **Nuxt 3**       | @grundtone/nuxt          | Auto-setup: components, composables, theme     |
 | **React Native** | @grundtone/react-native  | ThemeProvider, useGrundtoneTheme, tokens       |
-| **Plain Web**    | @grundtone/design-tokens | Design tokens only (CSS, SCSS), no components  |
+| **Plain Web**    | @grundtone/design-system | Design tokens only (CSS, SCSS), no components  |
 
 ## Next Steps
 

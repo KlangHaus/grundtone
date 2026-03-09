@@ -1,6 +1,6 @@
 # Containers
 
-Layout containers center content and constrain its width. Included in `@grundtone/design-tokens` CSS
+Layout containers center content and constrain its width. Included in `@grundtone/design-system` CSS
 — see [Installation](/guide/installation) for setup. Examples below have a **Code** / **Preview**
 tab.
 
@@ -253,7 +253,7 @@ All containers use CSS logical properties (`padding-inline`, `margin-inline`) in
 When writing custom SCSS, use the `make-container` mixin to create your own container variants:
 
 ```scss
-@use '@grundtone/design-tokens/scss/lib' as tokens;
+@use '@grundtone/design-system/scss/lib' as tokens;
 
 .my-custom-container {
   @include tokens.make-container;

@@ -56,7 +56,7 @@ Location: `.changeset/config.json`
   - `@grundtone/shared`
   - `@grundtone/vue`
   - `@grundtone/composables`
-  - `@grundtone/design-tokens`
+  - `@grundtone/design-system`
   - `@grundtone/nuxt`
 - **Base Branch**: `develop` - changesets compare against this branch
 - **Access**: `public` - all packages publish publicly to npm

@@ -1,4 +1,4 @@
-# @grundtone/design-tokens
+# @grundtone/design-system
 
 ## 2.0.0 - 2026-03-09
 
@@ -44,7 +44,7 @@
   fully resets button styling for custom wrappers.
 
 - [`43ad018`](https://github.com/grundtone/grundtone/commit/43ad018020e8c7a7156d1a99a323f156966feff9)
-  Thanks [@allanasp](https://github.com/allanasp)! - feat(design-tokens): alignment, display, order
+  Thanks [@allanasp](https://github.com/allanasp)! - feat(design-system): alignment, display, order
   utilities and expanded responsive grid
 
   New features:
@@ -76,8 +76,8 @@
   - Expand from 26 to 37 semantic color tokens (add `backgroundAlt`, `surfaceRaised`,
     `surfaceOverlay`, `textInverse`, `textPlaceholder`, `textDisabled`, `borderMedium`,
     `borderInverse`, status `*Dark` variants)
-  - Fix value drift in design-tokens (`success: #28a745` → `#198754`, `info: #17a2b8` → `#0dcaf0`)
-  - Remove duplicate semantic maps from design-tokens `_color-palette.scss` (raw palette retained)
+  - Fix value drift in design-system (`success: #28a745` → `#198754`, `info: #17a2b8` → `#0dcaf0`)
+  - Remove duplicate semantic maps from design-system `_color-palette.scss` (raw palette retained)
   - Remove duplicate `$color-primary-*` variables from `_variables.scss`
   - Add background utility classes: `.bg-alt`, `.bg-surface`, `.bg-surface-alt`,
     `.bg-surface-raised`, `.bg-overlay`
@@ -108,7 +108,7 @@
 
 - [`6a885a9`](https://github.com/grundtone/grundtone/commit/6a885a9d0ac1a0ee15647529b9bc998db7b5863f)
   Thanks [@allanasp](https://github.com/allanasp)! - Remove duplicated token values from
-  design-tokens SCSS — single source of truth is now @grundtone/core theme-preset.ts.
+  design-system SCSS — single source of truth is now @grundtone/core theme-preset.ts.
 
   - Export defaultSpacing, defaultRadius, defaultShadows, defaultTransitions, defaultTypography from
     core
@@ -121,7 +121,7 @@
 
 - [`765408b`](https://github.com/grundtone/grundtone/commit/765408b1334d695924e10d4f476ac85be9ee9530)
   Thanks [@allanasp](https://github.com/allanasp)! - Add elements and components layers to
-  design-tokens. Elements style HTML tags directly (body, header, footer, blockquote, hr) — no class
+  design-system. Elements style HTML tags directly (body, header, footer, blockquote, hr) — no class
   needed. Components provide class-based patterns (prose, callout, article-card, article-meta,
   breadcrumb, skip-link, author-card, back-link, blockquote variants). Cascade order: elements →
   components → utilities, so utilities always win. Inline body and .sr-only blocks removed from
@@ -151,7 +151,7 @@
     0-6 scale
 
 - [`434dbb6`](https://github.com/grundtone/grundtone/commit/434dbb6db98a36b64448b1a6064b8c86cd2e39c5)
-  Thanks [@allanasp](https://github.com/allanasp)! - feat(design-tokens): modern container system
+  Thanks [@allanasp](https://github.com/allanasp)! - feat(design-system): modern container system
   replacing Bootstrap-style containers
 
   New features:
@@ -171,7 +171,7 @@
   - Removed `$container-max-widths` SCSS variable (max-widths are now computed)
 
 - [`fda04b9`](https://github.com/grundtone/grundtone/commit/fda04b9badebeb214b0468b71fcc06c3c3a00a60)
-  Thanks [@allanasp](https://github.com/allanasp)! - Initial release of @grundtone/design-tokens
+  Thanks [@allanasp](https://github.com/allanasp)! - Initial release of @grundtone/design-system
   with comprehensive SCSS/CSS design system including colors, typography, spacing,
 
 - [`995f630`](https://github.com/grundtone/grundtone/commit/995f63062cd9dbb030b148d6d9a5f8b6e026fd20)
@@ -194,7 +194,7 @@
   `.external-link` and `.function-link` components.
 
 - [`73b3572`](https://github.com/grundtone/grundtone/commit/73b3572d4b278c7972213f8d6a6f0e98c8516c85)
-  Thanks [@allanasp](https://github.com/allanasp)! - feat(design-tokens): spacing and visibility
+  Thanks [@allanasp](https://github.com/allanasp)! - feat(design-system): spacing and visibility
   utilities
 
   New features:
@@ -225,7 +225,7 @@
   width, functions, and mixins.
 
 - [`b538711`](https://github.com/grundtone/grundtone/commit/b538711d025c26a6eaaf7f56e2abdb3e003def1c)
-  Thanks [@allanasp](https://github.com/allanasp)! - feat(design-tokens): z-index and position
+  Thanks [@allanasp](https://github.com/allanasp)! - feat(design-system): z-index and position
   utilities
 
   New features:

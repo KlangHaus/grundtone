@@ -42,7 +42,7 @@ so they adapt to light/dark mode automatically.
 ### SCSS
 
 ```scss
-@use '@grundtone/design-tokens/scss/lib' as gt;
+@use '@grundtone/design-system/scss/lib' as gt;
 
 .caption {
   color: gt.color('text-secondary');

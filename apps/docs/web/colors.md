@@ -1,7 +1,7 @@
 # Colors
 
 Grundtone uses **38 semantic color tokens** defined in `@grundtone/core`. Every token maps to a CSS
-custom property (`--color-{kebab-case}`). Core is the single source of truth — design-tokens and
+custom property (`--color-{kebab-case}`). Core is the single source of truth — design-system and
 Vue/Nuxt derive their values from it.
 
 ## Naming Convention
@@ -117,7 +117,7 @@ Side-by-side comparison of all tokens across modes.
 Override any semantic token at build time via `@use ... with ()`:
 
 ```scss
-@use '@grundtone/design-tokens/scss' with (
+@use '@grundtone/design-system/scss' with (
   $color-overrides-light: (
     'primary': #e91e63,
     'primary-light': #f06292,
@@ -132,7 +132,7 @@ Override any semantic token at build time via `@use ... with ()`:
 Or import colors standalone:
 
 ```scss
-@use '@grundtone/design-tokens/scss/colors' with (
+@use '@grundtone/design-system/scss/colors' with (
   $overrides-light: (
     'primary': #e91e63,
   ),
@@ -149,7 +149,7 @@ module. This is useful for generating static styles, calculating contrast, or bu
 variants.
 
 ```scss
-@use '@grundtone/design-tokens/scss/color-palette' as palette;
+@use '@grundtone/design-system/scss/color-palette' as palette;
 ```
 
 #### `palette.color($family, $shade)`
@@ -391,11 +391,11 @@ reacts to changes.
 
 **Where:** Your own CSS or build step
 
-**How:** `@grundtone/design-tokens` ships static `:root` variables. Override them in your stylesheet
-after importing the design-tokens CSS.
+**How:** `@grundtone/design-system` ships static `:root` variables. Override them in your stylesheet
+after importing the design-system CSS.
 
 ```html
-<link rel="stylesheet" href="node_modules/@grundtone/design-tokens/dist/index.css" />
+<link rel="stylesheet" href="node_modules/@grundtone/design-system/dist/index.css" />
 <style>
   :root {
     --color-primary: #e91e63;
@@ -410,7 +410,7 @@ after importing the design-tokens CSS.
 With a bundler (Vite, webpack), import and override in your main CSS/SCSS:
 
 ```css
-@import '@grundtone/design-tokens/dist/index.css';
+@import '@grundtone/design-system/dist/index.css';
 
 :root {
   --color-primary: #e91e63;
@@ -447,7 +447,7 @@ keeps its defaults via `map.merge`.
 Override via the main entry point:
 
 ```scss
-@use '@grundtone/design-tokens/scss' with (
+@use '@grundtone/design-system/scss' with (
   $color-overrides-light: (
     'primary': #e91e63,
     'primary-light': #f06292,
@@ -464,7 +464,7 @@ Override via the main entry point:
 Or import colors standalone (e.g. if you only need color tokens, not the full design system):
 
 ```scss
-@use '@grundtone/design-tokens/scss/colors' with (
+@use '@grundtone/design-system/scss/colors' with (
   $overrides-light: (
     'primary': #e91e63,
     'primary-light': #f06292,
@@ -490,10 +490,10 @@ Breakpoints are compiled into `@media` queries at build time via SCSS. The defau
 max-widths, CSS custom properties, and `@property` declarations — derives its values from this one
 map.
 
-Override `$grid-breakpoints` **before** importing design-tokens:
+Override `$grid-breakpoints` **before** importing design-system:
 
 ```scss
-@use '@grundtone/design-tokens/scss' with (
+@use '@grundtone/design-system/scss' with (
   $grid-breakpoints: (
     xs: 0,
     sm: 576px,
@@ -508,7 +508,7 @@ Override `$grid-breakpoints` **before** importing design-tokens:
 Or when importing just breakpoints:
 
 ```scss
-@use '@grundtone/design-tokens/scss/breakpoints' as bp with (
+@use '@grundtone/design-system/scss/breakpoints' as bp with (
   $grid-breakpoints: (
     xs: 0,
     sm: 576px,

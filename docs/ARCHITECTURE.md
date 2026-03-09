@@ -25,7 +25,7 @@ graph TB
     subgraph "Grundtone Ecosystem"
         subgraph "Core Layer"
             Core[core - Base styles]
-            Tokens[design-tokens - Design token system]
+            Tokens[design-system - Design token system]
             Shared[shared - Utilities]
         end
 
@@ -79,7 +79,7 @@ graph TB
 import '@grundtone/core/dist/index.css';
 ```
 
-#### `@grundtone/design-tokens`
+#### `@grundtone/design-system`
 
 **Purpose**: Complete design token implementation with tokens, functions, and utilities
 **Dependencies**: None **Architecture**:
@@ -339,7 +339,7 @@ graph TB
 
     subgraph "Level 1: Foundation"
         A1[core]
-        A2[design-tokens]
+        A2[design-system]
         A3[shared]
     end
 

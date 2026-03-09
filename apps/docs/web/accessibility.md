@@ -9,7 +9,7 @@ custom properties like `var(--color-primary)` — those are resolved at runtime 
 :::
 
 ```scss
-@use '@grundtone/design-tokens/scss/lib' as gt;
+@use '@grundtone/design-system/scss/lib' as gt;
 ```
 
 ---

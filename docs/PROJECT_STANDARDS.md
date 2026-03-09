@@ -12,7 +12,7 @@ This document outlines the mandatory standards for the Grundtone Design System m
 packages/
 ├── core/              # Foundation types, constants, base interfaces
 ├── shared/            # Utilities, formatters, validation (depends on core)
-├── design-tokens/     # SCSS variables, colors, typography, spacing
+├── design-system/     # SCSS variables, colors, typography, spacing
 ├── ui/                # Vue 3 components using atomic design (depends on core, shared)
 ├── composables/       # Vue 3 composables/hooks (depends on core, shared)
 └── nuxt/              # Nuxt 3 module (depends on ui, composables)
@@ -26,7 +26,7 @@ apps/
 The build pipeline follows strict dependency order:
 
 1. **core** and **shared** (no dependencies)
-2. **design-tokens**, **ui**, **composables** (depend on core/shared)
+2. **design-system**, **ui**, **composables** (depend on core/shared)
 3. **nuxt** and **playground** (depend on ui/composables)
 
 ## Component Architecture

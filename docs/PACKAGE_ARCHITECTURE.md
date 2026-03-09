@@ -16,7 +16,7 @@ Use in: Vue, Nuxt, React Native, or any platform that needs design tokens.
 
 ## Web-only
 
-### @grundtone/design-tokens
+### @grundtone/design-system
 
 **Web styling layer**: SCSS utilities, CSS output, grid system, mixins.
 
@@ -28,7 +28,7 @@ Use in: Vue, Nuxt, React Native, or any platform that needs design tokens.
 **You need this for:**
 
 - Vue/Vite projects using SCSS with design tokens
-- Projects that import `@use '@grundtone/design-tokens'` in styles
+- Projects that import `@use '@grundtone/design-system'` in styles
 - Standalone CSS (e.g. non-Vue web apps)
 
 **You do NOT need this for:**
@@ -40,7 +40,7 @@ Use in: Vue, Nuxt, React Native, or any platform that needs design tokens.
 
 Vue 3 components: Button, Icon, ThemeToggle, ThemeProvider, etc.
 
-- Depends on: core, design-tokens, shared, composables
+- Depends on: core, design-system, shared, composables
 - Applies theme to DOM via CSS custom properties
 
 ### @grundtone/nuxt
@@ -56,7 +56,7 @@ Nuxt 3 module: auto-imports Vue components, theme setup.
 Theme provider and `useGrundtoneTheme()` hook.
 
 - Depends on: core only
-- No design-tokens (RN does not use CSS/SCSS)
+- No design-system (RN does not use CSS/SCSS)
 - Use `theme.colors.primary`, `theme.spacing.md` etc. in `StyleSheet`
 
 ## Summary
@@ -64,7 +64,7 @@ Theme provider and `useGrundtoneTheme()` hook.
 | Package                  | Platform | Purpose                          |
 | ------------------------ | -------- | -------------------------------- |
 | @grundtone/core          | All      | Theme data, types, createTheme   |
-| @grundtone/design-tokens | Web      | SCSS utilities, CSS, grid        |
+| @grundtone/design-system | Web      | SCSS utilities, CSS, grid        |
 | @grundtone/vue           | Web      | Vue components                   |
 | @grundtone/nuxt          | Web      | Nuxt module                      |
 | @grundtone/react-native  | RN       | ThemeProvider, useGrundtoneTheme |

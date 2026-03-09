@@ -7,7 +7,7 @@ Grundtone is a monorepo of packages. Each package has a clear purpose and depend
 ```mermaid
 graph TD
     core["@grundtone/core<br/><small>Theme types, createTheme(), defaults</small>"]
-    tokens["@grundtone/design-tokens<br/><small>Web only — SCSS, CSS vars</small>"]
+    tokens["@grundtone/design-system<br/><small>Web only — SCSS, CSS vars</small>"]
     shared["@grundtone/shared<br/><small>Utilities</small>"]
     rn["@grundtone/react-native<br/><small>RN only — ThemeProvider, hook</small>"]
     composables["@grundtone/composables<br/><small>Vue hooks (useTheme)</small>"]
@@ -40,7 +40,7 @@ customize colors.
 Install when: You use themes, ThemeProvider, or GrundtoneThemeProvider
 ```
 
-### @grundtone/design-tokens
+### @grundtone/design-system
 
 **Platform:** Web only
 
@@ -78,7 +78,7 @@ Usually not installed directly
 
 **What it provides:** Vue 3 composables (`useTheme`, etc.).
 
-- Depends on core, design-tokens, shared
+- Depends on core, design-system, shared
 
 ```
 Install when: You use Vue or Nuxt (pulled in automatically)
@@ -92,12 +92,12 @@ Install when: You use Vue or Nuxt (pulled in automatically)
 to DOM. Customize via ThemeProvider `theme` prop – see
 [Theme Configuration](/guide/theme-configuration#vue-3).
 
-- Depends on core, design-tokens, shared
+- Depends on core, design-system, shared
 - Uses composables (you add it for hooks)
 
 ```
 Install when: You use Vue 3 with Vite
-Brings in: core, design-tokens, shared
+Brings in: core, design-system, shared
 ```
 
 ### @grundtone/nuxt
@@ -123,7 +123,7 @@ Brings in: vue, composables (and their deps)
 `createTheme()` – see [Theme Configuration](/guide/theme-configuration#react-native).
 
 - Depends only on core
-- No design-tokens (RN uses StyleSheet, not CSS)
+- No design-system (RN uses StyleSheet, not CSS)
 
 ```
 Install when: You use React Native
@@ -137,16 +137,16 @@ Brings in: core only
 | Vue 3                    | `@grundtone/vue` + `@grundtone/core`           |
 | Nuxt 3                   | `@grundtone/nuxt`                              |
 | React Native             | `@grundtone/react-native` + `@grundtone/core`  |
-| Plain Web (no framework) | `@grundtone/design-tokens` + `@grundtone/core` |
+| Plain Web (no framework) | `@grundtone/design-system` + `@grundtone/core` |
 
 ## Build Order (Turborepo)
 
 Turborepo builds in dependency order:
 
 1. **core** – no deps
-2. **design-tokens** – no Grundtone deps
+2. **design-system** – no Grundtone deps
 3. **shared** – after core
-4. **composables** – after core, design-tokens, shared
-5. **vue** – after core, design-tokens, shared
+4. **composables** – after core, design-system, shared
+5. **vue** – after core, design-system, shared
 6. **nuxt** – after vue, composables
 7. **react-native** – after core

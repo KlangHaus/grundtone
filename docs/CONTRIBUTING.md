@@ -65,7 +65,7 @@ This is a monorepo using Turborepo and pnpm workspaces:
 grundtone/
 ├── packages/
 │   ├── ui/              # Vue 3 components
-│   ├── design-tokens/   # Design system tokens
+│   ├── design-system/   # Design system tokens
 │   ├── composables/     # Vue composables
 │   ├── core/           # Core utilities
 │   ├── shared/         # Shared utilities
@@ -79,7 +79,7 @@ grundtone/
 ### Package Responsibilities
 
 - **@grundtone/vue**: Vue 3 components following atomic design
-- **@grundtone/design-tokens**: Colors, typography, spacing tokens
+- **@grundtone/design-system**: Colors, typography, spacing tokens
 - **@grundtone/composables**: Reusable Vue composables
 - **@grundtone/core**: Framework-agnostic utilities
 - **@grundtone/shared**: Shared build tools and presets

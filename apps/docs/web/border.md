@@ -83,7 +83,7 @@ All border and radius classes support breakpoint prefixes: `sm:`, `md:`, `lg:`, 
 ## SCSS
 
 ```scss
-@use '@grundtone/design-tokens/scss/lib' as gt;
+@use '@grundtone/design-system/scss/lib' as gt;
 
 .card {
   border: 1px solid gt.color('border-light');

@@ -10,7 +10,7 @@ Grundtone is built on top of excellent open-source software. This page lists the
 |---|---|---|
 | [Vue](https://vuejs.org/) | MIT | Peer dependency — reactive theme types |
 
-### @grundtone/design-tokens
+### @grundtone/design-system
 
 No external runtime dependencies. Produces standalone CSS/SCSS output.
 

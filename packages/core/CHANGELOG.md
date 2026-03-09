@@ -37,8 +37,8 @@
   - Expand from 26 to 37 semantic color tokens (add `backgroundAlt`, `surfaceRaised`,
     `surfaceOverlay`, `textInverse`, `textPlaceholder`, `textDisabled`, `borderMedium`,
     `borderInverse`, status `*Dark` variants)
-  - Fix value drift in design-tokens (`success: #28a745` → `#198754`, `info: #17a2b8` → `#0dcaf0`)
-  - Remove duplicate semantic maps from design-tokens `_color-palette.scss` (raw palette retained)
+  - Fix value drift in design-system (`success: #28a745` → `#198754`, `info: #17a2b8` → `#0dcaf0`)
+  - Remove duplicate semantic maps from design-system `_color-palette.scss` (raw palette retained)
   - Remove duplicate `$color-primary-*` variables from `_variables.scss`
   - Add background utility classes: `.bg-alt`, `.bg-surface`, `.bg-surface-alt`,
     `.bg-surface-raised`, `.bg-overlay`
@@ -69,7 +69,7 @@
 
 - [`6a885a9`](https://github.com/grundtone/grundtone/commit/6a885a9d0ac1a0ee15647529b9bc998db7b5863f)
   Thanks [@allanasp](https://github.com/allanasp)! - Remove duplicated token values from
-  design-tokens SCSS — single source of truth is now @grundtone/core theme-preset.ts.
+  design-system SCSS — single source of truth is now @grundtone/core theme-preset.ts.
 
   - Export defaultSpacing, defaultRadius, defaultShadows, defaultTransitions, defaultTypography from
     core

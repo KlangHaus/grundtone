@@ -1,7 +1,7 @@
 # Position
 
 Position and inset utilities for controlling element placement. Included in
-`@grundtone/design-tokens` CSS — see [Installation](/guide/installation) for setup.
+`@grundtone/design-system` CSS — see [Installation](/guide/installation) for setup.
 
 All utilities support responsive prefixes: `sm:`, `md:`, `lg:`, `xl:`, `2xl:`.
 

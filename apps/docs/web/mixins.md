@@ -3,7 +3,7 @@
 Reusable SCSS mixins for typography, focus states, accessibility, and text utilities.
 
 ```scss
-@use '@grundtone/design-tokens/scss/lib' as gt;
+@use '@grundtone/design-system/scss/lib' as gt;
 
 .my-heading { @include gt.heading('h2'); }
 .my-label   { @include gt.form-label; }

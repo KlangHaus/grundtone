@@ -13,7 +13,7 @@ grundtone/
 │   ├── core/             # Types and constants
 │   ├── shared/           # Utilities and helpers
 │   ├── composables/      # Vue composables
-│   ├── design-tokens/    # Design tokens
+│   ├── design-system/    # Design tokens
 │   └── nuxt/             # Nuxt module
 ├── apps/                 # Demo applications
 ├── apps/docs/            # VitePress documentation
@@ -26,7 +26,7 @@ grundtone/
 graph TD
     UI[ui] --> CORE[core]
     UI --> SHARED[shared]
-    UI --> TOKENS[design-tokens]
+    UI --> TOKENS[design-system]
     COMPOSABLES[composables] --> CORE
     NUXT[nuxt] --> UI
     NUXT --> COMPOSABLES
@@ -166,7 +166,7 @@ pnpm test --filter=@grundtone/vue
 - Use SCSS for component styles
 - Follow BEM naming convention
 - Scope styles with `scoped` attribute
-- Use design tokens from `@grundtone/design-tokens`
+- Use design tokens from `@grundtone/design-system`
 
 ### Git Workflow
 
