@@ -41,7 +41,6 @@
   },
   "dependencies": {
     "@grundtone/vue": "workspace:*",
-    "@grundtone/composables": "workspace:*",
     "@nuxt/kit": "^3.17.2"
   },
   "devDependencies": {

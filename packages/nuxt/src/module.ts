@@ -85,7 +85,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Auto-import composables
     if (options.composables) {
-      addImportsDir(resolver.resolve('../../composables/src'));
+      addImportsDir(resolver.resolve('../../vue/src/composables'));
     }
 
     // Expose module options to runtime

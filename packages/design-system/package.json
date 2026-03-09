@@ -1,0 +1,72 @@
+{
+  "name": "@grundtone/design-system",
+  "version": "2.0.0",
+  "description": "Design system for Grundtone - SCSS functions, mixins, CSS utilities, and grid system",
+  "license": "MIT",
+  "private": false,
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./dist/index.css": "./dist/index.css",
+    "./scss": {
+      "sass": "./src/index.scss",
+      "default": "./src/index.scss"
+    },
+    "./scss/lib": {
+      "sass": "./src/lib.scss",
+      "default": "./src/lib.scss"
+    },
+    "./scss/breakpoints": {
+      "sass": "./src/breakpoints.scss",
+      "default": "./src/breakpoints.scss"
+    },
+    "./scss/colors": {
+      "sass": "./src/colors.scss",
+      "default": "./src/colors.scss"
+    },
+    "./scss/color-palette": {
+      "sass": "./src/core/_color-palette.scss",
+      "default": "./src/core/_color-palette.scss"
+    },
+    "./branding": {
+      "types": "./dist/branding.d.ts",
+      "import": "./dist/branding.js",
+      "require": "./dist/branding.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grundtone/grundtone.git",
+    "directory": "packages/design-system"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "generate:tokens": "tsx scripts/generate-token-defaults.ts",
+    "build": "pnpm generate:tokens && tsup && sass --silence-deprecation=if-function src/index.scss dist/index.css",
+    "dev": "tsup --watch",
+    "clean": "rm -rf .turbo node_modules dist",
+    "prepublishOnly": "test -d dist || pnpm run build"
+  },
+  "dependencies": {
+    "@grundtone/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.45",
+    "sass": "^1.87.0",
+    "tsx": "^4.21.0",
+    "tsup": "^8.0.2"
+  }
+}

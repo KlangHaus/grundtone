@@ -11,10 +11,9 @@
   "linked": [
     [
       "@grundtone/core",
-      "@grundtone/shared",
+      "@grundtone/utils",
       "@grundtone/vue",
-      "@grundtone/composables",
-      "@grundtone/design-tokens",
+      "@grundtone/design-system",
       "@grundtone/nuxt",
       "@grundtone/react-native"
     ]

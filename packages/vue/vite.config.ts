@@ -9,11 +9,11 @@ export default defineConfig({
       scss: {
         // Add include paths for SCSS imports
         includePaths: [
-          resolve(__dirname, '../design-tokens/src'),
+          resolve(__dirname, '../design-system/src'),
           resolve(__dirname, 'node_modules'),
         ],
         // Global SCSS variables/mixins available in all components
-        additionalData: `@use "${resolve(__dirname, '../design-tokens/src/lib.scss')}" as tokens;`,
+        additionalData: `@use "${resolve(__dirname, '../design-system/src/lib.scss')}" as tokens;`,
         // Silence Sass deprecation warnings
         silenceDeprecations: ['if-function'],
       },
@@ -26,18 +26,12 @@ export default defineConfig({
       fileName: 'index',
     },
     rollupOptions: {
-      external: [
-        'vue',
-        '@grundtone/core',
-        '@grundtone/shared',
-        '@grundtone/composables',
-      ],
+      external: ['vue', '@grundtone/core', '@grundtone/utils'],
       output: {
         globals: {
           vue: 'Vue',
           '@grundtone/core': 'GrundtoneCore',
-          '@grundtone/shared': 'GrundtoneShared',
-          '@grundtone/composables': 'GrundtoneComposables',
+          '@grundtone/utils': 'GrundtoneUtils',
         },
       },
     },

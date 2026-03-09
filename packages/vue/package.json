@@ -39,12 +39,11 @@
   },
   "dependencies": {
     "@grundtone/core": "workspace:*",
-    "@grundtone/design-tokens": "workspace:*",
-    "@grundtone/shared": "workspace:*"
+    "@grundtone/design-system": "workspace:*",
+    "@grundtone/utils": "workspace:*"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.2",
-    "@grundtone/composables": "workspace:*",
     "@testing-library/jest-dom": "^6.8.0",
     "@vitejs/plugin-vue": "^5.0.3",
     "@vue/test-utils": "^2.4.0",

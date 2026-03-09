@@ -108,7 +108,7 @@ export default withMermaid(
         dedupe: ['vue'],
       },
       ssr: {
-        noExternal: ['@grundtone/design-tokens'],
+        noExternal: ['@grundtone/design-system'],
       },
     },
 

@@ -5,7 +5,7 @@ Vue 3 component library for the [Grundtone](https://grundtone.com) design system
 ## Installation
 
 ```bash
-npm install @grundtone/vue @grundtone/design-tokens
+npm install @grundtone/vue @grundtone/design-system
 ```
 
 ## Usage

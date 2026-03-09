@@ -1,7 +1,7 @@
 # @grundtone/nuxt
 
 Nuxt 3 module for the [Grundtone](https://grundtone.com) design system. Auto-imports components from
-`@grundtone/vue` and composables from `@grundtone/composables`.
+`@grundtone/vue`, including components and composables.
 
 ## Installation
 

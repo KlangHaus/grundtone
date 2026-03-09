@@ -12,15 +12,14 @@ and built for teams that need full control over their UI foundation.
 
 ## Packages
 
-| Package                                                | Description                                                   |
-| ------------------------------------------------------ | ------------------------------------------------------------- |
-| [`@grundtone/core`](./packages/core)                   | Theme system, types, and presets                              |
-| [`@grundtone/design-tokens`](./packages/design-tokens) | SCSS functions, mixins, CSS utilities, and grid system        |
-| [`@grundtone/shared`](./packages/shared)               | Formatting and validation utilities                           |
-| [`@grundtone/composables`](./packages/composables)     | Vue 3 composables (useTheme, useToggle, useClickOutside, ...) |
-| [`@grundtone/vue`](./packages/vue)                     | Vue 3 component library                                       |
-| [`@grundtone/nuxt`](./packages/nuxt)                   | Nuxt 3 module with auto-imports                               |
-| [`@grundtone/react-native`](./packages/react-native)   | React Native theme provider and hooks                         |
+| Package                                                | Description                                            |
+| ------------------------------------------------------ | ------------------------------------------------------ |
+| [`@grundtone/core`](./packages/core)                   | Theme system, types, and presets                       |
+| [`@grundtone/design-system`](./packages/design-system) | SCSS functions, mixins, CSS utilities, and grid system |
+| [`@grundtone/utils`](./packages/utils)                 | Formatting and validation utilities                    |
+| [`@grundtone/vue`](./packages/vue)                     | Vue 3 component library                                |
+| [`@grundtone/nuxt`](./packages/nuxt)                   | Nuxt 3 module with auto-imports                        |
+| [`@grundtone/react-native`](./packages/react-native)   | React Native theme provider and hooks                  |
 
 All packages are versioned together and published to npm under the `@grundtone` scope.
 
@@ -29,7 +28,7 @@ All packages are versioned together and published to npm under the `@grundtone` 
 ### Vue 3
 
 ```bash
-npm install @grundtone/vue @grundtone/design-tokens
+npm install @grundtone/vue @grundtone/design-system
 ```
 
 ```vue
@@ -60,11 +59,11 @@ Components and composables are auto-imported.
 ### Design tokens (any framework)
 
 ```bash
-npm install @grundtone/design-tokens
+npm install @grundtone/design-system
 ```
 
 ```scss
-@use '@grundtone/design-tokens/scss' as tokens;
+@use '@grundtone/design-system/scss' as tokens;
 
 .card {
   color: tokens.color('primary');
@@ -100,7 +99,7 @@ export default function App() {
 
 ```
 core                 Theme types, createTheme(), presets
- ├── design-tokens   SCSS/CSS layer for web
+ ├── design-system   SCSS/CSS layer for web
  ├── shared          Formatting & validation utilities
  ├── react-native    RN theme provider & hooks
  ├── composables     Vue 3 composition hooks

@@ -1,5 +1,5 @@
 import { defineConfig } from 'tsup';
-import { vuePreset } from '@grundtone/shared';
+import { vuePreset } from '@grundtone/utils';
 
 export default defineConfig(_options => {
   const preset = vuePreset({

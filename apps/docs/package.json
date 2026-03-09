@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@grundtone/core": "workspace:*",
-    "@grundtone/design-tokens": "workspace:*"
+    "@grundtone/design-system": "workspace:*"
   },
   "devDependencies": {
     "mermaid": "^11.12.3",

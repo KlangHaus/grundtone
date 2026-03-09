@@ -5,7 +5,7 @@ import CodePreview from './components/CodePreview.vue';
 import ColorTokens from './components/ColorTokens.vue';
 import { setupColorPreview } from 'vitepress-plugin-color-preview/client';
 import 'vitepress-plugin-color-preview/style.css';
-import '@grundtone/design-tokens/dist/index.css';
+import '@grundtone/design-system/dist/index.css';
 import './custom.css';
 
 export default {

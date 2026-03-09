@@ -136,9 +136,9 @@ importers:
       '@grundtone/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@grundtone/design-tokens':
+      '@grundtone/design-system':
         specifier: workspace:*
-        version: link:../../packages/design-tokens
+        version: link:../../packages/design-system
     devDependencies:
       mermaid:
         specifier: ^11.12.3
@@ -155,31 +155,9 @@ importers:
 
   apps/html-test:
     dependencies:
-      '@grundtone/design-tokens':
+      '@grundtone/design-system':
         specifier: workspace:*
-        version: link:../../packages/design-tokens
-
-  packages/composables:
-    dependencies:
-      '@grundtone/core':
-        specifier: workspace:*
-        version: link:../core
-      '@grundtone/design-tokens':
-        specifier: workspace:*
-        version: link:../design-tokens
-      '@grundtone/shared':
-        specifier: workspace:*
-        version: link:../shared
-      vue:
-        specifier: ^3.5.13
-        version: 3.5.27(typescript@5.8.3)
-    devDependencies:
-      '@types/node':
-        specifier: ^20.17.45
-        version: 20.19.30
-      tsup:
-        specifier: ^8.0.2
-        version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.8.3)(yaml@2.8.2)
+        version: link:../../packages/design-system
 
   packages/core:
     dependencies:
@@ -209,7 +187,7 @@ importers:
         specifier: ^8.0.2
         version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.8.3)(yaml@2.8.2)
 
-  packages/design-tokens:
+  packages/design-system:
     dependencies:
       '@grundtone/core':
         specifier: workspace:*
@@ -230,9 +208,6 @@ importers:
 
   packages/nuxt:
     dependencies:
-      '@grundtone/composables':
-        specifier: workspace:*
-        version: link:../composables
       '@grundtone/vue':
         specifier: workspace:*
         version: link:../vue
@@ -296,7 +271,7 @@ importers:
         specifier: ^5.0.0
         version: 5.8.3
 
-  packages/shared:
+  packages/utils:
     dependencies:
       '@grundtone/core':
         specifier: workspace:*
@@ -329,12 +304,12 @@ importers:
       '@grundtone/core':
         specifier: workspace:*
         version: link:../core
-      '@grundtone/design-tokens':
+      '@grundtone/design-system':
         specifier: workspace:*
-        version: link:../design-tokens
-      '@grundtone/shared':
+        version: link:../design-system
+      '@grundtone/utils':
         specifier: workspace:*
-        version: link:../shared
+        version: link:../utils
       vue:
         specifier: ^3.5.13
         version: 3.5.27(typescript@5.8.3)
@@ -342,9 +317,6 @@ importers:
       '@axe-core/playwright':
         specifier: ^4.10.2
         version: 4.11.0(playwright-core@1.58.1)
-      '@grundtone/composables':
-        specifier: workspace:*
-        version: link:../composables
       '@testing-library/jest-dom':
         specifier: ^6.8.0
         version: 6.9.1
@@ -12605,7 +12577,7 @@ snapshots:
 
   '@types/conventional-commits-parser@5.0.2':
     dependencies:
-      '@types/node': 22.15.17
+      '@types/node': 20.19.30
 
   '@types/d3-array@3.2.2': {}
 

@@ -24,9 +24,8 @@ export default {
       [
         'vue',          // @grundtone/vue package
         'core',         // @grundtone/core package
-        'shared',       // @grundtone/shared package
-        'composables',  // @grundtone/composables package
-        'design-tokens', // @grundtone/design-tokens package
+        'utils',        // @grundtone/utils package
+        'design-system', // @grundtone/design-system package
         'react-native', // @grundtone/react-native package
         'nuxt',         // @grundtone/nuxt package
         'deps',         // Dependencies

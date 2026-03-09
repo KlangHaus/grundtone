@@ -6,6 +6,6 @@
     "dev": "npx serve ."
   },
   "dependencies": {
-    "@grundtone/design-tokens": "workspace:*"
+    "@grundtone/design-system": "workspace:*"
   }
 }

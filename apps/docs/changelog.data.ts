@@ -98,9 +98,9 @@ export default {
       }
     }
 
-    // 2. Released versions — read from design-tokens (primary package)
+    // 2. Released versions — read from design-system (primary package)
     const released = parseChangelog(
-      resolve(root, 'packages/design-tokens/CHANGELOG.md'),
+      resolve(root, 'packages/design-system/CHANGELOG.md'),
     );
 
     return { pending, released };
