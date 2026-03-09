@@ -42,7 +42,7 @@ Gå til: https://www.npmjs.com/login
 
 ### 2.1 Gå til GitHub Repository Settings
 
-1. Gå til: https://github.com/allanasp/grundtone
+1. Gå til: https://github.com/grundtone/grundtone
 2. Klik på **Settings** (repository settings, ikke profile)
 3. I venstre menu, vælg **Secrets and variables** → **Actions**
 

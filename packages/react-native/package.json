@@ -1,6 +1,6 @@
 {
   "name": "@grundtone/react-native",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "React Native theme provider and hooks for Grundtone design system",
   "license": "MIT",
   "private": false,
@@ -19,7 +19,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/allanasp/grundtone.git",
+    "url": "https://github.com/grundtone/grundtone.git",
     "directory": "packages/react-native"
   },
   "publishConfig": {
@@ -29,7 +29,7 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "clean": "rm -rf .turbo node_modules dist",
-    "prepublishOnly": "pnpm run build"
+    "prepublishOnly": "test -d dist || pnpm run build"
   },
   "peerDependencies": {
     "react": ">=18.0.0",

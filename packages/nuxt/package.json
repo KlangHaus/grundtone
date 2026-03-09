@@ -1,6 +1,6 @@
 {
   "name": "@grundtone/nuxt",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Nuxt 3 module for Grundtone",
   "license": "MIT",
   "private": false,
@@ -24,7 +24,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/allanasp/grundtone.git",
+    "url": "https://github.com/grundtone/grundtone.git",
     "directory": "packages/nuxt"
   },
   "publishConfig": {
@@ -37,7 +37,7 @@
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "test": "../../node_modules/.bin/vitest run",
-    "prepublishOnly": "pnpm run build"
+    "prepublishOnly": "test -d dist || pnpm run build"
   },
   "dependencies": {
     "@grundtone/vue": "workspace:*",

@@ -105,6 +105,6 @@
       "@octokit/plugin-paginate-rest": ">=9.2.2"
     }
   },
-  "repository": "allanasp/grundtone",
+  "repository": "grundtone/grundtone",
   "author": "Allan Asp <mail@allanasp.dk>"
 }

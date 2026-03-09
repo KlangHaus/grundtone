@@ -306,7 +306,7 @@ export default withMermaid(
       },
 
       socialLinks: [
-        { icon: 'github', link: 'https://github.com/allanasp/grundtone' },
+        { icon: 'github', link: 'https://github.com/grundtone/grundtone' },
       ],
     },
   }),

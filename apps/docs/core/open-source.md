@@ -19,13 +19,13 @@ MIT License – use, modify, distribute, and use commercially.
 No warranty. Keep attribution if you redistribute.
 ```
 
-The source code is on [GitHub](https://github.com/allanasp/grundtone).
+The source code is on [GitHub](https://github.com/grundtone/grundtone).
 
 ## Self-Hosting Packages
 
 ### Option 1: Fork and publish to npm
 
-1. Fork the [repository](https://github.com/allanasp/grundtone)
+1. Fork the [repository](https://github.com/grundtone/grundtone)
 2. Update `package.json` names if desired (e.g. `@your-org/design-tokens`)
 3. Configure your npm registry and publish:
 

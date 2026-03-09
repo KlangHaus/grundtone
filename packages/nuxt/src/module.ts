@@ -104,7 +104,7 @@ export default defineNuxtModule<ModuleOptions>({
           '  grundtone: {\n' +
           '    theme: createTheme({ light: { primary: "#..." }, dark: { ... } })\n' +
           '  }\n' +
-          'See: https://github.com/allanasp/grundtone#theme-configuration',
+          'See: https://github.com/grundtone/grundtone#theme-configuration',
       );
     }
   },

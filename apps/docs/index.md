@@ -17,7 +17,7 @@ hero:
       link: /guide/theme-configuration
     - theme: alt
       text: View on GitHub
-      link: https://github.com/allanasp/grundtone
+      link: https://github.com/grundtone/grundtone
 
 features:
   - title: Platform Agnostic

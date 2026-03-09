@@ -1,7 +1,7 @@
 blank_issues_enabled: false
 contact_links:
   - name: 💬 Discussions
-    url: https://github.com/allanasp/grundtone/discussions
+    url: https://github.com/grundtone/grundtone/discussions
     about: Ask questions and discuss ideas with the community
   - name: 📖 Documentation
     url: https://grundtone.dev

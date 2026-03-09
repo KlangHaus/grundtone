@@ -1,6 +1,6 @@
 {
   "name": "@grundtone/shared",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Shared utilities and helpers for Grundtone",
   "license": "MIT",
   "private": false,
@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/allanasp/grundtone.git",
+    "url": "https://github.com/grundtone/grundtone.git",
     "directory": "packages/shared"
   },
   "publishConfig": {
@@ -25,7 +25,7 @@
     "lint": "eslint src",
     "test": "vitest --passWithNoTests",
     "clean": "rimraf .turbo node_modules dist",
-    "prepublishOnly": "pnpm run build"
+    "prepublishOnly": "test -d dist || pnpm run build"
   },
   "dependencies": {
     "@grundtone/core": "workspace:*"
