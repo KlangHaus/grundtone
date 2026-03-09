@@ -1,78 +1,59 @@
 # @grundtone/core
 
-Core package for the Grundtone design system. This package contains the fundamental building blocks,
-types, and utilities that form the foundation of the design system.
+Foundation package for the [Grundtone](https://grundtone.com) design system. Provides the theme
+system, TypeScript types, and presets that all other packages build on.
 
 ## Installation
 
 ```bash
-pnpm add @grundtone/core
+npm install @grundtone/core
 ```
 
 ## Usage
 
 ```typescript
-import { DEFAULT_THEME, type ThemeConfig } from '@grundtone/core';
+import { createTheme, type ThemeConfig } from '@grundtone/core';
 
-// Use the default theme
-const theme: ThemeConfig = DEFAULT_THEME;
+const { light, dark } = createTheme({
+  light: {
+    colors: {
+      primary: '#2563eb',
+      background: '#ffffff',
+    },
+  },
+  dark: {
+    colors: {
+      primary: '#3b82f6',
+      background: '#0a0a0a',
+    },
+  },
+});
 ```
 
 ## Exports
 
+### Theme
+
+- `createTheme()` - Create light/dark theme configurations
+- `DEFAULT_THEME` - Default theme configuration
+- Theme presets
+
 ### Types
 
-- `ComponentProps` - Base interface for component props
 - `ThemeConfig` - Theme configuration interface
-- `Size` - Common size variants ('sm' | 'md' | 'lg')
-- `Variant` - Common component variants ('primary' | 'secondary' | 'tertiary')
+- `ThemeMode` - Light/dark mode type
+- `ComponentProps` - Base component props interface
+- `Size` - Size variants (`'sm' | 'md' | 'lg'`)
+- `Variant` - Component variants (`'primary' | 'secondary' | 'tertiary'`)
 
-### Constants
+### Branding
 
-- `DEFAULT_THEME` - Default theme configuration
+- Branding configuration and utilities
 
-## Development
+## Documentation
 
-1. Install dependencies:
+See [grundtone.com](https://grundtone.com) for full documentation.
 
-```bash
-pnpm install
-```
+## License
 
-2. Start development server:
-
-```bash
-pnpm dev
-```
-
-3. Build package:
-
-```bash
-pnpm build
-```
-
-4. Run tests:
-
-```bash
-pnpm test
-```
-
-## Contributing
-
-Please refer to the main project README for contribution guidelines.
-
-## TypeScript-konfiguration
-
-Denne pakke bruger en specifik `tsconfig.json`, som udvider rodens `tsconfig.build.json`.
-Konfigurationen sikrer at kildekoden i `src/` og types i `types/` bliver korrekt transpileret og at
-types genereres i `dist/types`.
-
-- outDir: `dist`
-- rootDir: `src`
-- Types genereres automatisk ved build
-
-Byg pakken med:
-
-```sh
-pnpm build
-```
+MIT

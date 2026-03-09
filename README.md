@@ -1,302 +1,135 @@
-# Grundtone - Design System
+# Grundtone
 
-A comprehensive Vue 3 design system monorepo built with TypeScript, featuring the complete Danish
-design system implementation, atomic design principles, and automated workflows.
+A design token-driven design system for Vue 3, Nuxt 3, and React Native. Self-hosted, open source,
+and built for teams that need full control over their UI foundation.
 
-## 🏗️ Architecture Overview
+[![npm version](https://img.shields.io/npm/v/@grundtone/core?label=%40grundtone%2Fcore&color=1a1a1a)](https://www.npmjs.com/package/@grundtone/core)
+[![license](https://img.shields.io/npm/l/@grundtone/core?color=1a1a1a)](./LICENSE)
 
-### Core Philosophy
+**[Documentation](https://grundtone.com)** | **[npm](https://www.npmjs.com/org/grundtone)**
 
-Grundtone follows **atomic design methodology** and **design token-driven development**, providing a
-scalable foundation for building consistent user interfaces with Danish government design standards.
+---
 
-### Monorepo Structure
+## Packages
 
-```
-grundtone/
-├── packages/
-│   ├── core/              # Base styles and reset
-│   ├── design-tokens/     # Design tokens, functions, mixins
-│   ├── shared/            # Utilities and helpers
-│   ├── ui/                # Vue 3 components (atoms → organisms)
-│   ├── composables/       # Vue 3 composables/hooks
-│   ├── nuxt/              # Nuxt 3 module
-│   └── playground/        # Demo application
-├── apps/
-│   ├── core-test/         # Testing app for core package
-│   ├── shared-test/       # Testing app for shared utilities
-│   └── components-test/   # Component integration testing
-├── apps/docs/             # VitePress documentation
-└── docs/                  # Additional documentation
-```
+| Package                                                | Description                                                   |
+| ------------------------------------------------------ | ------------------------------------------------------------- |
+| [`@grundtone/core`](./packages/core)                   | Theme system, types, and presets                              |
+| [`@grundtone/design-tokens`](./packages/design-tokens) | SCSS functions, mixins, CSS utilities, and grid system        |
+| [`@grundtone/shared`](./packages/shared)               | Formatting and validation utilities                           |
+| [`@grundtone/composables`](./packages/composables)     | Vue 3 composables (useTheme, useToggle, useClickOutside, ...) |
+| [`@grundtone/vue`](./packages/vue)                     | Vue 3 component library                                       |
+| [`@grundtone/nuxt`](./packages/nuxt)                   | Nuxt 3 module with auto-imports                               |
+| [`@grundtone/react-native`](./packages/react-native)   | React Native theme provider and hooks                         |
 
-## 🚀 Quick Start
+All packages are versioned together and published to npm under the `@grundtone` scope.
 
-### Prerequisites
+## Quick start
 
-- **Node.js**: >= 20.0.0
-- **pnpm**: 10.14.0+ (package manager)
-- **Git**: For version control
-
-### Installation
-
-```bash
-# Clone the repository
-git clone <repository-url>
-cd grundtone
-
-# Install dependencies
-pnpm install
-
-# Build all packages
-pnpm build
-
-# Start development
-pnpm dev
-```
-
-### Development Commands
-
-```bash
-# Development servers
-pnpm dev                    # Start all development servers
-pnpm dev:playground         # Start playground app only
-pnpm docs:dev              # Start documentation site
-
-# Building
-pnpm build                 # Build all packages and apps
-pnpm build:packages        # Build only packages (excludes apps)
-
-# Testing & Quality
-pnpm test                  # Run all tests
-pnpm test:watch            # Run tests in watch mode
-pnpm typecheck             # TypeScript checking
-pnpm lint                  # Lint all packages
-pnpm format                # Format all files
-
-# Package-specific commands
-pnpm test --filter=@grundtone/vue  # Test specific package
-turbo run dev --filter=@grundtone/vue  # Build specific package in watch mode
-```
-
-## 🏛️ Design System Features
-
-### Design System Integration
-
-Complete implementation of the design system:
-
-- **100+ colors** with semantic naming
-- **IBM Plex Sans typography** with responsive scales
-- **8px-based spacing** system
-- **Complete utility classes** for rapid development
-- **SCSS functions and mixins** for advanced styling
-- **Comprehensive VitePress documentation**
-
-### Component Architecture
-
-Every component follows atomic design principles:
-
-- **Atoms**: Button, Input, Icon, Label
-- **Molecules**: FormField, Card, SearchBox
-- **Organisms**: Header, Navigation, DataTable
-- **Templates**: Page layouts and structures
-- **Pages**: Complete page implementations
-
-## 🛠️ Usage Examples
-
-### Vue 3 Integration
+### Vue 3
 
 ```bash
 npm install @grundtone/vue @grundtone/design-tokens
 ```
 
-```javascript
-// main.ts
-import { createApp } from 'vue';
-import GrundtoneUI from '@grundtone/vue';
-import '@grundtone/vue/dist/style.css';
-import App from './App.vue';
+```vue
+<script setup>
+  import { Button } from '@grundtone/vue';
+</script>
 
-const app = createApp(App);
-app.use(GrundtoneUI);
-app.mount('#app');
+<template>
+  <Button variant="primary">Submit</Button>
+</template>
 ```
 
-### Nuxt 3 Integration
+### Nuxt 3
 
 ```bash
-npm install @grundtone/nuxt
+npm install -D @grundtone/nuxt
 ```
 
-```javascript
+```ts
 // nuxt.config.ts
 export default defineNuxtConfig({
   modules: ['@grundtone/nuxt'],
 });
 ```
 
-### Design Tokens Usage
+Components and composables are auto-imported.
+
+### Design tokens (any framework)
+
+```bash
+npm install @grundtone/design-tokens
+```
 
 ```scss
-@use '@grundtone/design-tokens' as tokens;
+@use '@grundtone/design-tokens/scss' as tokens;
 
-.my-component {
+.card {
   color: tokens.color('primary');
-  font-size: tokens.font-size('lg');
-  padding: tokens.units(2);
+  padding: tokens.units(3);
   box-shadow: tokens.shadow('medium');
 }
 ```
 
-## 📚 Danish Localization Features
-
-### CPR Number Validation
-
-```typescript
-import { isValidCPR } from '@grundtone/shared';
-isValidCPR('123456-7890'); // true
-```
-
-### Danish Currency & Date Formatting
-
-```typescript
-import { formatCurrency, formatDanishDate } from '@grundtone/shared';
-formatCurrency(1234.56); // '1.234,56 kr.'
-formatDanishDate(new Date()); // 'DD/MM/YYYY'
-```
-
-## 🧪 Quality Assurance
-
-### Testing Requirements
-
-- **90% minimum test coverage** across all packages
-- **Unit tests** with Vitest and Vue Test Utils
-- **Design system documentation** with VitePress
-- **E2E testing** with Playwright
-- **Accessibility compliance** with WCAG 2.1 AA
-
-### Code Quality Tools
-
-- **ESLint**: JavaScript/TypeScript/Vue linting
-- **Stylelint**: SCSS/CSS code quality
-- **Prettier**: Consistent code formatting
-- **TypeScript**: Strict type checking
-- **Husky**: Pre-commit hooks
-
-## 🚀 Deployment & Publishing
-
-### Automated Releases
-
-- **Conventional commits** for semantic versioning
-- **Auto-generated changelogs** with release notes
-- **GitHub Actions** for CI/CD pipeline
-- **NPM publishing** with proper package distribution
-
-## 🔧 Troubleshooting
-
-### Common Issues
-
-**Build Failures**: Ensure correct package.json exports **TypeScript Errors**: Build packages in
-dependency order **Test Failures**: Verify vitest configuration
-
-See [TROUBLESHOOTING.md](./docs/TROUBLESHOOTING.md) for detailed solutions.
-
-## 📖 Documentation
-
-- **[Architecture Guide](./docs/ARCHITECTURE.md)**: System design and patterns
-- **[Contributing Guide](./docs/CONTRIBUTING.md)**: Development workflow and standards
-- **[Troubleshooting](./docs/TROUBLESHOOTING.md)**: Common issues and solutions
-- **[Component API](./docs/api/)**: Generated API documentation
-- **[Documentation](https://grundtone.vercel.app)**: Design system documentation
-
-## 🤝 Contributing
-
-We welcome contributions! Please read our [Contributing Guide](./docs/CONTRIBUTING.md) for:
-
-- Development setup and workflow
-- Component creation standards
-- Testing requirements
-- Code review process
-- Design system compliance guidelines
-
-### Development Workflow
+### React Native
 
 ```bash
-# 1. Fork and clone
-git clone https://github.com/yourusername/grundtone.git
-
-# 2. Create feature branch
-git checkout -b feature/new-component
-
-# 3. Develop with tests
-pnpm test:watch
-
-# 4. Submit pull request
-git push origin feature/new-component
+npm install @grundtone/react-native @grundtone/core
 ```
 
-## 📊 Project Status
+```tsx
+import { GrundtoneThemeProvider } from '@grundtone/react-native';
+import { createTheme } from '@grundtone/core';
 
-### Package Status
+const { light, dark } = createTheme({
+  /* ... */
+});
 
-- ✅ **@grundtone/core**: Stable - CSS reset and base styles
-- ✅ **@grundtone/design-tokens**: Stable - Complete design token implementation
-- ✅ **@grundtone/shared**: Stable - Danish utilities and helpers
-- ✅ **@grundtone/vue**: Stable - Vue 3 component library
-- ✅ **@grundtone/composables**: Stable - Vue 3 composables
-- ✅ **@grundtone/nuxt**: Stable - Nuxt 3 integration module
-- ✅ **@grundtone/playground**: Development - Demo application
+export default function App() {
+  return (
+    <GrundtoneThemeProvider light={light} dark={dark}>
+      <RootNavigator />
+    </GrundtoneThemeProvider>
+  );
+}
+```
 
-### Build Status
+## Architecture
 
-- ✅ All packages build successfully
-- ✅ Tests passing (90%+ coverage)
-- ✅ TypeScript compilation clean
-- ✅ Linting and formatting consistent
-- ✅ VitePress documentation deployed
+```
+core                 Theme types, createTheme(), presets
+ ├── design-tokens   SCSS/CSS layer for web
+ ├── shared          Formatting & validation utilities
+ ├── react-native    RN theme provider & hooks
+ ├── composables     Vue 3 composition hooks
+ ├── vue             Vue 3 components
+ └── nuxt            Nuxt 3 module (auto-imports vue + composables)
+```
 
-## 🌟 Features
+## Development
 
-### Design System
+Requires Node.js >= 24 and pnpm 10.
 
-- ✅ Complete color system (100+ colors)
-- ✅ Responsive typography with IBM Plex Sans
-- ✅ 8px-based spacing scale
-- ✅ Comprehensive utility classes
-- ✅ SCSS functions and mixins library
-- ✅ CSS custom properties support
+```bash
+pnpm install
+pnpm build
+pnpm test
+pnpm docs:dev        # Start docs at localhost
+```
 
-### Development Experience
+## Contributing
 
-- ✅ TypeScript strict mode
-- ✅ Vue 3 Composition API
-- ✅ Hot module replacement
-- ✅ Automated testing with Vitest
-- ✅ VitePress documentation site
-- ✅ Automated releases with conventional commits
+```bash
+git clone https://github.com/grundtone/grundtone.git
+cd grundtone
+pnpm install
+pnpm dev
+```
 
-### Accessibility & Compliance
+See [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for guidelines.
 
-- ✅ WCAG 2.1 AA compliance
-- ✅ Screen reader compatibility
-- ✅ Keyboard navigation support
-- ✅ Focus management
-- ✅ ARIA attributes and roles
+## License
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- **Design system inspiration**: For comprehensive design standards
-- **[Vue.js Team](https://vuejs.org/)**: For the amazing Vue 3 framework
-- **[TypeScript Team](https://www.typescriptlang.org/)**: For robust type safety
-- **Contributors**: Everyone who has contributed to this project
-
----
-
-**Built with ❤️ for the Danish development community**
-
-_This design system provides modern Vue 3 components following Danish government design standards
-with comprehensive tooling for scalable application development._
+MIT

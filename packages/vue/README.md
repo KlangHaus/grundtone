@@ -1,141 +1,75 @@
-# @grundtone/components
+# @grundtone/vue
 
-Vue 3 komponenter for Grundtone designsystemet, bygget med Atomic Design principper.
+Vue 3 component library for the [Grundtone](https://grundtone.com) design system.
 
 ## Installation
 
 ```bash
-npm install @grundtone/components
-# eller
-yarn add @grundtone/components
-# eller
-pnpm add @grundtone/components
+npm install @grundtone/vue @grundtone/design-tokens
 ```
 
-## Brug
+## Usage
 
 ```vue
-<template>
-  <Button variant="primary" size="md"> Click me </Button>
-</template>
-
 <script setup>
-  import { Button } from '@grundtone/components';
+  import { Button, Icon, ThemeProvider } from '@grundtone/vue';
 </script>
+
+<template>
+  <ThemeProvider>
+    <Button variant="primary" size="md">
+      <Icon name="check" />
+      Confirm
+    </Button>
+  </ThemeProvider>
+</template>
 ```
 
-## Atomic Design Struktur
+## Components
 
-Komponenterne er organiseret efter Atomic Design principper:
+### Button
 
-### Atoms
-
-Grundlæggende byggeblokke som:
-
-- Button
-- Input
-- Icon
-- Typography
-
-### Molecules
-
-Kombinationer af atomer som:
-
-- InputGroup
-- FormField
-- Card
-- Alert
-
-### Organisms
-
-Komplekse UI-komponenter som:
-
-- Header
-- Footer
-- Modal
-- Navigation
-
-### Templates
-
-Sidelayout-strukturer og skabeloner:
-
-- DefaultLayout
-- AuthLayout
-- DashboardLayout
-
-### Pages
-
-Komplette sideskabeloner:
-
-- HomePage
-- LoginPage
-- DashboardPage
-
-## Udvikling
-
-1. Installer dependencies:
-
-```bash
-pnpm install
+```vue
+<Button variant="primary" size="md">Label</Button>
+<Button variant="secondary">Label</Button>
+<Button variant="outlined">Label</Button>
 ```
 
-2. Start udviklingsserver:
+### Icon
 
-```bash
-pnpm dev
+Configurable icon system supporting Heroicons, Lucide, or custom icon sets.
+
+```typescript
+import { createHeroiconsConfig, createLucideConfig } from '@grundtone/vue';
 ```
 
-3. Byg pakken:
+### ThemeProvider
 
-```bash
-pnpm build
+Provides theme context to child components.
+
+```vue
+<ThemeProvider :theme="customTheme">
+  <slot />
+</ThemeProvider>
 ```
 
-## Konventioner
+### ThemeToggle
 
-### Komponentstruktur
+Toggle between light and dark mode.
 
-Hver komponent skal følge denne struktur:
-
-```
-ComponentName/
-  ├── ComponentName.vue    # Komponent-implementation
-  ├── ComponentName.scss   # Styling
-  ├── index.ts            # Export
-  └── ComponentName.test.ts # Tests
+```vue
+<ThemeToggle />
 ```
 
-### SCSS Konventioner
+## Nuxt
 
-- Brug BEM metodologi
-- Hold styling i separate SCSS-filer
-- Brug CSS variabler fra @grundtone/core
+For Nuxt 3 projects, use [`@grundtone/nuxt`](https://www.npmjs.com/package/@grundtone/nuxt) instead
+for automatic component and composable auto-imports.
 
-### TypeScript
+## Documentation
 
-- Brug TypeScript for alle komponenter
-- Definer props interfaces
-- Eksporter typer når nødvendigt
+See [grundtone.com](https://grundtone.com) for full component API, examples, and design guidelines.
 
-## TypeScript-konfiguration
-
-Denne pakke bruger en specifik `tsconfig.json`, som udvider rodens `tsconfig.build.json`.
-Konfigurationen er tilpasset til Vue 3 og understøtter:
-
-- outDir: `dist`
-- rootDir: `src`
-- Types genereres automatisk ved build
-- JSX support (`jsx: preserve`, `jsxImportSource: vue`)
-- Vue template compiler options
-
-Dette sikrer korrekt typesætning og udvikling med både SFC og JSX i Vue 3.
-
-Byg pakken med:
-
-```sh
-pnpm build
-```
-
-## Licens
+## License
 
 MIT

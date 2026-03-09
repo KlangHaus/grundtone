@@ -1,19 +1,20 @@
 # @grundtone/react-native
 
-React Native theme provider and hooks for Grundtone design system. Use the same semantic tokens as
-web (colors, spacing, typography) in your RN app.
+React Native theme provider and hooks for the [Grundtone](https://grundtone.com) design system. Uses
+the same semantic tokens as the web packages.
 
 ## Installation
 
 ```bash
-pnpm add @grundtone/react-native @grundtone/core
-# or
 npm install @grundtone/react-native @grundtone/core
 ```
 
+You do **not** need `@grundtone/design-tokens` - that package is web-only (SCSS/CSS). For React
+Native, tokens are delivered via the theme object.
+
 ## Usage
 
-### 1. Wrap your app with GrundtoneThemeProvider
+### 1. Wrap your app
 
 ```tsx
 import { GrundtoneThemeProvider } from '@grundtone/react-native';
@@ -21,19 +22,10 @@ import { createTheme } from '@grundtone/core';
 
 const { light, dark } = createTheme({
   light: {
-    colors: {
-      primary: '#007aff',
-      background: '#ffffff',
-      text: '#1c1c1e',
-      // ... override only what you need
-    },
+    colors: { primary: '#007aff', background: '#ffffff', text: '#1c1c1e' },
   },
   dark: {
-    colors: {
-      primary: '#0a84ff',
-      background: '#000000',
-      text: '#ffffff',
-    },
+    colors: { primary: '#0a84ff', background: '#000000', text: '#ffffff' },
   },
 });
 
@@ -46,79 +38,41 @@ export default function App() {
 }
 ```
 
-### 2. Use the theme in your components
+### 2. Use the theme
 
 ```tsx
-import { StyleSheet, View, Text } from 'react-native';
 import { useGrundtoneTheme } from '@grundtone/react-native';
 
 function MyScreen() {
-  const { theme } = useGrundtoneTheme();
+  const { theme, mode, setMode, isDark } = useGrundtoneTheme();
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <Text style={[styles.title, { color: theme.colors.text }]}>Hello</Text>
-      <View style={[styles.button, { backgroundColor: theme.colors.primary }]}>
-        <Text style={{ color: theme.colors.onPrimary }}>Submit</Text>
-      </View>
+    <View style={{ backgroundColor: theme.colors.background, flex: 1 }}>
+      <Text style={{ color: theme.colors.text }}>Hello</Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16, // or use theme.spacing.md when building styles dynamically
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  button: {
-    padding: 12,
-    borderRadius: 8,
-  },
-});
 ```
 
-### Theme mode
-
-By default, the provider follows the system color scheme. To fix a mode:
+### Toggle theme
 
 ```tsx
-<GrundtoneThemeProvider light={light} dark={dark} defaultMode="dark">
-  <App />
-</GrundtoneThemeProvider>
-```
-
-To toggle programmatically:
-
-```tsx
-const { mode, setMode, isDark } = useGrundtoneTheme();
-
-// Switch to dark
+const { setMode } = useGrundtoneTheme();
 setMode('dark');
 ```
 
-## Design tokens vs web
+By default, the provider follows the system color scheme.
 
-| Platform     | Token source      | Delivery                     |
-| ------------ | ----------------- | ---------------------------- |
-| Web (Vue)    | `@grundtone/core` | CSS vars, design-tokens SCSS |
-| React Native | `@grundtone/core` | Theme object via hook        |
+## Utilities
 
-You do **not** need `@grundtone/design-tokens` for React Native. Design-tokens is web-only (SCSS,
-CSS utilities). Use `createTheme()` from `@grundtone/core` and pass the theme objects to
-`GrundtoneThemeProvider`.
+- `shadowToRN(shadow)` - Convert web shadow values to React Native shadow styles
+- `createBranding()` - Create branding configuration
+- `getLogoSource()` - Get logo asset for current theme
 
-## Metro config (optional)
+## Documentation
 
-If you see errors about `@grundtone/core` importing `.css`, add to `metro.config.js`:
+See [grundtone.com](https://grundtone.com) for full API reference.
 
-```js
-const { getDefaultConfig } = require('expo/metro-config');
+## License
 
-const config = getDefaultConfig(__dirname);
-config.resolver.blockList = [/\.css$/];
-module.exports = config;
-```
+MIT
