@@ -3,7 +3,6 @@ import { createTheme } from '@grundtone/core';
 export default defineNuxtConfig({
   modules: ['../src/module'],
   grundtone: {
-    // Required: Configure your brand colors (override only what you need)
     theme: createTheme({
       light: {
         primary: '#0059b3',
@@ -18,7 +17,7 @@ export default defineNuxtConfig({
     }),
     components: true,
     composables: true,
-    prefix: 'Grundtone',
+    prefix: 'GT',
   },
   devtools: { enabled: true },
 });

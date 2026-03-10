@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { ref } from 'vue';
+  import { GTButton } from '@grundtone/vue';
 
   const isLoading = ref(false);
 
@@ -13,7 +14,7 @@
 
 <template>
   <div class="playground">
-    <h1>Grundtone Nuxt Playground</h1>
+    <h1>Grundtone Vue Playground</h1>
 
     <section>
       <h2>Variants</h2>
@@ -69,30 +70,37 @@
   </div>
 </template>
 
-<style>
+<style lang="scss">
   body {
     margin: 0;
-    font-family: system-ui, sans-serif;
-    padding: 2rem;
+    font-family: tokens.font-family('base');
+    background: tokens.color('background');
+    color: tokens.color('text');
   }
 
-  .playground h1 {
-    margin-bottom: 2rem;
-  }
+  .playground {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: tokens.space('xl');
 
-  .playground h2 {
-    margin-bottom: 0.5rem;
-    font-size: 1.25rem;
-  }
+    h1 {
+      margin-bottom: tokens.space('xl');
+    }
 
-  .playground section {
-    margin-bottom: 2rem;
-  }
+    h2 {
+      margin-bottom: tokens.space('sm');
+      font-size: tokens.font-size('lg');
+    }
 
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.5rem;
+    section {
+      margin-bottom: tokens.space('xl');
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: tokens.space('sm');
+    }
   }
 </style>

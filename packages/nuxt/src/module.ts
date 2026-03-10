@@ -34,7 +34,7 @@ export interface ModuleOptions {
 
   /**
    * Prefix for component names
-   * @default 'Grundtone'
+   * @default 'GT'
    */
   prefix?: string;
 }
@@ -80,7 +80,7 @@ export default defineNuxtModule<ModuleOptions>({
       theme: options.theme,
       components: options.components ?? true,
       composables: options.composables ?? true,
-      prefix: options.prefix ?? 'Grundtone',
+      prefix: options.prefix ?? 'GT',
     };
 
     // Dev warning if theme not configured
