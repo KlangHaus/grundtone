@@ -79,6 +79,8 @@ export default [
         navigator: 'readonly',
         setTimeout: 'readonly',
         clearTimeout: 'readonly',
+        MouseEvent: 'readonly',
+        HTMLElement: 'readonly',
         MediaQueryList: 'readonly',
         MediaQueryListEvent: 'readonly',
       },

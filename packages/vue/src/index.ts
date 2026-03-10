@@ -5,6 +5,13 @@
  */
 
 // Atoms
+export { GTButton } from './atoms/Button';
+export type {
+  ButtonProps,
+  ButtonVariant,
+  ButtonSize,
+  ButtonRadius,
+} from './atoms/Button';
 
 // Molecules
 

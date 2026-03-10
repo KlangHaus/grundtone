@@ -1,4 +1,8 @@
+import { resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { defineConfig } from 'vitepress';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 import { withMermaid } from 'vitepress-plugin-mermaid';
 import { createHighlighter } from 'shiki';
 import type { Plugin } from 'vite';
@@ -107,6 +111,14 @@ export default withMermaid(
       resolve: {
         dedupe: ['vue'],
       },
+      css: {
+        preprocessorOptions: {
+          scss: {
+            additionalData: `@use "${resolve(__dirname, '../../../packages/design-system/src/lib.scss')}" as tokens;`,
+            silenceDeprecations: ['if-function'],
+          },
+        },
+      },
       ssr: {
         noExternal: ['@grundtone/design-system'],
       },
@@ -138,6 +150,7 @@ export default withMermaid(
 
       nav: [
         { text: 'Getting Started', link: '/guide/welcome' },
+        { text: 'Vue / Nuxt', link: '/vue/installation' },
         { text: 'Web', link: '/web/colors' },
         { text: 'React Native', link: '/react-native/colors' },
         { text: 'Core Concepts', link: '/core/package-architecture' },
@@ -159,7 +172,24 @@ export default withMermaid(
                 text: 'Branding Configuration',
                 link: '/guide/branding-configuration',
               },
+              {
+                text: 'Component Prefix',
+                link: '/guide/prefix',
+              },
             ],
+          },
+        ],
+        '/vue/': [
+          {
+            text: 'Getting Started',
+            items: [
+              { text: 'Vue 3', link: '/vue/installation' },
+              { text: 'Nuxt 3', link: '/vue/nuxt' },
+            ],
+          },
+          {
+            text: 'Components',
+            items: [{ text: 'Button', link: '/vue/button' }],
           },
         ],
         '/web/': [

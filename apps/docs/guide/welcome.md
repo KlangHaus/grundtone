@@ -6,8 +6,9 @@ typography) powers your UI on **Vue**, **Nuxt**, and **React Native**.
 - **Semantic colors** – Use tokens like `primary`, `background`, `text` instead of hex values.
   Configure once with `createTheme()` to match your brand.
 - **Self-hosting** – Fork the repo, change the default colors in
-  [`theme-preset.ts`](/guide/theme-configuration#changing-the-default-colors-self-hosting), rebuild,
-  and every package ships with your brand out of the box.
+  [`theme-preset.ts`](/guide/theme-configuration#changing-the-default-colors-self-hosting), set your
+  own [component prefix](/guide/prefix) (e.g. `KH` instead of `GT`), rebuild, and every package
+  ships with your brand out of the box.
 - **Open source (MIT)** – Use it, fork it, self-host it, and customize the design. See
   [Open Source & Self-Hosting](/core/open-source).
 

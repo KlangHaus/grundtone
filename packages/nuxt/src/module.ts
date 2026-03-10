@@ -51,36 +51,23 @@ export default defineNuxtModule<ModuleOptions>({
   defaults: {
     components: true,
     composables: true,
-    prefix: 'Grundtone',
+    prefix: 'GT',
   },
   setup(options, nuxt) {
     const resolver = createResolver(import.meta.url);
 
     // Auto-import components
     if (options.components) {
-      addComponentsDir({
-        path: resolver.resolve('../../vue/src/atoms'),
-        pathPrefix: false,
-        prefix: options.prefix,
-        extensions: ['.vue'],
-        pattern: '**/*.vue',
-      });
-
-      addComponentsDir({
-        path: resolver.resolve('../../vue/src/molecules'),
-        pathPrefix: false,
-        prefix: options.prefix,
-        extensions: ['.vue'],
-        pattern: '**/*.vue',
-      });
-
-      addComponentsDir({
-        path: resolver.resolve('../../vue/src/organisms'),
-        pathPrefix: false,
-        prefix: options.prefix,
-        extensions: ['.vue'],
-        pattern: '**/*.vue',
-      });
+      const componentDirs = ['atoms', 'molecules', 'organisms'];
+      for (const dir of componentDirs) {
+        addComponentsDir({
+          path: resolver.resolve(`../../vue/src/${dir}`),
+          pathPrefix: false,
+          prefix: options.prefix,
+          extensions: ['.vue'],
+          pattern: '**/[A-Z]*.vue',
+        });
+      }
     }
 
     // Auto-import composables
