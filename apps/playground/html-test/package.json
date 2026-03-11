@@ -6,6 +6,7 @@
     "dev": "npx serve ."
   },
   "dependencies": {
-    "@grundtone/design-system": "workspace:*"
+    "@grundtone/design-system": "workspace:*",
+    "@grundtone/vue": "workspace:*"
   }
 }

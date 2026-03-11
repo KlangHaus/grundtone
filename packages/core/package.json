@@ -29,7 +29,8 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsup",
+    "generate:icons": "tsx scripts/generate-icon-registry.ts",
+    "build": "pnpm generate:icons && tsup",
     "dev": "tsup --watch",
     "lint": "eslint src",
     "test": "vitest --passWithNoTests",
@@ -43,7 +44,8 @@
     "@vitejs/plugin-vue": "^5.0.3",
     "eslint": "^8.56.0",
     "rimraf": "^5.0.5",
-    "tsup": "^8.0.2"
+    "tsup": "^8.0.2",
+    "tsx": "^4.19.4"
   },
   "peerDependencies": {
     "vue": "^3.5.13"
