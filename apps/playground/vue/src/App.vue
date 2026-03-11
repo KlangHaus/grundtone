@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { ref } from 'vue';
-  import { GTButton } from '@grundtone/vue';
+  import { GTButton, GTIcon } from '@grundtone/vue';
+  import { iconRegistry } from '@grundtone/core';
 
   const isLoading = ref(false);
 
@@ -55,6 +56,44 @@
           {{ isLoading ? 'Saving...' : 'Click to load' }}
         </GTButton>
         <GTButton block>Block (full width)</GTButton>
+      </div>
+    </section>
+
+    <section>
+      <h2>Icons</h2>
+      <div class="row">
+        <GTIcon
+          v-for="name in Object.keys(iconRegistry)"
+          :key="name"
+          :name="name"
+        />
+      </div>
+    </section>
+
+    <section>
+      <h2>Icon sizes</h2>
+      <div class="row">
+        <GTIcon name="check" size="xs" />
+        <GTIcon name="check" size="sm" />
+        <GTIcon name="check" size="md" />
+        <GTIcon name="check" size="lg" />
+        <GTIcon name="check" size="xl" />
+        <GTIcon name="check" size="2xl" />
+      </div>
+    </section>
+
+    <section>
+      <h2>Button with icon</h2>
+      <div class="row">
+        <GTButton variant="primary">
+          <GTIcon name="check" size="sm" /> Confirm
+        </GTButton>
+        <GTButton variant="negative">
+          <GTIcon name="close" size="sm" /> Delete
+        </GTButton>
+        <GTButton variant="outlined">
+          <GTIcon name="search" size="sm" /> Search
+        </GTButton>
       </div>
     </section>
 

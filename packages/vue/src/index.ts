@@ -12,6 +12,8 @@ export type {
   ButtonSize,
   ButtonRadius,
 } from './atoms/Button';
+export { GTIcon } from './atoms/Icon';
+export type { IconProps, IconSize } from './atoms/Icon';
 
 // Molecules
 
