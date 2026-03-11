@@ -29,11 +29,12 @@ export default defineConfig({
 
 ## Import CSS
 
-Import the design system CSS in your app entry point to load all CSS custom properties:
+Import the design system tokens and component styles in your app entry point:
 
 ```ts
 // main.ts
 import '@grundtone/design-system/dist/index.css';
+import '@grundtone/vue/dist/style.css';
 ```
 
 ## Use components

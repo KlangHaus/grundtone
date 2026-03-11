@@ -8,6 +8,7 @@
     "generate": "nuxi generate"
   },
   "dependencies": {
+    "@grundtone/design-system": "workspace:*",
     "nuxt": "^3.17.2"
   }
 }

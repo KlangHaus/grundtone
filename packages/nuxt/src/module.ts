@@ -56,6 +56,11 @@ export default defineNuxtModule<ModuleOptions>({
   setup(options, nuxt) {
     const resolver = createResolver(import.meta.url);
 
+    // Inject design-system CSS (custom properties)
+    nuxt.options.css.push(
+      resolver.resolve('../../design-system/dist/index.css'),
+    );
+
     // Auto-import components
     if (options.components) {
       const componentDirs = ['atoms', 'molecules', 'organisms'];

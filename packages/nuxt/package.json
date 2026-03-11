@@ -40,6 +40,8 @@
     "prepublishOnly": "test -d dist || pnpm run build"
   },
   "dependencies": {
+    "@grundtone/core": "workspace:*",
+    "@grundtone/design-system": "workspace:*",
     "@grundtone/vue": "workspace:*",
     "@nuxt/kit": "^3.17.2"
   },

@@ -1,6 +1,6 @@
 # Nuxt 3 Installation
 
-Install the Nuxt module — it pulls in `@grundtone/vue` and its dependencies automatically:
+Install the Nuxt module — it pulls in `@grundtone/vue`, `@grundtone/design-system`, and all dependencies automatically:
 
 ```bash
 npm install -D @grundtone/nuxt
@@ -19,6 +19,12 @@ export default defineNuxtConfig({
   },
 });
 ```
+
+The module automatically:
+- Auto-imports all components with the configured prefix
+- Injects the design-system CSS (custom properties and component styles)
+
+No manual CSS imports needed.
 
 ## Use components
 
@@ -62,7 +68,7 @@ export default defineNuxtConfig({
 
 ## SCSS tokens in Nuxt
 
-To use design-system tokens in your own SCSS, configure Vite in `nuxt.config.ts`:
+To use design-system SCSS tokens in your own components, configure Vite in `nuxt.config.ts`:
 
 ```ts
 // nuxt.config.ts

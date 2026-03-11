@@ -1,6 +1,7 @@
 import { createTheme } from '@grundtone/core';
 
 export default defineNuxtConfig({
+  compatibilityDate: '2026-03-11',
   modules: ['../src/module'],
   grundtone: {
     theme: createTheme({
@@ -18,6 +19,15 @@ export default defineNuxtConfig({
     components: true,
     composables: true,
     prefix: 'GT',
+  },
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@use "@grundtone/design-system/scss/lib" as tokens;`,
+        },
+      },
+    },
   },
   devtools: { enabled: true },
 });

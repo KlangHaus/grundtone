@@ -233,6 +233,12 @@ importers:
 
   packages/nuxt:
     dependencies:
+      '@grundtone/core':
+        specifier: workspace:*
+        version: link:../core
+      '@grundtone/design-system':
+        specifier: workspace:*
+        version: link:../design-system
       '@grundtone/vue':
         specifier: workspace:*
         version: link:../vue
@@ -5688,6 +5694,7 @@ packages:
   git-raw-commits@4.0.0:
     resolution: {integrity: sha512-ICsMM1Wk8xSGMowkOmPrzo2Fgmfo4bMHLNX6ytHjajRJUqvHOw/TFapQ+QG75c3X/tTDDhOSRPGC52dDbNM8FQ==}
     engines: {node: '>=16'}
+    deprecated: This package is no longer maintained. For the JavaScript API, please use @conventional-changelog/git-client instead.
     hasBin: true
 
   git-up@8.1.1:
