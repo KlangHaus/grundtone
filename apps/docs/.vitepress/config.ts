@@ -189,10 +189,7 @@ export default withMermaid(
           },
           {
             text: 'Components',
-            items: [
-              { text: 'Button', link: '/vue/button' },
-              { text: 'Icon', link: '/vue/icon' },
-            ],
+            items: [{ text: 'Button', link: '/vue/button' }],
           },
         ],
         '/web/': [

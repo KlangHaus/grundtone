@@ -10,6 +10,3 @@ export * from './theme-preset';
 
 // Branding
 export * from './branding';
-
-// Icons
-export * from './icons';

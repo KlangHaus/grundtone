@@ -158,9 +158,6 @@ importers:
       '@grundtone/design-system':
         specifier: workspace:*
         version: link:../../../packages/design-system
-      '@grundtone/vue':
-        specifier: workspace:*
-        version: link:../../../packages/vue
 
   apps/playground/nuxt:
     dependencies:
@@ -229,9 +226,6 @@ importers:
       tsup:
         specifier: ^8.0.2
         version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.8.3)(yaml@2.8.2)
-      tsx:
-        specifier: ^4.19.4
-        version: 4.21.0
 
   packages/design-system:
     dependencies:
