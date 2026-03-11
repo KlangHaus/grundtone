@@ -13,19 +13,31 @@ $grid-gutter-width: 32px !default;
 
 // Breakpoint infix function
 @function breakpoint-infix($name, $breakpoints: $grid-breakpoints) {
-  @return if(breakpoint-min($name, $breakpoints) == null, '', '-#{$name}');
+  @if breakpoint-min($name, $breakpoints) == null {
+    @return '';
+  } @else {
+    @return '-#{$name}';
+  }
 }
 
 // Minimum breakpoint width
 @function breakpoint-min($name, $breakpoints: $grid-breakpoints) {
   $min: map.get($breakpoints, $name);
-  @return if($min != 0, $min, null);
+  @if $min != 0 {
+    @return $min;
+  } @else {
+    @return null;
+  }
 }
 
 // Maximum breakpoint width
 @function breakpoint-max($name, $breakpoints: $grid-breakpoints) {
   $max: map.get($breakpoints, $name);
-  @return if($max and $max > 0, $max - 0.02, null);
+  @if $max and $max > 0 {
+    @return $max - 0.02;
+  } @else {
+    @return null;
+  }
 }
 
 // Next breakpoint name
@@ -35,11 +47,11 @@ $grid-gutter-width: 32px !default;
   $breakpoint-names: map.keys($breakpoints)
 ) {
   $n: index($breakpoint-names, $name);
-  @return if(
-    $n < length($breakpoint-names),
-    nth($breakpoint-names, $n + 1),
-    null
-  );
+  @if $n < length($breakpoint-names) {
+    @return nth($breakpoint-names, $n + 1);
+  } @else {
+    @return null;
+  }
 }
 
 // Media queries

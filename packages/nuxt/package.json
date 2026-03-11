@@ -33,9 +33,9 @@
   "scripts": {
     "build": "nuxt-module-build build",
     "build:nuxt": "nuxt-module-build build",
-    "dev": "nuxi dev playground",
-    "dev:build": "nuxi build playground",
-    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
+    "dev": "nuxi dev ../../apps/playground/nuxt",
+    "dev:build": "nuxi build ../../apps/playground/nuxt",
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare ../../apps/playground/nuxt",
     "test": "../../node_modules/.bin/vitest run",
     "prepublishOnly": "test -d dist || pnpm run build"
   },

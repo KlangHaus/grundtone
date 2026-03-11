@@ -22,11 +22,10 @@
     @error "heading(): unknown level '#{$level}'. Use h1–h6.";
   }
 
-  $weight: if(
-    $level == 'h1' or $level == 'h2' or $level == 'h3',
-    func.font-weight('bold'),
-    func.font-weight('semibold')
-  );
+  $weight: func.font-weight('semibold');
+  @if $level == 'h1' or $level == 'h2' or $level == 'h3' {
+    $weight: func.font-weight('bold');
+  }
 
   font-size: map.get($sizes, 'base');
   font-weight: $weight;

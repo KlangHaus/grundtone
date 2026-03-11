@@ -1,6 +1,7 @@
 packages:
   - packages/*
   - apps/*
+  - apps/playground/*
 
 ignoredBuiltDependencies:
   - unrs-resolver
