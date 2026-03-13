@@ -6,12 +6,13 @@ Grundtone is a monorepo of packages. Each package has a clear purpose and depend
 
 ```mermaid
 graph TD
-    core["@grundtone/core<br/><small>Theme types, createTheme(), defaults</small>"]
-    tokens["@grundtone/design-system<br/><small>Web only — SCSS, CSS vars</small>"]
-    shared["@grundtone/utils<br/><small>Utilities</small>"]
-    rn["@grundtone/react-native<br/><small>RN only — ThemeProvider, hook</small>"]
-    vue["@grundtone/vue<br/><small>Components, composables</small>"]
-    nuxt["@grundtone/nuxt<br/><small>Nuxt module, auto-imports</small>"]
+    core[core]
+    tokens[design-system]
+    shared[utils]
+    icons[icons]
+    rn[react-native]
+    vue[vue]
+    nuxt[nuxt]
 
     core --> tokens
     core --> shared
@@ -22,6 +23,8 @@ graph TD
     vue --> nuxt
 ```
 
+All packages are scoped under `@grundtone/`. Icons (`@grundtone/icons`) is a standalone package with no Grundtone dependencies — it is opt-in. The framework icon components (`GTIcon`) are generic and accept any icon library that follows the `IconDefinition` contract.
+
 ## Packages
 
 ### @grundtone/core
@@ -29,14 +32,28 @@ graph TD
 **Platform:** All
 
 **What it provides:** Theme types, `createTheme()`, semantic color presets (primary, background,
-text, etc.), injection keys. See [Theme Configuration](/guide/theme-configuration) for how to
-customize colors.
+text, etc.), injection keys, shared type contracts (`IconDefinition`, `IconRegistry`). See [Theme Configuration](/guide/theme-configuration) for how to customize colors.
 
 - No dependencies on other Grundtone packages
 - Use this in any framework (Vue, Nuxt, React Native, Plain Web)
 
 ```
 Install when: You use themes, ThemeProvider, or GrundtoneThemeProvider
+```
+
+### @grundtone/icons
+
+**Platform:** All
+
+**What it provides:** Typed SVG icon registry with category grouping. Icons are generated from SVG source files into a TypeScript registry. See [Icons](/icons/) for the full reference.
+
+- No Grundtone dependencies
+- Opt-in — only adds bundle weight when installed
+- Framework icon components work without this package (pass `icon` prop directly)
+
+```
+Install when: You want the built-in icon set
+Skip when: You use your own icons or don't need icons
 ```
 
 ### @grundtone/design-system
@@ -48,21 +65,22 @@ classes (containers, grid, gap, display, flexbox, spacing, container queries). F
 override `:root` to customize colors – see
 [Theme Configuration](/guide/theme-configuration#plain-web-no-framework).
 
-- No Grundtone dependencies
+- Depends on core
 - Used by Vue and Plain Web projects that need SCSS or CSS
 - All breakpoint values come from a single source of truth (`_breakpoints-defaults.scss`) — see
   [Breakpoints](/web/breakpoints#architecture)
 
 ```
-Install when: You use Vue, Nuxt, or Plain Web and need tokens in SCSS/CSS
+Install when: You use Plain Web and need tokens in SCSS/CSS
 Skip when: React Native (no CSS/SCSS)
+Not needed directly when using @grundtone/vue or @grundtone/nuxt (bundled in)
 ```
 
 ### @grundtone/utils
 
 **Platform:** All (utilities)
 
-**What it provides:** Shared utilities, formatters, validation helpers.
+**What it provides:** Shared utilities, formatters, validation helpers, validator factory functions (`required()`, `email()`, `minLength()`, etc.).
 
 - Depends on core
 
@@ -75,10 +93,11 @@ Usually not installed directly
 
 **Platform:** Vue (web)
 
-**What it provides:** Vue 3 components and composables. Customize via ThemeProvider `theme` prop –
+**What it provides:** Vue 3 components, composables (`useTheme`, `useField`, `useFormValidation`), and re-exports of validators. Also re-exports design-system CSS and SCSS via subpath exports. Customize via ThemeProvider `theme` prop –
 see [Theme Configuration](/guide/theme-configuration#vue-3).
 
 - Depends on core, design-system, utils
+- Subpath exports: `@grundtone/vue/css` (all CSS), `@grundtone/vue/scss/lib` (SCSS tokens)
 
 ```
 Install when: You use Vue 3 with Vite
@@ -89,7 +108,7 @@ Brings in: core, design-system, utils
 
 **Platform:** Nuxt 3
 
-**What it provides:** Nuxt module that auto-imports Vue components and composables, applies theme
+**What it provides:** Nuxt module that auto-imports Vue components, composables, and validator factories. Applies theme
 from config. Configure `grundtone.theme` – see
 [Theme Configuration](/guide/theme-configuration#nuxt-3).
 
@@ -104,7 +123,7 @@ Brings in: vue (and its deps)
 
 **Platform:** React Native
 
-**What it provides:** GrundtoneThemeProvider, useGrundtoneTheme hook. Pass `light` and `dark` from
+**What it provides:** `GrundtoneThemeProvider`, `useGrundtoneTheme` hook, `IconRegistryProvider`, `useField` / `useFormValidation` hooks, and re-exported validators. Pass `light` and `dark` from
 `createTheme()` – see [Theme Configuration](/guide/theme-configuration#react-native).
 
 - Depends on core, utils
@@ -112,17 +131,22 @@ Brings in: vue (and its deps)
 
 ```
 Install when: You use React Native
-Brings in: core only
+Brings in: core, utils
 ```
 
 ## What to Install
 
-| Your setup               | Install                                        |
-| ------------------------ | ---------------------------------------------- |
-| Vue 3                    | `@grundtone/vue` + `@grundtone/core`           |
-| Nuxt 3                   | `@grundtone/nuxt`                              |
-| React Native             | `@grundtone/react-native` + `@grundtone/core`  |
-| Plain Web (no framework) | `@grundtone/design-system` + `@grundtone/core` |
+| Your setup               | Install                                                     |
+| ------------------------ | ----------------------------------------------------------- |
+| Vue 3                    | `@grundtone/vue`                                            |
+| Vue 3 + icons            | `@grundtone/vue` + `@grundtone/icons`                       |
+| Nuxt 3                   | `@grundtone/nuxt`                                           |
+| Nuxt 3 + icons           | `@grundtone/nuxt` + `@grundtone/icons`                      |
+| React Native             | `@grundtone/react-native`                                   |
+| React Native + icons     | `@grundtone/react-native` + `@grundtone/icons`              |
+| Plain Web (no framework) | `@grundtone/design-system` + `@grundtone/core`              |
+
+Icons are always opt-in. The framework packages work without `@grundtone/icons` — you can pass icon definitions directly or use your own icon library.
 
 ## Design Philosophy: Tokens, Defaults, and Overrides
 
@@ -182,8 +206,9 @@ border radius.
 Turborepo builds in dependency order:
 
 1. **core** – no deps
-2. **design-system** – no Grundtone deps
-3. **utils** – after core
-4. **vue** – after core, design-system, utils
-5. **nuxt** – after vue
-6. **react-native** – after core
+2. **icons** – no Grundtone deps
+3. **design-system** – depends on core
+4. **utils** – depends on core
+5. **vue** – depends on core, design-system, utils
+6. **nuxt** – depends on vue
+7. **react-native** – depends on core, utils

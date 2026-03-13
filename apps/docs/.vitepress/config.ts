@@ -3,7 +3,7 @@ import { fileURLToPath } from 'url';
 import { defineConfig } from 'vitepress';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-import { withMermaid } from 'vitepress-plugin-mermaid';
+import { diagramPlugin } from 'vitepress-plugin-mermaid-diagram';
 import { createHighlighter } from 'shiki';
 import type { Plugin } from 'vite';
 import {
@@ -91,73 +91,291 @@ function codePreviewHighlightPlugin(): Plugin {
   };
 }
 
-export default withMermaid(
-  defineConfig({
-    title: 'Grundtone',
-    description:
-      'Design system documentation for Grundtone - part of KlangHaus infrastructure',
+export default defineConfig({
+  title: 'Grundtone',
+  description:
+    'Design system documentation for Grundtone - part of KlangHaus infrastructure',
 
-    ignoreDeadLinks: true,
+  ignoreDeadLinks: true,
 
-    markdown: {
-      config(md) {
-        md.use(colorPreviewPlugin);
-      },
-      codeTransformers: [colorPreviewTransformer()],
+  markdown: {
+    config(md) {
+      md.use(colorPreviewPlugin);
+      md.use(diagramPlugin);
     },
+    codeTransformers: [colorPreviewTransformer()],
+  },
 
-    vite: {
-      plugins: [codePreviewHighlightPlugin()],
-      resolve: {
-        dedupe: ['vue'],
+  vite: {
+    plugins: [codePreviewHighlightPlugin()],
+    resolve: {
+      dedupe: ['vue'],
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@use "${resolve(__dirname, '../../../packages/design-system/src/lib.scss')}" as tokens;`,
+          silenceDeprecations: ['if-function'],
+        },
       },
-      css: {
-        preprocessorOptions: {
-          scss: {
-            additionalData: `@use "${resolve(__dirname, '../../../packages/design-system/src/lib.scss')}" as tokens;`,
-            silenceDeprecations: ['if-function'],
+    },
+    ssr: {
+      noExternal: ['@grundtone/design-system'],
+    },
+  },
+
+  head: [
+    [
+      'link',
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '32x32',
+        href: '/favicon-32x32.png',
+      },
+    ],
+    [
+      'link',
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '16x16',
+        href: '/favicon-16x16.png',
+      },
+    ],
+  ],
+
+  themeConfig: {
+    logo: '/logo.png',
+
+    nav: [
+      { text: 'Getting Started', link: '/guide/welcome' },
+      {
+        text: 'Frameworks',
+        items: [
+          { text: 'Vue / Nuxt', link: '/vue/installation' },
+          { text: 'React Native', link: '/react-native/colors' },
+        ],
+      },
+      { text: 'Icons', link: '/icons/' },
+      { text: 'Design System', link: '/web/colors' },
+      {
+        text: 'Core Concepts',
+        items: [
+          {
+            text: 'Package Architecture',
+            link: '/core/package-architecture',
           },
-        },
+          { text: 'Open Source & Self-Hosting', link: '/core/open-source' },
+          { text: 'Third-Party Acknowledgements', link: '/core/third-party' },
+          { text: 'Changelog', link: '/changelog' },
+        ],
       },
-      ssr: {
-        noExternal: ['@grundtone/design-system'],
-      },
-    },
-
-    head: [
-      [
-        'link',
-        {
-          rel: 'icon',
-          type: 'image/png',
-          sizes: '32x32',
-          href: '/favicon-32x32.png',
-        },
-      ],
-      [
-        'link',
-        {
-          rel: 'icon',
-          type: 'image/png',
-          sizes: '16x16',
-          href: '/favicon-16x16.png',
-        },
-      ],
     ],
 
-    themeConfig: {
-      logo: '/logo.png',
-
-      nav: [
-        { text: 'Getting Started', link: '/guide/welcome' },
+    sidebar: {
+      '/guide/': [
         {
-          text: 'Frameworks',
+          text: 'Getting Started',
           items: [
-            { text: 'Vue / Nuxt', link: '/vue/installation' },
-            { text: 'React Native', link: '/react-native/colors' },
+            { text: 'Welcome', link: '/guide/welcome' },
+            { text: 'Installation', link: '/guide/installation' },
+            {
+              text: 'Theme Configuration',
+              link: '/guide/theme-configuration',
+            },
+            {
+              text: 'Branding Configuration',
+              link: '/guide/branding-configuration',
+            },
+            {
+              text: 'Component Prefix',
+              link: '/guide/prefix',
+            },
           ],
         },
-        { text: 'Design System', link: '/web/colors' },
+      ],
+      '/vue/': [
+        {
+          text: 'Getting Started',
+          items: [
+            { text: 'Vue 3', link: '/vue/installation' },
+            { text: 'Nuxt 3', link: '/vue/nuxt' },
+          ],
+        },
+        {
+          text: 'Components',
+          items: [
+            { text: 'Button', link: '/vue/button' },
+            { text: 'Input', link: '/vue/input' },
+          ],
+        },
+        {
+          text: 'Composables',
+          items: [
+            { text: 'Overview', link: '/vue/composables' },
+            { text: 'useTheme', link: '/vue/use-theme' },
+            { text: 'useField', link: '/vue/use-field' },
+            { text: 'useFormValidation', link: '/vue/use-form-validation' },
+          ],
+        },
+      ],
+      '/icons/': [
+        {
+          text: 'Icons',
+          items: [
+            { text: 'Overview', link: '/icons/' },
+            { text: 'Custom Icons', link: '/icons/custom-icons' },
+          ],
+        },
+        {
+          text: 'Framework Usage',
+          items: [
+            { text: 'Vue / Nuxt', link: '/icons/vue' },
+            { text: 'React Native', link: '/icons/react-native' },
+            { text: 'CSS Utilities', link: '/icons/css' },
+          ],
+        },
+      ],
+      '/web/': [
+        {
+          text: 'Colors & Theming',
+          items: [
+            { text: 'Colors & Theming', link: '/web/colors' },
+            { text: 'Branding', link: '/web/branding' },
+            { text: 'Typography', link: '/web/type-system' },
+          ],
+        },
+        {
+          text: 'Layout',
+          items: [
+            { text: 'Breakpoints', link: '/web/breakpoints' },
+            { text: 'Containers', link: '/web/containers' },
+            { text: 'Grid', link: '/web/grid-utility' },
+            { text: 'Columns & Layout', link: '/web/columns' },
+          ],
+        },
+        {
+          text: 'Utilities',
+          items: [
+            { text: 'Spacing & Visibility', link: '/web/spacing' },
+            { text: 'Position', link: '/web/position' },
+            { text: 'Z-Index', link: '/web/z-index' },
+            { text: 'Background', link: '/web/background' },
+            { text: 'Width', link: '/web/width' },
+            { text: 'Sizing', link: '/web/sizing' },
+            { text: 'Border & Radius', link: '/web/border' },
+            { text: 'Aspect Ratio', link: '/web/aspect-ratio' },
+            { text: 'Shadow', link: '/web/shadow' },
+            { text: 'Opacity', link: '/web/opacity' },
+            { text: 'Interactivity', link: '/web/interactivity' },
+            { text: 'Transitions', link: '/web/transitions' },
+          ],
+        },
+        {
+          text: 'Text',
+          collapsed: true,
+          items: [
+            { text: 'Headings', link: '/web/text-headings' },
+            { text: 'Body Text', link: '/web/text-body' },
+            { text: 'Form Text', link: '/web/text-form' },
+            { text: 'Highlight Text', link: '/web/text-highlight' },
+            { text: 'Text Utilities', link: '/web/text-utilities' },
+            { text: 'Font Utilities', link: '/web/font-utilities' },
+          ],
+        },
+        {
+          text: 'Links',
+          collapsed: true,
+          items: [
+            { text: 'Links', link: '/web/el-link' },
+            { text: 'External Link', link: '/web/c-external-link' },
+            { text: 'Function Link', link: '/web/c-function-link' },
+            { text: 'Back Link', link: '/web/c-back-link' },
+            { text: 'Breadcrumb', link: '/web/c-breadcrumb' },
+            { text: 'Skip Link', link: '/web/c-skip-link' },
+          ],
+        },
+        {
+          text: 'Elements',
+          collapsed: true,
+          items: [
+            { text: 'Address', link: '/web/el-address' },
+            { text: 'Article', link: '/web/el-article' },
+            { text: 'Aside', link: '/web/el-aside' },
+            { text: 'Blockquote', link: '/web/el-blockquote' },
+            { text: 'Body', link: '/web/el-body' },
+            { text: 'Button', link: '/web/el-button' },
+            { text: 'Description List', link: '/web/el-dl' },
+            { text: 'Footer', link: '/web/el-footer' },
+            { text: 'Header', link: '/web/el-header' },
+            { text: 'Hr', link: '/web/el-hr' },
+            { text: 'List', link: '/web/el-list' },
+            { text: 'Main', link: '/web/el-main' },
+            { text: 'Nav', link: '/web/el-nav' },
+            { text: 'Search', link: '/web/el-search' },
+            { text: 'Section', link: '/web/el-section' },
+          ],
+        },
+        {
+          text: 'Components',
+          collapsed: true,
+          items: [
+            { text: 'Prose', link: '/web/c-prose' },
+            { text: 'Callout', link: '/web/c-callout' },
+            { text: 'Article Card', link: '/web/c-article-card' },
+            { text: 'Article Meta', link: '/web/c-article-meta' },
+            { text: 'Author Card', link: '/web/c-author-card' },
+            { text: 'Footer', link: '/web/c-footer' },
+            { text: 'Header', link: '/web/c-header' },
+            { text: 'Product Card', link: '/web/c-product-card' },
+            { text: 'Product Gallery', link: '/web/c-product-gallery' },
+            { text: 'Input', link: '/web/c-input' },
+          ],
+        },
+        {
+          text: 'SCSS & Reference',
+          items: [
+            { text: 'CSS Custom Properties', link: '/web/custom-properties' },
+            { text: 'SCSS Functions', link: '/web/functions' },
+            { text: 'SCSS Mixins', link: '/web/mixins' },
+            { text: 'Accessibility', link: '/web/accessibility' },
+          ],
+        },
+      ],
+      '/react-native/': [
+        {
+          text: 'React Native',
+          items: [
+            { text: 'Colors', link: '/react-native/colors' },
+            { text: 'Branding', link: '/react-native/branding' },
+            { text: 'Typography', link: '/react-native/typography' },
+            { text: 'Spacing', link: '/react-native/spacing' },
+            { text: 'Border Radius', link: '/react-native/radius' },
+            { text: 'Shadows', link: '/react-native/shadows' },
+            { text: 'Z-Index', link: '/react-native/z-index' },
+            { text: 'Transitions', link: '/react-native/transitions' },
+            { text: 'Position', link: '/react-native/position' },
+            { text: 'Input', link: '/react-native/input' },
+          ],
+        },
+        {
+          text: 'Hooks',
+          items: [
+            { text: 'Overview', link: '/react-native/hooks' },
+            {
+              text: 'useGrundtoneTheme',
+              link: '/react-native/use-grundtone-theme',
+            },
+            { text: 'useField', link: '/react-native/use-field' },
+            {
+              text: 'useFormValidation',
+              link: '/react-native/use-form-validation',
+            },
+          ],
+        },
+      ],
+      '/core/': [
         {
           text: 'Core Concepts',
           items: [
@@ -165,226 +383,22 @@ export default withMermaid(
               text: 'Package Architecture',
               link: '/core/package-architecture',
             },
-            { text: 'Open Source & Self-Hosting', link: '/core/open-source' },
-            { text: 'Third-Party Acknowledgements', link: '/core/third-party' },
+            {
+              text: 'Open Source & Self-Hosting',
+              link: '/core/open-source',
+            },
+            {
+              text: 'Third-Party Acknowledgements',
+              link: '/core/third-party',
+            },
             { text: 'Changelog', link: '/changelog' },
           ],
         },
       ],
-
-      sidebar: {
-        '/guide/': [
-          {
-            text: 'Getting Started',
-            items: [
-              { text: 'Welcome', link: '/guide/welcome' },
-              { text: 'Installation', link: '/guide/installation' },
-              {
-                text: 'Theme Configuration',
-                link: '/guide/theme-configuration',
-              },
-              {
-                text: 'Branding Configuration',
-                link: '/guide/branding-configuration',
-              },
-              {
-                text: 'Component Prefix',
-                link: '/guide/prefix',
-              },
-            ],
-          },
-        ],
-        '/vue/': [
-          {
-            text: 'Getting Started',
-            items: [
-              { text: 'Vue 3', link: '/vue/installation' },
-              { text: 'Nuxt 3', link: '/vue/nuxt' },
-            ],
-          },
-          {
-            text: 'Components',
-            items: [
-              { text: 'Button', link: '/vue/button' },
-              { text: 'Icon', link: '/vue/icon' },
-              { text: 'Input', link: '/vue/input' },
-            ],
-          },
-          {
-            text: 'Composables',
-            items: [
-              { text: 'Overview', link: '/vue/composables' },
-              { text: 'useTheme', link: '/vue/use-theme' },
-              { text: 'useField', link: '/vue/use-field' },
-              { text: 'useFormValidation', link: '/vue/use-form-validation' },
-            ],
-          },
-        ],
-        '/web/': [
-          {
-            text: 'Colors & Theming',
-            items: [
-              { text: 'Colors & Theming', link: '/web/colors' },
-              { text: 'Branding', link: '/web/branding' },
-              { text: 'Typography', link: '/web/type-system' },
-            ],
-          },
-          {
-            text: 'Layout',
-            items: [
-              { text: 'Breakpoints', link: '/web/breakpoints' },
-              { text: 'Containers', link: '/web/containers' },
-              { text: 'Grid', link: '/web/grid-utility' },
-              { text: 'Columns & Layout', link: '/web/columns' },
-            ],
-          },
-          {
-            text: 'Utilities',
-            items: [
-              { text: 'Spacing & Visibility', link: '/web/spacing' },
-              { text: 'Position', link: '/web/position' },
-              { text: 'Z-Index', link: '/web/z-index' },
-              { text: 'Background', link: '/web/background' },
-              { text: 'Width', link: '/web/width' },
-              { text: 'Sizing', link: '/web/sizing' },
-              { text: 'Border & Radius', link: '/web/border' },
-              { text: 'Aspect Ratio', link: '/web/aspect-ratio' },
-              { text: 'Shadow', link: '/web/shadow' },
-              { text: 'Opacity', link: '/web/opacity' },
-              { text: 'Interactivity', link: '/web/interactivity' },
-              { text: 'Transitions', link: '/web/transitions' },
-              { text: 'Icon', link: '/web/icon' },
-            ],
-          },
-          {
-            text: 'Text',
-            collapsed: true,
-            items: [
-              { text: 'Headings', link: '/web/text-headings' },
-              { text: 'Body Text', link: '/web/text-body' },
-              { text: 'Form Text', link: '/web/text-form' },
-              { text: 'Highlight Text', link: '/web/text-highlight' },
-              { text: 'Text Utilities', link: '/web/text-utilities' },
-              { text: 'Font Utilities', link: '/web/font-utilities' },
-            ],
-          },
-          {
-            text: 'Links',
-            collapsed: true,
-            items: [
-              { text: 'Links', link: '/web/el-link' },
-              { text: 'External Link', link: '/web/c-external-link' },
-              { text: 'Function Link', link: '/web/c-function-link' },
-              { text: 'Back Link', link: '/web/c-back-link' },
-              { text: 'Breadcrumb', link: '/web/c-breadcrumb' },
-              { text: 'Skip Link', link: '/web/c-skip-link' },
-            ],
-          },
-          {
-            text: 'Elements',
-            collapsed: true,
-            items: [
-              { text: 'Address', link: '/web/el-address' },
-              { text: 'Article', link: '/web/el-article' },
-              { text: 'Aside', link: '/web/el-aside' },
-              { text: 'Blockquote', link: '/web/el-blockquote' },
-              { text: 'Body', link: '/web/el-body' },
-              { text: 'Button', link: '/web/el-button' },
-              { text: 'Description List', link: '/web/el-dl' },
-              { text: 'Footer', link: '/web/el-footer' },
-              { text: 'Header', link: '/web/el-header' },
-              { text: 'Hr', link: '/web/el-hr' },
-              { text: 'List', link: '/web/el-list' },
-              { text: 'Main', link: '/web/el-main' },
-              { text: 'Nav', link: '/web/el-nav' },
-              { text: 'Search', link: '/web/el-search' },
-              { text: 'Section', link: '/web/el-section' },
-            ],
-          },
-          {
-            text: 'Components',
-            collapsed: true,
-            items: [
-              { text: 'Prose', link: '/web/c-prose' },
-              { text: 'Callout', link: '/web/c-callout' },
-              { text: 'Article Card', link: '/web/c-article-card' },
-              { text: 'Article Meta', link: '/web/c-article-meta' },
-              { text: 'Author Card', link: '/web/c-author-card' },
-              { text: 'Footer', link: '/web/c-footer' },
-              { text: 'Header', link: '/web/c-header' },
-              { text: 'Product Card', link: '/web/c-product-card' },
-              { text: 'Product Gallery', link: '/web/c-product-gallery' },
-              { text: 'Input', link: '/web/c-input' },
-            ],
-          },
-          {
-            text: 'SCSS & Reference',
-            items: [
-              { text: 'CSS Custom Properties', link: '/web/custom-properties' },
-              { text: 'SCSS Functions', link: '/web/functions' },
-              { text: 'SCSS Mixins', link: '/web/mixins' },
-              { text: 'Accessibility', link: '/web/accessibility' },
-            ],
-          },
-        ],
-        '/react-native/': [
-          {
-            text: 'React Native',
-            items: [
-              { text: 'Colors', link: '/react-native/colors' },
-              { text: 'Branding', link: '/react-native/branding' },
-              { text: 'Typography', link: '/react-native/typography' },
-              { text: 'Spacing', link: '/react-native/spacing' },
-              { text: 'Border Radius', link: '/react-native/radius' },
-              { text: 'Shadows', link: '/react-native/shadows' },
-              { text: 'Z-Index', link: '/react-native/z-index' },
-              { text: 'Transitions', link: '/react-native/transitions' },
-              { text: 'Position', link: '/react-native/position' },
-              { text: 'Icons', link: '/react-native/icons' },
-              { text: 'Input', link: '/react-native/input' },
-            ],
-          },
-          {
-            text: 'Hooks',
-            items: [
-              { text: 'Overview', link: '/react-native/hooks' },
-              {
-                text: 'useGrundtoneTheme',
-                link: '/react-native/use-grundtone-theme',
-              },
-              { text: 'useField', link: '/react-native/use-field' },
-              {
-                text: 'useFormValidation',
-                link: '/react-native/use-form-validation',
-              },
-            ],
-          },
-        ],
-        '/core/': [
-          {
-            text: 'Core Concepts',
-            items: [
-              {
-                text: 'Package Architecture',
-                link: '/core/package-architecture',
-              },
-              {
-                text: 'Open Source & Self-Hosting',
-                link: '/core/open-source',
-              },
-              {
-                text: 'Third-Party Acknowledgements',
-                link: '/core/third-party',
-              },
-              { text: 'Changelog', link: '/changelog' },
-            ],
-          },
-        ],
-      },
-
-      socialLinks: [
-        { icon: 'github', link: 'https://github.com/grundtone/grundtone' },
-      ],
     },
-  }),
-);
+
+    socialLinks: [
+      { icon: 'github', link: 'https://github.com/grundtone/grundtone' },
+    ],
+  },
+});
