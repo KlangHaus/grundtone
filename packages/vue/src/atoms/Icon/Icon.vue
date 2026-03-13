@@ -1,26 +1,35 @@
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import { computed, inject } from 'vue';
   import { getClassPrefix, getIconColor } from '@grundtone/core';
-  import { iconRegistry } from '@grundtone/icons';
-  import type { IconDefinition } from '@grundtone/icons';
+  import type { IconDefinition } from '@grundtone/core';
   import type { IconProps } from './types';
+  import { GT_ICON_REGISTRY_KEY } from './types';
 
   const props = withDefaults(defineProps<IconProps>(), {
+    icon: undefined,
+    name: undefined,
     size: 'lg',
     label: undefined,
     color: undefined,
   });
 
+  const registry = inject(GT_ICON_REGISTRY_KEY, undefined);
+
   const p = computed(() => getClassPrefix());
   const base = computed(() => `${p.value}-icon`);
   const defaultColor = computed(() => getIconColor());
 
-  const customIcon = computed<IconDefinition | null>(() => {
-    const icon = iconRegistry[props.name as keyof typeof iconRegistry];
-    return icon ?? null;
-  });
+  const resolvedIcon = computed<IconDefinition | null>(() => {
+    // Direct icon prop takes precedence
+    if (props.icon) return props.icon;
 
-  const isCustom = computed(() => customIcon.value !== null);
+    // Fall back to registry lookup by name
+    if (props.name && registry) {
+      return registry[props.name] ?? null;
+    }
+
+    return null;
+  });
 
   const resolvedColor = computed(() => props.color ?? defaultColor.value);
   const colorStyle = computed(() =>
@@ -29,19 +38,26 @@
       : undefined,
   );
 
-  // Warn if icon not found in custom registry
-  if (!isCustom.value) {
-    // eslint-disable-next-line no-console
-    console.warn(`[GTIcon] Icon "${props.name}" not found in custom registry.`);
+  // Dev warning for missing icon
+  if (!resolvedIcon.value) {
+    if (props.name && !registry) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        `[GTIcon] No icon registry provided. Use app.provide(GT_ICON_REGISTRY_KEY, registry) or pass the "icon" prop directly.`,
+      );
+    } else if (props.name) {
+      // eslint-disable-next-line no-console
+      console.warn(`[GTIcon] Icon "${props.name}" not found in registry.`);
+    }
   }
 </script>
 
 <template>
   <svg
-    v-if="isCustom"
+    v-if="resolvedIcon"
     :class="[base, `${base}--${size}`]"
     :style="colorStyle"
-    :viewBox="customIcon!.viewBox"
+    :viewBox="resolvedIcon.viewBox"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     stroke="currentColor"
@@ -51,7 +67,7 @@
     :aria-hidden="!label || undefined"
     :role="label ? 'img' : undefined"
     :aria-label="label"
-    v-html="customIcon!.body"
+    v-html="resolvedIcon.body"
   />
 </template>
 

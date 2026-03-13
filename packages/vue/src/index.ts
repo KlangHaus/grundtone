@@ -4,6 +4,9 @@
  * Vue 3 component library for the Grundtone design system.
  */
 
+// Design system tokens (CSS custom properties) — bundled into dist/index.css
+import '@grundtone/design-system/dist/index.css';
+
 // Atoms
 export { GTButton } from './atoms/Button';
 export type {
@@ -14,6 +17,8 @@ export type {
 } from './atoms/Button';
 export { GTIcon } from './atoms/Icon';
 export type { IconProps, IconSize } from './atoms/Icon';
+export { GT_ICON_REGISTRY_KEY } from './atoms/Icon';
+export type { IconDefinition, IconRegistry } from '@grundtone/core';
 export { GTInput } from './atoms/Input';
 export type {
   InputProps,

@@ -138,9 +138,9 @@ export default [
     },
   },
 
-  // Nuxt playground auto-imports (composables + validators)
+  // Nuxt playground auto-imports (composables + validators + globals)
   {
-    files: ['apps/playground/nuxt/**/*.vue'],
+    files: ['apps/playground/nuxt/**/*.{vue,ts}'],
     languageOptions: {
       globals: {
         useField: 'readonly',
@@ -156,6 +156,8 @@ export default [
         pattern: 'readonly',
         url: 'readonly',
         composeValidators: 'readonly',
+        defineNuxtPlugin: 'readonly',
+        defineNuxtConfig: 'readonly',
       },
     },
   },

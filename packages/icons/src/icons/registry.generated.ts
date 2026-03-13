@@ -2,12 +2,9 @@
 // Run: pnpm generate:icons
 
 export interface IconDefinition {
-  /** SVG inner content (paths, circles, etc.) */
   body: string;
-  /** SVG viewBox attribute */
   viewBox: string;
-  /** Category derived from subdirectory name */
-  category: string;
+  category?: string;
 }
 
 export const iconRegistry = {

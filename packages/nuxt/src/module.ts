@@ -57,10 +57,8 @@ export default defineNuxtModule<ModuleOptions>({
   setup(options, nuxt) {
     const resolver = createResolver(import.meta.url);
 
-    // Inject design-system CSS (custom properties)
-    nuxt.options.css.push(
-      resolver.resolve('../../design-system/dist/index.css'),
-    );
+    // Inject design-system CSS (custom properties) via @grundtone/vue subpath
+    nuxt.options.css.push(resolver.resolve('../../vue/dist/index.css'));
 
     // Auto-import components
     if (options.components) {
@@ -79,6 +77,14 @@ export default defineNuxtModule<ModuleOptions>({
     // Auto-import composables
     if (options.composables) {
       addImportsDir(resolver.resolve('../../vue/src/composables'));
+
+      // Auto-import icon registry injection key
+      addImports([
+        {
+          name: 'GT_ICON_REGISTRY_KEY',
+          from: '@grundtone/vue',
+        },
+      ]);
 
       // Auto-import validator factories from @grundtone/utils
       const validators = [

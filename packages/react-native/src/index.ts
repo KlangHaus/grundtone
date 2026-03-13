@@ -43,6 +43,11 @@ export type { RNShadowStyle } from './shadows';
 // Components
 export { GTIcon } from './components/Icon';
 export type { IconProps, IconSize } from './components/Icon';
+
+// Icon registry provider
+export { IconRegistryProvider, useIconRegistry } from './IconRegistryContext';
+export type { IconRegistryProviderProps } from './IconRegistryContext';
+export type { IconDefinition, IconRegistry } from '@grundtone/core';
 export { GTButton } from './components/Button';
 export type {
   ButtonProps,
