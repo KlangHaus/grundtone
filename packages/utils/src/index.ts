@@ -9,5 +9,5 @@ export * from './types';
 // Helpers
 export * from './helpers';
 
-// Presets
-export * from './presets/vue-preset';
+// Validators
+export * from './utils/validators';

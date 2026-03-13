@@ -1,11 +1,35 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import { iconRegistry } from '@grundtone/core';
+  import { useField, useFormValidation } from '@grundtone/vue';
+  import { required, email, minLength } from '@grundtone/utils';
 
   const isLoading = ref(false);
   const inputValue = ref('');
   const emailValue = ref('');
   const errorValue = ref('');
+
+  // Validation demo
+  const nameField = useField({
+    validators: [
+      required('Name is required'),
+      minLength(2, 'At least 2 characters'),
+    ],
+  });
+  const emailField = useField({
+    validators: [required('Email is required'), email()],
+    validateOn: 'blur',
+  });
+  const form = useFormValidation({ name: nameField, email: emailField });
+
+  const formResult = ref('');
+  function onValidationSubmit() {
+    if (!form.validateAll()) {
+      formResult.value = 'Validation failed';
+      return;
+    }
+    formResult.value = `Valid! Name: ${nameField.value.value}, Email: ${emailField.value.value}`;
+  }
 
   function simulateLoad() {
     isLoading.value = true;
@@ -153,6 +177,36 @@
         <GTInput type="search" label="Search" placeholder="Search..." />
         <GTInput type="number" label="Amount" placeholder="0" />
       </div>
+    </section>
+
+    <section>
+      <h2>Validation (useField + useFormValidation)</h2>
+      <form class="stack" @submit.prevent="onValidationSubmit">
+        <GTInput
+          v-model="nameField.value.value"
+          :error-text="nameField.errorText.value"
+          v-on="nameField.handlers"
+          label="Name"
+          placeholder="Enter your name"
+          required
+        />
+        <GTInput
+          v-model="emailField.value.value"
+          :error-text="emailField.errorText.value"
+          v-on="emailField.handlers"
+          label="Email"
+          type="email"
+          placeholder="you@example.com"
+          required
+        />
+        <div class="row">
+          <GTButton type="submit" variant="primary">Submit</GTButton>
+          <GTButton type="button" variant="outlined" @click="form.resetAll()"
+            >Reset</GTButton
+          >
+        </div>
+        <p v-if="formResult">{{ formResult }}</p>
+      </form>
     </section>
 
     <section>

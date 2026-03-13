@@ -5,7 +5,10 @@ import {
   GTIcon,
   GTInput,
   useGrundtoneTheme,
+  useField,
+  useFormValidation,
 } from '@grundtone/react-native';
+import { required, email, minLength } from '@grundtone/utils';
 
 export default function ComponentsScreen() {
   const { theme } = useGrundtoneTheme();
@@ -13,6 +16,29 @@ export default function ComponentsScreen() {
   const [inputValue, setInputValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
   const [errorValue, setErrorValue] = useState('');
+  const [formResult, setFormResult] = useState('');
+
+  const nameField = useField({
+    validators: [
+      required('Name is required'),
+      minLength(2, 'At least 2 characters'),
+    ],
+  });
+  const emailField = useField({
+    validators: [required('Email is required'), email()],
+    validateOn: 'blur',
+  });
+  const form = useFormValidation({ name: nameField, email: emailField });
+
+  function onValidationSubmit() {
+    if (!form.validateAll()) {
+      setFormResult('Validation failed');
+      return;
+    }
+    setFormResult(
+      `Valid! Name: ${nameField.value}, Email: ${emailField.value}`,
+    );
+  }
 
   function simulateLoad() {
     setIsLoading(true);
@@ -307,6 +333,59 @@ export default function ComponentsScreen() {
         />
         <GTInput type="search" label="Search" placeholder="Search..." />
         <GTInput type="number" label="Amount" placeholder="0" />
+      </View>
+
+      <Text
+        style={[
+          styles.heading,
+          {
+            color: theme.colors.text,
+            fontFamily: theme.typography.fontFamily.base,
+          },
+        ]}
+      >
+        Validation (useField + useFormValidation)
+      </Text>
+      <View style={styles.group}>
+        <GTInput
+          {...nameField.fieldProps}
+          errorText={nameField.errorText}
+          label="Name"
+          placeholder="Enter your name"
+          required
+        />
+        <GTInput
+          {...emailField.fieldProps}
+          errorText={emailField.errorText}
+          label="Email"
+          type="email"
+          placeholder="you@example.com"
+          required
+        />
+        <View style={styles.row}>
+          <GTButton variant="primary" onPress={onValidationSubmit}>
+            Submit
+          </GTButton>
+          <GTButton
+            variant="outlined"
+            onPress={() => {
+              form.resetAll();
+              setFormResult('');
+            }}
+          >
+            Reset
+          </GTButton>
+        </View>
+        {formResult ? (
+          <Text
+            style={{
+              color: theme.colors.text,
+              fontFamily: theme.typography.fontFamily.base,
+            }}
+          >
+            {formResult}
+          </Text>
+        ) : null}
       </View>
     </ScrollView>
   );

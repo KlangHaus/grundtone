@@ -99,6 +99,56 @@ In Nuxt, `GTInput` is auto-imported.
 - `aria-describedby` points to help/error text
 - Error text uses `role="alert"` for screen reader announcement
 
+## Validation with useField
+
+Connect validators to GTInput using the `useField` composable:
+
+```vue
+<script setup>
+import { GTInput, useField, useFormValidation } from '@grundtone/vue';
+import { required, email, minLength } from '@grundtone/utils';
+
+const nameField = useField({
+  validators: [required('Name is required'), minLength(2, 'Too short')],
+});
+
+const emailField = useField({
+  validators: [required(), email()],
+  validateOn: 'blur',
+});
+
+const form = useFormValidation({ name: nameField, email: emailField });
+
+function onSubmit() {
+  if (!form.validateAll()) return;
+  console.log('Valid!', nameField.value.value, emailField.value.value);
+}
+</script>
+
+<template>
+  <form @submit.prevent="onSubmit">
+    <GTInput
+      v-model="nameField.value.value"
+      :error-text="nameField.errorText.value"
+      v-on="nameField.handlers"
+      label="Name"
+      required
+    />
+    <GTInput
+      v-model="emailField.value.value"
+      :error-text="emailField.errorText.value"
+      v-on="emailField.handlers"
+      label="Email"
+      type="email"
+      required
+    />
+    <button type="submit">Submit</button>
+  </form>
+</template>
+```
+
+See [Composables](/vue/composables) for full documentation.
+
 ## CSS Classes
 
 | Class | Description |

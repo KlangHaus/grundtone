@@ -210,6 +210,15 @@ export default withMermaid(
               { text: 'Input', link: '/vue/input' },
             ],
           },
+          {
+            text: 'Composables',
+            items: [
+              { text: 'Overview', link: '/vue/composables' },
+              { text: 'useTheme', link: '/vue/use-theme' },
+              { text: 'useField', link: '/vue/use-field' },
+              { text: 'useFormValidation', link: '/vue/use-form-validation' },
+            ],
+          },
         ],
         '/web/': [
           {
@@ -333,6 +342,21 @@ export default withMermaid(
               { text: 'Position', link: '/react-native/position' },
               { text: 'Icons', link: '/react-native/icons' },
               { text: 'Input', link: '/react-native/input' },
+            ],
+          },
+          {
+            text: 'Hooks',
+            items: [
+              { text: 'Overview', link: '/react-native/hooks' },
+              {
+                text: 'useGrundtoneTheme',
+                link: '/react-native/use-grundtone-theme',
+              },
+              { text: 'useField', link: '/react-native/use-field' },
+              {
+                text: 'useFormValidation',
+                link: '/react-native/use-form-validation',
+              },
             ],
           },
         ],

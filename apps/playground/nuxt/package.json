@@ -11,6 +11,8 @@
     "@grundtone/core": "workspace:*",
     "@grundtone/design-system": "workspace:*",
     "@grundtone/nuxt": "workspace:*",
+    "@grundtone/vue": "workspace:*",
+    "@grundtone/utils": "workspace:*",
     "nuxt": "^3.17.2"
   }
 }

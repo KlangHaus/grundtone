@@ -81,3 +81,59 @@ export const isValidPhoneNumber = (phone: string): boolean => {
   const cleaned = phone.replace(/\D/g, '');
   return cleaned.length === 8;
 };
+
+/**
+ * Checks that a value is non-empty after trimming whitespace.
+ */
+export const isRequired = (value: string): boolean => {
+  return value.trim().length > 0;
+};
+
+/**
+ * Checks that a value meets a minimum length requirement.
+ */
+export const isMinLength = (value: string, min: number): boolean => {
+  return value.length >= min;
+};
+
+/**
+ * Checks that a value does not exceed a maximum length.
+ */
+export const isMaxLength = (value: string, max: number): boolean => {
+  return value.length <= max;
+};
+
+/**
+ * Basic URL validation using the URL constructor.
+ */
+export const isValidURL = (url: string): boolean => {
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+  } catch {
+    return false;
+  }
+};
+
+/**
+ * Validates a Danish CVR number (8 digits, modulus 11 check).
+ */
+export const isValidCVR = (cvr: string): boolean => {
+  const cleaned = cvr.replace(/\D/g, '');
+  if (cleaned.length !== 8) return false;
+
+  const weights = [2, 7, 6, 5, 4, 3, 2, 1];
+  const sum = cleaned
+    .split('')
+    .map(Number)
+    .reduce((acc, digit, i) => acc + digit * weights[i], 0);
+
+  return sum % 11 === 0;
+};
+
+/**
+ * Checks that a value matches a given regular expression.
+ */
+export const isPattern = (value: string, regex: RegExp): boolean => {
+  return regex.test(value);
+};
