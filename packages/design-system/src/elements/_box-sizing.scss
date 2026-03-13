@@ -1,0 +1,8 @@
+// Element: global box-sizing
+// Ensure all elements use border-box for predictable sizing.
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}

@@ -1,6 +1,7 @@
 // Element Styles
 // Tag-level selectors — no classes required.
 
+@forward 'box-sizing';
 @forward 'address';
 @forward 'blockquote';
 @forward 'body';
