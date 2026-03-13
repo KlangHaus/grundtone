@@ -7,8 +7,10 @@ import {
   useGrundtoneTheme,
   useField,
   useFormValidation,
+  required,
+  email,
+  minLength,
 } from '@grundtone/react-native';
-import { required, email, minLength } from '@grundtone/utils';
 
 export default function ComponentsScreen() {
   const { theme } = useGrundtoneTheme();

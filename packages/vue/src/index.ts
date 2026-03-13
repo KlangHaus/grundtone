@@ -29,6 +29,21 @@ export type { UseFieldOptions, UseFieldReturn } from './composables/useField';
 export { useFormValidation } from './composables/useFormValidation';
 export type { UseFormValidationReturn } from './composables/useFormValidation';
 
+// Validators (re-exported from @grundtone/utils)
+export {
+  required,
+  email,
+  phone,
+  cpr,
+  cvr,
+  minLength,
+  maxLength,
+  pattern,
+  url,
+  composeValidators,
+} from '@grundtone/utils';
+export type { Validator, ValidationResult } from '@grundtone/utils';
+
 // Molecules
 
 // Organisms

@@ -2,7 +2,7 @@
 
 Vue composables for the Grundtone design system.
 
-In Nuxt, all composables are auto-imported.
+All composables and validators are available from `@grundtone/vue`. In Nuxt, composables are auto-imported.
 
 | Composable | Description |
 |------------|-------------|

@@ -64,6 +64,21 @@ export type { UseFieldOptions, UseFieldReturn } from './useField';
 export { useFormValidation } from './useFormValidation';
 export type { UseFormValidationReturn } from './useFormValidation';
 
+// Validators (re-exported from @grundtone/utils)
+export {
+  required,
+  email,
+  phone,
+  cpr,
+  cvr,
+  minLength,
+  maxLength,
+  pattern,
+  url,
+  composeValidators,
+} from '@grundtone/utils';
+export type { Validator, ValidationResult } from '@grundtone/utils';
+
 // Branding
 export {
   defaultLogoSource,

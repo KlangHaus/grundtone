@@ -7,7 +7,7 @@ Aggregates multiple `useField` instances for form-level validation.
 ```vue
 <script setup>
 import { useField, useFormValidation } from '@grundtone/vue';
-import { required, email, minLength } from '@grundtone/utils';
+import { required, email, minLength } from '@grundtone/vue';
 
 const nameField = useField({ validators: [required(), minLength(2)] });
 const emailField = useField({ validators: [required(), email()] });

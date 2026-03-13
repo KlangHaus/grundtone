@@ -7,7 +7,7 @@ Reactive field state with validation, designed for use with `GTInput`.
 ```vue
 <script setup>
 import { useField } from '@grundtone/vue';
-import { required, email } from '@grundtone/utils';
+import { required, email } from '@grundtone/vue';
 
 const field = useField({
   validators: [required(), email()],
@@ -56,7 +56,7 @@ In Nuxt, `useField` is auto-imported.
 
 ## Available validators
 
-Import from `@grundtone/utils`:
+Import from `@grundtone/vue` (or `@grundtone/utils`):
 
 | Factory | Description |
 |---------|-------------|
@@ -78,7 +78,7 @@ All validators (except `required`) pass on empty strings, so they're optional by
 A validator is just a function `(value: string) => ValidationResult`:
 
 ```ts
-import type { Validator } from '@grundtone/utils';
+import type { Validator } from '@grundtone/vue';
 
 const noSpaces: Validator = (value) =>
   value.includes(' ')

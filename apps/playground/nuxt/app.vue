@@ -1,8 +1,13 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import { iconRegistry } from '@grundtone/core';
-  import { useField, useFormValidation } from '@grundtone/vue';
-  import { required, email, minLength } from '@grundtone/utils';
+  import {
+    useField,
+    useFormValidation,
+    required,
+    email,
+    minLength,
+  } from '@grundtone/vue';
 
   const isLoading = ref(false);
   const inputValue = ref('');

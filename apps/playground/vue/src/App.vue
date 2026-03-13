@@ -6,9 +6,11 @@
     GTInput,
     useField,
     useFormValidation,
+    required,
+    email,
+    minLength,
   } from '@grundtone/vue';
   import { iconRegistry } from '@grundtone/core';
-  import { required, email, minLength } from '@grundtone/utils';
 
   const isLoading = ref(false);
   const inputValue = ref('');

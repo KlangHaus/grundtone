@@ -11,7 +11,6 @@
   "dependencies": {
     "@grundtone/core": "workspace:*",
     "@grundtone/design-system": "workspace:*",
-    "@grundtone/utils": "workspace:*",
     "@grundtone/vue": "workspace:*",
     "vue": "^3.5.13"
   },

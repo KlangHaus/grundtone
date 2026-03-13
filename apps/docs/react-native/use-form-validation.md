@@ -6,7 +6,7 @@ Aggregates multiple `useField` instances for form-level validation.
 
 ```tsx
 import { useField, useFormValidation } from '@grundtone/react-native';
-import { required, email, minLength } from '@grundtone/utils';
+import { required, email, minLength } from '@grundtone/react-native';
 
 function ContactForm() {
   const nameField = useField({ validators: [required(), minLength(2)] });

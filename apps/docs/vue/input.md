@@ -105,8 +105,10 @@ Connect validators to GTInput using the `useField` composable:
 
 ```vue
 <script setup>
-import { GTInput, useField, useFormValidation } from '@grundtone/vue';
-import { required, email, minLength } from '@grundtone/utils';
+import {
+  GTInput, useField, useFormValidation,
+  required, email, minLength,
+} from '@grundtone/vue';
 
 const nameField = useField({
   validators: [required('Name is required'), minLength(2, 'Too short')],

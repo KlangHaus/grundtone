@@ -6,7 +6,7 @@ Reactive field state with validation, designed for use with `GTInput`.
 
 ```tsx
 import { useField } from '@grundtone/react-native';
-import { required, email } from '@grundtone/utils';
+import { required, email } from '@grundtone/react-native';
 
 function EmailForm() {
   const field = useField({
@@ -54,7 +54,7 @@ function EmailForm() {
 
 ## Available validators
 
-Import from `@grundtone/utils`:
+Import from `@grundtone/react-native` (or `@grundtone/utils`):
 
 | Factory | Description |
 |---------|-------------|
@@ -76,7 +76,7 @@ All validators (except `required`) pass on empty strings, so they're optional by
 A validator is just a function `(value: string) => ValidationResult`:
 
 ```ts
-import type { Validator } from '@grundtone/utils';
+import type { Validator } from '@grundtone/react-native';
 
 const noSpaces: Validator = (value) =>
   value.includes(' ')
