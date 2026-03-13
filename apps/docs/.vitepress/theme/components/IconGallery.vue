@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { computed, ref } from 'vue';
-  import { iconRegistry, iconCategories } from '@grundtone/core';
+  import { iconRegistry, iconCategories } from '@grundtone/icons';
   import { GTIcon } from '../../../../../packages/vue/src/atoms/Icon';
 
   const copied = ref<string | null>(null);

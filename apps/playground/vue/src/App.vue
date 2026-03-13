@@ -10,7 +10,7 @@
     email,
     minLength,
   } from '@grundtone/vue';
-  import { iconRegistry } from '@grundtone/core';
+  import { iconRegistry } from '@grundtone/icons';
 
   const isLoading = ref(false);
   const inputValue = ref('');

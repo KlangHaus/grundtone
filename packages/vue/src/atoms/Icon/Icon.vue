@@ -1,7 +1,8 @@
 <script setup lang="ts">
   import { computed } from 'vue';
-  import { getClassPrefix, getIconColor, iconRegistry } from '@grundtone/core';
-  import type { IconDefinition } from '@grundtone/core';
+  import { getClassPrefix, getIconColor } from '@grundtone/core';
+  import { iconRegistry } from '@grundtone/icons';
+  import type { IconDefinition } from '@grundtone/icons';
   import type { IconProps } from './types';
 
   const props = withDefaults(defineProps<IconProps>(), {

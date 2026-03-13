@@ -1,7 +1,8 @@
 import React from 'react';
 import { SvgXml } from 'react-native-svg';
-import { iconRegistry, getIconColor } from '@grundtone/core';
-import type { IconName } from '@grundtone/core';
+import { getIconColor } from '@grundtone/core';
+import { iconRegistry } from '@grundtone/icons';
+import type { IconName } from '@grundtone/icons';
 import type { IconProps } from './types';
 
 /**

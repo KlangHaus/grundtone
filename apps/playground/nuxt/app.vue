@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { ref } from 'vue';
-  import { iconRegistry } from '@grundtone/core';
+  import { iconRegistry } from '@grundtone/icons';
   import {
     useField,
     useFormValidation,

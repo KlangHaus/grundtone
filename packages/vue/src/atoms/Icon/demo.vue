@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { iconRegistry } from '@grundtone/core';
+  import { iconRegistry } from '@grundtone/icons';
   import GTIcon from './Icon.vue';
 
   const allIcons = Object.keys(iconRegistry);

@@ -8,8 +8,7 @@
     "generate": "nuxi generate"
   },
   "dependencies": {
-    "@grundtone/core": "workspace:*",
-    "@grundtone/design-system": "workspace:*",
+    "@grundtone/icons": "workspace:*",
     "@grundtone/nuxt": "workspace:*",
     "@grundtone/vue": "workspace:*",
     "nuxt": "^3.17.2"

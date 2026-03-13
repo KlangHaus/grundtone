@@ -9,8 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@grundtone/core": "workspace:*",
     "@grundtone/design-system": "workspace:*",
+    "@grundtone/icons": "workspace:*",
     "@grundtone/vue": "workspace:*",
     "vue": "^3.5.13"
   },

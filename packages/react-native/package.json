@@ -47,6 +47,7 @@
   },
   "dependencies": {
     "@grundtone/core": "workspace:*",
+    "@grundtone/icons": "workspace:*",
     "@grundtone/utils": "workspace:*"
   },
   "devDependencies": {

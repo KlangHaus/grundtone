@@ -14,7 +14,7 @@
   "dependencies": {
     "@expo/metro-runtime": "^6.1.2",
     "@expo/vector-icons": "^15.0.3",
-    "@grundtone/core": "workspace:*",
+    "@grundtone/icons": "workspace:*",
     "@grundtone/react-native": "workspace:*",
     "@react-navigation/bottom-tabs": "^7.4.0",
     "@react-navigation/elements": "^2.6.3",

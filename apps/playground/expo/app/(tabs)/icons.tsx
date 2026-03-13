@@ -1,6 +1,6 @@
 import { ScrollView, View, Text, StyleSheet } from 'react-native';
 import { GTIcon, useGrundtoneTheme } from '@grundtone/react-native';
-import { iconRegistry, iconCategories } from '@grundtone/core';
+import { iconRegistry, iconCategories } from '@grundtone/icons';
 
 type IconName = keyof typeof iconRegistry;
 

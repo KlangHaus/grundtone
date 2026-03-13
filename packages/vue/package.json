@@ -40,6 +40,7 @@
   "dependencies": {
     "@grundtone/core": "workspace:*",
     "@grundtone/design-system": "workspace:*",
+    "@grundtone/icons": "workspace:*",
     "@grundtone/utils": "workspace:*"
   },
   "devDependencies": {
