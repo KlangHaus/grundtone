@@ -40,6 +40,17 @@ export type { Theme } from '@grundtone/core';
 export { shadowToRN } from './shadows';
 export type { RNShadowStyle } from './shadows';
 
+// Components
+export { GTIcon } from './components/Icon';
+export type { IconProps, IconSize } from './components/Icon';
+export { GTButton } from './components/Button';
+export type {
+  ButtonProps,
+  ButtonVariant,
+  ButtonSize,
+  ButtonRadius,
+} from './components/Button';
+
 // Branding
 export {
   defaultLogoSource,

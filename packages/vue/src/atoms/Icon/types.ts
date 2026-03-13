@@ -7,4 +7,6 @@ export interface IconProps {
   size?: IconSize;
   /** Accessible label. If omitted, icon is aria-hidden="true" */
   label?: string;
+  /** Override icon color. Falls back to the global iconColor config, then currentColor. */
+  color?: string;
 }

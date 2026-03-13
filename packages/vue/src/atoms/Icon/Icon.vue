@@ -1,16 +1,18 @@
 <script setup lang="ts">
   import { computed } from 'vue';
-  import { getClassPrefix, iconRegistry } from '@grundtone/core';
+  import { getClassPrefix, getIconColor, iconRegistry } from '@grundtone/core';
   import type { IconDefinition } from '@grundtone/core';
   import type { IconProps } from './types';
 
   const props = withDefaults(defineProps<IconProps>(), {
     size: 'lg',
     label: undefined,
+    color: undefined,
   });
 
   const p = computed(() => getClassPrefix());
   const base = computed(() => `${p.value}-icon`);
+  const defaultColor = computed(() => getIconColor());
 
   const customIcon = computed<IconDefinition | null>(() => {
     const icon = iconRegistry[props.name as keyof typeof iconRegistry];
@@ -19,8 +21,14 @@
 
   const isCustom = computed(() => customIcon.value !== null);
 
+  const resolvedColor = computed(() => props.color ?? defaultColor.value);
+  const colorStyle = computed(() =>
+    resolvedColor.value !== 'currentColor'
+      ? { color: resolvedColor.value }
+      : undefined,
+  );
+
   // Warn if icon not found in custom registry
-  // Heroicons fallback is handled by consumers or future integration
   if (!isCustom.value) {
     // eslint-disable-next-line no-console
     console.warn(`[GTIcon] Icon "${props.name}" not found in custom registry.`);
@@ -31,6 +39,7 @@
   <svg
     v-if="isCustom"
     :class="[base, `${base}--${size}`]"
+    :style="colorStyle"
     :viewBox="customIcon!.viewBox"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"

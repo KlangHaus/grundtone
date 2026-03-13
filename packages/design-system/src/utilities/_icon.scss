@@ -1,0 +1,45 @@
+// Icon utility classes
+// Provides .{prefix}-icon sizing classes driven by icon-size() tokens.
+// Use with inline SVGs in plain HTML or any framework.
+// Override $prefix via SCSS additionalData to match your brand.
+
+@use '../core/icon' as *;
+
+$prefix: 'gt' !default;
+
+.#{$prefix}-icon {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  color: currentColor;
+
+  &--xs {
+    width: icon-size('xs');
+    height: icon-size('xs');
+  }
+
+  &--sm {
+    width: icon-size('sm');
+    height: icon-size('sm');
+  }
+
+  &--md {
+    width: icon-size('md');
+    height: icon-size('md');
+  }
+
+  &--lg {
+    width: icon-size('lg');
+    height: icon-size('lg');
+  }
+
+  &--xl {
+    width: icon-size('xl');
+    height: icon-size('xl');
+  }
+
+  &--2xl {
+    width: icon-size('2xl');
+    height: icon-size('2xl');
+  }
+}

@@ -114,6 +114,8 @@ export default [
         global: 'readonly',
         window: 'readonly',
         document: 'readonly',
+        require: 'readonly',
+        module: 'readonly',
       },
     },
     rules: {

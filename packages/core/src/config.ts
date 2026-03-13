@@ -11,10 +11,22 @@ export interface GrundtoneConfig {
    * defineGrundtoneConfig({ prefix: 'KH' })
    */
   prefix: string;
+
+  /**
+   * Default color for icons. Uses any valid CSS color value.
+   * Icons inherit parent text color via `currentColor` by default.
+   *
+   * @default 'currentColor'
+   *
+   * @example
+   * defineGrundtoneConfig({ iconColor: 'var(--color-text-secondary)' })
+   */
+  iconColor: string;
 }
 
 const defaultConfig: GrundtoneConfig = {
   prefix: 'GT',
+  iconColor: 'currentColor',
 };
 
 let currentConfig: GrundtoneConfig = { ...defaultConfig };
@@ -55,4 +67,16 @@ export function getGrundtoneConfig(): GrundtoneConfig {
  */
 export function getClassPrefix(): string {
   return currentConfig.prefix.toLowerCase();
+}
+
+/**
+ * Get the default icon color.
+ *
+ * @example
+ * getIconColor() // 'currentColor' (default)
+ * // After defineGrundtoneConfig({ iconColor: 'var(--color-primary)' })
+ * getIconColor() // 'var(--color-primary)'
+ */
+export function getIconColor(): string {
+  return currentConfig.iconColor;
 }

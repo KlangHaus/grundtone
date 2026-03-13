@@ -150,11 +150,26 @@ export default withMermaid(
 
       nav: [
         { text: 'Getting Started', link: '/guide/welcome' },
-        { text: 'Vue / Nuxt', link: '/vue/installation' },
-        { text: 'Web', link: '/web/colors' },
-        { text: 'React Native', link: '/react-native/colors' },
-        { text: 'Core Concepts', link: '/core/package-architecture' },
-        { text: 'Changelog', link: '/changelog' },
+        {
+          text: 'Frameworks',
+          items: [
+            { text: 'Vue / Nuxt', link: '/vue/installation' },
+            { text: 'React Native', link: '/react-native/colors' },
+          ],
+        },
+        { text: 'Design System', link: '/web/colors' },
+        {
+          text: 'Core Concepts',
+          items: [
+            {
+              text: 'Package Architecture',
+              link: '/core/package-architecture',
+            },
+            { text: 'Open Source & Self-Hosting', link: '/core/open-source' },
+            { text: 'Third-Party Acknowledgements', link: '/core/third-party' },
+            { text: 'Changelog', link: '/changelog' },
+          ],
+        },
       ],
 
       sidebar: {
@@ -228,6 +243,7 @@ export default withMermaid(
               { text: 'Opacity', link: '/web/opacity' },
               { text: 'Interactivity', link: '/web/interactivity' },
               { text: 'Transitions', link: '/web/transitions' },
+              { text: 'Icon', link: '/web/icon' },
             ],
           },
           {
@@ -313,6 +329,7 @@ export default withMermaid(
               { text: 'Z-Index', link: '/react-native/z-index' },
               { text: 'Transitions', link: '/react-native/transitions' },
               { text: 'Position', link: '/react-native/position' },
+              { text: 'Icons', link: '/react-native/icons' },
             ],
           },
         ],

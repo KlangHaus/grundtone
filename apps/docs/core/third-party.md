@@ -26,6 +26,7 @@ No external runtime dependencies. Produces standalone CSS/SCSS output.
 |---|---|---|
 | [React](https://react.dev/) | MIT | Peer dependency — component model |
 | [React Native](https://reactnative.dev/) | MIT | Peer dependency — native runtime |
+| [react-native-svg](https://github.com/software-mansion/react-native-svg) | MIT | Optional peer dep — SVG rendering for GTIcon |
 
 ### @grundtone/nuxt
 
@@ -104,6 +105,6 @@ All runtime dependencies use permissive open-source licenses:
 
 | License | Count | Examples |
 |---|---|---|
-| MIT | 24 | Vue, React, Vite, ESLint |
+| MIT | 25 | Vue, React, Vite, ESLint, react-native-svg |
 | Apache-2.0 | 3 | TypeScript, Playwright, sharp |
 | ISC | 1 | rimraf |

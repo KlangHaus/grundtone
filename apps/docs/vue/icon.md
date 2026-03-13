@@ -30,14 +30,9 @@ import { GTIcon } from '@grundtone/vue';
 
 All icons are defined as SVG files in `@grundtone/core` and auto-generated into a typed registry. Add a new SVG to `packages/core/src/icons/svg/` and run `pnpm generate:icons` — it's immediately available in `<GTIcon>`.
 
-| Name | Description |
-| --- | --- |
-| `arrow-left` | Left arrow |
-| `arrow-right` | Right arrow |
-| `check` | Checkmark |
-| `close` | Close / X |
-| `menu` | Hamburger menu |
-| `search` | Magnifying glass |
+Click an icon to copy its name.
+
+<IconGallery />
 
 ## Sizes
 
@@ -89,20 +84,43 @@ Icons work naturally inside `<GTButton>`:
 
 ## Adding custom icons
 
-1. Add a 24x24 SVG file to `packages/core/src/icons/svg/` using `currentColor` for stroke/fill
+1. Add a 24x24 SVG file to a category folder in `packages/core/src/icons/svg/{category}/`
 2. Run `pnpm generate:icons` to regenerate the typed registry
 3. Use it immediately: `<GTIcon name="your-icon" />`
+
+Icons are organized by category using subdirectories:
+
+```
+packages/core/src/icons/svg/
+  action/
+    check.svg
+    close.svg
+    search.svg
+  navigation/
+    arrow-left.svg
+    arrow-right.svg
+    menu.svg
+  your-category/
+    your-icon.svg
+```
+
+SVG files placed directly in `svg/` (without a subdirectory) get the `general` category.
 
 SVG conventions:
 - ViewBox: `0 0 24 24`
 - Stroke-based: `fill="none" stroke="currentColor" stroke-width="1.5"`
 - Kebab-case filenames: `my-icon.svg` → `name="my-icon"`
 
-## Heroicons (planned)
+## Using Heroicons
 
-Heroicons integration is planned as a fallback. Custom icon names always take priority. When available, any Heroicon name will work as a fallback in `<GTIcon>`.
+Browse the full set at [heroicons.com](https://heroicons.com), then drop the SVGs you need into the appropriate category folder:
 
-For now, browse the full Heroicons set at [heroicons.com](https://heroicons.com).
+1. Download the outline variant SVG from [heroicons.com](https://heroicons.com)
+2. Save it to `packages/core/src/icons/svg/{category}/` (e.g. `action/heart.svg`)
+3. Run `pnpm generate:icons`
+4. Use it: `<GTIcon name="heart" />`
+
+Heroicons use the same 24x24 grid with `currentColor` strokes, so they work out of the box with no modifications. Only the icons you add are included in your bundle.
 
 ## Props
 
@@ -120,12 +138,14 @@ For now, browse the full Heroicons set at [heroicons.com](https://heroicons.com)
 
 ## CSS Classes
 
-All classes are prefixed with `gt-icon` to avoid collisions:
+Classes use the configurable `$prefix` (default `gt`). See [Component Prefix](/guide/prefix) for customization.
 
 | Class | Description |
 | --- | --- |
-| `.gt-icon` | Base styles |
-| `.gt-icon--{size}` | Size modifier |
+| `.{prefix}-icon` | Base styles |
+| `.{prefix}-icon--{size}` | Size modifier |
+
+With the default prefix: `.gt-icon`, `.gt-icon--lg`, etc.
 
 ## Design System Tokens Used
 
