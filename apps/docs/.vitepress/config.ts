@@ -101,7 +101,35 @@ export default defineConfig({
   markdown: {
     config(md) {
       md.use(colorPreviewPlugin);
-      md.use(diagramPlugin);
+      md.use(diagramPlugin, {
+        preview: true,
+        theme: {
+          // Match Grundtone light palette
+          processFill: '#dbeafe',
+          processStroke: '#0059b3',
+          decisionFill: '#fef3c7',
+          decisionStroke: '#b45309',
+          terminalFill: '#dcfce7',
+          terminalStroke: '#16a34a',
+          dataFill: '#f3e8ff',
+          dataStroke: '#7c3aed',
+          nodeTextColor: '#212529',
+          edgeColor: '#6b7280',
+          edgeLabelColor: '#4b5563',
+          edgeLabelBg: '#ffffff',
+          arrowColor: '#6b7280',
+          // Sequence
+          participantFill: '#dbeafe',
+          participantStroke: '#0059b3',
+          participantTextColor: '#212529',
+          // Class
+          classHeaderFill: '#0059b3',
+          classHeaderTextColor: '#ffffff',
+          classBodyFill: '#f8f9fa',
+          classStroke: '#0059b3',
+          classTextColor: '#212529',
+        },
+      });
     },
     codeTransformers: [colorPreviewTransformer()],
   },

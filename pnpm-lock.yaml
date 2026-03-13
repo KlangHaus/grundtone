@@ -150,8 +150,8 @@ importers:
         specifier: ^0.3.2
         version: 0.3.2(markdown-it@14.1.1)
       vitepress-plugin-mermaid-diagram:
-        specifier: ^0.1.2
-        version: 0.1.2(markdown-it@14.1.1)
+        specifier: ^0.2.4
+        version: 0.2.4(markdown-it@14.1.1)
 
   apps/playground/expo:
     dependencies:
@@ -9515,8 +9515,8 @@ packages:
     peerDependencies:
       markdown-it: '>=13.0.0'
 
-  vitepress-plugin-mermaid-diagram@0.1.2:
-    resolution: {integrity: sha512-GvRKE0dR6NuuVqRnzJjxnaBfa6hYcRTwGFTEKUI/oMwIKFem6VpSKNaAg+0XYVAYNC1lABj0sJ4OpUApMDRJLg==}
+  vitepress-plugin-mermaid-diagram@0.2.4:
+    resolution: {integrity: sha512-9sxNoFYxZumbqh/v7jPu91kbv6dIN2edME9n1r8fBy6/KN+I5+eF1UFTEvO+DqMOdgbSDni+IpPdfXlCpNyRng==}
     peerDependencies:
       markdown-it: '>=13.0.0'
 
@@ -20805,7 +20805,7 @@ snapshots:
     dependencies:
       markdown-it: 14.1.1
 
-  vitepress-plugin-mermaid-diagram@0.1.2(markdown-it@14.1.1):
+  vitepress-plugin-mermaid-diagram@0.2.4(markdown-it@14.1.1):
     dependencies:
       markdown-it: 14.1.1
 

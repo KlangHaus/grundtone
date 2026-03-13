@@ -7,12 +7,12 @@ Grundtone is a monorepo of packages. Each package has a clear purpose and depend
 ```mermaid
 graph TD
     core[core]
+    icons[icons]
     tokens[design-system]
     shared[utils]
-    icons[icons]
-    rn[react-native]
     vue[vue]
     nuxt[nuxt]
+    rn[react-native]
 
     core --> tokens
     core --> shared
@@ -205,6 +205,18 @@ border radius.
 
 Turborepo builds in dependency order:
 
+```mermaid
+flowchart LR
+    core[core] --> ds[design-system]
+    core --> utils
+    icons
+    ds --> vue
+    utils --> vue
+    vue --> nuxt
+    core --> rn[react-native]
+    utils --> rn
+```
+
 1. **core** – no deps
 2. **icons** – no Grundtone deps
 3. **design-system** – depends on core
@@ -212,3 +224,60 @@ Turborepo builds in dependency order:
 5. **vue** – depends on core, design-system, utils
 6. **nuxt** – depends on vue
 7. **react-native** – depends on core, utils
+
+## Theme Type Hierarchy
+
+```mermaid
+classDiagram
+    class GrundtoneTheme {
+        +colors: ThemeColors
+        +typography: Typography
+        +spacing: Spacing
+        +radius: Radius
+        +shadows: Shadows
+        +zIndex: ZIndex
+        +transitions: Transitions
+    }
+
+    class ThemeColors {
+        +primary: string
+        +background: string
+        +surface: string
+        +text: string
+        +error: string
+        +warning: string
+        +success: string
+    }
+
+    class ThemePreset {
+        +light: GrundtoneTheme
+        +dark: GrundtoneTheme
+    }
+
+    ThemePreset *-- GrundtoneTheme
+    GrundtoneTheme *-- ThemeColors
+
+    class ThemeProvider {
+        +theme: ThemePreset
+        +mode: light | dark
+    }
+
+    ThemeProvider --> ThemePreset
+```
+
+## Theme Resolution Flow
+
+```mermaid
+sequenceDiagram
+    participant App
+    participant Provider as ThemeProvider
+    participant Core as createTheme()
+    participant Component as GTButton / GTInput
+
+    App->>Core: createTheme(overrides)
+    Core-->>App: { light, dark }
+    App->>Provider: Provide theme preset
+    Component->>Provider: Inject theme
+    Provider-->>Component: Current theme (light/dark)
+    Component->>Component: Apply tokens to styles
+```
