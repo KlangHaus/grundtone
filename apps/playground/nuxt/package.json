@@ -10,7 +10,6 @@
   "dependencies": {
     "@grundtone/icons": "workspace:*",
     "@grundtone/nuxt": "workspace:*",
-    "@grundtone/vue": "workspace:*",
     "nuxt": "^3.17.2"
   }
 }

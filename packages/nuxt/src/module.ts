@@ -2,6 +2,7 @@ import {
   defineNuxtModule,
   addComponentsDir,
   addImportsDir,
+  addImports,
   createResolver,
 } from '@nuxt/kit';
 import type { NuxtModule } from '@nuxt/schema';
@@ -78,6 +79,26 @@ export default defineNuxtModule<ModuleOptions>({
     // Auto-import composables
     if (options.composables) {
       addImportsDir(resolver.resolve('../../vue/src/composables'));
+
+      // Auto-import validator factories from @grundtone/utils
+      const validators = [
+        'required',
+        'email',
+        'phone',
+        'cpr',
+        'cvr',
+        'minLength',
+        'maxLength',
+        'pattern',
+        'url',
+        'composeValidators',
+      ];
+      addImports(
+        validators.map(name => ({
+          name,
+          from: '@grundtone/utils',
+        })),
+      );
     }
 
     // Expose module options to runtime

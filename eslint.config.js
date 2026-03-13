@@ -138,6 +138,28 @@ export default [
     },
   },
 
+  // Nuxt playground auto-imports (composables + validators)
+  {
+    files: ['apps/playground/nuxt/**/*.vue'],
+    languageOptions: {
+      globals: {
+        useField: 'readonly',
+        useFormValidation: 'readonly',
+        useTheme: 'readonly',
+        required: 'readonly',
+        email: 'readonly',
+        phone: 'readonly',
+        cpr: 'readonly',
+        cvr: 'readonly',
+        minLength: 'readonly',
+        maxLength: 'readonly',
+        pattern: 'readonly',
+        url: 'readonly',
+        composeValidators: 'readonly',
+      },
+    },
+  },
+
   // Ignore patterns
   {
     ignores: [
