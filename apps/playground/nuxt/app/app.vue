@@ -38,12 +38,12 @@
 </script>
 
 <template>
-  <div class="playground">
-    <h1>Grundtone Nuxt Playground</h1>
+  <div class="container py-6">
+    <h1 class="mb-6">Grundtone Nuxt Playground</h1>
 
-    <section>
-      <h2>Variants</h2>
-      <div class="row">
+    <section class="mb-6">
+      <h2 class="mb-2">Variants</h2>
+      <div class="flex flex-wrap items-center gap-2">
         <GTButton variant="primary">Primary</GTButton>
         <GTButton variant="secondary">Secondary</GTButton>
         <GTButton variant="outlined">Outlined</GTButton>
@@ -52,18 +52,18 @@
       </div>
     </section>
 
-    <section>
-      <h2>Sizes</h2>
-      <div class="row">
+    <section class="mb-6">
+      <h2 class="mb-2">Sizes</h2>
+      <div class="flex flex-wrap items-center gap-2">
         <GTButton size="sm">Small</GTButton>
         <GTButton size="md">Medium</GTButton>
         <GTButton size="lg">Large</GTButton>
       </div>
     </section>
 
-    <section>
-      <h2>Rounded</h2>
-      <div class="row">
+    <section class="mb-6">
+      <h2 class="mb-2">Rounded</h2>
+      <div class="flex flex-wrap items-center gap-2">
         <GTButton rounded="none">none</GTButton>
         <GTButton rounded="sm">sm</GTButton>
         <GTButton>md (default)</GTButton>
@@ -72,9 +72,9 @@
       </div>
     </section>
 
-    <section>
-      <h2>States</h2>
-      <div class="row">
+    <section class="mb-6">
+      <h2 class="mb-2">States</h2>
+      <div class="flex flex-wrap items-center gap-2">
         <GTButton disabled>Disabled</GTButton>
         <GTButton :loading="isLoading" @click="simulateLoad">
           {{ isLoading ? 'Saving...' : 'Click to load' }}
@@ -83,9 +83,9 @@
       </div>
     </section>
 
-    <section>
-      <h2>Icons</h2>
-      <div class="row">
+    <section class="mb-6">
+      <h2 class="mb-2">Icons</h2>
+      <div class="flex flex-wrap items-center gap-2">
         <GTIcon
           v-for="name in Object.keys(iconRegistry)"
           :key="name"
@@ -94,9 +94,9 @@
       </div>
     </section>
 
-    <section>
-      <h2>Icon sizes</h2>
-      <div class="row">
+    <section class="mb-6">
+      <h2 class="mb-2">Icon sizes</h2>
+      <div class="flex flex-wrap items-center gap-2">
         <GTIcon name="check" size="xs" />
         <GTIcon name="check" size="sm" />
         <GTIcon name="check" size="md" />
@@ -106,9 +106,9 @@
       </div>
     </section>
 
-    <section>
-      <h2>Button with icon</h2>
-      <div class="row">
+    <section class="mb-6">
+      <h2 class="mb-2">Button with icon</h2>
+      <div class="flex flex-wrap items-center gap-2">
         <GTButton variant="primary">
           <GTIcon name="check" size="sm" /> Confirm
         </GTButton>
@@ -121,18 +121,18 @@
       </div>
     </section>
 
-    <section>
-      <h2>Input sizes</h2>
-      <div class="stack">
+    <section class="mb-6">
+      <h2 class="mb-2">Input sizes</h2>
+      <div class="flex flex-col gap-2">
         <GTInput v-model="inputValue" size="sm" placeholder="Small input" />
         <GTInput v-model="inputValue" size="md" placeholder="Medium input" />
         <GTInput v-model="inputValue" size="lg" placeholder="Large input" />
       </div>
     </section>
 
-    <section>
-      <h2>Input with label &amp; help</h2>
-      <div class="stack">
+    <section class="mb-6">
+      <h2 class="mb-2">Input with label &amp; help</h2>
+      <div class="flex flex-col gap-2">
         <GTInput
           v-model="inputValue"
           label="Full name"
@@ -150,9 +150,9 @@
       </div>
     </section>
 
-    <section>
-      <h2>Input states</h2>
-      <div class="stack">
+    <section class="mb-6">
+      <h2 class="mb-2">Input states</h2>
+      <div class="flex flex-col gap-2">
         <GTInput label="Disabled" disabled model-value="Cannot edit" />
         <GTInput label="Readonly" readonly model-value="Read only value" />
         <GTInput
@@ -164,9 +164,9 @@
       </div>
     </section>
 
-    <section>
-      <h2>Input types</h2>
-      <div class="stack">
+    <section class="mb-6">
+      <h2 class="mb-2">Input types</h2>
+      <div class="flex flex-col gap-2">
         <GTInput
           type="password"
           label="Password"
@@ -177,9 +177,9 @@
       </div>
     </section>
 
-    <section>
-      <h2>Validation (useField + useFormValidation)</h2>
-      <form class="stack" @submit.prevent="onValidationSubmit">
+    <section class="mb-6">
+      <h2 class="mb-2">Validation (useField + useFormValidation)</h2>
+      <form class="flex flex-col gap-2" @submit.prevent="onValidationSubmit">
         <GTInput
           v-model="nameField.value.value"
           :error-text="nameField.errorText.value"
@@ -197,7 +197,7 @@
           placeholder="you@example.com"
           required
         />
-        <div class="row">
+        <div class="flex flex-wrap items-center gap-2">
           <GTButton type="submit" variant="primary">Submit</GTButton>
           <GTButton type="button" variant="outlined" @click="form.resetAll()"
             >Reset</GTButton
@@ -207,9 +207,9 @@
       </form>
     </section>
 
-    <section>
-      <h2>As link</h2>
-      <div class="row">
+    <section class="mb-6">
+      <h2 class="mb-2">As link</h2>
+      <div class="flex flex-wrap items-center gap-2">
         <GTButton as="a" href="#link">Link button</GTButton>
         <GTButton as="a" href="#link" variant="outlined">
           Outlined link
@@ -218,37 +218,3 @@
     </section>
   </div>
 </template>
-
-<style>
-  body {
-    margin: 0;
-    font-family: system-ui, sans-serif;
-    padding: 2rem;
-  }
-
-  .playground h1 {
-    margin-bottom: 2rem;
-  }
-
-  .playground h2 {
-    margin-bottom: 0.5rem;
-    font-size: 1.25rem;
-  }
-
-  .playground section {
-    margin-bottom: 2rem;
-  }
-
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .stack {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-</style>

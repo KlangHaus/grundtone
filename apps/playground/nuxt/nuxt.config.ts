@@ -1,7 +1,7 @@
 import { createTheme } from '@grundtone/core';
 
 export default defineNuxtConfig({
-  compatibilityDate: '2026-03-11',
+  compatibilityDate: '2026-03-13',
   modules: ['@grundtone/nuxt'],
   grundtone: {
     theme: createTheme({
