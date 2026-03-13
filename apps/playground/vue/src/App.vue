@@ -175,6 +175,43 @@
     </section>
 
     <section class="mb-6">
+      <h2 class="mb-2">Prefix &amp; suffix</h2>
+      <div class="flex flex-col gap-2">
+        <GTInput
+          label="Amount"
+          prefix="kr."
+          placeholder="0,00"
+          help-text="Enter amount in DKK"
+        />
+        <GTInput label="Weight" suffix="kg" placeholder="0" type="number" />
+      </div>
+    </section>
+
+    <section class="mb-6">
+      <h2 class="mb-2">Field widths</h2>
+      <div class="flex flex-col gap-2">
+        <GTInput label="Postal code" :char-width="4" placeholder="8000" />
+        <GTInput label="Phone" :char-width="8" placeholder="12345678" />
+        <GTInput label="Street" :char-width="27" placeholder="Vestergade" />
+        <GTInput label="Short" width="xs" placeholder="16rem" />
+        <GTInput label="Medium" width="m" placeholder="32rem (default)" />
+      </div>
+    </section>
+
+    <section class="mb-6">
+      <h2 class="mb-2">Optional fields</h2>
+      <div class="flex flex-col gap-2">
+        <GTInput label="Name" placeholder="John Doe" required />
+        <GTInput
+          label="Phone"
+          optional-label="(valgfrit)"
+          placeholder="12345678"
+          type="tel"
+        />
+      </div>
+    </section>
+
+    <section class="mb-6">
       <h2 class="mb-2">Input rounded</h2>
       <div class="flex flex-col gap-2">
         <GTInput rounded="none" placeholder="none" />

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ScrollView, View, Text, StyleSheet } from 'react-native';
+import { ScrollView, View, Text } from 'react-native';
 import {
   GTButton,
   GTIcon,
@@ -47,35 +47,45 @@ export default function ComponentsScreen() {
     setTimeout(() => setIsLoading(false), 2000);
   }
 
+  const rem = (v: string) => parseFloat(v) * 16;
+
+  const titleStyle = {
+    fontSize: rem(theme.typography.fontSize['2xl']),
+    fontWeight: theme.typography.fontWeight.bold as '700',
+    marginBottom: rem(theme.spacing.xl),
+    color: theme.colors.text,
+    fontFamily: theme.typography.fontFamily.base,
+  };
+
+  const headingStyle = {
+    fontSize: rem(theme.typography.fontSize.lg),
+    fontWeight: theme.typography.fontWeight.semibold as '600',
+    marginTop: rem(theme.spacing.xl),
+    marginBottom: rem(theme.spacing.md),
+    color: theme.colors.text,
+    fontFamily: theme.typography.fontFamily.base,
+  };
+
+  const groupStyle = { gap: rem(theme.spacing.xs) };
+  const rowStyle = {
+    flexDirection: 'row' as const,
+    flexWrap: 'wrap' as const,
+    alignItems: 'center' as const,
+    gap: rem(theme.spacing.xs),
+  };
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: theme.colors.background }}
-      contentContainerStyle={styles.content}
+      contentContainerStyle={{
+        padding: rem(theme.spacing.md),
+        paddingBottom: rem(theme.spacing['4xl']),
+      }}
     >
-      <Text
-        style={[
-          styles.title,
-          {
-            color: theme.colors.text,
-            fontFamily: theme.typography.fontFamily.base,
-          },
-        ]}
-      >
-        Grundtone Expo Playground
-      </Text>
+      <Text style={titleStyle}>Grundtone Expo Playground</Text>
 
-      <Text
-        style={[
-          styles.heading,
-          {
-            color: theme.colors.text,
-            fontFamily: theme.typography.fontFamily.base,
-          },
-        ]}
-      >
-        Variants
-      </Text>
-      <View style={styles.row}>
+      <Text style={headingStyle}>Variants</Text>
+      <View style={rowStyle}>
         <GTButton variant="primary" onPress={() => {}}>
           Primary
         </GTButton>
@@ -93,18 +103,8 @@ export default function ComponentsScreen() {
         </GTButton>
       </View>
 
-      <Text
-        style={[
-          styles.heading,
-          {
-            color: theme.colors.text,
-            fontFamily: theme.typography.fontFamily.base,
-          },
-        ]}
-      >
-        Sizes
-      </Text>
-      <View style={styles.row}>
+      <Text style={headingStyle}>Sizes</Text>
+      <View style={rowStyle}>
         <GTButton size="sm" onPress={() => {}}>
           Small
         </GTButton>
@@ -116,18 +116,8 @@ export default function ComponentsScreen() {
         </GTButton>
       </View>
 
-      <Text
-        style={[
-          styles.heading,
-          {
-            color: theme.colors.text,
-            fontFamily: theme.typography.fontFamily.base,
-          },
-        ]}
-      >
-        Rounded
-      </Text>
-      <View style={styles.row}>
+      <Text style={headingStyle}>Rounded</Text>
+      <View style={rowStyle}>
         <GTButton rounded="none" onPress={() => {}}>
           none
         </GTButton>
@@ -143,18 +133,8 @@ export default function ComponentsScreen() {
         </GTButton>
       </View>
 
-      <Text
-        style={[
-          styles.heading,
-          {
-            color: theme.colors.text,
-            fontFamily: theme.typography.fontFamily.base,
-          },
-        ]}
-      >
-        States
-      </Text>
-      <View style={styles.group}>
+      <Text style={headingStyle}>States</Text>
+      <View style={groupStyle}>
         <GTButton disabled onPress={() => {}}>
           Disabled
         </GTButton>
@@ -166,18 +146,8 @@ export default function ComponentsScreen() {
         </GTButton>
       </View>
 
-      <Text
-        style={[
-          styles.heading,
-          {
-            color: theme.colors.text,
-            fontFamily: theme.typography.fontFamily.base,
-          },
-        ]}
-      >
-        Icon sizes
-      </Text>
-      <View style={styles.row}>
+      <Text style={headingStyle}>Icon sizes</Text>
+      <View style={rowStyle}>
         <GTIcon name="check" size="xs" color={theme.colors.text} />
         <GTIcon name="check" size="sm" color={theme.colors.text} />
         <GTIcon name="check" size="md" color={theme.colors.text} />
@@ -186,18 +156,8 @@ export default function ComponentsScreen() {
         <GTIcon name="check" size="2xl" color={theme.colors.text} />
       </View>
 
-      <Text
-        style={[
-          styles.heading,
-          {
-            color: theme.colors.text,
-            fontFamily: theme.typography.fontFamily.base,
-          },
-        ]}
-      >
-        Button with icon
-      </Text>
-      <View style={styles.row}>
+      <Text style={headingStyle}>Button with icon</Text>
+      <View style={rowStyle}>
         <GTButton variant="primary" onPress={() => {}}>
           <GTIcon name="check" size="sm" color={theme.colors.onPrimary} />
           <Text
@@ -232,18 +192,8 @@ export default function ComponentsScreen() {
           </Text>
         </GTButton>
       </View>
-      <Text
-        style={[
-          styles.heading,
-          {
-            color: theme.colors.text,
-            fontFamily: theme.typography.fontFamily.base,
-          },
-        ]}
-      >
-        Input sizes
-      </Text>
-      <View style={styles.group}>
+      <Text style={headingStyle}>Input sizes</Text>
+      <View style={groupStyle}>
         <GTInput
           value={inputValue}
           onChangeText={setInputValue}
@@ -264,18 +214,8 @@ export default function ComponentsScreen() {
         />
       </View>
 
-      <Text
-        style={[
-          styles.heading,
-          {
-            color: theme.colors.text,
-            fontFamily: theme.typography.fontFamily.base,
-          },
-        ]}
-      >
-        Input with label &amp; help
-      </Text>
-      <View style={styles.group}>
+      <Text style={headingStyle}>Input with label &amp; help</Text>
+      <View style={groupStyle}>
         <GTInput
           value={inputValue}
           onChangeText={setInputValue}
@@ -293,18 +233,8 @@ export default function ComponentsScreen() {
         />
       </View>
 
-      <Text
-        style={[
-          styles.heading,
-          {
-            color: theme.colors.text,
-            fontFamily: theme.typography.fontFamily.base,
-          },
-        ]}
-      >
-        Input states
-      </Text>
-      <View style={styles.group}>
+      <Text style={headingStyle}>Input states</Text>
+      <View style={groupStyle}>
         <GTInput label="Disabled" disabled value="Cannot edit" />
         <GTInput label="Readonly" readonly value="Read only value" />
         <GTInput
@@ -316,18 +246,30 @@ export default function ComponentsScreen() {
         />
       </View>
 
-      <Text
-        style={[
-          styles.heading,
-          {
-            color: theme.colors.text,
-            fontFamily: theme.typography.fontFamily.base,
-          },
-        ]}
-      >
-        Input types
-      </Text>
-      <View style={styles.group}>
+      <Text style={headingStyle}>Prefix &amp; suffix</Text>
+      <View style={groupStyle}>
+        <GTInput
+          label="Amount"
+          prefix="kr."
+          placeholder="0,00"
+          helpText="Enter amount in DKK"
+        />
+        <GTInput label="Weight" suffix="kg" placeholder="0" type="number" />
+      </View>
+
+      <Text style={headingStyle}>Optional fields</Text>
+      <View style={groupStyle}>
+        <GTInput label="Name" placeholder="John Doe" required />
+        <GTInput
+          label="Phone"
+          optionalLabel="(valgfrit)"
+          placeholder="12345678"
+          type="tel"
+        />
+      </View>
+
+      <Text style={headingStyle}>Input types</Text>
+      <View style={groupStyle}>
         <GTInput
           type="password"
           label="Password"
@@ -337,18 +279,10 @@ export default function ComponentsScreen() {
         <GTInput type="number" label="Amount" placeholder="0" />
       </View>
 
-      <Text
-        style={[
-          styles.heading,
-          {
-            color: theme.colors.text,
-            fontFamily: theme.typography.fontFamily.base,
-          },
-        ]}
-      >
+      <Text style={headingStyle}>
         Validation (useField + useFormValidation)
       </Text>
-      <View style={styles.group}>
+      <View style={groupStyle}>
         <GTInput
           {...nameField.fieldProps}
           errorText={nameField.errorText}
@@ -364,7 +298,7 @@ export default function ComponentsScreen() {
           placeholder="you@example.com"
           required
         />
-        <View style={styles.row}>
+        <View style={rowStyle}>
           <GTButton variant="primary" onPress={onValidationSubmit}>
             Submit
           </GTButton>
@@ -392,30 +326,3 @@ export default function ComponentsScreen() {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  content: {
-    padding: 16,
-    paddingBottom: 64,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: '700',
-    marginBottom: 24,
-  },
-  heading: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginTop: 24,
-    marginBottom: 12,
-  },
-  group: {
-    gap: 8,
-  },
-  row: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    gap: 8,
-  },
-});

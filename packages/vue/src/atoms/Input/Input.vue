@@ -12,6 +12,11 @@
     readonly: false,
     required: false,
     block: false,
+    width: undefined,
+    charWidth: undefined,
+    prefix: undefined,
+    suffix: undefined,
+    optionalLabel: undefined,
   });
 
   const emit = defineEmits<{
@@ -28,6 +33,14 @@
     props.errorText || props.helpText ? `${inputId.value}-desc` : undefined,
   );
 
+  const hasWrapper = computed(() => !!props.prefix || !!props.suffix);
+
+  const inputWidthClass = computed(() => {
+    if (props.charWidth) return `${base.value}-char-${props.charWidth}`;
+    if (props.width) return `${base.value}-width-${props.width}`;
+    return undefined;
+  });
+
   function handleInput(event: Event) {
     emit('update:modelValue', (event.target as HTMLInputElement).value);
   }
@@ -35,22 +48,93 @@
 
 <template>
   <div :class="[`${base}-field`, { [`${base}-field--block`]: block }]">
+    <!-- Label -->
     <label v-if="label" :for="inputId" :class="`${base}-label`">
       {{ label }}
       <span
-        v-if="required"
-        :class="`${base}-label__required`"
-        aria-hidden="true"
-        >*</span
+        v-if="optionalLabel && !required"
+        :class="`${base}-label__optional`"
       >
+        {{ optionalLabel }}
+      </span>
     </label>
 
+    <!-- Help text: between label and input (designsystem.dk guideline) -->
+    <p
+      v-if="helpText && !errorText"
+      :id="descriptionId"
+      :class="`${base}-hint`"
+    >
+      {{ helpText }}
+    </p>
+
+    <!-- Error message: between label and input (designsystem.dk guideline) -->
+    <p
+      v-if="errorText"
+      :id="descriptionId"
+      :class="`${base}-error`"
+      role="alert"
+    >
+      {{ errorText }}
+    </p>
+
+    <!-- Input with optional prefix/suffix wrapper -->
+    <div
+      v-if="hasWrapper"
+      :class="[
+        `${base}-wrapper`,
+        { [`${base}-wrapper--prefix`]: prefix },
+        { [`${base}-wrapper--suffix`]: suffix },
+      ]"
+    >
+      <div v-if="prefix" :class="`${base}-prefix`" aria-hidden="true">
+        {{ prefix }}
+      </div>
+      <input
+        :id="inputId"
+        :type="type"
+        :class="[
+          base,
+          `${base}--${size}`,
+          inputWidthClass,
+          {
+            [`${base}--error`]: !!errorText,
+            [`${base}--disabled`]: disabled,
+            [`${base}--readonly`]: readonly,
+          },
+        ]"
+        :style="
+          rounded ? { borderRadius: `var(--radius-${rounded})` } : undefined
+        "
+        :value="modelValue"
+        :placeholder="placeholder"
+        :disabled="disabled"
+        :readonly="readonly"
+        :required="required"
+        :name="name"
+        :autocomplete="autocomplete"
+        :maxlength="maxlength"
+        :aria-invalid="!!errorText"
+        :aria-describedby="descriptionId"
+        :aria-required="required"
+        @input="handleInput"
+        @focus="emit('focus', $event)"
+        @blur="emit('blur', $event)"
+      />
+      <div v-if="suffix" :class="`${base}-suffix`" aria-hidden="true">
+        {{ suffix }}
+      </div>
+    </div>
+
+    <!-- Input without wrapper -->
     <input
+      v-else
       :id="inputId"
       :type="type"
       :class="[
         base,
         `${base}--${size}`,
+        inputWidthClass,
         {
           [`${base}--error`]: !!errorText,
           [`${base}--disabled`]: disabled,
@@ -75,18 +159,6 @@
       @focus="emit('focus', $event)"
       @blur="emit('blur', $event)"
     />
-
-    <p
-      v-if="errorText"
-      :id="descriptionId"
-      :class="`${base}-error`"
-      role="alert"
-    >
-      {{ errorText }}
-    </p>
-    <p v-else-if="helpText" :id="descriptionId" :class="`${base}-help`">
-      {{ helpText }}
-    </p>
   </div>
 </template>
 
@@ -109,10 +181,25 @@
     color: tokens.color('text');
     line-height: tokens.line-height('tight');
 
-    &__required {
-      color: tokens.color('error');
-      margin-left: 0.125em;
+    &__optional {
+      font-weight: tokens.font-weight('normal');
+      color: tokens.color('text-secondary');
     }
+  }
+
+  .#{$prefix}-input-hint {
+    font-size: tokens.font-size('sm');
+    line-height: tokens.line-height('normal');
+    color: tokens.color('text-secondary');
+    margin: 0;
+  }
+
+  .#{$prefix}-input-error {
+    font-size: tokens.font-size('sm');
+    line-height: tokens.line-height('normal');
+    color: tokens.color('error');
+    font-weight: tokens.font-weight('semibold');
+    margin: 0;
   }
 
   .#{$prefix}-input {
@@ -154,6 +241,40 @@
       padding: tokens.space('md') tokens.space('xl');
     }
 
+    // Width presets (rem-based, per designsystem.dk)
+    &-width-xxs {
+      max-width: 8rem;
+    }
+    &-width-xs {
+      max-width: 16rem;
+    }
+    &-width-s {
+      max-width: 24rem;
+    }
+    &-width-m {
+      max-width: 32rem;
+    }
+    &-width-l {
+      max-width: 40rem;
+    }
+    &-width-xl {
+      max-width: 48rem;
+    }
+
+    // Width by character count
+    &-char-4 {
+      max-width: 6ch;
+    }
+    &-char-8 {
+      max-width: 10ch;
+    }
+    &-char-11 {
+      max-width: 13ch;
+    }
+    &-char-27 {
+      max-width: 29ch;
+    }
+
     // States
     &--error {
       border-color: tokens.color('error');
@@ -179,16 +300,46 @@
     }
   }
 
-  .#{$prefix}-input-help {
-    font-size: tokens.font-size('sm');
-    line-height: tokens.line-height('normal');
-    color: tokens.color('text-secondary');
+  // Prefix / suffix wrapper
+  .#{$prefix}-input-wrapper {
+    display: flex;
+    align-items: stretch;
+
+    .#{$prefix}-input {
+      flex: 1;
+      min-width: 0;
+    }
+
+    &--prefix .#{$prefix}-input {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    &--suffix .#{$prefix}-input {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
   }
 
-  .#{$prefix}-input-error {
-    font-size: tokens.font-size('sm');
-    line-height: tokens.line-height('normal');
-    color: tokens.color('error');
-    font-weight: tokens.font-weight('semibold');
+  .#{$prefix}-input-prefix,
+  .#{$prefix}-input-suffix {
+    display: flex;
+    align-items: center;
+    padding: tokens.space('sm') tokens.space('md');
+    background-color: tokens.color('surface');
+    border: 1px solid tokens.color('border-medium');
+    color: tokens.color('text-secondary');
+    font-size: tokens.font-size('base');
+    white-space: nowrap;
+  }
+
+  .#{$prefix}-input-prefix {
+    border-right: 0;
+    border-radius: tokens.radius('md') 0 0 tokens.radius('md');
+  }
+
+  .#{$prefix}-input-suffix {
+    border-left: 0;
+    border-radius: 0 tokens.radius('md') tokens.radius('md') 0;
   }
 </style>

@@ -25,6 +25,8 @@ export type {
   InputSize,
   InputType,
   InputRadius,
+  InputWidth,
+  InputCharWidth,
 } from './atoms/Input';
 
 // Composables

@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TextInput,
-  StyleSheet,
   type ViewStyle,
   type TextStyle,
   type KeyboardTypeOptions,
@@ -34,9 +33,13 @@ function getKeyboardType(type: InputType): KeyboardTypeOptions {
 /**
  * GTInput — text input component driven by Grundtone theme tokens.
  *
+ * Help text and error messages are placed between label and input,
+ * following form field best practices.
+ *
  * @example
  * <GTInput value={name} onChangeText={setName} label="Name" />
  * <GTInput value={email} onChangeText={setEmail} type="email" errorText="Invalid email" />
+ * <GTInput value={amount} onChangeText={setAmount} prefix="kr." label="Amount" />
  */
 export function GTInput({
   value,
@@ -53,12 +56,21 @@ export function GTInput({
   disabled = false,
   readonly = false,
   required = false,
+  optionalLabel,
   block = false,
   maxLength,
+  prefix,
+  suffix,
   accessibilityLabel,
 }: InputProps) {
   const { theme } = useGrundtoneTheme();
   const [isFocused, setIsFocused] = useState(false);
+
+  const sp = (key: keyof typeof theme.spacing) => rem(theme.spacing[key]);
+  const fs = (key: keyof typeof theme.typography.fontSize) =>
+    rem(theme.typography.fontSize[key]);
+  const fw = (key: keyof typeof theme.typography.fontWeight) =>
+    `${theme.typography.fontWeight[key]}` as TextStyle['fontWeight'];
 
   const sizeStyles = getSizeStyles(size, theme);
   const radiusStyle = getRadiusStyle(rounded, theme.radius);
@@ -70,7 +82,7 @@ export function GTInput({
       : theme.colors.borderMedium;
 
   const inputStyle: ViewStyle & TextStyle = {
-    ...styles.input,
+    borderWidth: 1,
     ...sizeStyles,
     ...radiusStyle,
     borderColor,
@@ -79,7 +91,39 @@ export function GTInput({
     color: theme.colors.text,
     fontFamily: theme.typography.fontFamily.base,
     opacity: disabled ? 0.5 : 1,
-    ...(block ? styles.block : undefined),
+    ...(block ? { width: '100%' as const } : undefined),
+  };
+
+  const hasAffix = !!prefix || !!suffix;
+
+  // When using prefix/suffix, remove border radius from adjacent sides
+  const affixInputStyle: ViewStyle & TextStyle = hasAffix
+    ? {
+        ...inputStyle,
+        ...(prefix
+          ? {
+              borderTopLeftRadius: 0,
+              borderBottomLeftRadius: 0,
+              borderLeftWidth: 0,
+            }
+          : {}),
+        ...(suffix
+          ? {
+              borderTopRightRadius: 0,
+              borderBottomRightRadius: 0,
+              borderRightWidth: 0,
+            }
+          : {}),
+        flex: 1,
+      }
+    : inputStyle;
+
+  const affixStyle: ViewStyle & TextStyle = {
+    justifyContent: 'center',
+    paddingHorizontal: sp('md'),
+    backgroundColor: theme.colors.surface,
+    borderWidth: 1,
+    borderColor,
   };
 
   function handleFocus() {
@@ -92,74 +136,132 @@ export function GTInput({
     onBlur?.();
   }
 
+  const textInput = (
+    <TextInput
+      style={hasAffix ? affixInputStyle : inputStyle}
+      value={value}
+      onChangeText={onChangeText}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+      placeholder={placeholder}
+      placeholderTextColor={theme.colors.textSecondary}
+      editable={!disabled && !readonly}
+      secureTextEntry={type === 'password'}
+      keyboardType={getKeyboardType(type)}
+      maxLength={maxLength}
+      accessibilityLabel={accessibilityLabel ?? label}
+      accessibilityState={{ disabled }}
+    />
+  );
+
   return (
-    <View style={block ? styles.block : undefined}>
+    <View style={block ? { width: '100%' as const } : undefined}>
+      {/* Label */}
       {label ? (
         <Text
-          style={[
-            styles.label,
-            {
-              color: theme.colors.text,
-              fontFamily: theme.typography.fontFamily.base,
-              fontSize: rem(theme.typography.fontSize.sm),
-              fontWeight:
-                `${theme.typography.fontWeight.medium}` as TextStyle['fontWeight'],
-            },
-          ]}
+          style={{
+            marginBottom: sp('xs'),
+            color: theme.colors.text,
+            fontFamily: theme.typography.fontFamily.base,
+            fontSize: fs('sm'),
+            fontWeight: fw('medium'),
+          }}
         >
           {label}
-          {required ? (
-            <Text style={{ color: theme.colors.error }}> *</Text>
+          {optionalLabel && !required ? (
+            <Text
+              style={{
+                color: theme.colors.textSecondary,
+                fontWeight: fw('normal'),
+              }}
+            >
+              {' '}
+              {optionalLabel}
+            </Text>
           ) : null}
         </Text>
       ) : null}
 
-      <TextInput
-        style={inputStyle}
-        value={value}
-        onChangeText={onChangeText}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        placeholder={placeholder}
-        placeholderTextColor={theme.colors.textSecondary}
-        editable={!disabled && !readonly}
-        secureTextEntry={type === 'password'}
-        keyboardType={getKeyboardType(type)}
-        maxLength={maxLength}
-        accessibilityLabel={accessibilityLabel ?? label}
-        accessibilityState={{ disabled }}
-      />
-
-      {errorText ? (
+      {/* Help text — between label and input */}
+      {helpText && !errorText ? (
         <Text
-          style={[
-            styles.errorText,
-            {
-              color: theme.colors.error,
-              fontFamily: theme.typography.fontFamily.base,
-              fontSize: rem(theme.typography.fontSize.sm),
-              fontWeight:
-                `${theme.typography.fontWeight.semibold}` as TextStyle['fontWeight'],
-            },
-          ]}
-          accessibilityRole="alert"
-        >
-          {errorText}
-        </Text>
-      ) : helpText ? (
-        <Text
-          style={[
-            styles.helpText,
-            {
-              color: theme.colors.textSecondary,
-              fontFamily: theme.typography.fontFamily.base,
-              fontSize: rem(theme.typography.fontSize.sm),
-            },
-          ]}
+          style={{
+            marginBottom: sp('xs'),
+            color: theme.colors.textSecondary,
+            fontFamily: theme.typography.fontFamily.base,
+            fontSize: fs('sm'),
+          }}
         >
           {helpText}
         </Text>
       ) : null}
+
+      {/* Error text — between label and input */}
+      {errorText ? (
+        <Text
+          style={{
+            marginBottom: sp('xs'),
+            color: theme.colors.error,
+            fontFamily: theme.typography.fontFamily.base,
+            fontSize: fs('sm'),
+            fontWeight: fw('semibold'),
+          }}
+          accessibilityRole="alert"
+        >
+          {errorText}
+        </Text>
+      ) : null}
+
+      {/* Input with optional prefix/suffix */}
+      {hasAffix ? (
+        <View style={{ flexDirection: 'row', alignItems: 'stretch' }}>
+          {prefix ? (
+            <View
+              style={[
+                affixStyle,
+                radiusStyle,
+                { borderTopRightRadius: 0, borderBottomRightRadius: 0 },
+              ]}
+              accessibilityElementsHidden
+              importantForAccessibility="no-hide-descendants"
+            >
+              <Text
+                style={{
+                  color: theme.colors.textSecondary,
+                  fontFamily: theme.typography.fontFamily.base,
+                  fontSize: fs('base'),
+                }}
+              >
+                {prefix}
+              </Text>
+            </View>
+          ) : null}
+          {textInput}
+          {suffix ? (
+            <View
+              style={[
+                affixStyle,
+                radiusStyle,
+                { borderTopLeftRadius: 0, borderBottomLeftRadius: 0 },
+              ]}
+              accessibilityElementsHidden
+              importantForAccessibility="no-hide-descendants"
+            >
+              <Text
+                style={{
+                  color: theme.colors.textSecondary,
+                  fontFamily: theme.typography.fontFamily.base,
+                  fontSize: fs('base'),
+                }}
+              >
+                {suffix}
+              </Text>
+            </View>
+          ) : null}
+        </View>
+      ) : (
+        textInput
+      )}
     </View>
   );
 }
@@ -199,21 +301,3 @@ function getRadiusStyle(
   if (rounded === 'none') return { borderRadius: 0 };
   return { borderRadius: rem(radius[rounded]) };
 }
-
-const styles = StyleSheet.create({
-  input: {
-    borderWidth: 1,
-  },
-  label: {
-    marginBottom: 4,
-  },
-  helpText: {
-    marginTop: 4,
-  },
-  errorText: {
-    marginTop: 4,
-  },
-  block: {
-    width: '100%',
-  },
-});
