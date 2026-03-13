@@ -207,6 +207,7 @@ export default withMermaid(
             items: [
               { text: 'Button', link: '/vue/button' },
               { text: 'Icon', link: '/vue/icon' },
+              { text: 'Input', link: '/vue/input' },
             ],
           },
         ],
@@ -304,6 +305,7 @@ export default withMermaid(
               { text: 'Header', link: '/web/c-header' },
               { text: 'Product Card', link: '/web/c-product-card' },
               { text: 'Product Gallery', link: '/web/c-product-gallery' },
+              { text: 'Input', link: '/web/c-input' },
             ],
           },
           {
@@ -330,6 +332,7 @@ export default withMermaid(
               { text: 'Transitions', link: '/react-native/transitions' },
               { text: 'Position', link: '/react-native/position' },
               { text: 'Icons', link: '/react-native/icons' },
+              { text: 'Input', link: '/react-native/input' },
             ],
           },
         ],

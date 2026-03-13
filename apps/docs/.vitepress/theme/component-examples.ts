@@ -158,4 +158,33 @@ export const componentExamples: Record<string, string> = {
   'c-footer': `<footer class="footer text-xs text-tertiary text-center">
   <p>&copy; 2026 Example. All rights reserved.</p>
 </footer>`,
+
+  'c-input-sizes': `<div class="flex flex-col gap-2" style="max-width: 360px">
+  <input class="input input--sm" placeholder="Small input" />
+  <input class="input input--md" placeholder="Medium input" />
+  <input class="input input--lg" placeholder="Large input" />
+</div>`,
+
+  'c-input-label': `<div class="input-field" style="max-width: 360px">
+  <label class="input-label" for="preview-name">Full name <span class="input-label__required">*</span></label>
+  <input id="preview-name" class="input input--md" type="text" placeholder="John Doe" required aria-required="true" />
+  <p class="input-help">Enter your full legal name</p>
+</div>`,
+
+  'c-input-error': `<div class="input-field" style="max-width: 360px">
+  <label class="input-label" for="preview-user">Username</label>
+  <input id="preview-user" class="input input--md input--error" type="text" value="admin" aria-invalid="true" aria-describedby="preview-user-err" />
+  <p id="preview-user-err" class="input-error" role="alert">Username is already taken</p>
+</div>`,
+
+  'c-input-states': `<div class="flex flex-col gap-3" style="max-width: 360px">
+  <div class="input-field">
+    <label class="input-label" for="preview-dis">Disabled</label>
+    <input id="preview-dis" class="input input--md" disabled value="Cannot edit" />
+  </div>
+  <div class="input-field">
+    <label class="input-label" for="preview-ro">Readonly</label>
+    <input id="preview-ro" class="input input--md" readonly value="Read only value" />
+  </div>
+</div>`,
 };

@@ -1,10 +1,18 @@
 import { useState } from 'react';
 import { ScrollView, View, Text, StyleSheet } from 'react-native';
-import { GTButton, GTIcon, useGrundtoneTheme } from '@grundtone/react-native';
+import {
+  GTButton,
+  GTIcon,
+  GTInput,
+  useGrundtoneTheme,
+} from '@grundtone/react-native';
 
 export default function ComponentsScreen() {
   const { theme } = useGrundtoneTheme();
   const [isLoading, setIsLoading] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const [emailValue, setEmailValue] = useState('');
+  const [errorValue, setErrorValue] = useState('');
 
   function simulateLoad() {
     setIsLoading(true);
@@ -195,6 +203,110 @@ export default function ComponentsScreen() {
             Search
           </Text>
         </GTButton>
+      </View>
+      <Text
+        style={[
+          styles.heading,
+          {
+            color: theme.colors.text,
+            fontFamily: theme.typography.fontFamily.base,
+          },
+        ]}
+      >
+        Input sizes
+      </Text>
+      <View style={styles.group}>
+        <GTInput
+          value={inputValue}
+          onChangeText={setInputValue}
+          size="sm"
+          placeholder="Small input"
+        />
+        <GTInput
+          value={inputValue}
+          onChangeText={setInputValue}
+          size="md"
+          placeholder="Medium input"
+        />
+        <GTInput
+          value={inputValue}
+          onChangeText={setInputValue}
+          size="lg"
+          placeholder="Large input"
+        />
+      </View>
+
+      <Text
+        style={[
+          styles.heading,
+          {
+            color: theme.colors.text,
+            fontFamily: theme.typography.fontFamily.base,
+          },
+        ]}
+      >
+        Input with label &amp; help
+      </Text>
+      <View style={styles.group}>
+        <GTInput
+          value={inputValue}
+          onChangeText={setInputValue}
+          label="Full name"
+          placeholder="John Doe"
+          helpText="Enter your full legal name"
+          required
+        />
+        <GTInput
+          value={emailValue}
+          onChangeText={setEmailValue}
+          type="email"
+          label="Email"
+          placeholder="john@example.com"
+        />
+      </View>
+
+      <Text
+        style={[
+          styles.heading,
+          {
+            color: theme.colors.text,
+            fontFamily: theme.typography.fontFamily.base,
+          },
+        ]}
+      >
+        Input states
+      </Text>
+      <View style={styles.group}>
+        <GTInput label="Disabled" disabled value="Cannot edit" />
+        <GTInput label="Readonly" readonly value="Read only value" />
+        <GTInput
+          value={errorValue}
+          onChangeText={setErrorValue}
+          label="With error"
+          errorText="This field is required"
+          placeholder="Type something..."
+        />
+      </View>
+
+      <Text
+        style={[
+          styles.heading,
+          {
+            color: theme.colors.text,
+            fontFamily: theme.typography.fontFamily.base,
+          },
+        ]}
+      >
+        Input types
+      </Text>
+      <View style={styles.group}>
+        <GTInput
+          type="password"
+          label="Password"
+          placeholder="Enter password"
+        />
+        <GTInput type="search" label="Search" placeholder="Search..." />
+        <GTInput type="number" label="Amount" placeholder="0" />
       </View>
     </ScrollView>
   );

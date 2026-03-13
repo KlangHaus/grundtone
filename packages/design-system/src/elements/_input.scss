@@ -1,0 +1,20 @@
+// Element: <input>
+// Base reset for input elements.
+
+input,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: var(--color-text-secondary);
+    opacity: 0.7;
+  }
+}

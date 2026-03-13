@@ -1,9 +1,12 @@
 <script setup lang="ts">
   import { ref } from 'vue';
-  import { GTButton, GTIcon } from '@grundtone/vue';
+  import { GTButton, GTIcon, GTInput } from '@grundtone/vue';
   import { iconRegistry } from '@grundtone/core';
 
   const isLoading = ref(false);
+  const inputValue = ref('');
+  const emailValue = ref('');
+  const errorValue = ref('');
 
   function simulateLoad() {
     isLoading.value = true;
@@ -98,6 +101,72 @@
     </section>
 
     <section>
+      <h2>Input sizes</h2>
+      <div class="stack">
+        <GTInput v-model="inputValue" size="sm" placeholder="Small input" />
+        <GTInput v-model="inputValue" size="md" placeholder="Medium input" />
+        <GTInput v-model="inputValue" size="lg" placeholder="Large input" />
+      </div>
+    </section>
+
+    <section>
+      <h2>Input with label &amp; help</h2>
+      <div class="stack">
+        <GTInput
+          v-model="inputValue"
+          label="Full name"
+          placeholder="John Doe"
+          help-text="Enter your full legal name"
+          required
+        />
+        <GTInput
+          v-model="emailValue"
+          type="email"
+          label="Email"
+          placeholder="john@example.com"
+          autocomplete="email"
+        />
+      </div>
+    </section>
+
+    <section>
+      <h2>Input states</h2>
+      <div class="stack">
+        <GTInput label="Disabled" disabled model-value="Cannot edit" />
+        <GTInput label="Readonly" readonly model-value="Read only value" />
+        <GTInput
+          v-model="errorValue"
+          label="With error"
+          error-text="This field is required"
+          placeholder="Type something..."
+        />
+      </div>
+    </section>
+
+    <section>
+      <h2>Input rounded</h2>
+      <div class="stack">
+        <GTInput rounded="none" placeholder="none" />
+        <GTInput rounded="sm" placeholder="sm" />
+        <GTInput placeholder="md (default)" />
+        <GTInput rounded="full" placeholder="full" />
+      </div>
+    </section>
+
+    <section>
+      <h2>Input types</h2>
+      <div class="stack">
+        <GTInput
+          type="password"
+          label="Password"
+          placeholder="Enter password"
+        />
+        <GTInput type="search" label="Search" placeholder="Search..." />
+        <GTInput type="number" label="Amount" placeholder="0" />
+      </div>
+    </section>
+
+    <section>
       <h2>As link</h2>
       <div class="row">
         <GTButton as="a" href="#link">Link button</GTButton>
@@ -139,6 +208,12 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
+      gap: tokens.space('sm');
+    }
+
+    .stack {
+      display: flex;
+      flex-direction: column;
       gap: tokens.space('sm');
     }
   }

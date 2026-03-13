@@ -14,6 +14,13 @@ export type {
 } from './atoms/Button';
 export { GTIcon } from './atoms/Icon';
 export type { IconProps, IconSize } from './atoms/Icon';
+export { GTInput } from './atoms/Input';
+export type {
+  InputProps,
+  InputSize,
+  InputType,
+  InputRadius,
+} from './atoms/Input';
 
 // Molecules
 

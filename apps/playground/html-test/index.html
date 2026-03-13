@@ -260,6 +260,48 @@
       </div>
     </div>
 
+    <!-- ─── Input ─── -->
+    <h2 class="text-xl font-semibold">Input</h2>
+
+    <h3 class="text-base font-semibold" style="margin-top:1rem">Sizes</h3>
+    <div class="flex flex-col gap-2 max-w-sm">
+      <input class="input input--sm" placeholder="Small input" />
+      <input class="input input--md" placeholder="Medium input" />
+      <input class="input input--lg" placeholder="Large input" />
+    </div>
+
+    <h3 class="text-base font-semibold" style="margin-top:1rem">With label &amp; help</h3>
+    <div class="flex flex-col gap-3 max-w-sm">
+      <div class="input-field">
+        <label class="input-label" for="demo-name">
+          Full name <span class="input-label__required">*</span>
+        </label>
+        <input id="demo-name" class="input input--md" type="text" placeholder="John Doe" required aria-required="true" />
+        <p class="input-help">Enter your full legal name</p>
+      </div>
+      <div class="input-field">
+        <label class="input-label" for="demo-email">Email</label>
+        <input id="demo-email" class="input input--md" type="email" placeholder="john@example.com" />
+      </div>
+    </div>
+
+    <h3 class="text-base font-semibold" style="margin-top:1rem">States</h3>
+    <div class="flex flex-col gap-3 max-w-sm">
+      <div class="input-field">
+        <label class="input-label" for="demo-disabled">Disabled</label>
+        <input id="demo-disabled" class="input input--md" disabled value="Cannot edit" />
+      </div>
+      <div class="input-field">
+        <label class="input-label" for="demo-readonly">Readonly</label>
+        <input id="demo-readonly" class="input input--md" readonly value="Read only value" />
+      </div>
+      <div class="input-field">
+        <label class="input-label" for="demo-error">With error</label>
+        <input id="demo-error" class="input input--md input--error" type="text" placeholder="Type something..." aria-invalid="true" aria-describedby="demo-error-msg" />
+        <p id="demo-error-msg" class="input-error" role="alert">This field is required</p>
+      </div>
+    </div>
+
     <!-- ─── Aspect Ratio ─── -->
     <h2 class="text-xl font-semibold">Aspect Ratio</h2>
     <div class="flex flex-wrap gap-2">

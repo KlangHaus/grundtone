@@ -5,6 +5,7 @@ import CodePreview from './components/CodePreview.vue';
 import ColorTokens from './components/ColorTokens.vue';
 import ButtonDemo from '../../../../packages/vue/src/atoms/Button/demo.vue';
 import IconDemo from '../../../../packages/vue/src/atoms/Icon/demo.vue';
+import InputDemo from '../../../../packages/vue/src/atoms/Input/demo.vue';
 import IconGallery from './components/IconGallery.vue';
 import { setupColorPreview } from 'vitepress-plugin-color-preview/client';
 import 'vitepress-plugin-color-preview/style.css';
@@ -18,6 +19,7 @@ export default {
     app.component('ColorTokens', ColorTokens);
     app.component('ButtonDemo', ButtonDemo);
     app.component('IconDemo', IconDemo);
+    app.component('InputDemo', InputDemo);
     app.component('IconGallery', IconGallery);
   },
   setup() {

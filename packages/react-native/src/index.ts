@@ -50,6 +50,13 @@ export type {
   ButtonSize,
   ButtonRadius,
 } from './components/Button';
+export { GTInput } from './components/Input';
+export type {
+  InputProps,
+  InputSize,
+  InputType,
+  InputRadius,
+} from './components/Input';
 
 // Branding
 export {
