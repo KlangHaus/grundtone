@@ -14,10 +14,32 @@
       "import": "./dist/index.js",
       "require": "./dist/index.umd.cjs"
     },
-    "./dist/style.css": "./dist/index.css"
+    "./css": "./dist/index.css",
+    "./dist/style.css": "./dist/index.css",
+    "./scss": {
+      "sass": "./scss/index.scss",
+      "default": "./scss/index.scss"
+    },
+    "./scss/lib": {
+      "sass": "./scss/lib.scss",
+      "default": "./scss/lib.scss"
+    },
+    "./scss/breakpoints": {
+      "sass": "./scss/breakpoints.scss",
+      "default": "./scss/breakpoints.scss"
+    },
+    "./scss/colors": {
+      "sass": "./scss/colors.scss",
+      "default": "./scss/colors.scss"
+    },
+    "./scss/color-palette": {
+      "sass": "./scss/color-palette.scss",
+      "default": "./scss/color-palette.scss"
+    }
   },
   "files": [
-    "dist"
+    "dist",
+    "scss"
   ],
   "repository": {
     "type": "git",

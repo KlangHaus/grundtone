@@ -24,7 +24,7 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@use "@grundtone/design-system/scss/lib" as tokens;`,
+          additionalData: `@use "@grundtone/vue/scss/lib" as tokens;`,
         },
       },
     },
