@@ -2,9 +2,11 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import {
   GrundtoneThemeProvider,
+  IconRegistryProvider,
   useGrundtoneTheme,
 } from '@grundtone/react-native';
 import { createTheme } from '@grundtone/core';
+import { iconRegistry } from '@grundtone/icons';
 import 'react-native-reanimated';
 
 const { light, dark } = createTheme({
@@ -34,7 +36,9 @@ function InnerLayout() {
 export default function RootLayout() {
   return (
     <GrundtoneThemeProvider light={light} dark={dark}>
-      <InnerLayout />
+      <IconRegistryProvider registry={iconRegistry}>
+        <InnerLayout />
+      </IconRegistryProvider>
     </GrundtoneThemeProvider>
   );
 }
