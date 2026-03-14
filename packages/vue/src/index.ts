@@ -28,6 +28,8 @@ export type {
   InputWidth,
   InputCharWidth,
 } from './atoms/Input';
+export { GTToggle } from './atoms/Toggle';
+export type { ToggleProps, ToggleSize } from './atoms/Toggle';
 
 // Composables
 export { useTheme } from './composables/useTheme';

@@ -8,5 +8,8 @@ export * from './types';
 export * from './theme';
 export * from './theme-preset';
 
+// Components
+export * from './toggle';
+
 // Branding
 export * from './branding';

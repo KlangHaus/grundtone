@@ -6,6 +6,7 @@ import ColorTokens from './components/ColorTokens.vue';
 import ButtonDemo from '../../../../packages/vue/src/atoms/Button/demo.vue';
 import IconDemo from '../../../../packages/vue/src/atoms/Icon/demo.vue';
 import InputDemo from '../../../../packages/vue/src/atoms/Input/demo.vue';
+import ToggleDemo from '../../../../packages/vue/src/atoms/Toggle/demo.vue';
 import IconGallery from './components/IconGallery.vue';
 import { GT_ICON_REGISTRY_KEY } from '../../../../packages/vue/src/atoms/Icon/types';
 import { iconRegistry } from '@grundtone/icons';
@@ -25,6 +26,7 @@ export default {
     app.component('ButtonDemo', ButtonDemo);
     app.component('IconDemo', IconDemo);
     app.component('InputDemo', InputDemo);
+    app.component('ToggleDemo', ToggleDemo);
     app.component('IconGallery', IconGallery);
     app.component('DiagramPreview', DiagramPreview);
   },

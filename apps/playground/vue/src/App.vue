@@ -4,6 +4,7 @@
     GTButton,
     GTIcon,
     GTInput,
+    GTToggle,
     useField,
     useFormValidation,
     required,
@@ -13,6 +14,8 @@
   import { iconRegistry } from '@grundtone/icons';
 
   const isLoading = ref(false);
+  const toggleValue = ref(false);
+  const toggleDisabled = ref(true);
   const inputValue = ref('');
   const emailValue = ref('');
   const errorValue = ref('');
@@ -262,6 +265,32 @@
         </div>
         <p v-if="formResult">{{ formResult }}</p>
       </form>
+    </section>
+
+    <section class="mb-6">
+      <h2 class="mb-2">Toggle</h2>
+      <div class="flex flex-col gap-2">
+        <GTToggle v-model="toggleValue" label="Notifications" />
+        <p>{{ toggleValue ? 'On' : 'Off' }}</p>
+      </div>
+    </section>
+
+    <section class="mb-6">
+      <h2 class="mb-2">Toggle sizes</h2>
+      <div class="flex flex-col gap-2">
+        <GTToggle v-model="toggleValue" size="sm" label="Small" />
+        <GTToggle v-model="toggleValue" size="md" label="Medium" />
+        <GTToggle v-model="toggleValue" size="lg" label="Large" />
+      </div>
+    </section>
+
+    <section class="mb-6">
+      <h2 class="mb-2">Toggle states</h2>
+      <div class="flex flex-col gap-2">
+        <GTToggle :model-value="true" label="Always on" />
+        <GTToggle :model-value="false" label="Always off" />
+        <GTToggle v-model="toggleDisabled" disabled label="Disabled" />
+      </div>
     </section>
 
     <section class="mb-6">

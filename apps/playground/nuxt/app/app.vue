@@ -3,6 +3,7 @@
   import { iconRegistry } from '@grundtone/icons';
 
   const isLoading = ref(false);
+  const toggleValue = ref(false);
   const inputValue = ref('');
   const emailValue = ref('');
   const errorValue = ref('');
@@ -242,6 +243,16 @@
         </div>
         <p v-if="formResult">{{ formResult }}</p>
       </form>
+    </section>
+
+    <section class="mb-6">
+      <h2 class="mb-2">Toggle</h2>
+      <div class="flex flex-col gap-2">
+        <GTToggle v-model="toggleValue" label="Notifications" />
+        <GTToggle v-model="toggleValue" size="sm" label="Small" />
+        <GTToggle v-model="toggleValue" size="lg" label="Large" />
+        <GTToggle :model-value="true" disabled label="Disabled" />
+      </div>
     </section>
 
     <section class="mb-6">

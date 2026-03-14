@@ -4,6 +4,7 @@ import {
   GTButton,
   GTIcon,
   GTInput,
+  GTToggle,
   useGrundtoneTheme,
   useField,
   useFormValidation,
@@ -13,8 +14,10 @@ import {
 } from '@grundtone/react-native';
 
 export default function ComponentsScreen() {
-  const { theme } = useGrundtoneTheme();
+  const { theme, isDark, setMode } = useGrundtoneTheme();
   const [isLoading, setIsLoading] = useState(false);
+  const [toggleSm, setToggleSm] = useState(false);
+  const [toggleLg, setToggleLg] = useState(true);
   const [inputValue, setInputValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
   const [errorValue, setErrorValue] = useState('');
@@ -83,6 +86,28 @@ export default function ComponentsScreen() {
       }}
     >
       <Text style={titleStyle}>Grundtone Expo Playground</Text>
+
+      <Text style={headingStyle}>Toggle</Text>
+      <View style={groupStyle}>
+        <GTToggle
+          value={isDark}
+          onValueChange={v => setMode(v ? 'dark' : 'light')}
+          label="Dark mode"
+        />
+        <GTToggle
+          value={toggleSm}
+          onValueChange={setToggleSm}
+          label="Small"
+          size="sm"
+        />
+        <GTToggle
+          value={toggleLg}
+          onValueChange={setToggleLg}
+          label="Large"
+          size="lg"
+        />
+        <GTToggle value={true} disabled label="Disabled" />
+      </View>
 
       <Text style={headingStyle}>Variants</Text>
       <View style={rowStyle}>

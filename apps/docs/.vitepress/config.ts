@@ -236,6 +236,7 @@ export default defineConfig({
           items: [
             { text: 'Button', link: '/vue/button' },
             { text: 'Input', link: '/vue/input' },
+            { text: 'Toggle', link: '/vue/toggle' },
           ],
         },
         {

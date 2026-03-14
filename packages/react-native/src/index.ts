@@ -62,6 +62,8 @@ export type {
   InputType,
   InputRadius,
 } from './components/Input';
+export { GTToggle } from './components/Toggle';
+export type { ToggleProps, ToggleSize } from './components/Toggle';
 
 // Hooks
 export { useField } from './useField';
