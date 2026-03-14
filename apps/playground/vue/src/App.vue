@@ -1,10 +1,11 @@
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { ref, computed } from 'vue';
   import {
     GTButton,
     GTIcon,
     GTInput,
     GTToggle,
+    useTheme,
     useField,
     useFormValidation,
     required,
@@ -12,6 +13,12 @@
     minLength,
   } from '@grundtone/vue';
   import { iconRegistry } from '@grundtone/icons';
+
+  const { isDark, mode, setMode, toggleMode } = useTheme();
+  const darkToggle = computed({
+    get: () => isDark.value,
+    set: () => toggleMode(),
+  });
 
   const isLoading = ref(false);
   const toggleValue = ref(false);
@@ -53,6 +60,36 @@
 <template>
   <div class="container py-6">
     <h1 class="mb-6">Grundtone Vue Playground</h1>
+
+    <section class="mb-6">
+      <h2 class="mb-2">Theme mode</h2>
+      <div class="flex flex-wrap items-center gap-2">
+        <GTToggle v-model="darkToggle" label="Dark mode" />
+        <div class="flex gap-2">
+          <GTButton
+            size="sm"
+            :variant="mode === 'light' ? 'primary' : 'outlined'"
+            @click="setMode('light')"
+          >
+            Light
+          </GTButton>
+          <GTButton
+            size="sm"
+            :variant="mode === 'dark' ? 'primary' : 'outlined'"
+            @click="setMode('dark')"
+          >
+            Dark
+          </GTButton>
+          <GTButton
+            size="sm"
+            :variant="mode === 'auto' ? 'primary' : 'outlined'"
+            @click="setMode('auto')"
+          >
+            Auto
+          </GTButton>
+        </div>
+      </div>
+    </section>
 
     <section class="mb-6">
       <h2 class="mb-2">Variants</h2>

@@ -31,6 +31,11 @@ export type {
 export { GTToggle } from './atoms/Toggle';
 export type { ToggleProps, ToggleSize } from './atoms/Toggle';
 
+// Theme
+export { default as GrundtoneThemeProvider } from './ThemeProvider.vue';
+export { applyThemeToDOM } from './applyThemeToDOM';
+export { getSystemThemeMode } from '@grundtone/utils';
+
 // Composables
 export { useTheme } from './composables/useTheme';
 export { useField } from './composables/useField';

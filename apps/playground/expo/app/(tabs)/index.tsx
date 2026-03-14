@@ -14,7 +14,7 @@ import {
 } from '@grundtone/react-native';
 
 export default function ComponentsScreen() {
-  const { theme, isDark, setMode } = useGrundtoneTheme();
+  const { theme, isDark, mode, setMode } = useGrundtoneTheme();
   const [isLoading, setIsLoading] = useState(false);
   const [toggleSm, setToggleSm] = useState(false);
   const [toggleLg, setToggleLg] = useState(true);
@@ -107,6 +107,31 @@ export default function ComponentsScreen() {
           size="lg"
         />
         <GTToggle value={true} disabled label="Disabled" />
+      </View>
+
+      <Text style={headingStyle}>Theme mode</Text>
+      <View style={rowStyle}>
+        <GTButton
+          size="sm"
+          variant={mode === 'light' ? 'primary' : 'outlined'}
+          onPress={() => setMode('light')}
+        >
+          Light
+        </GTButton>
+        <GTButton
+          size="sm"
+          variant={mode === 'dark' ? 'primary' : 'outlined'}
+          onPress={() => setMode('dark')}
+        >
+          Dark
+        </GTButton>
+        <GTButton
+          size="sm"
+          variant={mode === 'auto' ? 'primary' : 'outlined'}
+          onPress={() => setMode('auto')}
+        >
+          Auto
+        </GTButton>
       </View>
 
       <Text style={headingStyle}>Variants</Text>

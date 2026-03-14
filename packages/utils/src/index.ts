@@ -11,3 +11,6 @@ export * from './helpers';
 
 // Validators
 export * from './utils/validators';
+
+// Theme mode
+export * from './utils/theme-mode';
