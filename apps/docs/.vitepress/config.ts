@@ -376,9 +376,18 @@ export default defineConfig({
       ],
       '/react-native/': [
         {
+          text: 'Components',
+          items: [
+            { text: 'Alert', link: '/react-native/c-alert' },
+            { text: 'Button', link: '/react-native/c-button' },
+            { text: 'Input', link: '/react-native/c-input' },
+            { text: 'Toggle', link: '/react-native/c-toggle' },
+          ],
+        },
+        {
           text: 'React Native',
           items: [
-            { text: 'Alert', link: '/react-native/alert' },
+            { text: 'Alert (API)', link: '/react-native/alert' },
             { text: 'Colors', link: '/react-native/colors' },
             { text: 'Branding', link: '/react-native/branding' },
             { text: 'Typography', link: '/react-native/typography' },
@@ -388,7 +397,7 @@ export default defineConfig({
             { text: 'Z-Index', link: '/react-native/z-index' },
             { text: 'Transitions', link: '/react-native/transitions' },
             { text: 'Position', link: '/react-native/position' },
-            { text: 'Input', link: '/react-native/input' },
+            { text: 'Input (API)', link: '/react-native/input' },
           ],
         },
         {

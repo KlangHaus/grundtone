@@ -10,6 +10,7 @@ import ToggleDemo from '../../../../packages/vue/src/atoms/Toggle/demo.vue';
 import AlertDemo from '../../../../packages/vue/src/molecules/Alert/demo.vue';
 import BreadcrumbDemo from '../../../../packages/vue/src/molecules/Breadcrumb/demo.vue';
 import IconGallery from './components/IconGallery.vue';
+import SnackEmbed from './components/SnackEmbed.vue';
 import { GT_ICON_REGISTRY_KEY } from '../../../../packages/vue/src/atoms/Icon/types';
 import { iconRegistry } from '@grundtone/icons';
 import { setupColorPreview } from 'vitepress-plugin-color-preview/client';
@@ -32,6 +33,7 @@ export default {
     app.component('AlertDemo', AlertDemo);
     app.component('BreadcrumbDemo', BreadcrumbDemo);
     app.component('IconGallery', IconGallery);
+    app.component('SnackEmbed', SnackEmbed);
     app.component('DiagramPreview', DiagramPreview);
   },
   setup() {

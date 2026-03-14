@@ -34,6 +34,7 @@
 export { GrundtoneThemeProvider, GrundtoneThemeContext } from './ThemeContext';
 export type { GrundtoneThemeContextValue, ThemeMode } from './ThemeContext';
 export { useGrundtoneTheme } from './useGrundtoneTheme';
+export { createTheme } from '@grundtone/core';
 export type { Theme } from '@grundtone/core';
 
 // Shadows
