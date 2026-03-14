@@ -234,6 +234,7 @@ export default defineConfig({
         {
           text: 'Components',
           items: [
+            { text: 'Alert', link: '/vue/alert' },
             { text: 'Button', link: '/vue/button' },
             { text: 'Input', link: '/vue/input' },
             { text: 'Toggle', link: '/vue/toggle' },
@@ -351,8 +352,8 @@ export default defineConfig({
           text: 'Components',
           collapsed: true,
           items: [
+            { text: 'Alert', link: '/web/c-alert' },
             { text: 'Prose', link: '/web/c-prose' },
-            { text: 'Callout', link: '/web/c-callout' },
             { text: 'Article Card', link: '/web/c-article-card' },
             { text: 'Article Meta', link: '/web/c-article-meta' },
             { text: 'Author Card', link: '/web/c-author-card' },
@@ -377,6 +378,7 @@ export default defineConfig({
         {
           text: 'React Native',
           items: [
+            { text: 'Alert', link: '/react-native/alert' },
             { text: 'Colors', link: '/react-native/colors' },
             { text: 'Branding', link: '/react-native/branding' },
             { text: 'Typography', link: '/react-native/typography' },

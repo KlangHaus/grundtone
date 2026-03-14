@@ -75,14 +75,41 @@ export const componentExamples: Record<string, string> = {
   </ul>
 </div>`,
 
-  'c-callout-info': `<div class="callout callout--info" style="font-size: var(--font-size-sm)">
-  <span>&#x2139;&#xFE0F;</span>
-  <p>This is an informational callout using <code>.callout--info</code>.</p>
+  'c-alert-info': `<div class="alert alert--info" role="status">
+  <div class="alert__content">
+    <div class="alert__body">
+      <p>This is an informational message.</p>
+    </div>
+  </div>
 </div>`,
 
-  'c-callout-warning': `<div class="callout callout--warning" style="font-size: var(--font-size-sm)">
-  <span>&#x26A0;&#xFE0F;</span>
-  <p>This is a warning callout using <code>.callout--warning</code>.</p>
+  'c-alert-success': `<div class="alert alert--success" role="status">
+  <div class="alert__content">
+    <div class="alert__body">
+      <p>Your changes have been saved successfully.</p>
+    </div>
+  </div>
+</div>`,
+
+  'c-alert-warning': `<div class="alert alert--warning" role="status">
+  <div class="alert__content">
+    <p class="alert__heading">Attention</p>
+    <div class="alert__body">
+      <p>Your session will expire in 5 minutes.</p>
+    </div>
+  </div>
+</div>`,
+
+  'c-alert-error': `<div class="alert alert--error" role="alert">
+  <div class="alert__content">
+    <p class="alert__heading">Form errors</p>
+    <div class="alert__body">
+      <p>Please fix the following errors before submitting.</p>
+    </div>
+    <div class="alert__footer">
+      <p>Fix the errors and try again.</p>
+    </div>
+  </div>
 </div>`,
 
   'c-article-card': `<article class="article-card shadow-sm" style="max-width: 420px">

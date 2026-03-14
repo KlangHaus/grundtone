@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ScrollView, View, Text } from 'react-native';
 import {
+  GTAlert,
   GTButton,
   GTIcon,
   GTInput,
@@ -86,6 +87,54 @@ export default function ComponentsScreen() {
       }}
     >
       <Text style={titleStyle}>Grundtone Expo Playground</Text>
+
+      <Text style={headingStyle}>Alert</Text>
+      <View style={groupStyle}>
+        <GTAlert variant="info" icon="info-circle">
+          <Text
+            style={{
+              color: theme.colors.text,
+              fontFamily: theme.typography.fontFamily.base,
+              fontSize: rem(theme.typography.fontSize.sm),
+            }}
+          >
+            This is an informational message.
+          </Text>
+        </GTAlert>
+        <GTAlert variant="success" icon="check-circle">
+          <Text
+            style={{
+              color: theme.colors.text,
+              fontFamily: theme.typography.fontFamily.base,
+              fontSize: rem(theme.typography.fontSize.sm),
+            }}
+          >
+            Your changes have been saved.
+          </Text>
+        </GTAlert>
+        <GTAlert variant="warning" icon="alert-triangle" heading="Attention">
+          <Text
+            style={{
+              color: theme.colors.text,
+              fontFamily: theme.typography.fontFamily.base,
+              fontSize: rem(theme.typography.fontSize.sm),
+            }}
+          >
+            Your session will expire in 5 minutes.
+          </Text>
+        </GTAlert>
+        <GTAlert variant="error" icon="alert-circle" heading="Form errors">
+          <Text
+            style={{
+              color: theme.colors.text,
+              fontFamily: theme.typography.fontFamily.base,
+              fontSize: rem(theme.typography.fontSize.sm),
+            }}
+          >
+            Please fix the errors before submitting.
+          </Text>
+        </GTAlert>
+      </View>
 
       <Text style={headingStyle}>Toggle</Text>
       <View style={groupStyle}>

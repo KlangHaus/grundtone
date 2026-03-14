@@ -2,6 +2,7 @@
   import { ref } from 'vue';
   import { iconRegistry } from '@grundtone/icons';
 
+  const showDismissible = ref(true);
   const isLoading = ref(false);
   const toggleValue = ref(false);
   const inputValue = ref('');
@@ -41,6 +42,33 @@
 <template>
   <div class="container py-6">
     <h1 class="mb-6">Grundtone Nuxt Playground</h1>
+
+    <section class="mb-6">
+      <h2 class="mb-2">Alert</h2>
+      <div class="flex flex-col gap-2">
+        <GTAlert variant="info" icon="info-circle">
+          <p>This is an informational message.</p>
+        </GTAlert>
+        <GTAlert variant="success" icon="check-circle">
+          <p>Your changes have been saved.</p>
+        </GTAlert>
+        <GTAlert variant="warning" icon="alert-triangle" heading="Attention">
+          <p>Your session will expire in 5 minutes.</p>
+        </GTAlert>
+        <GTAlert variant="error" icon="alert-circle" heading="Form errors">
+          <p>Please fix the errors before submitting.</p>
+        </GTAlert>
+        <GTAlert
+          v-if="showDismissible"
+          variant="info"
+          icon="info-circle"
+          dismissible
+          @dismiss="showDismissible = false"
+        >
+          <p>This alert can be dismissed.</p>
+        </GTAlert>
+      </div>
+    </section>
 
     <section class="mb-6">
       <h2 class="mb-2">Breadcrumb</h2>

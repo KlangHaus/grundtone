@@ -64,6 +64,8 @@ export type {
 } from './components/Input';
 export { GTToggle } from './components/Toggle';
 export type { ToggleProps, ToggleSize } from './components/Toggle';
+export { GTAlert } from './components/Alert';
+export type { AlertProps, AlertVariant } from './components/Alert';
 
 // Hooks
 export { useField } from './useField';

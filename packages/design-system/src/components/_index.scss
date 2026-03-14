@@ -1,13 +1,13 @@
 // Component Styles
 // Class-based selectors — require a CSS class on the element.
 
+@forward 'alert';
 @forward 'article-card';
 @forward 'article-meta';
 @forward 'author-card';
 @forward 'back-link';
 @forward 'body-text';
 @forward 'breadcrumb';
-@forward 'callout';
 @forward 'caption';
 @forward 'display-text';
 @forward 'error-text';

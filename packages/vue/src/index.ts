@@ -59,6 +59,8 @@ export {
 export type { Validator, ValidationResult } from '@grundtone/utils';
 
 // Molecules
+export { GTAlert } from './molecules/Alert';
+export type { AlertProps, AlertVariant } from './molecules/Alert';
 export { GTBreadcrumb } from './molecules/Breadcrumb';
 export type { BreadcrumbProps, BreadcrumbItem } from './molecules/Breadcrumb';
 

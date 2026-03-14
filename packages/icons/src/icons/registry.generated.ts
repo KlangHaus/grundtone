@@ -38,10 +38,30 @@ export const iconRegistry = {
     viewBox: '0 0 24 24',
     category: 'navigation',
   },
+  'alert-circle': {
+    body: '<circle cx="12" cy="12" r="10"/> <path d="M12 8v4M12 16h.01"/>',
+    viewBox: '0 0 24 24',
+    category: 'status',
+  },
+  'alert-triangle': {
+    body: '<path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/> <path d="M12 9v4M12 17h.01"/>',
+    viewBox: '0 0 24 24',
+    category: 'status',
+  },
+  'check-circle': {
+    body: '<circle cx="12" cy="12" r="10"/> <path d="m9 12 2 2 4-4"/>',
+    viewBox: '0 0 24 24',
+    category: 'status',
+  },
+  'info-circle': {
+    body: '<circle cx="12" cy="12" r="10"/> <path d="M12 16v-4M12 8h.01"/>',
+    viewBox: '0 0 24 24',
+    category: 'status',
+  },
 } as const;
 
 export type IconName = keyof typeof iconRegistry;
 
-export const iconCategories = ['action', 'navigation'] as const;
+export const iconCategories = ['action', 'navigation', 'status'] as const;
 
 export type IconCategory = (typeof iconCategories)[number];
