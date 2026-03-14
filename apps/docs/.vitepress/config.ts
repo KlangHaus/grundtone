@@ -237,6 +237,7 @@ export default defineConfig({
             { text: 'Button', link: '/vue/button' },
             { text: 'Input', link: '/vue/input' },
             { text: 'Toggle', link: '/vue/toggle' },
+            { text: 'Breadcrumb', link: '/vue/breadcrumb' },
           ],
         },
         {

@@ -59,5 +59,7 @@ export {
 export type { Validator, ValidationResult } from '@grundtone/utils';
 
 // Molecules
+export { GTBreadcrumb } from './molecules/Breadcrumb';
+export type { BreadcrumbProps, BreadcrumbItem } from './molecules/Breadcrumb';
 
 // Organisms

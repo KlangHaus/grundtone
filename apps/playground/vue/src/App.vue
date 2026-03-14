@@ -5,6 +5,7 @@
     GTIcon,
     GTInput,
     GTToggle,
+    GTBreadcrumb,
     useTheme,
     useField,
     useFormValidation,
@@ -88,6 +89,27 @@
             Auto
           </GTButton>
         </div>
+      </div>
+    </section>
+
+    <section class="mb-6">
+      <h2 class="mb-2">Breadcrumb</h2>
+      <div class="flex flex-col gap-2">
+        <GTBreadcrumb
+          :items="[
+            { label: 'Home', href: '/' },
+            { label: 'Blog', href: '/blog' },
+            { label: 'Current Post' },
+          ]"
+        />
+        <GTBreadcrumb
+          separator="→"
+          :items="[
+            { label: 'Dashboard', href: '/dashboard' },
+            { label: 'Settings', href: '/settings' },
+            { label: 'Profile' },
+          ]"
+        />
       </div>
     </section>
 

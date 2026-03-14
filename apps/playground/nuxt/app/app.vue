@@ -43,6 +43,27 @@
     <h1 class="mb-6">Grundtone Nuxt Playground</h1>
 
     <section class="mb-6">
+      <h2 class="mb-2">Breadcrumb</h2>
+      <div class="flex flex-col gap-2">
+        <GTBreadcrumb
+          :items="[
+            { label: 'Home', href: '/' },
+            { label: 'Blog', href: '/blog' },
+            { label: 'Current Post' },
+          ]"
+        />
+        <GTBreadcrumb
+          separator="→"
+          :items="[
+            { label: 'Dashboard', href: '/dashboard' },
+            { label: 'Settings', href: '/settings' },
+            { label: 'Profile' },
+          ]"
+        />
+      </div>
+    </section>
+
+    <section class="mb-6">
       <h2 class="mb-2">Variants</h2>
       <div class="flex flex-wrap items-center gap-2">
         <GTButton variant="primary">Primary</GTButton>

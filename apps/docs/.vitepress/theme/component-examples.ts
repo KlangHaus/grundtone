@@ -101,10 +101,20 @@ export const componentExamples: Record<string, string> = {
   <span>6 min read</span>
 </div>`,
 
-  'c-breadcrumb': `<nav class="breadcrumb" style="font-size: var(--font-size-sm); color: var(--color-text-tertiary)">
-  <a href="#">Blog</a>
-  <span aria-hidden="true">/</span>
-  <span>Current Page</span>
+  'c-breadcrumb': `<nav aria-label="Breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb__item">
+      <a href="#" class="breadcrumb__link">Home</a>
+    </li>
+    <li class="breadcrumb__item">
+      <span class="breadcrumb__separator" aria-hidden="true">/</span>
+      <a href="#" class="breadcrumb__link">Blog</a>
+    </li>
+    <li class="breadcrumb__item">
+      <span class="breadcrumb__separator" aria-hidden="true">/</span>
+      <span class="breadcrumb__current" aria-current="page">Current Page</span>
+    </li>
+  </ol>
 </nav>`,
 
   'c-author-card': `<aside class="author-card" style="background: var(--color-surface)">
