@@ -9,6 +9,7 @@ import InputDemo from '../../../../packages/vue/src/atoms/Input/demo.vue';
 import ToggleDemo from '../../../../packages/vue/src/atoms/Toggle/demo.vue';
 import AlertDemo from '../../../../packages/vue/src/molecules/Alert/demo.vue';
 import BreadcrumbDemo from '../../../../packages/vue/src/molecules/Breadcrumb/demo.vue';
+import CardDemo from '../../../../packages/vue/src/molecules/Card/demo.vue';
 import IconGallery from './components/IconGallery.vue';
 import SnackEmbed from './components/SnackEmbed.vue';
 import { GT_ICON_REGISTRY_KEY } from '../../../../packages/vue/src/atoms/Icon/types';
@@ -32,6 +33,7 @@ export default {
     app.component('ToggleDemo', ToggleDemo);
     app.component('AlertDemo', AlertDemo);
     app.component('BreadcrumbDemo', BreadcrumbDemo);
+    app.component('CardDemo', CardDemo);
     app.component('IconGallery', IconGallery);
     app.component('SnackEmbed', SnackEmbed);
     app.component('DiagramPreview', DiagramPreview);

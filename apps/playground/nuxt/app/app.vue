@@ -92,6 +92,35 @@
     </section>
 
     <section class="mb-6">
+      <h2 class="mb-2">Card</h2>
+      <div class="grid grid-cols-3 gap-md">
+        <GTCard title="Standard Card" subheading="Raised">
+          <p>Default raised variant with surface background.</p>
+        </GTCard>
+        <GTCard nav href="#" title="Navigation Card" subheading="Clickable">
+          <p>Entire card is a link with hover elevation.</p>
+        </GTCard>
+        <GTCard variant="bordered" title="Bordered Card">
+          <p>Subtle border instead of elevation.</p>
+          <template #footer>
+            <a href="#">Read more</a>
+          </template>
+        </GTCard>
+      </div>
+      <div class="mt-2 max-w-xl">
+        <GTCard
+          horizontal
+          title="Horizontal Card"
+          subheading="Feature"
+          image="/placeholder-400x300.png"
+          image-alt="Placeholder"
+        >
+          <p>Image on the left, content on the right.</p>
+        </GTCard>
+      </div>
+    </section>
+
+    <section class="mb-6">
       <h2 class="mb-2">Variants</h2>
       <div class="flex flex-wrap items-center gap-2">
         <GTButton variant="primary">Primary</GTButton>

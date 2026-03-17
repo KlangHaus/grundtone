@@ -1,15 +1,14 @@
-// Component: .article-meta, .article-tag
-// Metadata row and pill badge for articles.
+// Component: .meta, .tag
+// Metadata row and pill badge — use in cards, articles, lists, etc.
 
-.article-meta {
+.meta {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-sm);
   align-items: center;
-  margin-bottom: var(--space-sm);
 }
 
-.article-tag {
+.tag {
   display: inline-block;
   padding: 0.125rem 0.5rem;
   border-radius: var(--radius-full);

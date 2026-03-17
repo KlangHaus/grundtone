@@ -112,21 +112,101 @@ export const componentExamples: Record<string, string> = {
   </div>
 </div>`,
 
-  'c-article-card': `<article class="article-card shadow-sm" style="max-width: 420px">
-  <div class="article-meta" style="font-size: var(--font-size-xs); color: var(--color-text-tertiary)">
-    <span class="article-tag" style="font-size: var(--font-size-xs)">Design</span>
-    <time>1 March 2026</time>
+  'c-card-default': `<article class="card max-w-sm">
+  <div class="card__media">
+    <div class="w-full h-full bg-surface-alt"></div>
   </div>
-  <h2 style="font-size: var(--font-size-xl); font-weight: var(--font-weight-semibold)">Article Title</h2>
-  <p class="article-excerpt" style="font-size: var(--font-size-sm); color: var(--color-text-secondary)">A short excerpt describing the article content.</p>
+  <div class="card__content">
+    <span class="card__subheading">Guide</span>
+    <h3 class="card__title">Design Tokens</h3>
+    <div class="card__body">
+      <p>Learn how design tokens power the entire Grundtone system.</p>
+    </div>
+  </div>
 </article>`,
 
-  'c-article-meta': `<div class="article-meta" style="font-size: var(--font-size-sm); color: var(--color-text-secondary)">
-  <span class="article-tag" style="font-size: var(--font-size-xs)">Design</span>
+  'c-card-nav': `<a href="#" class="card card--nav max-w-sm">
+  <div class="card__content">
+    <span class="card__subheading">Documentation</span>
+    <h3 class="card__title">Getting Started</h3>
+    <div class="card__body">
+      <p>Set up Grundtone in your project in under 5 minutes.</p>
+    </div>
+  </div>
+</a>`,
+
+  'c-card-bordered': `<article class="card card--bordered max-w-sm">
+  <div class="card__content">
+    <h3 class="card__title">Bordered Card</h3>
+    <div class="card__body">
+      <p>A card with a subtle border instead of elevation.</p>
+    </div>
+  </div>
+</article>`,
+
+  'c-card-flat': `<article class="card card--flat max-w-sm">
+  <div class="card__content">
+    <h3 class="card__title">Flat Card</h3>
+    <div class="card__body">
+      <p>No background, no border — just structure and spacing.</p>
+    </div>
+  </div>
+</article>`,
+
+  'c-card-horizontal': `<article class="card card--horizontal max-w-xl">
+  <div class="card__media">
+    <div class="w-full h-full aspect-video bg-surface-alt"></div>
+  </div>
+  <div class="card__content">
+    <span class="card__subheading">Feature</span>
+    <h3 class="card__title">Horizontal Layout</h3>
+    <div class="card__body">
+      <p>Image on the left, content on the right.</p>
+    </div>
+  </div>
+</article>`,
+
+  'c-card-with-buttons': `<article class="card max-w-sm">
+  <div class="card__media">
+    <div class="w-full h-full bg-surface-alt"></div>
+  </div>
+  <div class="card__content">
+    <span class="card__subheading">Course</span>
+    <h3 class="card__title">Introduction to Design Tokens</h3>
+    <div class="card__body">
+      <p>Learn the fundamentals of design tokens and how to apply them.</p>
+    </div>
+    <div class="card__footer">
+      <button type="button" class="gt-btn gt-btn--primary gt-btn--sm">Enrol</button>
+      <a href="#" class="gt-btn gt-btn--outlined gt-btn--sm">Read more</a>
+    </div>
+  </div>
+</article>`,
+
+  'c-meta': `<div class="meta text-sm text-secondary">
+  <span class="tag text-xs">Design</span>
   <time>1 March 2026</time>
   <span>&middot;</span>
   <span>6 min read</span>
 </div>`,
+
+  'c-meta-in-card': `<article class="card max-w-sm">
+  <div class="card__media">
+    <div class="w-full h-full bg-surface-alt"></div>
+  </div>
+  <div class="card__content">
+    <div class="meta text-sm text-secondary">
+      <span class="tag text-xs">Design</span>
+      <time>1 March 2026</time>
+      <span>&middot;</span>
+      <span>6 min read</span>
+    </div>
+    <h3 class="card__title">Design Tokens in Practice</h3>
+    <div class="card__body">
+      <p>How to leverage tokens across platforms.</p>
+    </div>
+  </div>
+</article>`,
 
   'c-breadcrumb': `<nav aria-label="Breadcrumb">
   <ol class="breadcrumb">
@@ -144,35 +224,7 @@ export const componentExamples: Record<string, string> = {
   </ol>
 </nav>`,
 
-  'c-author-card': `<aside class="author-card" style="background: var(--color-surface)">
-  <div class="author-avatar" style="background: var(--color-primary); color: var(--color-on-primary); font-weight: var(--font-weight-bold); font-size: var(--font-size-xl)">AH</div>
-  <div>
-    <div style="font-weight: var(--font-weight-semibold)">Allan Hansen</div>
-    <div style="font-size: var(--font-size-sm); color: var(--color-text-secondary)">Designer and frontend architect.</div>
-  </div>
-</aside>`,
-
   'c-back-link': `<a href="#" class="back-link" style="font-size: var(--font-size-sm); color: var(--color-primary); font-weight: var(--font-weight-medium)">&larr; All posts</a>`,
-
-  'c-product-card': `<a href="#" class="product-card shadow-sm" style="max-width: 280px; text-decoration: none">
-  <div style="width: 100%; aspect-ratio: 1/1; background: var(--color-surface-alt); border-radius: var(--radius-md)"></div>
-  <div class="product-card__body">
-    <div style="font-size: var(--font-size-xs); font-weight: var(--font-weight-medium); color: var(--color-primary)">T-shirt</div>
-    <div style="font-size: var(--font-size-base); font-weight: var(--font-weight-semibold)">Design Tokens Tee</div>
-    <div style="font-size: var(--font-size-sm); color: var(--color-text-secondary)">Organic cotton with semantic color print.</div>
-    <div class="product-card__price" style="font-size: var(--font-size-lg); font-weight: var(--font-weight-bold)">349 kr</div>
-  </div>
-</a>`,
-
-  'c-product-gallery': `<div class="product-gallery" style="max-width: 400px">
-  <div class="product-gallery__main" style="background: var(--color-surface-alt)"></div>
-  <div class="product-gallery__thumbs">
-    <div class="product-gallery__thumb product-gallery__thumb--active" style="background: var(--color-surface-alt)"></div>
-    <div class="product-gallery__thumb" style="background: var(--color-surface-alt)"></div>
-    <div class="product-gallery__thumb" style="background: var(--color-surface-alt)"></div>
-    <div class="product-gallery__thumb" style="background: var(--color-surface-alt)"></div>
-  </div>
-</div>`,
 
   'c-lead': `<div>
   <h2 style="font-size: var(--font-size-2xl); font-weight: var(--font-weight-bold); margin: 0 0 var(--space-sm)">Page Title</h2>

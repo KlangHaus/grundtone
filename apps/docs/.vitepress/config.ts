@@ -239,6 +239,7 @@ export default defineConfig({
             { text: 'Input', link: '/vue/input' },
             { text: 'Toggle', link: '/vue/toggle' },
             { text: 'Breadcrumb', link: '/vue/breadcrumb' },
+            { text: 'Card', link: '/vue/card' },
           ],
         },
         {
@@ -353,15 +354,12 @@ export default defineConfig({
           collapsed: true,
           items: [
             { text: 'Alert', link: '/web/c-alert' },
-            { text: 'Prose', link: '/web/c-prose' },
-            { text: 'Article Card', link: '/web/c-article-card' },
-            { text: 'Article Meta', link: '/web/c-article-meta' },
-            { text: 'Author Card', link: '/web/c-author-card' },
+            { text: 'Meta', link: '/web/c-meta' },
+            { text: 'Card', link: '/web/c-card' },
             { text: 'Footer', link: '/web/c-footer' },
             { text: 'Header', link: '/web/c-header' },
-            { text: 'Product Card', link: '/web/c-product-card' },
-            { text: 'Product Gallery', link: '/web/c-product-gallery' },
             { text: 'Input', link: '/web/c-input' },
+            { text: 'Prose', link: '/web/c-prose' },
           ],
         },
         {
@@ -380,6 +378,7 @@ export default defineConfig({
           items: [
             { text: 'Alert', link: '/react-native/c-alert' },
             { text: 'Button', link: '/react-native/c-button' },
+            { text: 'Card', link: '/react-native/c-card' },
             { text: 'Input', link: '/react-native/c-input' },
             { text: 'Toggle', link: '/react-native/c-toggle' },
           ],

@@ -3,6 +3,7 @@ import { ScrollView, View, Text } from 'react-native';
 import {
   GTAlert,
   GTButton,
+  GTCard,
   GTIcon,
   GTInput,
   GTToggle,
@@ -134,6 +135,65 @@ export default function ComponentsScreen() {
             Please fix the errors before submitting.
           </Text>
         </GTAlert>
+      </View>
+
+      <Text style={headingStyle}>Card</Text>
+      <View style={groupStyle}>
+        <GTCard title="Standard Card" subheading="Raised">
+          <Text
+            style={{
+              color: theme.colors.text,
+              fontFamily: theme.typography.fontFamily.base,
+              fontSize: rem(theme.typography.fontSize.sm),
+            }}
+          >
+            Default raised variant with surface background.
+          </Text>
+        </GTCard>
+        <GTCard
+          nav
+          onPress={() => {}}
+          title="Navigation Card"
+          subheading="Clickable"
+        >
+          <Text
+            style={{
+              color: theme.colors.text,
+              fontFamily: theme.typography.fontFamily.base,
+              fontSize: rem(theme.typography.fontSize.sm),
+            }}
+          >
+            Entire card is pressable.
+          </Text>
+        </GTCard>
+        <GTCard variant="bordered" title="Bordered Card">
+          <Text
+            style={{
+              color: theme.colors.text,
+              fontFamily: theme.typography.fontFamily.base,
+              fontSize: rem(theme.typography.fontSize.sm),
+            }}
+          >
+            Subtle border instead of elevation.
+          </Text>
+        </GTCard>
+        <GTCard
+          horizontal
+          title="Horizontal Card"
+          subheading="Feature"
+          image={require('../../assets/images/placeholder-400x300.png')}
+          imageAlt="Placeholder"
+        >
+          <Text
+            style={{
+              color: theme.colors.text,
+              fontFamily: theme.typography.fontFamily.base,
+              fontSize: rem(theme.typography.fontSize.sm),
+            }}
+          >
+            Image left, content right.
+          </Text>
+        </GTCard>
       </View>
 
       <Text style={headingStyle}>Toggle</Text>
