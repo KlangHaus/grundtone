@@ -2,12 +2,14 @@
 // Class-based selectors — require a CSS class on the element.
 
 @forward 'alert';
+@forward 'anchor-links';
 @forward 'meta';
 @forward 'back-link';
 @forward 'body-text';
 @forward 'breadcrumb';
 @forward 'caption';
 @forward 'card';
+@forward 'cookie-message';
 @forward 'display-text';
 @forward 'error-text';
 @forward 'external-link';

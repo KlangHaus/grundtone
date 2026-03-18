@@ -235,7 +235,9 @@ export default defineConfig({
           text: 'Components',
           items: [
             { text: 'Alert', link: '/vue/alert' },
+            { text: 'Anchor Links', link: '/vue/anchor-links' },
             { text: 'Button', link: '/vue/button' },
+            { text: 'Cookie Message', link: '/vue/cookie-message' },
             { text: 'Input', link: '/vue/input' },
             { text: 'Toggle', link: '/vue/toggle' },
             { text: 'Breadcrumb', link: '/vue/breadcrumb' },
@@ -354,6 +356,8 @@ export default defineConfig({
           collapsed: true,
           items: [
             { text: 'Alert', link: '/web/c-alert' },
+            { text: 'Anchor Links', link: '/web/c-anchor-links' },
+            { text: 'Cookie Message', link: '/web/c-cookie-message' },
             { text: 'Meta', link: '/web/c-meta' },
             { text: 'Card', link: '/web/c-card' },
             { text: 'Footer', link: '/web/c-footer' },

@@ -75,6 +75,75 @@ export const componentExamples: Record<string, string> = {
   </ul>
 </div>`,
 
+  'c-anchor-links-basic': `<nav class="anchor-links" aria-label="Indholdsfortegnelse">
+  <p class="anchor-links__heading">Indhold på siden</p>
+  <ol class="anchor-links__list">
+    <li class="anchor-links__item">
+      <a href="#intro" class="anchor-links__link">Introduktion</a>
+    </li>
+    <li class="anchor-links__item">
+      <a href="#features" class="anchor-links__link">Funktioner</a>
+    </li>
+    <li class="anchor-links__item">
+      <a href="#install" class="anchor-links__link">Installation</a>
+    </li>
+  </ol>
+</nav>`,
+
+  'c-anchor-links-active': `<nav class="anchor-links" aria-label="Indholdsfortegnelse">
+  <p class="anchor-links__heading">Indhold på siden</p>
+  <ol class="anchor-links__list">
+    <li class="anchor-links__item">
+      <a href="#intro" class="anchor-links__link">Introduktion</a>
+    </li>
+    <li class="anchor-links__item">
+      <a href="#features" class="anchor-links__link anchor-links__link--active" aria-current="true">Funktioner</a>
+    </li>
+    <li class="anchor-links__item">
+      <a href="#install" class="anchor-links__link">Installation</a>
+    </li>
+  </ol>
+</nav>`,
+
+  'c-cookie-message-basic': `<div class="cookie-message cookie-message--static" role="region" aria-label="Cookiemeddelelse">
+  <div class="cookie-message__content">
+    <p class="cookie-message__heading">Vi bruger cookies</p>
+    <div class="cookie-message__body">
+      <p>Vi bruger cookies til at forbedre din oplevelse. <a href="#">Læs mere</a>.</p>
+    </div>
+    <div class="cookie-message__actions">
+      <button type="button" class="gt-btn gt-btn--primary gt-btn--sm">Acceptér</button>
+    </div>
+  </div>
+  <button type="button" class="cookie-message__close" aria-label="Luk">&times;</button>
+</div>`,
+
+  'c-cookie-message-actions': `<div class="cookie-message cookie-message--static" role="region" aria-label="Cookiemeddelelse">
+  <div class="cookie-message__content">
+    <p class="cookie-message__heading">Cookies på dette site</p>
+    <div class="cookie-message__body">
+      <p>Vi bruger cookies til statistik og personalisering.</p>
+    </div>
+    <div class="cookie-message__actions">
+      <button type="button" class="gt-btn gt-btn--primary gt-btn--sm">Acceptér alle</button>
+      <button type="button" class="gt-btn gt-btn--secondary gt-btn--sm">Afvis alle</button>
+      <button type="button" class="gt-btn gt-btn--tertiary gt-btn--sm">Cookie-indstillinger</button>
+    </div>
+  </div>
+  <button type="button" class="cookie-message__close" aria-label="Luk">&times;</button>
+</div>`,
+
+  'c-cookie-message-static': `<div class="cookie-message cookie-message--static" role="region" aria-label="Cookiemeddelelse">
+  <div class="cookie-message__content">
+    <div class="cookie-message__body">
+      <p>Vi bruger kun funktionelt nødvendige cookies.</p>
+    </div>
+    <div class="cookie-message__actions">
+      <button type="button" class="gt-btn gt-btn--primary gt-btn--sm">OK</button>
+    </div>
+  </div>
+</div>`,
+
   'c-alert-info': `<div class="alert alert--info" role="status">
   <div class="alert__content">
     <div class="alert__body">

@@ -60,10 +60,14 @@ export type { Validator, ValidationResult } from '@grundtone/utils';
 
 // Molecules
 export { GTAlert } from './molecules/Alert';
+export { GTAnchorLinks } from './molecules/AnchorLinks';
+export type { AnchorLinksProps, AnchorLinkItem } from './molecules/AnchorLinks';
 export type { AlertProps, AlertVariant } from './molecules/Alert';
 export { GTBreadcrumb } from './molecules/Breadcrumb';
 export type { BreadcrumbProps, BreadcrumbItem } from './molecules/Breadcrumb';
 export { GTCard } from './molecules/Card';
 export type { CardProps, CardVariant } from './molecules/Card';
+export { GTCookieMessage } from './molecules/CookieMessage';
+export type { CookieMessageProps } from './molecules/CookieMessage';
 
 // Organisms

@@ -3,6 +3,7 @@
   import { iconRegistry } from '@grundtone/icons';
 
   const showDismissible = ref(true);
+  const showCookie = ref(true);
   const isLoading = ref(false);
   const toggleValue = ref(false);
   const inputValue = ref('');
@@ -44,7 +45,28 @@
     <h1 class="mb-6">Grundtone Nuxt Playground</h1>
 
     <section class="mb-6">
-      <h2 class="mb-2">Alert</h2>
+      <h2>Cookie Message</h2>
+      <GTCookieMessage
+        v-if="showCookie"
+        heading="Vi bruger cookies"
+        reject-label="Afvis alle"
+        settings-label="Cookie-indstillinger"
+        :persistent="false"
+        @accept="showCookie = false"
+        @reject="showCookie = false"
+      >
+        <p>
+          Vi bruger cookies til statistik og personalisering.
+          <a href="#">Læs mere</a>.
+        </p>
+      </GTCookieMessage>
+      <button v-else type="button" @click="showCookie = true">
+        Vis cookie-besked igen
+      </button>
+    </section>
+
+    <section class="mb-6">
+      <h2>Alert</h2>
       <div class="flex flex-col gap-2">
         <GTAlert variant="info" icon="info-circle">
           <p>This is an informational message.</p>
@@ -71,7 +93,7 @@
     </section>
 
     <section class="mb-6">
-      <h2 class="mb-2">Breadcrumb</h2>
+      <h2>Breadcrumb</h2>
       <div class="flex flex-col gap-2">
         <GTBreadcrumb
           :items="[
@@ -92,8 +114,8 @@
     </section>
 
     <section class="mb-6">
-      <h2 class="mb-2">Card</h2>
-      <div class="grid grid-cols-3 gap-md">
+      <h2>Card</h2>
+      <div class="grid grid-cols-3 gap-4">
         <GTCard title="Standard Card" subheading="Raised">
           <p>Default raised variant with surface background.</p>
         </GTCard>
@@ -121,7 +143,7 @@
     </section>
 
     <section class="mb-6">
-      <h2 class="mb-2">Variants</h2>
+      <h2>Variants</h2>
       <div class="flex flex-wrap items-center gap-2">
         <GTButton variant="primary">Primary</GTButton>
         <GTButton variant="secondary">Secondary</GTButton>
@@ -132,7 +154,7 @@
     </section>
 
     <section class="mb-6">
-      <h2 class="mb-2">Sizes</h2>
+      <h2>Sizes</h2>
       <div class="flex flex-wrap items-center gap-2">
         <GTButton size="sm">Small</GTButton>
         <GTButton size="md">Medium</GTButton>
@@ -141,7 +163,7 @@
     </section>
 
     <section class="mb-6">
-      <h2 class="mb-2">Rounded</h2>
+      <h2>Rounded</h2>
       <div class="flex flex-wrap items-center gap-2">
         <GTButton rounded="none">none</GTButton>
         <GTButton rounded="sm">sm</GTButton>
@@ -152,7 +174,7 @@
     </section>
 
     <section class="mb-6">
-      <h2 class="mb-2">States</h2>
+      <h2>States</h2>
       <div class="flex flex-wrap items-center gap-2">
         <GTButton disabled>Disabled</GTButton>
         <GTButton :loading="isLoading" @click="simulateLoad">
@@ -163,7 +185,7 @@
     </section>
 
     <section class="mb-6">
-      <h2 class="mb-2">Icons</h2>
+      <h2>Icons</h2>
       <div class="flex flex-wrap items-center gap-2">
         <GTIcon
           v-for="name in Object.keys(iconRegistry)"
@@ -174,7 +196,7 @@
     </section>
 
     <section class="mb-6">
-      <h2 class="mb-2">Icon sizes</h2>
+      <h2>Icon sizes</h2>
       <div class="flex flex-wrap items-center gap-2">
         <GTIcon name="check" size="xs" />
         <GTIcon name="check" size="sm" />
@@ -186,7 +208,7 @@
     </section>
 
     <section class="mb-6">
-      <h2 class="mb-2">Button with icon</h2>
+      <h2>Button with icon</h2>
       <div class="flex flex-wrap items-center gap-2">
         <GTButton variant="primary">
           <GTIcon name="check" size="sm" /> Confirm
@@ -201,7 +223,7 @@
     </section>
 
     <section class="mb-6">
-      <h2 class="mb-2">Input sizes</h2>
+      <h2>Input sizes</h2>
       <div class="flex flex-col gap-2">
         <GTInput v-model="inputValue" size="sm" placeholder="Small input" />
         <GTInput v-model="inputValue" size="md" placeholder="Medium input" />
@@ -210,7 +232,7 @@
     </section>
 
     <section class="mb-6">
-      <h2 class="mb-2">Input with label &amp; help</h2>
+      <h2>Input with label &amp; help</h2>
       <div class="flex flex-col gap-2">
         <GTInput
           v-model="inputValue"
@@ -230,7 +252,7 @@
     </section>
 
     <section class="mb-6">
-      <h2 class="mb-2">Input states</h2>
+      <h2>Input states</h2>
       <div class="flex flex-col gap-2">
         <GTInput label="Disabled" disabled model-value="Cannot edit" />
         <GTInput label="Readonly" readonly model-value="Read only value" />
@@ -244,7 +266,7 @@
     </section>
 
     <section class="mb-6">
-      <h2 class="mb-2">Prefix &amp; suffix</h2>
+      <h2>Prefix &amp; suffix</h2>
       <div class="flex flex-col gap-2">
         <GTInput
           label="Amount"
@@ -257,7 +279,7 @@
     </section>
 
     <section class="mb-6">
-      <h2 class="mb-2">Field widths</h2>
+      <h2>Field widths</h2>
       <div class="flex flex-col gap-2">
         <GTInput label="Postal code" :char-width="4" placeholder="8000" />
         <GTInput label="Phone" :char-width="8" placeholder="12345678" />
@@ -268,7 +290,7 @@
     </section>
 
     <section class="mb-6">
-      <h2 class="mb-2">Optional fields</h2>
+      <h2>Optional fields</h2>
       <div class="flex flex-col gap-2">
         <GTInput label="Name" placeholder="John Doe" required />
         <GTInput
@@ -281,7 +303,7 @@
     </section>
 
     <section class="mb-6">
-      <h2 class="mb-2">Input types</h2>
+      <h2>Input types</h2>
       <div class="flex flex-col gap-2">
         <GTInput
           type="password"
@@ -294,7 +316,7 @@
     </section>
 
     <section class="mb-6">
-      <h2 class="mb-2">Validation (useField + useFormValidation)</h2>
+      <h2>Validation (useField + useFormValidation)</h2>
       <form class="flex flex-col gap-2" @submit.prevent="onValidationSubmit">
         <GTInput
           v-model="nameField.value.value"
@@ -324,7 +346,7 @@
     </section>
 
     <section class="mb-6">
-      <h2 class="mb-2">Toggle</h2>
+      <h2>Toggle</h2>
       <div class="flex flex-col gap-2">
         <GTToggle v-model="toggleValue" label="Notifications" />
         <GTToggle v-model="toggleValue" size="sm" label="Small" />
@@ -334,7 +356,7 @@
     </section>
 
     <section class="mb-6">
-      <h2 class="mb-2">As link</h2>
+      <h2>As link</h2>
       <div class="flex flex-wrap items-center gap-2">
         <GTButton as="a" href="#link">Link button</GTButton>
         <GTButton as="a" href="#link" variant="outlined">

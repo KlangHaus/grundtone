@@ -49,7 +49,7 @@ export function GTCard({
   // Variant styles
   if (variant === 'raised') {
     baseStyle.backgroundColor = theme.colors.surfaceRaised;
-    Object.assign(baseStyle, shadowToRN(theme.shadows.sm));
+    Object.assign(baseStyle, shadowToRN(theme.shadowDefinitions.sm));
   } else if (variant === 'bordered') {
     baseStyle.backgroundColor = theme.colors.surface;
     baseStyle.borderWidth = 1;
@@ -58,23 +58,33 @@ export function GTCard({
     baseStyle.backgroundColor = 'transparent';
   }
 
-  const mediaStyle: ViewStyle & ImageStyle = horizontal
-    ? { width: 120, flexShrink: 0 }
+  const mediaStyle: ViewStyle = horizontal
+    ? { width: 100, overflow: 'hidden', flexShrink: 0 }
     : { aspectRatio: 16 / 9 };
 
-  const imageStyle: ImageStyle = {
-    width: '100%',
-    height: '100%',
-  };
+  const imageStyle: ImageStyle = horizontal
+    ? {
+        width: 100,
+        height: '100%',
+        resizeMode: 'cover',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+      }
+    : { width: '100%', height: '100%', resizeMode: 'cover' };
 
   const contentStyle: ViewStyle = {
     flex: 1,
-    padding: rem(theme.spacing.lg),
-    gap: rem(theme.spacing.xs),
+    padding: horizontal ? rem(theme.spacing.sm) : rem(theme.spacing.lg),
+    gap: horizontal ? 2 : rem(theme.spacing.xs),
+    justifyContent: horizontal ? 'center' : 'flex-start',
   };
 
   const subheadingStyle: TextStyle = {
-    fontSize: rem(theme.typography.fontSize.sm),
+    fontSize: rem(
+      horizontal ? theme.typography.fontSize.xs : theme.typography.fontSize.sm,
+    ),
     fontWeight: theme.typography.fontWeight.medium as TextStyle['fontWeight'],
     fontFamily: theme.typography.fontFamily.base,
     color: theme.colors.textSecondary,
@@ -83,7 +93,11 @@ export function GTCard({
   };
 
   const titleStyle: TextStyle = {
-    fontSize: rem(theme.typography.fontSize.lg),
+    fontSize: rem(
+      horizontal
+        ? theme.typography.fontSize.base
+        : theme.typography.fontSize.lg,
+    ),
     fontWeight: theme.typography.fontWeight.semibold as TextStyle['fontWeight'],
     fontFamily: theme.typography.fontFamily.base,
     color: theme.colors.text,

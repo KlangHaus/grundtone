@@ -18,6 +18,11 @@ export const iconRegistry = {
     viewBox: '0 0 24 24',
     category: 'action',
   },
+  cookie: {
+    body: '<path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01"/><path d="M16 15.5v.01"/><path d="M12 12v.01"/><path d="M11 17v.01"/><path d="M7 14v.01"/>',
+    viewBox: '0 0 24 24',
+    category: 'action',
+  },
   search: {
     body: '<circle cx="11" cy="11" r="8"/> <path d="M21 21l-4.35-4.35"/>',
     viewBox: '0 0 24 24',
