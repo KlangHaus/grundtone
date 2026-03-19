@@ -7,6 +7,8 @@
     GTBreadcrumb,
     GTButton,
     GTCard,
+    GTAccordion,
+    GTAccordionItem,
     GTCookieMessage,
     GTDetails,
     GTIcon,
@@ -75,6 +77,7 @@
         <GTAnchorLinks
           :items="[
             { label: 'Theme mode', href: '#pg-theme' },
+            { label: 'Accordion', href: '#pg-accordion' },
             { label: 'Alert', href: '#pg-alert' },
             { label: 'Badge', href: '#pg-badge' },
             { label: 'Breadcrumb', href: '#pg-breadcrumb' },
@@ -149,6 +152,37 @@
         >
           <GTIcon name="cookie" size="sm" />
         </GTButton>
+
+        <section class="mb-6">
+          <h2 id="pg-accordion" style="scroll-margin-top: 1rem">Accordion</h2>
+          <h3>Default</h3>
+          <GTAccordion>
+            <GTAccordionItem heading="Hvad er design tokens?">
+              <p>Navngivne værdier for farver, spacing, typografi og mere.</p>
+            </GTAccordionItem>
+            <GTAccordionItem heading="Dark mode?" :open="true">
+              <p>Ja — via CSS custom properties.</p>
+            </GTAccordionItem>
+          </GTAccordion>
+          <h3>Bordered</h3>
+          <GTAccordion variant="bordered">
+            <GTAccordionItem heading="Konfiguration">
+              <p>Via <code>defineGrundtoneConfig()</code>.</p>
+            </GTAccordionItem>
+            <GTAccordionItem heading="Prefix-system">
+              <p>Alle klasser prefixes med <code>gt-</code>.</p>
+            </GTAccordionItem>
+          </GTAccordion>
+          <h3>Card</h3>
+          <GTAccordion variant="card">
+            <GTAccordionItem heading="Vue 3">
+              <p>Fuld komponentbibliotek med Composition API.</p>
+            </GTAccordionItem>
+            <GTAccordionItem heading="React Native">
+              <p>Native komponenter med tema-provider.</p>
+            </GTAccordionItem>
+          </GTAccordion>
+        </section>
 
         <section class="mb-6">
           <h2 id="pg-alert" style="scroll-margin-top: 1rem">Alert</h2>

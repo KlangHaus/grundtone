@@ -234,6 +234,7 @@ export default defineConfig({
         {
           text: 'Components',
           items: [
+            { text: 'Accordion', link: '/vue/accordion' },
             { text: 'Alert', link: '/vue/alert' },
             { text: 'Anchor Links', link: '/vue/anchor-links' },
             { text: 'Badge', link: '/vue/badge' },
@@ -357,6 +358,7 @@ export default defineConfig({
           text: 'Components',
           collapsed: true,
           items: [
+            { text: 'Accordion', link: '/web/c-accordion' },
             { text: 'Alert', link: '/web/c-alert' },
             { text: 'Anchor Links', link: '/web/c-anchor-links' },
             { text: 'Badge', link: '/web/c-badge' },
@@ -384,6 +386,7 @@ export default defineConfig({
         {
           text: 'Components',
           items: [
+            { text: 'Accordion', link: '/react-native/c-accordion' },
             { text: 'Alert', link: '/react-native/c-alert' },
             { text: 'Badge', link: '/react-native/c-badge' },
             { text: 'Button', link: '/react-native/c-button' },

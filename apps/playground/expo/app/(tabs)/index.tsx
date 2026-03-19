@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import { ScrollView, View, Text } from 'react-native';
 import {
+  GTAccordion,
+  GTAccordionItem,
   GTAlert,
+  GTBadge,
   GTButton,
   GTCard,
+  GTDetails,
   GTIcon,
   GTInput,
   GTToggle,
@@ -88,6 +92,102 @@ export default function ComponentsScreen() {
       }}
     >
       <Text style={titleStyle}>Grundtone Expo Playground</Text>
+
+      <Text style={headingStyle}>Accordion</Text>
+      <GTAccordion>
+        <GTAccordionItem heading="Hvad er design tokens?">
+          <Text
+            style={{
+              color: theme.colors.text,
+              fontFamily: theme.typography.fontFamily.base,
+              fontSize: rem(theme.typography.fontSize.sm),
+            }}
+          >
+            Navngivne værdier for farver, spacing, typografi og mere.
+          </Text>
+        </GTAccordionItem>
+        <GTAccordionItem heading="Dark mode?" open>
+          <Text
+            style={{
+              color: theme.colors.text,
+              fontFamily: theme.typography.fontFamily.base,
+              fontSize: rem(theme.typography.fontSize.sm),
+            }}
+          >
+            Ja — via theme context provider.
+          </Text>
+        </GTAccordionItem>
+      </GTAccordion>
+      <GTAccordion variant="bordered">
+        <GTAccordionItem heading="Bordered variant">
+          <Text
+            style={{
+              color: theme.colors.text,
+              fontFamily: theme.typography.fontFamily.base,
+              fontSize: rem(theme.typography.fontSize.sm),
+            }}
+          >
+            Med border rundt om hele gruppen.
+          </Text>
+        </GTAccordionItem>
+      </GTAccordion>
+
+      <Text style={headingStyle}>Badge</Text>
+      <View style={rowStyle}>
+        <GTBadge variant="neutral">Neutral</GTBadge>
+        <GTBadge variant="info">Info</GTBadge>
+        <GTBadge variant="success">Success</GTBadge>
+        <GTBadge variant="warning">Warning</GTBadge>
+        <GTBadge variant="error">Error</GTBadge>
+      </View>
+      <View style={{ ...rowStyle, marginTop: rem(theme.spacing.sm) }}>
+        <GTBadge variant="success" dot>
+          Active
+        </GTBadge>
+        <GTBadge variant="error" dot>
+          Offline
+        </GTBadge>
+        <GTBadge variant="neutral" dot>
+          Draft
+        </GTBadge>
+      </View>
+
+      <Text style={headingStyle}>Details</Text>
+      <View style={groupStyle}>
+        <GTDetails summary="What are design tokens?">
+          <Text
+            style={{
+              color: theme.colors.text,
+              fontFamily: theme.typography.fontFamily.base,
+              fontSize: rem(theme.typography.fontSize.sm),
+            }}
+          >
+            Named values for colors, spacing, typography, and more.
+          </Text>
+        </GTDetails>
+        <GTDetails variant="subtle" summary="Read more about theming">
+          <Text
+            style={{
+              color: theme.colors.textSecondary,
+              fontFamily: theme.typography.fontFamily.base,
+              fontSize: rem(theme.typography.fontSize.sm),
+            }}
+          >
+            Theme switching via context provider.
+          </Text>
+        </GTDetails>
+        <GTDetails variant="card" summary="Do I need @grundtone/core?">
+          <Text
+            style={{
+              color: theme.colors.text,
+              fontFamily: theme.typography.fontFamily.base,
+              fontSize: rem(theme.typography.fontSize.sm),
+            }}
+          >
+            Yes — core contains TypeScript types and theme presets.
+          </Text>
+        </GTDetails>
+      </View>
 
       <Text style={headingStyle}>Alert</Text>
       <View style={groupStyle}>

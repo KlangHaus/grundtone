@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import {
   View,
   Text,
   Pressable,
+  Animated,
   type ViewStyle,
   type TextStyle,
 } from 'react-native';
@@ -17,13 +18,8 @@ function rem(value: string): number {
 /**
  * GTDetails — disclosure component driven by Grundtone theme tokens.
  *
- * Pressable summary that reveals/hides content. Three variants:
- * default (border-left accent), subtle (inline), card (boxed).
- *
- * @example
- * <GTDetails summary="More info">
- *   <Text>Hidden content revealed on press.</Text>
- * </GTDetails>
+ * Pressable summary that reveals/hides content with animated height transition.
+ * Three variants: default (border-left accent), subtle (inline), card (boxed).
  */
 export function GTDetails({
   summary,
@@ -34,6 +30,26 @@ export function GTDetails({
 }: DetailsProps) {
   const [isOpen, setIsOpen] = useState(initialOpen);
   const { theme } = useGrundtoneTheme();
+
+  const animValue = useRef(new Animated.Value(initialOpen ? 1 : 0)).current;
+  const contentHeight = useRef(0);
+
+  const onContentLayout = useCallback(
+    (e: { nativeEvent: { layout: { height: number } } }) => {
+      contentHeight.current = e.nativeEvent.layout.height;
+    },
+    [],
+  );
+
+  function toggle() {
+    const toOpen = !isOpen;
+    setIsOpen(toOpen);
+    Animated.timing(animValue, {
+      toValue: toOpen ? 1 : 0,
+      duration: 250,
+      useNativeDriver: false,
+    }).start();
+  }
 
   const isCard = variant === 'card';
   const isSubtle = variant === 'subtle';
@@ -68,11 +84,20 @@ export function GTDetails({
         : theme.colors.primary,
   };
 
-  const arrowStyle: TextStyle = {
-    fontSize: rem(theme.typography.fontSize.xs),
-    color: summaryTextStyle.color,
-    transform: [{ rotate: isOpen ? '90deg' : '0deg' }],
-  };
+  const arrowRotation = animValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '90deg'],
+  });
+
+  const maxHeight = animValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 500],
+  });
+
+  const opacity = animValue.interpolate({
+    inputRange: [0, 0.3, 1],
+    outputRange: [0, 0, 1],
+  });
 
   const bodyStyle: ViewStyle = {
     paddingTop: rem(theme.spacing.sm),
@@ -88,14 +113,26 @@ export function GTDetails({
     <View style={containerStyle} accessibilityLabel={accessibilityLabel}>
       <Pressable
         style={summaryStyle}
-        onPress={() => setIsOpen(prev => !prev)}
+        onPress={toggle}
         accessibilityRole="button"
         accessibilityState={{ expanded: isOpen }}
       >
-        <Text style={arrowStyle}>▶</Text>
+        <Animated.Text
+          style={{
+            fontSize: rem(theme.typography.fontSize.xs),
+            color: summaryTextStyle.color,
+            transform: [{ rotate: arrowRotation }],
+          }}
+        >
+          ▶
+        </Animated.Text>
         <Text style={summaryTextStyle}>{summary}</Text>
       </Pressable>
-      {isOpen ? <View style={bodyStyle}>{children}</View> : null}
+      <Animated.View style={{ maxHeight, opacity, overflow: 'hidden' }}>
+        <View onLayout={onContentLayout} style={bodyStyle}>
+          {children}
+        </View>
+      </Animated.View>
     </View>
   );
 }

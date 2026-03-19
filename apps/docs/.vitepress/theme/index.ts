@@ -9,6 +9,7 @@ import IconDemo from '../../../../packages/vue/src/atoms/Icon/demo.vue';
 import InputDemo from '../../../../packages/vue/src/atoms/Input/demo.vue';
 import ToggleDemo from '../../../../packages/vue/src/atoms/Toggle/demo.vue';
 import BadgeDemo from '../../../../packages/vue/src/atoms/Badge/demo.vue';
+import AccordionDemo from '../../../../packages/vue/src/molecules/Accordion/demo.vue';
 import AlertDemo from '../../../../packages/vue/src/molecules/Alert/demo.vue';
 import AnchorLinksDemo from '../../../../packages/vue/src/molecules/AnchorLinks/demo.vue';
 import BreadcrumbDemo from '../../../../packages/vue/src/molecules/Breadcrumb/demo.vue';
@@ -36,6 +37,7 @@ export default {
     app.component('InputDemo', InputDemo);
     app.component('ToggleDemo', ToggleDemo);
     app.component('BadgeDemo', BadgeDemo);
+    app.component('AccordionDemo', AccordionDemo);
     app.component('AlertDemo', AlertDemo);
     app.component('DetailsDemo', DetailsDemo);
     app.component('AnchorLinksDemo', AnchorLinksDemo);

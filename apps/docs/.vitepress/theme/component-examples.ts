@@ -75,6 +75,66 @@ export const componentExamples: Record<string, string> = {
   </ul>
 </div>`,
 
+  'c-accordion-default': `<div class="accordion" role="region" aria-label="FAQ">
+  <div class="accordion__item">
+    <button class="accordion__header" aria-expanded="false">
+      <span class="accordion__icon" aria-hidden="true"></span>
+      <span class="accordion__heading">Hvad er design tokens?</span>
+    </button>
+  </div>
+  <div class="accordion__item accordion__item--open">
+    <button class="accordion__header" aria-expanded="true">
+      <span class="accordion__icon" aria-hidden="true"></span>
+      <span class="accordion__heading">Understøtter Grundtone dark mode?</span>
+    </button>
+    <div class="accordion__panel" role="region">
+      <div class="accordion__body">
+        <p>Ja — tema-switching sker via CSS custom properties.</p>
+      </div>
+    </div>
+  </div>
+</div>`,
+
+  'c-accordion-bordered': `<div class="accordion accordion--bordered" role="region" aria-label="Settings">
+  <div class="accordion__item">
+    <button class="accordion__header" aria-expanded="false">
+      <span class="accordion__icon" aria-hidden="true"></span>
+      <span class="accordion__heading">Konfiguration</span>
+    </button>
+  </div>
+  <div class="accordion__item accordion__item--open">
+    <button class="accordion__header" aria-expanded="true">
+      <span class="accordion__icon" aria-hidden="true"></span>
+      <span class="accordion__heading">Prefix-system</span>
+    </button>
+    <div class="accordion__panel" role="region">
+      <div class="accordion__body">
+        <p>Alle klasser prefixes med <code>gt-</code> som default.</p>
+      </div>
+    </div>
+  </div>
+</div>`,
+
+  'c-accordion-card': `<div class="accordion accordion--card" role="region" aria-label="Platforms">
+  <div class="accordion__item accordion__item--open">
+    <button class="accordion__header" aria-expanded="true">
+      <span class="accordion__icon" aria-hidden="true"></span>
+      <span class="accordion__heading">Vue 3</span>
+    </button>
+    <div class="accordion__panel" role="region">
+      <div class="accordion__body">
+        <p>Fuld komponentbibliotek med Composition API og TypeScript.</p>
+      </div>
+    </div>
+  </div>
+  <div class="accordion__item">
+    <button class="accordion__header" aria-expanded="false">
+      <span class="accordion__icon" aria-hidden="true"></span>
+      <span class="accordion__heading">React Native</span>
+    </button>
+  </div>
+</div>`,
+
   'c-badge-variants': `<div class="flex flex-wrap items-center gap-2">
   <span class="badge badge--neutral badge--md">Neutral</span>
   <span class="badge badge--info badge--md">Information</span>

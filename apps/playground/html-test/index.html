@@ -302,6 +302,28 @@
       </div>
     </div>
 
+    <!-- ─── Accordion ─── -->
+    <h2>Accordion</h2>
+    <div class="accordion" role="region" aria-label="FAQ">
+      <div class="accordion__item">
+        <button class="accordion__header" aria-expanded="false">
+          <span class="accordion__icon" aria-hidden="true"></span>
+          <span class="accordion__heading">Hvad er design tokens?</span>
+        </button>
+      </div>
+      <div class="accordion__item accordion__item--open">
+        <button class="accordion__header" aria-expanded="true">
+          <span class="accordion__icon" aria-hidden="true"></span>
+          <span class="accordion__heading">Dark mode?</span>
+        </button>
+        <div class="accordion__panel" role="region">
+          <div class="accordion__body">
+            <p>Ja — via CSS custom properties.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ─── Details ─── -->
     <h2>Details</h2>
     <div style="display: flex; flex-direction: column; gap: 1rem;">

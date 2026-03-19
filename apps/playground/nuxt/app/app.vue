@@ -66,6 +66,69 @@
     </section>
 
     <section class="mb-6">
+      <h2>Accordion</h2>
+      <h3>Default</h3>
+      <GTAccordion>
+        <GTAccordionItem heading="Hvad er design tokens?">
+          <p>Navngivne værdier for farver, spacing, typografi og mere.</p>
+        </GTAccordionItem>
+        <GTAccordionItem heading="Dark mode?" :open="true">
+          <p>Ja — via CSS custom properties.</p>
+        </GTAccordionItem>
+      </GTAccordion>
+      <h3>Bordered</h3>
+      <GTAccordion variant="bordered">
+        <GTAccordionItem heading="Konfiguration">
+          <p>Via <code>defineGrundtoneConfig()</code>.</p>
+        </GTAccordionItem>
+        <GTAccordionItem heading="Prefix-system">
+          <p>Alle klasser prefixes med <code>gt-</code>.</p>
+        </GTAccordionItem>
+      </GTAccordion>
+      <h3>Card</h3>
+      <GTAccordion variant="card">
+        <GTAccordionItem heading="Vue 3">
+          <p>Fuld komponentbibliotek med Composition API.</p>
+        </GTAccordionItem>
+        <GTAccordionItem heading="React Native">
+          <p>Native komponenter med tema-provider.</p>
+        </GTAccordionItem>
+      </GTAccordion>
+    </section>
+
+    <section class="mb-6">
+      <h2>Badge</h2>
+      <div class="flex flex-wrap items-center gap-2">
+        <GTBadge variant="neutral">Neutral</GTBadge>
+        <GTBadge variant="info">Information</GTBadge>
+        <GTBadge variant="success">Godkendt</GTBadge>
+        <GTBadge variant="warning">Afventer</GTBadge>
+        <GTBadge variant="error">Afvist</GTBadge>
+      </div>
+      <h3>With dot</h3>
+      <div class="flex flex-wrap items-center gap-2">
+        <GTBadge variant="success" dot>Aktiv</GTBadge>
+        <GTBadge variant="error" dot>Offline</GTBadge>
+        <GTBadge variant="neutral" dot>Kladde</GTBadge>
+      </div>
+    </section>
+
+    <section class="mb-6">
+      <h2>Details</h2>
+      <div class="flex flex-col gap-4">
+        <GTDetails summary="Hvad er design tokens?">
+          <p>Navngivne værdier for farver, spacing, typografi og mere.</p>
+        </GTDetails>
+        <GTDetails variant="subtle" summary="Læs mere om theming">
+          <p>Tema-switching sker via CSS custom properties.</p>
+        </GTDetails>
+        <GTDetails variant="card" summary="Har jeg brug for @grundtone/core?">
+          <p>Ja — core indeholder TypeScript-typer og theme-presets.</p>
+        </GTDetails>
+      </div>
+    </section>
+
+    <section class="mb-6">
       <h2>Alert</h2>
       <div class="flex flex-col gap-2">
         <GTAlert variant="info" icon="info-circle">

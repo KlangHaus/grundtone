@@ -63,6 +63,13 @@ export {
 export type { Validator, ValidationResult } from '@grundtone/utils';
 
 // Molecules
+export { GTAccordion, GTAccordionItem } from './molecules/Accordion';
+export type {
+  AccordionProps,
+  AccordionVariant,
+  AccordionTransition,
+  AccordionItemProps,
+} from './molecules/Accordion';
 export { GTAlert } from './molecules/Alert';
 export { GTAnchorLinks } from './molecules/AnchorLinks';
 export type { AnchorLinksProps, AnchorLinkItem } from './molecules/AnchorLinks';
