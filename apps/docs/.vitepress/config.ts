@@ -392,6 +392,10 @@ export default defineConfig({
           ],
         },
         {
+          text: 'JavaScript',
+          items: [{ text: 'Behaviors (Vanilla JS)', link: '/web/behaviors' }],
+        },
+        {
           text: 'SCSS & Reference',
           items: [
             { text: 'CSS Custom Properties', link: '/web/custom-properties' },
