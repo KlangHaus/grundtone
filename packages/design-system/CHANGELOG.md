@@ -1,5 +1,13 @@
 # @grundtone/design-system
 
+## 2.3.0
+
+### Minor Changes
+
+- [`f155ea5`](https://github.com/grundtone/grundtone/commit/f155ea5b91ab9e7393a96dc3654aa92b46210db5)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add GTDetails disclosure component with
+  default, subtle, and card variants
+
 ## 2.2.0
 
 ### Minor Changes

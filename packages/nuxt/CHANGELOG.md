@@ -1,5 +1,14 @@
 # @grundtone/nuxt
 
+## 2.3.0
+
+### Patch Changes
+
+- Updated dependencies
+  [[`f155ea5`](https://github.com/grundtone/grundtone/commit/f155ea5b91ab9e7393a96dc3654aa92b46210db5)]:
+  - @grundtone/vue@2.3.0
+  - @grundtone/design-system@2.3.0
+
 ## 2.2.0
 
 ### Patch Changes
