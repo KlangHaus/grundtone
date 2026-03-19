@@ -1,4 +1,30 @@
 export const componentExamples: Record<string, string> = {
+  'c-tabs-underline': `<div class="tabs tabs--underline">
+  <div class="tabs__list" role="tablist">
+    <button class="tabs__tab tabs__tab--active" role="tab" aria-selected="true">Oversigt</button>
+    <button class="tabs__tab" role="tab" aria-selected="false">Detaljer</button>
+    <button class="tabs__tab" role="tab" aria-selected="false">Historik</button>
+  </div>
+  <div class="tabs__panel" role="tabpanel"><p>Oversigt over systemets status.</p></div>
+</div>`,
+
+  'c-tabs-segment': `<div class="tabs tabs--segment">
+  <div class="tabs__list" role="tablist">
+    <button class="tabs__tab tabs__tab--active" role="tab" aria-selected="true">Vue</button>
+    <button class="tabs__tab" role="tab" aria-selected="false">Nuxt</button>
+    <button class="tabs__tab" role="tab" aria-selected="false">React Native</button>
+  </div>
+  <div class="tabs__panel" role="tabpanel"><p>Vue 3 komponentbibliotek.</p></div>
+</div>`,
+
+  'c-tabs-pill': `<div class="tabs tabs--pill">
+  <div class="tabs__list" role="tablist">
+    <button class="tabs__tab tabs__tab--active" role="tab" aria-selected="true">Alle</button>
+    <button class="tabs__tab" role="tab" aria-selected="false">Atoms</button>
+    <button class="tabs__tab" role="tab" aria-selected="false">Molecules</button>
+  </div>
+  <div class="tabs__panel" role="tabpanel"><p>Viser alle komponenter.</p></div>
+</div>`,
   'c-external-link': `<div class="flex flex-col gap-2">
   <a href="#" class="external-link">Read more on borger.dk</a>
   <a href="#" class="external-link">Self-service guide (pdf)</a>

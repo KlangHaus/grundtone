@@ -59,6 +59,13 @@ export { GTAddressInput } from './components/AddressInput';
 export type { AddressInputProps } from './components/AddressInput';
 export { GTIcon } from './components/Icon';
 export type { IconProps, IconSize } from './components/Icon';
+export { GTTabs, GTTabPanel } from './components/Tabs';
+export type {
+  TabsProps,
+  TabsVariant,
+  TabItem,
+  TabPanelProps,
+} from './components/Tabs';
 
 // Icon registry provider
 export { IconRegistryProvider, useIconRegistry } from './IconRegistryContext';

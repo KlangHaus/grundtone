@@ -11,6 +11,8 @@ import {
   GTDetails,
   GTIcon,
   GTInput,
+  GTTabs,
+  GTTabPanel,
   GTToggle,
   useGrundtoneTheme,
   useField,
@@ -189,6 +191,99 @@ export default function ComponentsScreen() {
           </Text>
         </GTDetails>
       </View>
+
+      <Text style={headingStyle}>Tabs</Text>
+      <GTTabs
+        tabs={[
+          { id: 'a', label: 'Overview' },
+          { id: 'b', label: 'Details' },
+        ]}
+      >
+        <GTTabPanel id="a">
+          <Text
+            style={{
+              color: theme.colors.text,
+              fontFamily: theme.typography.fontFamily.base,
+              fontSize: rem(theme.typography.fontSize.sm),
+            }}
+          >
+            Overview content.
+          </Text>
+        </GTTabPanel>
+        <GTTabPanel id="b">
+          <Text
+            style={{
+              color: theme.colors.text,
+              fontFamily: theme.typography.fontFamily.base,
+              fontSize: rem(theme.typography.fontSize.sm),
+            }}
+          >
+            Details content.
+          </Text>
+        </GTTabPanel>
+      </GTTabs>
+      <GTTabs
+        variant="segment"
+        tabs={[
+          { id: 'vue', label: 'Vue' },
+          { id: 'rn', label: 'React Native' },
+        ]}
+        style={{ marginTop: 16 }}
+      >
+        <GTTabPanel id="vue">
+          <Text
+            style={{
+              color: theme.colors.text,
+              fontFamily: theme.typography.fontFamily.base,
+              fontSize: rem(theme.typography.fontSize.sm),
+            }}
+          >
+            Vue 3.
+          </Text>
+        </GTTabPanel>
+        <GTTabPanel id="rn">
+          <Text
+            style={{
+              color: theme.colors.text,
+              fontFamily: theme.typography.fontFamily.base,
+              fontSize: rem(theme.typography.fontSize.sm),
+            }}
+          >
+            React Native.
+          </Text>
+        </GTTabPanel>
+      </GTTabs>
+      <GTTabs
+        variant="pill"
+        tabs={[
+          { id: 'all', label: 'All' },
+          { id: 'atoms', label: 'Atoms' },
+        ]}
+        style={{ marginTop: 16 }}
+      >
+        <GTTabPanel id="all">
+          <Text
+            style={{
+              color: theme.colors.text,
+              fontFamily: theme.typography.fontFamily.base,
+              fontSize: rem(theme.typography.fontSize.sm),
+            }}
+          >
+            All components.
+          </Text>
+        </GTTabPanel>
+        <GTTabPanel id="atoms">
+          <Text
+            style={{
+              color: theme.colors.text,
+              fontFamily: theme.typography.fontFamily.base,
+              fontSize: rem(theme.typography.fontSize.sm),
+            }}
+          >
+            Badge, Button, Input...
+          </Text>
+        </GTTabPanel>
+      </GTTabs>
 
       <Text style={headingStyle}>Address Input</Text>
       <View style={{ zIndex: 20 }}>

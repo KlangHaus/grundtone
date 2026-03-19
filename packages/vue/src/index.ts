@@ -105,5 +105,12 @@ export { GTCard } from './molecules/Card';
 export type { CardProps, CardVariant } from './molecules/Card';
 export { GTCookieMessage } from './molecules/CookieMessage';
 export type { CookieMessageProps } from './molecules/CookieMessage';
+export { GTTabs, GTTabPanel } from './molecules/Tabs';
+export type {
+  TabsProps,
+  TabsVariant,
+  TabItem,
+  TabPanelProps,
+} from './molecules/Tabs';
 
 // Organisms

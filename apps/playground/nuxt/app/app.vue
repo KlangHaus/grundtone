@@ -440,6 +440,41 @@
     </section>
 
     <section class="mb-6">
+      <h2>Tabs</h2>
+      <GTTabs
+        :tabs="[
+          { id: 'a', label: 'Oversigt' },
+          { id: 'b', label: 'Detaljer' },
+        ]"
+      >
+        <GTTabPanel id="a"><p>Oversigt.</p></GTTabPanel>
+        <GTTabPanel id="b"><p>Detaljer.</p></GTTabPanel>
+      </GTTabs>
+      <GTTabs
+        variant="segment"
+        :tabs="[
+          { id: 'vue', label: 'Vue' },
+          { id: 'nuxt', label: 'Nuxt' },
+        ]"
+        style="margin-top: 1rem"
+      >
+        <GTTabPanel id="vue"><p>Vue 3.</p></GTTabPanel>
+        <GTTabPanel id="nuxt"><p>Nuxt module.</p></GTTabPanel>
+      </GTTabs>
+      <GTTabs
+        variant="pill"
+        :tabs="[
+          { id: 'all', label: 'Alle' },
+          { id: 'atoms', label: 'Atoms' },
+        ]"
+        style="margin-top: 1rem"
+      >
+        <GTTabPanel id="all"><p>Alle komponenter.</p></GTTabPanel>
+        <GTTabPanel id="atoms"><p>Badge, Button, Input...</p></GTTabPanel>
+      </GTTabs>
+    </section>
+
+    <section class="mb-6">
       <h2>Address Input</h2>
       <div class="flex flex-col gap-4">
         <GTAddressInput

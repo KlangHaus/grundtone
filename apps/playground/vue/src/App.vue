@@ -15,6 +15,8 @@
     GTIcon,
     GTInput,
     GTSelect,
+    GTTabs,
+    GTTabPanel,
     GTToggle,
     useTheme,
     useField,
@@ -91,6 +93,7 @@
             { label: 'Icons', href: '#pg-icons' },
             { label: 'Input', href: '#pg-input' },
             { label: 'Select', href: '#pg-select' },
+            { label: 'Tabs', href: '#pg-tabs' },
             { label: 'Address Input', href: '#pg-address' },
             { label: 'Toggle', href: '#pg-toggle' },
           ]"
@@ -695,6 +698,54 @@
               disabled
             />
           </div>
+        </section>
+
+        <section class="mb-6">
+          <h2 id="pg-tabs" style="scroll-margin-top: 1rem">Tabs</h2>
+          <h3>Underline</h3>
+          <GTTabs
+            :tabs="[
+              { id: 'a', label: 'Oversigt' },
+              { id: 'b', label: 'Detaljer' },
+              { id: 'c', label: 'Historik' },
+            ]"
+          >
+            <GTTabPanel id="a"><p>Oversigt over status.</p></GTTabPanel>
+            <GTTabPanel id="b"><p>Detaljeret konfiguration.</p></GTTabPanel>
+            <GTTabPanel id="c"><p>Ændringshistorik.</p></GTTabPanel>
+          </GTTabs>
+          <h3>Segment</h3>
+          <GTTabs
+            variant="segment"
+            :tabs="[
+              { id: 'vue', label: 'Vue' },
+              { id: 'nuxt', label: 'Nuxt' },
+              { id: 'rn', label: 'React Native' },
+            ]"
+          >
+            <GTTabPanel id="vue"><p>Vue 3 med Composition API.</p></GTTabPanel>
+            <GTTabPanel id="nuxt"
+              ><p>Nuxt-modul med auto-import.</p></GTTabPanel
+            >
+            <GTTabPanel id="rn"><p>Native komponenter.</p></GTTabPanel>
+          </GTTabs>
+          <h3>Pill</h3>
+          <GTTabs
+            variant="pill"
+            :tabs="[
+              { id: 'all', label: 'Alle' },
+              { id: 'atoms', label: 'Atoms' },
+              { id: 'mols', label: 'Molecules' },
+            ]"
+          >
+            <GTTabPanel id="all"><p>Alle komponenter.</p></GTTabPanel>
+            <GTTabPanel id="atoms"
+              ><p>Badge, Button, Input, Toggle...</p></GTTabPanel
+            >
+            <GTTabPanel id="mols"
+              ><p>Accordion, Alert, Card, Tabs...</p></GTTabPanel
+            >
+          </GTTabs>
         </section>
 
         <section class="mb-6">
