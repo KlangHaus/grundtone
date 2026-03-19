@@ -1,5 +1,16 @@
 # @grundtone/vue
 
+## 2.6.1
+
+### Patch Changes
+
+- [`fd7b9e7`](https://github.com/grundtone/grundtone/commit/fd7b9e736af8c3b2964a8bb9089c55583c18f1ae)
+  Thanks [@allanasp](https://github.com/allanasp)! - fix(accordion): improve accessibility — English
+  defaults, sr-only show/hide labels, prefers-reduced-motion
+- Updated dependencies
+  [[`fd7b9e7`](https://github.com/grundtone/grundtone/commit/fd7b9e736af8c3b2964a8bb9089c55583c18f1ae)]:
+  - @grundtone/design-system@2.6.1
+
 ## 2.6.0
 
 ### Minor Changes
