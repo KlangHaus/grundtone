@@ -1,5 +1,19 @@
 # @grundtone/vue
 
+## 2.6.0
+
+### Minor Changes
+
+- [`a8f16af`](https://github.com/grundtone/grundtone/commit/a8f16af2101e8fddec6e5e7e08cf287ca76937f4)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add GTTabs with underline, segment, pill
+  variants and slide transitions
+
+### Patch Changes
+
+- Updated dependencies
+  [[`a8f16af`](https://github.com/grundtone/grundtone/commit/a8f16af2101e8fddec6e5e7e08cf287ca76937f4)]:
+  - @grundtone/design-system@2.6.0
+
 ## 2.5.0
 
 ### Minor Changes

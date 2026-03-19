@@ -1,5 +1,13 @@
 # @grundtone/vue-playground
 
+## 0.0.7
+
+### Patch Changes
+
+- Updated dependencies
+  [[`a8f16af`](https://github.com/grundtone/grundtone/commit/a8f16af2101e8fddec6e5e7e08cf287ca76937f4)]:
+  - @grundtone/vue@2.6.0
+
 ## 0.0.6
 
 ### Patch Changes
