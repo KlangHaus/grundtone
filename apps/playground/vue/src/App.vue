@@ -8,6 +8,7 @@
     GTButton,
     GTCard,
     GTCookieMessage,
+    GTDetails,
     GTIcon,
     GTInput,
     GTToggle,
@@ -78,6 +79,7 @@
             { label: 'Badge', href: '#pg-badge' },
             { label: 'Breadcrumb', href: '#pg-breadcrumb' },
             { label: 'Card', href: '#pg-card' },
+            { label: 'Details', href: '#pg-details' },
             { label: 'Button', href: '#pg-button' },
             { label: 'Icons', href: '#pg-icons' },
             { label: 'Input', href: '#pg-input' },
@@ -343,6 +345,42 @@
               </div>
               <p>Opens in a new tab with noopener noreferrer.</p>
             </GTCard>
+          </div>
+        </section>
+
+        <section class="mb-6">
+          <h2 id="pg-details" style="scroll-margin-top: 1rem">Details</h2>
+          <div class="flex flex-col gap-4">
+            <GTDetails summary="Hvad er design tokens?">
+              <p>
+                Design tokens er navngivne værdier for farver, spacing,
+                typografi og mere. De sikrer konsistens på tværs af platforme.
+              </p>
+            </GTDetails>
+            <GTDetails variant="subtle" summary="Læs mere om theming">
+              <p>
+                Tema-switching sker via CSS custom properties. Alle farver
+                defineres som semantiske tokens.
+              </p>
+            </GTDetails>
+            <GTDetails
+              variant="card"
+              summary="Har jeg brug for @grundtone/core?"
+            >
+              <p>
+                Ja — core indeholder TypeScript-typer, theme-presets, og
+                ikonregistryet. Alle andre pakker afhænger af core.
+              </p>
+            </GTDetails>
+            <GTDetails
+              variant="card"
+              summary="Kan jeg bruge Grundtone med Nuxt?"
+            >
+              <p>
+                <code>@grundtone/nuxt</code> modulet auto-importerer komponenter
+                og injicerer design-system CSS automatisk.
+              </p>
+            </GTDetails>
           </div>
         </section>
 

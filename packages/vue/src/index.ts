@@ -11,6 +11,8 @@ import '@grundtone/design-system/dist/index.css';
 export { GTBadge } from './atoms/Badge';
 export type { BadgeProps, BadgeVariant, BadgeSize } from './atoms/Badge';
 export { GTButton } from './atoms/Button';
+export { GTDetails } from './atoms/Details';
+export type { DetailsProps, DetailsVariant } from './atoms/Details';
 export type {
   ButtonProps,
   ButtonVariant,

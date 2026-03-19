@@ -70,6 +70,8 @@ export type { AlertProps, AlertVariant } from './components/Alert';
 export { GTBadge } from './components/Badge';
 export type { BadgeProps, BadgeVariant, BadgeSize } from './components/Badge';
 export { GTCard } from './components/Card';
+export { GTDetails } from './components/Details';
+export type { DetailsProps, DetailsVariant } from './components/Details';
 export type { CardProps, CardVariant } from './components/Card';
 
 // Hooks

@@ -97,6 +97,42 @@ export const componentExamples: Record<string, string> = {
   <span class="badge badge--success badge--md"><span class="badge__dot" aria-hidden="true"></span>Medium dot</span>
 </div>`,
 
+  'c-details-default': `<details class="details details--default">
+  <summary class="details__summary">
+    <span class="details__arrow" aria-hidden="true"></span>
+    What are design tokens?
+  </summary>
+  <div class="details__content">
+    <div class="details__body">
+      <p>Design tokens are the smallest building blocks of a design system — named values for colors, spacing, typography, and more.</p>
+    </div>
+  </div>
+</details>`,
+
+  'c-details-subtle': `<details class="details details--subtle">
+  <summary class="details__summary">
+    <span class="details__arrow" aria-hidden="true"></span>
+    Read more about theming
+  </summary>
+  <div class="details__content">
+    <div class="details__body">
+      <p>Theme switching happens via CSS custom properties. All colors are defined as semantic tokens.</p>
+    </div>
+  </div>
+</details>`,
+
+  'c-details-card': `<details class="details details--card">
+  <summary class="details__summary">
+    <span class="details__arrow" aria-hidden="true"></span>
+    Do I need @grundtone/core?
+  </summary>
+  <div class="details__content">
+    <div class="details__body">
+      <p>Yes — core contains TypeScript types, theme presets, and the icon registry. All other packages depend on core.</p>
+    </div>
+  </div>
+</details>`,
+
   'c-anchor-links-basic': `<nav class="anchor-links" aria-label="Indholdsfortegnelse">
   <p class="anchor-links__heading">Indhold på siden</p>
   <ol class="anchor-links__list">

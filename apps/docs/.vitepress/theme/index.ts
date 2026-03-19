@@ -4,6 +4,7 @@ import { onMounted } from 'vue';
 import CodePreview from './components/CodePreview.vue';
 import ColorTokens from './components/ColorTokens.vue';
 import ButtonDemo from '../../../../packages/vue/src/atoms/Button/demo.vue';
+import DetailsDemo from '../../../../packages/vue/src/atoms/Details/demo.vue';
 import IconDemo from '../../../../packages/vue/src/atoms/Icon/demo.vue';
 import InputDemo from '../../../../packages/vue/src/atoms/Input/demo.vue';
 import ToggleDemo from '../../../../packages/vue/src/atoms/Toggle/demo.vue';
@@ -36,6 +37,7 @@ export default {
     app.component('ToggleDemo', ToggleDemo);
     app.component('BadgeDemo', BadgeDemo);
     app.component('AlertDemo', AlertDemo);
+    app.component('DetailsDemo', DetailsDemo);
     app.component('AnchorLinksDemo', AnchorLinksDemo);
     app.component('BreadcrumbDemo', BreadcrumbDemo);
     app.component('CardDemo', CardDemo);
