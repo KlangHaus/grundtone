@@ -76,11 +76,18 @@ Changes that are merged and will be included in the next version.
 
 ## Released
 
-<div v-for="release in data.released" :key="release.version" class="changelog-release">
+<div v-for="(release, i) in data.released" :key="release.version" class="changelog-release">
 
-### {{ release.version }} <span v-if="release.date" class="release-date">{{ release.date }}</span>
-
-<div v-html="renderMarkdown(release.content)" />
+<details :open="i === 0 || undefined" class="details details--card">
+  <summary class="details__summary">
+    <span class="details__arrow" aria-hidden="true"></span>
+    <strong>{{ release.version }}</strong>
+    <span v-if="release.date" class="release-date">{{ release.date }}</span>
+  </summary>
+  <div class="details__content">
+    <div class="details__body" v-html="renderMarkdown(release.content)" />
+  </div>
+</details>
 
 </div>
 
