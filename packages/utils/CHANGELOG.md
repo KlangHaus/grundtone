@@ -1,5 +1,21 @@
 # @grundtone/utils
 
+## 2.1.0
+
+### Minor Changes
+
+- [`36758db`](https://github.com/grundtone/grundtone/commit/36758db0b2b3823e5a71e5bc7b14ed80b7ee4a25)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add GTInput component with label, help text,
+  error state, and accessibility support across all platforms. Includes generateId utility, SCSS
+  element reset and component classes, Vue SFC with 27 tests, React Native component, docs for
+  Vue/web/RN, demos, and playground examples.
+
+### Patch Changes
+
+- Updated dependencies
+  [[`fe730ff`](https://github.com/grundtone/grundtone/commit/fe730ff700a9801f6985aa326d899fdb03e0f88f)]:
+  - @grundtone/core@2.1.0
+
 ## 2.0.0 - 2026-03-09
 
 ### Major Changes
