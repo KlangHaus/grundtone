@@ -3,6 +3,7 @@ import { ScrollView, View, Text } from 'react-native';
 import {
   GTAccordion,
   GTAccordionItem,
+  GTAddressInput,
   GTAlert,
   GTBadge,
   GTButton,
@@ -187,6 +188,11 @@ export default function ComponentsScreen() {
             Yes — core contains TypeScript types and theme presets.
           </Text>
         </GTDetails>
+      </View>
+
+      <Text style={headingStyle}>Address Input</Text>
+      <View style={{ zIndex: 20 }}>
+        <GTAddressInput label="Adresse" placeholder="Indtast adresse..." />
       </View>
 
       <Text style={headingStyle}>Alert</Text>

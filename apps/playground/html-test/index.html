@@ -302,6 +302,34 @@
       </div>
     </div>
 
+    <!-- ─── Select ─── -->
+    <h2>Select</h2>
+    <div class="flex flex-col gap-4" style="max-width: 360px">
+      <div class="input-field">
+        <label class="input-label" for="html-region">Region <span class="input-label__required">*</span></label>
+        <select id="html-region" class="select select--md" required>
+          <option value="" disabled selected>Vælg...</option>
+          <option value="hovedstaden">Hovedstaden</option>
+          <option value="midtjylland">Midtjylland</option>
+          <option value="nordjylland">Nordjylland</option>
+          <option value="sjaelland">Sjælland</option>
+          <option value="syddanmark">Syddanmark</option>
+        </select>
+      </div>
+      <div class="input-field">
+        <label class="input-label" for="html-size">Sizes</label>
+        <select class="select select--sm"><option>Small</option></select>
+        <select class="select select--md"><option>Medium</option></select>
+        <select class="select select--lg"><option>Large</option></select>
+      </div>
+      <div class="input-field">
+        <label class="input-label" for="html-dis">Disabled</label>
+        <select id="html-dis" class="select select--md" disabled>
+          <option selected>Hovedstaden</option>
+        </select>
+      </div>
+    </div>
+
     <!-- ─── Accordion ─── -->
     <h2>Accordion</h2>
     <div class="accordion" role="region" aria-label="FAQ">

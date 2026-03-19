@@ -41,7 +41,22 @@ export type { Theme } from '@grundtone/core';
 export { shadowToRN } from './shadows';
 export type { RNShadowStyle } from './shadows';
 
+// Hooks
+export { useDawaAutocomplete } from './hooks/useDawaAutocomplete';
+export type {
+  DawaType,
+  DawaResult,
+  UseDawaAutocompleteOptions,
+} from './hooks/useDawaAutocomplete';
+
 // Components
+export { GTAutocomplete } from './components/Autocomplete';
+export type {
+  AutocompleteProps,
+  AutocompleteSuggestion,
+} from './components/Autocomplete';
+export { GTAddressInput } from './components/AddressInput';
+export type { AddressInputProps } from './components/AddressInput';
 export { GTIcon } from './components/Icon';
 export type { IconProps, IconSize } from './components/Icon';
 

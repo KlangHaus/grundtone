@@ -75,6 +75,43 @@ export const componentExamples: Record<string, string> = {
   </ul>
 </div>`,
 
+  'c-select-basic': `<div class="input-field" style="max-width: 360px">
+  <label class="input-label" for="preview-region">Region <span class="input-label__required">*</span></label>
+  <select id="preview-region" class="select select--md" required>
+    <option value="" disabled selected>Vælg...</option>
+    <option value="hovedstaden">Hovedstaden</option>
+    <option value="midtjylland">Midtjylland</option>
+    <option value="nordjylland">Nordjylland</option>
+    <option value="sjaelland">Sjælland</option>
+    <option value="syddanmark">Syddanmark</option>
+  </select>
+</div>`,
+
+  'c-select-error': `<div class="input-field" style="max-width: 360px">
+  <label class="input-label" for="preview-err-sel">Region</label>
+  <p id="preview-err-sel-desc" class="input-error" role="alert">Du skal vælge en region</p>
+  <select id="preview-err-sel" class="select select--md select--error" aria-invalid="true" aria-describedby="preview-err-sel-desc" required>
+    <option value="" disabled selected>Vælg...</option>
+    <option value="hovedstaden">Hovedstaden</option>
+    <option value="midtjylland">Midtjylland</option>
+  </select>
+</div>`,
+
+  'c-select-sizes': `<div class="flex flex-col gap-2" style="max-width: 360px">
+  <select class="select select--sm">
+    <option value="" disabled selected>Small</option>
+    <option>Option A</option>
+  </select>
+  <select class="select select--md">
+    <option value="" disabled selected>Medium</option>
+    <option>Option A</option>
+  </select>
+  <select class="select select--lg">
+    <option value="" disabled selected>Large</option>
+    <option>Option A</option>
+  </select>
+</div>`,
+
   'c-accordion-default': `<div class="accordion" role="region" aria-label="FAQ">
   <div class="accordion__item">
     <button class="accordion__header" aria-expanded="false">

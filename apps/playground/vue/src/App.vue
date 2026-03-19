@@ -9,10 +9,12 @@
     GTCard,
     GTAccordion,
     GTAccordionItem,
+    GTAddressInput,
     GTCookieMessage,
     GTDetails,
     GTIcon,
     GTInput,
+    GTSelect,
     GTToggle,
     useTheme,
     useField,
@@ -37,6 +39,8 @@
   const inputValue = ref('');
   const emailValue = ref('');
   const errorValue = ref('');
+  const addressValue = ref('');
+  const roadValue = ref('');
 
   // Validation demo
   const nameField = useField({
@@ -86,6 +90,8 @@
             { label: 'Button', href: '#pg-button' },
             { label: 'Icons', href: '#pg-icons' },
             { label: 'Input', href: '#pg-input' },
+            { label: 'Select', href: '#pg-select' },
+            { label: 'Address Input', href: '#pg-address' },
             { label: 'Toggle', href: '#pg-toggle' },
           ]"
         />
@@ -639,6 +645,74 @@
             </div>
             <p v-if="formResult">{{ formResult }}</p>
           </form>
+        </section>
+
+        <section class="mb-6">
+          <h2 id="pg-select" style="scroll-margin-top: 1rem">Select</h2>
+          <div class="flex flex-col gap-4">
+            <GTSelect
+              label="Region"
+              :options="[
+                { value: 'hovedstaden', label: 'Hovedstaden' },
+                { value: 'midtjylland', label: 'Midtjylland' },
+                { value: 'nordjylland', label: 'Nordjylland' },
+                { value: 'sjaelland', label: 'Sjælland' },
+                { value: 'syddanmark', label: 'Syddanmark' },
+              ]"
+              required
+            />
+            <GTSelect
+              label="Region"
+              :options="[{ value: 'hovedstaden', label: 'Hovedstaden' }]"
+              error-text="Du skal vælge en region"
+              required
+            />
+            <GTSelect
+              label="Land"
+              :options="[
+                {
+                  label: 'Norden',
+                  options: [
+                    { value: 'dk', label: 'Danmark' },
+                    { value: 'se', label: 'Sverige' },
+                    { value: 'no', label: 'Norge' },
+                  ],
+                },
+                {
+                  label: 'Baltikum',
+                  options: [
+                    { value: 'ee', label: 'Estland' },
+                    { value: 'lv', label: 'Letland' },
+                  ],
+                },
+              ]"
+              placeholder="Vælg land..."
+            />
+            <GTSelect
+              label="Disabled"
+              :options="[{ value: 'a', label: 'Option A' }]"
+              model-value="a"
+              disabled
+            />
+          </div>
+        </section>
+
+        <section class="mb-6">
+          <h2 id="pg-address" style="scroll-margin-top: 1rem">Address Input</h2>
+          <div class="flex flex-col gap-4">
+            <GTAddressInput
+              v-model="addressValue"
+              label="Adresse"
+              help-text="Begynd at skrive din adresse"
+              required
+            />
+            <GTAddressInput
+              v-model="roadValue"
+              label="Vejnavn"
+              type="vejnavn"
+              placeholder="Søg vejnavn..."
+            />
+          </div>
         </section>
 
         <section class="mb-6">

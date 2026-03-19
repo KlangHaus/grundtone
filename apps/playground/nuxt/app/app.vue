@@ -9,6 +9,8 @@
   const inputValue = ref('');
   const emailValue = ref('');
   const errorValue = ref('');
+  const addressValue = ref('');
+  const roadValue = ref('');
 
   // Validation demo
   const nameField = useField({
@@ -406,6 +408,53 @@
         </div>
         <p v-if="formResult">{{ formResult }}</p>
       </form>
+    </section>
+
+    <section class="mb-6">
+      <h2>Select</h2>
+      <div class="flex flex-col gap-4">
+        <GTSelect
+          label="Region"
+          :options="[
+            { value: 'hovedstaden', label: 'Hovedstaden' },
+            { value: 'midtjylland', label: 'Midtjylland' },
+            { value: 'sjaelland', label: 'Sjælland' },
+            { value: 'syddanmark', label: 'Syddanmark' },
+          ]"
+          required
+        />
+        <GTSelect
+          label="Land"
+          :options="[
+            {
+              label: 'Norden',
+              options: [
+                { value: 'dk', label: 'Danmark' },
+                { value: 'se', label: 'Sverige' },
+              ],
+            },
+          ]"
+          placeholder="Vælg land..."
+        />
+      </div>
+    </section>
+
+    <section class="mb-6">
+      <h2>Address Input</h2>
+      <div class="flex flex-col gap-4">
+        <GTAddressInput
+          v-model="addressValue"
+          label="Adresse"
+          help-text="Begynd at skrive din adresse"
+          required
+        />
+        <GTAddressInput
+          v-model="roadValue"
+          label="Vejnavn"
+          type="vejnavn"
+          placeholder="Søg vejnavn..."
+        />
+      </div>
     </section>
 
     <section class="mb-6">
