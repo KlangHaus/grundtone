@@ -39,7 +39,13 @@
       "types": "./dist/branding.d.ts",
       "import": "./dist/branding.js",
       "require": "./dist/branding.cjs"
-    }
+    },
+    "./behaviors": {
+      "types": "./dist/behaviors.d.ts",
+      "import": "./dist/behaviors.js",
+      "require": "./dist/behaviors.cjs"
+    },
+    "./behaviors/umd": "./dist/behaviors.umd.global.js"
   },
   "files": [
     "dist",
