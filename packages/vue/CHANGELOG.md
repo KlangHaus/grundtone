@@ -1,5 +1,19 @@
 # @grundtone/vue
 
+## 2.4.0
+
+### Minor Changes
+
+- [`b24dbd9`](https://github.com/grundtone/grundtone/commit/b24dbd9a10bf80685d571ab69ff40ec1098fc9a6)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add GTAccordion with 3 variants, 3 transitions,
+  animated RN expand/collapse
+
+### Patch Changes
+
+- Updated dependencies
+  [[`b24dbd9`](https://github.com/grundtone/grundtone/commit/b24dbd9a10bf80685d571ab69ff40ec1098fc9a6)]:
+  - @grundtone/design-system@2.4.0
+
 ## 2.3.0
 
 ### Minor Changes
