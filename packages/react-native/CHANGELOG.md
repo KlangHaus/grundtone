@@ -1,5 +1,13 @@
 # @grundtone/react-native
 
+## 2.5.0
+
+### Minor Changes
+
+- [`47eec5f`](https://github.com/grundtone/grundtone/commit/47eec5f72d7299faf3b97bfc32513d6df4ff9ea4)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add GTSelect, GTAutocomplete, GTAddressInput
+  with DAWA integration
+
 ## 2.4.0
 
 ### Minor Changes
