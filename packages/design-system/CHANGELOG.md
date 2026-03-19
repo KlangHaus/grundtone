@@ -1,5 +1,14 @@
 # @grundtone/design-system
 
+## 2.7.0
+
+### Minor Changes
+
+- [`98a30f3`](https://github.com/grundtone/grundtone/commit/98a30f3c7786ac7425b5249740cb22e351874f16)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add vanilla TypeScript behaviors for
+  interactive components (accordion, tabs, toggle, alert, cookie-message, anchor-links). Ships as
+  ESM, CJS, and UMD bundle for framework-agnostic usage.
+
 ## 2.6.1
 
 ### Patch Changes

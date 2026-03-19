@@ -1,5 +1,11 @@
 ---
 
+## 1.0.9
+### Patch Changes
+
+- Updated dependencies [[`98a30f3`](https://github.com/grundtone/grundtone/commit/98a30f3c7786ac7425b5249740cb22e351874f16)]:
+  - @grundtone/design-system@2.7.0
+
 ## 1.0.8
 ### Patch Changes
 
