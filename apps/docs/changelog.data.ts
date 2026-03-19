@@ -98,10 +98,32 @@ export default {
       }
     }
 
-    // 2. Released versions — read from design-system (primary package)
-    const released = parseChangelog(
-      resolve(root, 'packages/design-system/CHANGELOG.md'),
-    );
+    // 2. Released versions — merge from all packages
+    const packagesDir = resolve(root, 'packages');
+    const allReleases = new Map<string, ChangelogRelease>();
+
+    for (const pkg of readdirSync(packagesDir)) {
+      const changelog = resolve(packagesDir, pkg, 'CHANGELOG.md');
+      for (const release of parseChangelog(changelog)) {
+        const existing = allReleases.get(release.version);
+        if (existing) {
+          // Merge content from multiple packages under the same version
+          existing.content += `\n\n#### @grundtone/${pkg}\n\n${release.content}`;
+        } else {
+          allReleases.set(release.version, {
+            ...release,
+            content: `#### @grundtone/${pkg}\n\n${release.content}`,
+          });
+        }
+      }
+    }
+
+    // Sort by semver descending
+    const released = [...allReleases.values()].sort((a, b) => {
+      const [aMajor, aMinor, aPatch] = a.version.split('.').map(Number);
+      const [bMajor, bMinor, bPatch] = b.version.split('.').map(Number);
+      return bMajor - aMajor || bMinor - aMinor || bPatch - aPatch;
+    });
 
     return { pending, released };
   },
