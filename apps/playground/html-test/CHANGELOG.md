@@ -1,5 +1,14 @@
 # @grundtone/html-test
 
+## 0.0.3
+
+### Patch Changes
+
+- Updated dependencies
+  [[`d087e51`](https://github.com/grundtone/grundtone/commit/d087e51106acb475d92a51e063ce540a0ea41d47)]:
+  - @grundtone/vue@2.2.0
+  - @grundtone/design-system@2.2.0
+
 ## 0.0.2
 
 ### Patch Changes

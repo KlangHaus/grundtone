@@ -1,5 +1,13 @@
 # @grundtone/react-native
 
+## 2.2.0
+
+### Minor Changes
+
+- [`d087e51`](https://github.com/grundtone/grundtone/commit/d087e51106acb475d92a51e063ce540a0ea41d47)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add GTBadge component, replace legacy .tag, fix
+  AnchorLinks click highlight
+
 ## 2.1.0
 
 ### Minor Changes
