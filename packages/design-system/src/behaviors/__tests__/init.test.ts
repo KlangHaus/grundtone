@@ -26,6 +26,24 @@ function setupDOM(): void {
       <span class="toggle__track"></span>
       <span class="toggle__thumb"></span>
     </button>
+    <div class="alert alert--info" data-dismissible role="status">
+      <div class="alert__content"><p>Alert</p></div>
+      <button class="alert__close" aria-label="Close">&times;</button>
+    </div>
+    <div class="cookie-message" role="region" aria-label="Cookies">
+      <div class="cookie-message__content">
+        <div class="cookie-message__actions">
+          <button data-action="accept">Accept</button>
+        </div>
+      </div>
+    </div>
+    <nav class="anchor-links" aria-label="TOC">
+      <ol class="anchor-links__list">
+        <li class="anchor-links__item">
+          <a href="#s1" class="anchor-links__link">S1</a>
+        </li>
+      </ol>
+    </nav>
   `;
 }
 
@@ -38,7 +56,7 @@ describe('initAll / destroyAll', () => {
     setupDOM();
     const instances = initAll();
 
-    expect(instances).toHaveLength(3);
+    expect(instances).toHaveLength(6);
     expect(
       GtComponent.getInstance(document.querySelector('.accordion')!),
     ).not.toBeNull();
@@ -48,6 +66,15 @@ describe('initAll / destroyAll', () => {
     expect(
       GtComponent.getInstance(document.querySelector('.toggle')!),
     ).not.toBeNull();
+    expect(
+      GtComponent.getInstance(document.querySelector('.alert')!),
+    ).not.toBeNull();
+    expect(
+      GtComponent.getInstance(document.querySelector('.cookie-message')!),
+    ).not.toBeNull();
+    expect(
+      GtComponent.getInstance(document.querySelector('.anchor-links')!),
+    ).not.toBeNull();
   });
 
   it('is idempotent — calling initAll twice does not double-init', () => {
@@ -55,7 +82,7 @@ describe('initAll / destroyAll', () => {
     const first = initAll();
     const second = initAll();
 
-    expect(first).toHaveLength(3);
+    expect(first).toHaveLength(6);
     expect(second).toHaveLength(0);
   });
 
@@ -72,6 +99,15 @@ describe('initAll / destroyAll', () => {
     ).toBeNull();
     expect(
       GtComponent.getInstance(document.querySelector('.toggle')!),
+    ).toBeNull();
+    expect(
+      GtComponent.getInstance(document.querySelector('.alert')!),
+    ).toBeNull();
+    expect(
+      GtComponent.getInstance(document.querySelector('.cookie-message')!),
+    ).toBeNull();
+    expect(
+      GtComponent.getInstance(document.querySelector('.anchor-links')!),
     ).toBeNull();
   });
 

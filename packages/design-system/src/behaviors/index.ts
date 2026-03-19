@@ -2,17 +2,26 @@ import { GtComponent } from './base';
 import { Accordion } from './accordion';
 import { Tabs } from './tabs';
 import { Toggle } from './toggle';
+import { Alert } from './alert';
+import { CookieMessage } from './cookie-message';
+import { AnchorLinks } from './anchor-links';
 
 export { GtComponent } from './base';
 export { Accordion } from './accordion';
 export { Tabs } from './tabs';
 export { Toggle } from './toggle';
+export { Alert } from './alert';
+export { CookieMessage } from './cookie-message';
+export { AnchorLinks } from './anchor-links';
 export { uid, prefersReducedMotion, slideOpen, slideClose } from './utils';
 
 const REGISTRY: Record<string, new (el: HTMLElement) => GtComponent> = {
   '.accordion': Accordion,
   '.tabs': Tabs,
   '.toggle': Toggle,
+  '.alert[data-dismissible]': Alert,
+  '.cookie-message': CookieMessage,
+  '.anchor-links': AnchorLinks,
 };
 
 /**
