@@ -92,6 +92,9 @@
         {{ heading }}
         <span v-if="summary" :class="`${base}__summary`">{{ summary }}</span>
       </span>
+      <span class="sr-only">{{
+        isOpen ? 'Hide this section' : 'Show this section'
+      }}</span>
     </button>
     <div
       ref="panel"

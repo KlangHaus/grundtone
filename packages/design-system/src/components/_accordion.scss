@@ -165,6 +165,26 @@
   }
 }
 
+// ─── Reduced motion ───
+@media (prefers-reduced-motion: reduce) {
+  .accordion__icon::before,
+  .accordion__icon::after {
+    transition: none;
+  }
+
+  .accordion__header {
+    transition: none;
+  }
+
+  .accordion__panel--slide {
+    transition: none;
+  }
+
+  .accordion__panel--fade {
+    transition: none;
+  }
+}
+
 // ─── Variant: default (separators only) ───
 // Base styles above are the default. No extra rules needed.
 

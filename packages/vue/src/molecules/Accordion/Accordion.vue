@@ -7,8 +7,8 @@
     variant: 'default',
     transition: 'slide',
     showToggleAll: true,
-    toggleAllLabelOpen: 'Vis alle',
-    toggleAllLabelClose: 'Skjul alle',
+    toggleAllLabelOpen: 'Show all sections',
+    toggleAllLabelClose: 'Hide all sections',
     ariaLabel: 'Accordion',
   });
 
@@ -249,6 +249,26 @@
           #{tokens.space('md')} + 1.25rem + #{tokens.space('sm')}
         );
         padding-right: tokens.space('md');
+      }
+    }
+
+    // Reduced motion
+    @media (prefers-reduced-motion: reduce) {
+      .#{$prefix}-accordion__icon::before,
+      .#{$prefix}-accordion__icon::after {
+        transition: none;
+      }
+
+      .#{$prefix}-accordion__header {
+        transition: none;
+      }
+
+      .#{$prefix}-accordion__panel--slide {
+        transition: none;
+      }
+
+      .#{$prefix}-accordion__panel--fade {
+        transition: none;
       }
     }
 
