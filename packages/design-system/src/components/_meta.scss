@@ -1,17 +1,9 @@
-// Component: .meta, .tag
-// Metadata row and pill badge — use in cards, articles, lists, etc.
+// Component: .meta
+// Metadata row — use in cards, articles, lists, etc.
 
 .meta {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-sm);
   align-items: center;
-}
-
-.tag {
-  display: inline-block;
-  padding: 0.125rem 0.5rem;
-  border-radius: var(--radius-full);
-  background: var(--color-primary);
-  color: var(--color-on-primary);
 }

@@ -236,6 +236,7 @@ export default defineConfig({
           items: [
             { text: 'Alert', link: '/vue/alert' },
             { text: 'Anchor Links', link: '/vue/anchor-links' },
+            { text: 'Badge', link: '/vue/badge' },
             { text: 'Button', link: '/vue/button' },
             { text: 'Cookie Message', link: '/vue/cookie-message' },
             { text: 'Input', link: '/vue/input' },
@@ -357,6 +358,7 @@ export default defineConfig({
           items: [
             { text: 'Alert', link: '/web/c-alert' },
             { text: 'Anchor Links', link: '/web/c-anchor-links' },
+            { text: 'Badge', link: '/web/c-badge' },
             { text: 'Cookie Message', link: '/web/c-cookie-message' },
             { text: 'Meta', link: '/web/c-meta' },
             { text: 'Card', link: '/web/c-card' },
@@ -381,6 +383,7 @@ export default defineConfig({
           text: 'Components',
           items: [
             { text: 'Alert', link: '/react-native/c-alert' },
+            { text: 'Badge', link: '/react-native/c-badge' },
             { text: 'Button', link: '/react-native/c-button' },
             { text: 'Card', link: '/react-native/c-card' },
             { text: 'Input', link: '/react-native/c-input' },

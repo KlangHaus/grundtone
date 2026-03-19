@@ -20,13 +20,21 @@
   /* eslint-disable no-undef */
   let observer: IntersectionObserver | null = null;
 
+  let isClickScrolling = false;
+
   function onClick(e: Event, href: string) {
     e.preventDefault();
     const id = href.replace(/^#/, '');
     const target = document.getElementById(id);
     if (target) {
+      isClickScrolling = true;
+      activeHref.value = href;
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       window.history.pushState(null, '', href);
+      // Re-enable observer after scroll settles
+      setTimeout(() => {
+        isClickScrolling = false;
+      }, 800);
     }
     emit('navigate', href);
   }
@@ -46,13 +54,14 @@
 
     observer = new IntersectionObserver(
       entries => {
+        if (isClickScrolling) return;
         for (const entry of entries) {
           if (entry.isIntersecting) {
             activeHref.value = `#${entry.target.id}`;
           }
         }
       },
-      { rootMargin: '-80px 0px -60% 0px', threshold: 0 },
+      { rootMargin: '0px 0px -75% 0px', threshold: 0 },
     );
 
     for (const target of targets) {

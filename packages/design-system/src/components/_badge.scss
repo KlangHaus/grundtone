@@ -1,0 +1,85 @@
+// Component: .badge
+// Non-interactive status indicators and category labels.
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  border-radius: var(--radius-full);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.025em;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+// Sizes
+.badge--sm {
+  padding: 0.0625rem var(--space-sm);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-normal);
+}
+
+.badge--md {
+  padding: var(--space-xs) var(--space-md);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-normal);
+}
+
+// Dot indicator
+.badge__dot {
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+// Icon
+.badge__icon {
+  flex-shrink: 0;
+}
+
+// Variants — tinted background with strong text
+.badge--neutral {
+  background: var(--color-surface-alt);
+  color: var(--color-text-secondary);
+
+  .badge__dot {
+    background: var(--color-text-tertiary);
+  }
+}
+
+.badge--info {
+  background: color-mix(in srgb, var(--color-info) 14%, transparent);
+  color: var(--color-info);
+
+  .badge__dot {
+    background: var(--color-info);
+  }
+}
+
+.badge--success {
+  background: color-mix(in srgb, var(--color-success) 14%, transparent);
+  color: var(--color-success);
+
+  .badge__dot {
+    background: var(--color-success);
+  }
+}
+
+.badge--warning {
+  background: color-mix(in srgb, var(--color-warning) 14%, transparent);
+  color: var(--color-warning);
+
+  .badge__dot {
+    background: var(--color-warning);
+  }
+}
+
+.badge--error {
+  background: color-mix(in srgb, var(--color-error) 14%, transparent);
+  color: var(--color-error);
+
+  .badge__dot {
+    background: var(--color-error);
+  }
+}

@@ -2,14 +2,15 @@
   import { ref, computed } from 'vue';
   import {
     GTAlert,
+    GTAnchorLinks,
+    GTBadge,
+    GTBreadcrumb,
     GTButton,
     GTCard,
+    GTCookieMessage,
     GTIcon,
     GTInput,
     GTToggle,
-    GTBreadcrumb,
-    GTCookieMessage,
-    GTAnchorLinks,
     useTheme,
     useField,
     useFormValidation,
@@ -74,6 +75,7 @@
           :items="[
             { label: 'Theme mode', href: '#pg-theme' },
             { label: 'Alert', href: '#pg-alert' },
+            { label: 'Badge', href: '#pg-badge' },
             { label: 'Breadcrumb', href: '#pg-breadcrumb' },
             { label: 'Card', href: '#pg-card' },
             { label: 'Button', href: '#pg-button' },
@@ -178,6 +180,37 @@
         </section>
 
         <section class="mb-6">
+          <h2 id="pg-badge" style="scroll-margin-top: 1rem">Badge</h2>
+          <div class="flex flex-wrap items-center gap-2">
+            <GTBadge variant="neutral">Neutral</GTBadge>
+            <GTBadge variant="info">Information</GTBadge>
+            <GTBadge variant="success">Godkendt</GTBadge>
+            <GTBadge variant="warning">Afventer</GTBadge>
+            <GTBadge variant="error">Afvist</GTBadge>
+          </div>
+          <h3>With dot</h3>
+          <div class="flex flex-wrap items-center gap-2">
+            <GTBadge variant="success" dot>Aktiv</GTBadge>
+            <GTBadge variant="warning" dot>Afventer</GTBadge>
+            <GTBadge variant="error" dot>Offline</GTBadge>
+            <GTBadge variant="info" dot>I gang</GTBadge>
+            <GTBadge variant="neutral" dot>Kladde</GTBadge>
+          </div>
+          <h3>With icon</h3>
+          <div class="flex flex-wrap items-center gap-2">
+            <GTBadge variant="success" icon="check">Bekræftet</GTBadge>
+            <GTBadge variant="error" icon="close">Fjernet</GTBadge>
+          </div>
+          <h3>Sizes</h3>
+          <div class="flex flex-wrap items-center gap-2">
+            <GTBadge size="sm">Small</GTBadge>
+            <GTBadge size="md">Medium</GTBadge>
+            <GTBadge size="sm" variant="success" dot>Small dot</GTBadge>
+            <GTBadge size="md" variant="success" dot>Medium dot</GTBadge>
+          </div>
+        </section>
+
+        <section class="mb-6">
           <h2 id="pg-breadcrumb" style="scroll-margin-top: 1rem">Breadcrumb</h2>
           <div class="flex flex-col gap-2">
             <GTBreadcrumb
@@ -277,7 +310,7 @@
               image-alt="Article image"
             >
               <div class="meta text-sm text-secondary">
-                <span class="tag text-xs">Design</span>
+                <GTBadge size="sm" variant="info">Design</GTBadge>
                 <time>1 March 2026</time>
                 <span aria-hidden="true">&middot;</span>
                 <span>6 min read</span>
@@ -292,7 +325,7 @@
               image-alt="Article image"
             >
               <div class="meta text-sm text-secondary">
-                <span class="tag text-xs">A11y</span>
+                <GTBadge size="sm" variant="success">A11y</GTBadge>
                 <time>15 February 2026</time>
                 <span aria-hidden="true">&middot;</span>
                 <span>4 min read</span>
@@ -306,7 +339,7 @@
               title="External Resource"
             >
               <div class="meta text-sm text-secondary">
-                <span class="tag text-xs">External</span>
+                <GTBadge size="sm" variant="warning">External</GTBadge>
               </div>
               <p>Opens in a new tab with noopener noreferrer.</p>
             </GTCard>

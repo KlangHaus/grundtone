@@ -1,6 +1,6 @@
 # Meta
 
-Metadata row and pill badge. Use in cards, article listings, blog overviews, or anywhere you need a compact row of tags, dates, and secondary info.
+Metadata row for compact secondary info. Use in cards, article listings, or blog overviews. Pair with [Badge](/web/c-badge) for category labels.
 
 ---
 
@@ -9,7 +9,6 @@ Metadata row and pill badge. Use in cards, article listings, blog overviews, or 
 | Class | Purpose |
 | --- | --- |
 | `.meta` | Flex row with wrap, gap, and center alignment |
-| `.tag` | Inline pill badge — primary background, full radius |
 
 ---
 
@@ -21,7 +20,7 @@ Metadata row and pill badge. Use in cards, article listings, blog overviews, or 
 
 ## Inside a Card
 
-Compose `.meta` and `.tag` inside a card's content area for article-style cards:
+Compose `.meta` with `.badge` inside a card's content area for article-style cards:
 
 <CodePreview name="c-meta-in-card" />
 
@@ -33,7 +32,7 @@ Compose `.meta` and `.tag` inside a card's content area for article-style cards:
 
 ```html
 <div class="meta text-sm text-secondary">
-  <span class="tag text-xs">Design</span>
+  <span class="badge badge--info badge--sm">Design</span>
   <time datetime="2026-03-01">1 March 2026</time>
   <span aria-hidden="true">&middot;</span>
   <span>6 min read</span>
@@ -49,7 +48,7 @@ Compose `.meta` and `.tag` inside a card's content area for article-style cards:
   </div>
   <div class="card__content">
     <div class="meta text-sm text-secondary">
-      <span class="tag text-xs">Tutorial</span>
+      <span class="badge badge--info badge--sm">Tutorial</span>
       <time datetime="2026-03-01">1 March 2026</time>
     </div>
     <h3 class="card__title">Article Title</h3>

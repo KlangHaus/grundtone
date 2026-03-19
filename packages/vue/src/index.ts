@@ -8,6 +8,8 @@
 import '@grundtone/design-system/dist/index.css';
 
 // Atoms
+export { GTBadge } from './atoms/Badge';
+export type { BadgeProps, BadgeVariant, BadgeSize } from './atoms/Badge';
 export { GTButton } from './atoms/Button';
 export type {
   ButtonProps,

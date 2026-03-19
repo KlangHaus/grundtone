@@ -75,6 +75,28 @@ export const componentExamples: Record<string, string> = {
   </ul>
 </div>`,
 
+  'c-badge-variants': `<div class="flex flex-wrap items-center gap-2">
+  <span class="badge badge--neutral badge--md">Neutral</span>
+  <span class="badge badge--info badge--md">Information</span>
+  <span class="badge badge--success badge--md">Godkendt</span>
+  <span class="badge badge--warning badge--md">Afventer</span>
+  <span class="badge badge--error badge--md">Afvist</span>
+</div>`,
+
+  'c-badge-dot': `<div class="flex flex-wrap items-center gap-2">
+  <span class="badge badge--success badge--md"><span class="badge__dot" aria-hidden="true"></span>Aktiv</span>
+  <span class="badge badge--warning badge--md"><span class="badge__dot" aria-hidden="true"></span>Afventer</span>
+  <span class="badge badge--error badge--md"><span class="badge__dot" aria-hidden="true"></span>Offline</span>
+  <span class="badge badge--neutral badge--md"><span class="badge__dot" aria-hidden="true"></span>Kladde</span>
+</div>`,
+
+  'c-badge-sizes': `<div class="flex flex-wrap items-center gap-2">
+  <span class="badge badge--info badge--sm">Small</span>
+  <span class="badge badge--info badge--md">Medium</span>
+  <span class="badge badge--success badge--sm"><span class="badge__dot" aria-hidden="true"></span>Small dot</span>
+  <span class="badge badge--success badge--md"><span class="badge__dot" aria-hidden="true"></span>Medium dot</span>
+</div>`,
+
   'c-anchor-links-basic': `<nav class="anchor-links" aria-label="Indholdsfortegnelse">
   <p class="anchor-links__heading">Indhold på siden</p>
   <ol class="anchor-links__list">
@@ -253,7 +275,7 @@ export const componentExamples: Record<string, string> = {
 </article>`,
 
   'c-meta': `<div class="meta text-sm text-secondary">
-  <span class="tag text-xs">Design</span>
+  <span class="badge badge--info badge--sm">Design</span>
   <time>1 March 2026</time>
   <span>&middot;</span>
   <span>6 min read</span>
@@ -265,7 +287,7 @@ export const componentExamples: Record<string, string> = {
   </div>
   <div class="card__content">
     <div class="meta text-sm text-secondary">
-      <span class="tag text-xs">Design</span>
+      <span class="badge badge--info badge--sm">Design</span>
       <time>1 March 2026</time>
       <span>&middot;</span>
       <span>6 min read</span>

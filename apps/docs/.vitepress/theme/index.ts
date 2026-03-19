@@ -7,6 +7,7 @@ import ButtonDemo from '../../../../packages/vue/src/atoms/Button/demo.vue';
 import IconDemo from '../../../../packages/vue/src/atoms/Icon/demo.vue';
 import InputDemo from '../../../../packages/vue/src/atoms/Input/demo.vue';
 import ToggleDemo from '../../../../packages/vue/src/atoms/Toggle/demo.vue';
+import BadgeDemo from '../../../../packages/vue/src/atoms/Badge/demo.vue';
 import AlertDemo from '../../../../packages/vue/src/molecules/Alert/demo.vue';
 import AnchorLinksDemo from '../../../../packages/vue/src/molecules/AnchorLinks/demo.vue';
 import BreadcrumbDemo from '../../../../packages/vue/src/molecules/Breadcrumb/demo.vue';
@@ -33,6 +34,7 @@ export default {
     app.component('IconDemo', IconDemo);
     app.component('InputDemo', InputDemo);
     app.component('ToggleDemo', ToggleDemo);
+    app.component('BadgeDemo', BadgeDemo);
     app.component('AlertDemo', AlertDemo);
     app.component('AnchorLinksDemo', AnchorLinksDemo);
     app.component('BreadcrumbDemo', BreadcrumbDemo);
