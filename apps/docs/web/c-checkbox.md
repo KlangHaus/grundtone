@@ -4,6 +4,12 @@ Checkboxes let the user select one or more options from a visible list. Uses nat
 
 ---
 
+## Preview
+
+<CodePreview name="c-checkbox-basic" />
+
+---
+
 ## Usage
 
 ```html

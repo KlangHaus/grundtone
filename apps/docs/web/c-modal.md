@@ -12,6 +12,12 @@ Do not use for page content, long text, multi-field forms, live updates, or as a
 
 ---
 
+## Preview
+
+<CodePreview name="c-modal-standard" />
+
+---
+
 ## Variants
 
 ### Standard

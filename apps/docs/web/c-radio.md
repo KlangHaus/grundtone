@@ -4,6 +4,12 @@ Radio buttons let the user select one option from a visible list. Uses native `<
 
 ---
 
+## Preview
+
+<CodePreview name="c-radio-basic" />
+
+---
+
 ## Usage
 
 ```html

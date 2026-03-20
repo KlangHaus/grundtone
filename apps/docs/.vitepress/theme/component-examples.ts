@@ -550,6 +550,65 @@ export const componentExamples: Record<string, string> = {
   </div>
 </div>`,
 
+  'c-modal-standard': `<div style="position: relative; height: 14rem; overflow: hidden; background: var(--color-surface-alt); border-radius: var(--radius-md)">
+  <div class="modal" style="position: absolute; display: flex">
+    <div class="modal__dialog" role="dialog" aria-modal="true" style="max-width: 24rem">
+      <div class="modal__header">
+        <h3 class="modal__title">Bekræft handling</h3>
+        <button class="modal__close" aria-label="Luk">&times;</button>
+      </div>
+      <div class="modal__body"><p>Er du sikker på at du vil fortsætte?</p></div>
+      <div class="modal__footer">
+        <button class="gt-btn gt-btn--outlined gt-btn--sm">Annuller</button>
+        <button class="gt-btn gt-btn--primary gt-btn--sm">Bekræft</button>
+      </div>
+    </div>
+  </div>
+</div>`,
+
+  'c-radio-basic': `<fieldset class="choice-group" style="max-width: 360px">
+  <legend class="choice-group__legend">Sagen handler om</legend>
+  <div class="choice-group__list" role="radiogroup">
+    <label class="choice choice--radio choice--checked">
+      <input class="choice__input" type="radio" name="preview-radio" value="a" checked />
+      <span class="choice__indicator" aria-hidden="true"></span>
+      <span class="choice__body"><span class="choice__label">Ulykkesforsikring</span></span>
+    </label>
+    <label class="choice choice--radio">
+      <input class="choice__input" type="radio" name="preview-radio" value="b" />
+      <span class="choice__indicator" aria-hidden="true"></span>
+      <span class="choice__body"><span class="choice__label">Erstatningsansvar</span></span>
+    </label>
+    <label class="choice choice--radio">
+      <input class="choice__input" type="radio" name="preview-radio" value="c" />
+      <span class="choice__indicator" aria-hidden="true"></span>
+      <span class="choice__body"><span class="choice__label">Forsikringsselskab</span></span>
+    </label>
+  </div>
+</fieldset>`,
+
+  'c-checkbox-basic': `<fieldset class="choice-group" style="max-width: 360px">
+  <legend class="choice-group__legend">Nationalitet</legend>
+  <p class="choice-group__hint">Angiv alle der gælder</p>
+  <div class="choice-group__list">
+    <label class="choice choice--checkbox choice--checked">
+      <input class="choice__input" type="checkbox" name="preview-cb" value="dk" checked />
+      <span class="choice__indicator" aria-hidden="true"></span>
+      <span class="choice__body"><span class="choice__label">Dansk</span></span>
+    </label>
+    <label class="choice choice--checkbox">
+      <input class="choice__input" type="checkbox" name="preview-cb" value="se" />
+      <span class="choice__indicator" aria-hidden="true"></span>
+      <span class="choice__body"><span class="choice__label">Svensk</span></span>
+    </label>
+    <label class="choice choice--checkbox choice--checked">
+      <input class="choice__input" type="checkbox" name="preview-cb" value="other" checked />
+      <span class="choice__indicator" aria-hidden="true"></span>
+      <span class="choice__body"><span class="choice__label">Anden nationalitet</span></span>
+    </label>
+  </div>
+</fieldset>`,
+
   'c-input-sizes': `<div class="flex flex-col gap-2" style="max-width: 360px">
   <input class="input input--sm" placeholder="Small input" />
   <input class="input input--md" placeholder="Medium input" />
