@@ -90,6 +90,9 @@ const padding = spacing[4];
 - Shadow, radius, and z-index tokens
 - WCAG 2.1 AA accessibility functions
 - Utility CSS classes
+- Component styles (accordion, alert, badge, card, date-input, input, select, tabs, toggle,
+  skip-link, etc.)
+- Vanilla JS behaviors (accordion, tabs, alert dismiss, cookie message, toggle)
 
 ## Documentation
 

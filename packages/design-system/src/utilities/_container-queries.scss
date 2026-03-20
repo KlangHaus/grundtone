@@ -3,6 +3,7 @@
 // Utility classes generated via loops from $container-breakpoints map.
 
 @use 'sass:map';
+@use 'sass:list';
 
 // ---------------------------------------------------------------------------
 // Container type utilities (cq- prefix to avoid conflict with layout .container)
@@ -144,7 +145,7 @@ $_cq-flex-props: (
   @container (min-width: #{$width}) {
     @each $cls, $pair in $_cq-flex-props {
       .cq-#{$bp}\:#{$cls} {
-        #{nth($pair, 1)}: #{nth($pair, 2)};
+        #{list.nth($pair, 1)}: #{list.nth($pair, 2)};
       }
     }
   }
@@ -293,7 +294,7 @@ $_cq-spacing: (
   @container (min-width: #{$width}) {
     @each $cls, $pair in $utils {
       .cq-#{$bp}\:#{$cls} {
-        #{nth($pair, 1)}: #{nth($pair, 2)};
+        #{list.nth($pair, 1)}: #{list.nth($pair, 2)};
       }
     }
   }

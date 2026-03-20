@@ -50,9 +50,11 @@ describe('Accordion', () => {
     expect(wrapper.find(`.${BASE}__toggle-all`).exists()).toBe(true);
   });
 
-  it('toggle-all shows "Vis alle" by default', () => {
+  it('toggle-all shows default label', () => {
     const wrapper = mountAccordion();
-    expect(wrapper.find(`.${BASE}__toggle-all`).text()).toBe('Vis alle');
+    expect(wrapper.find(`.${BASE}__toggle-all`).text()).toBe(
+      'Show all sections',
+    );
   });
 
   it('hides toggle-all when showToggleAll is false', () => {

@@ -27,39 +27,41 @@ npm install @grundtone/vue @grundtone/design-system
 
 ## Components
 
-### Button
+| Component                         | Description                                       |
+| --------------------------------- | ------------------------------------------------- |
+| `GTAccordion` / `GTAccordionItem` | Expandable sections with toggle-all               |
+| `GTAlert`                         | Info, success, warning, error alerts              |
+| `GTAnchorLinks`                   | In-page navigation                                |
+| `GTAutocomplete`                  | Typeahead search input                            |
+| `GTBadge`                         | Status labels with dot/icon                       |
+| `GTBreadcrumb`                    | Navigation trail                                  |
+| `GTButton`                        | Primary, secondary, outlined, negative            |
+| `GTCard`                          | Content container with media, nav, horizontal     |
+| `GTCookieMessage`                 | GDPR cookie consent                               |
+| `GTDateInput`                     | Day/month/year date entry (3 separate fields)     |
+| `GTDetails`                       | Collapsible content (native `<details>`)          |
+| `GTIcon`                          | SVG icon renderer                                 |
+| `GTInput`                         | Text input with label, help, error, prefix/suffix |
+| `GTSelect`                        | Dropdown select with option groups                |
+| `GTTabs` / `GTTabPanel`           | Tabbed content (underline, segment, pill)         |
+| `GTToggle`                        | On/off switch                                     |
 
-```vue
-<Button variant="primary" size="md">Label</Button>
-<Button variant="secondary">Label</Button>
-<Button variant="outlined">Label</Button>
-```
+### Composables
 
-### Icon
+| Composable            | Description                                        |
+| --------------------- | -------------------------------------------------- |
+| `useTheme`            | Access theme context (dark mode, toggle)           |
+| `useField`            | Reactive field state with validation               |
+| `useDateField`        | Date field state with validation (for GTDateInput) |
+| `useFormValidation`   | Form-level validation aggregator                   |
+| `useDawaAutocomplete` | Danish address autocomplete                        |
 
-Configurable icon system supporting Heroicons, Lucide, or custom icon sets.
+### Validators
 
-```typescript
-import { createHeroiconsConfig, createLucideConfig } from '@grundtone/vue';
-```
+All re-exported from `@grundtone/utils`:
 
-### ThemeProvider
-
-Provides theme context to child components.
-
-```vue
-<ThemeProvider :theme="customTheme">
-  <slot />
-</ThemeProvider>
-```
-
-### ThemeToggle
-
-Toggle between light and dark mode.
-
-```vue
-<ThemeToggle />
-```
+`required`, `email`, `phone`, `cpr`, `cvr`, `date`, `datePast`, `dateFuture`, `minLength`,
+`maxLength`, `pattern`, `url`, `composeValidators`
 
 ## Nuxt
 

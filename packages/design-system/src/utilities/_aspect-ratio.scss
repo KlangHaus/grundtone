@@ -2,15 +2,17 @@
 // Uses native CSS aspect-ratio (96%+ browser support).
 @use '../core/breakpoints' as *;
 
+// Values are unquoted strings so Sass emits them literally as CSS aspect-ratio values
+// (e.g. "16 / 9") instead of evaluating the division.
 $_aspect-ratios: (
-  'square': 1 / 1,
-  'video': 16 / 9,
-  'cinema': 21 / 9,
-  'photo': 4 / 3,
-  'portrait': 3 / 4,
-  'golden': 1.618 / 1,
-  'wide': 2 / 1,
-  'ultra-wide': 32 / 9,
+  'square': #{1 #{'/'} 1},
+  'video': #{16 #{'/'} 9},
+  'cinema': #{21 #{'/'} 9},
+  'photo': #{4 #{'/'} 3},
+  'portrait': #{3 #{'/'} 4},
+  'golden': #{1.618 #{'/'} 1},
+  'wide': #{2 #{'/'} 1},
+  'ultra-wide': #{32 #{'/'} 9},
 );
 
 @include responsive-variants using ($p) {
