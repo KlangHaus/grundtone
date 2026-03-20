@@ -1,5 +1,12 @@
 # @grundtone/vue-playground
 
+## 0.0.10
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/vue@2.7.1
+
 ## 0.0.9
 
 ### Patch Changes

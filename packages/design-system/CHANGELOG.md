@@ -1,5 +1,13 @@
 # @grundtone/design-system
 
+## 2.7.1
+
+### Patch Changes
+
+- [`f41cfa6`](https://github.com/grundtone/grundtone/commit/f41cfa697d66f842719621865c8ddafe96cf3b25)
+  Thanks [@allanasp](https://github.com/allanasp)! - Overhaul html-test playground: use proper .card
+  markup, add behaviors to all pages, add signup page
+
 ## 2.7.0
 
 ### Minor Changes
