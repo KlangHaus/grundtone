@@ -14,6 +14,7 @@ import {
   GTTabs,
   GTTabPanel,
   GTToggle,
+  GTSpinner,
   useGrundtoneTheme,
   useField,
   useFormValidation,
@@ -395,6 +396,15 @@ export default function ComponentsScreen() {
             Image left, content right.
           </Text>
         </GTCard>
+      </View>
+
+      <Text style={headingStyle}>Spinner</Text>
+      <View style={rowStyle}>
+        <GTSpinner />
+        <GTSpinner variant="light" />
+      </View>
+      <View style={groupStyle}>
+        <GTSpinner size="lg" text="Henter data…" />
       </View>
 
       <Text style={headingStyle}>Toggle</Text>
