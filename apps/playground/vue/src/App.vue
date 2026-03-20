@@ -1,7 +1,11 @@
 <script setup lang="ts">
   import { ref, computed, onMounted, onUnmounted } from 'vue';
   import BlogPage from './pages/BlogPage.vue';
+  import BlogPostPage from './pages/BlogPostPage.vue';
   import ShopPage from './pages/ShopPage.vue';
+  import ProductPage from './pages/ProductPage.vue';
+  import SignupPage from './pages/SignupPage.vue';
+  import LoginPage from './pages/LoginPage.vue';
   import {
     GTAlert,
     GTAnchorLinks,
@@ -82,8 +86,12 @@
   const page = ref('playground');
   function updatePage() {
     const hash = window.location.hash;
-    if (hash.startsWith('#/blog')) page.value = 'blog';
+    if (hash.match(/^#\/blog\/\d/)) page.value = 'blog-post';
+    else if (hash.startsWith('#/blog')) page.value = 'blog';
+    else if (hash.match(/^#\/shop\/\d/)) page.value = 'product';
     else if (hash.startsWith('#/shop')) page.value = 'shop';
+    else if (hash === '#/signup') page.value = 'signup';
+    else if (hash === '#/login') page.value = 'login';
     else page.value = 'playground';
   }
   onMounted(() => {
@@ -104,17 +112,32 @@
       <a href="#/" :aria-current="page === 'playground' ? 'page' : undefined"
         >Playground</a
       >
-      <a href="#/blog" :aria-current="page === 'blog' ? 'page' : undefined"
+      <a
+        href="#/blog"
+        :aria-current="
+          page === 'blog' || page === 'blog-post' ? 'page' : undefined
+        "
         >Blog</a
       >
-      <a href="#/shop" :aria-current="page === 'shop' ? 'page' : undefined"
+      <a
+        href="#/shop"
+        :aria-current="
+          page === 'shop' || page === 'product' ? 'page' : undefined
+        "
         >Shop</a
+      >
+      <a href="#/signup" :aria-current="page === 'signup' ? 'page' : undefined"
+        >Tilmeld</a
       >
     </nav>
   </header>
 
   <BlogPage v-if="page === 'blog'" />
+  <BlogPostPage v-else-if="page === 'blog-post'" />
   <ShopPage v-else-if="page === 'shop'" />
+  <ProductPage v-else-if="page === 'product'" />
+  <SignupPage v-else-if="page === 'signup'" />
+  <LoginPage v-else-if="page === 'login'" />
 
   <div v-else class="container py-6">
     <h1 class="mb-6">Grundtone Vue Playground</h1>

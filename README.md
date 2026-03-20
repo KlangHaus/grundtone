@@ -12,14 +12,25 @@ and built for teams that need full control over their UI foundation.
 
 ## Packages
 
-| Package                                                | Description                                            |
-| ------------------------------------------------------ | ------------------------------------------------------ |
-| [`@grundtone/core`](./packages/core)                   | Theme system, types, and presets                       |
-| [`@grundtone/design-system`](./packages/design-system) | SCSS functions, mixins, CSS utilities, and grid system |
-| [`@grundtone/utils`](./packages/utils)                 | Formatting and validation utilities                    |
-| [`@grundtone/vue`](./packages/vue)                     | Vue 3 component library                                |
-| [`@grundtone/nuxt`](./packages/nuxt)                   | Nuxt 3 module with auto-imports                        |
-| [`@grundtone/react-native`](./packages/react-native)   | React Native theme provider and hooks                  |
+| Package                                                | Description                                                    |
+| ------------------------------------------------------ | -------------------------------------------------------------- |
+| [`@grundtone/core`](./packages/core)                   | Theme system, config, types, branding, icon registry           |
+| [`@grundtone/design-system`](./packages/design-system) | SCSS tokens, utilities, components, CSS + vanilla JS behaviors |
+| [`@grundtone/utils`](./packages/utils)                 | Validation, formatting, ID generation                          |
+| [`@grundtone/icons`](./packages/icons)                 | SVG icon registry (auto-generated)                             |
+| [`@grundtone/vue`](./packages/vue)                     | Vue 3 component library (17 components, 5 composables)         |
+| [`@grundtone/nuxt`](./packages/nuxt)                   | Nuxt 3 module with auto-imports                                |
+| [`@grundtone/react-native`](./packages/react-native)   | React Native theme provider and hooks                          |
+
+### Apps
+
+| App                                                        | Description                               |
+| ---------------------------------------------------------- | ----------------------------------------- |
+| [`apps/docs`](./apps/docs)                                 | VitePress documentation site              |
+| [`apps/playground/vue`](./apps/playground/vue)             | Vue 3 playground (blog, shop, components) |
+| [`apps/playground/nuxt`](./apps/playground/nuxt)           | Nuxt 3 playground                         |
+| [`apps/playground/html-test`](./apps/playground/html-test) | Plain HTML playground (no framework)      |
+| [`apps/playground/expo`](./apps/playground/expo)           | React Native / Expo playground            |
 
 All packages are versioned together and published to npm under the `@grundtone` scope.
 
@@ -113,10 +124,84 @@ Requires Node.js >= 24 and pnpm 10.
 
 ```bash
 pnpm install
-pnpm build
-pnpm test
-pnpm docs:dev        # Start docs at localhost
+pnpm build           # Build all packages + apps
+pnpm test            # Run all tests
 ```
+
+### Root commands
+
+| Command               | Description                       |
+| --------------------- | --------------------------------- |
+| `pnpm build`          | Build all packages and apps       |
+| `pnpm build:packages` | Build only `packages/*`           |
+| `pnpm dev`            | Start all dev servers in parallel |
+| `pnpm test`           | Run all tests                     |
+| `pnpm test:watch`     | Run tests in watch mode           |
+| `pnpm test:coverage`  | Run tests with coverage           |
+| `pnpm lint`           | Lint all packages                 |
+| `pnpm typecheck`      | TypeScript type checking          |
+| `pnpm format`         | Format all files with Prettier    |
+| `pnpm clean`          | Remove dist, node_modules, .turbo |
+
+### Per-package commands
+
+```bash
+# Build a specific package
+pnpm --filter @grundtone/vue build
+pnpm --filter @grundtone/design-system build
+pnpm --filter @grundtone/utils build
+pnpm --filter @grundtone/core build
+pnpm --filter @grundtone/icons build
+pnpm --filter @grundtone/nuxt build
+pnpm --filter @grundtone/react-native build
+
+# Run tests
+pnpm --filter @grundtone/vue test        # Vue component tests (Vitest)
+pnpm --filter @grundtone/utils test      # Validator/utility tests
+pnpm --filter @grundtone/nuxt test       # Nuxt module tests
+
+# Watch mode
+pnpm --filter @grundtone/vue dev
+pnpm --filter @grundtone/design-system dev
+
+# Generate
+pnpm --filter @grundtone/icons generate:icons           # Regenerate icon registry
+pnpm --filter @grundtone/design-system generate:tokens   # Regenerate SCSS token defaults
+```
+
+### Docs
+
+| Command             | Description               |
+| ------------------- | ------------------------- |
+| `pnpm docs:dev`     | Start docs dev server     |
+| `pnpm docs:build`   | Build docs for production |
+| `pnpm docs:preview` | Preview docs build        |
+
+### Playground apps
+
+```bash
+# Vue playground (Vite SPA — blog, shop, component demos)
+pnpm --filter @grundtone/vue-playground dev
+
+# Nuxt playground (auto-imported components)
+pnpm --filter @grundtone/nuxt-playground dev
+
+# HTML playground (plain HTML + CSS, no framework)
+pnpm --filter @grundtone/html-test dev
+
+# Expo playground (React Native)
+pnpm --filter @grundtone/expo-playground dev
+```
+
+### Changesets & release
+
+| Command                 | Description                     |
+| ----------------------- | ------------------------------- |
+| `pnpm changeset`        | Create a new changeset          |
+| `pnpm changeset:status` | View pending changesets         |
+| `pnpm version-packages` | Apply changesets, bump versions |
+| `pnpm release`          | Build + publish to npm          |
+| `pnpm release:snapshot` | Publish snapshot release        |
 
 ## Contributing
 
@@ -124,7 +209,8 @@ pnpm docs:dev        # Start docs at localhost
 git clone https://github.com/grundtone/grundtone.git
 cd grundtone
 pnpm install
-pnpm dev
+pnpm build:packages
+pnpm --filter @grundtone/vue-playground dev
 ```
 
 See [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for guidelines.
