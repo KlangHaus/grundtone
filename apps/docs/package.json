@@ -11,7 +11,9 @@
   "dependencies": {
     "@grundtone/core": "workspace:*",
     "@grundtone/design-system": "workspace:*",
-    "@grundtone/icons": "workspace:*"
+    "@grundtone/icons": "workspace:*",
+    "@grundtone/utils": "workspace:*",
+    "@grundtone/vue": "workspace:*"
   },
   "devDependencies": {
     "vitepress": "^1.6.4",
