@@ -1,5 +1,7 @@
 <script setup lang="ts">
-  import { ref, computed } from 'vue';
+  import { ref, computed, onMounted, onUnmounted } from 'vue';
+  import BlogPage from './pages/BlogPage.vue';
+  import ShopPage from './pages/ShopPage.vue';
   import {
     GTAlert,
     GTAnchorLinks,
@@ -75,11 +77,46 @@
       isLoading.value = false;
     }, 2000);
   }
+
+  // Simple hash router
+  const page = ref('playground');
+  function updatePage() {
+    const hash = window.location.hash;
+    if (hash.startsWith('#/blog')) page.value = 'blog';
+    else if (hash.startsWith('#/shop')) page.value = 'shop';
+    else page.value = 'playground';
+  }
+  onMounted(() => {
+    updatePage();
+    window.addEventListener('hashchange', updatePage);
+  });
+  onUnmounted(() => {
+    window.removeEventListener('hashchange', updatePage);
+  });
 </script>
 
 <template>
   <GTSkipLink>Spring til indhold</GTSkipLink>
-  <div class="container py-6">
+
+  <header class="header">
+    <a href="#/">Grundtone</a>
+    <nav>
+      <a href="#/" :aria-current="page === 'playground' ? 'page' : undefined"
+        >Playground</a
+      >
+      <a href="#/blog" :aria-current="page === 'blog' ? 'page' : undefined"
+        >Blog</a
+      >
+      <a href="#/shop" :aria-current="page === 'shop' ? 'page' : undefined"
+        >Shop</a
+      >
+    </nav>
+  </header>
+
+  <BlogPage v-if="page === 'blog'" />
+  <ShopPage v-else-if="page === 'shop'" />
+
+  <div v-else class="container py-6">
     <h1 class="mb-6">Grundtone Vue Playground</h1>
 
     <div class="grid-sidebar-left items-start">
@@ -845,4 +882,8 @@
       </main>
     </div>
   </div>
+
+  <footer class="footer text-xs text-tertiary text-center">
+    <p>&copy; 2026 Grundtone. Bygget med semantiske design tokens.</p>
+  </footer>
 </template>

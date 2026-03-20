@@ -539,5 +539,121 @@
         </GTButton>
       </div>
     </section>
+
+    <!-- ─── Blog ─── -->
+    <section class="mb-6">
+      <h2>Blog</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <GTCard
+          nav
+          href="#"
+          title="Semantiske farvetokens i praksis"
+          subheading="Design"
+          image="/placeholder-640x360.png"
+          image-alt=""
+        >
+          <div class="meta text-sm text-secondary">
+            <GTBadge size="sm" variant="info">Design</GTBadge>
+            <time>1. marts 2026</time>
+          </div>
+          <p>
+            Hvordan semantiske farvetokens skaber konsistens på tværs af
+            platforme.
+          </p>
+        </GTCard>
+        <GTCard
+          nav
+          href="#"
+          title="WCAG 2.2 og komponentbiblioteker"
+          image="/placeholder-640x360.png"
+          image-alt=""
+        >
+          <div class="meta text-sm text-secondary">
+            <GTBadge size="sm" variant="success">Tilgængelighed</GTBadge>
+            <time>22. februar 2026</time>
+          </div>
+          <p>
+            Hvad ændrer sig med WCAG 2.2, og hvordan bygger man tilgængelige
+            komponenter.
+          </p>
+        </GTCard>
+      </div>
+    </section>
+
+    <!-- ─── Shop ─── -->
+    <section class="mb-6">
+      <h2>Shop</h2>
+      <GTTabs
+        variant="pill"
+        :tabs="[
+          { id: 'all', label: 'Alle' },
+          { id: 'tshirts', label: 'T-shirts' },
+        ]"
+      >
+        <GTTabPanel id="all">
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4"
+          >
+            <GTCard
+              nav
+              href="#"
+              title="Design Tokens Tee"
+              subheading="T-shirt"
+              image="/placeholder-640x360.png"
+              image-alt="Design Tokens Tee"
+            >
+              <p>Økologisk bomuld med semantisk farveprint.</p>
+              <template #footer><span class="font-bold">349 kr</span></template>
+            </GTCard>
+            <GTCard
+              nav
+              href="#"
+              title="Color System Plakat"
+              subheading="Plakat"
+              image="/placeholder-640x360.png"
+              image-alt="Color System Plakat"
+            >
+              <p>A2-format, 200g mat papir med fuld farveskala.</p>
+              <template #footer>
+                <span class="font-bold">199 kr</span>
+                <span class="text-sm text-tertiary line-through ml-1"
+                  >299 kr</span
+                >
+              </template>
+            </GTCard>
+            <GTCard
+              nav
+              href="#"
+              title="Spacing Scale Krus"
+              subheading="Accessories"
+              image="/placeholder-640x360.png"
+              image-alt="Spacing Scale Krus"
+            >
+              <p>Keramik krus med spacing-skala visualisering.</p>
+              <template #footer><span class="font-bold">129 kr</span></template>
+            </GTCard>
+          </div>
+        </GTTabPanel>
+        <GTTabPanel id="tshirts">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+            <GTCard
+              nav
+              href="#"
+              title="Design Tokens Tee"
+              subheading="T-shirt"
+              image="/placeholder-640x360.png"
+              image-alt=""
+            >
+              <p>Økologisk bomuld med semantisk farveprint.</p>
+              <template #footer><span class="font-bold">349 kr</span></template>
+            </GTCard>
+          </div>
+        </GTTabPanel>
+      </GTTabs>
+    </section>
   </main>
+
+  <footer class="footer text-xs text-tertiary text-center">
+    <p>&copy; 2026 Grundtone. Bygget med semantiske design tokens.</p>
+  </footer>
 </template>
