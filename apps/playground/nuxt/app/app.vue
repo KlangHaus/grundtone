@@ -44,7 +44,8 @@
 </script>
 
 <template>
-  <div class="container py-6">
+  <GTSkipLink>Spring til indhold</GTSkipLink>
+  <main id="main" class="container py-6">
     <h1 class="mb-6">Grundtone Nuxt Playground</h1>
 
     <section class="mb-6">
@@ -538,5 +539,5 @@
         </GTButton>
       </div>
     </section>
-  </div>
+  </main>
 </template>

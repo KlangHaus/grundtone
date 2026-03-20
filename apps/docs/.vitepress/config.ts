@@ -243,6 +243,7 @@ export default defineConfig({
             { text: 'Card', link: '/vue/card' },
             { text: 'Cookie Message', link: '/vue/cookie-message' },
             { text: 'Details', link: '/vue/details' },
+            { text: 'Skip Link', link: '/vue/skip-link' },
             { text: 'Tabs', link: '/vue/tabs' },
           ],
         },

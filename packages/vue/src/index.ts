@@ -37,6 +37,8 @@ export type {
 } from './atoms/DateInput';
 export { GTInput } from './atoms/Input';
 export { GTSelect } from './atoms/Select';
+export { GTSkipLink } from './atoms/SkipLink';
+export type { SkipLinkProps } from './atoms/SkipLink';
 export type {
   SelectProps,
   SelectOption,

@@ -29,6 +29,7 @@ npm install @grundtone/vue @grundtone/design-system
 | `GTIcon`         | —                      | `name`, `size` (xs/sm/md/lg/xl/2xl), `label`, `color`                                                                                          |
 | `GTInput`        | `string`               | `type`, `size`, `label`, `helpText`, `errorText`, `required`, `disabled`, `readonly`, `prefix`, `suffix`, `width`, `charWidth`, `autocomplete` |
 | `GTSelect`       | `string`               | `options` (required), `size`, `label`, `helpText`, `errorText`, `placeholder`                                                                  |
+| `GTSkipLink`     | —                      | `href` (default `'#main'`). Slot: link text. Hidden until keyboard focus.                                                                      |
 | `GTToggle`       | `boolean`              | `label`, `size`, `disabled`                                                                                                                    |
 
 ### Molecules

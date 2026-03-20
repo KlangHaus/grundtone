@@ -19,6 +19,7 @@
     GTTabs,
     GTTabPanel,
     GTToggle,
+    GTSkipLink,
     useTheme,
     useField,
     useFormValidation,
@@ -77,6 +78,7 @@
 </script>
 
 <template>
+  <GTSkipLink>Spring til indhold</GTSkipLink>
   <div class="container py-6">
     <h1 class="mb-6">Grundtone Vue Playground</h1>
 
@@ -103,7 +105,7 @@
         />
       </aside>
 
-      <main>
+      <main id="main">
         <section class="mb-6">
           <h2 id="pg-theme" style="scroll-margin-top: 1rem">Theme mode</h2>
           <div class="flex flex-wrap items-center gap-2">

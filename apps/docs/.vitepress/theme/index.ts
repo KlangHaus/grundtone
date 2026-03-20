@@ -12,6 +12,7 @@ import IconDemo from '../../../../packages/vue/src/atoms/Icon/demo.vue';
 import DateInputDemo from '../../../../packages/vue/src/atoms/DateInput/demo.vue';
 import InputDemo from '../../../../packages/vue/src/atoms/Input/demo.vue';
 import SelectDemo from '../../../../packages/vue/src/atoms/Select/demo.vue';
+import SkipLinkDemo from '../../../../packages/vue/src/atoms/SkipLink/demo.vue';
 import ToggleDemo from '../../../../packages/vue/src/atoms/Toggle/demo.vue';
 import AutocompleteDemo from '../../../../packages/vue/src/atoms/Autocomplete/demo.vue';
 import BadgeDemo from '../../../../packages/vue/src/atoms/Badge/demo.vue';
@@ -48,6 +49,7 @@ export default {
     app.component('DateInputDemo', DateInputDemo);
     app.component('InputDemo', InputDemo);
     app.component('SelectDemo', SelectDemo);
+    app.component('SkipLinkDemo', SkipLinkDemo);
     app.component('ToggleDemo', ToggleDemo);
     app.component('AutocompleteDemo', AutocompleteDemo);
     app.component('BadgeDemo', BadgeDemo);
