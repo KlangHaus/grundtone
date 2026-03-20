@@ -125,6 +125,8 @@ export { GTBreadcrumb } from './molecules/Breadcrumb';
 export type { BreadcrumbProps, BreadcrumbItem } from './molecules/Breadcrumb';
 export { GTCard } from './molecules/Card';
 export type { CardProps, CardVariant } from './molecules/Card';
+export { GTModal } from './molecules/Modal';
+export type { ModalProps, ModalTransition } from './molecules/Modal';
 export { GTCookieMessage } from './molecules/CookieMessage';
 export type { CookieMessageProps } from './molecules/CookieMessage';
 export { GTTabs, GTTabPanel } from './molecules/Tabs';

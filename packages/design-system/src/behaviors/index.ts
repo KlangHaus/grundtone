@@ -5,6 +5,7 @@ import { Toggle } from './toggle';
 import { Alert } from './alert';
 import { CookieMessage } from './cookie-message';
 import { AnchorLinks } from './anchor-links';
+import { Modal } from './modal';
 
 export { GtComponent } from './base';
 export { Accordion } from './accordion';
@@ -13,6 +14,7 @@ export { Toggle } from './toggle';
 export { Alert } from './alert';
 export { CookieMessage } from './cookie-message';
 export { AnchorLinks } from './anchor-links';
+export { Modal } from './modal';
 export { uid, prefersReducedMotion, slideOpen, slideClose } from './utils';
 
 const REGISTRY: Record<string, new (el: HTMLElement) => GtComponent> = {
@@ -22,6 +24,7 @@ const REGISTRY: Record<string, new (el: HTMLElement) => GtComponent> = {
   '.alert[data-dismissible]': Alert,
   '.cookie-message': CookieMessage,
   '.anchor-links': AnchorLinks,
+  '.modal': Modal,
 };
 
 /**

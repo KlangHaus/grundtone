@@ -173,6 +173,44 @@
         <button type="submit" class="gt-btn gt-btn--primary gt-btn--md w-full">Opret konto</button>
       </form>
 
+      <!-- ─── Modal demo ─── -->
+      <h2 class="text-xl font-bold mt-5 mb-3">Modal</h2>
+      <div class="flex gap-2 mb-4">
+        <button type="button" class="gt-btn gt-btn--primary gt-btn--sm" data-modal-target="#demo-modal">Åbn modal</button>
+        <button type="button" class="gt-btn gt-btn--negative gt-btn--sm" data-modal-target="#demo-persistent">Persistent modal</button>
+      </div>
+
+      <div class="modal" id="demo-modal" aria-hidden="true" style="display: none" data-transition="scale">
+        <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="demo-modal-title">
+          <div class="modal__header">
+            <h3 class="modal__title" id="demo-modal-title">Bekræft handling</h3>
+            <button class="modal__close" aria-label="Luk">&times;</button>
+          </div>
+          <div class="modal__body">
+            <p>Er du sikker på at du vil fortsætte?</p>
+          </div>
+          <div class="modal__footer">
+            <button class="gt-btn gt-btn--outlined gt-btn--sm" onclick="Grundtone.Modal.getInstance(document.getElementById('demo-modal'))?.close()">Annuller</button>
+            <button class="gt-btn gt-btn--primary gt-btn--sm" onclick="Grundtone.Modal.getInstance(document.getElementById('demo-modal'))?.close()">Bekræft</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal modal--persistent" id="demo-persistent" data-persistent aria-hidden="true" style="display: none">
+        <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="demo-persistent-title">
+          <div class="modal__header">
+            <h3 class="modal__title" id="demo-persistent-title">Slet konto?</h3>
+          </div>
+          <div class="modal__body">
+            <p>Denne handling kan ikke fortrydes.</p>
+          </div>
+          <div class="modal__footer">
+            <button class="gt-btn gt-btn--outlined gt-btn--sm" onclick="Grundtone.Modal.getInstance(document.getElementById('demo-persistent'))?.close()">Annuller</button>
+            <button class="gt-btn gt-btn--negative gt-btn--sm" onclick="Grundtone.Modal.getInstance(document.getElementById('demo-persistent'))?.close()">Slet</button>
+          </div>
+        </div>
+      </div>
+
       <!-- ─── FAQ ─── -->
       <h2 class="text-xl font-bold mt-5 mb-3">Ofte stillede spørgsmål</h2>
       <div class="accordion accordion--bordered mb-5" data-transition="slide" role="region" aria-label="Tilmeldings-FAQ">

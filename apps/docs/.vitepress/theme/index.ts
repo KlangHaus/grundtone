@@ -23,6 +23,7 @@ import AlertDemo from '../../../../packages/vue/src/molecules/Alert/demo.vue';
 import AnchorLinksDemo from '../../../../packages/vue/src/molecules/AnchorLinks/demo.vue';
 import BreadcrumbDemo from '../../../../packages/vue/src/molecules/Breadcrumb/demo.vue';
 import CardDemo from '../../../../packages/vue/src/molecules/Card/demo.vue';
+import ModalDemo from '../../../../packages/vue/src/molecules/Modal/demo.vue';
 import TabsDemo from '../../../../packages/vue/src/molecules/Tabs/demo.vue';
 import CookieMessageDemo from '../../../../packages/vue/src/molecules/CookieMessage/demo.vue';
 import IconGallery from './components/IconGallery.vue';
@@ -62,6 +63,7 @@ export default {
     app.component('AnchorLinksDemo', AnchorLinksDemo);
     app.component('BreadcrumbDemo', BreadcrumbDemo);
     app.component('CardDemo', CardDemo);
+    app.component('ModalDemo', ModalDemo);
     app.component('TabsDemo', TabsDemo);
     app.component('CookieMessageDemo', CookieMessageDemo);
     app.component('IconGallery', IconGallery);

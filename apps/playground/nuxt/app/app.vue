@@ -4,6 +4,8 @@
 
   const showDismissible = ref(true);
   const showCookie = ref(true);
+  const showModal = ref(false);
+  const showPersistentModal = ref(false);
   const isLoading = ref(false);
   const toggleValue = ref(false);
   const dateValue = ref({ day: '', month: '', year: '' });
@@ -561,6 +563,53 @@
         <p>Indhold bag spinneren.</p>
         <GTSpinner size="lg" backdrop text="Indlæser sektion…" />
       </div>
+    </section>
+
+    <section class="mb-6">
+      <h2>Modal</h2>
+      <div class="flex flex-wrap gap-2">
+        <GTButton size="sm" variant="primary" @click="showModal = true"
+          >Standard modal</GTButton
+        >
+        <GTButton
+          size="sm"
+          variant="negative"
+          @click="showPersistentModal = true"
+          >Persistent modal</GTButton
+        >
+      </div>
+      <GTModal v-model:open="showModal" title="Bekræft handling">
+        <p>Er du sikker på at du vil fortsætte?</p>
+        <template #footer>
+          <GTButton variant="outlined" size="sm" @click="showModal = false"
+            >Annuller</GTButton
+          >
+          <GTButton variant="primary" size="sm" @click="showModal = false"
+            >Bekræft</GTButton
+          >
+        </template>
+      </GTModal>
+      <GTModal
+        v-model:open="showPersistentModal"
+        title="Slet konto?"
+        persistent
+      >
+        <p>Denne handling kan ikke fortrydes.</p>
+        <template #footer>
+          <GTButton
+            variant="outlined"
+            size="sm"
+            @click="showPersistentModal = false"
+            >Annuller</GTButton
+          >
+          <GTButton
+            variant="negative"
+            size="sm"
+            @click="showPersistentModal = false"
+            >Slet</GTButton
+          >
+        </template>
+      </GTModal>
     </section>
 
     <!-- ─── Blog ─── -->

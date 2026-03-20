@@ -15,6 +15,7 @@ import {
   GTTabPanel,
   GTToggle,
   GTSpinner,
+  GTModal,
   useGrundtoneTheme,
   useField,
   useFormValidation,
@@ -26,6 +27,8 @@ import {
 export default function ComponentsScreen() {
   const { theme, isDark, mode, setMode } = useGrundtoneTheme();
   const [isLoading, setIsLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [showPersistent, setShowPersistent] = useState(false);
   const [toggleSm, setToggleSm] = useState(false);
   const [toggleLg, setToggleLg] = useState(true);
   const [inputValue, setInputValue] = useState('');
@@ -406,6 +409,77 @@ export default function ComponentsScreen() {
       <View style={groupStyle}>
         <GTSpinner size="lg" text="Henter data…" />
       </View>
+
+      <Text style={headingStyle}>Modal</Text>
+      <View style={rowStyle}>
+        <GTButton
+          size="sm"
+          variant="primary"
+          onPress={() => setShowModal(true)}
+        >
+          Standard
+        </GTButton>
+        <GTButton
+          size="sm"
+          variant="negative"
+          onPress={() => setShowPersistent(true)}
+        >
+          Persistent
+        </GTButton>
+      </View>
+      <GTModal
+        open={showModal}
+        title="Bekræft handling"
+        onClose={() => setShowModal(false)}
+        footer={
+          <View style={rowStyle}>
+            <GTButton
+              size="sm"
+              variant="outlined"
+              onPress={() => setShowModal(false)}
+            >
+              Annuller
+            </GTButton>
+            <GTButton
+              size="sm"
+              variant="primary"
+              onPress={() => setShowModal(false)}
+            >
+              Bekræft
+            </GTButton>
+          </View>
+        }
+      >
+        <Text style={{ color: theme.colors.text }}>Er du sikker?</Text>
+      </GTModal>
+      <GTModal
+        open={showPersistent}
+        title="Slet konto?"
+        persistent
+        onClose={() => setShowPersistent(false)}
+        footer={
+          <View style={rowStyle}>
+            <GTButton
+              size="sm"
+              variant="outlined"
+              onPress={() => setShowPersistent(false)}
+            >
+              Annuller
+            </GTButton>
+            <GTButton
+              size="sm"
+              variant="negative"
+              onPress={() => setShowPersistent(false)}
+            >
+              Slet
+            </GTButton>
+          </View>
+        }
+      >
+        <Text style={{ color: theme.colors.text }}>
+          Denne handling kan ikke fortrydes.
+        </Text>
+      </GTModal>
 
       <Text style={headingStyle}>Toggle</Text>
       <View style={groupStyle}>

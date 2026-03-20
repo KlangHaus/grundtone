@@ -99,6 +99,11 @@ export { GTBadge } from './components/Badge';
 export type { BadgeProps, BadgeVariant, BadgeSize } from './components/Badge';
 export { GTCard } from './components/Card';
 export { GTDetails } from './components/Details';
+export { GTModal } from './components/Modal';
+export type {
+  ModalProps as RNModalProps,
+  ModalTransition as RNModalTransition,
+} from './components/Modal';
 export { GTSpinner } from './components/Spinner';
 export type {
   SpinnerProps as RNSpinnerProps,

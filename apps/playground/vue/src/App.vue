@@ -27,6 +27,7 @@
     GTToggle,
     GTSkipLink,
     GTSpinner,
+    GTModal,
     useTheme,
     useField,
     useFormValidation,
@@ -37,6 +38,8 @@
   import { iconRegistry } from '@grundtone/icons';
 
   const { isDark, mode, setMode, toggleMode } = useTheme();
+  const showModal = ref(false);
+  const showPersistentModal = ref(false);
   const darkToggle = computed({
     get: () => isDark.value,
     set: () => toggleMode(),
@@ -163,6 +166,7 @@
             { label: 'Address Input', href: '#pg-address' },
             { label: 'Toggle', href: '#pg-toggle' },
             { label: 'Spinner', href: '#pg-spinner' },
+            { label: 'Modal', href: '#pg-modal' },
           ]"
         />
       </aside>
@@ -921,6 +925,54 @@
             <p>Mere indhold her.</p>
             <GTSpinner size="lg" backdrop text="Indlæser sektion…" />
           </div>
+        </section>
+
+        <section class="mb-6">
+          <h2 id="pg-modal" style="scroll-margin-top: 1rem">Modal</h2>
+          <div class="flex flex-wrap gap-2">
+            <GTButton size="sm" variant="primary" @click="showModal = true">
+              Standard modal
+            </GTButton>
+            <GTButton
+              size="sm"
+              variant="negative"
+              @click="showPersistentModal = true"
+            >
+              Persistent modal
+            </GTButton>
+          </div>
+          <GTModal v-model:open="showModal" title="Bekræft handling">
+            <p>Er du sikker på at du vil fortsætte?</p>
+            <template #footer>
+              <GTButton variant="outlined" size="sm" @click="showModal = false"
+                >Annuller</GTButton
+              >
+              <GTButton variant="primary" size="sm" @click="showModal = false"
+                >Bekræft</GTButton
+              >
+            </template>
+          </GTModal>
+          <GTModal
+            v-model:open="showPersistentModal"
+            title="Slet konto?"
+            persistent
+          >
+            <p>Denne handling kan ikke fortrydes.</p>
+            <template #footer>
+              <GTButton
+                variant="outlined"
+                size="sm"
+                @click="showPersistentModal = false"
+                >Annuller</GTButton
+              >
+              <GTButton
+                variant="negative"
+                size="sm"
+                @click="showPersistentModal = false"
+                >Slet</GTButton
+              >
+            </template>
+          </GTModal>
         </section>
 
         <section class="mb-6">

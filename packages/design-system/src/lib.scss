@@ -19,6 +19,9 @@
 @forward 'core/radius';
 @forward 'core/icon';
 
+// Animations
+@forward 'core/animations';
+
 // Functions and mixins (depend on core)
 @forward 'functions' hide color;
 @forward 'mixins';

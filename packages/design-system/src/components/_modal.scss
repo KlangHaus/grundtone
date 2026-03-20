@@ -1,0 +1,142 @@
+// Component: Modal
+// Overlay dialog that forces focus on specific content.
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal-backdrop);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-modal-backdrop);
+  padding: var(--space-lg);
+
+  &__dialog {
+    position: relative;
+    z-index: var(--z-modal);
+    background: var(--color-surface-overlay, var(--color-surface));
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    max-width: 32rem;
+    width: 100%;
+    max-height: calc(100vh - var(--space-3xl));
+    overflow-y: auto;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-lg) var(--space-lg) 0;
+  }
+
+  &__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-xl);
+    line-height: 1;
+    padding: var(--space-xs);
+    border-radius: var(--radius-sm);
+
+    &:hover {
+      color: var(--color-text);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-focus);
+      outline-offset: 2px;
+    }
+  }
+
+  &__body {
+    padding: var(--space-lg);
+    color: var(--color-text);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-sm);
+    padding: 0 var(--space-lg) var(--space-lg);
+  }
+
+  // Persistent: hide close button
+  &--persistent .modal__close {
+    display: none;
+  }
+
+  // Transitions — backdrop always fades
+  &--entering {
+    animation: gt-fade-in var(--duration-fast) var(--ease-ease-out);
+  }
+
+  &--leaving {
+    animation: gt-fade-out var(--duration-fast) var(--ease-ease-in, ease-in);
+  }
+
+  // Dialog transitions (data-transition attribute)
+  &--entering &__dialog,
+  &[data-transition='scale'] &--entering &__dialog {
+    animation: gt-scale-in var(--duration-fast) var(--ease-ease-out);
+  }
+
+  &--leaving &__dialog,
+  &[data-transition='scale'] &--leaving &__dialog {
+    animation: gt-scale-out var(--duration-fast) var(--ease-ease-in, ease-in);
+  }
+
+  &[data-transition='fade'] &--entering &__dialog {
+    animation: gt-fade-in var(--duration-fast) var(--ease-ease-out);
+  }
+
+  &[data-transition='fade'] &--leaving &__dialog {
+    animation: gt-fade-out var(--duration-fast) var(--ease-ease-in, ease-in);
+  }
+
+  &[data-transition='slide-up'] &--entering &__dialog {
+    animation: gt-slide-up-in var(--duration-fast) var(--ease-ease-out);
+  }
+
+  &[data-transition='slide-up'] &--leaving &__dialog {
+    animation: gt-slide-up-out var(--duration-fast) var(--ease-ease-in, ease-in);
+  }
+
+  &[data-transition='slide-down'] &--entering &__dialog {
+    animation: gt-slide-down-in var(--duration-fast) var(--ease-ease-out);
+  }
+
+  &[data-transition='slide-down'] &--leaving &__dialog {
+    animation: gt-slide-down-out var(--duration-fast)
+      var(--ease-ease-in, ease-in);
+  }
+
+  &[data-transition='slide-right'] &--entering &__dialog {
+    animation: gt-slide-right-in var(--duration-fast) var(--ease-ease-out);
+  }
+
+  &[data-transition='slide-right'] &--leaving &__dialog {
+    animation: gt-slide-right-out var(--duration-fast)
+      var(--ease-ease-in, ease-in);
+  }
+
+  // Reduced motion
+  @media (prefers-reduced-motion: reduce) {
+    &--entering,
+    &--leaving,
+    &--entering .modal__dialog,
+    &--leaving .modal__dialog {
+      animation: none;
+    }
+  }
+}
