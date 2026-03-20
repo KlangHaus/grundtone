@@ -76,7 +76,7 @@ export function GTSpinner({
   };
 
   const textStyle: TextStyle = {
-    fontSize: rem(theme.typography.fontSizes.sm),
+    fontSize: rem(theme.typography.fontSize.sm),
     color: theme.colors.textSecondary ?? theme.colors.text,
   };
 
