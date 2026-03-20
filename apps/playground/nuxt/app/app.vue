@@ -8,6 +8,9 @@
   const showPersistentModal = ref(false);
   const isLoading = ref(false);
   const toggleValue = ref(false);
+  const radioValue = ref('');
+  const checkboxValues = ref<string[]>([]);
+  const acceptTerms = ref(false);
   const dateValue = ref({ day: '', month: '', year: '' });
   const inputValue = ref('');
   const emailValue = ref('');
@@ -563,6 +566,33 @@
         <p>Indhold bag spinneren.</p>
         <GTSpinner size="lg" backdrop text="Indlæser sektion…" />
       </div>
+    </section>
+
+    <section class="mb-6">
+      <h2>Radio &amp; Checkbox</h2>
+      <GTRadioGroup
+        v-model="radioValue"
+        label="Sagen handler om"
+        :options="[
+          { value: 'insurance', label: 'Ulykkesforsikring' },
+          { value: 'liability', label: 'Erstatningsansvar' },
+        ]"
+        required
+      />
+      <GTCheckboxGroup
+        v-model="checkboxValues"
+        label="Nationalitet"
+        :options="[
+          { value: 'dk', label: 'Dansk' },
+          { value: 'se', label: 'Svensk' },
+        ]"
+        class="mt-3"
+      />
+      <GTCheckbox
+        v-model="acceptTerms"
+        label="Jeg accepterer vilkårene"
+        class="mt-3"
+      />
     </section>
 
     <section class="mb-6">

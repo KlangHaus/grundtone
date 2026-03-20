@@ -28,6 +28,9 @@
     GTSkipLink,
     GTSpinner,
     GTModal,
+    GTCheckbox,
+    GTCheckboxGroup,
+    GTRadioGroup,
     useTheme,
     useField,
     useFormValidation,
@@ -47,6 +50,9 @@
 
   const showDismissible = ref(true);
   const showCookie = ref(true);
+  const radioValue = ref('');
+  const checkboxValues = ref<string[]>([]);
+  const acceptTerms = ref(false);
   const isLoading = ref(false);
   const toggleValue = ref(false);
   const toggleDisabled = ref(true);
@@ -167,6 +173,7 @@
             { label: 'Toggle', href: '#pg-toggle' },
             { label: 'Spinner', href: '#pg-spinner' },
             { label: 'Modal', href: '#pg-modal' },
+            { label: 'Radio & Checkbox', href: '#pg-choice' },
           ]"
         />
       </aside>
@@ -983,6 +990,49 @@
               Outlined link
             </GTButton>
           </div>
+        </section>
+
+        <section class="mb-6">
+          <h2 id="pg-choice" style="scroll-margin-top: 1rem">
+            Radio &amp; Checkbox
+          </h2>
+          <h3>Radio Group</h3>
+          <GTRadioGroup
+            v-model="radioValue"
+            label="Sagen handler om"
+            :options="[
+              { value: 'insurance', label: 'Ulykkesforsikring' },
+              { value: 'liability', label: 'Erstatningsansvar' },
+              { value: 'company', label: 'Forsikringsselskab' },
+            ]"
+            required
+          />
+          <p class="body-text-sm text-secondary mt-2">
+            Valgt: {{ radioValue || '(ingen)' }}
+          </p>
+
+          <h3>Checkbox Group</h3>
+          <GTCheckboxGroup
+            v-model="checkboxValues"
+            label="Nationalitet"
+            help-text="Angiv alle der gælder"
+            :options="[
+              { value: 'dk', label: 'Dansk' },
+              { value: 'se', label: 'Svensk' },
+              { value: 'other', label: 'Anden nationalitet' },
+            ]"
+          />
+          <p class="body-text-sm text-secondary mt-2">
+            Valgt:
+            {{ checkboxValues.length ? checkboxValues.join(', ') : '(ingen)' }}
+          </p>
+
+          <h3>Standalone Checkbox</h3>
+          <GTCheckbox
+            v-model="acceptTerms"
+            label="Jeg accepterer vilkårene"
+            help-text="Læs vilkårene før du accepterer"
+          />
         </section>
       </main>
     </div>

@@ -29,6 +29,8 @@ export { GTIcon } from './atoms/Icon';
 export type { IconProps, IconSize } from './atoms/Icon';
 export { GT_ICON_REGISTRY_KEY } from './atoms/Icon';
 export type { IconDefinition, IconRegistry } from '@grundtone/core';
+export { GTCheckbox } from './atoms/Checkbox';
+export type { CheckboxProps } from './atoms/Checkbox';
 export { GTDateInput } from './atoms/DateInput';
 export type {
   DateInputProps,
@@ -125,6 +127,11 @@ export { GTBreadcrumb } from './molecules/Breadcrumb';
 export type { BreadcrumbProps, BreadcrumbItem } from './molecules/Breadcrumb';
 export { GTCard } from './molecules/Card';
 export type { CardProps, CardVariant } from './molecules/Card';
+export { GTCheckboxGroup } from './molecules/CheckboxGroup';
+export type {
+  CheckboxGroupProps,
+  CheckboxOption,
+} from './molecules/CheckboxGroup';
 export { GTModal } from './molecules/Modal';
 export type { ModalProps, ModalTransition } from './molecules/Modal';
 export { GTCookieMessage } from './molecules/CookieMessage';
@@ -136,5 +143,7 @@ export type {
   TabItem,
   TabPanelProps,
 } from './molecules/Tabs';
+export { GTRadioGroup } from './molecules/RadioGroup';
+export type { RadioGroupProps, RadioOption } from './molecules/RadioGroup';
 
 // Organisms

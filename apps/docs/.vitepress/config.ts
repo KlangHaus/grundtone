@@ -255,8 +255,11 @@ export default defineConfig({
           items: [
             { text: 'Address Input', link: '/vue/address-input' },
             { text: 'Autocomplete', link: '/vue/autocomplete' },
+            { text: 'Checkbox', link: '/vue/checkbox' },
+            { text: 'Checkbox Group', link: '/vue/checkbox-group' },
             { text: 'Date Input', link: '/vue/date-input' },
             { text: 'Input', link: '/vue/input' },
+            { text: 'Radio Group', link: '/vue/radio-group' },
             { text: 'Select', link: '/vue/select' },
             { text: 'Toggle', link: '/vue/toggle' },
           ],
@@ -394,8 +397,10 @@ export default defineConfig({
           collapsed: true,
           items: [
             { text: 'Autocomplete', link: '/web/c-autocomplete' },
+            { text: 'Checkbox', link: '/web/c-checkbox' },
             { text: 'Date Input', link: '/web/c-date-input' },
             { text: 'Input', link: '/web/c-input' },
+            { text: 'Radio', link: '/web/c-radio' },
             { text: 'Select', link: '/web/c-select' },
           ],
         },

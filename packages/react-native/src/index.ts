@@ -98,12 +98,22 @@ export type { AlertProps, AlertVariant } from './components/Alert';
 export { GTBadge } from './components/Badge';
 export type { BadgeProps, BadgeVariant, BadgeSize } from './components/Badge';
 export { GTCard } from './components/Card';
+export { GTCheckboxGroup } from './components/CheckboxGroup';
+export type {
+  CheckboxGroupProps as RNCheckboxGroupProps,
+  CheckboxOption as RNCheckboxOption,
+} from './components/CheckboxGroup';
 export { GTDetails } from './components/Details';
 export { GTModal } from './components/Modal';
 export type {
   ModalProps as RNModalProps,
   ModalTransition as RNModalTransition,
 } from './components/Modal';
+export { GTRadioGroup } from './components/RadioGroup';
+export type {
+  RadioGroupProps as RNRadioGroupProps,
+  RadioOption as RNRadioOption,
+} from './components/RadioGroup';
 export { GTSpinner } from './components/Spinner';
 export type {
   SpinnerProps as RNSpinnerProps,

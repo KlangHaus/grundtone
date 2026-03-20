@@ -154,6 +154,40 @@
           <button class="alert__close" aria-label="Luk">&times;</button>
         </div>
 
+        <!-- ─── Radio & Checkbox ─── -->
+        <fieldset class="choice-group mb-4">
+          <legend class="choice-group__legend">Kontotype</legend>
+          <div class="choice-group__list" role="radiogroup">
+            <label class="choice choice--radio choice--checked" for="signup-type-personal">
+              <input id="signup-type-personal" class="choice__input" type="radio" name="account-type" value="personal" checked />
+              <span class="choice__indicator" aria-hidden="true"></span>
+              <span class="choice__body"><span class="choice__label">Personlig</span></span>
+            </label>
+            <label class="choice choice--radio" for="signup-type-business">
+              <input id="signup-type-business" class="choice__input" type="radio" name="account-type" value="business" />
+              <span class="choice__indicator" aria-hidden="true"></span>
+              <span class="choice__body"><span class="choice__label">Virksomhed</span></span>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="choice-group mb-4">
+          <legend class="choice-group__legend">Interesser</legend>
+          <p class="choice-group__hint">Vælg alle der gælder</p>
+          <div class="choice-group__list">
+            <label class="choice choice--checkbox" for="signup-interest-design">
+              <input id="signup-interest-design" class="choice__input" type="checkbox" name="interests" value="design" />
+              <span class="choice__indicator" aria-hidden="true"></span>
+              <span class="choice__body"><span class="choice__label">Design</span></span>
+            </label>
+            <label class="choice choice--checkbox" for="signup-interest-dev">
+              <input id="signup-interest-dev" class="choice__input" type="checkbox" name="interests" value="development" />
+              <span class="choice__indicator" aria-hidden="true"></span>
+              <span class="choice__body"><span class="choice__label">Udvikling</span></span>
+            </label>
+          </div>
+        </fieldset>
+
         <!-- ─── Spinner demo ─── -->
         <div class="mb-4">
           <p class="text-base font-semibold mb-2">Loading spinner</p>

@@ -1,0 +1,162 @@
+// Component: Choice (Radio & Checkbox)
+// Shared styling for radio buttons and checkboxes.
+// Uses native <input> elements (visually hidden) with custom indicators.
+
+.choice-group {
+  border: none;
+  padding: 0;
+  margin: 0;
+
+  &__legend {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+    margin-bottom: var(--space-xs);
+  }
+
+  &__hint {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-sm);
+  }
+
+  &__error {
+    font-size: var(--font-size-sm);
+    color: var(--color-error);
+    font-weight: var(--font-weight-semibold);
+    margin: 0 0 var(--space-sm);
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+}
+
+// Single choice item (radio or checkbox)
+.choice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  cursor: pointer;
+
+  // Hide native input but keep it focusable
+  &__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
+
+  // Custom visual indicator
+  &__indicator {
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-top: 0.125rem; // align with first line of text
+    border: 2px solid var(--color-border-medium);
+    background: var(--color-background);
+    transition:
+      border-color var(--duration-fast) var(--ease-ease),
+      background-color var(--duration-fast) var(--ease-ease);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  &__label {
+    font-size: var(--font-size-base);
+    color: var(--color-text);
+    line-height: var(--line-height-normal);
+  }
+
+  &__hint {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  // Collapse content (shown when checked)
+  &__content {
+    display: none;
+    padding-top: var(--space-xs);
+  }
+
+  // Radio: circle indicator
+  &--radio .choice__indicator {
+    border-radius: var(--radius-full);
+
+    &::after {
+      content: '';
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: var(--radius-full);
+      background: transparent;
+      transition: background-color var(--duration-fast) var(--ease-ease);
+    }
+  }
+
+  // Checkbox: square indicator with checkmark
+  &--checkbox .choice__indicator {
+    border-radius: var(--radius-sm);
+
+    &::after {
+      content: '';
+      width: 0.625rem;
+      height: 0.375rem;
+      border-left: 2px solid transparent;
+      border-bottom: 2px solid transparent;
+      transform: rotate(-45deg) translateY(-0.0625rem);
+      transition: border-color var(--duration-fast) var(--ease-ease);
+    }
+  }
+
+  // Checked state
+  &--checked .choice__indicator {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+  }
+
+  &--checked.choice--radio .choice__indicator::after {
+    background: var(--color-background);
+  }
+
+  &--checked.choice--checkbox .choice__indicator::after {
+    border-left-color: var(--color-background);
+    border-bottom-color: var(--color-background);
+  }
+
+  // Show collapse content when checked
+  &--checked .choice__content {
+    display: block;
+  }
+
+  // Focus visible on indicator when input is focused
+  &__input:focus-visible + .choice__indicator {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+
+  // Error state
+  &--error .choice__indicator {
+    border-color: var(--color-error);
+  }
+
+  // Disabled
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    .choice__indicator {
+      background: var(--color-surface-alt);
+    }
+  }
+}

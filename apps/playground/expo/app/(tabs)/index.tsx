@@ -16,6 +16,8 @@ import {
   GTToggle,
   GTSpinner,
   GTModal,
+  GTRadioGroup,
+  GTCheckboxGroup,
   useGrundtoneTheme,
   useField,
   useFormValidation,
@@ -29,6 +31,8 @@ export default function ComponentsScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showPersistent, setShowPersistent] = useState(false);
+  const [radioValue, setRadioValue] = useState('');
+  const [checkboxValues, setCheckboxValues] = useState<string[]>([]);
   const [toggleSm, setToggleSm] = useState(false);
   const [toggleLg, setToggleLg] = useState(true);
   const [inputValue, setInputValue] = useState('');
@@ -408,6 +412,31 @@ export default function ComponentsScreen() {
       </View>
       <View style={groupStyle}>
         <GTSpinner size="lg" text="Henter data…" />
+      </View>
+
+      <Text style={headingStyle}>Radio &amp; Checkbox</Text>
+      <GTRadioGroup
+        value={radioValue}
+        onValueChange={setRadioValue}
+        label="Sagen handler om"
+        options={[
+          { value: 'insurance', label: 'Ulykkesforsikring' },
+          { value: 'liability', label: 'Erstatningsansvar' },
+          { value: 'company', label: 'Forsikringsselskab' },
+        ]}
+      />
+      <View style={{ marginTop: 12 }}>
+        <GTCheckboxGroup
+          value={checkboxValues}
+          onValueChange={setCheckboxValues}
+          label="Nationalitet"
+          helpText="Angiv alle der gælder"
+          options={[
+            { value: 'dk', label: 'Dansk' },
+            { value: 'se', label: 'Svensk' },
+            { value: 'other', label: 'Anden' },
+          ]}
+        />
       </View>
 
       <Text style={headingStyle}>Modal</Text>
