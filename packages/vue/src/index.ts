@@ -39,6 +39,12 @@ export { GTInput } from './atoms/Input';
 export { GTSelect } from './atoms/Select';
 export { GTSkipLink } from './atoms/SkipLink';
 export type { SkipLinkProps } from './atoms/SkipLink';
+export { GTSpinner } from './atoms/Spinner';
+export type {
+  SpinnerProps,
+  SpinnerSize,
+  SpinnerVariant,
+} from './atoms/Spinner';
 export type {
   SelectProps,
   SelectOption,

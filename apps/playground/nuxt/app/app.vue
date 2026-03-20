@@ -540,6 +540,29 @@
       </div>
     </section>
 
+    <section class="mb-6">
+      <h2>Spinner</h2>
+      <div class="flex items-center gap-4" style="font-size: 1.5rem">
+        <GTSpinner />
+        <GTSpinner variant="light" />
+      </div>
+      <h3>Large with text</h3>
+      <GTSpinner size="lg" text="Henter data…" />
+      <h3>Backdrop</h3>
+      <div
+        style="
+          position: relative;
+          min-height: 8rem;
+          border: 1px solid var(--color-border-medium);
+          border-radius: var(--radius-md);
+          padding: 1rem;
+        "
+      >
+        <p>Indhold bag spinneren.</p>
+        <GTSpinner size="lg" backdrop text="Indlæser sektion…" />
+      </div>
+    </section>
+
     <!-- ─── Blog ─── -->
     <section class="mb-6">
       <h2>Blog</h2>

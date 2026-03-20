@@ -154,6 +154,21 @@
           <button class="alert__close" aria-label="Luk">&times;</button>
         </div>
 
+        <!-- ─── Spinner demo ─── -->
+        <div class="mb-4">
+          <p class="text-base font-semibold mb-2">Loading spinner</p>
+          <div class="flex items-center gap-4" style="font-size: 1.25rem">
+            <div class="spinner spinner--sm spinner--dark" role="status" aria-live="polite">
+              <span class="spinner__circle" aria-hidden="true"></span>
+              <span class="sr-only">Indlæser…</span>
+            </div>
+            <div class="spinner spinner--lg spinner--dark" role="status" aria-live="polite">
+              <span class="spinner__circle" aria-hidden="true"></span>
+              <span class="spinner__text">Henter data…</span>
+            </div>
+          </div>
+        </div>
+
         <!-- ─── Submit ─── -->
         <button type="submit" class="gt-btn gt-btn--primary gt-btn--md w-full">Opret konto</button>
       </form>

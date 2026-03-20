@@ -1,0 +1,68 @@
+// Component: Spinner
+// Loading indicator with size variants and optional text.
+
+@keyframes spinner-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+
+  &__circle {
+    display: block;
+    border-radius: var(--radius-full);
+    border-style: solid;
+    border-color: currentColor;
+    border-right-color: transparent;
+    animation: spinner-spin 0.75s linear infinite;
+  }
+
+  &__text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+  }
+
+  // Sizes
+  &--sm .spinner__circle {
+    width: 1em;
+    height: 1em;
+    border-width: 0.15em;
+  }
+
+  &--lg {
+    flex-direction: column;
+
+    .spinner__circle {
+      width: 3rem;
+      height: 3rem;
+      border-width: 0.25rem;
+    }
+  }
+
+  // Variants
+  &--dark .spinner__circle {
+    border-color: var(--color-text-secondary);
+    border-right-color: transparent;
+  }
+
+  &--light .spinner__circle {
+    border-color: var(--color-background);
+    border-right-color: transparent;
+  }
+
+  // Backdrop (only with lg)
+  &--backdrop {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: var(--space-xl);
+    background: color-mix(in srgb, var(--color-background) 75%, transparent);
+    z-index: var(--z-dropdown);
+  }
+}

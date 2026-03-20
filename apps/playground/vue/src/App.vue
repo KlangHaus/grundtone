@@ -26,6 +26,7 @@
     GTTabPanel,
     GTToggle,
     GTSkipLink,
+    GTSpinner,
     useTheme,
     useField,
     useFormValidation,
@@ -161,6 +162,7 @@
             { label: 'Tabs', href: '#pg-tabs' },
             { label: 'Address Input', href: '#pg-address' },
             { label: 'Toggle', href: '#pg-toggle' },
+            { label: 'Spinner', href: '#pg-spinner' },
           ]"
         />
       </aside>
@@ -890,6 +892,34 @@
             <GTToggle :model-value="true" label="Always on" />
             <GTToggle :model-value="false" label="Always off" />
             <GTToggle v-model="toggleDisabled" disabled label="Disabled" />
+          </div>
+        </section>
+
+        <section class="mb-6">
+          <h2 id="pg-spinner" style="scroll-margin-top: 1rem">Spinner</h2>
+          <h3>Small (inline)</h3>
+          <div class="flex items-center gap-4" style="font-size: 1.5rem">
+            <GTSpinner />
+            <GTSpinner variant="light" />
+          </div>
+          <h3>Large</h3>
+          <div class="flex flex-col gap-2">
+            <GTSpinner size="lg" />
+            <GTSpinner size="lg" text="Henter data…" />
+          </div>
+          <h3>Backdrop</h3>
+          <div
+            style="
+              position: relative;
+              min-height: 8rem;
+              border: 1px solid var(--color-border-medium);
+              border-radius: var(--radius-md);
+              padding: 1rem;
+            "
+          >
+            <p>Indhold bag spinneren.</p>
+            <p>Mere indhold her.</p>
+            <GTSpinner size="lg" backdrop text="Indlæser sektion…" />
           </div>
         </section>
 

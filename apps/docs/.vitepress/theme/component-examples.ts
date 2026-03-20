@@ -536,6 +536,20 @@ export const componentExamples: Record<string, string> = {
   </div>
 </div>`,
 
+  'c-spinner-sm': `<div class="flex items-center gap-4" style="font-size: var(--font-size-2xl)">
+  <div class="spinner spinner--sm spinner--dark" role="status" aria-live="polite">
+    <span class="spinner__circle" aria-hidden="true"></span>
+    <span class="sr-only">Indlæser…</span>
+  </div>
+</div>`,
+
+  'c-spinner-lg': `<div class="flex items-center gap-4">
+  <div class="spinner spinner--lg spinner--dark" role="status" aria-live="polite">
+    <span class="spinner__circle" aria-hidden="true"></span>
+    <span class="sr-only">Indlæser…</span>
+  </div>
+</div>`,
+
   'c-input-sizes': `<div class="flex flex-col gap-2" style="max-width: 360px">
   <input class="input input--sm" placeholder="Small input" />
   <input class="input input--md" placeholder="Medium input" />
