@@ -6,29 +6,22 @@
     <title>Semantiske farvetokens i praksis — Grundtone Blog</title>
     <meta name="description" content="Hvordan semantiske farvetokens skaber konsistens på tværs af platforme og gør dark mode trivielt." />
     <link rel="stylesheet" href="./node_modules/@grundtone/design-system/dist/index.css" />
-    <style>
-      body {
-        max-width: 680px;
-        margin: 0 auto;
-        padding: 2rem 1rem;
-      }
-    </style>
   </head>
 
   <body>
     <a href="#main" class="skip-link">Spring til indhold</a>
 
-    <!-- ─── Header ─── -->
     <header class="header" role="banner">
-      <a href="blog.html" aria-label="Blog forside">Grundtone Blog</a>
+      <a href="index.html" aria-label="Forside">Grundtone</a>
       <nav aria-label="Primær navigation">
         <a href="index.html">Playground</a>
         <a href="blog.html">Blog</a>
+        <a href="shop.html">Shop</a>
+        <a href="signup.html">Tilmeld</a>
       </nav>
     </header>
 
-    <!-- ─── Main ─── -->
-    <main id="main">
+    <main id="main" class="container-lg p-4">
 
       <!-- Breadcrumb -->
       <nav class="breadcrumb text-sm text-tertiary mb-4" aria-label="Breadcrumb">
@@ -37,173 +30,225 @@
         <span aria-current="page">Semantiske farvetokens i praksis</span>
       </nav>
 
-      <article aria-labelledby="article-title">
-
-        <!-- Header -->
-        <div class="mb-5">
-          <h1 id="article-title" class="text-3xl font-bold leading-tight">Semantiske farvetokens i praksis</h1>
-          <div class="article-meta text-sm text-secondary">
-            <span class="badge badge--info badge--sm">Design</span>
-            <time datetime="2026-03-01">1. marts 2026</time>
-            <span aria-hidden="true">&middot;</span>
-            <span>6 min læsetid</span>
-          </div>
+      <!-- Article header (full width) -->
+      <div class="mb-5">
+        <h1 class="text-3xl font-bold leading-tight">Semantiske farvetokens i praksis</h1>
+        <div class="flex gap-2 items-center mt-2 text-sm text-secondary">
+          <span class="badge badge--info badge--sm">Design</span>
+          <time datetime="2026-03-01">1. marts 2026</time>
+          <span aria-hidden="true">&middot;</span>
+          <span>6 min læsetid</span>
         </div>
+      </div>
 
-        <!-- Content -->
-        <div class="prose text-sm leading-normal">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
-            consequat lacus at nisi lobortis, vel malesuada felis tincidunt.
-            Phasellus auctor libero in urna facilisis, at dictum sapien viverra.
-            Cras id dui lectus. Proin mollis augue vel sapien pretium, quis
-            fermentum lorem congue.
-          </p>
+      <!-- Two-column layout: sidebar TOC + article content -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
 
-          <p>
-            Nulla facilisi. Morbi tempus iaculis urna id volutpat lacus laoreet
-            non curabitur gravida arcu ac tortor dignissim. Eget nunc scelerisque
-            viverra mauris in aliquam sem fringilla ut. Amet nisl purus in mollis
-            nunc sed id semper.
-          </p>
+        <!-- ─── Sidebar: Anchor Links (sticky) ─── -->
+        <aside class="md:col-span-1">
+          <nav class="anchor-links sticky-top pt-3" aria-label="Indholdsfortegnelse">
+            <p class="anchor-links__heading">Indhold</p>
+            <ol class="anchor-links__list">
+              <li class="anchor-links__item"><a href="#section-1" class="anchor-links__link anchor-links__link--active" aria-current="true">Hvorfor semantiske tokens?</a></li>
+              <li class="anchor-links__item"><a href="#section-2" class="anchor-links__link">Implementering i praksis</a></li>
+              <li class="anchor-links__item"><a href="#section-3" class="anchor-links__link">Cross-platform shadows</a></li>
+              <li class="anchor-links__item"><a href="#faq" class="anchor-links__link">Ofte stillede spørgsmål</a></li>
+            </ol>
+          </nav>
+        </aside>
 
-          <h2 id="section-1">Hvorfor semantiske tokens?</h2>
+        <!-- ─── Main content ─── -->
+        <div class="md:col-span-3">
+          <article>
+            <div class="prose text-sm leading-normal">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
+                consequat lacus at nisi lobortis, vel malesuada felis tincidunt.
+                Phasellus auctor libero in urna facilisis, at dictum sapien viverra.
+                Cras id dui lectus. Proin mollis augue vel sapien pretium, quis
+                fermentum lorem congue.
+              </p>
 
-          <p>
-            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-            nisi ut aliquip ex ea commodo consequat. Pellentesque habitant morbi
-            tristique senectus et netus et malesuada fames ac turpis egestas.
-          </p>
+              <h2 id="section-1">Hvorfor semantiske tokens?</h2>
 
-          <blockquote>
-            <p>
-              Tokens er kontrakter mellem design og implementering. Når vi navngiver
-              dem efter funktion — ikke farve — kan vi ændre udseendet uden at røre
-              en eneste komponent.
-            </p>
-          </blockquote>
+              <p>
+                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Pellentesque habitant morbi
+                tristique senectus et netus et malesuada fames ac turpis egestas.
+              </p>
 
-          <p>
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-            dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </p>
+              <blockquote>
+                <p>
+                  Tokens er kontrakter mellem design og implementering. Når vi navngiver
+                  dem efter funktion — ikke farve — kan vi ændre udseendet uden at røre
+                  en eneste komponent.
+                </p>
+              </blockquote>
 
-          <div class="callout callout--info text-sm leading-relaxed" role="note" aria-label="Info">
-            <span aria-hidden="true">&#x2139;&#xFE0F;</span>
-            <p>
-              Semantiske tokens som <code>--color-primary</code> og
-              <code>--color-surface</code> tilpasser sig automatisk til dark mode
-              via CSS <code>light-dark()</code>.
-            </p>
-          </div>
+              <p>
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </p>
 
-          <h2 id="section-2">Implementering i praksis</h2>
+              <!-- Details inline i teksten -->
+              <details class="details details--subtle">
+                <summary class="details__summary">
+                  <span class="details__arrow" aria-hidden="true"></span>
+                  Hvad er forskellen på palette- og semantiske tokens?
+                </summary>
+                <div class="details__content">
+                  <div class="details__body">
+                    <p>
+                      <strong>Palette-tokens</strong> er rå farveværdier (<code>blue-600</code>, <code>gray-100</code>).
+                      <strong>Semantiske tokens</strong> beskriver funktion (<code>color-primary</code>, <code>color-surface</code>).
+                      Komponenter bør kun bruge semantiske tokens — det gør theming og dark mode trivielt.
+                    </p>
+                  </div>
+                </div>
+              </details>
 
-          <p>
-            At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
-            praesentium voluptatum deleniti atque corrupti quos dolores et quas
-            molestias excepturi sint occaecati cupiditate non provident.
-          </p>
+              <h2 id="section-2">Implementering i praksis</h2>
 
-          <h3 id="section-2-1">CSS custom properties</h3>
+              <p>
+                At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
+                praesentium voluptatum deleniti atque corrupti quos dolores et quas
+                molestias excepturi sint occaecati cupiditate non provident.
+              </p>
 
-          <p>
-            Alle tokens eksponeres som CSS custom properties på <code>:root</code>:
-          </p>
+              <div class="callout callout--info text-sm leading-relaxed" role="note" aria-label="Info">
+                <span aria-hidden="true">&#x2139;&#xFE0F;</span>
+                <p>
+                  Semantiske tokens som <code>--color-primary</code> og
+                  <code>--color-surface</code> tilpasser sig automatisk til dark mode
+                  via CSS <code>light-dark()</code>.
+                </p>
+              </div>
 
-          <pre><code>:root {
+              <p>
+                Alle tokens eksponeres som CSS custom properties på <code>:root</code>:
+              </p>
+
+              <pre><code>:root {
   --color-primary: light-dark(#0059b3, #4dabf7);
   --color-surface: light-dark(#f8f9fa, #1e1e1e);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
                0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }</code></pre>
 
-          <h3 id="section-2-2">Brug i komponenter</h3>
+              <div class="callout callout--warning text-sm leading-relaxed" role="note" aria-label="Advarsel">
+                <span aria-hidden="true">&#x26A0;&#xFE0F;</span>
+                <p>
+                  Undgå at bruge palette-farver direkte i komponenter. De er beregnet
+                  til at bygge temaer — ikke til at style UI.
+                </p>
+              </div>
 
-          <p>
-            Temporibus autem quibusdam et aut officiis debitis aut rerum
-            necessitatibus saepe eveniet ut et voluptates repudiandae sint et
-            molestiae non recusandae. Itaque earum rerum hic tenetur:
-          </p>
+              <h2 id="section-3">Cross-platform shadows</h2>
 
-          <ul>
-            <li>Brug <code>var(--color-text)</code> i stedet for hårdkodede hex-værdier</li>
-            <li>Brug <code>var(--shadow-md)</code> for konsistente skygger</li>
-            <li>Brug spacing-tokens (<code>var(--space-md)</code>) for ensartet afstand</li>
-            <li>Hold farvenavne semantiske — <code>primary</code>, ikke <code>blue-600</code></li>
-          </ul>
+              <p>
+                Nam libero justo, laoreet sit amet cursus id, dictum vel nibh. Donec
+                mollis hendrerit risus. Strukturerede <code>ShadowLayer</code>-objekter
+                gør det muligt at bruge samme shadow-definition på web og React Native:
+              </p>
 
-          <div class="callout callout--warning text-sm leading-relaxed" role="note" aria-label="Advarsel">
-            <span aria-hidden="true">&#x26A0;&#xFE0F;</span>
-            <p>
-              Undgå at bruge palette-farver direkte i komponenter. De er beregnet
-              til at bygge temaer — ikke til at style UI.
-            </p>
-          </div>
-
-          <h2 id="section-3">Cross-platform med strukturerede shadows</h2>
-
-          <p>
-            Nam libero justo, laoreet sit amet cursus id, dictum vel nibh. Donec
-            mollis hendrerit risus. Phasellus nec sem in justo pellentesque
-            facilisis. Etiam imperdiet imperdiet orci. Nunc nec neque.
-          </p>
-
-          <p>
-            Strukturerede <code>ShadowLayer</code>-objekter gør det muligt at
-            bruge samme shadow-definition på web (CSS) og React Native (iOS/Android):
-          </p>
-
-          <pre><code>// Core: struktureret definition
+              <pre><code>// Core: struktureret definition
 const md = [
   { x: 0, y: 4, blur: 6, spread: -1, color: '#000', opacity: 0.1 },
   { x: 0, y: 2, blur: 4, spread: -1, color: '#000', opacity: 0.06 },
 ];
 
-// Web: automatisk konverteret til CSS
-// box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), ...
+// Web → box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), ...
+// RN  → { shadowColor, shadowOffset, shadowOpacity, shadowRadius }</code></pre>
 
-// RN: konverteret til native
-// { shadowColor: '#000', shadowOffset: {width:0,height:4}, ... }</code></pre>
+              <p>
+                Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.
+                Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper
+                ultricies nisi.
+              </p>
 
-          <p>
-            Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.
-            Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper
-            ultricies nisi. Praesent nonummy mi in odio. Nunc interdum lacus sit
-            amet orci.
-          </p>
+              <ul>
+                <li>Brug <code>var(--color-text)</code> i stedet for hårdkodede hex-værdier</li>
+                <li>Brug <code>var(--shadow-md)</code> for konsistente skygger</li>
+                <li>Brug spacing-tokens (<code>var(--space-md)</code>) for ensartet afstand</li>
+                <li>Hold farvenavne semantiske — <code>primary</code>, ikke <code>blue-600</code></li>
+              </ul>
 
-          <hr />
+              <hr />
 
-          <p>
-            Fusce risus nisl, viverra et, tempor et, pretium in, sapien. Donec
-            venenatis vulputate lorem. Morbi nec metus. Vestibulum ante ipsum
-            primis in faucibus orci luctus et ultrices posuere cubilia curae.
-          </p>
-        </div>
-
-        <!-- Author -->
-        <aside class="author-card bg-surface" aria-label="Om forfatteren">
-          <div class="author-avatar bg-primary text-on-primary font-bold text-xl" aria-hidden="true">AH</div>
-          <div>
-            <div class="font-semibold">Allan Hansen</div>
-            <div class="text-sm text-secondary mt-1">
-              Designer og frontend-arkitekt. Bygger Grundtone — et cross-platform design system.
+              <p>
+                Fusce risus nisl, viverra et, tempor et, pretium in, sapien. Donec
+                venenatis vulputate lorem. Morbi nec metus.
+              </p>
             </div>
-          </div>
-        </aside>
 
-      </article>
+            <!-- FAQ Accordion -->
+            <h2 id="faq" class="text-xl font-bold mt-5 mb-3">Ofte stillede spørgsmål</h2>
+            <div class="accordion mb-5" data-transition="slide" role="region" aria-label="FAQ om farvetokens">
+              <div class="accordion__item">
+                <button class="accordion__header" aria-expanded="false">
+                  <span class="accordion__icon" aria-hidden="true"></span>
+                  <span class="accordion__heading">Skal jeg bruge CSS custom properties eller SCSS-variabler?</span>
+                </button>
+                <div class="accordion__panel" role="region">
+                  <div class="accordion__body">
+                    <p>Brug CSS custom properties i dine komponenter — de er runtime-dynamiske og understøtter theming. SCSS-variabler er build-time og kan ikke ændres af brugeren.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion__item">
+                <button class="accordion__header" aria-expanded="false">
+                  <span class="accordion__icon" aria-hidden="true"></span>
+                  <span class="accordion__heading">Hvordan virker dark mode?</span>
+                </button>
+                <div class="accordion__panel" role="region">
+                  <div class="accordion__body">
+                    <p>Sæt <code>data-theme="dark"</code> på <code>&lt;html&gt;</code>. Alle semantiske tokens bruger <code>light-dark()</code> CSS-funktionen, så farverne skifter automatisk.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion__item">
+                <button class="accordion__header" aria-expanded="false">
+                  <span class="accordion__icon" aria-hidden="true"></span>
+                  <span class="accordion__heading">Kan jeg tilføje mine egne tokens?</span>
+                </button>
+                <div class="accordion__panel" role="region">
+                  <div class="accordion__body">
+                    <p>Ja — overskriv eksisterende tokens via CSS custom properties på <code>:root</code>, eller tilføj nye via SCSS med <code>@grundtone/design-system/scss/lib</code>.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-      <a href="blog.html" class="back-link text-sm font-medium text-primary" aria-label="Tilbage til blogoversigt">
-        &larr; Alle indlæg
-      </a>
+            <!-- Author -->
+            <aside class="author-card bg-surface" aria-label="Om forfatteren">
+              <div class="author-avatar bg-primary text-on-primary font-bold text-xl" aria-hidden="true">AH</div>
+              <div>
+                <div class="font-semibold">Allan Hansen</div>
+                <div class="text-sm text-secondary mt-1">
+                  Designer og frontend-arkitekt. Bygger Grundtone — et cross-platform design system.
+                </div>
+              </div>
+            </aside>
+          </article>
+
+          <a href="blog.html" class="back-link text-sm font-medium text-primary mt-4" aria-label="Tilbage til blogoversigt">
+            &larr; Alle indlæg
+          </a>
+        </div>
+      </div>
     </main>
 
     <footer class="footer text-xs text-tertiary text-center" role="contentinfo">
       <p>&copy; 2026 Grundtone. Bygget med semantiske design tokens.</p>
     </footer>
+
+    <script src="./node_modules/@grundtone/design-system/dist/behaviors.umd.global.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        Grundtone.initAll();
+      });
+    </script>
   </body>
 </html>

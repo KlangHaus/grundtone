@@ -1,57 +1,401 @@
 <!doctype html>
-<html lang="en">
+<html lang="da">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Grundtone Playground</title>
+    <title>Grundtone — HTML Playground</title>
     <link rel="stylesheet" href="./node_modules/@grundtone/design-system/dist/index.css" />
     <link rel="stylesheet" href="./node_modules/@grundtone/vue/dist/index.css" />
-    <style>
-      /* Page-level overrides for the playground */
-      body {
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 2rem 1rem;
-      }
-      h2 {
-        margin-top: 2.5rem;
-        margin-bottom: 1rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 1px solid var(--color-border-light);
-      }
-      .label {
-        font-size: var(--font-size-xs);
-        color: var(--color-text-tertiary);
-        margin-top: 0.25rem;
-      }
-      /* ─── Swatch (shared for color/surface demos) ─── */
-      .swatch {
-        min-width: 100px;
-      }
-      .swatch--lg {
-        min-width: 120px;
-      }
-      /* ─── Z-index demo needs positioning ─── */
-      .z-demo {
-        position: relative;
-        height: 120px;
-        max-width: 400px;
-      }
-      .z-demo > div {
-        position: absolute;
-        width: 120px;
-        height: 80px;
-      }
-    </style>
   </head>
 
-  <body>
-    <h1 class="text-3xl font-bold mb-2">Grundtone Playground</h1>
-    <p class="text-secondary mb-5">Plain HTML test of design tokens, utilities, and shadows.</p>
+  <body class="p-4 mx-auto">
+    <a href="#main" class="skip-link">Spring til indhold</a>
 
-    <!-- ─── Icons (inline SVG from @grundtone/core) ─── -->
-    <h2>Icons</h2>
-    <div class="flex flex-wrap gap-3 items-center">
+    <header class="header" role="banner">
+      <a href="index.html" aria-label="Forside">Grundtone</a>
+      <nav aria-label="Primær navigation">
+        <a href="index.html" aria-current="page">Playground</a>
+        <a href="blog.html">Blog</a>
+        <a href="shop.html">Shop</a>
+        <a href="signup.html">Tilmeld</a>
+      </nav>
+    </header>
+
+    <main id="main">
+
+    <h1 class="text-3xl font-bold mb-1">Grundtone HTML Playground</h1>
+    <p class="text-secondary mb-5">
+      Ren HTML + CSS + vanilla JS behaviors. Ingen frameworks, ingen bundler.
+      Alt interaktivt drives af <code>Grundtone.initAll()</code>.
+    </p>
+
+    <!-- ─── Anchor Links ─── -->
+    <nav class="anchor-links mb-5" aria-label="Indholdsfortegnelse">
+      <p class="anchor-links__heading">Indhold</p>
+      <ol class="anchor-links__list">
+        <li class="anchor-links__item"><a href="#behaviors" class="anchor-links__link anchor-links__link--active" aria-current="true">Behaviors</a></li>
+        <li class="anchor-links__item"><a href="#tokens" class="anchor-links__link">Design Tokens</a></li>
+        <li class="anchor-links__item"><a href="#forms" class="anchor-links__link">Formularer</a></li>
+        <li class="anchor-links__item"><a href="#utilities" class="anchor-links__link">Utilities</a></li>
+      </ol>
+    </nav>
+
+
+    <!-- ═══════════════ BEHAVIORS ═══════════════ -->
+    <h2 id="behaviors" class="text-2xl font-bold mt-5 mb-3 border-b pb-2">Interactive Behaviors</h2>
+
+    <!-- ─── Alert ─── -->
+    <h3 class="text-base font-semibold mt-4 mb-2">Alert</h3>
+    <div class="flex flex-col gap-2 mb-4">
+      <div class="alert alert--info" data-dismissible role="status">
+        <div class="alert__content">
+          <p class="alert__heading">Information</p>
+          <div class="alert__body"><p>Denne alert kan lukkes. Klik krydset til højre.</p></div>
+        </div>
+        <button class="alert__close" aria-label="Luk">&times;</button>
+      </div>
+      <div class="alert alert--success" data-dismissible role="status">
+        <div class="alert__content">
+          <p class="alert__heading">Succes</p>
+          <div class="alert__body"><p>Din handling er gennemført.</p></div>
+        </div>
+        <button class="alert__close" aria-label="Luk">&times;</button>
+      </div>
+      <div class="alert alert--warning" role="status">
+        <div class="alert__content">
+          <p class="alert__heading">Advarsel</p>
+          <div class="alert__body"><p>Denne alert kan <strong>ikke</strong> lukkes (ingen <code>data-dismissible</code>).</p></div>
+        </div>
+      </div>
+      <div class="alert alert--error" data-dismissible role="alert">
+        <div class="alert__content">
+          <p class="alert__heading">Fejl</p>
+          <div class="alert__body"><p>Noget gik galt. Prøv igen.</p></div>
+        </div>
+        <button class="alert__close" aria-label="Luk">&times;</button>
+      </div>
+    </div>
+
+    <!-- ─── Accordion: slide ─── -->
+    <h3 class="text-base font-semibold mt-4 mb-2">Accordion — slide transition</h3>
+    <div class="accordion mb-4" data-transition="slide" role="region" aria-label="FAQ">
+      <button class="accordion__toggle-all">Vis/skjul alle</button>
+      <div class="accordion__item accordion__item--open">
+        <button class="accordion__header" aria-expanded="true">
+          <span class="accordion__icon" aria-hidden="true"></span>
+          <span class="accordion__heading">Hvad er design tokens?</span>
+        </button>
+        <div class="accordion__panel" role="region">
+          <div class="accordion__body">
+            <p>Design tokens er navngivne værdier for farver, spacing, typografi, shadows, radii og mere. De sikrer konsistens på tværs af platforme.</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion__item">
+        <button class="accordion__header" aria-expanded="false">
+          <span class="accordion__icon" aria-hidden="true"></span>
+          <span class="accordion__heading">Understøtter Grundtone dark mode?</span>
+        </button>
+        <div class="accordion__panel" role="region">
+          <div class="accordion__body">
+            <p>Ja — via CSS custom properties. Skift <code>data-theme="dark"</code> på <code>&lt;html&gt;</code> elementet.</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion__item">
+        <button class="accordion__header" aria-expanded="false">
+          <span class="accordion__icon" aria-hidden="true"></span>
+          <span class="accordion__heading">Kan jeg bruge det uden Vue?</span>
+        </button>
+        <div class="accordion__panel" role="region">
+          <div class="accordion__body">
+            <p>Ja — <code>@grundtone/design-system</code> shipper CSS + vanilla JS behaviors. Denne side er beviset.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Accordion: bordered, fade ─── -->
+    <h3 class="text-base font-semibold mt-4 mb-2">Accordion — bordered, fade transition</h3>
+    <div class="accordion accordion--bordered mb-4" data-transition="fade" role="region" aria-label="Bordered FAQ">
+      <div class="accordion__item accordion__item--open">
+        <button class="accordion__header" aria-expanded="true">
+          <span class="accordion__icon" aria-hidden="true"></span>
+          <span class="accordion__heading">Levering</span>
+        </button>
+        <div class="accordion__panel" role="region">
+          <div class="accordion__body">
+            <p>Estimeret 2–5 hverdage inden for Danmark.</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion__item">
+        <button class="accordion__header" aria-expanded="false">
+          <span class="accordion__icon" aria-hidden="true"></span>
+          <span class="accordion__heading">Returnering</span>
+        </button>
+        <div class="accordion__panel" role="region">
+          <div class="accordion__body">
+            <p>30 dages fuld returret. Ingen begrundelse nødvendig.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Accordion: card, none ─── -->
+    <h3 class="text-base font-semibold mt-4 mb-2">Accordion — card, no transition</h3>
+    <div class="accordion accordion--card mb-4" data-transition="none" role="region" aria-label="Card FAQ">
+      <div class="accordion__item">
+        <button class="accordion__header" aria-expanded="false">
+          <span class="accordion__icon" aria-hidden="true"></span>
+          <span class="accordion__heading">Er det open source?</span>
+        </button>
+        <div class="accordion__panel" role="region">
+          <div class="accordion__body">
+            <p>Ja — MIT-licenseret. Se GitHub-repoen.</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion__item">
+        <button class="accordion__header" aria-expanded="false">
+          <span class="accordion__icon" aria-hidden="true"></span>
+          <span class="accordion__heading">Hvem vedligeholder det?</span>
+        </button>
+        <div class="accordion__panel" role="region">
+          <div class="accordion__body">
+            <p>KlangHaus-teamet. Bidrag er velkomne.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Tabs: underline ─── -->
+    <h3 class="text-base font-semibold mt-4 mb-2">Tabs — underline</h3>
+    <div class="tabs tabs--underline mb-4">
+      <div class="tabs__list" role="tablist">
+        <button class="tabs__tab tabs__tab--active" role="tab" aria-selected="true">Oversigt</button>
+        <button class="tabs__tab" role="tab" aria-selected="false">Detaljer</button>
+        <button class="tabs__tab" role="tab" aria-selected="false">Historik</button>
+      </div>
+      <div class="tabs__panel" role="tabpanel">
+        <p>Oversigt over den aktuelle status. Prøv tastaturnavigation: piltaster, Home, End.</p>
+      </div>
+      <div class="tabs__panel" role="tabpanel">
+        <p>Detaljeret information om komponentens konfiguration og props.</p>
+      </div>
+      <div class="tabs__panel" role="tabpanel">
+        <p>Historik over ændringer. Version 2.7.0 tilføjede vanilla JS behaviors.</p>
+      </div>
+    </div>
+
+    <!-- ─── Tabs: segment ─── -->
+    <h3 class="text-base font-semibold mt-4 mb-2">Tabs — segment</h3>
+    <div class="tabs tabs--segment mb-4">
+      <div class="tabs__list" role="tablist">
+        <button class="tabs__tab tabs__tab--active" role="tab" aria-selected="true">Vue</button>
+        <button class="tabs__tab" role="tab" aria-selected="false">Nuxt</button>
+        <button class="tabs__tab" role="tab" aria-selected="false">HTML</button>
+      </div>
+      <div class="tabs__panel" role="tabpanel">
+        <p>Vue 3 komponentbibliotek med reactivity og composables.</p>
+      </div>
+      <div class="tabs__panel" role="tabpanel">
+        <p>Nuxt 3 modul med auto-imports og SSR-support.</p>
+      </div>
+      <div class="tabs__panel" role="tabpanel">
+        <p>Ren HTML + CSS + vanilla JS behaviors. Det du ser nu.</p>
+      </div>
+    </div>
+
+    <!-- ─── Tabs: pill ─── -->
+    <h3 class="text-base font-semibold mt-4 mb-2">Tabs — pill</h3>
+    <div class="tabs tabs--pill mb-4">
+      <div class="tabs__list" role="tablist">
+        <button class="tabs__tab tabs__tab--active" role="tab" aria-selected="true">Alle</button>
+        <button class="tabs__tab" role="tab" aria-selected="false">Atoms</button>
+        <button class="tabs__tab" role="tab" aria-selected="false">Molecules</button>
+      </div>
+      <div class="tabs__panel" role="tabpanel">
+        <p>Alle komponenter i design-systemet.</p>
+      </div>
+      <div class="tabs__panel" role="tabpanel">
+        <p>Atoms: Button, Badge, Toggle, Input, Select.</p>
+      </div>
+      <div class="tabs__panel" role="tabpanel">
+        <p>Molecules: Accordion, Tabs, Alert, Card, Cookie Message.</p>
+      </div>
+    </div>
+
+    <!-- ─── Toggle ─── -->
+    <h3 class="text-base font-semibold mt-4 mb-2">Toggle</h3>
+    <div class="flex flex-col gap-3 mb-4">
+      <div class="toggle-field">
+        <label class="toggle-label">Small</label>
+        <button class="toggle toggle--sm" role="switch" aria-checked="false">
+          <span class="toggle__track"></span>
+          <span class="toggle__thumb"></span>
+        </button>
+      </div>
+      <div class="toggle-field">
+        <label class="toggle-label">Medium (checked)</label>
+        <button class="toggle toggle--md toggle--checked" role="switch" aria-checked="true">
+          <span class="toggle__track"></span>
+          <span class="toggle__thumb"></span>
+        </button>
+      </div>
+      <div class="toggle-field">
+        <label class="toggle-label">Large</label>
+        <button class="toggle toggle--lg" role="switch" aria-checked="false">
+          <span class="toggle__track"></span>
+          <span class="toggle__thumb"></span>
+        </button>
+      </div>
+      <div class="toggle-field">
+        <label class="toggle-label">Disabled</label>
+        <button class="toggle toggle--md toggle--disabled" role="switch" aria-checked="false" disabled>
+          <span class="toggle__track"></span>
+          <span class="toggle__thumb"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ─── Cookie Message ─── -->
+    <h3 class="text-base font-semibold mt-4 mb-2">Cookie Message</h3>
+    <div class="cookie-message cookie-message--static mb-4" role="region" aria-label="Cookiemeddelelse">
+      <div class="cookie-message__content">
+        <p class="cookie-message__heading">Vi bruger cookies</p>
+        <div class="cookie-message__body">
+          <p>Vi bruger cookies til statistik og personalisering. <a href="#">Læs mere om cookies</a>.</p>
+        </div>
+        <div class="cookie-message__actions">
+          <button type="button" data-action="accept" class="gt-btn gt-btn--primary gt-btn--sm">Acceptér alle</button>
+          <button type="button" data-action="reject" class="gt-btn gt-btn--secondary gt-btn--sm">Afvis alle</button>
+          <button type="button" data-action="settings" class="gt-btn gt-btn--tertiary gt-btn--sm" aria-expanded="false">Cookie-indstillinger</button>
+        </div>
+      </div>
+      <div class="cookie-message__settings" hidden>
+        <div class="flex flex-col gap-2">
+          <div class="toggle-field">
+            <label class="toggle-label">Nødvendige (altid aktive)</label>
+            <button class="toggle toggle--sm toggle--checked toggle--disabled" role="switch" aria-checked="true" disabled>
+              <span class="toggle__track"></span>
+              <span class="toggle__thumb"></span>
+            </button>
+          </div>
+          <div class="toggle-field">
+            <label class="toggle-label">Statistik</label>
+            <button class="toggle toggle--sm" role="switch" aria-checked="false">
+              <span class="toggle__track"></span>
+              <span class="toggle__thumb"></span>
+            </button>
+          </div>
+          <div class="toggle-field">
+            <label class="toggle-label">Marketing</label>
+            <button class="toggle toggle--sm" role="switch" aria-checked="false">
+              <span class="toggle__track"></span>
+              <span class="toggle__thumb"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="cookie-message__close" aria-label="Luk">&times;</button>
+    </div>
+
+    <!-- ─── Details (native) ─── -->
+    <h3 class="text-base font-semibold mt-4 mb-2">Details (native &lt;details&gt;)</h3>
+    <div class="flex flex-col gap-2 mb-4">
+      <details class="details details--default">
+        <summary class="details__summary">
+          <span class="details__arrow" aria-hidden="true"></span>
+          Hvad er design tokens?
+        </summary>
+        <div class="details__content">
+          <div class="details__body">
+            <p>Design tokens er navngivne værdier for farver, spacing, typografi og mere.</p>
+          </div>
+        </div>
+      </details>
+      <details class="details details--subtle">
+        <summary class="details__summary">
+          <span class="details__arrow" aria-hidden="true"></span>
+          Læs mere om theming
+        </summary>
+        <div class="details__content">
+          <div class="details__body">
+            <p>Tema-switching sker via CSS custom properties på <code>&lt;html&gt;</code> elementet.</p>
+          </div>
+        </div>
+      </details>
+      <details class="details details--card">
+        <summary class="details__summary">
+          <span class="details__arrow" aria-hidden="true"></span>
+          Har jeg brug for @grundtone/core?
+        </summary>
+        <div class="details__content">
+          <div class="details__body">
+            <p>Ja — core indeholder TypeScript-typer, theme-presets, og ikonregistryet.</p>
+          </div>
+        </div>
+      </details>
+    </div>
+
+
+    <!-- ═══════════════ DESIGN TOKENS ═══════════════ -->
+    <h2 id="tokens" class="text-2xl font-bold mt-5 mb-3 border-b pb-2">Design Tokens</h2>
+
+    <h3 class="text-base font-semibold mt-4 mb-2">Colors</h3>
+    <div class="flex flex-wrap gap-2 mb-4">
+      <div class="rounded-md p-3 bg-primary text-on-primary swatch text-center">primary</div>
+      <div class="rounded-md p-3 bg-primary-light text-inverse swatch text-center">primaryLight</div>
+      <div class="rounded-md p-3 bg-primary-dark text-inverse swatch text-center">primaryDark</div>
+      <div class="rounded-md p-3 bg-success text-inverse swatch text-center">success</div>
+      <div class="rounded-md p-3 bg-warning swatch text-center">warning</div>
+      <div class="rounded-md p-3 bg-error text-inverse swatch text-center">error</div>
+      <div class="rounded-md p-3 bg-info swatch text-center">info</div>
+    </div>
+
+    <h3 class="text-base font-semibold mt-4 mb-2">Surfaces</h3>
+    <div class="flex flex-wrap gap-2 mb-4">
+      <div class="border rounded-md p-3 bg-background swatch--lg text-center">background</div>
+      <div class="border rounded-md p-3 bg-background-alt swatch--lg text-center">backgroundAlt</div>
+      <div class="border rounded-md p-3 bg-surface swatch--lg text-center">surface</div>
+      <div class="border rounded-md p-3 bg-surface-alt swatch--lg text-center">surfaceAlt</div>
+      <div class="shadow-sm rounded-md p-3 bg-surface-raised swatch--lg text-center">surfaceRaised</div>
+    </div>
+
+    <h3 class="text-base font-semibold mt-4 mb-2">Shadows</h3>
+    <div class="flex flex-wrap gap-3 mb-4">
+      <div class="shadow-xs rounded-md p-3 bg-surface-raised swatch text-center">xs</div>
+      <div class="shadow-sm rounded-md p-3 bg-surface-raised swatch text-center">sm</div>
+      <div class="shadow-md rounded-md p-3 bg-surface-raised swatch text-center">md</div>
+      <div class="shadow-lg rounded-md p-3 bg-surface-raised swatch text-center">lg</div>
+      <div class="shadow-xl rounded-md p-3 bg-surface-raised swatch text-center">xl</div>
+      <div class="shadow-2xl rounded-md p-3 bg-surface-raised swatch text-center">2xl</div>
+    </div>
+
+    <h3 class="text-base font-semibold mt-4 mb-2">Border Radius</h3>
+    <div class="flex flex-wrap gap-2 mb-4">
+      <div class="border p-3 rounded-none w-20 text-center">none</div>
+      <div class="border p-3 rounded-xs w-20 text-center">xs</div>
+      <div class="border p-3 rounded-sm w-20 text-center">sm</div>
+      <div class="border p-3 rounded-md w-20 text-center">md</div>
+      <div class="border p-3 rounded-lg w-20 text-center">lg</div>
+      <div class="border p-3 rounded-xl w-20 text-center">xl</div>
+      <div class="border p-3 rounded-2xl w-20 text-center">2xl</div>
+      <div class="border p-3 rounded-full w-20 h-20 flex items-center justify-center">full</div>
+    </div>
+
+    <h3 class="text-base font-semibold mt-4 mb-2">Spacing</h3>
+    <div class="flex flex-col gap-1 max-w-md mb-4">
+      <div class="p-1 rounded-sm bg-primary-light text-default opacity-75">p-1 (xs: 4px)</div>
+      <div class="p-2 rounded-sm bg-primary-light text-default opacity-75">p-2 (sm: 8px)</div>
+      <div class="p-3 rounded-sm bg-primary-light text-default opacity-75">p-3 (md: 16px)</div>
+      <div class="p-4 rounded-sm bg-primary-light text-default opacity-75">p-4 (lg: 24px)</div>
+      <div class="p-5 rounded-sm bg-primary-light text-default opacity-75">p-5 (xl: 32px)</div>
+    </div>
+
+    <h3 class="text-base font-semibold mt-4 mb-2">Icons</h3>
+    <div class="flex flex-wrap gap-3 items-center mb-2">
       <div class="text-center">
         <svg class="gt-icon gt-icon--lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         <div class="label">arrow-left</div>
@@ -77,9 +421,7 @@
         <div class="label">search</div>
       </div>
     </div>
-
-    <h3 class="text-base font-semibold" style="margin-top:1rem">Icon sizes</h3>
-    <div class="flex flex-wrap gap-3 items-center">
+    <div class="flex flex-wrap gap-3 items-center mb-4">
       <svg class="gt-icon gt-icon--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
       <svg class="gt-icon gt-icon--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
       <svg class="gt-icon gt-icon--md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
@@ -88,248 +430,41 @@
       <svg class="gt-icon gt-icon--2xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
     </div>
 
-    <!-- ─── Shadows ─── -->
-    <h2>Shadows</h2>
-    <div class="flex flex-wrap gap-3">
-      <div class="shadow-xs rounded-md p-3 bg-surface-raised swatch text-center">
-        <div>shadow-xs</div>
-        <div class="label">Subtle</div>
-      </div>
-      <div class="shadow-sm rounded-md p-3 bg-surface-raised swatch text-center">
-        <div>shadow-sm</div>
-        <div class="label">Small</div>
-      </div>
-      <div class="shadow-md rounded-md p-3 bg-surface-raised swatch text-center">
-        <div>shadow-md</div>
-        <div class="label">Medium</div>
-      </div>
-      <div class="shadow-lg rounded-md p-3 bg-surface-raised swatch text-center">
-        <div>shadow-lg</div>
-        <div class="label">Large</div>
-      </div>
-      <div class="shadow-xl rounded-md p-3 bg-surface-raised swatch text-center">
-        <div>shadow-xl</div>
-        <div class="label">XL</div>
-      </div>
-      <div class="shadow-2xl rounded-md p-3 bg-surface-raised swatch text-center">
-        <div>shadow-2xl</div>
-        <div class="label">2XL</div>
-      </div>
-    </div>
 
-    <div class="flex flex-wrap gap-3 mt-3">
-      <div class="shadow-inner rounded-md p-3 bg-surface min-w-0 text-center" style="min-width:140px">
-        shadow-inner
-      </div>
-      <div class="shadow-none rounded-md border p-3 text-center" style="min-width:140px">
-        shadow-none
-      </div>
-    </div>
+    <!-- ═══════════════ FORMS ═══════════════ -->
+    <h2 id="forms" class="text-2xl font-bold mt-5 mb-3 border-b pb-2">Formularer</h2>
 
-    <!-- ─── Shadow + Transition ─── -->
-    <h2>Shadow with Hover Transition</h2>
-    <div class="flex flex-wrap gap-3">
-      <div
-        class="shadow-sm rounded-lg p-4 transition-shadow bg-surface-raised cursor-pointer"
-        style="min-width:200px"
-        onmouseover="this.className='shadow-xl rounded-lg p-4 transition-shadow bg-surface-raised cursor-pointer'"
-        onmouseout="this.className='shadow-sm rounded-lg p-4 transition-shadow bg-surface-raised cursor-pointer'"
-      >
-        <strong>Hover me</strong>
-        <div class="label">sm &rarr; xl on hover</div>
-      </div>
-      <div
-        class="shadow-md rounded-lg p-4 transition-shadow bg-surface-raised cursor-pointer"
-        style="min-width:200px"
-        onmouseover="this.className='shadow-2xl rounded-lg p-4 transition-shadow bg-surface-raised cursor-pointer'"
-        onmouseout="this.className='shadow-md rounded-lg p-4 transition-shadow bg-surface-raised cursor-pointer'"
-      >
-        <strong>Hover me</strong>
-        <div class="label">md &rarr; 2xl on hover</div>
-      </div>
-    </div>
-
-    <!-- ─── Border Radius ─── -->
-    <h2>Border Radius</h2>
-    <div class="flex flex-wrap gap-2">
-      <div class="border p-3 rounded-none w-20 text-center">none</div>
-      <div class="border p-3 rounded-xs w-20 text-center">xs</div>
-      <div class="border p-3 rounded-sm w-20 text-center">sm</div>
-      <div class="border p-3 rounded-md w-20 text-center">md</div>
-      <div class="border p-3 rounded-lg w-20 text-center">lg</div>
-      <div class="border p-3 rounded-xl w-20 text-center">xl</div>
-      <div class="border p-3 rounded-2xl w-20 text-center">2xl</div>
-      <div class="border p-3 rounded-3xl w-20 text-center">3xl</div>
-      <div class="border p-3 rounded-full w-20 h-20 flex items-center justify-center">full</div>
-    </div>
-
-    <!-- ─── Borders ─── -->
-    <h2>Borders</h2>
-    <div class="flex flex-col gap-2 max-w-sm">
-      <div class="border p-3 rounded-md">border (all sides)</div>
-      <div class="border-t p-3">border-t</div>
-      <div class="border-b p-3">border-b</div>
-      <div class="border border-light p-3 rounded-sm">border-light</div>
-      <div class="border border-medium p-3 rounded-sm">border-medium</div>
-      <div class="border border-strong p-3 rounded-sm">border-strong</div>
-    </div>
-
-    <!-- ─── Colors ─── -->
-    <h2>Colors</h2>
-    <div class="flex flex-wrap gap-2">
-      <div class="rounded-md p-3 bg-primary text-on-primary swatch text-center">primary</div>
-      <div class="rounded-md p-3 bg-primary-light text-inverse swatch text-center">primaryLight</div>
-      <div class="rounded-md p-3 bg-primary-dark text-inverse swatch text-center">primaryDark</div>
-      <div class="rounded-md p-3 bg-success text-inverse swatch text-center">success</div>
-      <div class="rounded-md p-3 bg-warning swatch text-center">warning</div>
-      <div class="rounded-md p-3 bg-error text-inverse swatch text-center">error</div>
-      <div class="rounded-md p-3 bg-info swatch text-center">info</div>
-    </div>
-
-    <!-- ─── Surfaces ─── -->
-    <h2>Surfaces</h2>
-    <div class="flex flex-wrap gap-2">
-      <div class="border rounded-md p-3 bg-background swatch--lg text-center">background</div>
-      <div class="border rounded-md p-3 bg-background-alt swatch--lg text-center">backgroundAlt</div>
-      <div class="border rounded-md p-3 bg-surface swatch--lg text-center">surface</div>
-      <div class="border rounded-md p-3 bg-surface-alt swatch--lg text-center">surfaceAlt</div>
-      <div class="shadow-sm rounded-md p-3 bg-surface-raised swatch--lg text-center">surfaceRaised</div>
-    </div>
-
-    <!-- ─── Spacing ─── -->
-    <h2>Spacing</h2>
-    <div class="flex flex-col gap-1 max-w-md">
-      <div class="p-1 rounded-sm bg-primary-light text-default opacity-75">p-1 (xs: 4px)</div>
-      <div class="p-2 rounded-sm bg-primary-light text-default opacity-75">p-2 (sm: 8px)</div>
-      <div class="p-3 rounded-sm bg-primary-light text-default opacity-75">p-3 (md: 16px)</div>
-      <div class="p-4 rounded-sm bg-primary-light text-default opacity-75">p-4 (lg: 24px)</div>
-      <div class="p-5 rounded-sm bg-primary-light text-default opacity-75">p-5 (xl: 32px)</div>
-    </div>
-
-    <!-- ─── Transitions ─── -->
-    <h2>Transitions</h2>
-    <div class="flex gap-2">
-      <button
-        class="transition-colors border rounded-md p-2 cursor-pointer bg-transparent"
-        onmouseover="this.style.background='var(--color-primary)';this.style.color='var(--color-on-primary)';this.style.borderColor='var(--color-primary)'"
-        onmouseout="this.style.background='';this.style.color='';this.style.borderColor=''"
-      >
-        transition-colors
-      </button>
-      <button
-        class="transition-opacity border rounded-md p-2 cursor-pointer bg-transparent"
-        onmouseover="this.style.opacity='0.4'"
-        onmouseout="this.style.opacity='1'"
-      >
-        transition-opacity
-      </button>
-      <button
-        class="transition-transform border rounded-md p-2 cursor-pointer bg-transparent"
-        onmouseover="this.style.transform='scale(1.1)'"
-        onmouseout="this.style.transform=''"
-      >
-        transition-transform
-      </button>
-    </div>
-
-    <!-- ─── Card composition ─── -->
-    <h2>Composed: Card</h2>
-    <div class="flex flex-wrap gap-3">
-      <div class="shadow-md rounded-lg p-4 border transition-shadow bg-surface-raised max-w-xs cursor-pointer"
-        onmouseover="this.classList.remove('shadow-md');this.classList.add('shadow-xl')"
-        onmouseout="this.classList.remove('shadow-xl');this.classList.add('shadow-md')"
-      >
-        <div class="font-semibold mb-1">Card Title</div>
-        <div class="text-secondary text-sm">
-          A composed card using shadow, border, radius, spacing, typography, and transition utilities together.
-        </div>
-      </div>
-
-      <div class="shadow-lg rounded-xl p-4 bg-primary text-on-primary max-w-xs">
-        <div class="font-bold mb-1">Highlighted Card</div>
-        <div class="text-sm opacity-85">
-          Primary-colored card with large shadow and xl radius.
-        </div>
-      </div>
-
-      <div class="shadow-inner rounded-lg p-4 border bg-surface max-w-xs">
-        <div class="font-semibold mb-1">Inset Card</div>
-        <div class="text-secondary text-sm">
-          Inner shadow gives a recessed appearance, useful for input areas or wells.
-        </div>
-      </div>
-    </div>
-
-    <!-- ─── Input ─── -->
-    <h2>Input</h2>
-
-    <h3 class="text-base font-semibold" style="margin-top:1rem">Sizes</h3>
-    <div class="flex flex-col gap-2 max-w-sm">
+    <h3 class="text-base font-semibold mt-4 mb-2">Input — sizes</h3>
+    <div class="flex flex-col gap-2 max-w-sm mb-4">
       <input class="input input--sm" placeholder="Small input" />
       <input class="input input--md" placeholder="Medium input" />
       <input class="input input--lg" placeholder="Large input" />
     </div>
 
-    <h3 class="text-base font-semibold" style="margin-top:1rem">With label &amp; help</h3>
-    <div class="flex flex-col gap-3 max-w-sm">
+    <h3 class="text-base font-semibold mt-4 mb-2">Input — med label, help og error</h3>
+    <div class="flex flex-col gap-3 max-w-sm mb-4">
       <div class="input-field">
-        <label class="input-label" for="demo-name">
-          Full name <span class="input-label__required">*</span>
-        </label>
-        <input id="demo-name" class="input input--md" type="text" placeholder="John Doe" required aria-required="true" />
-        <p class="input-help">Enter your full legal name</p>
+        <label class="input-label" for="demo-name">Fulde navn <span class="input-label__required">*</span></label>
+        <input id="demo-name" class="input input--md" type="text" placeholder="Anders Andersen" required aria-required="true" />
+        <p class="input-help">Indtast dit fulde juridiske navn</p>
       </div>
       <div class="input-field">
         <label class="input-label" for="demo-email">Email</label>
-        <input id="demo-email" class="input input--md" type="email" placeholder="john@example.com" />
+        <input id="demo-email" class="input input--md" type="email" placeholder="anders@example.dk" />
       </div>
-    </div>
-
-    <h3 class="text-base font-semibold" style="margin-top:1rem">States</h3>
-    <div class="flex flex-col gap-3 max-w-sm">
+      <div class="input-field">
+        <label class="input-label" for="demo-error">Med fejl</label>
+        <input id="demo-error" class="input input--md input--error" type="text" placeholder="Skriv noget..." aria-invalid="true" aria-describedby="demo-error-msg" />
+        <p id="demo-error-msg" class="input-error" role="alert">Dette felt er påkrævet</p>
+      </div>
       <div class="input-field">
         <label class="input-label" for="demo-disabled">Disabled</label>
-        <input id="demo-disabled" class="input input--md" disabled value="Cannot edit" />
-      </div>
-      <div class="input-field">
-        <label class="input-label" for="demo-readonly">Readonly</label>
-        <input id="demo-readonly" class="input input--md" readonly value="Read only value" />
-      </div>
-      <div class="input-field">
-        <label class="input-label" for="demo-error">With error</label>
-        <input id="demo-error" class="input input--md input--error" type="text" placeholder="Type something..." aria-invalid="true" aria-describedby="demo-error-msg" />
-        <p id="demo-error-msg" class="input-error" role="alert">This field is required</p>
+        <input id="demo-disabled" class="input input--md" disabled value="Kan ikke redigeres" />
       </div>
     </div>
 
-    <!-- ─── Tabs ─── -->
-    <h2>Tabs</h2>
-    <div class="tabs tabs--underline">
-      <div class="tabs__list" role="tablist">
-        <button class="tabs__tab tabs__tab--active" role="tab" aria-selected="true">Oversigt</button>
-        <button class="tabs__tab" role="tab" aria-selected="false">Detaljer</button>
-        <button class="tabs__tab" role="tab" aria-selected="false">Historik</button>
-      </div>
-      <div class="tabs__panel" role="tabpanel"><p>Oversigt over status.</p></div>
-    </div>
-    <div class="tabs tabs--segment" style="margin-top: 1rem">
-      <div class="tabs__list" role="tablist">
-        <button class="tabs__tab tabs__tab--active" role="tab" aria-selected="true">Vue</button>
-        <button class="tabs__tab" role="tab" aria-selected="false">Nuxt</button>
-      </div>
-      <div class="tabs__panel" role="tabpanel"><p>Vue 3 komponentbibliotek.</p></div>
-    </div>
-    <div class="tabs tabs--pill" style="margin-top: 1rem">
-      <div class="tabs__list" role="tablist">
-        <button class="tabs__tab tabs__tab--active" role="tab" aria-selected="true">Alle</button>
-        <button class="tabs__tab" role="tab" aria-selected="false">Atoms</button>
-      </div>
-      <div class="tabs__panel" role="tabpanel"><p>Alle komponenter.</p></div>
-    </div>
-
-    <!-- ─── Select ─── -->
-    <h2>Select</h2>
-    <div class="flex flex-col gap-4" style="max-width: 360px">
+    <h3 class="text-base font-semibold mt-4 mb-2">Select</h3>
+    <div class="flex flex-col gap-3 max-w-sm mb-4">
       <div class="input-field">
         <label class="input-label" for="html-region">Region <span class="input-label__required">*</span></label>
         <select id="html-region" class="select select--md" required>
@@ -342,143 +477,92 @@
         </select>
       </div>
       <div class="input-field">
-        <label class="input-label" for="html-size">Sizes</label>
-        <select class="select select--sm"><option>Small</option></select>
-        <select class="select select--md"><option>Medium</option></select>
-        <select class="select select--lg"><option>Large</option></select>
-      </div>
-      <div class="input-field">
-        <label class="input-label" for="html-dis">Disabled</label>
-        <select id="html-dis" class="select select--md" disabled>
-          <option selected>Hovedstaden</option>
-        </select>
-      </div>
-    </div>
-
-    <!-- ─── Accordion ─── -->
-    <h2>Accordion</h2>
-    <div class="accordion" role="region" aria-label="FAQ">
-      <div class="accordion__item">
-        <button class="accordion__header" aria-expanded="false">
-          <span class="accordion__icon" aria-hidden="true"></span>
-          <span class="accordion__heading">Hvad er design tokens?</span>
-        </button>
-      </div>
-      <div class="accordion__item accordion__item--open">
-        <button class="accordion__header" aria-expanded="true">
-          <span class="accordion__icon" aria-hidden="true"></span>
-          <span class="accordion__heading">Dark mode?</span>
-        </button>
-        <div class="accordion__panel" role="region">
-          <div class="accordion__body">
-            <p>Ja — via CSS custom properties.</p>
-          </div>
+        <label class="input-label">Sizes</label>
+        <div class="flex flex-col gap-1">
+          <select class="select select--sm"><option>Small</option></select>
+          <select class="select select--md"><option>Medium</option></select>
+          <select class="select select--lg"><option>Large</option></select>
         </div>
       </div>
     </div>
 
-    <!-- ─── Details ─── -->
-    <h2>Details</h2>
-    <div style="display: flex; flex-direction: column; gap: 1rem;">
-      <details class="details details--default">
-        <summary class="details__summary">
-          <span class="details__arrow" aria-hidden="true"></span>
-          Hvad er design tokens?
-        </summary>
-        <div class="details__content">
-          <div class="details__body">
-            <p>Design tokens er navngivne værdier for farver, spacing, typografi og mere.</p>
-          </div>
-        </div>
-      </details>
-      <details class="details details--subtle">
-        <summary class="details__summary">
-          <span class="details__arrow" aria-hidden="true"></span>
-          Læs mere om theming
-        </summary>
-        <div class="details__content">
-          <div class="details__body">
-            <p>Tema-switching sker via CSS custom properties.</p>
-          </div>
-        </div>
-      </details>
-      <details class="details details--card">
-        <summary class="details__summary">
-          <span class="details__arrow" aria-hidden="true"></span>
-          Har jeg brug for @grundtone/core?
-        </summary>
-        <div class="details__content">
-          <div class="details__body">
-            <p>Ja — core indeholder TypeScript-typer, theme-presets, og ikonregistryet.</p>
-          </div>
-        </div>
-      </details>
-    </div>
 
-    <!-- ─── Anchor Links ─── -->
-    <h2>Anchor Links</h2>
-    <nav class="anchor-links" aria-label="Indholdsfortegnelse">
-      <p class="anchor-links__heading">Indhold på siden</p>
-      <ol class="anchor-links__list">
-        <li class="anchor-links__item">
-          <a href="#html-colors" class="anchor-links__link">Colors</a>
-        </li>
-        <li class="anchor-links__item">
-          <a href="#html-spacing" class="anchor-links__link">Spacing</a>
-        </li>
-        <li class="anchor-links__item">
-          <a href="#html-cookie" class="anchor-links__link anchor-links__link--active" aria-current="true">Cookie Message</a>
-        </li>
-      </ol>
-    </nav>
+    <!-- ═══════════════ UTILITIES ═══════════════ -->
+    <h2 id="utilities" class="text-2xl font-bold mt-5 mb-3 border-b pb-2">Utilities</h2>
 
-    <!-- ─── Cookie Message ─── -->
-    <h2>Cookie Message</h2>
-    <div class="cookie-message cookie-message--static" role="region" aria-label="Cookiemeddelelse">
-      <div class="cookie-message__content">
-        <p class="cookie-message__heading">Vi bruger cookies</p>
-        <div class="cookie-message__body">
-          <p>Vi bruger cookies til statistik og personalisering. <a href="#">Læs mere om cookies</a>.</p>
-        </div>
-        <div class="cookie-message__actions">
-          <button type="button" class="gt-btn gt-btn--primary gt-btn--sm">Acceptér alle</button>
-          <button type="button" class="gt-btn gt-btn--secondary gt-btn--sm">Afvis alle</button>
-          <button type="button" class="gt-btn gt-btn--tertiary gt-btn--sm">Cookie-indstillinger</button>
-        </div>
+    <h3 class="text-base font-semibold mt-4 mb-2">Composed: Cards</h3>
+    <div class="flex flex-wrap gap-3 mb-4">
+      <div class="shadow-md rounded-lg p-4 border transition-shadow bg-surface-raised max-w-xs cursor-pointer"
+        onmouseover="this.classList.remove('shadow-md');this.classList.add('shadow-xl')"
+        onmouseout="this.classList.remove('shadow-xl');this.classList.add('shadow-md')">
+        <div class="font-semibold mb-1">Hover Card</div>
+        <div class="text-secondary text-sm">Shadow, border, radius, spacing, typography og transition utilities.</div>
       </div>
-      <button type="button" class="cookie-message__close" aria-label="Luk">&times;</button>
+      <div class="shadow-lg rounded-xl p-4 bg-primary text-on-primary max-w-xs">
+        <div class="font-bold mb-1">Primary Card</div>
+        <div class="text-sm opacity-85">Primary-baggrund med large shadow og xl radius.</div>
+      </div>
+      <div class="shadow-inner rounded-lg p-4 border bg-surface max-w-xs">
+        <div class="font-semibold mb-1">Inset Card</div>
+        <div class="text-secondary text-sm">Inner shadow giver et sunket udseende.</div>
+      </div>
     </div>
 
-    <!-- ─── Aspect Ratio ─── -->
-    <h2>Aspect Ratio</h2>
-    <div class="flex flex-wrap gap-2">
+    <h3 class="text-base font-semibold mt-4 mb-2">Borders</h3>
+    <div class="flex flex-col gap-2 max-w-sm mb-4">
+      <div class="border p-3 rounded-md">border (all sides)</div>
+      <div class="border-t p-3">border-t</div>
+      <div class="border-b p-3">border-b</div>
+      <div class="border border-light p-3 rounded-sm">border-light</div>
+      <div class="border border-medium p-3 rounded-sm">border-medium</div>
+      <div class="border border-strong p-3 rounded-sm">border-strong</div>
+    </div>
+
+    <h3 class="text-base font-semibold mt-4 mb-2">Transitions</h3>
+    <div class="flex gap-2 mb-4">
+      <button class="transition-colors border rounded-md p-2 cursor-pointer bg-transparent"
+        onmouseover="this.style.background='var(--color-primary)';this.style.color='var(--color-on-primary)';this.style.borderColor='var(--color-primary)'"
+        onmouseout="this.style.background='';this.style.color='';this.style.borderColor=''">
+        transition-colors
+      </button>
+      <button class="transition-opacity border rounded-md p-2 cursor-pointer bg-transparent"
+        onmouseover="this.style.opacity='0.4'"
+        onmouseout="this.style.opacity='1'">
+        transition-opacity
+      </button>
+      <button class="transition-transform border rounded-md p-2 cursor-pointer bg-transparent"
+        onmouseover="this.style.transform='scale(1.1)'"
+        onmouseout="this.style.transform=''">
+        transition-transform
+      </button>
+    </div>
+
+    <h3 class="text-base font-semibold mt-4 mb-2">Aspect Ratio</h3>
+    <div class="flex flex-wrap gap-2 mb-4">
       <div class="aspect-square border rounded-md w-24 bg-surface-alt flex items-center justify-center">
-        <span class="label">square</span>
+        <span class="text-xs text-tertiary">square</span>
       </div>
-      <div class="aspect-video border rounded-md bg-surface-alt flex items-center justify-center" style="width:178px">
-        <span class="label">video (16:9)</span>
+      <div class="aspect-video border rounded-md bg-surface-alt flex items-center justify-center w-44">
+        <span class="text-xs text-tertiary">video (16:9)</span>
       </div>
-      <div class="aspect-photo border rounded-md bg-surface-alt flex items-center justify-center" style="width:133px">
-        <span class="label">photo (4:3)</span>
+      <div class="aspect-photo border rounded-md bg-surface-alt flex items-center justify-center w-32">
+        <span class="text-xs text-tertiary">photo (4:3)</span>
       </div>
     </div>
 
-    <!-- ─── Z-Index (visual) ─── -->
-    <h2>Z-Index Stacking</h2>
-    <div class="z-demo">
-      <div class="shadow-sm rounded-md p-2 bg-error-light z-dropdown" style="left:0;top:0">
-        z-dropdown
-      </div>
-      <div class="shadow-md rounded-md p-2 bg-warning-light z-sticky" style="left:60px;top:20px">
-        z-sticky
-      </div>
-      <div class="shadow-lg rounded-md p-2 bg-success-light z-fixed" style="left:120px;top:40px">
-        z-fixed
-      </div>
-    </div>
-    <script type="module">
-      import { initAll } from '@grundtone/design-system/behaviors';
-      document.addEventListener('DOMContentLoaded', () => initAll());
+    </main>
+
+    <footer class="footer text-xs text-tertiary text-center" role="contentinfo">
+      <p>&copy; 2026 Grundtone. Bygget med semantiske design tokens.</p>
+    </footer>
+
+    <!-- ─── Behaviors JS ─── -->
+    <script src="./node_modules/@grundtone/design-system/dist/behaviors.umd.global.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var instances = Grundtone.initAll();
+        console.log('Grundtone: initialized', instances.length, 'components');
+      });
     </script>
   </body>
 </html>

@@ -6,33 +6,23 @@
     <title>Design Tokens Tee — Grundtone Shop</title>
     <meta name="description" content="Økologisk bomuld t-shirt med semantisk farveprint fra Grundtone." />
     <link rel="stylesheet" href="./node_modules/@grundtone/design-system/dist/index.css" />
-    <style>
-      body {
-        max-width: 1000px;
-        margin: 0 auto;
-        padding: 2rem 1rem;
-      }
-      .product-info {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-md);
-      }
-    </style>
   </head>
 
   <body>
     <a href="#main" class="skip-link">Spring til indhold</a>
 
     <header class="header" role="banner">
-      <a href="shop.html" aria-label="Shop forside">Grundtone Shop</a>
+      <a href="index.html" aria-label="Forside">Grundtone</a>
       <nav aria-label="Primær navigation">
         <a href="index.html">Playground</a>
         <a href="blog.html">Blog</a>
         <a href="shop.html">Shop</a>
+        <a href="signup.html">Tilmeld</a>
       </nav>
     </header>
 
-    <main id="main">
+    <main id="main" class="container-lg p-4">
+
       <!-- Breadcrumb -->
       <nav class="breadcrumb text-sm text-tertiary mb-4" aria-label="Breadcrumb">
         <a href="shop.html">Shop</a>
@@ -42,26 +32,38 @@
         <span aria-current="page">Design Tokens Tee</span>
       </nav>
 
-      <!-- Product detail: gallery + info -->
+      <!-- Product: image + info side by side -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
 
-        <!-- Gallery -->
-        <div class="product-gallery">
-          <img src="assets/placeholder-1080x1080.jpg" alt="Design Tokens Tee — forside" class="product-gallery__main" />
-          <div class="product-gallery__thumbs">
-            <img src="assets/placeholder-200x200.png" alt="Forside" class="product-gallery__thumb product-gallery__thumb--active" />
-            <img src="assets/placeholder-200x200.png" alt="Bagside" class="product-gallery__thumb" />
-            <img src="assets/placeholder-200x200.png" alt="Detalje" class="product-gallery__thumb" />
-            <img src="assets/placeholder-200x200.png" alt="Model" class="product-gallery__thumb" />
+        <!-- Product image -->
+        <div>
+          <div class="card card--bordered">
+            <div class="card__media">
+              <img src="assets/placeholder-640x360.png" alt="Design Tokens Tee — forside" />
+            </div>
+          </div>
+          <div class="grid grid-cols-4 gap-2 mt-2">
+            <div class="card card--bordered rounded-md overflow-hidden">
+              <img src="assets/placeholder-200x200-product.png" alt="Forside" class="w-full" />
+            </div>
+            <div class="card card--bordered rounded-md overflow-hidden">
+              <img src="assets/placeholder-200x200-product.png" alt="Bagside" class="w-full" />
+            </div>
+            <div class="card card--bordered rounded-md overflow-hidden">
+              <img src="assets/placeholder-200x200-product.png" alt="Detalje" class="w-full" />
+            </div>
+            <div class="card card--bordered rounded-md overflow-hidden">
+              <img src="assets/placeholder-200x200-product.png" alt="Model" class="w-full" />
+            </div>
           </div>
         </div>
 
-        <!-- Info -->
-        <div class="product-info">
+        <!-- Product info -->
+        <div class="flex flex-col gap-3">
           <div>
             <span class="badge badge--neutral badge--sm">T-shirt</span>
-            <h1 class="text-3xl font-bold leading-tight mb-1">Design Tokens Tee</h1>
-            <p class="text-secondary leading-relaxed">
+            <h1 class="text-3xl font-bold leading-tight mt-1 mb-1">Design Tokens Tee</h1>
+            <p class="text-secondary leading-relaxed text-sm">
               Økologisk bomuld t-shirt med semantisk farveprint. Designet til udviklere
               og designere der tænker i systemer.
             </p>
@@ -74,67 +76,62 @@
 
           <hr />
 
-          <!-- Size selector -->
+          <!-- Size selector using tabs -->
           <div>
-            <label class="text-sm font-semibold mb-2" style="display: block">Størrelse</label>
-            <div class="size-selector">
-              <button class="size-btn">XS</button>
-              <button class="size-btn size-btn--active">S</button>
-              <button class="size-btn">M</button>
-              <button class="size-btn">L</button>
-              <button class="size-btn">XL</button>
-              <button class="size-btn" disabled>XXL</button>
+            <p class="text-sm font-semibold mb-2">Størrelse</p>
+            <div class="tabs tabs--pill">
+              <div class="tabs__list" role="tablist">
+                <button class="tabs__tab" role="tab" aria-selected="false">XS</button>
+                <button class="tabs__tab tabs__tab--active" role="tab" aria-selected="true">S</button>
+                <button class="tabs__tab" role="tab" aria-selected="false">M</button>
+                <button class="tabs__tab" role="tab" aria-selected="false">L</button>
+                <button class="tabs__tab" role="tab" aria-selected="false">XL</button>
+              </div>
+              <!-- No panels needed — just selection -->
             </div>
             <p class="text-xs text-tertiary mt-1">XXL er midlertidigt udsolgt.</p>
           </div>
 
-          <!-- Color -->
-          <div>
-            <label class="text-sm font-semibold mb-2" style="display: block">Farve</label>
-            <div class="flex gap-2">
-              <button class="rounded-full border-2 border-primary" style="width: 2rem; height: 2rem; background: #1a1a2e; cursor: pointer" aria-label="Midnight" title="Midnight"></button>
-              <button class="rounded-full border" style="width: 2rem; height: 2rem; background: #f5f5f5; cursor: pointer" aria-label="Cloud" title="Cloud"></button>
-              <button class="rounded-full border" style="width: 2rem; height: 2rem; background: #0059b3; cursor: pointer" aria-label="Primary Blue" title="Primary Blue"></button>
-            </div>
-          </div>
-
           <!-- Add to cart -->
-          <button class="btn-primary" style="align-self: start">
-            Læg i kurv
-          </button>
+          <button class="gt-btn gt-btn--primary gt-btn--md">Læg i kurv</button>
 
           <hr />
 
-          <!-- Product details -->
-          <div>
-            <h2 class="text-sm font-semibold mb-2">Produktdetaljer</h2>
-            <dl>
-              <div class="detail-row">
-                <dt>Materiale</dt>
-                <dd>100% økologisk bomuld, 180g/m²</dd>
+          <!-- Product details accordion -->
+          <div class="accordion accordion--bordered" data-transition="slide" role="region" aria-label="Produktdetaljer">
+            <div class="accordion__item accordion__item--open">
+              <button class="accordion__header" aria-expanded="true">
+                <span class="accordion__icon" aria-hidden="true"></span>
+                <span class="accordion__heading">Produktdetaljer</span>
+              </button>
+              <div class="accordion__panel" role="region">
+                <div class="accordion__body">
+                  <dl class="flex flex-col gap-1 text-sm">
+                    <div class="flex gap-3"><dt class="font-medium w-32">Materiale</dt><dd class="text-secondary">100% økologisk bomuld, 180g/m²</dd></div>
+                    <div class="flex gap-3"><dt class="font-medium w-32">Pasform</dt><dd class="text-secondary">Regular fit, unisex</dd></div>
+                    <div class="flex gap-3"><dt class="font-medium w-32">Print</dt><dd class="text-secondary">Vandbaseret serigrafisk tryk</dd></div>
+                    <div class="flex gap-3"><dt class="font-medium w-32">Pleje</dt><dd class="text-secondary">Maskinvask 30°, tørretumbling frarådes</dd></div>
+                    <div class="flex gap-3"><dt class="font-medium w-32">Certificering</dt><dd class="text-secondary">GOTS-certificeret, Fair Trade</dd></div>
+                  </dl>
+                </div>
               </div>
-              <div class="detail-row">
-                <dt>Pasform</dt>
-                <dd>Regular fit, unisex</dd>
+            </div>
+            <div class="accordion__item">
+              <button class="accordion__header" aria-expanded="false">
+                <span class="accordion__icon" aria-hidden="true"></span>
+                <span class="accordion__heading">Levering og returnering</span>
+              </button>
+              <div class="accordion__panel" role="region">
+                <div class="accordion__body">
+                  <p class="text-sm text-secondary">Fri fragt over 500 kr. Levering 2–5 hverdage. 30 dages fuld returret.</p>
+                </div>
               </div>
-              <div class="detail-row">
-                <dt>Print</dt>
-                <dd>Vandbaseret serigrafisk tryk</dd>
-              </div>
-              <div class="detail-row">
-                <dt>Pleje</dt>
-                <dd>Maskinvask 30°, tørretumbling frarådes</dd>
-              </div>
-              <div class="detail-row">
-                <dt>Bæredygtighed</dt>
-                <dd>GOTS-certificeret, Fair Trade</dd>
-              </div>
-            </dl>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Description prose -->
+      <!-- Description -->
       <section class="mb-5">
         <h2 class="text-xl font-semibold mb-3">Beskrivelse</h2>
         <div class="prose text-sm">
@@ -144,14 +141,9 @@
             en visuel repræsentation af vores farve-token hierarki: fra primitive
             palette-farver til semantiske tokens.
           </p>
-          <blockquote class="blockquote--quotes">
+          <blockquote>
             <p>Navngiv tokens efter funktion, ikke farve. <code>--color-primary</code>, ikke <code>--color-blue-600</code>.</p>
           </blockquote>
-          <p>
-            T-shirten er fremstillet af 100% GOTS-certificeret økologisk bomuld med
-            vandbaseret serigrafisk tryk. Pasformen er regular fit og fungerer til alle
-            kropstyper.
-          </p>
           <ul>
             <li>Forvask for minimal krympning</li>
             <li>Dobbelt-syet hals og ærmer for holdbarhed</li>
@@ -161,38 +153,46 @@
         </div>
       </section>
 
-      <hr />
+      <hr class="mb-4" />
 
       <!-- Related products -->
       <section class="mb-5">
         <h2 class="text-xl font-semibold mb-3">Relaterede produkter</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <a href="product.html" class="product-card shadow-sm">
-            <img src="assets/placeholder-500x500.png" alt="Utility-First Hoodie" loading="lazy" />
-            <div class="product-card__body">
-              <div class="text-sm font-semibold">Utility-First Hoodie</div>
-              <div class="text-sm font-bold mt-1">599 kr</div>
+          <a href="product.html" class="card card--nav shadow-sm">
+            <div class="card__media">
+              <img src="assets/placeholder-300x200-card.png" alt="Utility-First Hoodie" loading="lazy" />
+            </div>
+            <div class="card__content">
+              <h3 class="card__title text-sm">Utility-First Hoodie</h3>
+              <div class="card__footer font-bold text-sm">599 kr</div>
             </div>
           </a>
-          <a href="product.html" class="product-card shadow-sm">
-            <img src="assets/placeholder-500x500.png" alt="Color System Plakat" loading="lazy" />
-            <div class="product-card__body">
-              <div class="text-sm font-semibold">Color System Plakat</div>
-              <div class="text-sm font-bold mt-1">199 kr</div>
+          <a href="product.html" class="card card--nav shadow-sm">
+            <div class="card__media">
+              <img src="assets/placeholder-300x200-card.png" alt="Color System Plakat" loading="lazy" />
+            </div>
+            <div class="card__content">
+              <h3 class="card__title text-sm">Color System Plakat</h3>
+              <div class="card__footer font-bold text-sm">199 kr</div>
             </div>
           </a>
-          <a href="product.html" class="product-card shadow-sm">
-            <img src="assets/placeholder-500x500.png" alt="Spacing Scale Krus" loading="lazy" />
-            <div class="product-card__body">
-              <div class="text-sm font-semibold">Spacing Scale Krus</div>
-              <div class="text-sm font-bold mt-1">129 kr</div>
+          <a href="product.html" class="card card--nav shadow-sm">
+            <div class="card__media">
+              <img src="assets/placeholder-300x200-card.png" alt="Spacing Scale Krus" loading="lazy" />
+            </div>
+            <div class="card__content">
+              <h3 class="card__title text-sm">Spacing Scale Krus</h3>
+              <div class="card__footer font-bold text-sm">129 kr</div>
             </div>
           </a>
-          <a href="product.html" class="product-card shadow-sm">
-            <img src="assets/placeholder-500x500.png" alt="Token Sticker Pack" loading="lazy" />
-            <div class="product-card__body">
-              <div class="text-sm font-semibold">Token Sticker Pack</div>
-              <div class="text-sm font-bold mt-1">79 kr</div>
+          <a href="product.html" class="card card--nav shadow-sm">
+            <div class="card__media">
+              <img src="assets/placeholder-300x200-card.png" alt="Token Sticker Pack" loading="lazy" />
+            </div>
+            <div class="card__content">
+              <h3 class="card__title text-sm">Token Sticker Pack</h3>
+              <div class="card__footer font-bold text-sm">79 kr</div>
             </div>
           </a>
         </div>
@@ -206,5 +206,12 @@
     <footer class="footer text-xs text-tertiary text-center" role="contentinfo">
       <p>&copy; 2026 Grundtone. Bygget med semantiske design tokens.</p>
     </footer>
+
+    <script src="./node_modules/@grundtone/design-system/dist/behaviors.umd.global.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        Grundtone.initAll();
+      });
+    </script>
   </body>
 </html>

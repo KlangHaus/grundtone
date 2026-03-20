@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="da">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tilmeld dig — Grundtone</title>
+    <link rel="stylesheet" href="./node_modules/@grundtone/design-system/dist/index.css" />
+  </head>
+
+  <body>
+    <a href="#main" class="skip-link">Spring til indhold</a>
+
+    <!-- ─── Header ─── -->
+    <header class="header" role="banner">
+      <a href="index.html" aria-label="Forside">Grundtone</a>
+      <nav aria-label="Primær navigation">
+        <a href="index.html">Playground</a>
+        <a href="blog.html">Blog</a>
+        <a href="shop.html">Shop</a>
+        <a href="signup.html" aria-current="page">Tilmeld</a>
+      </nav>
+    </header>
+
+    <!-- ─── Main ─── -->
+    <main id="main" class="container-sm p-4">
+      <h1 class="text-3xl font-bold mb-1">Opret konto</h1>
+      <p class="text-secondary mb-5">Tilmeld dig for at få adgang til alle funktioner.</p>
+
+      <!-- ─── Signup form ─── -->
+      <form novalidate>
+
+        <!-- ─── Tabs: account type ─── -->
+        <div class="tabs tabs--segment mb-4">
+          <div class="tabs__list" role="tablist">
+            <button type="button" class="tabs__tab tabs__tab--active" role="tab" aria-selected="true">Personlig</button>
+            <button type="button" class="tabs__tab" role="tab" aria-selected="false">Virksomhed</button>
+          </div>
+          <div class="tabs__panel" role="tabpanel">
+            <div class="flex flex-col gap-3 mt-3">
+              <div class="input-field">
+                <label class="input-label" for="signup-name">Fulde navn <span class="input-label__required">*</span></label>
+                <input id="signup-name" class="input input--md" type="text" placeholder="Anders Andersen" required aria-required="true" />
+              </div>
+              <div class="input-field">
+                <label class="input-label" for="signup-email">Email <span class="input-label__required">*</span></label>
+                <input id="signup-email" class="input input--md" type="email" placeholder="anders@example.dk" required aria-required="true" />
+              </div>
+              <div class="input-field">
+                <label class="input-label" for="signup-password">Adgangskode <span class="input-label__required">*</span></label>
+                <input id="signup-password" class="input input--md" type="password" placeholder="Minimum 8 tegn" required aria-required="true" />
+                <p class="input-help">Brug mindst 8 tegn med bogstaver og tal</p>
+              </div>
+            </div>
+          </div>
+          <div class="tabs__panel" role="tabpanel">
+            <div class="flex flex-col gap-3 mt-3">
+              <div class="input-field">
+                <label class="input-label" for="signup-company">Virksomhedsnavn <span class="input-label__required">*</span></label>
+                <input id="signup-company" class="input input--md" type="text" placeholder="Firma ApS" required aria-required="true" />
+              </div>
+              <div class="input-field">
+                <label class="input-label" for="signup-cvr">CVR-nummer</label>
+                <input id="signup-cvr" class="input input--md" type="text" placeholder="12345678" />
+              </div>
+              <div class="input-field">
+                <label class="input-label" for="signup-contact">Kontaktperson <span class="input-label__required">*</span></label>
+                <input id="signup-contact" class="input input--md" type="text" placeholder="Anders Andersen" required aria-required="true" />
+              </div>
+              <div class="input-field">
+                <label class="input-label" for="signup-biz-email">Email <span class="input-label__required">*</span></label>
+                <input id="signup-biz-email" class="input input--md" type="email" placeholder="info@firma.dk" required aria-required="true" />
+              </div>
+              <div class="input-field">
+                <label class="input-label" for="signup-biz-password">Adgangskode <span class="input-label__required">*</span></label>
+                <input id="signup-biz-password" class="input input--md" type="password" placeholder="Minimum 8 tegn" required aria-required="true" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── Region select ─── -->
+        <div class="input-field mb-4">
+          <label class="input-label" for="signup-region">Region</label>
+          <select id="signup-region" class="select select--md">
+            <option value="" disabled selected>Vælg region...</option>
+            <option value="hovedstaden">Hovedstaden</option>
+            <option value="midtjylland">Midtjylland</option>
+            <option value="nordjylland">Nordjylland</option>
+            <option value="sjaelland">Sjælland</option>
+            <option value="syddanmark">Syddanmark</option>
+          </select>
+        </div>
+
+        <!-- ─── Toggles: preferences ─── -->
+        <fieldset class="mb-4">
+          <legend class="text-base font-semibold mb-3">Præferencer</legend>
+          <div class="flex flex-col gap-3">
+            <div class="toggle-field">
+              <label class="toggle-label">Modtag nyhedsbrev</label>
+              <button type="button" class="toggle toggle--md toggle--checked" role="switch" aria-checked="true">
+                <span class="toggle__track"></span>
+                <span class="toggle__thumb"></span>
+              </button>
+            </div>
+            <div class="toggle-field">
+              <label class="toggle-label">Tillad push-notifikationer</label>
+              <button type="button" class="toggle toggle--md" role="switch" aria-checked="false">
+                <span class="toggle__track"></span>
+                <span class="toggle__thumb"></span>
+              </button>
+            </div>
+            <div class="toggle-field">
+              <label class="toggle-label">Dark mode</label>
+              <button type="button" class="toggle toggle--md" role="switch" aria-checked="false">
+                <span class="toggle__track"></span>
+                <span class="toggle__thumb"></span>
+              </button>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ─── Alert: info ─── -->
+        <div class="alert alert--info mb-4" data-dismissible role="status">
+          <div class="alert__content">
+            <p class="alert__heading">Gratis i 30 dage</p>
+            <div class="alert__body"><p>Du kan altid opgradere eller annullere. Ingen kreditkort påkrævet.</p></div>
+          </div>
+          <button class="alert__close" aria-label="Luk">&times;</button>
+        </div>
+
+        <!-- ─── Submit ─── -->
+        <button type="submit" class="gt-btn gt-btn--primary gt-btn--md w-full">Opret konto</button>
+      </form>
+
+      <!-- ─── FAQ ─── -->
+      <h2 class="text-xl font-bold mt-5 mb-3">Ofte stillede spørgsmål</h2>
+      <div class="accordion accordion--bordered mb-5" data-transition="slide" role="region" aria-label="Tilmeldings-FAQ">
+        <div class="accordion__item">
+          <button class="accordion__header" aria-expanded="false">
+            <span class="accordion__icon" aria-hidden="true"></span>
+            <span class="accordion__heading">Koster det noget?</span>
+          </button>
+          <div class="accordion__panel" role="region">
+            <div class="accordion__body">
+              <p>Nej — Grundtone er gratis og open source under MIT-licensen.</p>
+            </div>
+          </div>
+        </div>
+        <div class="accordion__item">
+          <button class="accordion__header" aria-expanded="false">
+            <span class="accordion__icon" aria-hidden="true"></span>
+            <span class="accordion__heading">Kan jeg bruge det kommercielt?</span>
+          </button>
+          <div class="accordion__panel" role="region">
+            <div class="accordion__body">
+              <p>Ja — MIT-licensen tillader kommerciel brug, modifikation og distribution.</p>
+            </div>
+          </div>
+        </div>
+        <div class="accordion__item">
+          <button class="accordion__header" aria-expanded="false">
+            <span class="accordion__icon" aria-hidden="true"></span>
+            <span class="accordion__heading">Hvordan sletter jeg min konto?</span>
+          </button>
+          <div class="accordion__panel" role="region">
+            <div class="accordion__body">
+              <p>Kontakt os på support@grundtone.dk, så sletter vi alt data inden for 24 timer.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <footer class="footer text-xs text-tertiary text-center" role="contentinfo">
+      <p>&copy; 2026 Grundtone. Bygget med semantiske design tokens.</p>
+    </footer>
+
+    <script src="./node_modules/@grundtone/design-system/dist/behaviors.umd.global.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        Grundtone.initAll();
+      });
+    </script>
+  </body>
+</html>

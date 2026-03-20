@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.9",
   "scripts": {
-    "dev": "npx serve ."
+    "dev": "npx serve . --symlinks"
   },
   "dependencies": {
     "@grundtone/design-system": "workspace:*",
