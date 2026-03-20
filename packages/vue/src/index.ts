@@ -29,6 +29,12 @@ export { GTIcon } from './atoms/Icon';
 export type { IconProps, IconSize } from './atoms/Icon';
 export { GT_ICON_REGISTRY_KEY } from './atoms/Icon';
 export type { IconDefinition, IconRegistry } from '@grundtone/core';
+export { GTDateInput } from './atoms/DateInput';
+export type {
+  DateInputProps,
+  DateInputValue,
+  DateInputSize,
+} from './atoms/DateInput';
 export { GTInput } from './atoms/Input';
 export { GTSelect } from './atoms/Select';
 export type {
@@ -64,6 +70,11 @@ export type {
 } from './composables/useDawaAutocomplete';
 export { useField } from './composables/useField';
 export type { UseFieldOptions, UseFieldReturn } from './composables/useField';
+export { useDateField } from './composables/useDateField';
+export type {
+  UseDateFieldOptions,
+  UseDateFieldReturn,
+} from './composables/useDateField';
 export { useFormValidation } from './composables/useFormValidation';
 export type { UseFormValidationReturn } from './composables/useFormValidation';
 
@@ -74,6 +85,9 @@ export {
   phone,
   cpr,
   cvr,
+  date,
+  datePast,
+  dateFuture,
   minLength,
   maxLength,
   pattern,

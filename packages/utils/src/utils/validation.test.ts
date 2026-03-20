@@ -9,6 +9,9 @@ import {
   isValidURL,
   isValidCVR,
   isPattern,
+  isValidDate,
+  isDateInPast,
+  isDateInFuture,
 } from './validation';
 
 describe('isValidCPR', () => {
@@ -128,5 +131,59 @@ describe('isPattern', () => {
 
   it('rejects non-matching', () => {
     expect(isPattern('123abc', /^[a-z]+$/)).toBe(false);
+  });
+});
+
+describe('isValidDate', () => {
+  it('accepts valid date', () => {
+    expect(isValidDate('15', '03', '1990')).toBe(true);
+  });
+
+  it('accepts leap year date', () => {
+    expect(isValidDate('29', '02', '2024')).toBe(true);
+  });
+
+  it('rejects 29 feb in non-leap year', () => {
+    expect(isValidDate('29', '02', '2023')).toBe(false);
+  });
+
+  it('rejects 31 in 30-day month', () => {
+    expect(isValidDate('31', '04', '2023')).toBe(false);
+  });
+
+  it('rejects day 0', () => {
+    expect(isValidDate('0', '01', '2023')).toBe(false);
+  });
+
+  it('rejects month 13', () => {
+    expect(isValidDate('15', '13', '2023')).toBe(false);
+  });
+
+  it('rejects empty fields', () => {
+    expect(isValidDate('', '', '')).toBe(false);
+  });
+
+  it('rejects non-numeric', () => {
+    expect(isValidDate('ab', '12', '2023')).toBe(false);
+  });
+});
+
+describe('isDateInPast', () => {
+  it('returns true for past date', () => {
+    expect(isDateInPast('01', '01', '2000')).toBe(true);
+  });
+
+  it('returns false for far future date', () => {
+    expect(isDateInPast('01', '01', '2099')).toBe(false);
+  });
+});
+
+describe('isDateInFuture', () => {
+  it('returns true for future date', () => {
+    expect(isDateInFuture('01', '01', '2099')).toBe(true);
+  });
+
+  it('returns false for past date', () => {
+    expect(isDateInFuture('01', '01', '2000')).toBe(false);
   });
 });

@@ -69,9 +69,14 @@ Import from `@grundtone/vue` (or `@grundtone/utils`):
 | `maxLength(n, msg?)` | Maximum character length |
 | `pattern(regex, msg?)` | Custom regex match |
 | `url(msg?)` | Valid HTTP(S) URL |
+| `date(msg?)` | Valid date (day/month/year exist) |
+| `datePast(msg?)` | Date must be in the past |
+| `dateFuture(msg?)` | Date must be in the future |
 | `composeValidators(...v)` | Compose multiple validators into one |
 
 All validators (except `required`) pass on empty strings, so they're optional by default. Combine with `required()` to make a field mandatory.
+
+The `date`, `datePast`, and `dateFuture` validators expect a `"DD-MM-YYYY"` format string. For use with `GTDateInput`, use [useDateField](/vue/use-date-field) which handles the conversion automatically.
 
 ## Custom validators
 

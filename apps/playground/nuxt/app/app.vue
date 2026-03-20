@@ -6,6 +6,7 @@
   const showCookie = ref(true);
   const isLoading = ref(false);
   const toggleValue = ref(false);
+  const dateValue = ref({ day: '', month: '', year: '' });
   const inputValue = ref('');
   const emailValue = ref('');
   const errorValue = ref('');
@@ -284,6 +285,32 @@
         <GTButton variant="outlined">
           <GTIcon name="search" size="sm" /> Search
         </GTButton>
+      </div>
+    </section>
+
+    <section class="mb-6">
+      <h2>Date Input</h2>
+      <div class="flex flex-col gap-4">
+        <GTDateInput
+          v-model="dateValue"
+          label="Fødselsdato"
+          help-text="For eksempel: 27 03 1990"
+          autocomplete="bday"
+          required
+        />
+        <p class="body-text-sm text-secondary">
+          Value: {{ dateValue.day }}/{{ dateValue.month }}/{{ dateValue.year }}
+        </p>
+        <GTDateInput
+          v-model="dateValue"
+          label="With error"
+          error-text="Datoen kan ikke være i fremtiden"
+        />
+        <GTDateInput
+          :model-value="{ day: '01', month: '01', year: '2020' }"
+          label="Disabled"
+          disabled
+        />
       </div>
     </section>
 

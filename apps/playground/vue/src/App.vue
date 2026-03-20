@@ -11,6 +11,7 @@
     GTAccordionItem,
     GTAddressInput,
     GTCookieMessage,
+    GTDateInput,
     GTDetails,
     GTIcon,
     GTInput,
@@ -41,6 +42,7 @@
   const inputValue = ref('');
   const emailValue = ref('');
   const errorValue = ref('');
+  const dateValue = ref({ day: '', month: '', year: '' });
   const addressValue = ref('');
   const roadValue = ref('');
 
@@ -91,6 +93,7 @@
             { label: 'Details', href: '#pg-details' },
             { label: 'Button', href: '#pg-button' },
             { label: 'Icons', href: '#pg-icons' },
+            { label: 'Date Input', href: '#pg-date-input' },
             { label: 'Input', href: '#pg-input' },
             { label: 'Select', href: '#pg-select' },
             { label: 'Tabs', href: '#pg-tabs' },
@@ -505,6 +508,42 @@
               <GTIcon name="search" size="sm" /> Search
             </GTButton>
           </div>
+        </section>
+
+        <section class="mb-6">
+          <h2 id="pg-date-input" style="scroll-margin-top: 1rem">Date Input</h2>
+          <div class="flex flex-col gap-4">
+            <GTDateInput
+              v-model="dateValue"
+              label="Fødselsdato"
+              help-text="For eksempel: 27 03 1990"
+              autocomplete="bday"
+              required
+            />
+            <p class="body-text-sm text-secondary">
+              Value: {{ dateValue.day }}/{{ dateValue.month }}/{{
+                dateValue.year
+              }}
+            </p>
+          </div>
+          <h3>Sizes</h3>
+          <div class="flex flex-col gap-2">
+            <GTDateInput v-model="dateValue" label="Small" size="sm" />
+            <GTDateInput v-model="dateValue" label="Medium" size="md" />
+            <GTDateInput v-model="dateValue" label="Large" size="lg" />
+          </div>
+          <h3>Error state</h3>
+          <GTDateInput
+            v-model="dateValue"
+            label="Startdato"
+            error-text="Datoen kan ikke være i fremtiden"
+          />
+          <h3>Disabled</h3>
+          <GTDateInput
+            :model-value="{ day: '01', month: '01', year: '2020' }"
+            label="Oprettelsesdato"
+            disabled
+          />
         </section>
 
         <section class="mb-6">

@@ -9,6 +9,9 @@ import {
   isMaxLength,
   isValidURL,
   isPattern,
+  isValidDate,
+  isDateInPast,
+  isDateInFuture,
 } from './validation';
 
 const ok = { isValid: true };
@@ -56,6 +59,32 @@ export function pattern(regex: RegExp, message = 'Invalid format'): Validator {
 
 export function url(message = 'Invalid URL'): Validator {
   return value => (value === '' || isValidURL(value) ? ok : fail(message));
+}
+
+export function date(message = 'Invalid date'): Validator {
+  return value => {
+    if (value === '') return ok;
+    const [day, month, year] = value.split('-');
+    return isValidDate(day, month, year) ? ok : fail(message);
+  };
+}
+
+export function datePast(message = 'Date must be in the past'): Validator {
+  return value => {
+    if (value === '') return ok;
+    const [day, month, year] = value.split('-');
+    if (!isValidDate(day, month, year)) return fail(message);
+    return isDateInPast(day, month, year) ? ok : fail(message);
+  };
+}
+
+export function dateFuture(message = 'Date must be in the future'): Validator {
+  return value => {
+    if (value === '') return ok;
+    const [day, month, year] = value.split('-');
+    if (!isValidDate(day, month, year)) return fail(message);
+    return isDateInFuture(day, month, year) ? ok : fail(message);
+  };
 }
 
 /**

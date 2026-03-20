@@ -252,6 +252,7 @@ export default defineConfig({
           items: [
             { text: 'Address Input', link: '/vue/address-input' },
             { text: 'Autocomplete', link: '/vue/autocomplete' },
+            { text: 'Date Input', link: '/vue/date-input' },
             { text: 'Input', link: '/vue/input' },
             { text: 'Select', link: '/vue/select' },
             { text: 'Toggle', link: '/vue/toggle' },
@@ -263,6 +264,7 @@ export default defineConfig({
             { text: 'Overview', link: '/vue/composables' },
             { text: 'useTheme', link: '/vue/use-theme' },
             { text: 'useField', link: '/vue/use-field' },
+            { text: 'useDateField', link: '/vue/use-date-field' },
             { text: 'useFormValidation', link: '/vue/use-form-validation' },
           ],
         },
@@ -387,6 +389,7 @@ export default defineConfig({
           collapsed: true,
           items: [
             { text: 'Autocomplete', link: '/web/c-autocomplete' },
+            { text: 'Date Input', link: '/web/c-date-input' },
             { text: 'Input', link: '/web/c-input' },
             { text: 'Select', link: '/web/c-select' },
           ],

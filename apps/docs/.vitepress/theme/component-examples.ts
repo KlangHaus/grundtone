@@ -498,6 +498,44 @@ export const componentExamples: Record<string, string> = {
   <p>&copy; 2026 Example. All rights reserved.</p>
 </footer>`,
 
+  'c-date-input-basic': `<div class="input-field" style="max-width: 360px">
+  <label class="input-label" id="preview-bday-label">Fødselsdato</label>
+  <p class="input-help" id="preview-bday-hint">For eksempel: 27 03 1990</p>
+  <div class="date-input" role="group" aria-labelledby="preview-bday-label" aria-describedby="preview-bday-hint">
+    <div class="date-input__field">
+      <label class="date-input__label" for="preview-bday-day">Dag</label>
+      <input id="preview-bday-day" class="input input--md date-input__input--day" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="bday-day" />
+    </div>
+    <div class="date-input__field">
+      <label class="date-input__label" for="preview-bday-month">Måned</label>
+      <input id="preview-bday-month" class="input input--md date-input__input--month" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="bday-month" />
+    </div>
+    <div class="date-input__field">
+      <label class="date-input__label" for="preview-bday-year">År</label>
+      <input id="preview-bday-year" class="input input--md date-input__input--year" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="bday-year" />
+    </div>
+  </div>
+</div>`,
+
+  'c-date-input-error': `<div class="input-field" style="max-width: 360px">
+  <label class="input-label" id="preview-err-date-label">Startdato</label>
+  <p id="preview-err-date-desc" class="input-error" role="alert">Datoen kan ikke være i fremtiden</p>
+  <div class="date-input" role="group" aria-labelledby="preview-err-date-label" aria-describedby="preview-err-date-desc">
+    <div class="date-input__field">
+      <label class="date-input__label" for="preview-err-day">Dag</label>
+      <input id="preview-err-day" class="input input--md input--error date-input__input--day" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" aria-invalid="true" />
+    </div>
+    <div class="date-input__field">
+      <label class="date-input__label" for="preview-err-month">Måned</label>
+      <input id="preview-err-month" class="input input--md input--error date-input__input--month" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" aria-invalid="true" />
+    </div>
+    <div class="date-input__field">
+      <label class="date-input__label" for="preview-err-year">År</label>
+      <input id="preview-err-year" class="input input--md input--error date-input__input--year" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" aria-invalid="true" />
+    </div>
+  </div>
+</div>`,
+
   'c-input-sizes': `<div class="flex flex-col gap-2" style="max-width: 360px">
   <input class="input input--sm" placeholder="Small input" />
   <input class="input input--md" placeholder="Medium input" />

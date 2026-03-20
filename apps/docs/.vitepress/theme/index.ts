@@ -9,6 +9,7 @@ import DosDonts from './components/DosDonts.vue';
 import ButtonDemo from '../../../../packages/vue/src/atoms/Button/demo.vue';
 import DetailsDemo from '../../../../packages/vue/src/atoms/Details/demo.vue';
 import IconDemo from '../../../../packages/vue/src/atoms/Icon/demo.vue';
+import DateInputDemo from '../../../../packages/vue/src/atoms/DateInput/demo.vue';
 import InputDemo from '../../../../packages/vue/src/atoms/Input/demo.vue';
 import SelectDemo from '../../../../packages/vue/src/atoms/Select/demo.vue';
 import ToggleDemo from '../../../../packages/vue/src/atoms/Toggle/demo.vue';
@@ -44,6 +45,7 @@ export default {
     app.component('DosDonts', DosDonts);
     app.component('ButtonDemo', ButtonDemo);
     app.component('IconDemo', IconDemo);
+    app.component('DateInputDemo', DateInputDemo);
     app.component('InputDemo', InputDemo);
     app.component('SelectDemo', SelectDemo);
     app.component('ToggleDemo', ToggleDemo);

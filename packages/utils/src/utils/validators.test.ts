@@ -5,6 +5,9 @@ import {
   phone,
   cpr,
   cvr,
+  date,
+  datePast,
+  dateFuture,
   minLength,
   maxLength,
   pattern,
@@ -141,6 +144,66 @@ describe('url', () => {
 
   it('fails on invalid URL', () => {
     expect(v('not-a-url').isValid).toBe(false);
+  });
+
+  it('passes on empty', () => {
+    expect(v('').isValid).toBe(true);
+  });
+});
+
+describe('date', () => {
+  const v = date();
+
+  it('passes on valid date string', () => {
+    expect(v('15-03-1990').isValid).toBe(true);
+  });
+
+  it('fails on invalid date', () => {
+    expect(v('31-02-2023').isValid).toBe(false);
+  });
+
+  it('passes on empty', () => {
+    expect(v('').isValid).toBe(true);
+  });
+
+  it('uses custom message', () => {
+    const v2 = date('Ugyldig dato');
+    expect(v2('99-99-9999')).toEqual({
+      isValid: false,
+      message: 'Ugyldig dato',
+    });
+  });
+});
+
+describe('datePast', () => {
+  const v = datePast();
+
+  it('passes for past date', () => {
+    expect(v('01-01-2000').isValid).toBe(true);
+  });
+
+  it('fails for future date', () => {
+    expect(v('01-01-2099').isValid).toBe(false);
+  });
+
+  it('fails for invalid date', () => {
+    expect(v('31-02-2023').isValid).toBe(false);
+  });
+
+  it('passes on empty', () => {
+    expect(v('').isValid).toBe(true);
+  });
+});
+
+describe('dateFuture', () => {
+  const v = dateFuture();
+
+  it('passes for future date', () => {
+    expect(v('01-01-2099').isValid).toBe(true);
+  });
+
+  it('fails for past date', () => {
+    expect(v('01-01-2000').isValid).toBe(false);
   });
 
   it('passes on empty', () => {

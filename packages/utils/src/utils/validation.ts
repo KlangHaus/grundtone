@@ -137,3 +137,62 @@ export const isValidCVR = (cvr: string): boolean => {
 export const isPattern = (value: string, regex: RegExp): boolean => {
   return regex.test(value);
 };
+
+/**
+ * Validates a date given as day, month, year strings.
+ * Checks that all fields are filled, values are in range,
+ * and the date actually exists (e.g. not 31 February).
+ */
+export const isValidDate = (
+  day: string,
+  month: string,
+  year: string,
+): boolean => {
+  const d = parseInt(day, 10);
+  const m = parseInt(month, 10);
+  const y = parseInt(year, 10);
+
+  if (isNaN(d) || isNaN(m) || isNaN(y)) return false;
+  if (d < 1 || d > 31 || m < 1 || m > 12 || y < 1) return false;
+
+  const date = new Date(y, m - 1, d);
+  return (
+    date.getFullYear() === y &&
+    date.getMonth() === m - 1 &&
+    date.getDate() === d
+  );
+};
+
+/**
+ * Checks whether a date is in the past (before today).
+ */
+export const isDateInPast = (
+  day: string,
+  month: string,
+  year: string,
+): boolean => {
+  const d = parseInt(day, 10);
+  const m = parseInt(month, 10);
+  const y = parseInt(year, 10);
+  const date = new Date(y, m - 1, d);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return date < today;
+};
+
+/**
+ * Checks whether a date is in the future (after today).
+ */
+export const isDateInFuture = (
+  day: string,
+  month: string,
+  year: string,
+): boolean => {
+  const d = parseInt(day, 10);
+  const m = parseInt(month, 10);
+  const y = parseInt(year, 10);
+  const date = new Date(y, m - 1, d);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return date > today;
+};
