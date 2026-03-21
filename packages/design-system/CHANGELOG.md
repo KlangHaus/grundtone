@@ -1,6 +1,50 @@
 # @grundtone/design-system
 
-## 2.7.1
+## 2.8.0 - 2026-03-21
+
+### Minor Changes
+
+- [`ccb6a4e`](https://github.com/grundtone/grundtone/commit/ccb6a4e5833b18115cf520ef625c802ed55c42ba)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add DateInput component for day/month/year date
+  entry
+
+  - **design-system**: Add `_date-input.scss` with flex layout, field widths
+    (`box-sizing: content-box` for correct sizing across all input sizes), and sub-labels
+  - **vue**: Add `GTDateInput` component with auto-advance, numeric filtering, accessible markup
+    (`role="group"`, `aria-labelledby`, per-field labels, `inputmode="numeric"`)
+  - **vue**: Add `useDateField` composable — reactive date validation with
+    `UseFieldReturn`-compatible interface for `useFormValidation` integration
+  - **utils**: Add `isValidDate`, `isDateInPast`, `isDateInFuture` validation functions and
+    `date()`, `datePast()`, `dateFuture()` validators
+
+- [`8fc757a`](https://github.com/grundtone/grundtone/commit/8fc757a37e5cb862f4d6c48b8a1271088535ff6d)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add Radio, Checkbox, and CheckboxGroup
+  components
+
+  - **design-system**: Add `_choice.scss` with shared BEM for radio/checkbox (native hidden inputs +
+    custom indicators), CodePreview examples for Modal/Radio/Checkbox
+  - **vue**: Add `GTCheckbox` (standalone atom), `GTRadioGroup` and `GTCheckboxGroup` (molecules)
+    with option hints and collapse content slots
+  - **react-native**: Add `GTRadioGroup` and `GTCheckboxGroup` with Pressable + custom indicators
+
+- [`9cf5217`](https://github.com/grundtone/grundtone/commit/9cf52174c298cab51259a2ca948523eef26a1516)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add SkipLink, Spinner, and Modal components
+  with shared animations and utilities
+
+  - **design-system**: Add `_animations.scss` (shared keyframes: fade, scale, slide-up/down/right,
+    spin), `_modal.scss` (BEM + 6 transition modes), `_spinner.scss`, Modal vanilla JS behavior
+    (focus trap, scroll lock, open/close events)
+  - **vue**: Add `GTSkipLink` (keyboard-only skip-to-content link), `GTSpinner` (sm/lg, light/dark,
+    text, backdrop), `GTModal` (Teleport, Vue Transition, persistent variant, 6 animation modes)
+  - **react-native**: Add `GTSpinner` (Animated.View rotation) and `GTModal` (RN Modal wrapper with
+    theme tokens)
+  - **utils**: Add `createFocusTrap()` and `createScrollLock()` (framework-agnostic DOM utilities)
+  - Fix Dart Sass deprecations (nth→list.nth, slash division→interpolated strings)
+  - Fix Accordion test, docs changelog frontmatter, docs missing dependencies
+  - Add CLAUDE.md files for AI-assisted development context
+  - Add blog, shop, login, signup pages to Vue playground
+
+## 2.7.1 - 2026-03-21
 
 ### Patch Changes
 
@@ -8,7 +52,7 @@
   Thanks [@allanasp](https://github.com/allanasp)! - Overhaul html-test playground: use proper .card
   markup, add behaviors to all pages, add signup page
 
-## 2.7.0
+## 2.7.0 - 2026-03-21
 
 ### Minor Changes
 
@@ -17,7 +61,7 @@
   interactive components (accordion, tabs, toggle, alert, cookie-message, anchor-links). Ships as
   ESM, CJS, and UMD bundle for framework-agnostic usage.
 
-## 2.6.1
+## 2.6.1 - 2026-03-21
 
 ### Patch Changes
 
@@ -25,7 +69,7 @@
   Thanks [@allanasp](https://github.com/allanasp)! - fix(accordion): improve accessibility — English
   defaults, sr-only show/hide labels, prefers-reduced-motion
 
-## 2.6.0
+## 2.6.0 - 2026-03-21
 
 ### Minor Changes
 
@@ -33,7 +77,7 @@
   Thanks [@allanasp](https://github.com/allanasp)! - Add GTTabs with underline, segment, pill
   variants and slide transitions
 
-## 2.5.0
+## 2.5.0 - 2026-03-21
 
 ### Minor Changes
 
@@ -41,7 +85,7 @@
   Thanks [@allanasp](https://github.com/allanasp)! - Add GTSelect, GTAutocomplete, GTAddressInput
   with DAWA integration
 
-## 2.4.0
+## 2.4.0 - 2026-03-21
 
 ### Minor Changes
 
@@ -49,7 +93,7 @@
   Thanks [@allanasp](https://github.com/allanasp)! - Add GTAccordion with 3 variants, 3 transitions,
   animated RN expand/collapse
 
-## 2.3.0
+## 2.3.0 - 2026-03-21
 
 ### Minor Changes
 
@@ -57,7 +101,7 @@
   Thanks [@allanasp](https://github.com/allanasp)! - Add GTDetails disclosure component with
   default, subtle, and card variants
 
-## 2.2.0
+## 2.2.0 - 2026-03-21
 
 ### Minor Changes
 
@@ -65,7 +109,7 @@
   Thanks [@allanasp](https://github.com/allanasp)! - Add GTBadge component, replace legacy .tag, fix
   AnchorLinks click highlight
 
-## 2.1.0
+## 2.1.0 - 2026-03-21
 
 ### Minor Changes
 

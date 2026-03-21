@@ -1,6 +1,6 @@
 {
   "name": "@grundtone/vue",
-  "version": "2.7.1",
+  "version": "2.8.0",
   "description": "Vue 3 UI components for Grundtone",
   "license": "MIT",
   "private": false,

@@ -1,6 +1,17 @@
 # @grundtone/nuxt
 
-## 2.7.1
+## 2.8.0 - 2026-03-21
+
+### Patch Changes
+
+- Updated dependencies
+  [[`ccb6a4e`](https://github.com/grundtone/grundtone/commit/ccb6a4e5833b18115cf520ef625c802ed55c42ba),
+  [`8fc757a`](https://github.com/grundtone/grundtone/commit/8fc757a37e5cb862f4d6c48b8a1271088535ff6d),
+  [`9cf5217`](https://github.com/grundtone/grundtone/commit/9cf52174c298cab51259a2ca948523eef26a1516)]:
+  - @grundtone/design-system@2.8.0
+  - @grundtone/vue@2.8.0
+
+## 2.7.1 - 2026-03-21
 
 ### Patch Changes
 
@@ -9,7 +20,7 @@
   - @grundtone/design-system@2.7.1
   - @grundtone/vue@2.7.1
 
-## 2.7.0
+## 2.7.0 - 2026-03-21
 
 ### Patch Changes
 
@@ -18,7 +29,7 @@
   - @grundtone/design-system@2.7.0
   - @grundtone/vue@2.7.0
 
-## 2.6.1
+## 2.6.1 - 2026-03-21
 
 ### Patch Changes
 
@@ -27,7 +38,7 @@
   - @grundtone/design-system@2.6.1
   - @grundtone/vue@2.6.1
 
-## 2.6.0
+## 2.6.0 - 2026-03-21
 
 ### Patch Changes
 
@@ -36,7 +47,7 @@
   - @grundtone/vue@2.6.0
   - @grundtone/design-system@2.6.0
 
-## 2.5.0
+## 2.5.0 - 2026-03-21
 
 ### Patch Changes
 
@@ -45,7 +56,7 @@
   - @grundtone/vue@2.5.0
   - @grundtone/design-system@2.5.0
 
-## 2.4.0
+## 2.4.0 - 2026-03-21
 
 ### Patch Changes
 
@@ -54,7 +65,7 @@
   - @grundtone/vue@2.4.0
   - @grundtone/design-system@2.4.0
 
-## 2.3.0
+## 2.3.0 - 2026-03-21
 
 ### Patch Changes
 
@@ -63,7 +74,7 @@
   - @grundtone/vue@2.3.0
   - @grundtone/design-system@2.3.0
 
-## 2.2.0
+## 2.2.0 - 2026-03-21
 
 ### Patch Changes
 
@@ -72,7 +83,7 @@
   - @grundtone/vue@2.2.0
   - @grundtone/design-system@2.2.0
 
-## 2.1.0
+## 2.1.0 - 2026-03-21
 
 ### Patch Changes
 

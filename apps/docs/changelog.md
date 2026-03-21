@@ -1,23 +1,37 @@
 ---
+
+## 1.0.11
+### Patch Changes
+
+- Updated dependencies [[`ccb6a4e`](https://github.com/grundtone/grundtone/commit/ccb6a4e5833b18115cf520ef625c802ed55c42ba), [`8fc757a`](https://github.com/grundtone/grundtone/commit/8fc757a37e5cb862f4d6c48b8a1271088535ff6d), [`9cf5217`](https://github.com/grundtone/grundtone/commit/9cf52174c298cab51259a2ca948523eef26a1516)]:
+  - @grundtone/design-system@2.8.0
+  - @grundtone/vue@2.8.0
+  - @grundtone/utils@2.8.0
 outline: [2, 3]
 ---
 
 ## 1.0.10
+
 ### Patch Changes
 
-- Updated dependencies [[`f41cfa6`](https://github.com/grundtone/grundtone/commit/f41cfa697d66f842719621865c8ddafe96cf3b25)]:
+- Updated dependencies
+  [[`f41cfa6`](https://github.com/grundtone/grundtone/commit/f41cfa697d66f842719621865c8ddafe96cf3b25)]:
   - @grundtone/design-system@2.7.1
 
 ## 1.0.9
+
 ### Patch Changes
 
-- Updated dependencies [[`98a30f3`](https://github.com/grundtone/grundtone/commit/98a30f3c7786ac7425b5249740cb22e351874f16)]:
+- Updated dependencies
+  [[`98a30f3`](https://github.com/grundtone/grundtone/commit/98a30f3c7786ac7425b5249740cb22e351874f16)]:
   - @grundtone/design-system@2.7.0
 
 ## 1.0.8
+
 ### Patch Changes
 
-- Updated dependencies [[`fd7b9e7`](https://github.com/grundtone/grundtone/commit/fd7b9e736af8c3b2964a8bb9089c55583c18f1ae)]:
+- Updated dependencies
+  [[`fd7b9e7`](https://github.com/grundtone/grundtone/commit/fd7b9e736af8c3b2964a8bb9089c55583c18f1ae)]:
   - @grundtone/design-system@2.6.1
 
 <script setup>

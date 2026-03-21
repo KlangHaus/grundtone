@@ -1,6 +1,6 @@
 # @grundtone/icons
 
-## 2.1.0
+## 2.1.0 - 2026-03-21
 
 ### Minor Changes
 
