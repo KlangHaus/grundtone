@@ -569,6 +569,14 @@
     </section>
 
     <section class="mb-6">
+      <h2>Textarea</h2>
+      <div class="flex flex-col gap-2" style="max-width: 400px">
+        <GTTextarea label="Kommentar" placeholder="Skriv her..." />
+        <GTTextarea label="Med begrænsning" :max-chars="60" />
+      </div>
+    </section>
+
+    <section class="mb-6">
       <h2>Tag</h2>
       <div class="flex flex-wrap gap-2">
         <GTTag label="Design" />

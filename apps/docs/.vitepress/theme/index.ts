@@ -15,6 +15,7 @@ import SelectDemo from '../../../../packages/vue/src/atoms/Select/demo.vue';
 import SkipLinkDemo from '../../../../packages/vue/src/atoms/SkipLink/demo.vue';
 import SpinnerDemo from '../../../../packages/vue/src/atoms/Spinner/demo.vue';
 import TagDemo from '../../../../packages/vue/src/atoms/Tag/demo.vue';
+import TextareaDemo from '../../../../packages/vue/src/atoms/Textarea/demo.vue';
 import ToggleDemo from '../../../../packages/vue/src/atoms/Toggle/demo.vue';
 import AutocompleteDemo from '../../../../packages/vue/src/atoms/Autocomplete/demo.vue';
 import BadgeDemo from '../../../../packages/vue/src/atoms/Badge/demo.vue';
@@ -61,6 +62,7 @@ export default {
     app.component('SkipLinkDemo', SkipLinkDemo);
     app.component('SpinnerDemo', SpinnerDemo);
     app.component('TagDemo', TagDemo);
+    app.component('TextareaDemo', TextareaDemo);
     app.component('ToggleDemo', ToggleDemo);
     app.component('AutocompleteDemo', AutocompleteDemo);
     app.component('BadgeDemo', BadgeDemo);

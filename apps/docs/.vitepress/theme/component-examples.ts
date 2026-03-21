@@ -556,6 +556,13 @@ export const componentExamples: Record<string, string> = {
   <button class="search-field__button" type="submit" aria-label="Søg"><span class="sr-only">Søg</span></button>
 </form>`,
 
+  'c-textarea': `<div class="input-field" style="max-width: 360px">
+  <label class="input-label" for="preview-textarea">Kommentar</label>
+  <p class="input-help">Beskriv din situation</p>
+  <textarea id="preview-textarea" class="textarea" rows="3" placeholder="Skriv her..."></textarea>
+  <p class="textarea-count">Du har 200 tegn tilbage</p>
+</div>`,
+
   'c-tag': `<div class="flex flex-wrap gap-2">
   <span class="tag tag--md" tabindex="0"><span class="tag__label">Design</span></span>
   <span class="tag tag--md" tabindex="0"><span class="tag__label">Tilgængelighed</span></span>

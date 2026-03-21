@@ -129,6 +129,8 @@ export type {
 } from './components/Spinner';
 export { GTTag } from './components/Tag';
 export type { TagProps as RNTagProps } from './components/Tag';
+export { GTTextarea } from './components/Textarea';
+export type { TextareaProps as RNTextareaProps } from './components/Textarea';
 export type { DetailsProps, DetailsVariant } from './components/Details';
 export type { CardProps, CardVariant } from './components/Card';
 

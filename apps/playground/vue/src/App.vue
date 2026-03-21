@@ -31,6 +31,7 @@
     GTOverflowMenu,
     GTSearchField,
     GTTag,
+    GTTextarea,
     GTCheckbox,
     GTCheckboxGroup,
     GTRadioGroup,
@@ -54,6 +55,7 @@
   const showDismissible = ref(true);
   const showCookie = ref(true);
   const searchQuery = ref('');
+  const textareaValue = ref('');
   const radioValue = ref('');
   const checkboxValues = ref<string[]>([]);
   const acceptTerms = ref(false);
@@ -996,6 +998,23 @@
             <GTButton as="a" href="#link" variant="outlined">
               Outlined link
             </GTButton>
+          </div>
+        </section>
+
+        <section class="mb-6">
+          <h3>Textarea</h3>
+          <div class="flex flex-col gap-2" style="max-width: 400px">
+            <GTTextarea
+              v-model="textareaValue"
+              label="Kommentar"
+              placeholder="Skriv din kommentar..."
+              help-text="Beskriv din situation"
+            />
+            <GTTextarea
+              v-model="textareaValue"
+              label="Med tegnbegrænsning"
+              :max-chars="100"
+            />
           </div>
         </section>
 

@@ -21,6 +21,7 @@ import {
   GTOverflowMenu,
   GTSearchField,
   GTTag,
+  GTTextarea,
   useGrundtoneTheme,
   useField,
   useFormValidation,
@@ -416,6 +417,9 @@ export default function ComponentsScreen() {
       <View style={groupStyle}>
         <GTSpinner size="lg" text="Henter data…" />
       </View>
+
+      <Text style={headingStyle}>Textarea</Text>
+      <GTTextarea label="Kommentar" placeholder="Skriv her..." maxChars={100} />
 
       <Text style={headingStyle}>Tag</Text>
       <View style={rowStyle}>

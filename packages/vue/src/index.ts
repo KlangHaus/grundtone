@@ -43,6 +43,8 @@ export { GTSkipLink } from './atoms/SkipLink';
 export type { SkipLinkProps } from './atoms/SkipLink';
 export { GTTag } from './atoms/Tag';
 export type { TagProps, TagSize } from './atoms/Tag';
+export { GTTextarea } from './atoms/Textarea';
+export type { TextareaProps } from './atoms/Textarea';
 export { GTSpinner } from './atoms/Spinner';
 export type {
   SpinnerProps,

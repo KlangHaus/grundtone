@@ -264,6 +264,7 @@ export default defineConfig({
             { text: 'Radio Group', link: '/vue/radio-group' },
             { text: 'Search Field', link: '/vue/search-field' },
             { text: 'Select', link: '/vue/select' },
+            { text: 'Textarea', link: '/vue/textarea' },
             { text: 'Toggle', link: '/vue/toggle' },
           ],
         },
@@ -408,6 +409,7 @@ export default defineConfig({
             { text: 'Radio', link: '/web/c-radio' },
             { text: 'Search Field', link: '/web/c-search-field' },
             { text: 'Select', link: '/web/c-select' },
+            { text: 'Textarea', link: '/web/c-textarea' },
           ],
         },
         {
