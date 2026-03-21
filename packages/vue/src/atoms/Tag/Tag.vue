@@ -1,6 +1,4 @@
 <script setup lang="ts">
-  import { computed } from 'vue';
-  import { getClassPrefix } from '@grundtone/core';
   import { GTIcon } from '../Icon';
   import type { TagProps } from './types';
 
@@ -19,9 +17,6 @@
     'update:selected': [value: boolean];
   }>();
 
-  const p = computed(() => getClassPrefix());
-  const base = computed(() => `${p.value}-tag`);
-
   function handleClick() {
     if (props.disabled) return;
     emit('click', props.value);
@@ -38,11 +33,11 @@
 <template>
   <span
     :class="[
-      base,
-      `${base}--${size}`,
+      'tag',
+      `tag--${size}`,
       {
-        [`${base}--selected`]: selected,
-        [`${base}--disabled`]: disabled,
+        'tag--selected': selected,
+        'tag--disabled': disabled,
       },
     ]"
     :role="selected !== undefined ? 'option' : undefined"
@@ -53,12 +48,12 @@
     @keydown.enter.prevent="handleClick"
     @keydown.space.prevent="handleClick"
   >
-    <GTIcon v-if="icon" :name="icon" size="xs" :class="`${base}__icon`" />
-    <span :class="`${base}__label`">{{ label }}</span>
+    <GTIcon v-if="icon" :name="icon" size="xs" class="tag__icon" />
+    <span class="tag__label">{{ label }}</span>
     <button
       v-if="dismissible"
       type="button"
-      :class="`${base}__dismiss`"
+      class="tag__dismiss"
       :aria-label="`Fjern ${label}`"
       :disabled="disabled"
       @click="handleDismiss"
