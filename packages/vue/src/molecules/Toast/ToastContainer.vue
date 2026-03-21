@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { computed, ref } from 'vue';
+  import { getClassPrefix } from '@grundtone/core';
   import Toast from './Toast.vue';
   import type { ToastContainerProps } from './types';
   import { toastState } from '../../composables/useToast';
@@ -10,6 +11,9 @@
     richColors: false,
     expand: false,
   });
+
+  const p = computed(() => getClassPrefix());
+  const base = computed(() => `${p.value}-toast-container`);
 
   const isHovered = ref(false);
 
@@ -31,9 +35,9 @@
     <div
       v-if="toastState.toasts.length > 0"
       :class="[
-        'toast-container',
-        `toast-container--${position}`,
-        { 'toast-container--expanded': isExpanded },
+        base,
+        `${base}--${position}`,
+        { [`${base}--expanded`]: isExpanded },
       ]"
       @mouseenter="isHovered = true"
       @mouseleave="isHovered = false"
@@ -54,3 +58,61 @@
     </div>
   </Teleport>
 </template>
+
+<style lang="scss">
+  $prefix: 'gt' !default;
+
+  .#{$prefix}-toast-container {
+    position: fixed;
+    z-index: tokens.z-index('toast');
+    display: flex;
+    flex-direction: column-reverse;
+    pointer-events: none;
+    gap: 0;
+    padding: tokens.space('lg');
+
+    &--bottom-center {
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    &--bottom-right {
+      bottom: 0;
+      right: 0;
+    }
+
+    &--bottom-left {
+      bottom: 0;
+      left: 0;
+    }
+
+    &--top-center {
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      flex-direction: column;
+    }
+
+    &--top-right {
+      top: 0;
+      right: 0;
+      flex-direction: column;
+    }
+
+    &--top-left {
+      top: 0;
+      left: 0;
+      flex-direction: column;
+    }
+
+    &--expanded {
+      gap: tokens.space('sm');
+
+      .#{$prefix}-toast {
+        transform: scale(1) translateY(0) !important;
+        opacity: 1 !important;
+      }
+    }
+  }
+</style>

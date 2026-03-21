@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { computed } from 'vue';
+  import { getClassPrefix } from '@grundtone/core';
   import { generateId } from '@grundtone/utils';
   import type { CheckboxGroupProps } from './types';
 
@@ -17,6 +18,10 @@
   const emit = defineEmits<{
     'update:modelValue': [value: string[]];
   }>();
+
+  const pr = computed(() => getClassPrefix());
+  const group = computed(() => `${pr.value}-choice-group`);
+  const choice = computed(() => `${pr.value}-choice`);
 
   const baseId = computed(() => props.id ?? generateId('cbgroup'));
   const descId = computed(() =>
@@ -42,38 +47,38 @@
 
 <template>
   <fieldset
-    class="choice-group"
+    :class="group"
     :aria-describedby="descId"
     :aria-required="required"
     :disabled="disabled"
   >
-    <legend v-if="label" class="choice-group__legend">{{ label }}</legend>
+    <legend v-if="label" :class="`${group}__legend`">{{ label }}</legend>
 
-    <p v-if="helpText && !errorText" :id="descId" class="choice-group__hint">
+    <p v-if="helpText && !errorText" :id="descId" :class="`${group}__hint`">
       {{ helpText }}
     </p>
-    <p v-if="errorText" :id="descId" class="choice-group__error" role="alert">
+    <p v-if="errorText" :id="descId" :class="`${group}__error`" role="alert">
       {{ errorText }}
     </p>
 
-    <div class="choice-group__list">
+    <div :class="`${group}__list`">
       <label
         v-for="option in options"
         :key="option.value"
         :class="[
-          'choice',
-          'choice--checkbox',
+          choice,
+          `${choice}--checkbox`,
           {
-            'choice--checked': isChecked(option.value),
-            'choice--disabled': disabled || option.disabled,
-            'choice--error': !!errorText,
+            [`${choice}--checked`]: isChecked(option.value),
+            [`${choice}--disabled`]: disabled || option.disabled,
+            [`${choice}--error`]: !!errorText,
           },
         ]"
         :for="`${baseId}-${option.value}`"
       >
         <input
           :id="`${baseId}-${option.value}`"
-          class="choice__input"
+          :class="`${choice}__input`"
           type="checkbox"
           :name="name ?? baseId"
           :value="option.value"
@@ -81,13 +86,15 @@
           :disabled="disabled || option.disabled"
           @change="handleChange(option.value)"
         />
-        <span class="choice__indicator" aria-hidden="true" />
-        <span class="choice__body">
-          <span class="choice__label">{{ option.label }}</span>
-          <span v-if="option.hint" class="choice__hint">{{ option.hint }}</span>
+        <span :class="`${choice}__indicator`" aria-hidden="true" />
+        <span :class="`${choice}__body`">
+          <span :class="`${choice}__label`">{{ option.label }}</span>
+          <span v-if="option.hint" :class="`${choice}__hint`">{{
+            option.hint
+          }}</span>
           <div
             v-if="option.content && isChecked(option.value)"
-            class="choice__content"
+            :class="`${choice}__content`"
             style="display: block"
           >
             <slot :name="`content-${option.value}`" />

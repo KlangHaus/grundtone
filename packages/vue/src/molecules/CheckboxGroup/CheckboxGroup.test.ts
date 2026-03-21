@@ -15,7 +15,7 @@ function mountCbGroup(props = {}) {
 describe('CheckboxGroup', () => {
   it('renders all options', () => {
     const wrapper = mountCbGroup();
-    expect(wrapper.findAll('.choice--checkbox')).toHaveLength(3);
+    expect(wrapper.findAll('.gt-choice--checkbox')).toHaveLength(3);
   });
 
   it('renders as checkbox inputs', () => {
@@ -39,27 +39,29 @@ describe('CheckboxGroup', () => {
 
   it('marks checked options', () => {
     const wrapper = mountCbGroup({ modelValue: ['dk', 'other'] });
-    const choices = wrapper.findAll('.choice--checkbox');
-    expect(choices[0].classes()).toContain('choice--checked');
-    expect(choices[1].classes()).not.toContain('choice--checked');
-    expect(choices[2].classes()).toContain('choice--checked');
+    const choices = wrapper.findAll('.gt-choice--checkbox');
+    expect(choices[0].classes()).toContain('gt-choice--checked');
+    expect(choices[1].classes()).not.toContain('gt-choice--checked');
+    expect(choices[2].classes()).toContain('gt-choice--checked');
   });
 
   it('renders group label', () => {
     const wrapper = mountCbGroup({ label: 'Nationalitet' });
-    expect(wrapper.find('.choice-group__legend').text()).toBe('Nationalitet');
+    expect(wrapper.find('.gt-choice-group__legend').text()).toBe(
+      'Nationalitet',
+    );
   });
 
   it('renders help text', () => {
     const wrapper = mountCbGroup({ helpText: 'Vælg alle der passer' });
-    expect(wrapper.find('.choice-group__hint').text()).toBe(
+    expect(wrapper.find('.gt-choice-group__hint').text()).toBe(
       'Vælg alle der passer',
     );
   });
 
   it('renders error text', () => {
     const wrapper = mountCbGroup({ errorText: 'Vælg mindst én' });
-    const error = wrapper.find('.choice-group__error');
+    const error = wrapper.find('.gt-choice-group__error');
     expect(error.text()).toBe('Vælg mindst én');
     expect(error.attributes('role')).toBe('alert');
   });
@@ -74,6 +76,6 @@ describe('CheckboxGroup', () => {
   it('renders option hints', () => {
     const opts = [{ value: 'a', label: 'A', hint: 'Some hint' }];
     const wrapper = mount(CheckboxGroup, { props: { options: opts } });
-    expect(wrapper.find('.choice__hint').text()).toBe('Some hint');
+    expect(wrapper.find('.gt-choice__hint').text()).toBe('Some hint');
   });
 });

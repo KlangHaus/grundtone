@@ -15,12 +15,12 @@ function mountRadio(props = {}) {
 describe('RadioGroup', () => {
   it('renders all options', () => {
     const wrapper = mountRadio();
-    expect(wrapper.findAll('.choice--radio')).toHaveLength(3);
+    expect(wrapper.findAll('.gt-choice--radio')).toHaveLength(3);
   });
 
   it('renders labels', () => {
     const wrapper = mountRadio();
-    const labels = wrapper.findAll('.choice__label');
+    const labels = wrapper.findAll('.gt-choice__label');
     expect(labels[0].text()).toBe('Option A');
     expect(labels[1].text()).toBe('Option B');
   });
@@ -40,38 +40,38 @@ describe('RadioGroup', () => {
 
   it('marks selected option as checked', () => {
     const wrapper = mountRadio({ modelValue: 'b' });
-    const choices = wrapper.findAll('.choice--radio');
-    expect(choices[1].classes()).toContain('choice--checked');
-    expect(choices[0].classes()).not.toContain('choice--checked');
+    const choices = wrapper.findAll('.gt-choice--radio');
+    expect(choices[1].classes()).toContain('gt-choice--checked');
+    expect(choices[0].classes()).not.toContain('gt-choice--checked');
   });
 
   it('renders group label as legend', () => {
     const wrapper = mountRadio({ label: 'Pick one' });
-    expect(wrapper.find('.choice-group__legend').text()).toBe('Pick one');
+    expect(wrapper.find('.gt-choice-group__legend').text()).toBe('Pick one');
   });
 
   it('renders help text', () => {
     const wrapper = mountRadio({ helpText: 'Choose wisely' });
-    expect(wrapper.find('.choice-group__hint').text()).toBe('Choose wisely');
+    expect(wrapper.find('.gt-choice-group__hint').text()).toBe('Choose wisely');
   });
 
   it('renders error text', () => {
     const wrapper = mountRadio({ errorText: 'Required' });
-    const error = wrapper.find('.choice-group__error');
+    const error = wrapper.find('.gt-choice-group__error');
     expect(error.text()).toBe('Required');
     expect(error.attributes('role')).toBe('alert');
   });
 
   it('error replaces help text', () => {
     const wrapper = mountRadio({ helpText: 'Help', errorText: 'Error' });
-    expect(wrapper.find('.choice-group__error').exists()).toBe(true);
-    expect(wrapper.find('.choice-group__hint').exists()).toBe(false);
+    expect(wrapper.find('.gt-choice-group__error').exists()).toBe(true);
+    expect(wrapper.find('.gt-choice-group__hint').exists()).toBe(false);
   });
 
   it('applies error class to options', () => {
     const wrapper = mountRadio({ errorText: 'Error' });
-    wrapper.findAll('.choice--radio').forEach(choice => {
-      expect(choice.classes()).toContain('choice--error');
+    wrapper.findAll('.gt-choice--radio').forEach(choice => {
+      expect(choice.classes()).toContain('gt-choice--error');
     });
   });
 
@@ -94,7 +94,7 @@ describe('RadioGroup', () => {
   it('renders option hints', () => {
     const opts = [{ value: 'a', label: 'A', hint: 'Hint text' }];
     const wrapper = mount(RadioGroup, { props: { options: opts } });
-    expect(wrapper.find('.choice__hint').text()).toBe('Hint text');
+    expect(wrapper.find('.gt-choice__hint').text()).toBe('Hint text');
   });
 
   it('has role="radiogroup"', () => {

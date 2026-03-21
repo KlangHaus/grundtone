@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { computed } from 'vue';
+  import { getClassPrefix } from '@grundtone/core';
   import { generateId } from '@grundtone/utils';
   import type { RadioGroupProps } from './types';
 
@@ -18,6 +19,10 @@
     'update:modelValue': [value: string];
   }>();
 
+  const pr = computed(() => getClassPrefix());
+  const group = computed(() => `${pr.value}-choice-group`);
+  const choice = computed(() => `${pr.value}-choice`);
+
   const baseId = computed(() => props.id ?? generateId('radio'));
   const groupName = computed(() => props.name ?? baseId.value);
   const descId = computed(() =>
@@ -32,38 +37,38 @@
 
 <template>
   <fieldset
-    class="choice-group"
+    :class="group"
     :aria-describedby="descId"
     :aria-required="required"
     :disabled="disabled"
   >
-    <legend v-if="label" class="choice-group__legend">{{ label }}</legend>
+    <legend v-if="label" :class="`${group}__legend`">{{ label }}</legend>
 
-    <p v-if="helpText && !errorText" :id="descId" class="choice-group__hint">
+    <p v-if="helpText && !errorText" :id="descId" :class="`${group}__hint`">
       {{ helpText }}
     </p>
-    <p v-if="errorText" :id="descId" class="choice-group__error" role="alert">
+    <p v-if="errorText" :id="descId" :class="`${group}__error`" role="alert">
       {{ errorText }}
     </p>
 
-    <div class="choice-group__list" role="radiogroup">
+    <div :class="`${group}__list`" role="radiogroup">
       <label
         v-for="option in options"
         :key="option.value"
         :class="[
-          'choice',
-          'choice--radio',
+          choice,
+          `${choice}--radio`,
           {
-            'choice--checked': modelValue === option.value,
-            'choice--disabled': disabled || option.disabled,
-            'choice--error': !!errorText,
+            [`${choice}--checked`]: modelValue === option.value,
+            [`${choice}--disabled`]: disabled || option.disabled,
+            [`${choice}--error`]: !!errorText,
           },
         ]"
         :for="`${baseId}-${option.value}`"
       >
         <input
           :id="`${baseId}-${option.value}`"
-          class="choice__input"
+          :class="`${choice}__input`"
           type="radio"
           :name="groupName"
           :value="option.value"
@@ -71,13 +76,15 @@
           :disabled="disabled || option.disabled"
           @change="handleChange(option.value)"
         />
-        <span class="choice__indicator" aria-hidden="true" />
-        <span class="choice__body">
-          <span class="choice__label">{{ option.label }}</span>
-          <span v-if="option.hint" class="choice__hint">{{ option.hint }}</span>
+        <span :class="`${choice}__indicator`" aria-hidden="true" />
+        <span :class="`${choice}__body`">
+          <span :class="`${choice}__label`">{{ option.label }}</span>
+          <span v-if="option.hint" :class="`${choice}__hint`">{{
+            option.hint
+          }}</span>
           <div
             v-if="option.content && modelValue === option.value"
-            class="choice__content"
+            :class="`${choice}__content`"
             style="display: block"
           >
             <slot :name="`content-${option.value}`" />
@@ -87,3 +94,39 @@
     </div>
   </fieldset>
 </template>
+
+<style lang="scss">
+  $prefix: 'gt' !default;
+
+  .#{$prefix}-choice-group {
+    border: none;
+    padding: 0;
+    margin: 0;
+
+    &__legend {
+      font-size: tokens.font-size('sm');
+      font-weight: tokens.font-weight('medium');
+      color: tokens.color('text');
+      margin-bottom: tokens.space('xs');
+    }
+
+    &__hint {
+      font-size: tokens.font-size('sm');
+      color: tokens.color('text-secondary');
+      margin: 0 0 tokens.space('sm');
+    }
+
+    &__error {
+      font-size: tokens.font-size('sm');
+      color: tokens.color('error');
+      font-weight: tokens.font-weight('semibold');
+      margin: 0 0 tokens.space('sm');
+    }
+
+    &__list {
+      display: flex;
+      flex-direction: column;
+      gap: tokens.space('sm');
+    }
+  }
+</style>

@@ -5,8 +5,8 @@ import SearchField from './SearchField.vue';
 describe('SearchField', () => {
   it('renders input and submit button', () => {
     const wrapper = mount(SearchField);
-    expect(wrapper.find('.search-field__input').exists()).toBe(true);
-    expect(wrapper.find('.search-field__button').exists()).toBe(true);
+    expect(wrapper.find('.gt-search-field__input').exists()).toBe(true);
+    expect(wrapper.find('.gt-search-field__button').exists()).toBe(true);
   });
 
   it('input has type="search"', () => {
@@ -53,7 +53,7 @@ describe('SearchField', () => {
 
   it('applies disabled state', () => {
     const wrapper = mount(SearchField, { props: { disabled: true } });
-    expect(wrapper.find('.search-field--disabled').exists()).toBe(true);
+    expect(wrapper.find('.gt-search-field--disabled').exists()).toBe(true);
     expect(wrapper.find('input').attributes('disabled')).toBeDefined();
     expect(wrapper.find('button').attributes('disabled')).toBeDefined();
   });
@@ -75,7 +75,9 @@ describe('SearchField', () => {
   // Sizes
   it.each(['md', 'lg'] as const)('renders %s size', size => {
     const wrapper = mount(SearchField, { props: { size } });
-    expect(wrapper.find('form').classes()).toContain(`search-field--${size}`);
+    expect(wrapper.find('form').classes()).toContain(
+      `gt-search-field--${size}`,
+    );
   });
 
   it('has inputmode="search"', () => {
@@ -96,8 +98,8 @@ describe('SearchField', () => {
       },
     });
     await wrapper.find('input').trigger('focus');
-    expect(wrapper.find('.search-field__suggestions').exists()).toBe(true);
-    expect(wrapper.findAll('.search-field__suggestion')).toHaveLength(2);
+    expect(wrapper.find('.gt-search-field__suggestions').exists()).toBe(true);
+    expect(wrapper.findAll('.gt-search-field__suggestion')).toHaveLength(2);
   });
 
   it('does not show suggestions when input is too short', () => {
@@ -108,13 +110,13 @@ describe('SearchField', () => {
         minChars: 2,
       },
     });
-    expect(wrapper.find('.search-field__suggestions').exists()).toBe(false);
+    expect(wrapper.find('.gt-search-field__suggestions').exists()).toBe(false);
   });
 
   it('does not show suggestions when none provided', () => {
     const wrapper = mount(SearchField, {
       props: { modelValue: 'test' },
     });
-    expect(wrapper.find('.search-field__suggestions').exists()).toBe(false);
+    expect(wrapper.find('.gt-search-field__suggestions').exists()).toBe(false);
   });
 });

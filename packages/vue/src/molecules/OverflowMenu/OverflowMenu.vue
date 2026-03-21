@@ -1,5 +1,6 @@
 <script setup lang="ts">
-  import { ref, nextTick, onBeforeUnmount } from 'vue';
+  import { computed, ref, nextTick, onBeforeUnmount } from 'vue';
+  import { getClassPrefix } from '@grundtone/core';
   import { generateId } from '@grundtone/utils';
   import type { OverflowMenuProps, OverflowMenuItem } from './types';
 
@@ -12,6 +13,9 @@
   const emit = defineEmits<{
     select: [item: OverflowMenuItem];
   }>();
+
+  const p = computed(() => getClassPrefix());
+  const base = computed(() => `${p.value}-overflow-menu`);
 
   const menuId = generateId('overflow');
   const isOpen = ref(false);
@@ -129,17 +133,17 @@
 <template>
   <div
     :class="[
-      'overflow-menu',
+      base,
       {
-        'overflow-menu--open': isOpen,
-        'overflow-menu--bordered': !!label,
+        [`${base}--open`]: isOpen,
+        [`${base}--bordered`]: !!label,
       },
     ]"
     @keydown="onKeydown"
   >
     <button
       ref="triggerRef"
-      class="overflow-menu__trigger"
+      :class="`${base}__trigger`"
       type="button"
       :aria-expanded="isOpen"
       aria-haspopup="menu"
@@ -155,21 +159,21 @@
       v-if="isOpen"
       :id="menuId"
       ref="panelRef"
-      class="overflow-menu__panel"
+      :class="`${base}__panel`"
       role="menu"
       :style="panelPosition"
     >
-      <ul class="overflow-menu__list">
-        <li v-for="(item, i) in items" :key="i" class="overflow-menu__item">
+      <ul :class="`${base}__list`">
+        <li v-for="(item, i) in items" :key="i" :class="`${base}__item`">
           <component
             :is="item.href ? 'a' : 'button'"
             :href="item.href"
             :class="[
-              'overflow-menu__link',
+              `${base}__link`,
               {
-                'overflow-menu__link--active': item.active,
-                'overflow-menu__link--danger': item.danger,
-                'overflow-menu__link--disabled': item.disabled,
+                [`${base}__link--active`]: item.active,
+                [`${base}__link--danger`]: item.danger,
+                [`${base}__link--disabled`]: item.disabled,
               },
             ]"
             role="menuitem"
@@ -184,3 +188,151 @@
     </div>
   </div>
 </template>
+
+<style lang="scss">
+  $prefix: 'gt' !default;
+
+  .#{$prefix}-overflow-menu {
+    position: relative;
+    display: inline-block;
+
+    &__trigger {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: tokens.space('xs');
+      background: none;
+      border: none;
+      border-radius: tokens.radius('md');
+      padding: tokens.space('xs') tokens.space('sm');
+      cursor: pointer;
+      color: tokens.color('text-secondary');
+      font-size: tokens.font-size('sm');
+      font-weight: tokens.font-weight('medium');
+      line-height: 1;
+      min-width: 2rem;
+      min-height: 2rem;
+      transition:
+        color tokens.duration('fast') tokens.ease('ease'),
+        background-color tokens.duration('fast') tokens.ease('ease');
+
+      &:hover {
+        color: tokens.color('text');
+        background: tokens.color('surface-alt');
+      }
+
+      &:focus-visible {
+        outline: 2px solid tokens.color('focus-ring');
+        outline-offset: 2px;
+      }
+    }
+
+    &--bordered &__trigger {
+      border: 1px solid tokens.color('border-medium');
+    }
+
+    &__panel {
+      position: absolute;
+      top: 100%;
+      margin-top: 0.125rem;
+      min-width: 10rem;
+      background: tokens.color('surface');
+      border: 1px solid tokens.color('border-medium');
+      border-radius: tokens.radius('md');
+      box-shadow: tokens.shadow('lg');
+      z-index: tokens.z-index('dropdown');
+      display: none;
+      right: 0;
+    }
+
+    &--left .#{$prefix}-overflow-menu__panel {
+      right: auto;
+      left: 0;
+    }
+
+    &--open .#{$prefix}-overflow-menu__panel {
+      display: block;
+    }
+
+    &__list {
+      list-style: none !important;
+      margin: 0;
+      padding: 0.5rem 0;
+      padding-left: 0;
+    }
+
+    &__item {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      &::before,
+      &::marker {
+        content: none;
+      }
+    }
+
+    &__divider {
+      height: 0;
+      margin: 0.5rem 0;
+      border: 0;
+      border-top: 1px solid tokens.color('border-medium');
+    }
+
+    &__link {
+      display: flex;
+      align-items: center;
+      gap: tokens.space('sm');
+      width: 100%;
+      padding: 0.375rem 1rem;
+      background: none;
+      border: none;
+      color: tokens.color('text');
+      font-size: tokens.font-size('sm');
+      text-decoration: none;
+      cursor: pointer;
+      text-align: left;
+      white-space: nowrap;
+      line-height: tokens.line-height('normal');
+      border-radius: 0;
+      transition: background-color tokens.duration('fast') tokens.ease('ease');
+
+      &:hover {
+        background: tokens.color('surface-alt');
+      }
+
+      &:focus-visible {
+        outline: 2px solid tokens.color('focus-ring');
+        outline-offset: -2px;
+        background: tokens.color('surface-alt');
+      }
+
+      &--active {
+        font-weight: tokens.font-weight('semibold');
+        color: tokens.color('primary');
+
+        &::before {
+          content: '\2713';
+          display: inline-block;
+          width: 1.25em;
+          flex-shrink: 0;
+        }
+      }
+
+      &--danger {
+        color: tokens.color('error');
+
+        &:hover {
+          background: color-mix(in srgb, tokens.color('error') 8%, transparent);
+        }
+      }
+
+      &--disabled {
+        color: tokens.color('text-secondary');
+        opacity: 0.6;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+    }
+  }
+</style>
