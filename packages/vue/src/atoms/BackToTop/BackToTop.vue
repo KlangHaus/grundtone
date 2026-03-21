@@ -41,7 +41,7 @@
     :aria-label="label"
     @click="scrollToTop"
   >
-    <span class="back-to-top__icon" aria-hidden="true">↑</span>
+    <span class="back-to-top__icon" aria-hidden="true" />
     <span class="back-to-top__label">{{ label }}</span>
   </button>
 </template>

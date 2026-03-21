@@ -33,7 +33,7 @@ describe('BackToTop', () => {
     expect(wrapper.find('button').attributes('aria-label')).toBe('Scroll up');
   });
 
-  it('renders arrow icon', () => {
+  it('renders chevron icon element', () => {
     const wrapper = mount(BackToTop);
     const icon = wrapper.find('.back-to-top__icon');
     expect(icon.exists()).toBe(true);

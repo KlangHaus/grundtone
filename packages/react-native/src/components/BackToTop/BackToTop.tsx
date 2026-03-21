@@ -35,8 +35,10 @@ export function GTBackToTop({ label, scrollRef }: BackToTopProps) {
   };
 
   const iconStyle: TextStyle = {
-    fontSize: rem(theme.typography.fontSize.base),
+    fontSize: rem(theme.typography.fontSize.lg),
     color: theme.colors.text,
+    transform: [{ rotate: '90deg' }],
+    lineHeight: rem(theme.typography.fontSize.lg),
   };
 
   const labelStyle: TextStyle = {
@@ -52,7 +54,7 @@ export function GTBackToTop({ label, scrollRef }: BackToTopProps) {
       accessibilityRole="button"
       accessibilityLabel={label ?? 'Til toppen'}
     >
-      <Text style={iconStyle}>↑</Text>
+      <Text style={iconStyle}>‹</Text>
       {label && <Text style={labelStyle}>{label}</Text>}
     </Pressable>
   );
