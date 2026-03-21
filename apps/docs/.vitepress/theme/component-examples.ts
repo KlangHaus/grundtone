@@ -550,6 +550,12 @@ export const componentExamples: Record<string, string> = {
   </div>
 </div>`,
 
+  'c-search-field': `<form class="search-field search-field--md" role="search" style="max-width: 360px">
+  <label for="preview-search" class="sr-only">Søg</label>
+  <input id="preview-search" class="search-field__input" type="search" placeholder="Søg..." inputmode="search" />
+  <button class="search-field__button" type="submit" aria-label="Søg"><span class="sr-only">Søg</span></button>
+</form>`,
+
   'c-overflow-menu': `<div class="overflow-menu overflow-menu--open" style="min-height: 10rem">
   <button class="overflow-menu__trigger" aria-haspopup="menu" aria-expanded="true">⋯</button>
   <div class="overflow-menu__panel" role="menu" style="display: block">

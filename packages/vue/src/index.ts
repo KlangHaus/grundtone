@@ -38,6 +38,8 @@ export type {
   DateInputSize,
 } from './atoms/DateInput';
 export { GTInput } from './atoms/Input';
+export { GTSearchField } from './atoms/SearchField';
+export type { SearchFieldProps, SearchSuggestion } from './atoms/SearchField';
 export { GTSelect } from './atoms/Select';
 export { GTSkipLink } from './atoms/SkipLink';
 export type { SkipLinkProps } from './atoms/SkipLink';

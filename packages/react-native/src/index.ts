@@ -115,6 +115,8 @@ export type {
   OverflowMenuItem as RNOverflowMenuItem,
 } from './components/OverflowMenu';
 export { GTRadioGroup } from './components/RadioGroup';
+export { GTSearchField } from './components/SearchField';
+export type { SearchFieldProps as RNSearchFieldProps } from './components/SearchField';
 export type {
   RadioGroupProps as RNRadioGroupProps,
   RadioOption as RNRadioOption,

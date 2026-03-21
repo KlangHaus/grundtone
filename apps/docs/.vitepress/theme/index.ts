@@ -11,6 +11,7 @@ import DetailsDemo from '../../../../packages/vue/src/atoms/Details/demo.vue';
 import IconDemo from '../../../../packages/vue/src/atoms/Icon/demo.vue';
 import DateInputDemo from '../../../../packages/vue/src/atoms/DateInput/demo.vue';
 import InputDemo from '../../../../packages/vue/src/atoms/Input/demo.vue';
+import SearchFieldDemo from '../../../../packages/vue/src/atoms/SearchField/demo.vue';
 import SelectDemo from '../../../../packages/vue/src/atoms/Select/demo.vue';
 import SkipLinkDemo from '../../../../packages/vue/src/atoms/SkipLink/demo.vue';
 import SpinnerDemo from '../../../../packages/vue/src/atoms/Spinner/demo.vue';
@@ -54,6 +55,7 @@ export default {
     app.component('IconDemo', IconDemo);
     app.component('DateInputDemo', DateInputDemo);
     app.component('InputDemo', InputDemo);
+    app.component('SearchFieldDemo', SearchFieldDemo);
     app.component('SelectDemo', SelectDemo);
     app.component('SkipLinkDemo', SkipLinkDemo);
     app.component('SpinnerDemo', SpinnerDemo);

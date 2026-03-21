@@ -19,6 +19,7 @@ import {
   GTRadioGroup,
   GTCheckboxGroup,
   GTOverflowMenu,
+  GTSearchField,
   useGrundtoneTheme,
   useField,
   useFormValidation,
@@ -414,6 +415,9 @@ export default function ComponentsScreen() {
       <View style={groupStyle}>
         <GTSpinner size="lg" text="Henter data…" />
       </View>
+
+      <Text style={headingStyle}>Search Field</Text>
+      <GTSearchField placeholder="Søg..." onSubmit={_q => {}} />
 
       <Text style={headingStyle}>Overflow Menu</Text>
       <View style={rowStyle}>

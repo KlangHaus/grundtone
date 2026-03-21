@@ -29,6 +29,7 @@
     GTSpinner,
     GTModal,
     GTOverflowMenu,
+    GTSearchField,
     GTCheckbox,
     GTCheckboxGroup,
     GTRadioGroup,
@@ -51,6 +52,7 @@
 
   const showDismissible = ref(true);
   const showCookie = ref(true);
+  const searchQuery = ref('');
   const radioValue = ref('');
   const checkboxValues = ref<string[]>([]);
   const acceptTerms = ref(false);
@@ -174,6 +176,7 @@
             { label: 'Toggle', href: '#pg-toggle' },
             { label: 'Spinner', href: '#pg-spinner' },
             { label: 'Modal', href: '#pg-modal' },
+            { label: 'Search Field', href: '#pg-search' },
             { label: 'Overflow Menu', href: '#pg-overflow' },
             { label: 'Radio & Checkbox', href: '#pg-choice' },
           ]"
@@ -991,6 +994,18 @@
             <GTButton as="a" href="#link" variant="outlined">
               Outlined link
             </GTButton>
+          </div>
+        </section>
+
+        <section class="mb-6">
+          <h2 id="pg-search" style="scroll-margin-top: 1rem">Search Field</h2>
+          <div class="flex flex-col gap-2" style="max-width: 400px">
+            <GTSearchField v-model="searchQuery" />
+            <GTSearchField
+              v-model="searchQuery"
+              size="lg"
+              placeholder="Søg i dokumentation..."
+            />
           </div>
         </section>
 

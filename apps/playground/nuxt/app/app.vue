@@ -569,6 +569,14 @@
     </section>
 
     <section class="mb-6">
+      <h2>Search Field</h2>
+      <div class="flex flex-col gap-2" style="max-width: 400px">
+        <GTSearchField placeholder="Søg..." />
+        <GTSearchField size="lg" placeholder="Søg i dokumentation..." />
+      </div>
+    </section>
+
+    <section class="mb-6">
       <h2>Overflow Menu</h2>
       <div class="flex flex-wrap gap-4">
         <GTOverflowMenu
