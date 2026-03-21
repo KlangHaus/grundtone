@@ -556,6 +556,18 @@ export const componentExamples: Record<string, string> = {
   <button class="search-field__button" type="submit" aria-label="Søg"><span class="sr-only">Søg</span></button>
 </form>`,
 
+  'c-tag': `<div class="flex flex-wrap gap-2">
+  <span class="tag tag--md" tabindex="0"><span class="tag__label">Design</span></span>
+  <span class="tag tag--md" tabindex="0"><span class="tag__label">Tilgængelighed</span></span>
+  <span class="tag tag--md" tabindex="0">
+    <span class="tag__label">Vue 3</span>
+    <button class="tag__dismiss" aria-label="Fjern Vue 3">&times;</button>
+  </span>
+  <span class="tag tag--md tag--selected" tabindex="0" role="option" aria-selected="true">
+    <span class="tag__label">Aktiv filter</span>
+  </span>
+</div>`,
+
   'c-overflow-menu': `<div class="overflow-menu overflow-menu--open" style="min-height: 10rem">
   <button class="overflow-menu__trigger" aria-haspopup="menu" aria-expanded="true">⋯</button>
   <div class="overflow-menu__panel" role="menu" style="display: block">

@@ -248,6 +248,7 @@ export default defineConfig({
             { text: 'Skip Link', link: '/vue/skip-link' },
             { text: 'Spinner', link: '/vue/spinner' },
             { text: 'Tabs', link: '/vue/tabs' },
+            { text: 'Tag', link: '/vue/tag' },
           ],
         },
         {
@@ -393,6 +394,7 @@ export default defineConfig({
             { text: 'Prose', link: '/web/c-prose' },
             { text: 'Spinner', link: '/web/c-spinner' },
             { text: 'Tabs', link: '/web/c-tabs' },
+            { text: 'Tag', link: '/web/c-tag' },
           ],
         },
         {

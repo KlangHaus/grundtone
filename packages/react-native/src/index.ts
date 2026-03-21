@@ -127,6 +127,8 @@ export type {
   SpinnerSize as RNSpinnerSize,
   SpinnerVariant as RNSpinnerVariant,
 } from './components/Spinner';
+export { GTTag } from './components/Tag';
+export type { TagProps as RNTagProps } from './components/Tag';
 export type { DetailsProps, DetailsVariant } from './components/Details';
 export type { CardProps, CardVariant } from './components/Card';
 

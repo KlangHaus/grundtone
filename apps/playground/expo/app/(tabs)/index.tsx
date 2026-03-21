@@ -20,6 +20,7 @@ import {
   GTCheckboxGroup,
   GTOverflowMenu,
   GTSearchField,
+  GTTag,
   useGrundtoneTheme,
   useField,
   useFormValidation,
@@ -414,6 +415,13 @@ export default function ComponentsScreen() {
       </View>
       <View style={groupStyle}>
         <GTSpinner size="lg" text="Henter data…" />
+      </View>
+
+      <Text style={headingStyle}>Tag</Text>
+      <View style={rowStyle}>
+        <GTTag label="Design" />
+        <GTTag label="Vue 3" dismissible onDismiss={() => {}} />
+        <GTTag label="Aktiv" selected onPress={() => {}} />
       </View>
 
       <Text style={headingStyle}>Search Field</Text>

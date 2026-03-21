@@ -569,6 +569,16 @@
     </section>
 
     <section class="mb-6">
+      <h2>Tag</h2>
+      <div class="flex flex-wrap gap-2">
+        <GTTag label="Design" />
+        <GTTag label="Vue 3" dismissible />
+        <GTTag label="Aktiv" :selected="true" />
+        <GTTag label="Inaktiv" :selected="false" />
+      </div>
+    </section>
+
+    <section class="mb-6">
       <h2>Search Field</h2>
       <div class="flex flex-col gap-2" style="max-width: 400px">
         <GTSearchField placeholder="Søg..." />

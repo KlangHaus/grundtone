@@ -30,6 +30,7 @@
     GTModal,
     GTOverflowMenu,
     GTSearchField,
+    GTTag,
     GTCheckbox,
     GTCheckboxGroup,
     GTRadioGroup,
@@ -176,6 +177,7 @@
             { label: 'Toggle', href: '#pg-toggle' },
             { label: 'Spinner', href: '#pg-spinner' },
             { label: 'Modal', href: '#pg-modal' },
+            { label: 'Tag', href: '#pg-tag' },
             { label: 'Search Field', href: '#pg-search' },
             { label: 'Overflow Menu', href: '#pg-overflow' },
             { label: 'Radio & Checkbox', href: '#pg-choice' },
@@ -994,6 +996,27 @@
             <GTButton as="a" href="#link" variant="outlined">
               Outlined link
             </GTButton>
+          </div>
+        </section>
+
+        <section class="mb-6">
+          <h2 id="pg-tag" style="scroll-margin-top: 1rem">Tag</h2>
+          <h3>Display</h3>
+          <div class="flex flex-wrap gap-2">
+            <GTTag label="Design" />
+            <GTTag label="Tilgængelighed" />
+            <GTTag label="Frontend" />
+          </div>
+          <h3>Dismissible</h3>
+          <div class="flex flex-wrap gap-2">
+            <GTTag label="Vue 3" dismissible />
+            <GTTag label="TypeScript" dismissible />
+          </div>
+          <h3>Selectable</h3>
+          <div class="flex flex-wrap gap-2">
+            <GTTag label="Design" :selected="true" />
+            <GTTag label="Code" :selected="false" />
+            <GTTag label="A11y" :selected="true" />
           </div>
         </section>
 
