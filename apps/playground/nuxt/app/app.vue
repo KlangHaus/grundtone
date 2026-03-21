@@ -569,6 +569,27 @@
     </section>
 
     <section class="mb-6">
+      <h2>Overflow Menu</h2>
+      <div class="flex flex-wrap gap-4">
+        <GTOverflowMenu
+          :items="[
+            { label: 'Redigér', value: 'edit' },
+            { label: 'Dupliker', value: 'duplicate' },
+            { label: 'Slet', value: 'delete', danger: true },
+          ]"
+        />
+        <GTOverflowMenu
+          label="Sortér"
+          align="left"
+          :items="[
+            { label: 'Nyeste først', active: true },
+            { label: 'Ældste først' },
+          ]"
+        />
+      </div>
+    </section>
+
+    <section class="mb-6">
       <h2>Radio &amp; Checkbox</h2>
       <GTRadioGroup
         v-model="radioValue"

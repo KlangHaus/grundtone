@@ -6,6 +6,7 @@ import { Alert } from './alert';
 import { CookieMessage } from './cookie-message';
 import { AnchorLinks } from './anchor-links';
 import { Modal } from './modal';
+import { OverflowMenu } from './overflow-menu';
 
 export { GtComponent } from './base';
 export { Accordion } from './accordion';
@@ -15,6 +16,7 @@ export { Alert } from './alert';
 export { CookieMessage } from './cookie-message';
 export { AnchorLinks } from './anchor-links';
 export { Modal } from './modal';
+export { OverflowMenu } from './overflow-menu';
 export { uid, prefersReducedMotion, slideOpen, slideClose } from './utils';
 
 const REGISTRY: Record<string, new (el: HTMLElement) => GtComponent> = {
@@ -25,6 +27,7 @@ const REGISTRY: Record<string, new (el: HTMLElement) => GtComponent> = {
   '.cookie-message': CookieMessage,
   '.anchor-links': AnchorLinks,
   '.modal': Modal,
+  '.overflow-menu': OverflowMenu,
 };
 
 /**

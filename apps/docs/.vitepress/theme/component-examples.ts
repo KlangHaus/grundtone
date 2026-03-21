@@ -550,6 +550,17 @@ export const componentExamples: Record<string, string> = {
   </div>
 </div>`,
 
+  'c-overflow-menu': `<div class="overflow-menu overflow-menu--open" style="min-height: 10rem">
+  <button class="overflow-menu__trigger" aria-haspopup="menu" aria-expanded="true">⋯</button>
+  <div class="overflow-menu__panel" role="menu" style="display: block">
+    <ul class="overflow-menu__list">
+      <li class="overflow-menu__item"><button class="overflow-menu__link" role="menuitem">Redigér</button></li>
+      <li class="overflow-menu__item"><button class="overflow-menu__link" role="menuitem">Dupliker</button></li>
+      <li class="overflow-menu__item"><button class="overflow-menu__link overflow-menu__link--danger" role="menuitem">Slet</button></li>
+    </ul>
+  </div>
+</div>`,
+
   'c-modal-standard': `<div style="position: relative; height: 14rem; overflow: hidden; background: var(--color-surface-alt); border-radius: var(--radius-md)">
   <div class="modal" style="position: absolute; display: flex">
     <div class="modal__dialog" role="dialog" aria-modal="true" style="max-width: 24rem">

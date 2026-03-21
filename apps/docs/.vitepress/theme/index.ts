@@ -26,6 +26,7 @@ import CardDemo from '../../../../packages/vue/src/molecules/Card/demo.vue';
 import CheckboxDemo from '../../../../packages/vue/src/atoms/Checkbox/demo.vue';
 import CheckboxGroupDemo from '../../../../packages/vue/src/molecules/CheckboxGroup/demo.vue';
 import ModalDemo from '../../../../packages/vue/src/molecules/Modal/demo.vue';
+import OverflowMenuDemo from '../../../../packages/vue/src/molecules/OverflowMenu/demo.vue';
 import RadioGroupDemo from '../../../../packages/vue/src/molecules/RadioGroup/demo.vue';
 import TabsDemo from '../../../../packages/vue/src/molecules/Tabs/demo.vue';
 import CookieMessageDemo from '../../../../packages/vue/src/molecules/CookieMessage/demo.vue';
@@ -69,6 +70,7 @@ export default {
     app.component('CheckboxDemo', CheckboxDemo);
     app.component('CheckboxGroupDemo', CheckboxGroupDemo);
     app.component('ModalDemo', ModalDemo);
+    app.component('OverflowMenuDemo', OverflowMenuDemo);
     app.component('RadioGroupDemo', RadioGroupDemo);
     app.component('TabsDemo', TabsDemo);
     app.component('CookieMessageDemo', CookieMessageDemo);

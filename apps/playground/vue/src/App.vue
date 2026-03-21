@@ -28,6 +28,7 @@
     GTSkipLink,
     GTSpinner,
     GTModal,
+    GTOverflowMenu,
     GTCheckbox,
     GTCheckboxGroup,
     GTRadioGroup,
@@ -173,6 +174,7 @@
             { label: 'Toggle', href: '#pg-toggle' },
             { label: 'Spinner', href: '#pg-spinner' },
             { label: 'Modal', href: '#pg-modal' },
+            { label: 'Overflow Menu', href: '#pg-overflow' },
             { label: 'Radio & Checkbox', href: '#pg-choice' },
           ]"
         />
@@ -989,6 +991,31 @@
             <GTButton as="a" href="#link" variant="outlined">
               Outlined link
             </GTButton>
+          </div>
+        </section>
+
+        <section class="mb-6">
+          <h2 id="pg-overflow" style="scroll-margin-top: 1rem">
+            Overflow Menu
+          </h2>
+          <div class="flex flex-wrap gap-4">
+            <GTOverflowMenu
+              :items="[
+                { label: 'Redigér', value: 'edit' },
+                { label: 'Dupliker', value: 'duplicate' },
+                { label: 'Arkivér', value: 'archive' },
+                { label: 'Slet', value: 'delete', danger: true },
+              ]"
+            />
+            <GTOverflowMenu
+              label="Sortér"
+              align="left"
+              :items="[
+                { label: 'Nyeste først', active: true },
+                { label: 'Ældste først' },
+                { label: 'Navn (A-Å)' },
+              ]"
+            />
           </div>
         </section>
 

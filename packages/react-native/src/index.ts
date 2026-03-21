@@ -109,6 +109,11 @@ export type {
   ModalProps as RNModalProps,
   ModalTransition as RNModalTransition,
 } from './components/Modal';
+export { GTOverflowMenu } from './components/OverflowMenu';
+export type {
+  OverflowMenuProps as RNOverflowMenuProps,
+  OverflowMenuItem as RNOverflowMenuItem,
+} from './components/OverflowMenu';
 export { GTRadioGroup } from './components/RadioGroup';
 export type {
   RadioGroupProps as RNRadioGroupProps,

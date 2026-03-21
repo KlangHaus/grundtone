@@ -18,6 +18,7 @@ import {
   GTModal,
   GTRadioGroup,
   GTCheckboxGroup,
+  GTOverflowMenu,
   useGrundtoneTheme,
   useField,
   useFormValidation,
@@ -412,6 +413,24 @@ export default function ComponentsScreen() {
       </View>
       <View style={groupStyle}>
         <GTSpinner size="lg" text="Henter data…" />
+      </View>
+
+      <Text style={headingStyle}>Overflow Menu</Text>
+      <View style={rowStyle}>
+        <GTOverflowMenu
+          items={[
+            { label: 'Redigér', value: 'edit' },
+            { label: 'Dupliker', value: 'duplicate' },
+            { label: 'Slet', value: 'delete', danger: true },
+          ]}
+        />
+        <GTOverflowMenu
+          label="Sortér"
+          items={[
+            { label: 'Nyeste først', active: true },
+            { label: 'Ældste først' },
+          ]}
+        />
       </View>
 
       <Text style={headingStyle}>Radio &amp; Checkbox</Text>

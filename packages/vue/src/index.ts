@@ -134,6 +134,11 @@ export type {
 } from './molecules/CheckboxGroup';
 export { GTModal } from './molecules/Modal';
 export type { ModalProps, ModalTransition } from './molecules/Modal';
+export { GTOverflowMenu } from './molecules/OverflowMenu';
+export type {
+  OverflowMenuProps,
+  OverflowMenuItem,
+} from './molecules/OverflowMenu';
 export { GTCookieMessage } from './molecules/CookieMessage';
 export type { CookieMessageProps } from './molecules/CookieMessage';
 export { GTTabs, GTTabPanel } from './molecules/Tabs';
