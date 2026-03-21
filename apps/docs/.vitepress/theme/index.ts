@@ -11,7 +11,6 @@ import DetailsDemo from '../../../../packages/vue/src/atoms/Details/demo.vue';
 import IconDemo from '../../../../packages/vue/src/atoms/Icon/demo.vue';
 import DateInputDemo from '../../../../packages/vue/src/atoms/DateInput/demo.vue';
 import InputDemo from '../../../../packages/vue/src/atoms/Input/demo.vue';
-import SearchFieldDemo from '../../../../packages/vue/src/atoms/SearchField/demo.vue';
 import SelectDemo from '../../../../packages/vue/src/atoms/Select/demo.vue';
 import SkipLinkDemo from '../../../../packages/vue/src/atoms/SkipLink/demo.vue';
 import SpinnerDemo from '../../../../packages/vue/src/atoms/Spinner/demo.vue';
@@ -29,6 +28,7 @@ import CheckboxGroupDemo from '../../../../packages/vue/src/molecules/CheckboxGr
 import ModalDemo from '../../../../packages/vue/src/molecules/Modal/demo.vue';
 import OverflowMenuDemo from '../../../../packages/vue/src/molecules/OverflowMenu/demo.vue';
 import RadioGroupDemo from '../../../../packages/vue/src/molecules/RadioGroup/demo.vue';
+import SearchFieldDemo from '../../../../packages/vue/src/molecules/SearchField/demo.vue';
 import TabsDemo from '../../../../packages/vue/src/molecules/Tabs/demo.vue';
 import CookieMessageDemo from '../../../../packages/vue/src/molecules/CookieMessage/demo.vue';
 import IconGallery from './components/IconGallery.vue';

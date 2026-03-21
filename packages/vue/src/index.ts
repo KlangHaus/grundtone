@@ -38,8 +38,6 @@ export type {
   DateInputSize,
 } from './atoms/DateInput';
 export { GTInput } from './atoms/Input';
-export { GTSearchField } from './atoms/SearchField';
-export type { SearchFieldProps, SearchSuggestion } from './atoms/SearchField';
 export { GTSelect } from './atoms/Select';
 export { GTSkipLink } from './atoms/SkipLink';
 export type { SkipLinkProps } from './atoms/SkipLink';
@@ -141,6 +139,11 @@ export type {
   OverflowMenuProps,
   OverflowMenuItem,
 } from './molecules/OverflowMenu';
+export { GTSearchField } from './molecules/SearchField';
+export type {
+  SearchFieldProps,
+  SearchSuggestion,
+} from './molecules/SearchField';
 export { GTCookieMessage } from './molecules/CookieMessage';
 export type { CookieMessageProps } from './molecules/CookieMessage';
 export { GTTabs, GTTabPanel } from './molecules/Tabs';
