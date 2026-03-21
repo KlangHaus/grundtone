@@ -7,6 +7,7 @@ import DoItem from './components/DoItem.vue';
 import DontItem from './components/DontItem.vue';
 import DosDonts from './components/DosDonts.vue';
 import BackLinkDemo from '../../../../packages/vue/src/atoms/BackLink/demo.vue';
+import BackToTopDemo from '../../../../packages/vue/src/atoms/BackToTop/demo.vue';
 import ButtonDemo from '../../../../packages/vue/src/atoms/Button/demo.vue';
 import DetailsDemo from '../../../../packages/vue/src/atoms/Details/demo.vue';
 import IconDemo from '../../../../packages/vue/src/atoms/Icon/demo.vue';
@@ -55,6 +56,7 @@ export default {
     app.component('DontItem', DontItem);
     app.component('DosDonts', DosDonts);
     app.component('BackLinkDemo', BackLinkDemo);
+    app.component('BackToTopDemo', BackToTopDemo);
     app.component('ButtonDemo', ButtonDemo);
     app.component('IconDemo', IconDemo);
     app.component('DateInputDemo', DateInputDemo);

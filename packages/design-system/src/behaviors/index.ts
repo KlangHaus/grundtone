@@ -1,4 +1,5 @@
 import { GtComponent } from './base';
+import { BackToTop } from './back-to-top';
 import { Accordion } from './accordion';
 import { Tabs } from './tabs';
 import { Toggle } from './toggle';
@@ -9,6 +10,7 @@ import { Modal } from './modal';
 import { OverflowMenu } from './overflow-menu';
 
 export { GtComponent } from './base';
+export { BackToTop } from './back-to-top';
 export { Accordion } from './accordion';
 export { Tabs } from './tabs';
 export { Toggle } from './toggle';
@@ -28,6 +30,7 @@ const REGISTRY: Record<string, new (el: HTMLElement) => GtComponent> = {
   '.anchor-links': AnchorLinks,
   '.modal': Modal,
   '.overflow-menu': OverflowMenu,
+  '.back-to-top': BackToTop,
 };
 
 /**

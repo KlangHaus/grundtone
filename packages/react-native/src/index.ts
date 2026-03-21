@@ -52,6 +52,8 @@ export type {
 // Components
 export { GTBackLink } from './components/BackLink';
 export type { BackLinkProps as RNBackLinkProps } from './components/BackLink';
+export { GTBackToTop } from './components/BackToTop';
+export type { BackToTopProps as RNBackToTopProps } from './components/BackToTop';
 export { GTAutocomplete } from './components/Autocomplete';
 export type {
   AutocompleteProps,

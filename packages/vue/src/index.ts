@@ -10,6 +10,8 @@ import '@grundtone/design-system/dist/index.css';
 // Atoms
 export { GTBackLink } from './atoms/BackLink';
 export type { BackLinkProps } from './atoms/BackLink';
+export { GTBackToTop } from './atoms/BackToTop';
+export type { BackToTopProps } from './atoms/BackToTop';
 export { GTAutocomplete } from './atoms/Autocomplete';
 export type {
   AutocompleteProps,
