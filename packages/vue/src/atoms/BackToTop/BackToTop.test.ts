@@ -10,22 +10,22 @@ describe('BackToTop', () => {
 
   it('has back-to-top class', () => {
     const wrapper = mount(BackToTop);
-    expect(wrapper.find('.back-to-top').exists()).toBe(true);
+    expect(wrapper.find('.gt-back-to-top').exists()).toBe(true);
   });
 
   it('is hidden by default (no visible class)', () => {
     const wrapper = mount(BackToTop);
-    expect(wrapper.find('.back-to-top--visible').exists()).toBe(false);
+    expect(wrapper.find('.gt-back-to-top--visible').exists()).toBe(false);
   });
 
   it('renders default label', () => {
     const wrapper = mount(BackToTop);
-    expect(wrapper.find('.back-to-top__label').text()).toBe('Til toppen');
+    expect(wrapper.find('.gt-back-to-top__label').text()).toBe('Til toppen');
   });
 
   it('renders custom label', () => {
     const wrapper = mount(BackToTop, { props: { label: 'Back to top' } });
-    expect(wrapper.find('.back-to-top__label').text()).toBe('Back to top');
+    expect(wrapper.find('.gt-back-to-top__label').text()).toBe('Back to top');
   });
 
   it('has aria-label', () => {
@@ -35,7 +35,7 @@ describe('BackToTop', () => {
 
   it('renders chevron icon element', () => {
     const wrapper = mount(BackToTop);
-    const icon = wrapper.find('.back-to-top__icon');
+    const icon = wrapper.find('.gt-back-to-top__icon');
     expect(icon.exists()).toBe(true);
     expect(icon.attributes('aria-hidden')).toBe('true');
   });

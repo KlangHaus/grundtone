@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import { computed } from 'vue';
+  import { getClassPrefix } from '@grundtone/core';
   import { GTIcon } from '../Icon';
   import type { TagProps } from './types';
 
@@ -17,6 +19,9 @@
     'update:selected': [value: boolean];
   }>();
 
+  const p = computed(() => getClassPrefix());
+  const base = computed(() => `${p.value}-tag`);
+
   function handleClick() {
     if (props.disabled) return;
     emit('click', props.value);
@@ -33,11 +38,11 @@
 <template>
   <span
     :class="[
-      'tag',
-      `tag--${size}`,
+      base,
+      `${base}--${size}`,
       {
-        'tag--selected': selected,
-        'tag--disabled': disabled,
+        [`${base}--selected`]: selected,
+        [`${base}--disabled`]: disabled,
       },
     ]"
     :role="selected !== undefined ? 'option' : undefined"
@@ -48,12 +53,12 @@
     @keydown.enter.prevent="handleClick"
     @keydown.space.prevent="handleClick"
   >
-    <GTIcon v-if="icon" :name="icon" size="xs" class="tag__icon" />
-    <span class="tag__label">{{ label }}</span>
+    <GTIcon v-if="icon" :name="icon" size="xs" :class="`${base}__icon`" />
+    <span :class="`${base}__label`">{{ label }}</span>
     <button
       v-if="dismissible"
       type="button"
-      class="tag__dismiss"
+      :class="`${base}__dismiss`"
       :aria-label="`Fjern ${label}`"
       :disabled="disabled"
       @click="handleDismiss"
@@ -62,3 +67,93 @@
     </button>
   </span>
 </template>
+
+<style lang="scss">
+  $prefix: 'gt' !default;
+
+  .#{$prefix}-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: tokens.space('xs');
+    border: 1px solid tokens.color('border-medium');
+    border-radius: tokens.radius('full');
+    background: tokens.color('background');
+    color: tokens.color('text');
+    cursor: pointer;
+    white-space: nowrap;
+    vertical-align: middle;
+    transition:
+      background-color tokens.duration('fast') tokens.ease('ease'),
+      border-color tokens.duration('fast') tokens.ease('ease'),
+      color tokens.duration('fast') tokens.ease('ease');
+
+    &:hover {
+      background: tokens.color('surface-alt');
+    }
+
+    &:focus-visible {
+      outline: 2px solid tokens.color('focus-ring');
+      outline-offset: 2px;
+    }
+
+    &--sm {
+      padding: 0.0625rem tokens.space('sm');
+      font-size: tokens.font-size('xs');
+      line-height: tokens.line-height('normal');
+    }
+
+    &--md {
+      padding: tokens.space('xs') tokens.space('md');
+      font-size: tokens.font-size('sm');
+      line-height: tokens.line-height('normal');
+    }
+
+    &--selected {
+      background: tokens.color('primary');
+      border-color: tokens.color('primary');
+      color: var(--color-on-primary, #fff);
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    &--disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    &__icon {
+      flex-shrink: 0;
+    }
+
+    &__dismiss {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: inherit;
+      opacity: 0.6;
+      padding: 0;
+      margin-left: calc(-1 * #{tokens.space('xs')});
+      font-size: 1em;
+      line-height: 1;
+      border-radius: tokens.radius('full');
+      width: 1.25em;
+      height: 1.25em;
+      transition: opacity tokens.duration('fast') tokens.ease('ease');
+
+      &:hover {
+        opacity: 1;
+      }
+
+      &:focus-visible {
+        outline: 2px solid tokens.color('focus-ring');
+        outline-offset: 1px;
+      }
+    }
+  }
+</style>

@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
 import Tag from './Tag.vue';
 
-const BASE = 'tag';
+const BASE = 'gt-tag';
 
 // GTIcon needs registry — stub it
 const stubs = { GTIcon: true };

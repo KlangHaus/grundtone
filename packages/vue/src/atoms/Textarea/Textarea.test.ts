@@ -10,7 +10,7 @@ describe('Textarea', () => {
 
   it('has textarea class', () => {
     const wrapper = mount(Textarea);
-    expect(wrapper.find('textarea').classes()).toContain('textarea');
+    expect(wrapper.find('textarea').classes()).toContain('gt-textarea');
   });
 
   it('emits update:modelValue on input', async () => {
@@ -49,7 +49,7 @@ describe('Textarea', () => {
     const error = wrapper.find('.gt-input-error');
     expect(error.text()).toBe('Required');
     expect(error.attributes('role')).toBe('alert');
-    expect(wrapper.find('textarea').classes()).toContain('textarea--error');
+    expect(wrapper.find('textarea').classes()).toContain('gt-textarea--error');
   });
 
   it('error replaces help text', () => {
@@ -73,7 +73,9 @@ describe('Textarea', () => {
   it('sets disabled state', () => {
     const wrapper = mount(Textarea, { props: { disabled: true } });
     expect(wrapper.find('textarea').attributes('disabled')).toBeDefined();
-    expect(wrapper.find('textarea').classes()).toContain('textarea--disabled');
+    expect(wrapper.find('textarea').classes()).toContain(
+      'gt-textarea--disabled',
+    );
   });
 
   it('sets readonly state', () => {
@@ -98,7 +100,7 @@ describe('Textarea', () => {
     const wrapper = mount(Textarea, {
       props: { modelValue: '', maxChars: 100 },
     });
-    expect(wrapper.find('.textarea-count').text()).toContain(
+    expect(wrapper.find('.gt-textarea-count').text()).toContain(
       '100 tegn tilbage',
     );
   });
@@ -107,15 +109,17 @@ describe('Textarea', () => {
     const wrapper = mount(Textarea, {
       props: { modelValue: 'hello', maxChars: 10 },
     });
-    expect(wrapper.find('.textarea-count').text()).toContain('5 tegn tilbage');
+    expect(wrapper.find('.gt-textarea-count').text()).toContain(
+      '5 tegn tilbage',
+    );
   });
 
   it('shows over-limit message', () => {
     const wrapper = mount(Textarea, {
       props: { modelValue: 'hello world!', maxChars: 5 },
     });
-    const count = wrapper.find('.textarea-count');
-    expect(count.classes()).toContain('textarea-count--over');
+    const count = wrapper.find('.gt-textarea-count');
+    expect(count.classes()).toContain('gt-textarea-count--over');
     expect(count.text()).toContain('overskredet med 7 tegn');
   });
 
@@ -123,12 +127,12 @@ describe('Textarea', () => {
     const wrapper = mount(Textarea, {
       props: { modelValue: 'hello world', maxChars: 5 },
     });
-    expect(wrapper.find('textarea').classes()).toContain('textarea--error');
+    expect(wrapper.find('textarea').classes()).toContain('gt-textarea--error');
   });
 
   it('does not show character count without maxChars', () => {
     const wrapper = mount(Textarea);
-    expect(wrapper.find('.textarea-count').exists()).toBe(false);
+    expect(wrapper.find('.gt-textarea-count').exists()).toBe(false);
   });
 
   // aria-describedby

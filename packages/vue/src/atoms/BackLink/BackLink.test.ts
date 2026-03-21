@@ -14,7 +14,7 @@ describe('BackLink', () => {
     const wrapper = mount(BackLink, {
       props: { href: '/blog', label: 'Back' },
     });
-    expect(wrapper.find('a').classes()).toContain('back-link');
+    expect(wrapper.find('a').classes()).toContain('gt-back-link');
   });
 
   it('renders href', () => {

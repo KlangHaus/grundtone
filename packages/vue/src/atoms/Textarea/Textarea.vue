@@ -22,6 +22,7 @@
 
   const p = computed(() => getClassPrefix());
   const base = computed(() => `${p.value}-input`); // reuse input-field pattern
+  const ta = computed(() => `${p.value}-textarea`);
 
   const textareaId = computed(() => props.id ?? generateId('textarea'));
   const descriptionId = computed(() =>
@@ -72,11 +73,11 @@
     <textarea
       :id="textareaId"
       :class="[
-        'textarea',
+        ta,
         {
-          'textarea--error': !!errorText || isOverLimit,
-          'textarea--disabled': disabled,
-          'textarea--readonly': readonly,
+          [`${ta}--error`]: !!errorText || isOverLimit,
+          [`${ta}--disabled`]: disabled,
+          [`${ta}--readonly`]: readonly,
         },
       ]"
       :value="modelValue"
@@ -97,7 +98,7 @@
     <!-- Character count -->
     <p
       v-if="maxChars"
-      :class="['textarea-count', { 'textarea-count--over': isOverLimit }]"
+      :class="[`${ta}-count`, { [`${ta}-count--over`]: isOverLimit }]"
       aria-live="polite"
     >
       <template v-if="charsRemaining! >= 0">
@@ -109,3 +110,70 @@
     </p>
   </div>
 </template>
+
+<style lang="scss">
+  $prefix: 'gt' !default;
+
+  .#{$prefix}-textarea {
+    display: block;
+    width: 100%;
+    border: 1px solid tokens.color('border-medium');
+    border-radius: tokens.radius('md');
+    background-color: tokens.color('background');
+    color: tokens.color('text');
+    font-family: tokens.font-family('base');
+    font-size: tokens.font-size('base');
+    line-height: tokens.line-height('normal');
+    padding: tokens.space('sm') tokens.space('md');
+    resize: vertical;
+    min-height: 6rem;
+    transition:
+      border-color tokens.duration('fast') tokens.ease('ease-out'),
+      box-shadow tokens.duration('fast') tokens.ease('ease-out');
+
+    &::placeholder {
+      color: tokens.color('text-secondary');
+      opacity: 0.7;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: tokens.color('primary');
+      box-shadow: 0 0 0 3px tokens.color('focus-ring');
+    }
+
+    &--error {
+      border-color: tokens.color('error');
+
+      &:focus {
+        border-color: tokens.color('error');
+        box-shadow: 0 0 0 3px
+          color-mix(in srgb, #{tokens.color('error')} 25%, transparent);
+      }
+    }
+
+    &--disabled,
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background-color: tokens.color('surface-alt');
+    }
+
+    &--readonly,
+    &:read-only {
+      background-color: tokens.color('surface-alt');
+      cursor: default;
+    }
+  }
+
+  .#{$prefix}-textarea-count {
+    font-size: tokens.font-size('sm');
+    color: tokens.color('text-secondary');
+    margin-top: tokens.space('xs');
+
+    &--over {
+      color: tokens.color('error');
+      font-weight: tokens.font-weight('semibold');
+    }
+  }
+</style>
