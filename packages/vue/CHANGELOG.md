@@ -1,5 +1,25 @@
 # @grundtone/vue
 
+## 2.9.1 - 2026-03-21
+
+### Patch Changes
+
+- [`009ab18`](https://github.com/grundtone/grundtone/commit/009ab18cbff1652f5b42665bfcc7bc37a4e310b7)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add Toast component, chevron-up icon, and
+  prefix refactor for all new components
+
+  - **vue**: Add `GTToast`, `GTToastContainer`, and `useToast` composable (Sonner-style with
+    countdown bar, stacking, rich colors, 15 tests). Add chevron-up icon for BackToTop.
+  - **vue**: Prefix refactor — all new components (Tag, BackLink, BackToTop, Textarea, Checkbox,
+    RadioGroup, CheckboxGroup, SearchField, OverflowMenu, Toast, Modal) now use `getClassPrefix()`
+    in templates and `<style lang="scss">` blocks with `$prefix` and `tokens.*` namespace, matching
+    the existing Badge/Input/Button pattern.
+  - **icons**: Add `chevron-up` SVG icon to navigation category (13 icons total).
+
+- Updated dependencies
+  [[`009ab18`](https://github.com/grundtone/grundtone/commit/009ab18cbff1652f5b42665bfcc7bc37a4e310b7)]:
+  - @grundtone/icons@2.1.2
+
 ## 2.9.0 - 2026-03-21
 
 ### Minor Changes
