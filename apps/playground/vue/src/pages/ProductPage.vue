@@ -2,6 +2,7 @@
   import {
     GTAccordion,
     GTAccordionItem,
+    GTBackLink,
     GTBadge,
     GTBreadcrumb,
     GTButton,
@@ -177,8 +178,6 @@
       </div>
     </section>
 
-    <a href="#/shop" class="back-link text-sm font-medium text-primary">
-      &larr; Tilbage til shop
-    </a>
+    <GTBackLink href="#/shop" label="Tilbage til shop" />
   </main>
 </template>

@@ -50,6 +50,8 @@ export type {
 } from './hooks/useDawaAutocomplete';
 
 // Components
+export { GTBackLink } from './components/BackLink';
+export type { BackLinkProps as RNBackLinkProps } from './components/BackLink';
 export { GTAutocomplete } from './components/Autocomplete';
 export type {
   AutocompleteProps,

@@ -236,6 +236,7 @@ export default defineConfig({
           items: [
             { text: 'Accordion', link: '/vue/accordion' },
             { text: 'Alert', link: '/vue/alert' },
+            { text: 'Back Link', link: '/vue/back-link' },
             { text: 'Anchor Links', link: '/vue/anchor-links' },
             { text: 'Badge', link: '/vue/badge' },
             { text: 'Breadcrumb', link: '/vue/breadcrumb' },

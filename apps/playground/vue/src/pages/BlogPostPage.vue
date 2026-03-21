@@ -4,6 +4,7 @@
     GTAccordionItem,
     GTAnchorLinks,
     GTBadge,
+    GTBackLink,
     GTBreadcrumb,
     GTDetails,
   } from '@grundtone/vue';
@@ -161,12 +162,7 @@
           </div>
         </article>
 
-        <a
-          href="#/blog"
-          class="back-link text-sm font-medium text-primary mt-4"
-        >
-          &larr; Alle indlæg
-        </a>
+        <GTBackLink href="#/blog" label="Alle indlæg" class="mt-4" />
       </div>
     </div>
   </main>
