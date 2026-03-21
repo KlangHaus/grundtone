@@ -251,6 +251,7 @@ export default defineConfig({
             { text: 'Spinner', link: '/vue/spinner' },
             { text: 'Tabs', link: '/vue/tabs' },
             { text: 'Tag', link: '/vue/tag' },
+            { text: 'Toast', link: '/vue/toast' },
           ],
         },
         {
@@ -399,6 +400,7 @@ export default defineConfig({
             { text: 'Spinner', link: '/web/c-spinner' },
             { text: 'Tabs', link: '/web/c-tabs' },
             { text: 'Tag', link: '/web/c-tag' },
+            { text: 'Toast', link: '/web/c-toast' },
           ],
         },
         {
