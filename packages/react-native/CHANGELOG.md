@@ -1,5 +1,14 @@
 # @grundtone/react-native
 
+## 2.12.0 - 2026-03-22
+
+### Patch Changes
+
+- Updated dependencies
+  [[`fc456bf`](https://github.com/grundtone/grundtone/commit/fc456bfc25e1263f3fc19140f8108698072c269d)]:
+  - @grundtone/utils@2.12.0
+  - @grundtone/icons@2.2.0
+
 ## 2.11.0 - 2026-03-22
 
 ### Minor Changes
