@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { GTCard, GTTabs, GTTabPanel } from '@grundtone/vue';
+  import { GTButton, GTCard, GTTabs, GTTabPanel } from '@grundtone/vue';
 
   const products = [
     {
@@ -65,10 +65,17 @@
 <template>
   <main id="main" class="container-lg p-4">
     <section>
-      <h1 class="text-3xl font-bold mb-1">Shop</h1>
-      <p class="text-secondary mb-4">
-        Udforsk vores kollektion af design-system merchandise og accessories.
-      </p>
+      <div class="flex justify-between items-center mb-4">
+        <div>
+          <h1 class="text-3xl font-bold mb-1">Shop</h1>
+          <p class="text-secondary">
+            Udforsk vores kollektion af design-system merchandise og accessories.
+          </p>
+        </div>
+        <GTButton as="a" href="#/checkout" variant="primary" size="sm">
+          Gå til kassen
+        </GTButton>
+      </div>
 
       <GTTabs
         variant="pill"

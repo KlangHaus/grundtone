@@ -6,6 +6,7 @@
   import ProductPage from './pages/ProductPage.vue';
   import SignupPage from './pages/SignupPage.vue';
   import LoginPage from './pages/LoginPage.vue';
+  import CheckoutPage from './pages/CheckoutPage.vue';
   import {
     GTAlert,
     GTAnchorLinks,
@@ -110,6 +111,7 @@
     else if (hash.startsWith('#/blog')) page.value = 'blog';
     else if (hash.match(/^#\/shop\/\d/)) page.value = 'product';
     else if (hash.startsWith('#/shop')) page.value = 'shop';
+    else if (hash === '#/checkout') page.value = 'checkout';
     else if (hash === '#/signup') page.value = 'signup';
     else if (hash === '#/login') page.value = 'login';
     else page.value = 'playground';
@@ -156,6 +158,7 @@
   <BlogPostPage v-else-if="page === 'blog-post'" />
   <ShopPage v-else-if="page === 'shop'" />
   <ProductPage v-else-if="page === 'product'" />
+  <CheckoutPage v-else-if="page === 'checkout'" />
   <SignupPage v-else-if="page === 'signup'" />
   <LoginPage v-else-if="page === 'login'" />
 
