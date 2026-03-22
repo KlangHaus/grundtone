@@ -169,6 +169,8 @@ export type {
   TabItem,
   TabPanelProps,
 } from './molecules/Tabs';
+export { GTStepper } from './molecules/Stepper';
+export type { StepperProps, StepperStep } from './molecules/Stepper';
 export { GTToast, GTToastContainer } from './molecules/Toast';
 export type {
   ToastProps,

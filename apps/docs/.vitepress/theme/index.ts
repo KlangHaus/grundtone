@@ -34,6 +34,7 @@ import ModalDemo from '../../../../packages/vue/src/molecules/Modal/demo.vue';
 import OverflowMenuDemo from '../../../../packages/vue/src/molecules/OverflowMenu/demo.vue';
 import RadioGroupDemo from '../../../../packages/vue/src/molecules/RadioGroup/demo.vue';
 import SearchFieldDemo from '../../../../packages/vue/src/molecules/SearchField/demo.vue';
+import StepperDemo from '../../../../packages/vue/src/molecules/Stepper/demo.vue';
 import TabsDemo from '../../../../packages/vue/src/molecules/Tabs/demo.vue';
 import ToastDemo from '../../../../packages/vue/src/molecules/Toast/demo.vue';
 import CookieMessageDemo from '../../../../packages/vue/src/molecules/CookieMessage/demo.vue';
@@ -64,6 +65,7 @@ export default {
     app.component('DateInputDemo', DateInputDemo);
     app.component('InputDemo', InputDemo);
     app.component('SearchFieldDemo', SearchFieldDemo);
+    app.component('StepperDemo', StepperDemo);
     app.component('SelectDemo', SelectDemo);
     app.component('SkipLinkDemo', SkipLinkDemo);
     app.component('SpinnerDemo', SpinnerDemo);

@@ -126,6 +126,11 @@ export type {
   RadioOption as RNRadioOption,
 } from './components/RadioGroup';
 export { GTSpinner } from './components/Spinner';
+export { GTStepper } from './components/Stepper';
+export type {
+  StepperProps as RNStepperProps,
+  StepperStep as RNStepperStep,
+} from './components/Stepper';
 export type {
   SpinnerProps as RNSpinnerProps,
   SpinnerSize as RNSpinnerSize,
