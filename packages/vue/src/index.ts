@@ -44,6 +44,10 @@ export type {
   DateInputSize,
 } from './atoms/DateInput';
 export { GTInput } from './atoms/Input';
+export { GTOtpInput } from './atoms/OtpInput';
+export type { OtpInputProps } from './atoms/OtpInput';
+export { GTPasswordInput } from './atoms/PasswordInput';
+export type { PasswordInputProps } from './atoms/PasswordInput';
 export { GTSelect } from './atoms/Select';
 export { GTSkipLink } from './atoms/SkipLink';
 export type { SkipLinkProps } from './atoms/SkipLink';

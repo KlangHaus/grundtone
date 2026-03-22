@@ -267,6 +267,8 @@ export default defineConfig({
             { text: 'Date Input', link: '/vue/date-input' },
             { text: 'File Upload', link: '/vue/file-upload' },
             { text: 'Input', link: '/vue/input' },
+            { text: 'OTP Input', link: '/vue/otp-input' },
+            { text: 'Password Input', link: '/vue/password-input' },
             { text: 'Radio Group', link: '/vue/radio-group' },
             { text: 'Search Field', link: '/vue/search-field' },
             { text: 'Select', link: '/vue/select' },
