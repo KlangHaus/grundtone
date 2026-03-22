@@ -57,7 +57,8 @@
       align-items: center;
       gap: tokens.space('xs');
       list-style: none;
-      padding: 0;
+      padding: 0 !important;
+      padding-left: 0 !important;
       margin: 0;
     }
 
@@ -65,6 +66,7 @@
       display: inline-flex;
       align-items: center;
       gap: tokens.space('xs');
+      margin-top: 0 !important; // override global li + li margin
     }
 
     &__link {

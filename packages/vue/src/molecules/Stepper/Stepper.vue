@@ -76,7 +76,8 @@
     display: flex;
     align-items: flex-start;
     list-style: none !important;
-    padding: 0;
+    padding: 0 !important;
+    padding-left: 0 !important;
     margin: 0;
 
     &__step {
@@ -88,6 +89,7 @@
       text-align: center;
       list-style: none;
       padding: 0;
+      margin-top: 0 !important; // override global li + li margin
 
       &::before,
       &::marker {
@@ -95,13 +97,13 @@
       }
     }
 
-    // Connecting line — spans from previous dot center to this dot center
+    // Connecting line — stretches from previous step center to this step center
     &__step + &__step::after {
       content: '';
       position: absolute;
-      top: calc(0.75rem - 1px); // vertically center on dot (1.5rem / 2)
-      left: calc(-50% + 0.75rem); // start at previous dot center
-      right: calc(50% + 0.75rem); // end at this dot center
+      top: calc(0.75rem - 1px);
+      left: -50%;
+      right: 50%;
       height: 2px;
       background: tokens.color('border-medium');
       z-index: 0;
