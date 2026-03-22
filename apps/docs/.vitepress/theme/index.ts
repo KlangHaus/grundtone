@@ -9,6 +9,7 @@ import DosDonts from './components/DosDonts.vue';
 import BackLinkDemo from '../../../../packages/vue/src/atoms/BackLink/demo.vue';
 import BackToTopDemo from '../../../../packages/vue/src/atoms/BackToTop/demo.vue';
 import ButtonDemo from '../../../../packages/vue/src/atoms/Button/demo.vue';
+import FileUploadDemo from '../../../../packages/vue/src/atoms/FileUpload/demo.vue';
 import DetailsDemo from '../../../../packages/vue/src/atoms/Details/demo.vue';
 import IconDemo from '../../../../packages/vue/src/atoms/Icon/demo.vue';
 import DateInputDemo from '../../../../packages/vue/src/atoms/DateInput/demo.vue';
@@ -61,6 +62,7 @@ export default {
     app.component('BackLinkDemo', BackLinkDemo);
     app.component('BackToTopDemo', BackToTopDemo);
     app.component('ButtonDemo', ButtonDemo);
+    app.component('FileUploadDemo', FileUploadDemo);
     app.component('IconDemo', IconDemo);
     app.component('DateInputDemo', DateInputDemo);
     app.component('InputDemo', InputDemo);

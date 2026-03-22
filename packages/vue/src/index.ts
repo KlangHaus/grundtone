@@ -18,6 +18,8 @@ export type {
   AutocompleteSuggestion,
   AutocompleteSize,
 } from './atoms/Autocomplete';
+export { GTFileUpload } from './atoms/FileUpload';
+export type { FileUploadProps } from './atoms/FileUpload';
 export { GTBadge } from './atoms/Badge';
 export type { BadgeProps, BadgeVariant, BadgeSize } from './atoms/Badge';
 export { GTButton } from './atoms/Button';

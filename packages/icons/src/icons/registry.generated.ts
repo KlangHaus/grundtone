@@ -23,8 +23,18 @@ export const iconRegistry = {
     viewBox: '0 0 24 24',
     category: 'action',
   },
+  file: {
+    body: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/> <polyline points="14 2 14 8 20 8"/>',
+    viewBox: '0 0 24 24',
+    category: 'action',
+  },
   search: {
     body: '<circle cx="11" cy="11" r="8"/> <path d="M21 21l-4.35-4.35"/>',
+    viewBox: '0 0 24 24',
+    category: 'action',
+  },
+  upload: {
+    body: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>',
     viewBox: '0 0 24 24',
     category: 'action',
   },
