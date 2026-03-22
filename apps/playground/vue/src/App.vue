@@ -186,6 +186,7 @@
             { label: 'Tag', href: '#pg-tag' },
             { label: 'Search Field', href: '#pg-search' },
             { label: 'Overflow Menu', href: '#pg-overflow' },
+            { label: 'Tooltip', href: '#pg-tooltip' },
             { label: 'Toast', href: '#pg-toast' },
             { label: 'Radio & Checkbox', href: '#pg-choice' },
           ]"
@@ -1082,7 +1083,7 @@
         </section>
 
         <section class="mb-6">
-          <h3>Tooltip</h3>
+          <h2 id="pg-tooltip" style="scroll-margin-top: 1rem">Tooltip</h2>
           <div class="flex flex-col gap-3" style="max-width: 400px">
             <GTTooltip content="CPR bruges til at verificere din identitet.">
               <GTInput label="CPR-nummer" placeholder="000000-0000" />
