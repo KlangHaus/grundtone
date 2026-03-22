@@ -1,5 +1,26 @@
 # @grundtone/vue
 
+## 2.11.0 - 2026-03-22
+
+### Minor Changes
+
+- [`c37762e`](https://github.com/grundtone/grundtone/commit/c37762e4ae7944dffc13d04de43a5b0ba83fcf32)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add Stepper component, checkout flow, and fixes
+
+  - **design-system**: Add `_stepper.scss` (horizontal dots, checkmarks, connecting lines,
+    error/simple variants)
+  - **vue**: Add `GTStepper` molecule (14 tests) with v-model:activeStep, allClickable, simple
+    variant. Fix Input charWidth with padding compensation. Fix Breadcrumb li margin override. Add
+    checkout flow to Vue playground (4-step: Cart → Delivery → Payment → Confirm using GTStepper,
+    GTAddressInput, GTCard, GTRadioGroup, GTCheckbox, useField, useToast).
+  - **react-native**: Add `GTStepper` with Pressable steps and dot/check/error indicators
+
+### Patch Changes
+
+- Updated dependencies
+  [[`c37762e`](https://github.com/grundtone/grundtone/commit/c37762e4ae7944dffc13d04de43a5b0ba83fcf32)]:
+  - @grundtone/design-system@2.11.0
+
 ## 2.10.0 - 2026-03-22
 
 ### Minor Changes
