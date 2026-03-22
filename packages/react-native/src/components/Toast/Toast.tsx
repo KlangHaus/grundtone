@@ -54,7 +54,7 @@ export function GTToast({
     padding: rem(theme.spacing.md),
     paddingRight: rem(theme.spacing.lg),
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     gap: rem(theme.spacing.sm),
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },

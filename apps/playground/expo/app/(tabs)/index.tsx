@@ -22,6 +22,7 @@ import {
   GTSearchField,
   GTTag,
   GTTextarea,
+  GTToast,
   useGrundtoneTheme,
   useField,
   useFormValidation,
@@ -33,6 +34,7 @@ import {
 export default function ComponentsScreen() {
   const { theme, isDark, mode, setMode } = useGrundtoneTheme();
   const [isLoading, setIsLoading] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showPersistent, setShowPersistent] = useState(false);
   const [radioValue, setRadioValue] = useState('');
@@ -417,6 +419,20 @@ export default function ComponentsScreen() {
       <View style={groupStyle}>
         <GTSpinner size="lg" text="Henter data…" />
       </View>
+
+      <Text style={headingStyle}>Toast</Text>
+      <GTButton size="sm" variant="primary" onPress={() => setShowToast(true)}>
+        Show Toast
+      </GTButton>
+      {showToast && (
+        <GTToast
+          variant="success"
+          message="Din ansøgning er afsendt"
+          description="Bekræftelse sendt til din email."
+          duration={5000}
+          onDismiss={() => setShowToast(false)}
+        />
+      )}
 
       <Text style={headingStyle}>Textarea</Text>
       <GTTextarea label="Kommentar" placeholder="Skriv her..." maxChars={100} />

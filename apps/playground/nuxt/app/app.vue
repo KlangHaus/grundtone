@@ -569,6 +569,36 @@
     </section>
 
     <section class="mb-6">
+      <h2>Toast</h2>
+      <div class="flex flex-wrap gap-2">
+        <GTButton
+          size="sm"
+          variant="primary"
+          @click="useToast().success('Afsendt', { icon: 'check-circle' })"
+          >Success</GTButton
+        >
+        <GTButton
+          size="sm"
+          variant="negative"
+          @click="useToast().error('Fejl', { icon: 'alert-circle' })"
+          >Error</GTButton
+        >
+        <GTButton
+          size="sm"
+          @click="useToast().info('Ny besked', { icon: 'info-circle' })"
+          >Info</GTButton
+        >
+        <GTButton
+          size="sm"
+          variant="secondary"
+          @click="useToast().warning('Advarsel', { icon: 'alert-triangle' })"
+          >Warning</GTButton
+        >
+      </div>
+      <GTToastContainer position="bottom-right" />
+    </section>
+
+    <section class="mb-6">
       <h2>Textarea</h2>
       <div class="flex flex-col gap-2" style="max-width: 400px">
         <GTTextarea label="Kommentar" placeholder="Skriv her..." />

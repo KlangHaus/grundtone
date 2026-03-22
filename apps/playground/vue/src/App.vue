@@ -35,16 +35,19 @@
     GTCheckbox,
     GTCheckboxGroup,
     GTRadioGroup,
+    GTToastContainer,
     useTheme,
     useField,
     useFormValidation,
     required,
     email,
     minLength,
+    useToast,
   } from '@grundtone/vue';
   import { iconRegistry } from '@grundtone/icons';
 
   const { isDark, mode, setMode, toggleMode } = useTheme();
+  const toast = useToast();
   const showModal = ref(false);
   const showPersistentModal = ref(false);
   const darkToggle = computed({
@@ -182,6 +185,7 @@
             { label: 'Tag', href: '#pg-tag' },
             { label: 'Search Field', href: '#pg-search' },
             { label: 'Overflow Menu', href: '#pg-overflow' },
+            { label: 'Toast', href: '#pg-toast' },
             { label: 'Radio & Checkbox', href: '#pg-choice' },
           ]"
         />
@@ -1077,6 +1081,61 @@
         </section>
 
         <section class="mb-6">
+          <h2 id="pg-toast" style="scroll-margin-top: 1rem">Toast</h2>
+          <div class="flex flex-wrap gap-2">
+            <GTButton
+              size="sm"
+              variant="primary"
+              @click="
+                toast.success('Din ansøgning er afsendt', {
+                  icon: 'check-circle',
+                })
+              "
+            >
+              Success
+            </GTButton>
+            <GTButton
+              size="sm"
+              variant="secondary"
+              @click="
+                toast.warning('Dette er en advarsel', {
+                  icon: 'alert-triangle',
+                })
+              "
+            >
+              Warning
+            </GTButton>
+            <GTButton
+              size="sm"
+              variant="negative"
+              @click="
+                toast.error('Der opstod en fejl', { icon: 'alert-circle' })
+              "
+            >
+              Error
+            </GTButton>
+            <GTButton
+              size="sm"
+              @click="
+                toast.info('Du har fået en besked', {
+                  icon: 'info-circle',
+                  description: 'Yderligere detaljer.',
+                })
+              "
+            >
+              Info
+            </GTButton>
+            <GTButton
+              size="sm"
+              variant="outlined"
+              @click="toast('Ændringer gemt')"
+            >
+              Default
+            </GTButton>
+          </div>
+        </section>
+
+        <section class="mb-6">
           <h2 id="pg-choice" style="scroll-margin-top: 1rem">
             Radio &amp; Checkbox
           </h2>
@@ -1121,6 +1180,8 @@
       </main>
     </div>
   </div>
+
+  <GTToastContainer position="bottom-right" />
 
   <footer class="footer text-xs text-tertiary text-center">
     <p>&copy; 2026 Grundtone. Bygget med semantiske design tokens.</p>

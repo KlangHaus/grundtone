@@ -119,7 +119,7 @@
     border-radius: tokens.radius('lg');
     box-shadow: tokens.shadow('lg');
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: tokens.space('sm');
     overflow: hidden;
     transition:
