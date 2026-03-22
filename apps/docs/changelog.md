@@ -1,4 +1,6 @@
 ---
+outline: [2, 3]
+---
 
 ## 1.0.16
 ### Patch Changes
@@ -8,8 +10,6 @@
   - @grundtone/vue@2.12.0
   - @grundtone/utils@2.12.0
   - @grundtone/icons@2.2.0
-outline: [2, 3]
----
 
 ## 1.0.15
 
