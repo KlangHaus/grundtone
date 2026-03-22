@@ -556,6 +556,51 @@ export const componentExamples: Record<string, string> = {
   <button class="search-field__button" type="submit" aria-label="Søg"><span class="sr-only">Søg</span></button>
 </form>`,
 
+  'c-fieldset': `<fieldset class="fieldset" style="max-width: 420px">
+  <legend class="fieldset__legend">Leveringsadresse</legend>
+  <p class="fieldset__hint">Udfyld din adresse for levering.</p>
+  <div class="fieldset__fields">
+    <div class="input-field">
+      <label class="input-label" for="fs-name">Fulde navn</label>
+      <input id="fs-name" class="input input--md" type="text" placeholder="Anders Andersen" />
+    </div>
+    <div class="input-field">
+      <label class="input-label" for="fs-street">Gade</label>
+      <input id="fs-street" class="input input--md" type="text" placeholder="Vestergade 1" />
+    </div>
+    <div class="fieldset__fields--row">
+      <div class="input-field">
+        <label class="input-label" for="fs-postal">Postnummer</label>
+        <input id="fs-postal" class="input input--md" type="text" placeholder="8000" />
+      </div>
+      <div class="input-field">
+        <label class="input-label" for="fs-city">By</label>
+        <input id="fs-city" class="input input--md" type="text" placeholder="Aarhus C" />
+      </div>
+    </div>
+  </div>
+</fieldset>`,
+
+  'c-fieldset-bordered': `<fieldset class="fieldset fieldset--bordered" style="max-width: 420px">
+  <legend class="fieldset__legend">Betalingsoplysninger</legend>
+  <div class="fieldset__fields">
+    <div class="input-field">
+      <label class="input-label" for="fs-card">Kortnummer</label>
+      <input id="fs-card" class="input input--md" type="text" placeholder="1234 5678 9012 3456" />
+    </div>
+    <div class="fieldset__fields--row">
+      <div class="input-field">
+        <label class="input-label" for="fs-exp">Udløb</label>
+        <input id="fs-exp" class="input input--md" type="text" placeholder="MM/ÅÅ" />
+      </div>
+      <div class="input-field">
+        <label class="input-label" for="fs-cvv">CVV</label>
+        <input id="fs-cvv" class="input input--md" type="text" placeholder="123" />
+      </div>
+    </div>
+  </div>
+</fieldset>`,
+
   'c-textarea': `<div class="input-field" style="max-width: 360px">
   <label class="input-label" for="preview-textarea">Kommentar</label>
   <p class="input-help">Beskriv din situation</p>

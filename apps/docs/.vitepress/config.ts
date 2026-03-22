@@ -414,6 +414,7 @@ export default defineConfig({
             { text: 'Autocomplete', link: '/web/c-autocomplete' },
             { text: 'Checkbox', link: '/web/c-checkbox' },
             { text: 'Date Input', link: '/web/c-date-input' },
+            { text: 'Fieldset', link: '/web/c-fieldset' },
             { text: 'Input', link: '/web/c-input' },
             { text: 'Radio', link: '/web/c-radio' },
             { text: 'Search Field', link: '/web/c-search-field' },

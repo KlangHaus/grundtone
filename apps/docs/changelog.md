@@ -1,4 +1,6 @@
 ---
+outline: [2, 3]
+---
 
 ## 1.0.15
 ### Patch Changes
