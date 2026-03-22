@@ -97,13 +97,13 @@
       }
     }
 
-    // Connecting line — stretches from previous step center to this step center
+    // Connecting line — from prev dot edge to this dot edge
     &__step + &__step::after {
       content: '';
       position: absolute;
       top: calc(0.75rem - 1px);
-      left: -50%;
-      right: 50%;
+      left: calc(-50% + 0.75rem); // start at prev dot's right edge
+      right: calc(50% + 0.75rem); // end at this dot's left edge
       height: 2px;
       background: tokens.color('border-medium');
       z-index: 0;

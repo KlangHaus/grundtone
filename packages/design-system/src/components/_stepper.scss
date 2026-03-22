@@ -32,8 +32,8 @@
     content: '';
     position: absolute;
     top: calc(0.75rem - 1px);
-    left: -50%;
-    right: 50%;
+    left: calc(-50% + 0.75rem);
+    right: calc(50% + 0.75rem);
     height: 2px;
     background: var(--color-border-medium);
     z-index: 0;
