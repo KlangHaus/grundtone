@@ -3,6 +3,7 @@
   import {
     GTStepper,
     GTInput,
+    GTAddressInput,
     GTSelect,
     GTRadioGroup,
     GTCheckbox,
@@ -64,22 +65,11 @@
     validators: [required('Email er påkrævet'), email('Ugyldig email')],
     validateOn: 'blur',
   });
-  const addressField = useField({
-    validators: [required('Adresse er påkrævet')],
-  });
-  const postalField = useField({
-    validators: [required('Postnummer er påkrævet')],
-  });
-  const cityField = useField({
-    validators: [required('By er påkrævet')],
-  });
+  const addressValue = ref('');
 
   const deliveryForm = useFormValidation({
     name: nameField,
     email: emailField,
-    address: addressField,
-    postal: postalField,
-    city: cityField,
   });
 
   // Step 3: Payment
@@ -214,37 +204,12 @@
           />
         </div>
 
-        <GTInput
-          v-model="addressField.value.value"
-          :error-text="addressField.errorText.value"
-          v-on="addressField.handlers"
+        <GTAddressInput
+          v-model="addressValue"
           label="Adresse"
-          placeholder="Vestergade 1, 2. th."
-          autocomplete="street-address"
+          help-text="Begynd at skrive din adresse"
           required
         />
-
-        <div class="grid grid-cols-2 gap-3">
-          <GTInput
-            v-model="postalField.value.value"
-            :error-text="postalField.errorText.value"
-            v-on="postalField.handlers"
-            label="Postnummer"
-            placeholder="8000"
-            :char-width="4"
-            autocomplete="postal-code"
-            required
-          />
-          <GTInput
-            v-model="cityField.value.value"
-            :error-text="cityField.errorText.value"
-            v-on="cityField.handlers"
-            label="By"
-            placeholder="Aarhus C"
-            autocomplete="address-level2"
-            required
-          />
-        </div>
 
         <GTSelect
           label="Land"
@@ -311,8 +276,7 @@
         <GTCard variant="bordered" title="Leveringsadresse">
           <p class="body-text-sm">
             {{ nameField.value.value }}<br />
-            {{ addressField.value.value }}<br />
-            {{ postalField.value.value }} {{ cityField.value.value }}<br />
+            {{ addressValue }}<br />
             {{ emailField.value.value }}
           </p>
         </GTCard>

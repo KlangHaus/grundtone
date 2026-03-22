@@ -261,18 +261,18 @@
       max-width: 48rem;
     }
 
-    // Width by character count
+    // Width by character count — includes padding compensation
     &-char-4 {
-      max-width: 6ch;
+      max-width: calc(4ch + 2 * #{tokens.space('md')} + 2px);
     }
     &-char-8 {
-      max-width: 10ch;
+      max-width: calc(8ch + 2 * #{tokens.space('md')} + 2px);
     }
     &-char-11 {
-      max-width: 13ch;
+      max-width: calc(11ch + 2 * #{tokens.space('md')} + 2px);
     }
     &-char-27 {
-      max-width: 29ch;
+      max-width: calc(27ch + 2 * #{tokens.space('md')} + 2px);
     }
 
     // States
