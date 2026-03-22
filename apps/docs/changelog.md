@@ -1,5 +1,12 @@
 ---
 
+## 1.0.14
+### Patch Changes
+
+- Updated dependencies [[`200846b`](https://github.com/grundtone/grundtone/commit/200846b19a450ca48fc97919cf858989483c4318)]:
+  - @grundtone/design-system@2.10.0
+  - @grundtone/vue@2.10.0
+
 ## 1.0.13
 ### Patch Changes
 

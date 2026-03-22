@@ -1,5 +1,26 @@
 # @grundtone/vue
 
+## 2.10.0 - 2026-03-22
+
+### Minor Changes
+
+- [`200846b`](https://github.com/grundtone/grundtone/commit/200846b19a450ca48fc97919cf858989483c4318)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add Tooltip component, Toast playground updates
+
+  - **design-system**: Add `_tooltip.scss` (dark minimal Sonner-style bubble with auto-positioning
+    and arrow)
+  - **vue**: Add `GTTooltip` atom (click with help icon, hover with 300ms delay, auto-flips
+    top↔bottom, 13 tests). Toast icons vertically centered. Toast added to all playgrounds with
+    variant icons.
+  - **react-native**: Add `GTTooltip` (long-press trigger with Modal overlay). Toast vertically
+    centered.
+
+### Patch Changes
+
+- Updated dependencies
+  [[`200846b`](https://github.com/grundtone/grundtone/commit/200846b19a450ca48fc97919cf858989483c4318)]:
+  - @grundtone/design-system@2.10.0
+
 ## 2.9.1 - 2026-03-21
 
 ### Patch Changes

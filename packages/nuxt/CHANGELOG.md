@@ -1,5 +1,14 @@
 # @grundtone/nuxt
 
+## 2.10.0 - 2026-03-22
+
+### Patch Changes
+
+- Updated dependencies
+  [[`200846b`](https://github.com/grundtone/grundtone/commit/200846b19a450ca48fc97919cf858989483c4318)]:
+  - @grundtone/design-system@2.10.0
+  - @grundtone/vue@2.10.0
+
 ## 2.9.1 - 2026-03-21
 
 ### Patch Changes

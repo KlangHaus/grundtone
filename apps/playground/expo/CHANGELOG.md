@@ -1,5 +1,13 @@
 # @grundtone/expo-playground
 
+## 0.0.11
+
+### Patch Changes
+
+- Updated dependencies
+  [[`200846b`](https://github.com/grundtone/grundtone/commit/200846b19a450ca48fc97919cf858989483c4318)]:
+  - @grundtone/react-native@2.10.0
+
 ## 0.0.10
 
 ### Patch Changes
