@@ -29,13 +29,12 @@
   &__step + &__step::after {
     content: '';
     position: absolute;
-    top: 0.75rem;
-    right: 50%;
-    width: 100%;
+    top: calc(0.75rem - 1px);
+    left: calc(-50% + 0.75rem);
+    right: calc(50% + 0.75rem);
     height: 2px;
     background: var(--color-border-medium);
     z-index: 0;
-    transform: translateX(-50%);
   }
 
   &__step--completed + &__step::after {
@@ -99,6 +98,11 @@
       font-size: var(--font-size-xs);
       font-weight: var(--font-weight-bold);
       line-height: 1;
+      width: auto;
+      height: auto;
+      border: none;
+      border-radius: 0;
+      transform: none;
     }
   }
 

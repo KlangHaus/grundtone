@@ -53,7 +53,7 @@
         `${base}__step`,
         {
           [`${base}__step--active`]: i === activeStep,
-          [`${base}__step--completed`]: isCompleted(i),
+          [`${base}__step--completed`]: isCompleted(i) && !step.error,
           [`${base}__step--error`]: step.error,
           [`${base}__step--clickable`]: isClickable(i),
           [`${base}__step--disabled`]: !isClickable(i) && i !== activeStep,
@@ -95,17 +95,16 @@
       }
     }
 
-    // Connecting line
+    // Connecting line — spans from previous dot center to this dot center
     &__step + &__step::after {
       content: '';
       position: absolute;
-      top: 0.75rem;
-      right: 50%;
-      width: 100%;
+      top: calc(0.75rem - 1px); // vertically center on dot (1.5rem / 2)
+      left: calc(-50% + 0.75rem); // start at previous dot center
+      right: calc(50% + 0.75rem); // end at this dot center
       height: 2px;
       background: tokens.color('border-medium');
       z-index: 0;
-      transform: translateX(-50%);
     }
 
     &__step--completed + &__step::after {
@@ -158,7 +157,7 @@
       }
     }
 
-    // Error
+    // Error — must reset completed checkmark styles
     &__step--error &__dot {
       border-color: tokens.color('error');
       background: tokens.color('error');
@@ -169,6 +168,12 @@
         font-size: tokens.font-size('xs');
         font-weight: tokens.font-weight('bold');
         line-height: 1;
+        // Reset any checkmark styles
+        width: auto;
+        height: auto;
+        border: none;
+        border-radius: 0;
+        transform: none;
       }
     }
 
