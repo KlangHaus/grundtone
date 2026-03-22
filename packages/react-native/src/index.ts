@@ -61,6 +61,8 @@ export type {
 } from './components/Autocomplete';
 export { GTAddressInput } from './components/AddressInput';
 export type { AddressInputProps } from './components/AddressInput';
+export { GTDatePicker } from './components/DatePicker';
+export type { DatePickerProps as RNDatePickerProps } from './components/DatePicker';
 export { GTIcon } from './components/Icon';
 export type { IconProps, IconSize } from './components/Icon';
 export { GTTabs, GTTabPanel } from './components/Tabs';

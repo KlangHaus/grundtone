@@ -28,6 +28,7 @@ import BadgeDemo from '../../../../packages/vue/src/atoms/Badge/demo.vue';
 import AccordionDemo from '../../../../packages/vue/src/molecules/Accordion/demo.vue';
 import AddressInputDemo from '../../../../packages/vue/src/molecules/AddressInput/demo.vue';
 import AlertDemo from '../../../../packages/vue/src/molecules/Alert/demo.vue';
+import DatePickerDemo from '../../../../packages/vue/src/molecules/DatePicker/demo.vue';
 import AnchorLinksDemo from '../../../../packages/vue/src/molecules/AnchorLinks/demo.vue';
 import BreadcrumbDemo from '../../../../packages/vue/src/molecules/Breadcrumb/demo.vue';
 import CardDemo from '../../../../packages/vue/src/molecules/Card/demo.vue';
@@ -84,6 +85,7 @@ export default {
     app.component('AccordionDemo', AccordionDemo);
     app.component('AddressInputDemo', AddressInputDemo);
     app.component('AlertDemo', AlertDemo);
+    app.component('DatePickerDemo', DatePickerDemo);
     app.component('DetailsDemo', DetailsDemo);
     app.component('AnchorLinksDemo', AnchorLinksDemo);
     app.component('BreadcrumbDemo', BreadcrumbDemo);

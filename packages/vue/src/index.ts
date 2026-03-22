@@ -144,6 +144,8 @@ export type {
   AddressInputProps,
   AddressInputSize,
 } from './molecules/AddressInput';
+export { GTDatePicker } from './molecules/DatePicker';
+export type { DatePickerProps } from './molecules/DatePicker';
 export { GTAlert } from './molecules/Alert';
 export { GTAnchorLinks } from './molecules/AnchorLinks';
 export type { AnchorLinksProps, AnchorLinkItem } from './molecules/AnchorLinks';

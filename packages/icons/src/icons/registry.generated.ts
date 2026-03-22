@@ -8,6 +8,11 @@ export interface IconDefinition {
 }
 
 export const iconRegistry = {
+  calendar: {
+    body: '<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/> <line x1="16" y1="2" x2="16" y2="6"/> <line x1="8" y1="2" x2="8" y2="6"/> <line x1="3" y1="10" x2="21" y2="10"/>',
+    viewBox: '0 0 24 24',
+    category: 'action',
+  },
   check: {
     body: '<path d="M20 6L9 17l-5-5"/>',
     viewBox: '0 0 24 24',
@@ -55,6 +60,16 @@ export const iconRegistry = {
   },
   'arrow-right': {
     body: '<path d="M5 12h14M12 5l7 7-7 7"/>',
+    viewBox: '0 0 24 24',
+    category: 'navigation',
+  },
+  'chevron-left': {
+    body: '<path d="M15 18l-6-6 6-6"/>',
+    viewBox: '0 0 24 24',
+    category: 'navigation',
+  },
+  'chevron-right': {
+    body: '<path d="M9 18l6-6-6-6"/>',
     viewBox: '0 0 24 24',
     category: 'navigation',
   },
