@@ -3,7 +3,6 @@
   import {
     GTStepper,
     GTInput,
-    GTDateInput,
     GTSelect,
     GTRadioGroup,
     GTCheckbox,
@@ -12,15 +11,12 @@
     GTBadge,
     GTAlert,
     GTBackLink,
-    GTSpinner,
     useField,
-    useDateField,
     useFormValidation,
     useToast,
     required,
     email,
     minLength,
-    date as dateValidator,
   } from '@grundtone/vue';
 
   const toast = useToast();
@@ -128,7 +124,12 @@
 
     <h1 class="text-3xl font-bold mt-4 mb-2">Checkout</h1>
 
-    <GTStepper v-model:active-step="step" :steps="steps" all-clickable class="mb-5" />
+    <GTStepper
+      v-model:active-step="step"
+      :steps="steps"
+      all-clickable
+      class="mb-5"
+    />
 
     <!-- Step 1: Cart -->
     <div v-if="step === 0">
@@ -190,7 +191,7 @@
     <div v-if="step === 1">
       <h2 class="text-xl font-semibold mb-3">Leveringsoplysninger</h2>
 
-      <div class="flex flex-col gap-3" >
+      <div class="flex flex-col gap-3">
         <div class="grid grid-cols-2 gap-3">
           <GTInput
             v-model="nameField.value.value"
@@ -319,7 +320,13 @@
         <GTCard variant="bordered" title="Betaling">
           <div class="flex items-center gap-2">
             <GTBadge variant="info" size="sm">
-              {{ paymentMethod === 'card' ? 'Kort' : paymentMethod === 'mobilepay' ? 'MobilePay' : 'Faktura' }}
+              {{
+                paymentMethod === 'card'
+                  ? 'Kort'
+                  : paymentMethod === 'mobilepay'
+                    ? 'MobilePay'
+                    : 'Faktura'
+              }}
             </GTBadge>
           </div>
         </GTCard>
@@ -346,12 +353,7 @@
 
     <!-- Navigation -->
     <div class="flex justify-between items-center mt-5 mb-5">
-      <GTButton
-        v-if="step > 0"
-        variant="outlined"
-        size="md"
-        @click="prevStep"
-      >
+      <GTButton v-if="step > 0" variant="outlined" size="md" @click="prevStep">
         Tilbage
       </GTButton>
       <span v-else />
