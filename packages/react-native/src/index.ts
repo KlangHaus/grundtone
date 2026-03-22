@@ -135,6 +135,8 @@ export { GTTag } from './components/Tag';
 export type { TagProps as RNTagProps } from './components/Tag';
 export { GTTextarea } from './components/Textarea';
 export type { TextareaProps as RNTextareaProps } from './components/Textarea';
+export { GTTooltip } from './components/Tooltip';
+export type { TooltipProps as RNTooltipProps } from './components/Tooltip';
 export { GTToast } from './components/Toast';
 export type {
   ToastProps as RNToastProps,

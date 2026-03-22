@@ -23,6 +23,7 @@ import {
   GTTag,
   GTTextarea,
   GTToast,
+  GTTooltip,
   useGrundtoneTheme,
   useField,
   useFormValidation,
@@ -419,6 +420,11 @@ export default function ComponentsScreen() {
       <View style={groupStyle}>
         <GTSpinner size="lg" text="Henter data…" />
       </View>
+
+      <Text style={headingStyle}>Tooltip</Text>
+      <GTTooltip content="CPR bruges til at verificere din identitet.">
+        <Text style={{ color: theme.colors.text }}>Long press for tooltip</Text>
+      </GTTooltip>
 
       <Text style={headingStyle}>Toast</Text>
       <GTButton size="sm" variant="primary" onPress={() => setShowToast(true)}>

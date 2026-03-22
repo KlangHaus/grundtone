@@ -36,6 +36,7 @@
     GTCheckboxGroup,
     GTRadioGroup,
     GTToastContainer,
+    GTTooltip,
     useTheme,
     useField,
     useFormValidation,
@@ -1077,6 +1078,27 @@
                 { label: 'Navn (A-Å)' },
               ]"
             />
+          </div>
+        </section>
+
+        <section class="mb-6">
+          <h3>Tooltip</h3>
+          <div class="flex flex-col gap-3" style="max-width: 400px">
+            <GTTooltip content="CPR bruges til at verificere din identitet.">
+              <GTInput label="CPR-nummer" placeholder="000000-0000" />
+            </GTTooltip>
+            <div class="flex gap-2">
+              <GTTooltip content="Slet" trigger="hover">
+                <GTButton variant="outlined" size="sm">
+                  <GTIcon name="close" size="sm" />
+                </GTButton>
+              </GTTooltip>
+              <GTTooltip content="Søg" trigger="hover">
+                <GTButton variant="outlined" size="sm">
+                  <GTIcon name="search" size="sm" />
+                </GTButton>
+              </GTTooltip>
+            </div>
           </div>
         </section>
 

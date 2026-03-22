@@ -1,0 +1,121 @@
+// Component: Tooltip
+// Dark, minimal tooltip bubble with arrow. Sonner-style.
+
+.tooltip-trigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border-medium);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    background: none;
+    line-height: 1;
+    margin-left: var(--space-xs);
+
+    &:hover {
+      color: var(--color-text);
+      border-color: var(--color-text);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-focus-ring);
+      outline-offset: 2px;
+    }
+  }
+}
+
+.tooltip {
+  position: absolute;
+  z-index: var(--z-tooltip);
+  max-width: 250px;
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--color-text);
+  color: var(--color-background);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-normal);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  pointer-events: none;
+  white-space: normal;
+  word-wrap: break-word;
+
+  // Animation
+  opacity: 0;
+  transform: scale(0.95);
+  transition:
+    opacity var(--duration-fast) var(--ease-ease-out),
+    transform var(--duration-fast) var(--ease-ease-out);
+
+  &--visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  // Arrow
+  &__arrow {
+    position: absolute;
+    width: 0.5rem;
+    height: 0.5rem;
+    background: var(--color-text);
+    transform: rotate(45deg);
+  }
+
+  // Positions
+  &--top {
+    bottom: calc(100% + 0.5rem);
+    left: 50%;
+    transform-origin: bottom center;
+
+    &.tooltip--visible {
+      transform: translateX(-50%) scale(1);
+    }
+
+    transform: translateX(-50%) scale(0.95);
+
+    .tooltip__arrow {
+      bottom: -0.25rem;
+      left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+    }
+  }
+
+  &--bottom {
+    top: calc(100% + 0.5rem);
+    left: 50%;
+    transform-origin: top center;
+
+    &.tooltip--visible {
+      transform: translateX(-50%) scale(1);
+    }
+
+    transform: translateX(-50%) scale(0.95);
+
+    .tooltip__arrow {
+      top: -0.25rem;
+      left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+    transform: none;
+
+    &--top,
+    &--bottom {
+      &.tooltip--visible {
+        transform: translateX(-50%);
+      }
+    }
+  }
+}

@@ -252,6 +252,7 @@ export default defineConfig({
             { text: 'Tabs', link: '/vue/tabs' },
             { text: 'Tag', link: '/vue/tag' },
             { text: 'Toast', link: '/vue/toast' },
+            { text: 'Tooltip', link: '/vue/tooltip' },
           ],
         },
         {
@@ -401,6 +402,7 @@ export default defineConfig({
             { text: 'Tabs', link: '/web/c-tabs' },
             { text: 'Tag', link: '/web/c-tag' },
             { text: 'Toast', link: '/web/c-toast' },
+            { text: 'Tooltip', link: '/web/c-tooltip' },
           ],
         },
         {

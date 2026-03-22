@@ -569,6 +569,15 @@
     </section>
 
     <section class="mb-6">
+      <h2>Tooltip</h2>
+      <div class="flex flex-col gap-3" style="max-width: 400px">
+        <GTTooltip content="CPR bruges til at verificere din identitet.">
+          <GTInput label="CPR" placeholder="000000-0000" />
+        </GTTooltip>
+      </div>
+    </section>
+
+    <section class="mb-6">
       <h2>Toast</h2>
       <div class="flex flex-wrap gap-2">
         <GTButton

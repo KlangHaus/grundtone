@@ -49,6 +49,12 @@ export { GTTag } from './atoms/Tag';
 export type { TagProps, TagSize } from './atoms/Tag';
 export { GTTextarea } from './atoms/Textarea';
 export type { TextareaProps } from './atoms/Textarea';
+export { GTTooltip } from './atoms/Tooltip';
+export type {
+  TooltipProps,
+  TooltipPosition,
+  TooltipTrigger,
+} from './atoms/Tooltip';
 export { GTSpinner } from './atoms/Spinner';
 export type {
   SpinnerProps,
