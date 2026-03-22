@@ -3,9 +3,10 @@ import { mount } from '@vue/test-utils';
 import PasswordInput from './PasswordInput.vue';
 
 const BASE = 'gt-password-input';
+const stubs = { GTIcon: true };
 
 function mountPw(props = {}) {
-  return mount(PasswordInput, { props });
+  return mount(PasswordInput, { props, global: { stubs } });
 }
 
 describe('PasswordInput', () => {
@@ -27,22 +28,30 @@ describe('PasswordInput', () => {
     expect(wrapper.find('input').attributes('type')).toBe('password');
   });
 
-  it('toggle button shows "Vis" by default', () => {
+  it('toggle has aria-label "Vis" by default', () => {
     const wrapper = mountPw();
-    expect(wrapper.find(`.${BASE}__toggle`).text()).toBe('Vis');
+    expect(wrapper.find(`.${BASE}__toggle`).attributes('aria-label')).toBe(
+      'Vis',
+    );
   });
 
-  it('toggle button shows "Skjul" when visible', async () => {
+  it('toggle has aria-label "Skjul" when visible', async () => {
     const wrapper = mountPw();
     await wrapper.find(`.${BASE}__toggle`).trigger('click');
-    expect(wrapper.find(`.${BASE}__toggle`).text()).toBe('Skjul');
+    expect(wrapper.find(`.${BASE}__toggle`).attributes('aria-label')).toBe(
+      'Skjul',
+    );
   });
 
-  it('custom show/hide labels', async () => {
+  it('custom show/hide labels in aria-label', async () => {
     const wrapper = mountPw({ showLabel: 'Show', hideLabel: 'Hide' });
-    expect(wrapper.find(`.${BASE}__toggle`).text()).toBe('Show');
+    expect(wrapper.find(`.${BASE}__toggle`).attributes('aria-label')).toBe(
+      'Show',
+    );
     await wrapper.find(`.${BASE}__toggle`).trigger('click');
-    expect(wrapper.find(`.${BASE}__toggle`).text()).toBe('Hide');
+    expect(wrapper.find(`.${BASE}__toggle`).attributes('aria-label')).toBe(
+      'Hide',
+    );
   });
 
   it('emits update:modelValue', async () => {

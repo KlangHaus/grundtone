@@ -2,6 +2,7 @@
   import { computed, ref } from 'vue';
   import { getClassPrefix } from '@grundtone/core';
   import { generateId } from '@grundtone/utils';
+  import { GTIcon } from '../Icon';
   import type { PasswordInputProps } from './types';
 
   const props = withDefaults(defineProps<PasswordInputProps>(), {
@@ -77,7 +78,7 @@
         :aria-label="showPassword ? hideLabel : showLabel"
         @click="toggleVisibility"
       >
-        {{ showPassword ? hideLabel : showLabel }}
+        <GTIcon :name="showPassword ? 'eye-off' : 'eye'" size="sm" />
       </button>
     </div>
   </div>

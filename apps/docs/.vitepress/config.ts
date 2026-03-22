@@ -420,6 +420,8 @@ export default defineConfig({
             { text: 'Fieldset', link: '/web/c-fieldset' },
             { text: 'File Upload', link: '/web/c-file-upload' },
             { text: 'Input', link: '/web/c-input' },
+            { text: 'OTP Input', link: '/web/c-otp-input' },
+            { text: 'Password Input', link: '/web/c-password-input' },
             { text: 'Radio', link: '/web/c-radio' },
             { text: 'Search Field', link: '/web/c-search-field' },
             { text: 'Select', link: '/web/c-select' },

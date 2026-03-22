@@ -139,6 +139,41 @@ export const isPattern = (value: string, regex: RegExp): boolean => {
 };
 
 /**
+ * Checks if a password meets minimum strength requirements.
+ * Requires at least minLength characters with both letters and numbers.
+ */
+export const isStrongPassword = (password: string, minLength = 8): boolean => {
+  if (password.length < minLength) return false;
+  return /[a-zA-Z]/.test(password) && /\d/.test(password);
+};
+
+/**
+ * Returns password strength level.
+ * - weak: too short or only letters/numbers
+ * - fair: min length + letters + numbers
+ * - strong: 12+ chars + letters + numbers + special characters
+ */
+export const getPasswordStrength = (
+  password: string,
+): 'weak' | 'fair' | 'strong' => {
+  if (password.length < 8) return 'weak';
+  const hasLetters = /[a-zA-Z]/.test(password);
+  const hasNumbers = /\d/.test(password);
+  const hasSpecial = /[^a-zA-Z0-9]/.test(password);
+
+  if (!hasLetters || !hasNumbers) return 'weak';
+  if (password.length >= 12 && hasSpecial) return 'strong';
+  return 'fair';
+};
+
+/**
+ * Checks that an OTP code is exactly N digits.
+ */
+export const isValidOtp = (code: string, length = 6): boolean => {
+  return new RegExp(`^\\d{${length}}$`).test(code);
+};
+
+/**
  * Validates a date given as day, month, year strings.
  * Checks that all fields are filled, values are in range,
  * and the date actually exists (e.g. not 31 February).

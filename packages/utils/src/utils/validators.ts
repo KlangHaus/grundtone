@@ -12,6 +12,9 @@ import {
   isValidDate,
   isDateInPast,
   isDateInFuture,
+  isStrongPassword,
+  getPasswordStrength,
+  isValidOtp,
 } from './validation';
 
 const ok = { isValid: true };
@@ -84,6 +87,35 @@ export function dateFuture(message = 'Date must be in the future'): Validator {
     const [day, month, year] = value.split('-');
     if (!isValidDate(day, month, year)) return fail(message);
     return isDateInFuture(day, month, year) ? ok : fail(message);
+  };
+}
+
+export function password(
+  minLength = 8,
+  message = 'Password must contain letters and numbers',
+): Validator {
+  return value => {
+    if (value === '') return ok;
+    return isStrongPassword(value, minLength) ? ok : fail(message);
+  };
+}
+
+export function passwordStrength(
+  level: 'fair' | 'strong' = 'fair',
+  message = 'Password is too weak',
+): Validator {
+  return value => {
+    if (value === '') return ok;
+    const strength = getPasswordStrength(value);
+    const levels = { weak: 0, fair: 1, strong: 2 };
+    return levels[strength] >= levels[level] ? ok : fail(message);
+  };
+}
+
+export function otp(length = 6, message = 'Invalid code'): Validator {
+  return value => {
+    if (value === '') return ok;
+    return isValidOtp(value, length) ? ok : fail(message);
   };
 }
 
