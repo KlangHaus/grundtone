@@ -1,11 +1,20 @@
 ---
+
+## 1.0.17
+### Patch Changes
+
+- Updated dependencies [dbd9c2c]
+  - @grundtone/design-system@2.13.0
+  - @grundtone/vue@2.13.0
 outline: [2, 3]
 ---
 
 ## 1.0.16
+
 ### Patch Changes
 
-- Updated dependencies [[`fc456bf`](https://github.com/grundtone/grundtone/commit/fc456bfc25e1263f3fc19140f8108698072c269d)]:
+- Updated dependencies
+  [[`fc456bf`](https://github.com/grundtone/grundtone/commit/fc456bfc25e1263f3fc19140f8108698072c269d)]:
   - @grundtone/design-system@2.12.0
   - @grundtone/vue@2.12.0
   - @grundtone/utils@2.12.0

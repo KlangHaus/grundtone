@@ -1,5 +1,22 @@
 # @grundtone/vue
 
+## 2.13.0
+
+### Minor Changes
+
+- dbd9c2c: Add Table and Summary List components
+
+  **Table** (`GTTable`): Data table with sorting, selection, responsive stacking, and variants
+  (default, borderless, zebra, compact). Includes vanilla JS behavior for HTML-only usage.
+
+  **Summary List** (`GTSummaryList` + `GTSummaryItem`): Key-value pair display with `<dl>`
+  semantics, optional actions, and a card variant. Replaces the old `.structured-list` CSS.
+
+### Patch Changes
+
+- Updated dependencies [dbd9c2c]
+  - @grundtone/design-system@2.13.0
+
 ## 2.12.0 - 2026-03-22
 
 ### Minor Changes

@@ -1,5 +1,13 @@
 # @grundtone/html-test
 
+## 0.0.17
+
+### Patch Changes
+
+- Updated dependencies [dbd9c2c]
+  - @grundtone/design-system@2.13.0
+  - @grundtone/vue@2.13.0
+
 ## 0.0.16
 
 ### Patch Changes
