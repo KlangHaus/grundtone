@@ -9,7 +9,6 @@
   const unregisterSlide = inject<(idx: number) => void>(
     'gt-carousel-unregister',
   );
-  const fade = inject<{ value: boolean }>('gt-carousel-fade');
 
   const index = ref(-1);
 
