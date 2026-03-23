@@ -77,7 +77,7 @@ destroyAll(document.getElementById('section-to-remove'));
 Each component can be instantiated directly:
 
 ```js
-import { Accordion, Tabs, Toggle, Alert, CookieMessage, AnchorLinks } from '@grundtone/design-system/behaviors';
+import { Accordion, Tabs, Table, Carousel, Toggle, Alert, CookieMessage, AnchorLinks, Modal, OverflowMenu, BackToTop, Tooltip, Toast, Stepper, SearchField } from '@grundtone/design-system/behaviors';
 
 // Initialize a single accordion
 const el = document.querySelector('.accordion');
@@ -294,6 +294,150 @@ cookie.addEventListener('gt:cookie-accept', () => {
     </li>
   </ol>
 </nav>
+```
+
+---
+
+### Modal
+
+**Selector:** `.modal`
+
+**Features:**
+- Click `.modal__close` or backdrop to close
+- Escape key closes the modal
+- Manages `aria-modal`, focus trapping
+
+---
+
+### Overflow Menu
+
+**Selector:** `.overflow-menu`
+
+**Features:**
+- Click `.overflow-menu__trigger` to toggle the panel
+- Outside click closes the menu
+- Keyboard: Escape closes, ArrowDown/Up navigates items
+- Manages `aria-expanded`, `aria-haspopup`
+
+---
+
+### Back to Top
+
+**Selector:** `.back-to-top`
+
+**Features:**
+- Appears on scroll (shows after scrolling down)
+- Click scrolls to top of page
+- Respects `prefers-reduced-motion`
+
+---
+
+### Table
+
+**Selector:** `.table[data-sortable]`, `.table[data-selectable]`
+
+**Features:**
+- **Sort:** Click `.table__sort` buttons to sort tbody rows. Toggles `aria-sort` on `<th>`, reorders DOM rows. Supports numeric (`.table__num`) and string sorting.
+- **Select:** Checkbox click toggles `.table__row--selected`. Header checkbox selects/deselects all with indeterminate state.
+
+```html
+<table class="table" data-sortable data-selectable>
+  <thead>
+    <tr>
+      <th class="table__select"><input type="checkbox" aria-label="Select all" /></th>
+      <th><button class="table__sort">Name <span class="table__sort-icon">⇅</span></button></th>
+      <th class="table__num"><button class="table__sort">Age <span class="table__sort-icon">⇅</span></button></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="table__select"><input type="checkbox" /></td>
+      <td>Alice</td><td class="table__num">30</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+---
+
+### Carousel
+
+**Selector:** `.carousel`
+
+**Features:**
+- Click `.carousel__prev` / `.carousel__next` to navigate
+- Click `.carousel__indicator` to jump to slide
+- Touch/swipe via pointer events (50px threshold)
+- Keyboard: ArrowLeft / ArrowRight
+- Autoplay: `data-autoplay` + `data-interval` (default 5000ms)
+- Pauses on hover and `prefers-reduced-motion`
+- Loop: `data-loop="false"` to disable wrapping
+
+```html
+<div class="carousel" data-autoplay data-interval="4000" tabindex="0" aria-label="Gallery" aria-roledescription="carousel">
+  <div class="carousel__track">
+    <div class="carousel__slide carousel__slide--active" role="tabpanel">...</div>
+    <div class="carousel__slide" role="tabpanel" aria-hidden="true">...</div>
+  </div>
+  <button class="carousel__prev" aria-label="Previous">&#8249;</button>
+  <button class="carousel__next" aria-label="Next">&#8250;</button>
+  <div class="carousel__indicators">
+    <button class="carousel__indicator carousel__indicator--active"></button>
+    <button class="carousel__indicator"></button>
+  </div>
+</div>
+```
+
+---
+
+### Tooltip
+
+**Selector:** `.tooltip`
+
+**Features:**
+- Hover/focus shows `.tooltip__bubble`, mouseleave/focusout hides
+- Click trigger: `data-trigger="click"` toggles on click
+- Position: `data-position="top"` (default) or `"bottom"`, auto-flips if not enough space
+- Escape key hides tooltip
+- Manages `.tooltip__bubble--visible`, `.tooltip__bubble--top`, `.tooltip__bubble--bottom`
+
+---
+
+### Toast
+
+**Selector:** `.toast`
+
+**Features:**
+- Click `.toast__close` to dismiss (removes from DOM)
+- Auto-dismiss: `.toast__countdown` CSS animation triggers `animationend` → dismiss
+- Adds `.toast--dismissing` class before removal for exit animation
+
+---
+
+### Stepper
+
+**Selector:** `.stepper`
+
+**Features:**
+- Click completed steps (`.stepper__step--completed`) to navigate back
+- `data-all-clickable` allows clicking any step
+- Manages `.stepper__step--active`, `.stepper__step--completed`, `aria-current="step"`
+
+---
+
+### Search Field
+
+**Selector:** `.search-field`
+
+**Features:**
+- Enter key submits the closest `<form>` or dispatches `gt:search-submit` CustomEvent
+- Native `type="search"` clear button dispatches `gt:search-clear` event
+- Click `.search-field__button` submits
+
+```js
+document.querySelector('.search-field').addEventListener('gt:search-submit', (e) => {
+  console.log('Search:', e.detail.value);
+});
 ```
 
 ---

@@ -88,14 +88,23 @@ Optional — for HTML-only usage without Vue.
 </script>
 ```
 
-| Behavior      | Selector                   | What it does                                          |
-| ------------- | -------------------------- | ----------------------------------------------------- |
-| Accordion     | `.accordion`               | Expand/collapse items, toggle-all, keyboard nav       |
-| Tabs          | `.tabs`                    | Tab switching, arrow key navigation, panel visibility |
-| Toggle        | `[role="switch"]`          | Checked state, change event                           |
-| Alert         | `.alert[data-dismissible]` | Close button, `gt:dismiss` event                      |
-| CookieMessage | `.cookie-message`          | Accept/reject/settings, custom events                 |
-| AnchorLinks   | `.anchor-links`            | Smooth scroll, active link highlight                  |
+| Behavior      | Selector                                         | What it does                                          |
+| ------------- | ------------------------------------------------ | ----------------------------------------------------- |
+| Accordion     | `.accordion`                                     | Expand/collapse items, toggle-all, keyboard nav       |
+| Tabs          | `.tabs`                                          | Tab switching, arrow key navigation, panel visibility |
+| Table         | `.table[data-sortable], .table[data-selectable]` | Column sorting, row selection with checkboxes         |
+| Carousel      | `.carousel`                                      | Slide/fade navigation, touch, keyboard, autoplay      |
+| Toggle        | `.toggle`                                        | Checked state, change event                           |
+| Alert         | `.alert[data-dismissible]`                       | Close button, `gt:dismiss` event                      |
+| CookieMessage | `.cookie-message`                                | Accept/reject/settings, custom events                 |
+| AnchorLinks   | `.anchor-links`                                  | Smooth scroll, active link highlight                  |
+| Modal         | `.modal`                                         | Open/close, backdrop, Escape key, focus trap          |
+| OverflowMenu  | `.overflow-menu`                                 | Toggle panel, outside click, keyboard nav             |
+| BackToTop     | `.back-to-top`                                   | Show on scroll, smooth scroll to top                  |
+| Tooltip       | `.tooltip`                                       | Hover/click show/hide, position flip, Escape          |
+| Toast         | `.toast`                                         | Close button, auto-dismiss countdown                  |
+| Stepper       | `.stepper`                                       | Step click navigation, completed state                |
+| SearchField   | `.search-field`                                  | Enter submit, clear event, form integration           |
 
 ## Utility Classes
 
