@@ -10,6 +10,10 @@ import { CookieMessage } from './cookie-message';
 import { AnchorLinks } from './anchor-links';
 import { Modal } from './modal';
 import { OverflowMenu } from './overflow-menu';
+import { Tooltip } from './tooltip';
+import { Toast } from './toast';
+import { Stepper } from './stepper';
+import { SearchField } from './search-field';
 
 export { GtComponent } from './base';
 export { BackToTop } from './back-to-top';
@@ -23,6 +27,10 @@ export { CookieMessage } from './cookie-message';
 export { AnchorLinks } from './anchor-links';
 export { Modal } from './modal';
 export { OverflowMenu } from './overflow-menu';
+export { Tooltip } from './tooltip';
+export { Toast } from './toast';
+export { Stepper } from './stepper';
+export { SearchField } from './search-field';
 export { uid, prefersReducedMotion, slideOpen, slideClose } from './utils';
 
 const REGISTRY: Record<string, new (el: HTMLElement) => GtComponent> = {
@@ -37,6 +45,10 @@ const REGISTRY: Record<string, new (el: HTMLElement) => GtComponent> = {
   '.modal': Modal,
   '.overflow-menu': OverflowMenu,
   '.back-to-top': BackToTop,
+  '.tooltip': Tooltip,
+  '.toast': Toast,
+  '.stepper': Stepper,
+  '.search-field': SearchField,
 };
 
 /**
