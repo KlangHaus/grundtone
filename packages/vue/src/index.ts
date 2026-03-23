@@ -133,6 +133,8 @@ export type { Validator, ValidationResult } from '@grundtone/utils';
 
 // Molecules
 export { GTAccordion, GTAccordionItem } from './molecules/Accordion';
+export { GTCarousel, GTCarouselSlide } from './molecules/Carousel';
+export type { CarouselProps, CarouselSlideProps } from './molecules/Carousel';
 export type {
   AccordionProps,
   AccordionVariant,

@@ -31,6 +31,7 @@ import AlertDemo from '../../../../packages/vue/src/molecules/Alert/demo.vue';
 import DatePickerDemo from '../../../../packages/vue/src/molecules/DatePicker/demo.vue';
 import AnchorLinksDemo from '../../../../packages/vue/src/molecules/AnchorLinks/demo.vue';
 import BreadcrumbDemo from '../../../../packages/vue/src/molecules/Breadcrumb/demo.vue';
+import CarouselDemo from '../../../../packages/vue/src/molecules/Carousel/demo.vue';
 import CardDemo from '../../../../packages/vue/src/molecules/Card/demo.vue';
 import CheckboxDemo from '../../../../packages/vue/src/atoms/Checkbox/demo.vue';
 import CheckboxGroupDemo from '../../../../packages/vue/src/molecules/CheckboxGroup/demo.vue';
@@ -91,6 +92,7 @@ export default {
     app.component('DetailsDemo', DetailsDemo);
     app.component('AnchorLinksDemo', AnchorLinksDemo);
     app.component('BreadcrumbDemo', BreadcrumbDemo);
+    app.component('CarouselDemo', CarouselDemo);
     app.component('CardDemo', CardDemo);
     app.component('CheckboxDemo', CheckboxDemo);
     app.component('CheckboxGroupDemo', CheckboxGroupDemo);

@@ -887,6 +887,72 @@ export const componentExamples: Record<string, string> = {
   </div>
 </dl>`,
 
+  'c-img-fluid': `<img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='200'%3E%3Crect fill='%23718096' width='600' height='200'/%3E%3Ctext x='50%25' y='50%25' fill='white' font-size='20' text-anchor='middle' dy='.3em'%3E600 × 200 — img-fluid%3C/text%3E%3C/svg%3E" alt="Responsive placeholder" class="img-fluid" style="max-width: 400px" />`,
+
+  'c-img-thumbnail': `<img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect fill='%23718096' width='200' height='200'/%3E%3Ctext x='50%25' y='50%25' fill='white' font-size='14' text-anchor='middle' dy='.3em'%3EThumbnail%3C/text%3E%3C/svg%3E" alt="Thumbnail" class="img-thumbnail" style="max-width: 150px" />`,
+
+  'c-img-cover': `<div class="flex gap-4">
+  <div style="width: 120px; height: 80px; overflow: hidden; border-radius: var(--radius-md)">
+    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect fill='%23718096' width='300' height='200'/%3E%3Ctext x='50%25' y='50%25' fill='white' font-size='14' text-anchor='middle' dy='.3em'%3Eimg-cover%3C/text%3E%3C/svg%3E" alt="Cover" class="img-cover" />
+  </div>
+  <div style="width: 120px; height: 80px; overflow: hidden; border-radius: var(--radius-md)">
+    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect fill='%23718096' width='300' height='200'/%3E%3Ctext x='50%25' y='50%25' fill='white' font-size='14' text-anchor='middle' dy='.3em'%3Eimg-contain%3C/text%3E%3C/svg%3E" alt="Contain" class="img-contain" />
+  </div>
+</div>`,
+
+  'c-figure-default': `<figure class="figure" style="max-width: 360px">
+  <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='300'%3E%3Crect fill='%23718096' width='600' height='300'/%3E%3Ctext x='50%25' y='50%25' fill='white' font-size='18' text-anchor='middle' dy='.3em'%3EBillede%3C/text%3E%3C/svg%3E" alt="Eksempel" class="figure__img" />
+  <figcaption class="figure__caption">Grundtone farvepalet i lys og mørk tilstand.</figcaption>
+</figure>`,
+
+  'c-figure-end': `<figure class="figure figure--end" style="max-width: 360px">
+  <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='300'%3E%3Crect fill='%23718096' width='600' height='300'/%3E%3Ctext x='50%25' y='50%25' fill='white' font-size='18' text-anchor='middle' dy='.3em'%3EBillede%3C/text%3E%3C/svg%3E" alt="Eksempel" class="figure__img" />
+  <figcaption class="figure__caption">Billedtekst højre-justeret.</figcaption>
+</figure>`,
+
+  'c-carousel-default': `<div class="carousel" tabindex="0" aria-label="Eksempel" aria-roledescription="carousel" style="max-width: 480px">
+  <div class="carousel__track">
+    <div class="carousel__slide carousel__slide--active" role="tabpanel"><div style="background: var(--color-primary); height: 200px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: var(--font-size-xl)">Slide 1</div></div>
+    <div class="carousel__slide" role="tabpanel" aria-hidden="true"><div style="background: var(--color-success); height: 200px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: var(--font-size-xl)">Slide 2</div></div>
+    <div class="carousel__slide" role="tabpanel" aria-hidden="true"><div style="background: var(--color-warning); height: 200px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: var(--font-size-xl)">Slide 3</div></div>
+  </div>
+  <button class="carousel__prev" aria-label="Forrige" style="opacity: 1">&#8249;</button>
+  <button class="carousel__next" aria-label="Næste" style="opacity: 1">&#8250;</button>
+  <div class="carousel__indicators">
+    <button class="carousel__indicator carousel__indicator--active" aria-selected="true"></button>
+    <button class="carousel__indicator"></button>
+    <button class="carousel__indicator"></button>
+  </div>
+</div>`,
+
+  'c-carousel-fade': `<div class="carousel carousel--fade" tabindex="0" aria-label="Fade eksempel" aria-roledescription="carousel" style="max-width: 480px">
+  <div class="carousel__track">
+    <div class="carousel__slide carousel__slide--active" role="tabpanel"><div style="background: var(--color-primary); height: 200px; display: flex; align-items: center; justify-content: center; color: #fff">Fade 1</div></div>
+    <div class="carousel__slide" role="tabpanel" aria-hidden="true"><div style="background: var(--color-success); height: 200px; display: flex; align-items: center; justify-content: center; color: #fff">Fade 2</div></div>
+  </div>
+  <div class="carousel__indicators"><button class="carousel__indicator carousel__indicator--active"></button><button class="carousel__indicator"></button></div>
+</div>`,
+
+  'c-carousel-caption': `<div class="carousel" tabindex="0" aria-label="Med tekst" aria-roledescription="carousel" style="max-width: 480px">
+  <div class="carousel__track">
+    <div class="carousel__slide carousel__slide--active" role="tabpanel" style="position: relative">
+      <div style="background: var(--color-primary); height: 240px"></div>
+      <div class="carousel__caption"><h4 style="margin: 0 0 0.25rem; font-weight: var(--font-weight-semibold)">Første slide</h4><p style="margin: 0">Beskrivende tekst over billedet.</p></div>
+    </div>
+  </div>
+  <button class="carousel__prev" aria-label="Forrige" style="opacity: 1">&#8249;</button>
+  <button class="carousel__next" aria-label="Næste" style="opacity: 1">&#8250;</button>
+</div>`,
+
+  'c-carousel-autoplay': `<div class="carousel" tabindex="0" data-autoplay data-interval="3000" aria-label="Autoplay" aria-roledescription="carousel" style="max-width: 480px">
+  <div class="carousel__track">
+    <div class="carousel__slide carousel__slide--active" role="tabpanel"><div style="background: var(--color-success); height: 180px; display: flex; align-items: center; justify-content: center; color: #fff">Auto 1</div></div>
+    <div class="carousel__slide" role="tabpanel" aria-hidden="true"><div style="background: var(--color-warning); height: 180px; display: flex; align-items: center; justify-content: center; color: #fff">Auto 2</div></div>
+    <div class="carousel__slide" role="tabpanel" aria-hidden="true"><div style="background: var(--color-error); height: 180px; display: flex; align-items: center; justify-content: center; color: #fff">Auto 3</div></div>
+  </div>
+  <div class="carousel__indicators"><button class="carousel__indicator carousel__indicator--active"></button><button class="carousel__indicator"></button><button class="carousel__indicator"></button></div>
+</div>`,
+
   'c-input-states': `<div class="flex flex-col gap-3" style="max-width: 360px">
   <div class="input-field">
     <label class="input-label" for="preview-dis">Disabled</label>

@@ -473,6 +473,21 @@
     </section>
 
     <section class="mb-6">
+      <h2>Carousel</h2>
+      <GTCarousel style="max-width: 500px">
+        <GTCarouselSlide>
+          <div style="background: var(--color-primary); height: 200px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: var(--font-size-xl)">Slide 1</div>
+        </GTCarouselSlide>
+        <GTCarouselSlide>
+          <div style="background: var(--color-success); height: 200px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: var(--font-size-xl)">Slide 2</div>
+        </GTCarouselSlide>
+        <GTCarouselSlide>
+          <div style="background: var(--color-warning); height: 200px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: var(--font-size-xl)">Slide 3</div>
+        </GTCarouselSlide>
+      </GTCarousel>
+    </section>
+
+    <section class="mb-6">
       <h2>Summary List</h2>
       <GTSummaryList>
         <GTSummaryItem label="Navn" action="Redigér" action-label="navn">

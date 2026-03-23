@@ -23,6 +23,8 @@
     GTIcon,
     GTInput,
     GTSelect,
+    GTCarousel,
+    GTCarouselSlide,
     GTSummaryList,
     GTSummaryItem,
     GTTable,
@@ -195,6 +197,7 @@
             { label: 'Date Input', href: '#pg-date-input' },
             { label: 'Input', href: '#pg-input' },
             { label: 'Select', href: '#pg-select' },
+            { label: 'Carousel', href: '#pg-carousel' },
             { label: 'Summary List', href: '#pg-summary-list' },
             { label: 'Table', href: '#pg-table' },
             { label: 'Tabs', href: '#pg-tabs' },
@@ -846,6 +849,57 @@
               disabled
             />
           </div>
+        </section>
+
+        <section class="mb-6">
+          <h2 id="pg-carousel" style="scroll-margin-top: 1rem">Carousel</h2>
+          <GTCarousel style="max-width: 500px">
+            <GTCarouselSlide>
+              <div
+                style="
+                  background: var(--color-primary);
+                  height: 220px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: #fff;
+                  font-size: var(--font-size-xl);
+                "
+              >
+                Slide 1
+              </div>
+            </GTCarouselSlide>
+            <GTCarouselSlide>
+              <div
+                style="
+                  background: var(--color-success);
+                  height: 220px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: #fff;
+                  font-size: var(--font-size-xl);
+                "
+              >
+                Slide 2
+              </div>
+            </GTCarouselSlide>
+            <GTCarouselSlide>
+              <div
+                style="
+                  background: var(--color-warning);
+                  height: 220px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: #fff;
+                  font-size: var(--font-size-xl);
+                "
+              >
+                Slide 3
+              </div>
+            </GTCarouselSlide>
+          </GTCarousel>
         </section>
 
         <section class="mb-6">

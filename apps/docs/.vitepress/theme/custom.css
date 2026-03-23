@@ -80,6 +80,14 @@
   transition: none;
 }
 
+/* Reset for figure and carousel inside .vp-doc */
+.vp-doc .figure,
+.vp-doc .carousel {
+  display: revert-layer;
+  margin: 0;
+  overflow: revert-layer;
+}
+
 /* Also reset for responsive wrapper */
 .vp-doc .table-wrapper {
   overflow-x: auto;
