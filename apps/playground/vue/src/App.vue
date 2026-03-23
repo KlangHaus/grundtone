@@ -23,6 +23,9 @@
     GTIcon,
     GTInput,
     GTSelect,
+    GTSummaryList,
+    GTSummaryItem,
+    GTTable,
     GTTabs,
     GTTabPanel,
     GTToggle,
@@ -73,6 +76,17 @@
   const dateValue = ref({ day: '', month: '', year: '' });
   const addressValue = ref('');
   const roadValue = ref('');
+  const tableSelected = ref<number[]>([]);
+  const tableColumns = [
+    { key: 'name', label: 'Navn', sortable: true },
+    { key: 'role', label: 'Rolle' },
+    { key: 'salary', label: 'Løn', numeric: true, sortable: true },
+  ];
+  const tableRows = [
+    { name: 'Alice Jensen', role: 'Designer', salary: 42000 },
+    { name: 'Bob Nielsen', role: 'Developer', salary: 48000 },
+    { name: 'Carol Sørensen', role: 'Manager', salary: 55000 },
+  ];
 
   // Validation demo
   const nameField = useField({
@@ -181,6 +195,8 @@
             { label: 'Date Input', href: '#pg-date-input' },
             { label: 'Input', href: '#pg-input' },
             { label: 'Select', href: '#pg-select' },
+            { label: 'Summary List', href: '#pg-summary-list' },
+            { label: 'Table', href: '#pg-table' },
             { label: 'Tabs', href: '#pg-tabs' },
             { label: 'Address Input', href: '#pg-address' },
             { label: 'Toggle', href: '#pg-toggle' },
@@ -830,6 +846,72 @@
               disabled
             />
           </div>
+        </section>
+
+        <section class="mb-6">
+          <h2 id="pg-summary-list" style="scroll-margin-top: 1rem">
+            Summary List
+          </h2>
+          <h3>Default with actions</h3>
+          <GTSummaryList>
+            <GTSummaryItem
+              label="Navn"
+              action="Redigér"
+              action-label="navn"
+            >
+              Alice Jensen
+            </GTSummaryItem>
+            <GTSummaryItem
+              label="Email"
+              action="Redigér"
+              action-label="email"
+            >
+              alice@example.com
+            </GTSummaryItem>
+            <GTSummaryItem
+              label="Adresse"
+              action="Redigér"
+              action-label="adresse"
+            >
+              Vestergade 1, 8000 Aarhus C
+            </GTSummaryItem>
+          </GTSummaryList>
+
+          <h3>Card variant</h3>
+          <GTSummaryList variant="card" title="Kontaktoplysninger">
+            <GTSummaryItem label="Navn" action="Redigér" action-label="navn">
+              Alice Jensen
+            </GTSummaryItem>
+            <GTSummaryItem
+              label="Telefon"
+              action="Redigér"
+              action-label="telefon"
+            >
+              +45 12 34 56 78
+            </GTSummaryItem>
+          </GTSummaryList>
+        </section>
+
+        <section class="mb-6">
+          <h2 id="pg-table" style="scroll-margin-top: 1rem">Table</h2>
+          <h3>Sortable + Selectable</h3>
+          <GTTable
+            v-model="tableSelected"
+            :columns="tableColumns"
+            :rows="tableRows"
+            selectable
+            caption="Medarbejdere"
+          />
+          <p class="text-sm text-secondary mt-1">
+            Valgte: {{ tableSelected.length }} rækker
+          </p>
+          <h3>Zebra</h3>
+          <GTTable
+            :columns="tableColumns"
+            :rows="tableRows"
+            striped
+            caption="Zebra table"
+          />
         </section>
 
         <section class="mb-6">

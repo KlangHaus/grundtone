@@ -45,3 +45,46 @@
 .dos-donts-item__body p + p {
   margin-top: 0.5rem;
 }
+
+/*
+ * Neutralize VitePress .vp-doc table styles for design-system components.
+ * VitePress sets display:block, cell borders, and its own padding/font on all
+ * tables inside .vp-doc — this clashes with .table and .structured-list.
+ */
+.vp-doc .table,
+.vp-doc .summary-list,
+.vp-doc .summary-card {
+  display: table;
+  overflow: visible;
+  margin: 0;
+}
+
+.vp-doc .table th,
+.vp-doc .table td,
+.vp-doc .summary-list dt,
+.vp-doc .summary-list dd {
+  border: none;
+  padding: revert-layer;
+  font-size: revert-layer;
+  font-weight: revert-layer;
+  background-color: transparent;
+}
+
+.vp-doc .table thead {
+  background-color: transparent;
+}
+
+.vp-doc .table tr {
+  border-top: none;
+  background-color: transparent;
+  transition: none;
+}
+
+/* Also reset for responsive wrapper */
+.vp-doc .table-wrapper {
+  overflow-x: auto;
+}
+
+.vp-doc .table-wrapper .table {
+  display: table;
+}

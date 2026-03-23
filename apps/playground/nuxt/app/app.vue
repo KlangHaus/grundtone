@@ -473,6 +473,42 @@
     </section>
 
     <section class="mb-6">
+      <h2>Summary List</h2>
+      <GTSummaryList>
+        <GTSummaryItem label="Navn" action="Redigér" action-label="navn">
+          Alice Jensen
+        </GTSummaryItem>
+        <GTSummaryItem label="Email" action="Redigér" action-label="email">
+          alice@example.com
+        </GTSummaryItem>
+      </GTSummaryList>
+
+      <h3 style="margin-top: 1rem">Card</h3>
+      <GTSummaryList variant="card" title="Profil">
+        <GTSummaryItem label="Navn">Alice Jensen</GTSummaryItem>
+        <GTSummaryItem label="Rolle">Designer</GTSummaryItem>
+      </GTSummaryList>
+    </section>
+
+    <section class="mb-6">
+      <h2>Table</h2>
+      <GTTable
+        :columns="[
+          { key: 'name', label: 'Navn', sortable: true },
+          { key: 'role', label: 'Rolle' },
+          { key: 'salary', label: 'Løn', numeric: true, sortable: true },
+        ]"
+        :rows="[
+          { name: 'Alice', role: 'Designer', salary: 42000 },
+          { name: 'Bob', role: 'Developer', salary: 48000 },
+          { name: 'Carol', role: 'Manager', salary: 55000 },
+        ]"
+        striped
+        caption="Medarbejdere"
+      />
+    </section>
+
+    <section class="mb-6">
       <h2>Tabs</h2>
       <GTTabs
         :tabs="[

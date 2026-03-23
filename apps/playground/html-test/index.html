@@ -169,6 +169,101 @@
       </div>
     </div>
 
+    <!-- ─── Summary List ─── -->
+    <h3 class="text-base font-semibold mt-4 mb-2">Summary List — default</h3>
+    <dl class="summary-list mb-4" style="max-width: 480px">
+      <div class="summary-list__row">
+        <dt class="summary-list__key">Navn</dt>
+        <dd class="summary-list__value">Alice Jensen</dd>
+        <dd class="summary-list__actions">
+          <a href="#" class="summary-list__action">Redigér</a>
+        </dd>
+      </div>
+      <div class="summary-list__row">
+        <dt class="summary-list__key">Email</dt>
+        <dd class="summary-list__value">alice@example.com</dd>
+        <dd class="summary-list__actions">
+          <a href="#" class="summary-list__action">Redigér</a>
+        </dd>
+      </div>
+      <div class="summary-list__row summary-list__row--no-actions">
+        <dt class="summary-list__key">CPR</dt>
+        <dd class="summary-list__value">010190-1234</dd>
+      </div>
+    </dl>
+
+    <h3 class="text-base font-semibold mt-4 mb-2">Summary Card</h3>
+    <div class="summary-card mb-4" style="max-width: 480px">
+      <div class="summary-card__header">
+        <h4 class="summary-card__title">Kontaktoplysninger</h4>
+      </div>
+      <div class="summary-card__content">
+        <dl class="summary-list">
+          <div class="summary-list__row">
+            <dt class="summary-list__key">Navn</dt>
+            <dd class="summary-list__value">Alice Jensen</dd>
+            <dd class="summary-list__actions">
+              <a href="#" class="summary-list__action">Redigér</a>
+            </dd>
+          </div>
+          <div class="summary-list__row">
+            <dt class="summary-list__key">Telefon</dt>
+            <dd class="summary-list__value">+45 12 34 56 78</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <!-- ─── Table ─── -->
+    <h3 class="text-base font-semibold mt-4 mb-2">Table — default</h3>
+    <table class="table mb-4">
+      <caption class="sr-only">Medarbejdere</caption>
+      <thead>
+        <tr>
+          <th>Navn</th>
+          <th>Rolle</th>
+          <th class="table__num">Løn</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Alice Jensen</td><td>Designer</td><td class="table__num">42.000 kr</td></tr>
+        <tr><td>Bob Nielsen</td><td>Developer</td><td class="table__num">48.000 kr</td></tr>
+        <tr><td>Carol Sørensen</td><td>Manager</td><td class="table__num">55.000 kr</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="text-base font-semibold mt-4 mb-2">Table — zebra</h3>
+    <table class="table table--zebra mb-4">
+      <thead>
+        <tr><th>Produkt</th><th class="table__num">Pris</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Widget A</td><td class="table__num">199 kr</td></tr>
+        <tr><td>Widget B</td><td class="table__num">249 kr</td></tr>
+        <tr><td>Widget C</td><td class="table__num">179 kr</td></tr>
+        <tr><td>Widget D</td><td class="table__num">329 kr</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="text-base font-semibold mt-4 mb-2">Table — sortable</h3>
+    <table class="table mb-4" data-sortable>
+      <thead>
+        <tr>
+          <th>
+            <button type="button" class="table__sort">Navn <span class="table__sort-icon" aria-hidden="true">⇅</span></button>
+          </th>
+          <th class="table__num">
+            <button type="button" class="table__sort">Alder <span class="table__sort-icon" aria-hidden="true">⇅</span></button>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Alice</td><td class="table__num">30</td></tr>
+        <tr><td>Bob</td><td class="table__num">25</td></tr>
+        <tr><td>Carol</td><td class="table__num">35</td></tr>
+      </tbody>
+    </table>
+
     <!-- ─── Tabs: underline ─── -->
     <h3 class="text-base font-semibold mt-4 mb-2">Tabs — underline</h3>
     <div class="tabs tabs--underline mb-4">

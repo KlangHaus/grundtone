@@ -39,6 +39,8 @@ import OverflowMenuDemo from '../../../../packages/vue/src/molecules/OverflowMen
 import RadioGroupDemo from '../../../../packages/vue/src/molecules/RadioGroup/demo.vue';
 import SearchFieldDemo from '../../../../packages/vue/src/molecules/SearchField/demo.vue';
 import StepperDemo from '../../../../packages/vue/src/molecules/Stepper/demo.vue';
+import SummaryListDemo from '../../../../packages/vue/src/molecules/SummaryList/demo.vue';
+import TableDemo from '../../../../packages/vue/src/molecules/Table/demo.vue';
 import TabsDemo from '../../../../packages/vue/src/molecules/Tabs/demo.vue';
 import ToastDemo from '../../../../packages/vue/src/molecules/Toast/demo.vue';
 import CookieMessageDemo from '../../../../packages/vue/src/molecules/CookieMessage/demo.vue';
@@ -95,6 +97,8 @@ export default {
     app.component('ModalDemo', ModalDemo);
     app.component('OverflowMenuDemo', OverflowMenuDemo);
     app.component('RadioGroupDemo', RadioGroupDemo);
+    app.component('SummaryListDemo', SummaryListDemo);
+    app.component('TableDemo', TableDemo);
     app.component('TabsDemo', TabsDemo);
     app.component('ToastDemo', ToastDemo);
     app.component('CookieMessageDemo', CookieMessageDemo);

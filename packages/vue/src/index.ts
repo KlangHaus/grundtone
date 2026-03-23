@@ -193,5 +193,19 @@ export type {
 } from './molecules/Toast';
 export { GTRadioGroup } from './molecules/RadioGroup';
 export type { RadioGroupProps, RadioOption } from './molecules/RadioGroup';
+export { GTSummaryList, GTSummaryItem } from './molecules/SummaryList';
+export type {
+  SummaryListProps,
+  SummaryListVariant,
+  SummaryItemProps,
+} from './molecules/SummaryList';
+export { GTTable } from './molecules/Table';
+export type {
+  TableProps,
+  TableColumn,
+  TableVariant,
+  TableDensity,
+  SortDirection,
+} from './molecules/Table';
 
 // Organisms

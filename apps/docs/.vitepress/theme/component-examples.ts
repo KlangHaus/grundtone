@@ -708,6 +708,185 @@ export const componentExamples: Record<string, string> = {
   <p id="preview-user-err" class="input-error" role="alert">Username is already taken</p>
 </div>`,
 
+  'c-table-default': `<table class="table">
+  <caption class="sr-only">Medarbejdere</caption>
+  <thead>
+    <tr>
+      <th>Navn</th>
+      <th>Rolle</th>
+      <th class="table__num">Løn</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Alice Jensen</td><td>Designer</td><td class="table__num">42.000 kr</td></tr>
+    <tr><td>Bob Nielsen</td><td>Developer</td><td class="table__num">48.000 kr</td></tr>
+    <tr><td>Carol Sørensen</td><td>Manager</td><td class="table__num">55.000 kr</td></tr>
+  </tbody>
+</table>`,
+
+  'c-table-borderless': `<table class="table table--borderless">
+  <thead>
+    <tr><th>Navn</th><th>Email</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Alice</td><td>alice@example.com</td></tr>
+    <tr><td>Bob</td><td>bob@example.com</td></tr>
+  </tbody>
+</table>`,
+
+  'c-table-zebra': `<table class="table table--zebra">
+  <thead>
+    <tr><th>Produkt</th><th class="table__num">Pris</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Widget A</td><td class="table__num">199 kr</td></tr>
+    <tr><td>Widget B</td><td class="table__num">249 kr</td></tr>
+    <tr><td>Widget C</td><td class="table__num">179 kr</td></tr>
+    <tr><td>Widget D</td><td class="table__num">329 kr</td></tr>
+  </tbody>
+</table>`,
+
+  'c-table-compact': `<table class="table table--compact">
+  <thead>
+    <tr><th>ID</th><th>Status</th><th>Dato</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>001</td><td>Aktiv</td><td>2026-03-15</td></tr>
+    <tr><td>002</td><td>Inaktiv</td><td>2026-03-14</td></tr>
+    <tr><td>003</td><td>Aktiv</td><td>2026-03-13</td></tr>
+  </tbody>
+</table>`,
+
+  'c-table-sortable': `<table class="table" data-sortable>
+  <thead>
+    <tr>
+      <th aria-sort="ascending">
+        <button type="button" class="table__sort table__sort--active">Navn <span class="table__sort-icon" aria-hidden="true">▲</span></button>
+      </th>
+      <th class="table__num">
+        <button type="button" class="table__sort">Alder <span class="table__sort-icon" aria-hidden="true">⇅</span></button>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Alice</td><td class="table__num">30</td></tr>
+    <tr><td>Bob</td><td class="table__num">25</td></tr>
+    <tr><td>Carol</td><td class="table__num">35</td></tr>
+  </tbody>
+</table>`,
+
+  'c-table-selectable': `<table class="table" data-selectable>
+  <thead>
+    <tr>
+      <th class="table__select"><input type="checkbox" aria-label="Vælg alle" /></th>
+      <th>Navn</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td class="table__select"><input type="checkbox" aria-label="Vælg Alice" /></td><td>Alice</td><td>alice@example.com</td></tr>
+    <tr class="table__row--selected"><td class="table__select"><input type="checkbox" checked aria-label="Vælg Bob" /></td><td>Bob</td><td>bob@example.com</td></tr>
+  </tbody>
+</table>`,
+
+  'c-table-responsive': `<div class="table-wrapper table-wrapper--responsive">
+  <table class="table">
+    <thead>
+      <tr><th>Navn</th><th>Rolle</th><th class="table__num">Løn</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td data-label="Navn">Alice Jensen</td>
+        <td data-label="Rolle">Designer</td>
+        <td data-label="Løn" class="table__num">42.000 kr</td>
+      </tr>
+      <tr>
+        <td data-label="Navn">Bob Nielsen</td>
+        <td data-label="Rolle">Developer</td>
+        <td data-label="Løn" class="table__num">48.000 kr</td>
+      </tr>
+    </tbody>
+  </table>
+</div>`,
+
+  'c-summary-list-default': `<dl class="summary-list" style="max-width: 480px">
+  <div class="summary-list__row">
+    <dt class="summary-list__key">Navn</dt>
+    <dd class="summary-list__value">Alice Jensen</dd>
+    <dd class="summary-list__actions">
+      <a href="#" class="summary-list__action">Redigér<span class="sr-only">, navn</span></a>
+    </dd>
+  </div>
+  <div class="summary-list__row">
+    <dt class="summary-list__key">Email</dt>
+    <dd class="summary-list__value">alice@example.com</dd>
+    <dd class="summary-list__actions">
+      <a href="#" class="summary-list__action">Redigér<span class="sr-only">, email</span></a>
+    </dd>
+  </div>
+  <div class="summary-list__row">
+    <dt class="summary-list__key">Adresse</dt>
+    <dd class="summary-list__value">Vestergade 1, 8000 Aarhus C</dd>
+    <dd class="summary-list__actions">
+      <a href="#" class="summary-list__action">Redigér<span class="sr-only">, adresse</span></a>
+    </dd>
+  </div>
+</dl>`,
+
+  'c-summary-list-borderless': `<dl class="summary-list summary-list--borderless" style="max-width: 480px">
+  <div class="summary-list__row">
+    <dt class="summary-list__key">Ordrenummer</dt>
+    <dd class="summary-list__value">2026-0042</dd>
+  </div>
+  <div class="summary-list__row">
+    <dt class="summary-list__key">Dato</dt>
+    <dd class="summary-list__value">23. marts 2026</dd>
+  </div>
+  <div class="summary-list__row">
+    <dt class="summary-list__key">Status</dt>
+    <dd class="summary-list__value">Sendt</dd>
+  </div>
+</dl>`,
+
+  'c-summary-list-card': `<div class="summary-card" style="max-width: 480px">
+  <div class="summary-card__header">
+    <h3 class="summary-card__title">Kontaktoplysninger</h3>
+  </div>
+  <div class="summary-card__content">
+    <dl class="summary-list">
+      <div class="summary-list__row">
+        <dt class="summary-list__key">Navn</dt>
+        <dd class="summary-list__value">Alice Jensen</dd>
+        <dd class="summary-list__actions">
+          <a href="#" class="summary-list__action">Redigér</a>
+        </dd>
+      </div>
+      <div class="summary-list__row">
+        <dt class="summary-list__key">Telefon</dt>
+        <dd class="summary-list__value">+45 12 34 56 78</dd>
+        <dd class="summary-list__actions">
+          <a href="#" class="summary-list__action">Redigér</a>
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>`,
+
+  'c-summary-list-readonly': `<dl class="summary-list" style="max-width: 480px">
+  <div class="summary-list__row summary-list__row--no-actions">
+    <dt class="summary-list__key">CPR</dt>
+    <dd class="summary-list__value">010190-1234</dd>
+  </div>
+  <div class="summary-list__row summary-list__row--no-actions">
+    <dt class="summary-list__key">Nationalitet</dt>
+    <dd class="summary-list__value">Dansk</dd>
+  </div>
+  <div class="summary-list__row summary-list__row--no-actions">
+    <dt class="summary-list__key">Kommune</dt>
+    <dd class="summary-list__value">Aarhus</dd>
+  </div>
+</dl>`,
+
   'c-input-states': `<div class="flex flex-col gap-3" style="max-width: 360px">
   <div class="input-field">
     <label class="input-label" for="preview-dis">Disabled</label>

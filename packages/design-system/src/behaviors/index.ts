@@ -2,6 +2,7 @@ import { GtComponent } from './base';
 import { BackToTop } from './back-to-top';
 import { Accordion } from './accordion';
 import { Tabs } from './tabs';
+import { Table } from './table';
 import { Toggle } from './toggle';
 import { Alert } from './alert';
 import { CookieMessage } from './cookie-message';
@@ -13,6 +14,7 @@ export { GtComponent } from './base';
 export { BackToTop } from './back-to-top';
 export { Accordion } from './accordion';
 export { Tabs } from './tabs';
+export { Table } from './table';
 export { Toggle } from './toggle';
 export { Alert } from './alert';
 export { CookieMessage } from './cookie-message';
@@ -24,6 +26,7 @@ export { uid, prefersReducedMotion, slideOpen, slideClose } from './utils';
 const REGISTRY: Record<string, new (el: HTMLElement) => GtComponent> = {
   '.accordion': Accordion,
   '.tabs': Tabs,
+  '.table[data-sortable], .table[data-selectable]': Table,
   '.toggle': Toggle,
   '.alert[data-dismissible]': Alert,
   '.cookie-message': CookieMessage,
