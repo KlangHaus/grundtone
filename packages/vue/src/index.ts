@@ -135,17 +135,11 @@ export type { Validator, ValidationResult } from '@grundtone/utils';
 export { GTAccordion, GTAccordionItem } from './molecules/Accordion';
 export { GTCarousel, GTCarouselSlide } from './molecules/Carousel';
 export type { CarouselProps, CarouselSlideProps } from './molecules/Carousel';
-export {
-  GTChartContainer,
-  GTChartTooltip,
-  GTChartLegend,
-} from './molecules/Chart';
+export { GTChartContainer, GTChartLegend } from './molecules/Chart';
 export type {
   ChartConfig,
   ChartConfigItem,
   ChartContainerProps,
-  ChartTooltipProps,
-  ChartTooltipItem,
   ChartLegendProps,
 } from './molecules/Chart';
 export type {

@@ -125,35 +125,88 @@
     }
   }
 
-  // Touch / pointer
+  // Touch / pointer — continuous drag with visual feedback
   let pointerStartX = 0;
   let pointerStartY = 0;
   let isDragging = false;
+  let directionLocked = false;
+  const dragOffset = ref(0);
 
   function onPointerDown(e: PointerEvent) {
+    if (props.fade) return; // No drag in fade mode
     pointerStartX = e.clientX;
     pointerStartY = e.clientY;
     isDragging = true;
+    directionLocked = false;
+    dragOffset.value = 0;
+
+    // Capture pointer for smooth tracking
+    (e.currentTarget as HTMLElement)?.setPointerCapture(e.pointerId);
   }
 
-  function onPointerUp(e: PointerEvent) {
+  function onPointerMove(e: PointerEvent) {
     if (!isDragging) return;
-    isDragging = false;
 
     const dx = e.clientX - pointerStartX;
     const dy = e.clientY - pointerStartY;
 
-    // Only swipe if horizontal movement > vertical and > 50px threshold
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+    // Lock direction on first significant movement
+    if (!directionLocked && (Math.abs(dx) > 5 || Math.abs(dy) > 5)) {
+      directionLocked = true;
+      if (Math.abs(dy) > Math.abs(dx)) {
+        // Vertical scroll — abort drag
+        isDragging = false;
+        dragOffset.value = 0;
+        return;
+      }
+    }
+
+    if (!directionLocked) return;
+
+    // Resistance at edges when not looping
+    let offset = dx;
+    if (!props.loop) {
+      const atStart = activeIndex.value === 0 && dx > 0;
+      const atEnd = activeIndex.value === slideCount.value - 1 && dx < 0;
+      if (atStart || atEnd) {
+        offset = dx * 0.3; // Rubber-band effect
+      }
+    }
+
+    dragOffset.value = offset;
+  }
+
+  function onPointerUp(e: PointerEvent) {
+    if (!isDragging) {
+      dragOffset.value = 0;
+      return;
+    }
+    isDragging = false;
+
+    const dx = dragOffset.value;
+    const threshold = 50;
+
+    if (Math.abs(dx) > threshold) {
       if (dx < 0) next();
       else prev();
     }
+
+    dragOffset.value = 0;
   }
 
   const trackStyle = computed(() => {
     if (props.fade) return {};
+    const baseOffset = -activeIndex.value * 100;
+    const dragPx = dragOffset.value;
+    // During drag: disable transition for instant feedback
+    if (dragPx !== 0) {
+      return {
+        transform: `translateX(calc(${baseOffset}% + ${dragPx}px))`,
+        transition: 'none',
+      };
+    }
     return {
-      transform: `translateX(${-activeIndex.value * 100}%)`,
+      transform: `translateX(${baseOffset}%)`,
     };
   });
 
@@ -172,7 +225,9 @@
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
     @pointerdown="onPointerDown"
+    @pointermove="onPointerMove"
     @pointerup="onPointerUp"
+    @pointercancel="onPointerUp"
   >
     <div class="carousel__track" :style="trackStyle">
       <slot />

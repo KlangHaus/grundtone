@@ -953,6 +953,43 @@ export const componentExamples: Record<string, string> = {
   <div class="carousel__indicators"><button class="carousel__indicator carousel__indicator--active"></button><button class="carousel__indicator"></button><button class="carousel__indicator"></button></div>
 </div>`,
 
+  'c-error-page-404': `<div class="error-page" style="min-height: auto; padding: var(--space-lg)">
+  <div class="error-page__illustration" style="max-width: 12rem">
+    <svg viewBox="0 0 240 140" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="404">
+      <line x1="20" y1="30" x2="220" y2="30" stroke="currentColor" stroke-width="1" stroke-opacity="0.3"/>
+      <line x1="20" y1="46" x2="220" y2="46" stroke="currentColor" stroke-width="1" stroke-opacity="0.3"/>
+      <line x1="20" y1="62" x2="220" y2="62" stroke="currentColor" stroke-width="1" stroke-opacity="0.3"/>
+      <line x1="20" y1="78" x2="220" y2="78" stroke="currentColor" stroke-width="1" stroke-opacity="0.3"/>
+      <line x1="20" y1="94" x2="220" y2="94" stroke="currentColor" stroke-width="1" stroke-opacity="0.3"/>
+      <ellipse cx="120" cy="70" rx="12" ry="9" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3" fill="none" opacity="0.4"/>
+      <text x="120" y="76" text-anchor="middle" fill="currentColor" font-size="16" font-weight="600" opacity="0.6">?</text>
+    </svg>
+  </div>
+  <div class="error-page__code" style="font-size: 4rem">404</div>
+  <h2 class="error-page__title">Denne side spiller ikke</h2>
+  <p class="error-page__description">Vi kunne ikke finde den node, du ledte efter.</p>
+  <div class="error-page__actions">
+    <a href="#" class="gt-btn gt-btn--primary gt-btn--md">Gå til forsiden</a>
+  </div>
+</div>`,
+
+  'c-error-page-500': `<div class="error-page" style="min-height: auto; padding: var(--space-lg)">
+  <div class="error-page__illustration" style="max-width: 12rem">
+    <svg viewBox="0 0 240 140" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="500">
+      <line x1="20" y1="30" x2="220" y2="30" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4" stroke-opacity="0.3"/>
+      <line x1="20" y1="46" x2="220" y2="46" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4" stroke-opacity="0.3"/>
+      <line x1="20" y1="62" x2="220" y2="62" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4" stroke-opacity="0.3"/>
+      <line x1="20" y1="78" x2="220" y2="78" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4" stroke-opacity="0.3"/>
+      <line x1="20" y1="94" x2="220" y2="94" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4" stroke-opacity="0.3"/>
+      <path d="M 90 30 L 100 55 L 110 40 L 120 65 L 130 45 L 140 70 L 150 50" stroke="currentColor" stroke-width="2" fill="none" opacity="0.5" stroke-linecap="round"/>
+      <text x="120" y="120" text-anchor="middle" fill="currentColor" font-size="11" opacity="0.35">♯ ♭</text>
+    </svg>
+  </div>
+  <div class="error-page__code" style="font-size: 4rem">500</div>
+  <h2 class="error-page__title">Noget gik galt i orkestret</h2>
+  <p class="error-page__description">En uventet fejl opstod. Vi arbejder på at stemme instrumenterne.</p>
+</div>`,
+
   'c-input-states': `<div class="flex flex-col gap-3" style="max-width: 360px">
   <div class="input-field">
     <label class="input-label" for="preview-dis">Disabled</label>

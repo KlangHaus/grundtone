@@ -37,21 +37,13 @@ Full-page error display with musical illustrations, status code, title, descript
 
 ---
 
-## HTML structure
+## 404 — Not Found
 
-```html
-<div class="error-page">
-  <div class="error-page__illustration">
-    <!-- SVG illustration -->
-  </div>
-  <div class="error-page__code">404</div>
-  <h1 class="error-page__title">Denne side spiller ikke</h1>
-  <p class="error-page__description">Vi kunne ikke finde den node, du ledte efter.</p>
-  <div class="error-page__actions">
-    <a href="/" class="gt-btn gt-btn--primary gt-btn--md">Gå til forsiden</a>
-  </div>
-</div>
-```
+<CodePreview id="c-error-page-404" />
+
+## 500 — Server Error
+
+<CodePreview id="c-error-page-500" />
 
 ---
 

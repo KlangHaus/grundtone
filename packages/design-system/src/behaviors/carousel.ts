@@ -11,8 +11,12 @@ export class Carousel extends GtComponent {
   private clickHandlers!: Map<HTMLElement, (e: Event) => void>;
   private keydownHandler!: ((e: KeyboardEvent) => void) | null;
   private pointerStartX = 0;
+  private pointerStartY = 0;
   private isDragging = false;
+  private directionLocked = false;
+  private dragOffset = 0;
   private pointerDownHandler!: ((e: PointerEvent) => void) | null;
+  private pointerMoveHandler!: ((e: PointerEvent) => void) | null;
   private pointerUpHandler!: ((e: PointerEvent) => void) | null;
   private mouseEnterHandler!: (() => void) | null;
   private mouseLeaveHandler!: (() => void) | null;
@@ -66,22 +70,59 @@ export class Carousel extends GtComponent {
     };
     this.el.addEventListener('keydown', this.keydownHandler as EventListener);
 
-    // Touch/pointer
+    // Touch/pointer — continuous drag
+    const isFade = this.el.classList.contains('carousel--fade');
     this.pointerDownHandler = (e: PointerEvent) => {
+      if (isFade) return;
       this.pointerStartX = e.clientX;
+      this.pointerStartY = e.clientY;
       this.isDragging = true;
+      this.directionLocked = false;
+      this.dragOffset = 0;
+      this.el.setPointerCapture(e.pointerId);
     };
-    this.pointerUpHandler = (e: PointerEvent) => {
+    this.pointerMoveHandler = (e: PointerEvent) => {
       if (!this.isDragging) return;
-      this.isDragging = false;
       const dx = e.clientX - this.pointerStartX;
+      const dy = e.clientY - this.pointerStartY;
+      if (!this.directionLocked && (Math.abs(dx) > 5 || Math.abs(dy) > 5)) {
+        this.directionLocked = true;
+        if (Math.abs(dy) > Math.abs(dx)) {
+          this.isDragging = false;
+          this.dragOffset = 0;
+          return;
+        }
+      }
+      if (!this.directionLocked) return;
+      const loop = this.el.getAttribute('data-loop') !== 'false';
+      let offset = dx;
+      if (!loop) {
+        const atStart = this.activeIndex === 0 && dx > 0;
+        const atEnd = this.activeIndex === this.slides.length - 1 && dx < 0;
+        if (atStart || atEnd) offset = dx * 0.3;
+      }
+      this.dragOffset = offset;
+      const track = this.el.querySelector<HTMLElement>('.carousel__track');
+      if (track) {
+        track.style.transition = 'none';
+        track.style.transform = `translateX(calc(${-this.activeIndex * 100}% + ${offset}px))`;
+      }
+    };
+    this.pointerUpHandler = () => {
+      if (!this.isDragging && this.dragOffset === 0) return;
+      this.isDragging = false;
+      const dx = this.dragOffset;
+      this.dragOffset = 0;
       if (Math.abs(dx) > 50) {
         if (dx < 0) this.next();
         else this.prev();
       }
+      this.update(); // Restores transition + correct position
     };
     this.el.addEventListener('pointerdown', this.pointerDownHandler);
+    this.el.addEventListener('pointermove', this.pointerMoveHandler);
     this.el.addEventListener('pointerup', this.pointerUpHandler);
+    this.el.addEventListener('pointercancel', this.pointerUpHandler);
 
     // Hover pause
     this.mouseEnterHandler = () => {
@@ -171,8 +212,12 @@ export class Carousel extends GtComponent {
     if (this.pointerDownHandler) {
       this.el.removeEventListener('pointerdown', this.pointerDownHandler);
     }
+    if (this.pointerMoveHandler) {
+      this.el.removeEventListener('pointermove', this.pointerMoveHandler);
+    }
     if (this.pointerUpHandler) {
       this.el.removeEventListener('pointerup', this.pointerUpHandler);
+      this.el.removeEventListener('pointercancel', this.pointerUpHandler);
     }
     if (this.mouseEnterHandler) {
       this.el.removeEventListener('mouseenter', this.mouseEnterHandler);

@@ -15,11 +15,13 @@
   border-radius: var(--radius-md);
 }
 
+// .figure__caption inherits from .caption — use either class
 .figure__caption {
   font-size: var(--font-size-sm);
   line-height: var(--line-height-normal);
   color: var(--color-text-tertiary);
 }
+
 
 .figure--center {
   margin-inline: auto;
