@@ -60,7 +60,8 @@
 
     let target = index;
     if (props.loop) {
-      target = ((index % slideCount.value) + slideCount.value) % slideCount.value;
+      target =
+        ((index % slideCount.value) + slideCount.value) % slideCount.value;
     } else {
       target = Math.max(0, Math.min(index, slideCount.value - 1));
     }
@@ -176,7 +177,7 @@
     dragOffset.value = offset;
   }
 
-  function onPointerUp(e: PointerEvent) {
+  function onPointerUp(_e: PointerEvent) {
     if (!isDragging) {
       dragOffset.value = 0;
       return;

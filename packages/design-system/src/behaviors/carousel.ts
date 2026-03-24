@@ -68,7 +68,10 @@ export class Carousel extends GtComponent {
         this.next();
       }
     };
-    this.el.addEventListener('keydown', this.keydownHandler as EventListener);
+    this.el.addEventListener(
+      'keydown',
+      this.keydownHandler as (e: Event) => void,
+    );
 
     // Touch/pointer — continuous drag
     const isFade = this.el.classList.contains('carousel--fade');
@@ -155,10 +158,7 @@ export class Carousel extends GtComponent {
         ((index % this.slides.length) + this.slides.length) %
         this.slides.length;
     } else {
-      this.activeIndex = Math.max(
-        0,
-        Math.min(index, this.slides.length - 1),
-      );
+      this.activeIndex = Math.max(0, Math.min(index, this.slides.length - 1));
     }
     this.update();
   }
@@ -206,7 +206,7 @@ export class Carousel extends GtComponent {
     if (this.keydownHandler) {
       this.el.removeEventListener(
         'keydown',
-        this.keydownHandler as EventListener,
+        this.keydownHandler as (e: Event) => void,
       );
     }
     if (this.pointerDownHandler) {
