@@ -1,12 +1,15 @@
 <script setup lang="ts">
   import { computed, provide } from 'vue';
-  import type { ChartContainerProps, ChartConfig } from './types';
+  import type { ChartContainerProps } from './types';
 
   const props = withDefaults(defineProps<ChartContainerProps>(), {
     ariaLabel: undefined,
   });
 
-  provide('gt-chart-config', computed(() => props.config));
+  provide(
+    'gt-chart-config',
+    computed(() => props.config),
+  );
 
   // Generate CSS custom properties for each config entry
   // so chart libs can reference var(--color-revenue) etc.
@@ -20,12 +23,7 @@
 </script>
 
 <template>
-  <div
-    class="chart"
-    :style="colorVars"
-    :aria-label="ariaLabel"
-    role="img"
-  >
+  <div class="chart" :style="colorVars" :aria-label="ariaLabel" role="img">
     <slot />
   </div>
 </template>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-  import { inject, computed } from 'vue';
+  import { inject } from 'vue';
   import type { ChartTooltipProps, ChartConfig } from './types';
 
-  const props = withDefaults(defineProps<ChartTooltipProps>(), {
+  withDefaults(defineProps<ChartTooltipProps>(), {
     label: undefined,
     items: () => [],
   });
