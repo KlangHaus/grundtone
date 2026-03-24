@@ -1,0 +1,131 @@
+// Chart
+// Color tokens and container styling for data visualizations.
+// Chart-lib agnostic — works with Chart.js, ECharts, D3, or inline SVG.
+
+:root {
+  --chart-1: oklch(0.55 0.2 255);
+  --chart-2: oklch(0.65 0.15 165);
+  --chart-3: oklch(0.55 0.1 285);
+  --chart-4: oklch(0.75 0.15 75);
+  --chart-5: oklch(0.65 0.18 25);
+}
+
+[data-theme='dark'],
+.dark {
+  --chart-1: oklch(0.7 0.2 255);
+  --chart-2: oklch(0.75 0.15 165);
+  --chart-3: oklch(0.65 0.1 285);
+  --chart-4: oklch(0.8 0.15 75);
+  --chart-5: oklch(0.75 0.18 25);
+}
+
+// Container
+.chart {
+  position: relative;
+  width: 100%;
+
+  // Ensure SVG/canvas fills container
+  > svg,
+  > canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+
+.chart__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
+
+.chart__title {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+}
+
+.chart__description {
+  margin: 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+}
+
+// Legend
+.chart__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  padding-top: var(--space-sm);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.chart__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.chart__legend-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+// Tooltip
+.chart__tooltip {
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  font-size: var(--font-size-xs);
+  color: var(--color-text);
+  pointer-events: none;
+  z-index: var(--z-index-tooltip);
+}
+
+.chart__tooltip-label {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--space-xs);
+}
+
+.chart__tooltip-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.chart__tooltip-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.chart__tooltip-dot {
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.chart__tooltip-value {
+  font-weight: var(--font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+// Footer
+.chart__footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding-top: var(--space-md);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+}

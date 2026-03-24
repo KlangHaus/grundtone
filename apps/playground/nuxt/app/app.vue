@@ -473,6 +473,29 @@
     </section>
 
     <section class="mb-6">
+      <h2>Chart</h2>
+      <GTChartContainer
+        :config="{
+          a: { label: 'Serie A', color: 'var(--chart-1)' },
+          b: { label: 'Serie B', color: 'var(--chart-2)' },
+        }"
+        aria-label="Demo chart"
+        style="max-width: 400px"
+      >
+        <div class="chart__header">
+          <p class="chart__title">Kvartalsdata</p>
+        </div>
+        <svg viewBox="0 0 200 80" style="width: 100%">
+          <rect x="10" y="10" width="30" height="70" fill="var(--color-a)" rx="4" />
+          <rect x="45" y="30" width="30" height="50" fill="var(--color-b)" rx="4" />
+          <rect x="90" y="5" width="30" height="75" fill="var(--color-a)" rx="4" />
+          <rect x="125" y="25" width="30" height="55" fill="var(--color-b)" rx="4" />
+        </svg>
+        <GTChartLegend />
+      </GTChartContainer>
+    </section>
+
+    <section class="mb-6">
       <h2>Carousel</h2>
       <GTCarousel style="max-width: 500px">
         <GTCarouselSlide>
