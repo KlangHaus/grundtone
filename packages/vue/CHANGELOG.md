@@ -1,5 +1,19 @@
 # @grundtone/vue
 
+## 2.15.0
+
+### Minor Changes
+
+- 366ae17: Add Slider component
+
+  GTSlider: single and dual-thumb range input with pointer drag, keyboard navigation, ARIA slider
+  pattern, vertical orientation, step snapping, and vanilla JS behavior.
+
+### Patch Changes
+
+- Updated dependencies [366ae17]
+  - @grundtone/design-system@2.15.0
+
 ## 2.14.0
 
 ### Minor Changes

@@ -1,5 +1,13 @@
 # @grundtone/nuxt
 
+## 2.15.0
+
+### Patch Changes
+
+- Updated dependencies [366ae17]
+  - @grundtone/design-system@2.15.0
+  - @grundtone/vue@2.15.0
+
 ## 2.14.0
 
 ### Patch Changes
