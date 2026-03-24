@@ -473,6 +473,14 @@
     </section>
 
     <section class="mb-6">
+      <h2>Slider</h2>
+      <div class="flex flex-col gap-4" style="max-width: 400px">
+        <GTSlider :model-value="60" label="Volumen" show-value />
+        <GTSlider :model-value="40" label="Disabled" show-value disabled />
+      </div>
+    </section>
+
+    <section class="mb-6">
       <h2>Error Page</h2>
       <div
         style="

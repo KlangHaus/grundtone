@@ -17,6 +17,7 @@ import InputDemo from '../../../../packages/vue/src/atoms/Input/demo.vue';
 import OtpInputDemo from '../../../../packages/vue/src/atoms/OtpInput/demo.vue';
 import PasswordInputDemo from '../../../../packages/vue/src/atoms/PasswordInput/demo.vue';
 import SelectDemo from '../../../../packages/vue/src/atoms/Select/demo.vue';
+import SliderDemo from '../../../../packages/vue/src/atoms/Slider/demo.vue';
 import SkipLinkDemo from '../../../../packages/vue/src/atoms/SkipLink/demo.vue';
 import SpinnerDemo from '../../../../packages/vue/src/atoms/Spinner/demo.vue';
 import TagDemo from '../../../../packages/vue/src/atoms/Tag/demo.vue';
@@ -79,6 +80,7 @@ export default {
     app.component('SearchFieldDemo', SearchFieldDemo);
     app.component('StepperDemo', StepperDemo);
     app.component('SelectDemo', SelectDemo);
+    app.component('SliderDemo', SliderDemo);
     app.component('SkipLinkDemo', SkipLinkDemo);
     app.component('SpinnerDemo', SpinnerDemo);
     app.component('TagDemo', TagDemo);

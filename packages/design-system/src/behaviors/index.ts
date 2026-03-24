@@ -14,6 +14,7 @@ import { Tooltip } from './tooltip';
 import { Toast } from './toast';
 import { Stepper } from './stepper';
 import { SearchField } from './search-field';
+import { Slider } from './slider';
 
 export { GtComponent } from './base';
 export { BackToTop } from './back-to-top';
@@ -31,6 +32,7 @@ export { Tooltip } from './tooltip';
 export { Toast } from './toast';
 export { Stepper } from './stepper';
 export { SearchField } from './search-field';
+export { Slider } from './slider';
 export { uid, prefersReducedMotion, slideOpen, slideClose } from './utils';
 
 const REGISTRY: Record<string, new (el: HTMLElement) => GtComponent> = {
@@ -49,6 +51,7 @@ const REGISTRY: Record<string, new (el: HTMLElement) => GtComponent> = {
   '.toast': Toast,
   '.stepper': Stepper,
   '.search-field': SearchField,
+  '.slider': Slider,
 };
 
 /**

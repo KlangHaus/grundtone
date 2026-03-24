@@ -990,6 +990,43 @@ export const componentExamples: Record<string, string> = {
   <p class="error-page__description">En uventet fejl opstod. Vi arbejder på at stemme instrumenterne.</p>
 </div>`,
 
+  'c-slider-default': `<div class="slider" style="max-width: 360px">
+  <div class="slider__header">
+    <label class="slider__label">Volumen</label>
+    <span class="slider__value">60</span>
+  </div>
+  <div class="slider__control">
+    <div class="slider__track"></div>
+    <div class="slider__range" style="left: 0%; width: 60%"></div>
+    <div class="slider__thumb" role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="60" aria-label="Volumen" style="left: 60%"></div>
+  </div>
+</div>`,
+
+  'c-slider-range': `<div class="slider slider--range" data-min="0" data-max="1000" data-step="50" style="max-width: 360px">
+  <div class="slider__header">
+    <label class="slider__label">Pris (kr)</label>
+    <span class="slider__value">200 – 800</span>
+  </div>
+  <div class="slider__control">
+    <div class="slider__track"></div>
+    <div class="slider__range" style="left: 20%; width: 60%"></div>
+    <div class="slider__thumb" role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="800" aria-valuenow="200" aria-label="Pris minimum" style="left: 20%"></div>
+    <div class="slider__thumb" role="slider" tabindex="0" aria-valuemin="200" aria-valuemax="1000" aria-valuenow="800" aria-label="Pris maximum" style="left: 80%"></div>
+  </div>
+</div>`,
+
+  'c-slider-disabled': `<div class="slider slider--disabled" style="max-width: 360px">
+  <div class="slider__header">
+    <label class="slider__label">Deaktiveret</label>
+    <span class="slider__value">40</span>
+  </div>
+  <div class="slider__control">
+    <div class="slider__track"></div>
+    <div class="slider__range" style="left: 0%; width: 40%"></div>
+    <div class="slider__thumb" role="slider" tabindex="-1" aria-valuemin="0" aria-valuemax="100" aria-valuenow="40" aria-disabled="true" style="left: 40%"></div>
+  </div>
+</div>`,
+
   'c-input-states': `<div class="flex flex-col gap-3" style="max-width: 360px">
   <div class="input-field">
     <label class="input-label" for="preview-dis">Disabled</label>

@@ -49,6 +49,8 @@ export type { OtpInputProps } from './atoms/OtpInput';
 export { GTPasswordInput } from './atoms/PasswordInput';
 export type { PasswordInputProps } from './atoms/PasswordInput';
 export { GTSelect } from './atoms/Select';
+export { GTSlider } from './atoms/Slider';
+export type { SliderProps } from './atoms/Slider';
 export { GTSkipLink } from './atoms/SkipLink';
 export type { SkipLinkProps } from './atoms/SkipLink';
 export { GTTag } from './atoms/Tag';

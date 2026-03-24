@@ -1,4 +1,6 @@
 ---
+outline: [2, 3]
+---
 
 ## 1.0.18
 ### Patch Changes
@@ -6,8 +8,6 @@
 - Updated dependencies [7e77c0b]
   - @grundtone/design-system@2.14.0
   - @grundtone/vue@2.14.0
-outline: [2, 3]
----
 
 ## 1.0.17
 

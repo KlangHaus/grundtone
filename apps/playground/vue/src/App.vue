@@ -23,6 +23,7 @@
     GTIcon,
     GTInput,
     GTSelect,
+    GTSlider,
     GTCarousel,
     GTCarouselSlide,
     GTChartContainer,
@@ -67,6 +68,8 @@
 
   const showDismissible = ref(true);
   const showCookie = ref(true);
+  const sliderValue = ref(60);
+  const sliderRange = ref<[number, number]>([200, 800]);
   const searchQuery = ref('');
   const textareaValue = ref('');
   const radioValue = ref('');
@@ -853,6 +856,23 @@
               model-value="a"
               disabled
             />
+          </div>
+        </section>
+
+        <section class="mb-6">
+          <h2 id="pg-slider" style="scroll-margin-top: 1rem">Slider</h2>
+          <div class="flex flex-col gap-4" style="max-width: 400px">
+            <GTSlider v-model="sliderValue" label="Volumen" show-value />
+            <GTSlider
+              v-model="sliderRange"
+              :min="0"
+              :max="1000"
+              :step="50"
+              range
+              label="Pris (kr)"
+              show-value
+            />
+            <GTSlider :model-value="40" label="Disabled" show-value disabled />
           </div>
         </section>
 
