@@ -169,6 +169,31 @@
       </div>
     </div>
 
+    <!-- ─── Error Page ─── -->
+    <h3 class="text-base font-semibold mt-4 mb-2">Error Page (404)</h3>
+    <div style="border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: var(--space-lg)">
+      <div class="error-page" style="min-height: 30vh">
+        <div class="error-page__illustration" style="max-width: 14rem">
+          <svg viewBox="0 0 240 140" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fejl 404">
+            <line v-for="i in 5" x1="20" y1="30" x2="220" y2="30" stroke="currentColor" stroke-width="1" stroke-opacity="0.3"></line>
+            <line x1="20" y1="46" x2="220" y2="46" stroke="currentColor" stroke-width="1" stroke-opacity="0.3"></line>
+            <line x1="20" y1="62" x2="220" y2="62" stroke="currentColor" stroke-width="1" stroke-opacity="0.3"></line>
+            <line x1="20" y1="78" x2="220" y2="78" stroke="currentColor" stroke-width="1" stroke-opacity="0.3"></line>
+            <line x1="20" y1="94" x2="220" y2="94" stroke="currentColor" stroke-width="1" stroke-opacity="0.3"></line>
+            <ellipse cx="120" cy="70" rx="12" ry="9" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3" fill="none" opacity="0.4"></ellipse>
+            <text x="120" y="76" text-anchor="middle" fill="currentColor" font-size="16" font-weight="600" opacity="0.6">?</text>
+            <line x1="60" y1="130" x2="180" y2="130" stroke="currentColor" stroke-width="0.5" opacity="0.15"></line>
+          </svg>
+        </div>
+        <div class="error-page__code">404</div>
+        <h2 class="error-page__title">Denne side spiller ikke</h2>
+        <p class="error-page__description">Vi kunne ikke finde den node, du ledte efter.</p>
+        <div class="error-page__actions">
+          <a href="index.html" class="gt-btn gt-btn--primary gt-btn--md">Gå til forsiden</a>
+        </div>
+      </div>
+    </div>
+
     <!-- ─── Chart ─── -->
     <h3 class="text-base font-semibold mt-4 mb-2">Chart (inline SVG)</h3>
     <div class="chart mb-4" role="img" aria-label="Demo chart" style="max-width: 400px">

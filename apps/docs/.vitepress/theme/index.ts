@@ -29,6 +29,7 @@ import AccordionDemo from '../../../../packages/vue/src/molecules/Accordion/demo
 import AddressInputDemo from '../../../../packages/vue/src/molecules/AddressInput/demo.vue';
 import AlertDemo from '../../../../packages/vue/src/molecules/Alert/demo.vue';
 import DatePickerDemo from '../../../../packages/vue/src/molecules/DatePicker/demo.vue';
+import ErrorPageDemo from '../../../../packages/vue/src/molecules/ErrorPage/demo.vue';
 import AnchorLinksDemo from '../../../../packages/vue/src/molecules/AnchorLinks/demo.vue';
 import BreadcrumbDemo from '../../../../packages/vue/src/molecules/Breadcrumb/demo.vue';
 import CarouselDemo from '../../../../packages/vue/src/molecules/Carousel/demo.vue';
@@ -90,6 +91,7 @@ export default {
     app.component('AddressInputDemo', AddressInputDemo);
     app.component('AlertDemo', AlertDemo);
     app.component('DatePickerDemo', DatePickerDemo);
+    app.component('ErrorPageDemo', ErrorPageDemo);
     app.component('DetailsDemo', DetailsDemo);
     app.component('AnchorLinksDemo', AnchorLinksDemo);
     app.component('BreadcrumbDemo', BreadcrumbDemo);

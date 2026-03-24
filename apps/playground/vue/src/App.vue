@@ -27,6 +27,7 @@
     GTCarouselSlide,
     GTChartContainer,
     GTChartLegend,
+    GTErrorPage,
     GTSummaryList,
     GTSummaryItem,
     GTTable,
@@ -199,6 +200,7 @@
             { label: 'Date Input', href: '#pg-date-input' },
             { label: 'Input', href: '#pg-input' },
             { label: 'Select', href: '#pg-select' },
+            { label: 'Error Page', href: '#pg-error' },
             { label: 'Chart', href: '#pg-chart' },
             { label: 'Carousel', href: '#pg-carousel' },
             { label: 'Summary List', href: '#pg-summary-list' },
@@ -855,6 +857,19 @@
         </section>
 
         <section class="mb-6">
+          <h2 id="pg-error" style="scroll-margin-top: 1rem">Error Page</h2>
+          <div
+            style="
+              border: 1px solid var(--color-border-light);
+              border-radius: var(--radius-lg);
+              overflow: hidden;
+            "
+          >
+            <GTErrorPage :code="404" :show-home-link="false" />
+          </div>
+        </section>
+
+        <section class="mb-6">
           <h2 id="pg-chart" style="scroll-margin-top: 1rem">Chart</h2>
           <GTChartContainer
             :config="{
@@ -869,14 +884,70 @@
               <p class="chart__description">Q1 – Q4 2026</p>
             </div>
             <svg viewBox="0 0 400 120" style="width: 100%">
-              <rect x="20" y="30" width="40" height="90" fill="var(--color-a)" rx="4" />
-              <rect x="65" y="50" width="40" height="70" fill="var(--color-b)" rx="4" />
-              <rect x="120" y="10" width="40" height="110" fill="var(--color-a)" rx="4" />
-              <rect x="165" y="40" width="40" height="80" fill="var(--color-b)" rx="4" />
-              <rect x="220" y="25" width="40" height="95" fill="var(--color-a)" rx="4" />
-              <rect x="265" y="55" width="40" height="65" fill="var(--color-b)" rx="4" />
-              <rect x="320" y="15" width="40" height="105" fill="var(--color-a)" rx="4" />
-              <rect x="365" y="35" width="40" height="85" fill="var(--color-b)" rx="4" />
+              <rect
+                x="20"
+                y="30"
+                width="40"
+                height="90"
+                fill="var(--color-a)"
+                rx="4"
+              />
+              <rect
+                x="65"
+                y="50"
+                width="40"
+                height="70"
+                fill="var(--color-b)"
+                rx="4"
+              />
+              <rect
+                x="120"
+                y="10"
+                width="40"
+                height="110"
+                fill="var(--color-a)"
+                rx="4"
+              />
+              <rect
+                x="165"
+                y="40"
+                width="40"
+                height="80"
+                fill="var(--color-b)"
+                rx="4"
+              />
+              <rect
+                x="220"
+                y="25"
+                width="40"
+                height="95"
+                fill="var(--color-a)"
+                rx="4"
+              />
+              <rect
+                x="265"
+                y="55"
+                width="40"
+                height="65"
+                fill="var(--color-b)"
+                rx="4"
+              />
+              <rect
+                x="320"
+                y="15"
+                width="40"
+                height="105"
+                fill="var(--color-a)"
+                rx="4"
+              />
+              <rect
+                x="365"
+                y="35"
+                width="40"
+                height="85"
+                fill="var(--color-b)"
+                rx="4"
+              />
             </svg>
             <GTChartLegend />
           </GTChartContainer>
@@ -939,18 +1010,10 @@
           </h2>
           <h3>Default with actions</h3>
           <GTSummaryList>
-            <GTSummaryItem
-              label="Navn"
-              action="Redigér"
-              action-label="navn"
-            >
+            <GTSummaryItem label="Navn" action="Redigér" action-label="navn">
               Alice Jensen
             </GTSummaryItem>
-            <GTSummaryItem
-              label="Email"
-              action="Redigér"
-              action-label="email"
-            >
+            <GTSummaryItem label="Email" action="Redigér" action-label="email">
               alice@example.com
             </GTSummaryItem>
             <GTSummaryItem

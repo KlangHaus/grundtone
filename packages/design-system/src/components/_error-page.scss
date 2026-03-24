@@ -1,0 +1,98 @@
+// Error Page
+// Centered error display with illustration, code, title, and actions.
+
+.error-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: var(--space-xl) var(--space-md);
+  text-align: center;
+}
+
+.error-page__illustration {
+  width: 100%;
+  max-width: 18rem;
+  margin-bottom: var(--space-lg);
+  color: var(--color-text-tertiary);
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+
+// Subtle breathing animation on the illustration
+@keyframes error-page-breathe {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.error-page__illustration svg {
+  animation: error-page-breathe 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .error-page__illustration svg {
+    animation: none;
+    opacity: 0.8;
+  }
+}
+
+.error-page__code {
+  font-family: var(--font-family-mono);
+  font-size: clamp(4rem, 10vw, 8rem);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: var(--space-sm);
+}
+
+.error-page__title {
+  margin: 0 0 var(--space-sm);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+}
+
+.error-page__description {
+  margin: 0 0 var(--space-xl);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+  max-width: 28rem;
+  line-height: var(--line-height-relaxed);
+}
+
+.error-page__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: center;
+}
+
+.error-page__debug {
+  margin-top: var(--space-xl);
+  padding: var(--space-md);
+  max-width: 40rem;
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}

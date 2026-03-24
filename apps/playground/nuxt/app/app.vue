@@ -473,6 +473,19 @@
     </section>
 
     <section class="mb-6">
+      <h2>Error Page</h2>
+      <div
+        style="
+          border: 1px solid var(--color-border-light);
+          border-radius: var(--radius-lg);
+          overflow: hidden;
+        "
+      >
+        <GTErrorPage :code="404" :show-home-link="false" />
+      </div>
+    </section>
+
+    <section class="mb-6">
       <h2>Chart</h2>
       <GTChartContainer
         :config="{
@@ -486,10 +499,38 @@
           <p class="chart__title">Kvartalsdata</p>
         </div>
         <svg viewBox="0 0 200 80" style="width: 100%">
-          <rect x="10" y="10" width="30" height="70" fill="var(--color-a)" rx="4" />
-          <rect x="45" y="30" width="30" height="50" fill="var(--color-b)" rx="4" />
-          <rect x="90" y="5" width="30" height="75" fill="var(--color-a)" rx="4" />
-          <rect x="125" y="25" width="30" height="55" fill="var(--color-b)" rx="4" />
+          <rect
+            x="10"
+            y="10"
+            width="30"
+            height="70"
+            fill="var(--color-a)"
+            rx="4"
+          />
+          <rect
+            x="45"
+            y="30"
+            width="30"
+            height="50"
+            fill="var(--color-b)"
+            rx="4"
+          />
+          <rect
+            x="90"
+            y="5"
+            width="30"
+            height="75"
+            fill="var(--color-a)"
+            rx="4"
+          />
+          <rect
+            x="125"
+            y="25"
+            width="30"
+            height="55"
+            fill="var(--color-b)"
+            rx="4"
+          />
         </svg>
         <GTChartLegend />
       </GTChartContainer>
@@ -499,13 +540,49 @@
       <h2>Carousel</h2>
       <GTCarousel style="max-width: 500px">
         <GTCarouselSlide>
-          <div style="background: var(--color-primary); height: 200px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: var(--font-size-xl)">Slide 1</div>
+          <div
+            style="
+              background: var(--color-primary);
+              height: 200px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: #fff;
+              font-size: var(--font-size-xl);
+            "
+          >
+            Slide 1
+          </div>
         </GTCarouselSlide>
         <GTCarouselSlide>
-          <div style="background: var(--color-success); height: 200px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: var(--font-size-xl)">Slide 2</div>
+          <div
+            style="
+              background: var(--color-success);
+              height: 200px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: #fff;
+              font-size: var(--font-size-xl);
+            "
+          >
+            Slide 2
+          </div>
         </GTCarouselSlide>
         <GTCarouselSlide>
-          <div style="background: var(--color-warning); height: 200px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: var(--font-size-xl)">Slide 3</div>
+          <div
+            style="
+              background: var(--color-warning);
+              height: 200px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: #fff;
+              font-size: var(--font-size-xl);
+            "
+          >
+            Slide 3
+          </div>
         </GTCarouselSlide>
       </GTCarousel>
     </section>

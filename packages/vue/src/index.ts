@@ -135,7 +135,11 @@ export type { Validator, ValidationResult } from '@grundtone/utils';
 export { GTAccordion, GTAccordionItem } from './molecules/Accordion';
 export { GTCarousel, GTCarouselSlide } from './molecules/Carousel';
 export type { CarouselProps, CarouselSlideProps } from './molecules/Carousel';
-export { GTChartContainer, GTChartTooltip, GTChartLegend } from './molecules/Chart';
+export {
+  GTChartContainer,
+  GTChartTooltip,
+  GTChartLegend,
+} from './molecules/Chart';
 export type {
   ChartConfig,
   ChartConfigItem,
@@ -156,6 +160,8 @@ export type {
   AddressInputSize,
 } from './molecules/AddressInput';
 export { GTDatePicker } from './molecules/DatePicker';
+export { GTErrorPage } from './molecules/ErrorPage';
+export type { ErrorPageProps } from './molecules/ErrorPage';
 export type { DatePickerProps } from './molecules/DatePicker';
 export { GTAlert } from './molecules/Alert';
 export { GTAnchorLinks } from './molecules/AnchorLinks';
