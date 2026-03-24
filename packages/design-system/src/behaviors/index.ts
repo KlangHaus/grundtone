@@ -58,7 +58,9 @@ const REGISTRY: Record<string, new (el: HTMLElement) => GtComponent> = {
  * Discover and initialize all registered components within scope.
  * Idempotent — skips already-initialized elements.
  */
-export function initAll(scope: ParentNode = document): GtComponent[] {
+export function initAll(
+  scope: Document | HTMLElement = document,
+): GtComponent[] {
   const instances: GtComponent[] = [];
 
   for (const [selector, Ctor] of Object.entries(REGISTRY)) {
@@ -75,7 +77,7 @@ export function initAll(scope: ParentNode = document): GtComponent[] {
 /**
  * Destroy all initialized components within scope.
  */
-export function destroyAll(scope: ParentNode = document): void {
+export function destroyAll(scope: Document | HTMLElement = document): void {
   for (const selector of Object.keys(REGISTRY)) {
     const elements = Array.from(scope.querySelectorAll<HTMLElement>(selector));
     for (const el of elements) {
