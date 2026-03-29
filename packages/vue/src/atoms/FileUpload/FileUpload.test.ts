@@ -40,16 +40,16 @@ describe('FileUpload', () => {
 
   it('applies error class on dropzone', () => {
     const wrapper = mountUpload({ errorText: 'Error' });
-    expect(
-      wrapper.find(`.${BASE}__dropzone`).classes(),
-    ).toContain(`${BASE}__dropzone--error`);
+    expect(wrapper.find(`.${BASE}__dropzone`).classes()).toContain(
+      `${BASE}__dropzone--error`,
+    );
   });
 
   it('applies disabled class', () => {
     const wrapper = mountUpload({ disabled: true });
-    expect(
-      wrapper.find(`.${BASE}__dropzone`).classes(),
-    ).toContain(`${BASE}__dropzone--disabled`);
+    expect(wrapper.find(`.${BASE}__dropzone`).classes()).toContain(
+      `${BASE}__dropzone--disabled`,
+    );
   });
 
   it('sets accept attribute', () => {

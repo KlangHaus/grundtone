@@ -38,7 +38,6 @@
   }
 
   function handleChange(event: Event) {
-     
     emit('update:modelValue', (event.target as HTMLSelectElement).value);
   }
 

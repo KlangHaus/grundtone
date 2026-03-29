@@ -3,11 +3,7 @@ import { mount } from '@vue/test-utils';
 import Stepper from './Stepper.vue';
 
 const BASE = 'gt-stepper';
-const steps = [
-  { label: 'Trin 1' },
-  { label: 'Trin 2' },
-  { label: 'Trin 3' },
-];
+const steps = [{ label: 'Trin 1' }, { label: 'Trin 2' }, { label: 'Trin 3' }];
 
 function mountStepper(props = {}) {
   return mount(Stepper, { props: { steps, ...props } });
@@ -28,9 +24,9 @@ describe('Stepper', () => {
 
   it('marks first step as active by default', () => {
     const wrapper = mountStepper();
-    expect(
-      wrapper.findAll(`.${BASE}__step`)[0].classes(),
-    ).toContain(`${BASE}__step--active`);
+    expect(wrapper.findAll(`.${BASE}__step`)[0].classes()).toContain(
+      `${BASE}__step--active`,
+    );
   });
 
   it('marks active step correctly', () => {
@@ -60,14 +56,11 @@ describe('Stepper', () => {
   });
 
   it('renders error state', () => {
-    const errorSteps = [
-      { label: 'Trin 1', error: true },
-      { label: 'Trin 2' },
-    ];
+    const errorSteps = [{ label: 'Trin 1', error: true }, { label: 'Trin 2' }];
     const wrapper = mount(Stepper, { props: { steps: errorSteps } });
-    expect(
-      wrapper.findAll(`.${BASE}__step`)[0].classes(),
-    ).toContain(`${BASE}__step--error`);
+    expect(wrapper.findAll(`.${BASE}__step`)[0].classes()).toContain(
+      `${BASE}__step--error`,
+    );
   });
 
   it('renders info text', () => {

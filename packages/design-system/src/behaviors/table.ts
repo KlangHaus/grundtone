@@ -70,7 +70,9 @@ export class Table extends GtComponent {
 
       let cmp: number;
       if (isNumeric) {
-        cmp = parseFloat(aText.replace(/[^\d.-]/g, '')) - parseFloat(bText.replace(/[^\d.-]/g, ''));
+        cmp =
+          parseFloat(aText.replace(/[^\d.-]/g, '')) -
+          parseFloat(bText.replace(/[^\d.-]/g, ''));
       } else {
         cmp = aText.localeCompare(bText, 'da');
       }

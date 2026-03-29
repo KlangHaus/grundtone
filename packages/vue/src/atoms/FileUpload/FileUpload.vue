@@ -45,7 +45,10 @@
 
     for (const file of Array.from(fileList)) {
       if (props.maxSize && file.size > props.maxSize) {
-        emit('error', `${file.name} er for stor (maks ${formatSize(props.maxSize)})`);
+        emit(
+          'error',
+          `${file.name} er for stor (maks ${formatSize(props.maxSize)})`,
+        );
         continue;
       }
       files.value.push({ file, id: generateId('f') });
@@ -55,12 +58,18 @@
       files.value = [files.value[files.value.length - 1]];
     }
 
-    emit('change', files.value.map(f => f.file));
+    emit(
+      'change',
+      files.value.map(f => f.file),
+    );
   }
 
   function removeFile(id: string) {
     files.value = files.value.filter(f => f.id !== id);
-    emit('change', files.value.map(f => f.file));
+    emit(
+      'change',
+      files.value.map(f => f.file),
+    );
   }
 
   function onDrop(e: Event) {

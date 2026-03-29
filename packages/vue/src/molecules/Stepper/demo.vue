@@ -18,7 +18,12 @@
       <h3>Standard</h3>
       <GTStepper v-model:active-step="step" :steps="steps" />
       <div class="flex gap-2 mt-3">
-        <GTButton size="sm" variant="outlined" :disabled="step === 0" @click="step--">
+        <GTButton
+          size="sm"
+          variant="outlined"
+          :disabled="step === 0"
+          @click="step--"
+        >
           Tilbage
         </GTButton>
         <GTButton
@@ -34,11 +39,7 @@
 
     <section class="gt-demo__section">
       <h3>Alle klikbare</h3>
-      <GTStepper
-        v-model:active-step="step"
-        :steps="steps"
-        all-clickable
-      />
+      <GTStepper v-model:active-step="step" :steps="steps" all-clickable />
     </section>
 
     <section class="gt-demo__section">

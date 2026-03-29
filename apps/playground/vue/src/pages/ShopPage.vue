@@ -69,7 +69,8 @@
         <div>
           <h1 class="text-3xl font-bold mb-1">Shop</h1>
           <p class="text-secondary">
-            Udforsk vores kollektion af design-system merchandise og accessories.
+            Udforsk vores kollektion af design-system merchandise og
+            accessories.
           </p>
         </div>
         <GTButton as="a" href="#/checkout" variant="primary" size="sm">

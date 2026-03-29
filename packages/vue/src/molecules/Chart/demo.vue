@@ -59,10 +59,7 @@
               :x="i * 100 + 45"
               y="196"
               text-anchor="middle"
-              style="
-                font-size: 11px;
-                fill: var(--color-text-tertiary);
-              "
+              style="font-size: 11px; fill: var(--color-text-tertiary)"
             >
               {{ d.month }}
             </text>
@@ -72,7 +69,9 @@
         <GTChartLegend />
 
         <div class="chart__footer">
-          <p>Total omsætning: {{ data.reduce((s, d) => s + d.revenue, 0) }}k kr</p>
+          <p>
+            Total omsætning: {{ data.reduce((s, d) => s + d.revenue, 0) }}k kr
+          </p>
         </div>
       </GTChartContainer>
     </div>
@@ -80,11 +79,7 @@
     <div>
       <h4>Color tokens</h4>
       <div class="flex flex-wrap gap-3">
-        <div
-          v-for="i in 5"
-          :key="i"
-          class="flex items-center gap-2"
-        >
+        <div v-for="i in 5" :key="i" class="flex items-center gap-2">
           <div
             :style="{
               width: '2rem',

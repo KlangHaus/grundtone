@@ -87,7 +87,8 @@
 
   // Snap to step
   function snap(val: number): number {
-    const stepped = Math.round((val - props.min) / props.step) * props.step + props.min;
+    const stepped =
+      Math.round((val - props.min) / props.step) * props.step + props.min;
     return Math.max(props.min, Math.min(props.max, stepped));
   }
 

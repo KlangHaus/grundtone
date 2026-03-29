@@ -22,13 +22,19 @@
 
     &:hover {
       border-color: var(--color-primary);
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 10%, transparent);
+      box-shadow: 0 0 0 3px
+        color-mix(in srgb, var(--color-primary) 10%, transparent);
     }
 
     &--dragover {
       border-color: var(--color-primary);
-      background: color-mix(in srgb, var(--color-primary) 6%, var(--color-surface-alt));
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 15%, transparent);
+      background: color-mix(
+        in srgb,
+        var(--color-primary) 6%,
+        var(--color-surface-alt)
+      );
+      box-shadow: 0 0 0 3px
+        color-mix(in srgb, var(--color-primary) 15%, transparent);
     }
 
     &--error {

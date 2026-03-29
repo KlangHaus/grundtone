@@ -30,10 +30,8 @@
 
   const selectedRows = ref<number[]>([]);
 
-  const statusVariant = (s: string) =>
-    s === 'active' ? 'success' : 'neutral';
-  const statusLabel = (s: string) =>
-    s === 'active' ? 'Aktiv' : 'Inaktiv';
+  const statusVariant = (s: string) => (s === 'active' ? 'success' : 'neutral');
+  const statusLabel = (s: string) => (s === 'active' ? 'Aktiv' : 'Inaktiv');
 </script>
 
 <template>
@@ -96,11 +94,7 @@
       <h4>Custom cell slot with Badge</h4>
       <GTTable :columns="columns" :rows="rows" caption="Custom cell demo">
         <template #cell-status="{ value }">
-          <GTBadge
-            :variant="statusVariant(value as string)"
-            size="sm"
-            dot
-          >
+          <GTBadge :variant="statusVariant(value as string)" size="sm" dot>
             {{ statusLabel(value as string) }}
           </GTBadge>
         </template>

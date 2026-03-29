@@ -22,11 +22,7 @@
 
 <template>
   <div class="chart__legend">
-    <span
-      v-for="entry in entries"
-      :key="entry.key"
-      class="chart__legend-item"
-    >
+    <span v-for="entry in entries" :key="entry.key" class="chart__legend-item">
       <span
         class="chart__legend-dot"
         :style="{ backgroundColor: entry.color }"

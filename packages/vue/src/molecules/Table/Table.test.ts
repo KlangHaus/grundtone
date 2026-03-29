@@ -165,8 +165,7 @@ describe('GTTable', () => {
     const w = mount(Table, {
       props: { columns, rows },
       slots: {
-        'cell-name': ({ value }: { value: unknown }) =>
-          `Custom: ${value}`,
+        'cell-name': ({ value }: { value: unknown }) => `Custom: ${value}`,
       },
     });
 

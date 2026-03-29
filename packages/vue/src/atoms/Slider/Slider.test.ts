@@ -37,9 +37,7 @@ describe('GTSlider', () => {
   it('applies disabled class and aria', () => {
     const w = mount(Slider, { props: { disabled: true } });
     expect(w.find('.slider').classes()).toContain('slider--disabled');
-    expect(w.find('[role="slider"]').attributes('aria-disabled')).toBe(
-      'true',
-    );
+    expect(w.find('[role="slider"]').attributes('aria-disabled')).toBe('true');
   });
 
   it('applies vertical class', () => {

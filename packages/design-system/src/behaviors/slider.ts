@@ -33,9 +33,13 @@ export class Slider extends GtComponent {
     this.isVertical = this.el.classList.contains('slider--vertical');
 
     // Read initial values from aria-valuenow
-    const v0 = parseFloat(this.thumbs[0]?.getAttribute('aria-valuenow') ?? String(this.min));
+    const v0 = parseFloat(
+      this.thumbs[0]?.getAttribute('aria-valuenow') ?? String(this.min),
+    );
     const v1 = this.isRange
-      ? parseFloat(this.thumbs[1]?.getAttribute('aria-valuenow') ?? String(this.max))
+      ? parseFloat(
+          this.thumbs[1]?.getAttribute('aria-valuenow') ?? String(this.max),
+        )
       : v0;
     this.values = [v0, v1];
 
@@ -77,7 +81,8 @@ export class Slider extends GtComponent {
 
       // Track click
       this.trackClickHandler = (e: PointerEvent) => {
-        if ((e.target as HTMLElement).classList.contains('slider__thumb')) return;
+        if ((e.target as HTMLElement).classList.contains('slider__thumb'))
+          return;
         const val = this.getValueFromEvent(e);
         if (this.isRange) {
           const d0 = Math.abs(val - this.values[0]);

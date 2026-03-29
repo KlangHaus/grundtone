@@ -90,10 +90,7 @@
 
     <div>
       <h4>Without controls</h4>
-      <GTCarousel
-        :show-controls="false"
-        style="max-width: 600px"
-      >
+      <GTCarousel :show-controls="false" style="max-width: 600px">
         <GTCarouselSlide v-for="(s, i) in slides" :key="i">
           <div
             :style="{

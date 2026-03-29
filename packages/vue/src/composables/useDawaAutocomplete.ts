@@ -1,4 +1,3 @@
- 
 import { ref, watch, type Ref } from 'vue';
 
 export type DawaType = 'adresse' | 'adgangsadresse' | 'vejnavn' | 'postnummer';

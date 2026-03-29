@@ -71,7 +71,6 @@
     activeIndex.value = -1;
   }
 
-   
   function handleKeydown(event: KeyboardEvent) {
     if (!showDropdown.value) return;
 

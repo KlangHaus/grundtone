@@ -127,24 +127,21 @@
     if (allSelected.value) {
       emit('update:modelValue', []);
     } else {
-      emit('update:modelValue', props.rows.map((_, i) => i));
+      emit(
+        'update:modelValue',
+        props.rows.map((_, i) => i),
+      );
     }
   }
 </script>
 
 <template>
-  <div
-    :class="[
-      'table-wrapper',
-      { 'table-wrapper--responsive': responsive },
-    ]"
-  >
+  <div :class="['table-wrapper', { 'table-wrapper--responsive': responsive }]">
     <table :class="tableClasses">
-      <caption
-        v-if="caption"
-        :class="{ 'sr-only': !captionVisible }"
-      >
-        {{ caption }}
+      <caption v-if="caption" :class="{ 'sr-only': !captionVisible }">
+        {{
+          caption
+        }}
       </caption>
 
       <thead>

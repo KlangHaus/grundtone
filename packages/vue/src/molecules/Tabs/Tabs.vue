@@ -41,7 +41,6 @@
     emit('update:modelValue', id);
   }
 
-   
   function handleKeydown(event: KeyboardEvent) {
     const ids = props.tabs.map(t => t.id);
     const currentIndex = ids.indexOf(activeTab.value);
