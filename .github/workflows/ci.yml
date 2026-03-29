@@ -38,7 +38,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Validate PR title
-        run: echo "${{ github.event.pull_request.title }}" | pnpm commitlint
+        run: echo "${{ github.event.pull_request.title }}" | npx commitlint
 
   lint-and-test:
     name: Lint & Test

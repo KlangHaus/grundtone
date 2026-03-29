@@ -53,13 +53,13 @@ describe('localStorage utilities', () => {
 
   beforeEach(() => {
     store = {};
-    vi.stubGlobal('window', {});
-    vi.stubGlobal('localStorage', {
+    const storage = {
       getItem: (key: string) => store[key] ?? null,
       setItem: (key: string, value: string) => {
         store[key] = value;
       },
-    });
+    };
+    vi.stubGlobal('window', { localStorage: storage });
   });
 
   afterEach(() => {
