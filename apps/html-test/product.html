@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="da">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Design Tokens Tee — Grundtone Shop</title>
+    <meta name="description" content="Økologisk bomuld t-shirt med semantisk farveprint fra Grundtone." />
+    <link rel="stylesheet" href="./node_modules/@grundtone/design-tokens/dist/index.css" />
+    <style>
+      body {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+      }
+      .product-info {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
+      }
+    </style>
+  </head>
+
+  <body>
+    <a href="#main" class="skip-link">Spring til indhold</a>
+
+    <header class="header" role="banner">
+      <a href="shop.html" aria-label="Shop forside">Grundtone Shop</a>
+      <nav aria-label="Primær navigation">
+        <a href="index.html">Playground</a>
+        <a href="blog.html">Blog</a>
+        <a href="shop.html">Shop</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb text-sm text-tertiary mb-4" aria-label="Breadcrumb">
+        <a href="shop.html">Shop</a>
+        <span aria-hidden="true">/</span>
+        <a href="shop.html">T-shirts</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">Design Tokens Tee</span>
+      </nav>
+
+      <!-- Product detail: gallery + info -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+
+        <!-- Gallery -->
+        <div class="product-gallery">
+          <img src="assets/placeholder-1080x1080.jpg" alt="Design Tokens Tee — forside" class="product-gallery__main" />
+          <div class="product-gallery__thumbs">
+            <img src="assets/placeholder-200x200.png" alt="Forside" class="product-gallery__thumb product-gallery__thumb--active" />
+            <img src="assets/placeholder-200x200.png" alt="Bagside" class="product-gallery__thumb" />
+            <img src="assets/placeholder-200x200.png" alt="Detalje" class="product-gallery__thumb" />
+            <img src="assets/placeholder-200x200.png" alt="Model" class="product-gallery__thumb" />
+          </div>
+        </div>
+
+        <!-- Info -->
+        <div class="product-info">
+          <div>
+            <div class="article-tag text-xs font-medium mb-2" style="display: inline-block">T-shirt</div>
+            <h1 class="text-3xl font-bold leading-tight mb-1">Design Tokens Tee</h1>
+            <p class="text-secondary leading-relaxed">
+              Økologisk bomuld t-shirt med semantisk farveprint. Designet til udviklere
+              og designere der tænker i systemer.
+            </p>
+          </div>
+
+          <div>
+            <div class="text-2xl font-bold">349 kr</div>
+            <p class="text-xs text-tertiary mt-1">Inkl. moms. Fri fragt over 500 kr.</p>
+          </div>
+
+          <hr />
+
+          <!-- Size selector -->
+          <div>
+            <label class="text-sm font-semibold mb-2" style="display: block">Størrelse</label>
+            <div class="size-selector">
+              <button class="size-btn">XS</button>
+              <button class="size-btn size-btn--active">S</button>
+              <button class="size-btn">M</button>
+              <button class="size-btn">L</button>
+              <button class="size-btn">XL</button>
+              <button class="size-btn" disabled>XXL</button>
+            </div>
+            <p class="text-xs text-tertiary mt-1">XXL er midlertidigt udsolgt.</p>
+          </div>
+
+          <!-- Color -->
+          <div>
+            <label class="text-sm font-semibold mb-2" style="display: block">Farve</label>
+            <div class="flex gap-2">
+              <button class="rounded-full border-2 border-primary" style="width: 2rem; height: 2rem; background: #1a1a2e; cursor: pointer" aria-label="Midnight" title="Midnight"></button>
+              <button class="rounded-full border" style="width: 2rem; height: 2rem; background: #f5f5f5; cursor: pointer" aria-label="Cloud" title="Cloud"></button>
+              <button class="rounded-full border" style="width: 2rem; height: 2rem; background: #0059b3; cursor: pointer" aria-label="Primary Blue" title="Primary Blue"></button>
+            </div>
+          </div>
+
+          <!-- Add to cart -->
+          <button class="btn-primary" style="align-self: start">
+            Læg i kurv
+          </button>
+
+          <hr />
+
+          <!-- Product details -->
+          <div>
+            <h2 class="text-sm font-semibold mb-2">Produktdetaljer</h2>
+            <dl>
+              <div class="detail-row">
+                <dt>Materiale</dt>
+                <dd>100% økologisk bomuld, 180g/m²</dd>
+              </div>
+              <div class="detail-row">
+                <dt>Pasform</dt>
+                <dd>Regular fit, unisex</dd>
+              </div>
+              <div class="detail-row">
+                <dt>Print</dt>
+                <dd>Vandbaseret serigrafisk tryk</dd>
+              </div>
+              <div class="detail-row">
+                <dt>Pleje</dt>
+                <dd>Maskinvask 30°, tørretumbling frarådes</dd>
+              </div>
+              <div class="detail-row">
+                <dt>Bæredygtighed</dt>
+                <dd>GOTS-certificeret, Fair Trade</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- Description prose -->
+      <section class="mb-5">
+        <h2 class="text-xl font-semibold mb-3">Beskrivelse</h2>
+        <div class="prose text-sm">
+          <p>
+            Design Tokens Tee er mere end bare en t-shirt — det er en statement om
+            at designsystemer starter med de rigtige abstraktioner. Printet viser
+            en visuel repræsentation af vores farve-token hierarki: fra primitive
+            palette-farver til semantiske tokens.
+          </p>
+          <blockquote class="blockquote--quotes">
+            <p>Navngiv tokens efter funktion, ikke farve. <code>--color-primary</code>, ikke <code>--color-blue-600</code>.</p>
+          </blockquote>
+          <p>
+            T-shirten er fremstillet af 100% GOTS-certificeret økologisk bomuld med
+            vandbaseret serigrafisk tryk. Pasformen er regular fit og fungerer til alle
+            kropstyper.
+          </p>
+          <ul>
+            <li>Forvask for minimal krympning</li>
+            <li>Dobbelt-syet hals og ærmer for holdbarhed</li>
+            <li>Nakkelabel med størrelsesguide i CSS-syntax</li>
+            <li>Leveres i genanvendelig emballage</li>
+          </ul>
+        </div>
+      </section>
+
+      <hr />
+
+      <!-- Related products -->
+      <section class="mb-5">
+        <h2 class="text-xl font-semibold mb-3">Relaterede produkter</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <a href="product.html" class="product-card shadow-sm">
+            <img src="assets/placeholder-500x500.png" alt="Utility-First Hoodie" loading="lazy" />
+            <div class="product-card__body">
+              <div class="text-sm font-semibold">Utility-First Hoodie</div>
+              <div class="text-sm font-bold mt-1">599 kr</div>
+            </div>
+          </a>
+          <a href="product.html" class="product-card shadow-sm">
+            <img src="assets/placeholder-500x500.png" alt="Color System Plakat" loading="lazy" />
+            <div class="product-card__body">
+              <div class="text-sm font-semibold">Color System Plakat</div>
+              <div class="text-sm font-bold mt-1">199 kr</div>
+            </div>
+          </a>
+          <a href="product.html" class="product-card shadow-sm">
+            <img src="assets/placeholder-500x500.png" alt="Spacing Scale Krus" loading="lazy" />
+            <div class="product-card__body">
+              <div class="text-sm font-semibold">Spacing Scale Krus</div>
+              <div class="text-sm font-bold mt-1">129 kr</div>
+            </div>
+          </a>
+          <a href="product.html" class="product-card shadow-sm">
+            <img src="assets/placeholder-500x500.png" alt="Token Sticker Pack" loading="lazy" />
+            <div class="product-card__body">
+              <div class="text-sm font-semibold">Token Sticker Pack</div>
+              <div class="text-sm font-bold mt-1">79 kr</div>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <a href="shop.html" class="back-link text-sm font-medium text-primary">
+        &larr; Tilbage til shop
+      </a>
+    </main>
+
+    <footer class="footer text-xs text-tertiary text-center" role="contentinfo">
+      <p>&copy; 2026 Grundtone. Bygget med semantiske design tokens.</p>
+    </footer>
+  </body>
+</html>
