@@ -57,7 +57,7 @@
     "@types/node": "^20.17.45",
     "@unhead/vue": "^2.0.8",
     "changelogen": "^0.6.1",
-    "eslint": "^9.26.0",
+    "eslint": "^9.39.4",
     "nuxt": "^4.4.2"
   }
 }

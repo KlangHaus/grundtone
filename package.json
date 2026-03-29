@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.2",
-    "@changesets/cli": "^2.29.8",
+    "@changesets/cli": "^2.30.0",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@eslint/js": "^9.33.0",
@@ -51,7 +51,7 @@
     "eslint": "9.33.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
-    "eslint-plugin-vue": "^10.4.0",
+    "eslint-plugin-vue": "^10.8.0",
     "filesize": "^11.0.2",
     "husky": "^9.1.7",
     "jsdom": "26.1.0",
@@ -96,13 +96,36 @@
     ]
   },
   "pnpm": {
+    "auditConfig": {
+      "ignoreCves": [
+        "CVE-2026-33128",
+        "CVE-2026-33131",
+        "CVE-2026-33490"
+      ],
+      "ignoreGhsas": [
+        "GHSA-4hxc-9384-m385",
+        "GHSA-q5pr-72pq-83v3",
+        "GHSA-wr4h-v87w-p3r7",
+        "GHSA-xffm-g5w8-qvg7"
+      ]
+    },
     "overrides": {
       "file-type": ">=16.5.4",
       "node-fetch": ">=2.6.7",
       "glob": ">=11.1.0",
       "@octokit/request-error": ">=5.1.1",
       "@octokit/request": ">=8.4.1",
-      "@octokit/plugin-paginate-rest": ">=9.2.2"
+      "@octokit/plugin-paginate-rest": ">=9.2.2",
+      "brace-expansion": ">=5.0.5",
+      "esbuild": ">=0.25.0",
+      "flatted": ">=3.4.2",
+      "h3": ">=2.0.1-rc.18",
+      "minimatch": ">=9.0.7",
+      "node-forge": ">=1.4.0",
+      "picomatch": ">=4.0.4",
+      "serialize-javascript": ">=7.0.5",
+      "srvx": ">=0.11.13",
+      "yaml": ">=2.8.3"
     }
   },
   "repository": "grundtone/grundtone",
