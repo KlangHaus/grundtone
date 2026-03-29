@@ -121,7 +121,6 @@
       "brace-expansion": ">=5.0.5",
       "esbuild": ">=0.25.0",
       "flatted": ">=3.4.2",
-      "h3": ">=2.0.1-rc.18",
       "minimatch": ">=9.0.7",
       "node-forge": ">=1.4.0",
       "picomatch": ">=4.0.4",
