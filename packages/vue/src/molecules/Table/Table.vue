@@ -1,6 +1,5 @@
 <script setup lang="ts">
   import { computed, ref, watch } from 'vue';
-  import { getClassPrefix } from '@grundtone/core';
   import type { TableProps, SortDirection } from './types';
 
   const props = withDefaults(defineProps<TableProps>(), {
@@ -21,8 +20,6 @@
     'update:sortBy': [key: string];
     'update:sortDirection': [dir: SortDirection];
   }>();
-
-  const p = computed(() => getClassPrefix());
 
   // Internal sort state
   const internalSortBy = ref(props.sortBy ?? '');

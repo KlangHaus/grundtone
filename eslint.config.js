@@ -35,8 +35,9 @@ export default [
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': [
         'error',
-        { argsIgnorePattern: '^_' },
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
+      'no-undef': 'off',
     },
   },
 
@@ -66,9 +67,10 @@ export default [
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': [
         'error',
-        { argsIgnorePattern: '^_' },
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
       'vue/multi-word-component-names': 'off',
+      'no-undef': 'off',
     },
   },
 
@@ -95,6 +97,19 @@ export default [
   // Test files
   {
     files: ['**/*.{test,spec}.{js,ts,jsx,tsx,vue}'],
+    rules: {
+      'no-console': 'off',
+    },
+  },
+
+  // Scripts (Node.js utilities)
+  {
+    files: ['**/scripts/**/*.{js,ts,mjs}'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
     rules: {
       'no-console': 'off',
     },
@@ -133,11 +148,14 @@ export default [
       '.output/**',
       '**/.nuxt/**',
       '**/.output/**',
-      'docs/.vitepress/dist/**',
-      'docs/.vitepress/cache/**',
+      '**/.vitepress/dist/**',
+      '**/.vitepress/cache/**',
       '**/*.d.ts',
       'apps/*/dist/**',
       'packages/*/dist/**',
+      'packages/design-system/apps/**',
+      'apps/playground/*/dist/**',
+      'packages/vue/test-*.mjs',
     ],
   },
 ];

@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+ 
 import { useState, useRef, useCallback } from 'react';
 
 export type DawaType = 'adresse' | 'adgangsadresse' | 'vejnavn' | 'postnummer';

@@ -60,6 +60,7 @@
     "access": "public"
   },
   "scripts": {
+    "lint": "eslint src scripts",
     "generate:tokens": "tsx scripts/generate-token-defaults.ts",
     "build": "pnpm generate:tokens && tsup && sass --silence-deprecation=if-function src/index.scss dist/index.css",
     "dev": "tsup --watch",

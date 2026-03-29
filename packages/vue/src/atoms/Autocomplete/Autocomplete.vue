@@ -71,7 +71,7 @@
     activeIndex.value = -1;
   }
 
-  // eslint-disable-next-line no-undef
+   
   function handleKeydown(event: KeyboardEvent) {
     if (!showDropdown.value) return;
 

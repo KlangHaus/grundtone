@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils';
 import SummaryList from './SummaryList.vue';
 import SummaryItem from './SummaryItem.vue';
 
-const slots = {
+const _slots = {
   default: () => [
     {
       setup: () => ({}),

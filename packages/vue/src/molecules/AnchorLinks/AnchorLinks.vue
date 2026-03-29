@@ -17,7 +17,7 @@
   const base = computed(() => `${p.value}-anchor-links`);
 
   const activeHref = ref('');
-  /* eslint-disable no-undef */
+   
   let observer: IntersectionObserver | null = null;
 
   let isClickScrolling = false;

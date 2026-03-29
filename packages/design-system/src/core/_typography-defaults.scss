@@ -2,16 +2,14 @@
 // Run: pnpm generate:tokens
 
 // Font families
-$font-family-base:
-  'IBM Plex Sans',
+$font-family-base: 'IBM Plex Sans',
   -apple-system,
   BlinkMacSystemFont,
   'Segoe UI',
   Helvetica,
   Arial,
   sans-serif !default;
-$font-family-heading:
-  'IBM Plex Sans',
+$font-family-heading: 'IBM Plex Sans',
   -apple-system,
   BlinkMacSystemFont,
   'Segoe UI',

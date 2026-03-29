@@ -38,7 +38,7 @@
   }
 
   function handleChange(event: Event) {
-    // eslint-disable-next-line no-undef
+     
     emit('update:modelValue', (event.target as HTMLSelectElement).value);
   }
 

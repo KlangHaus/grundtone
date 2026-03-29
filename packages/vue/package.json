@@ -50,6 +50,7 @@
     "access": "public"
   },
   "scripts": {
+    "lint": "eslint src",
     "build": "vite build",
     "dev": "vite build --watch",
     "clean": "rm -rf .turbo node_modules dist",

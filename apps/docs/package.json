@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "lint": "eslint . --ignore-pattern .vitepress/cache --ignore-pattern .vitepress/dist",
     "dev": "vitepress dev",
     "build": "vitepress build",
     "preview": "vitepress preview"
