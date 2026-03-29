@@ -4,6 +4,7 @@ import tseslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import vue from 'eslint-plugin-vue';
 import vueParser from 'vue-eslint-parser';
+import prettierConfig from 'eslint-config-prettier';
 
 export default [
   // Base JavaScript configuration
@@ -138,6 +139,9 @@ export default [
       },
     },
   },
+
+  // Disable ESLint rules that conflict with Prettier
+  prettierConfig,
 
   // Ignore patterns
   {
