@@ -280,6 +280,9 @@ importers:
 
   apps/playground/nuxt:
     dependencies:
+      '@grundtone/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
       '@grundtone/icons':
         specifier: workspace:*
         version: link:../../../packages/icons
