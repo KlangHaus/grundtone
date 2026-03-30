@@ -6,9 +6,10 @@ import React, {
   useState,
 } from 'react';
 import { Appearance } from 'react-native';
-import type { Theme } from '@grundtone/core';
+import type { Theme, ThemeMode } from '@grundtone/core';
+import { resolveThemeMode } from '@grundtone/utils';
 
-export type ThemeMode = 'light' | 'dark';
+export type { ThemeMode } from '@grundtone/core';
 
 export interface GrundtoneThemeContextValue {
   theme: Theme;
@@ -21,8 +22,8 @@ export const GrundtoneThemeContext = createContext<
   GrundtoneThemeContextValue | undefined
 >(undefined);
 
-function getSystemTheme(): ThemeMode {
-  return Appearance.getColorScheme() === 'dark' ? 'dark' : 'light';
+function getSystemIsDark(): boolean {
+  return Appearance.getColorScheme() === 'dark';
 }
 
 export interface GrundtoneThemeProviderProps {
@@ -30,7 +31,10 @@ export interface GrundtoneThemeProviderProps {
   light: Theme;
   /** Dark theme – use createTheme() from @grundtone/core */
   dark: Theme;
-  /** Initial mode. Default: follows system. Pass 'light' or 'dark' to override. */
+  /**
+   * Initial mode. Default: 'auto' (follows system).
+   * Pass 'light' or 'dark' to override, or 'auto' for system preference.
+   */
   defaultMode?: ThemeMode;
   /** Force a specific mode (controlled), overriding defaultMode after mount */
   mode?: ThemeMode;
@@ -40,6 +44,8 @@ export interface GrundtoneThemeProviderProps {
 /**
  * Provides Grundtone theme to React Native components.
  * Use useGrundtoneTheme() to consume.
+ *
+ * Supports 'light', 'dark', and 'auto' (system preference) modes.
  *
  * @example
  * import { GrundtoneThemeProvider, useGrundtoneTheme } from '@grundtone/react-native';
@@ -57,24 +63,24 @@ export interface GrundtoneThemeProviderProps {
 export function GrundtoneThemeProvider({
   light,
   dark,
-  defaultMode = 'light',
+  defaultMode = 'auto',
   mode: controlledMode,
   children,
 }: GrundtoneThemeProviderProps): React.ReactElement {
-  const [internalMode, setInternalMode] = useState<ThemeMode>(() => {
-    if (defaultMode === 'dark' || defaultMode === 'light') return defaultMode;
-    return getSystemTheme();
-  });
+  const [internalMode, setInternalMode] = useState<ThemeMode>(defaultMode);
+  const [systemIsDark, setSystemIsDark] = useState(getSystemIsDark);
 
+  // Listen for system appearance changes
   useEffect(() => {
-    if (defaultMode !== undefined) return;
     const sub = Appearance.addChangeListener(() => {
-      setInternalMode(getSystemTheme());
+      setSystemIsDark(getSystemIsDark());
     });
     return () => sub.remove();
-  }, [defaultMode]);
+  }, []);
 
-  const mode = controlledMode ?? internalMode;
+  const activeMode = controlledMode ?? internalMode;
+  const resolved = resolveThemeMode(activeMode, systemIsDark);
+
   const setMode = useCallback(
     (newMode: ThemeMode) => {
       if (controlledMode === undefined) {
@@ -84,16 +90,17 @@ export function GrundtoneThemeProvider({
     [controlledMode],
   );
 
-  const theme = mode === 'dark' ? dark : light;
+  const theme = resolved === 'dark' ? dark : light;
+  const isDark = resolved === 'dark';
 
   const value = useMemo<GrundtoneThemeContextValue>(
     () => ({
       theme,
-      mode,
-      isDark: mode === 'dark',
+      mode: activeMode,
+      isDark,
       setMode,
     }),
-    [theme, mode, setMode],
+    [theme, activeMode, isDark, setMode],
   );
 
   return (

@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="da">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shop — Grundtone</title>
+    <link rel="stylesheet" href="./node_modules/@grundtone/design-system/dist/index.css" />
+  </head>
+
+  <body>
+    <a href="#main" class="skip-link">Spring til indhold</a>
+
+    <header class="header" role="banner">
+      <a href="index.html" aria-label="Forside">Grundtone</a>
+      <nav aria-label="Primær navigation">
+        <a href="index.html">Playground</a>
+        <a href="blog.html">Blog</a>
+        <a href="shop.html" aria-current="page">Shop</a>
+        <a href="signup.html">Tilmeld</a>
+      </nav>
+    </header>
+
+    <main id="main" class="container-lg p-4">
+      <section aria-labelledby="shop-heading">
+        <h1 id="shop-heading" class="text-3xl font-bold mb-1">Shop</h1>
+        <p class="text-secondary mb-4">Udforsk vores kollektion af design-system merchandise og accessories.</p>
+
+        <!-- Filter tabs -->
+        <div class="tabs tabs--pill mb-4">
+          <div class="tabs__list" role="tablist">
+            <button class="tabs__tab tabs__tab--active" role="tab" aria-selected="true">Alle</button>
+            <button class="tabs__tab" role="tab" aria-selected="false">T-shirts</button>
+            <button class="tabs__tab" role="tab" aria-selected="false">Plakater</button>
+            <button class="tabs__tab" role="tab" aria-selected="false">Accessories</button>
+          </div>
+          <div class="tabs__panel" role="tabpanel">
+
+            <!-- Product grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+
+              <a href="product.html" class="card card--nav shadow-sm">
+                <div class="card__media">
+                  <img src="assets/placeholder-300x200-card.png" alt="Design Tokens T-shirt" loading="lazy" />
+                </div>
+                <div class="card__content">
+                  <div class="card__subheading">T-shirt</div>
+                  <h2 class="card__title">Design Tokens Tee</h2>
+                  <div class="card__body"><p>Økologisk bomuld med semantisk farveprint.</p></div>
+                  <div class="card__footer font-bold">349 kr</div>
+                </div>
+              </a>
+
+              <a href="product.html" class="card card--nav shadow-sm">
+                <div class="card__media">
+                  <img src="assets/placeholder-300x200-card.png" alt="Color System Plakat" loading="lazy" />
+                </div>
+                <div class="card__content">
+                  <div class="card__subheading">Plakat</div>
+                  <h2 class="card__title">Color System Plakat</h2>
+                  <div class="card__body"><p>A2-format, 200g mat papir med fuld farveskala.</p></div>
+                  <div class="card__footer">
+                    <span class="font-bold">199 kr</span>
+                    <span class="text-sm text-tertiary line-through ml-1">299 kr</span>
+                  </div>
+                </div>
+              </a>
+
+              <a href="product.html" class="card card--nav shadow-sm">
+                <div class="card__media">
+                  <img src="assets/placeholder-300x200-card.png" alt="Spacing Scale Krus" loading="lazy" />
+                </div>
+                <div class="card__content">
+                  <div class="card__subheading">Accessories</div>
+                  <h2 class="card__title">Spacing Scale Krus</h2>
+                  <div class="card__body"><p>Keramik krus med spacing-skala visualisering.</p></div>
+                  <div class="card__footer font-bold">129 kr</div>
+                </div>
+              </a>
+
+              <a href="product.html" class="card card--nav shadow-sm">
+                <div class="card__media">
+                  <img src="assets/placeholder-300x200-card.png" alt="Design Systems Handbook" loading="lazy" />
+                </div>
+                <div class="card__content">
+                  <div class="card__subheading">Bog</div>
+                  <h2 class="card__title">Design Systems Handbook</h2>
+                  <div class="card__body"><p>256 sider om at bygge skalerbare design systemer.</p></div>
+                  <div class="card__footer font-bold">449 kr</div>
+                </div>
+              </a>
+
+              <a href="product.html" class="card card--nav shadow-sm">
+                <div class="card__media">
+                  <img src="assets/placeholder-300x200-card.png" alt="Utility-First Hoodie" loading="lazy" />
+                </div>
+                <div class="card__content">
+                  <div class="card__subheading">T-shirt</div>
+                  <h2 class="card__title">Utility-First Hoodie</h2>
+                  <div class="card__body"><p>Blød fleece med broderet .flex .items-center motiv.</p></div>
+                  <div class="card__footer font-bold">599 kr</div>
+                </div>
+              </a>
+
+              <a href="product.html" class="card card--nav shadow-sm">
+                <div class="card__media">
+                  <img src="assets/placeholder-300x200-card.png" alt="Token Sticker Pack" loading="lazy" />
+                </div>
+                <div class="card__content">
+                  <div class="card__subheading">Accessories</div>
+                  <h2 class="card__title">Token Sticker Pack</h2>
+                  <div class="card__body"><p>12 vinyl stickers med CSS custom property navne.</p></div>
+                  <div class="card__footer font-bold">79 kr</div>
+                </div>
+              </a>
+
+              <a href="product.html" class="card card--nav shadow-sm">
+                <div class="card__media">
+                  <img src="assets/placeholder-300x200-card.png" alt="Typography Scale Plakat" loading="lazy" />
+                </div>
+                <div class="card__content">
+                  <div class="card__subheading">Plakat</div>
+                  <h2 class="card__title">Typography Scale Plakat</h2>
+                  <div class="card__body"><p>A3-format med komplet typografi-skala visualisering.</p></div>
+                  <div class="card__footer font-bold">149 kr</div>
+                </div>
+              </a>
+
+              <a href="product.html" class="card card--nav shadow-sm">
+                <div class="card__media">
+                  <img src="assets/placeholder-300x200-card.png" alt="Grid System Notesbog" loading="lazy" />
+                </div>
+                <div class="card__content">
+                  <div class="card__subheading">Accessories</div>
+                  <h2 class="card__title">Grid System Notesbog</h2>
+                  <div class="card__body"><p>A5 dot-grid notesbog med 12-kolonne layout.</p></div>
+                  <div class="card__footer font-bold">89 kr</div>
+                </div>
+              </a>
+
+            </div>
+          </div>
+
+          <!-- Filtered panels (empty for demo) -->
+          <div class="tabs__panel" role="tabpanel"><p class="text-secondary text-sm mt-4">Viser kun t-shirts...</p></div>
+          <div class="tabs__panel" role="tabpanel"><p class="text-secondary text-sm mt-4">Viser kun plakater...</p></div>
+          <div class="tabs__panel" role="tabpanel"><p class="text-secondary text-sm mt-4">Viser kun accessories...</p></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer text-xs text-tertiary text-center" role="contentinfo">
+      <p>&copy; 2026 Grundtone. Bygget med semantiske design tokens.</p>
+    </footer>
+
+    <script src="./node_modules/@grundtone/design-system/dist/behaviors.umd.global.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        Grundtone.initAll();
+      });
+    </script>
+  </body>
+</html>

@@ -1,5 +1,25 @@
 # @grundtone/core
 
+## 2.1.0 - 2026-03-21
+
+### Minor Changes
+
+- [`fe730ff`](https://github.com/grundtone/grundtone/commit/fe730ff700a9801f6985aa326d899fdb03e0f88f)
+  Thanks [@allanasp](https://github.com/allanasp)! - feat: icon categories, configurable icon color,
+  RN components (GTIcon, GTButton), Expo playground
+
+  - Icon system: subdirectory-based categories, auto-generated registry with category metadata
+  - Core config: add `iconColor` to `defineGrundtoneConfig` with three-layer resolution (prop →
+    config → currentColor)
+  - Design system: icon utility SCSS classes with prefix support (`{prefix}-icon`)
+  - Vue Icon: add `color` prop with config fallback
+  - React Native: GTIcon (react-native-svg) and GTButton (Pressable) components with full theme
+    support
+  - Expo playground: SDK 54, pnpm workspace, expo-router with Grundtone theme provider
+  - Docs: web icon classes, RN icons, icon gallery component, nav restructure (Design System,
+    Frameworks dropdown, Core Concepts dropdown)
+  - Third-party: credit react-native-svg
+
 ## 2.0.0 - 2026-03-09
 
 ### Major Changes
@@ -37,8 +57,8 @@
   - Expand from 26 to 37 semantic color tokens (add `backgroundAlt`, `surfaceRaised`,
     `surfaceOverlay`, `textInverse`, `textPlaceholder`, `textDisabled`, `borderMedium`,
     `borderInverse`, status `*Dark` variants)
-  - Fix value drift in design-tokens (`success: #28a745` → `#198754`, `info: #17a2b8` → `#0dcaf0`)
-  - Remove duplicate semantic maps from design-tokens `_color-palette.scss` (raw palette retained)
+  - Fix value drift in design-system (`success: #28a745` → `#198754`, `info: #17a2b8` → `#0dcaf0`)
+  - Remove duplicate semantic maps from design-system `_color-palette.scss` (raw palette retained)
   - Remove duplicate `$color-primary-*` variables from `_variables.scss`
   - Add background utility classes: `.bg-alt`, `.bg-surface`, `.bg-surface-alt`,
     `.bg-surface-raised`, `.bg-overlay`
@@ -69,7 +89,7 @@
 
 - [`6a885a9`](https://github.com/grundtone/grundtone/commit/6a885a9d0ac1a0ee15647529b9bc998db7b5863f)
   Thanks [@allanasp](https://github.com/allanasp)! - Remove duplicated token values from
-  design-tokens SCSS — single source of truth is now @grundtone/core theme-preset.ts.
+  design-system SCSS — single source of truth is now @grundtone/core theme-preset.ts.
 
   - Export defaultSpacing, defaultRadius, defaultShadows, defaultTransitions, defaultTypography from
     core

@@ -1,6 +1,6 @@
 # Grid Utility
 
-CSS Grid layout classes included in `@grundtone/design-tokens`. Import the design-tokens CSS to use
+CSS Grid layout classes included in `@grundtone/design-system`. Import the design-system CSS to use
 them – see [Installation](/guide/installation) for setup. Examples below have a **Code** /
 **Preview** tab.
 

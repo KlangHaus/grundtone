@@ -44,9 +44,8 @@ pnpm dev
 
 - **`@grundtone/vue`** - Vue 3 components (buttons, forms, etc.)
 - **`@grundtone/core`** - Core types and constants
-- **`@grundtone/shared`** - Shared utilities and helpers
-- **`@grundtone/composables`** - Vue composables (hooks)
-- **`@grundtone/design-tokens`** - Design tokens (colors, spacing, typography)
+- **`@grundtone/utils`** - Shared utilities and helpers
+- **`@grundtone/design-system`** - Design tokens (colors, spacing, typography)
 - **`@grundtone/nuxt`** - Nuxt 3 module
 
 ### Applications

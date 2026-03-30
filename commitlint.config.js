@@ -24,9 +24,9 @@ export default {
       [
         'vue',          // @grundtone/vue package
         'core',         // @grundtone/core package
-        'shared',       // @grundtone/shared package
-        'composables',  // @grundtone/composables package
-        'design-tokens', // @grundtone/design-tokens package
+        'utils',        // @grundtone/utils package
+        'icons',        // @grundtone/icons package
+        'design-system', // @grundtone/design-system package
         'react-native', // @grundtone/react-native package
         'nuxt',         // @grundtone/nuxt package
         'deps',         // Dependencies
@@ -36,6 +36,7 @@ export default {
         'release',      // Release related
       ],
     ],
+    'scope-empty': [2, 'never'],
     'subject-case': [2, 'never', ['start-case', 'pascal-case', 'upper-case']],
     'subject-max-length': [2, 'always', 100],
     'body-max-line-length': [2, 'always', 100],

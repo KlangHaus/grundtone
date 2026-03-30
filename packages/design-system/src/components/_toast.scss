@@ -1,0 +1,259 @@
+// Component: Toast (Sonner-style)
+// Minimal, stacked toast notifications with countdown bar.
+
+@keyframes toast-countdown {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+@keyframes toast-enter {
+  from {
+    opacity: 0;
+    transform: translateY(100%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes toast-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(100%) scale(0.95);
+  }
+}
+
+// Container — fixed position, stacking
+.toast-container {
+  position: fixed;
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column-reverse;
+  pointer-events: none;
+  gap: 0;
+  padding: var(--space-lg);
+
+  // Positions
+  &--bottom-center {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  &--bottom-right {
+    bottom: 0;
+    right: 0;
+  }
+  &--bottom-left {
+    bottom: 0;
+    left: 0;
+  }
+  &--top-center {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: column;
+  }
+  &--top-right {
+    top: 0;
+    right: 0;
+    flex-direction: column;
+  }
+  &--top-left {
+    top: 0;
+    left: 0;
+    flex-direction: column;
+  }
+
+  // Expanded: show all toasts with gap
+  &--expanded {
+    gap: var(--space-sm);
+
+    .toast {
+      transform: scale(1) translateY(0) !important;
+      opacity: 1 !important;
+    }
+  }
+}
+
+// Single toast
+.toast {
+  position: relative;
+  pointer-events: auto;
+  min-width: 356px;
+  max-width: 420px;
+  padding: var(--space-md) var(--space-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-medium);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  overflow: hidden;
+  transition:
+    transform var(--duration-fast) var(--ease-ease),
+    opacity var(--duration-fast) var(--ease-ease);
+
+  // Enter animation
+  &--entering {
+    animation: toast-enter var(--duration-fast) var(--ease-ease-out);
+  }
+
+  &--leaving {
+    animation: toast-exit var(--duration-fast) ease-in forwards;
+  }
+
+  // Stacking transforms (set via data-index or inline style)
+  &[data-index='1'] {
+    transform: scale(0.95) translateY(-0.5rem);
+    opacity: 0.8;
+  }
+
+  &[data-index='2'] {
+    transform: scale(0.9) translateY(-1rem);
+    opacity: 0.6;
+  }
+
+  // Elements
+  &__icon {
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__message {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+    line-height: var(--line-height-normal);
+  }
+
+  &__description {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+    margin-top: var(--space-xs);
+    line-height: var(--line-height-normal);
+  }
+
+  &__close {
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-sm);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    line-height: 1;
+    padding: var(--space-xs);
+    border-radius: var(--radius-sm);
+    opacity: 0;
+    transition: opacity var(--duration-fast) var(--ease-ease);
+
+    &:hover {
+      color: var(--color-text);
+    }
+    &:focus-visible {
+      opacity: 1;
+      outline: 2px solid var(--color-focus-ring);
+      outline-offset: 2px;
+    }
+  }
+
+  &:hover &__close {
+    opacity: 1;
+  }
+
+  // Countdown bar
+  &__countdown {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    animation: toast-countdown linear forwards;
+  }
+
+  // Pause countdown on hover/focus
+  &:hover &__countdown,
+  &:focus-within &__countdown {
+    animation-play-state: paused;
+  }
+
+  // Variant countdown colors
+  &--success &__countdown {
+    background: var(--color-success);
+  }
+  &--warning &__countdown {
+    background: var(--color-warning);
+  }
+  &--error &__countdown {
+    background: var(--color-error);
+  }
+  &--info &__countdown {
+    background: var(--color-info);
+  }
+  &--default &__countdown {
+    background: var(--color-text-secondary);
+  }
+
+  // Rich colors (filled backgrounds)
+  &--rich.toast--success {
+    background: color-mix(
+      in srgb,
+      var(--color-success) 12%,
+      var(--color-surface)
+    );
+    border-color: color-mix(in srgb, var(--color-success) 25%, transparent);
+  }
+  &--rich.toast--warning {
+    background: color-mix(
+      in srgb,
+      var(--color-warning) 12%,
+      var(--color-surface)
+    );
+    border-color: color-mix(in srgb, var(--color-warning) 25%, transparent);
+  }
+  &--rich.toast--error {
+    background: color-mix(
+      in srgb,
+      var(--color-error) 12%,
+      var(--color-surface)
+    );
+    border-color: color-mix(in srgb, var(--color-error) 25%, transparent);
+  }
+  &--rich.toast--info {
+    background: color-mix(in srgb, var(--color-info) 12%, var(--color-surface));
+    border-color: color-mix(in srgb, var(--color-info) 25%, transparent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &--entering,
+    &--leaving {
+      animation: none;
+    }
+    .toast__countdown {
+      animation: none;
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 639px) {
+    min-width: auto;
+    max-width: none;
+    width: calc(100vw - 2 * var(--space-lg));
+  }
+}

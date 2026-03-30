@@ -169,9 +169,9 @@ Each package is configured for optimal distribution:
 #### Installation
 
 ```bash
-npm install @grundtone/vue @grundtone/design-tokens
+npm install @grundtone/vue @grundtone/design-system
 # or
-pnpm add @grundtone/vue @grundtone/design-tokens
+pnpm add @grundtone/vue @grundtone/design-system
 ```
 
 #### Global Setup
@@ -200,7 +200,7 @@ app.mount('#app');
 </template>
 
 <style lang="scss">
-  @use '@grundtone/design-tokens' as tokens;
+  @use '@grundtone/design-system' as tokens;
 
   .custom-component {
     color: tokens.color('primary');
@@ -304,7 +304,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@use '@grundtone/design-tokens' as tokens;`,
+        additionalData: `@use '@grundtone/design-system' as tokens;`,
       },
     },
   },
@@ -341,7 +341,7 @@ module.exports = {
           {
             loader: 'sass-loader',
             options: {
-              additionalData: `@use '@grundtone/design-tokens' as tokens;`,
+              additionalData: `@use '@grundtone/design-system' as tokens;`,
             },
           },
         ],

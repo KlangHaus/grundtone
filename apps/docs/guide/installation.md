@@ -35,7 +35,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@use '@grundtone/design-tokens' as tokens;`,
+        additionalData: `@use '@grundtone/design-system' as tokens;`,
       },
     },
   },
@@ -233,21 +233,21 @@ Use design tokens only: CSS variables and SCSS. No Vue or React components.
 ### Step 1: Install
 
 ```bash
-pnpm add @grundtone/design-tokens @grundtone/core
+pnpm add @grundtone/design-system @grundtone/core
 # or
-npm install @grundtone/design-tokens @grundtone/core
+npm install @grundtone/design-system @grundtone/core
 ```
 
 ### Step 2: Import CSS
 
 ```html
-<link rel="stylesheet" href="node_modules/@grundtone/design-tokens/dist/index.css" />
+<link rel="stylesheet" href="node_modules/@grundtone/design-system/dist/index.css" />
 ```
 
 Or with a bundler (Vite, webpack):
 
 ```ts
-import '@grundtone/design-tokens/dist/index.css';
+import '@grundtone/design-system/dist/index.css';
 ```
 
 ### Step 3: Use CSS variables
@@ -267,7 +267,7 @@ Override colors in `:root` to match your brand – see
 ### Step 4: Use SCSS and grid (optional)
 
 ```scss
-@use '@grundtone/design-tokens' as tokens;
+@use '@grundtone/design-system' as tokens;
 
 .card {
   padding: tokens.space('md');
@@ -292,4 +292,4 @@ brand.
 | Vue 3        | vue, core           | ThemeProvider in App.vue             |
 | Nuxt 3       | nuxt (dev)          | grundtone.theme in nuxt.config.ts    |
 | React Native | react-native, core  | GrundtoneThemeProvider + createTheme |
-| Plain Web    | design-tokens, core | Import CSS, use CSS vars or SCSS     |
+| Plain Web    | design-system, core | Import CSS, use CSS vars or SCSS     |

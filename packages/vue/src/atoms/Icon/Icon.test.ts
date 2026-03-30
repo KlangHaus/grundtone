@@ -1,221 +1,146 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import { nextTick } from 'vue';
+import { iconRegistry } from '@grundtone/icons';
 import Icon from './Icon.vue';
-import IconProvider from './IconProvider.vue';
-import { ICON_PROVIDER_KEY } from './provider';
-import {
-  testComponentAccessibility,
-  configureGrundtoneAxe,
-} from '../../test-utils/accessibility';
+import { GT_ICON_REGISTRY_KEY } from './types';
 
-// Configure axe for tests
-configureGrundtoneAxe();
+const BASE = 'gt-icon';
 
-// Mock icon component for testing
-const TestIcon = {
-  name: 'TestIcon',
-  props: ['size', 'ariaHidden', 'ariaLabel'],
-  template:
-    '<svg :width="size" :height="size" class="test-icon" :aria-hidden="ariaHidden" :aria-label="ariaLabel"><circle /></svg>',
-};
+/** Mount helper that provides icon registry */
+function mountIcon(props: Record<string, unknown>) {
+  return mount(Icon, {
+    props,
+    global: {
+      provide: {
+        [GT_ICON_REGISTRY_KEY as symbol]: iconRegistry,
+      },
+    },
+  });
+}
 
-describe('Icon (Simplified)', () => {
-  describe('Accessibility', () => {
-    it('meets WCAG 2.1 AA accessibility standards', async () => {
-      const wrapper = mount(IconProvider, {
-        props: {
-          icons: { test: TestIcon },
-        },
-        slots: {
-          default: '<Icon name="test" :size="24" aria-label="Test icon" />',
-        },
-        global: {
-          components: { Icon },
-        },
-      });
-      await nextTick();
-
-      await testComponentAccessibility(wrapper.element as HTMLElement, {
-        componentName: 'Icon',
-        testContrast: false, // Icons handle their own color contrast via theme
-      });
-    });
-
-    it('provides appropriate ARIA attributes for decorative icons', () => {
-      const wrapper = mount(IconProvider, {
-        props: {
-          icons: { test: TestIcon },
-        },
-        slots: {
-          default: '<Icon name="test" :size="24" :aria-hidden="true" />',
-        },
-        global: {
-          components: { Icon },
-        },
-      });
-
-      const testIcon = wrapper.findComponent(TestIcon);
-      expect(testIcon.props('ariaHidden')).toBe(true);
-    });
-
-    it('provides appropriate ARIA label for informative icons', () => {
-      const wrapper = mount(IconProvider, {
-        props: {
-          icons: { test: TestIcon },
-        },
-        slots: {
-          default:
-            '<Icon name="test" :size="24" aria-label="Important information" />',
-        },
-        global: {
-          components: { Icon },
-        },
-      });
-
-      const testIcon = wrapper.findComponent(TestIcon);
-      expect(testIcon.props('ariaLabel')).toBe('Important information');
-    });
-
-    it('defaults to decorative when no aria-label provided', () => {
-      const wrapper = mount(IconProvider, {
-        props: {
-          icons: { test: TestIcon },
-        },
-        slots: {
-          default: '<Icon name="test" :size="24" />',
-        },
-        global: {
-          components: { Icon },
-        },
-      });
-
-      const testIcon = wrapper.findComponent(TestIcon);
-      // Should be decorative by default (aria-hidden=true)
-      expect(testIcon.props('ariaHidden')).toBe(true);
-    });
+describe('Icon', () => {
+  // Rendering with registry (name prop)
+  it('renders icon by name from registry', () => {
+    const wrapper = mountIcon({ name: 'check' });
+    const svg = wrapper.find('svg');
+    expect(svg.exists()).toBe(true);
+    expect(svg.classes()).toContain(BASE);
+    expect(svg.html()).toContain('<path');
   });
 
-  it('renders custom icon from provider', () => {
-    const wrapper = mount(IconProvider, {
+  it('renders correct SVG body for known icon', () => {
+    const wrapper = mountIcon({ name: 'close' });
+    expect(wrapper.html()).toContain('M18 6L6 18');
+  });
+
+  it('sets correct viewBox', () => {
+    const wrapper = mountIcon({ name: 'check' });
+    expect(wrapper.find('svg').attributes('viewBox')).toBe('0 0 24 24');
+  });
+
+  // Direct icon prop
+  it('renders icon from direct icon prop', () => {
+    const wrapper = mount(Icon, {
       props: {
-        icons: { test: TestIcon },
-      },
-      slots: {
-        default: '<Icon name="test" :size="24" />',
-      },
-      global: {
-        components: { Icon },
+        icon: {
+          body: '<circle cx="12" cy="12" r="10"/>',
+          viewBox: '0 0 24 24',
+        },
       },
     });
-
-    const testIcon = wrapper.findComponent(TestIcon);
-    expect(testIcon.exists()).toBe(true);
-    expect(testIcon.props('size')).toBe(24);
+    const svg = wrapper.find('svg');
+    expect(svg.exists()).toBe(true);
+    expect(svg.html()).toContain('<circle');
   });
 
-  it('warns when icon not found using structured logging', () => {
-    const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
-    const originalEnv = process.env.NODE_ENV;
-    process.env.NODE_ENV = 'development';
-
-    mount(Icon, {
-      props: { name: 'nonexistent' },
+  it('icon prop takes precedence over name', () => {
+    const wrapper = mount(Icon, {
+      props: {
+        name: 'check',
+        icon: { body: '<rect width="10" height="10"/>', viewBox: '0 0 24 24' },
+      },
       global: {
         provide: {
-          [ICON_PROVIDER_KEY]: {
-            icons: {},
-            prefix: '',
-            defaultSize: 16,
-          },
+          [GT_ICON_REGISTRY_KEY as symbol]: iconRegistry,
         },
       },
     });
+    expect(wrapper.html()).toContain('<rect');
+    expect(wrapper.html()).not.toContain('M20 6L9 17');
+  });
 
-    expect(consoleSpy).toHaveBeenCalledWith(
-      '[Grundtone UI Warning]',
-      expect.objectContaining({
-        message: 'Icon "nonexistent" not found in custom library',
-        context: expect.objectContaining({
-          component: 'Icon',
-          action: 'loadIcon',
-          severity: 'low',
-          metadata: expect.objectContaining({
-            iconName: 'nonexistent',
-            availableIcons: [],
-          }),
-        }),
-        timestamp: expect.any(String),
-      }),
+  // Sizes
+  it('applies default size class (lg)', () => {
+    const wrapper = mountIcon({ name: 'check' });
+    expect(wrapper.find('svg').classes()).toContain(`${BASE}--lg`);
+  });
+
+  it.each(['xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const)(
+    'applies %s size class',
+    size => {
+      const wrapper = mountIcon({ name: 'check', size });
+      expect(wrapper.find('svg').classes()).toContain(`${BASE}--${size}`);
+    },
+  );
+
+  // Accessibility
+  it('sets aria-hidden when no label', () => {
+    const wrapper = mountIcon({ name: 'check' });
+    expect(wrapper.find('svg').attributes('aria-hidden')).toBe('true');
+  });
+
+  it('does not set aria-hidden when label is provided', () => {
+    const wrapper = mountIcon({ name: 'check', label: 'Checkmark' });
+    const svg = wrapper.find('svg');
+    expect(svg.attributes('aria-hidden')).toBeUndefined();
+    expect(svg.attributes('role')).toBe('img');
+    expect(svg.attributes('aria-label')).toBe('Checkmark');
+  });
+
+  // SVG attributes
+  it('sets stroke attributes for line icons', () => {
+    const wrapper = mountIcon({ name: 'check' });
+    const svg = wrapper.find('svg');
+    expect(svg.attributes('fill')).toBe('none');
+    expect(svg.attributes('stroke')).toBe('currentColor');
+    expect(svg.attributes('stroke-width')).toBe('1.5');
+  });
+
+  // Unknown icon
+  it('warns and renders nothing for unknown icon name', () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const wrapper = mountIcon({ name: 'nonexistent-icon' });
+    expect(wrapper.find('svg').exists()).toBe(false);
+    expect(warnSpy).toHaveBeenCalledWith(
+      expect.stringContaining('nonexistent-icon'),
     );
-
-    consoleSpy.mockRestore();
-    process.env.NODE_ENV = originalEnv;
+    warnSpy.mockRestore();
   });
 
-  it('applies CSS classes', () => {
-    const wrapper = mount(IconProvider, {
-      props: {
-        icons: { test: TestIcon },
-        prefix: 'my-prefix',
-      },
-      slots: {
-        default: '<Icon name="test" />',
-      },
-      global: {
-        components: { Icon },
-      },
-    });
-
-    const iconWrapper = wrapper.findComponent(Icon);
-    expect(iconWrapper.classes()).toContain('icon');
-    expect(iconWrapper.classes()).toContain('icon--test');
-    expect(iconWrapper.classes()).toContain('my-prefix-test');
-  });
-
-  it('passes props to icon component', () => {
-    const wrapper = mount(IconProvider, {
-      props: {
-        icons: { test: TestIcon },
-      },
-      slots: {
-        default: '<Icon name="test" :size="32" aria-label="Test Icon" />',
-      },
-      global: {
-        components: { Icon },
-      },
-    });
-
-    const testIcon = wrapper.findComponent(TestIcon);
-    expect(testIcon.props('size')).toBe(32);
-    expect(testIcon.props('ariaLabel')).toBe('Test Icon');
-  });
-
-  it('works without provider using defaults', () => {
-    const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
-    const originalEnv = process.env.NODE_ENV;
-    process.env.NODE_ENV = 'development';
-
-    const wrapper = mount(Icon, {
-      props: { name: 'missing' },
-    });
-
-    // Should render but warn about missing icon using structured logging
-    expect(wrapper.exists()).toBe(true);
-    expect(consoleSpy).toHaveBeenCalledWith(
-      '[Grundtone UI Warning]',
-      expect.objectContaining({
-        message: 'Icon "missing" not found in custom library',
-        context: expect.objectContaining({
-          component: 'Icon',
-          action: 'loadIcon',
-          severity: 'low',
-        }),
-        timestamp: expect.any(String),
-      }),
+  // No registry warning
+  it('warns when name used without registry', () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const wrapper = mount(Icon, { props: { name: 'check' } });
+    expect(wrapper.find('svg').exists()).toBe(false);
+    expect(warnSpy).toHaveBeenCalledWith(
+      expect.stringContaining('No icon registry provided'),
     );
+    warnSpy.mockRestore();
+  });
 
-    consoleSpy.mockRestore();
-    process.env.NODE_ENV = originalEnv;
+  // All icons renderable
+  it('renders all icons from registry', () => {
+    const names = [
+      'arrow-left',
+      'arrow-right',
+      'check',
+      'close',
+      'menu',
+      'search',
+    ];
+    for (const name of names) {
+      const wrapper = mountIcon({ name });
+      expect(wrapper.find('svg').exists()).toBe(true);
+    }
   });
 });

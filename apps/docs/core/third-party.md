@@ -10,7 +10,7 @@ Grundtone is built on top of excellent open-source software. This page lists the
 |---|---|---|
 | [Vue](https://vuejs.org/) | MIT | Peer dependency — reactive theme types |
 
-### @grundtone/design-tokens
+### @grundtone/design-system
 
 No external runtime dependencies. Produces standalone CSS/SCSS output.
 
@@ -26,6 +26,7 @@ No external runtime dependencies. Produces standalone CSS/SCSS output.
 |---|---|---|
 | [React](https://react.dev/) | MIT | Peer dependency — component model |
 | [React Native](https://reactnative.dev/) | MIT | Peer dependency — native runtime |
+| [react-native-svg](https://github.com/software-mansion/react-native-svg) | MIT | Optional peer dep — SVG rendering for GTIcon |
 
 ### @grundtone/nuxt
 
@@ -33,13 +34,7 @@ No external runtime dependencies. Produces standalone CSS/SCSS output.
 |---|---|---|
 | [@nuxt/kit](https://nuxt.com/) | MIT | Nuxt module API |
 
-### @grundtone/composables
-
-| Library | License | Purpose |
-|---|---|---|
-| [Vue](https://vuejs.org/) | MIT | Peer dependency — composition API |
-
-### @grundtone/shared
+### @grundtone/utils
 
 | Library | License | Purpose |
 |---|---|---|
@@ -110,6 +105,6 @@ All runtime dependencies use permissive open-source licenses:
 
 | License | Count | Examples |
 |---|---|---|
-| MIT | 24 | Vue, React, Vite, ESLint |
+| MIT | 25 | Vue, React, Vite, ESLint, react-native-svg |
 | Apache-2.0 | 3 | TypeScript, Playwright, sharp |
 | ISC | 1 | rimraf |

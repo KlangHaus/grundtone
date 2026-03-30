@@ -1,0 +1,128 @@
+// Component: .details
+// Disclosure element built on native <details>/<summary>.
+// Three variants: default (border-left accent), subtle (inline), card (boxed).
+
+.details {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-base);
+  color: var(--color-text);
+}
+
+// Summary — the clickable trigger
+.details__summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+  list-style: none;
+  user-select: none;
+
+  // Remove native marker
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  &::marker {
+    content: none;
+  }
+
+  &:hover {
+    color: var(--color-primary-dark);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+}
+
+// Custom arrow indicator
+.details__arrow {
+  display: inline-flex;
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  transition: transform 200ms ease;
+
+  // Chevron drawn with borders
+  &::before {
+    content: '';
+    display: block;
+    width: 0.4em;
+    height: 0.4em;
+    margin: auto;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(-45deg);
+    transform-origin: center;
+  }
+}
+
+// Rotate arrow when open
+.details[open] > .details__summary .details__arrow::before {
+  transform: rotate(45deg);
+}
+
+// Content area — animated with grid trick
+.details__content {
+  overflow: hidden;
+}
+
+.details__body {
+  padding-top: var(--space-sm);
+  color: var(--color-text);
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+// ─── Variant: default (border-left accent) ───
+.details--default {
+  .details__body {
+    padding-left: var(--space-md);
+    border-left: 2px solid var(--color-primary);
+    margin-left: 2px; // align with arrow center
+  }
+}
+
+// ─── Variant: subtle (minimal, inline) ───
+.details--subtle {
+  .details__summary {
+    font-weight: var(--font-weight-normal);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+
+    &:hover {
+      color: var(--color-text);
+    }
+  }
+
+  .details__body {
+    color: var(--color-text-secondary);
+  }
+}
+
+// ─── Variant: card (boxed, standalone) ───
+.details--card {
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-xl);
+  padding: var(--space-md) var(--space-lg);
+
+  .details__summary {
+    color: var(--color-text);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .details__body {
+    padding-left: 0;
+    border-left: none;
+  }
+}

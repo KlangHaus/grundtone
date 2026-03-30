@@ -1,0 +1,84 @@
+// Grundtone UI Functions
+// Convenience accessors for CSS custom properties.
+// Usage: @use '@grundtone/design-system/scss/lib' as gt;
+//        color: gt.color('primary');
+//        padding: gt.space('md');
+
+// ─── Color ───────────────────────────────────────────────────────────────────
+
+/// Semantic color token.
+/// @param {String} $key ['primary'] - kebab-case key (e.g. 'text-secondary', 'error')
+/// @return CSS var(--color-{$key})
+@function color($key: 'primary') {
+  @return var(--color-#{$key});
+}
+
+// ─── Typography ──────────────────────────────────────────────────────────────
+
+/// @param {String} $size ['base'] - xs | sm | base | lg | xl | 2xl | 3xl | 4xl | 5xl
+@function font-size($size: 'base') {
+  @return var(--font-size-#{$size});
+}
+
+/// @param {String} $weight ['normal'] - thin | light | normal | medium | semibold | bold | extrabold
+@function font-weight($weight: 'normal') {
+  @return var(--font-weight-#{$weight});
+}
+
+/// @param {String} $family ['base'] - base | heading | mono
+@function font-family($family: 'base') {
+  @return var(--font-family-#{$family});
+}
+
+/// @param {String} $height ['normal'] - none | tight | snug | normal | relaxed | loose
+@function line-height($height: 'normal') {
+  @return var(--line-height-#{$height});
+}
+
+// ─── Spacing ─────────────────────────────────────────────────────────────────
+
+/// @param {String} $size ['md'] - xs | sm | md | lg | xl | 2xl | 3xl | 4xl
+@function space($size: 'md') {
+  @return var(--space-#{$size});
+}
+
+// ─── Border radius ───────────────────────────────────────────────────────────
+
+/// @param {String} $size ['md'] - none | xs | sm | md | lg | xl | 2xl | 3xl | full
+@function radius($size: 'md') {
+  @return var(--radius-#{$size});
+}
+
+// ─── Shadows ─────────────────────────────────────────────────────────────────
+
+/// @param {String} $level ['md'] - none | xs | sm | md | lg | xl | 2xl | inner
+@function shadow($level: 'md') {
+  @return var(--shadow-#{$level});
+}
+
+// ─── Z-index ─────────────────────────────────────────────────────────────────
+
+/// @param {String} $layer ['modal'] - dropdown | sticky | fixed | modal-backdrop | modal | popover | tooltip | toast
+@function z-index($layer: 'modal') {
+  @return var(--z-#{$layer});
+}
+
+// ─── Animation ───────────────────────────────────────────────────────────────
+
+/// @param {String} $speed ['base'] - fast | base | slow
+@function duration($speed: 'base') {
+  @return var(--duration-#{$speed});
+}
+
+/// Returns a timing CSS var. Keys map directly to CSS var names.
+/// @param {String} $type ['ease-out'] - ease | ease-in | ease-out | ease-in-out | linear
+@function ease($type: 'ease-out') {
+  @return var(--#{$type});
+}
+
+// ─── Breakpoints ─────────────────────────────────────────────────────────────
+
+/// @param {String} $name - xs | sm | md | lg | xl | 2xl
+@function breakpoint($name) {
+  @return var(--breakpoint-#{$name});
+}

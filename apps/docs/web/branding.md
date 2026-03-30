@@ -9,7 +9,7 @@
 to inject into the document `<head>`:
 
 ```ts
-import { brandingHeadTags, createBranding } from '@grundtone/design-tokens';
+import { brandingHeadTags, createBranding } from '@grundtone/design-system';
 
 const branding = createBranding();
 const tags = brandingHeadTags(branding);
@@ -30,7 +30,7 @@ If called without arguments it uses `defaultBranding` automatically.
 Pass a custom branding config to generate tags with your own assets:
 
 ```ts
-import { brandingHeadTags, createBranding } from '@grundtone/design-tokens';
+import { brandingHeadTags, createBranding } from '@grundtone/design-system';
 
 const branding = createBranding({
   logos: {

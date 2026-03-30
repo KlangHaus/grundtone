@@ -1,6 +1,6 @@
 # Z-Index
 
-Layering utilities for controlling stacking order. Included in `@grundtone/design-tokens` CSS — see
+Layering utilities for controlling stacking order. Included in `@grundtone/design-system` CSS — see
 [Installation](/guide/installation) for setup.
 
 All utilities support responsive prefixes: `sm:`, `md:`, `lg:`, `xl:`, `2xl:`.
@@ -96,7 +96,7 @@ For component styles, use the CSS custom properties directly or the `z-index()` 
 }
 
 // Using the z-index() function
-@use '@grundtone/design-tokens/scss' as gt;
+@use '@grundtone/design-system/scss' as gt;
 
 .my-modal {
   z-index: gt.z-index('modal'); // → var(--z-modal)

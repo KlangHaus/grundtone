@@ -1,6 +1,6 @@
 # CSS Custom Properties Reference
 
-Complete reference of all CSS custom properties emitted on `:root` by `@grundtone/design-tokens`.
+Complete reference of all CSS custom properties emitted on `:root` by `@grundtone/design-system`.
 All values derive from `@grundtone/core` (single source of truth) and can be overridden at runtime.
 
 ```css

@@ -1,133 +1,103 @@
-<!-- Demo component to test the new Icon system -->
+<script setup lang="ts">
+  import { iconRegistry } from '@grundtone/icons';
+  import GTIcon from './Icon.vue';
+
+  const allIcons = Object.keys(iconRegistry);
+</script>
+
 <template>
-  <div class="icon-demo">
-    <h2>Icon System Test</h2>
+  <div class="gt-demo">
+    <section class="gt-demo__section">
+      <h3>All Custom Icons</h3>
+      <div class="gt-demo__grid">
+        <div v-for="name in allIcons" :key="name" class="gt-demo__icon-card">
+          <GTIcon :name="name" size="lg" />
+          <span class="gt-demo__icon-name">{{ name }}</span>
+        </div>
+      </div>
+    </section>
 
-    <!-- Test 1: Custom Icons with Built-ins -->
-    <div class="demo-section">
-      <h3>Built-in Custom Icons</h3>
-      <IconProvider :icons="builtInIcons">
-        <Icon name="sun" :size="24" />
-        <Icon name="moon" :size="24" />
-      </IconProvider>
-    </div>
+    <section class="gt-demo__section">
+      <h3>Sizes</h3>
+      <div class="gt-demo__row">
+        <GTIcon name="check" size="xs" />
+        <GTIcon name="check" size="sm" />
+        <GTIcon name="check" size="md" />
+        <GTIcon name="check" size="lg" />
+        <GTIcon name="check" size="xl" />
+        <GTIcon name="check" size="2xl" />
+      </div>
+    </section>
 
-    <!-- Test 2: Custom Icons with Provider -->
-    <div class="demo-section">
-      <h3>Custom Icons with Provider</h3>
-      <IconProvider :icons="customIcons">
-        <Icon name="heart" :size="32" />
-        <Icon name="star" :size="32" />
-      </IconProvider>
-    </div>
+    <section class="gt-demo__section">
+      <h3>Inherits color</h3>
+      <div class="gt-demo__row">
+        <span style="color: var(--color-primary)">
+          <GTIcon name="check" />
+        </span>
+        <span style="color: var(--color-error)">
+          <GTIcon name="close" />
+        </span>
+        <span style="color: var(--color-text-secondary)">
+          <GTIcon name="search" />
+        </span>
+      </div>
+    </section>
 
-    <!-- Test 3: Without Provider (fallback) -->
-    <div class="demo-section">
-      <h3>Without Provider (should warn)</h3>
-      <Icon name="test" :size="16" />
-    </div>
-
-    <!-- Test 4: Different sizes and accessibility -->
-    <div class="demo-section">
-      <h3>Sizes and Accessibility</h3>
-      <IconProvider :icons="builtInIcons">
-        <Icon name="sun" :size="16" />
-        <Icon name="sun" :size="24" />
-        <Icon name="sun" :size="32" />
-        <Icon name="sun" :size="48" />
-
-        <!-- Semantic icon with label -->
-        <Icon
-          name="moon"
-          :size="24"
-          :aria-hidden="false"
-          aria-label="Dark mode"
-        />
-      </IconProvider>
-    </div>
-
-    <!-- Test 5: Composables -->
-    <div class="demo-section">
-      <h3>Composables Test</h3>
-      <IconProvider :icons="builtInIcons">
-        <p>Available icons: {{ availableIcons }}</p>
-        <p>Sun icon exists: {{ sunExists }}</p>
-        <p>Config library: {{ iconConfig.library }}</p>
-      </IconProvider>
-    </div>
+    <section class="gt-demo__section">
+      <h3>Accessible (with label)</h3>
+      <div class="gt-demo__row">
+        <GTIcon name="search" label="Search" />
+        <GTIcon name="close" label="Close dialog" />
+      </div>
+    </section>
   </div>
 </template>
 
-<script setup lang="ts">
-  import {
-    Icon,
-    IconProvider,
-    grundtoneIcons,
-    useIconConfig,
-    useIconExists,
-    useAvailableIcons,
-  } from './index';
+<style lang="scss">
+  .gt-demo {
+    &__section {
+      margin-bottom: tokens.space('lg');
 
-  // Built-in icons
-  const builtInIcons = grundtoneIcons;
+      h3 {
+        margin-bottom: tokens.space('sm');
+        font-family: tokens.font-family('base');
+        font-size: tokens.font-size('base');
+        font-weight: tokens.font-weight('semibold');
+      }
+    }
 
-  // Custom test icons (simple SVG components)
-  const HeartIcon = {
-    name: 'HeartIcon',
-    props: ['size', 'aria-hidden', 'aria-label'],
-    template: `
-    <svg :width="size" :height="size" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-    </svg>
-  `,
-  };
+    &__row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: tokens.space('md');
+    }
 
-  const StarIcon = {
-    name: 'StarIcon',
-    props: ['size', 'aria-hidden', 'aria-label'],
-    template: `
-    <svg :width="size" :height="size" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-    </svg>
-  `,
-  };
+    &__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: tokens.space('sm');
+    }
 
-  const customIcons = {
-    heart: HeartIcon,
-    star: StarIcon,
-  };
+    &__icon-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: tokens.space('xs');
+      padding: tokens.space('sm');
+      border: 1px solid tokens.color('border');
+      border-radius: tokens.radius('md');
 
-  // Test composables
-  const iconConfig = useIconConfig();
-  const availableIcons = useAvailableIcons();
-  const sunExists = useIconExists('sun');
-</script>
+      &:hover {
+        background: tokens.color('surface');
+      }
+    }
 
-<script lang="ts">
-  export default {
-    name: 'IconDemo',
-  };
-</script>
-
-<style scoped>
-  .icon-demo {
-    padding: 2rem;
-    font-family: system-ui, sans-serif;
-  }
-
-  .demo-section {
-    margin: 2rem 0;
-    padding: 1rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-  }
-
-  .demo-section h3 {
-    margin-top: 0;
-    color: #374151;
-  }
-
-  .demo-section > * + * {
-    margin-left: 1rem;
+    &__icon-name {
+      font-size: tokens.font-size('xs');
+      color: tokens.color('text-secondary');
+      font-family: tokens.font-family('mono');
+    }
   }
 </style>

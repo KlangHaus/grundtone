@@ -64,25 +64,24 @@ This is a monorepo using Turborepo and pnpm workspaces:
 ```
 grundtone/
 ├── packages/
-│   ├── ui/              # Vue 3 components
-│   ├── design-tokens/   # Design system tokens
-│   ├── composables/     # Vue composables
-│   ├── core/           # Core utilities
-│   ├── shared/         # Shared utilities
-│   └── nuxt/           # Nuxt module
+│   ├── core/            # Core types and constants
+│   ├── design-system/   # SCSS functions, mixins, CSS utilities
+│   ├── utils/           # Shared utilities, formatters, validation
+│   ├── vue/             # Vue 3 components and composables
+│   ├── nuxt/            # Nuxt 3 module
+│   └── react-native/   # React Native theme provider
 ├── apps/
-│   └── playground/     # Demo application
-├── TEMPLATES/          # Component templates (excluded from linting)
+│   ├── docs/           # Documentation site (VitePress)
+│   └── html-test/      # Plain HTML test pages
 └── .github/            # GitHub workflows and templates
 ```
 
 ### Package Responsibilities
 
 - **@grundtone/vue**: Vue 3 components following atomic design
-- **@grundtone/design-tokens**: Colors, typography, spacing tokens
-- **@grundtone/composables**: Reusable Vue composables
-- **@grundtone/core**: Framework-agnostic utilities
-- **@grundtone/shared**: Shared build tools and presets
+- **@grundtone/design-system**: Colors, typography, spacing tokens
+- **@grundtone/core**: Framework-agnostic types and constants
+- **@grundtone/utils**: Shared utilities, formatters, validation
 - **@grundtone/nuxt**: Nuxt integration module
 
 ## Development Workflow

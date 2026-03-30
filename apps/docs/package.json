@@ -1,21 +1,24 @@
 {
   "name": "@grundtone/docs",
-  "version": "1.0.1",
+  "version": "1.0.19",
   "private": true,
   "type": "module",
   "scripts": {
+    "lint": "eslint . --ignore-pattern .vitepress/cache --ignore-pattern .vitepress/dist",
     "dev": "vitepress dev",
     "build": "vitepress build",
     "preview": "vitepress preview"
   },
   "dependencies": {
     "@grundtone/core": "workspace:*",
-    "@grundtone/design-tokens": "workspace:*"
+    "@grundtone/design-system": "workspace:*",
+    "@grundtone/icons": "workspace:*",
+    "@grundtone/utils": "workspace:*",
+    "@grundtone/vue": "workspace:*"
   },
   "devDependencies": {
-    "mermaid": "^11.12.3",
     "vitepress": "^1.6.4",
     "vitepress-plugin-color-preview": "^0.3.2",
-    "vitepress-plugin-mermaid": "^2.0.17"
+    "vitepress-plugin-mermaid-diagram": "^0.2.4"
   }
 }

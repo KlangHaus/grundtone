@@ -1,0 +1,12 @@
+{
+  "name": "@grundtone/html-test",
+  "private": true,
+  "version": "0.0.19",
+  "scripts": {
+    "dev": "npx serve . --symlinks"
+  },
+  "dependencies": {
+    "@grundtone/design-system": "workspace:*",
+    "@grundtone/vue": "workspace:*"
+  }
+}

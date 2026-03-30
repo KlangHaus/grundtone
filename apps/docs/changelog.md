@@ -2,6 +2,115 @@
 outline: [2, 3]
 ---
 
+## 1.0.19
+### Patch Changes
+
+- Updated dependencies [366ae17]
+  - @grundtone/design-system@2.15.0
+  - @grundtone/vue@2.15.0
+
+## 1.0.18
+
+### Patch Changes
+
+- Updated dependencies [7e77c0b]
+  - @grundtone/design-system@2.14.0
+  - @grundtone/vue@2.14.0
+
+## 1.0.17
+
+### Patch Changes
+
+- Updated dependencies [dbd9c2c]
+  - @grundtone/design-system@2.13.0
+  - @grundtone/vue@2.13.0
+
+## 1.0.16
+
+### Patch Changes
+
+- Updated dependencies
+  [[`fc456bf`](https://github.com/grundtone/grundtone/commit/fc456bfc25e1263f3fc19140f8108698072c269d)]:
+  - @grundtone/design-system@2.12.0
+  - @grundtone/vue@2.12.0
+  - @grundtone/utils@2.12.0
+  - @grundtone/icons@2.2.0
+
+## 1.0.15
+
+### Patch Changes
+
+- Updated dependencies
+  [[`c37762e`](https://github.com/grundtone/grundtone/commit/c37762e4ae7944dffc13d04de43a5b0ba83fcf32)]:
+  - @grundtone/design-system@2.11.0
+  - @grundtone/vue@2.11.0
+
+## 1.0.14
+
+### Patch Changes
+
+- Updated dependencies
+  [[`200846b`](https://github.com/grundtone/grundtone/commit/200846b19a450ca48fc97919cf858989483c4318)]:
+  - @grundtone/design-system@2.10.0
+  - @grundtone/vue@2.10.0
+
+## 1.0.13
+
+### Patch Changes
+
+- Updated dependencies
+  [[`009ab18`](https://github.com/grundtone/grundtone/commit/009ab18cbff1652f5b42665bfcc7bc37a4e310b7)]:
+  - @grundtone/vue@2.9.1
+  - @grundtone/icons@2.1.2
+
+## 1.0.12
+
+### Patch Changes
+
+- Updated dependencies
+  [[`efee6cf`](https://github.com/grundtone/grundtone/commit/efee6cfe57c2ec6f038bd2ddc7bd7004a71e2a67)]:
+  - @grundtone/design-system@2.9.0
+  - @grundtone/vue@2.9.0
+  - @grundtone/icons@2.1.1
+
+## 1.0.11
+
+### Patch Changes
+
+- Updated dependencies
+  [[`ccb6a4e`](https://github.com/grundtone/grundtone/commit/ccb6a4e5833b18115cf520ef625c802ed55c42ba),
+  [`8fc757a`](https://github.com/grundtone/grundtone/commit/8fc757a37e5cb862f4d6c48b8a1271088535ff6d),
+  [`9cf5217`](https://github.com/grundtone/grundtone/commit/9cf52174c298cab51259a2ca948523eef26a1516)]:
+  - @grundtone/design-system@2.8.0
+  - @grundtone/vue@2.8.0
+  - @grundtone/utils@2.8.0 outline: [2, 3]
+
+---
+
+## 1.0.10
+
+### Patch Changes
+
+- Updated dependencies
+  [[`f41cfa6`](https://github.com/grundtone/grundtone/commit/f41cfa697d66f842719621865c8ddafe96cf3b25)]:
+  - @grundtone/design-system@2.7.1
+
+## 1.0.9
+
+### Patch Changes
+
+- Updated dependencies
+  [[`98a30f3`](https://github.com/grundtone/grundtone/commit/98a30f3c7786ac7425b5249740cb22e351874f16)]:
+  - @grundtone/design-system@2.7.0
+
+## 1.0.8
+
+### Patch Changes
+
+- Updated dependencies
+  [[`fd7b9e7`](https://github.com/grundtone/grundtone/commit/fd7b9e736af8c3b2964a8bb9089c55583c18f1ae)]:
+  - @grundtone/design-system@2.6.1
+
 <script setup>
 import { data } from './changelog.data'
 
@@ -76,11 +185,18 @@ Changes that are merged and will be included in the next version.
 
 ## Released
 
-<div v-for="release in data.released" :key="release.version" class="changelog-release">
+<div v-for="(release, i) in data.released" :key="release.version" class="changelog-release">
 
-### {{ release.version }} <span v-if="release.date" class="release-date">{{ release.date }}</span>
-
-<div v-html="renderMarkdown(release.content)" />
+<details :open="i === 0 || undefined" class="details details--card">
+  <summary class="details__summary">
+    <span class="details__arrow" aria-hidden="true"></span>
+    <strong>{{ release.version }}</strong>
+    <span v-if="release.date" class="release-date">{{ release.date }}</span>
+  </summary>
+  <div class="details__content">
+    <div class="details__body" v-html="renderMarkdown(release.content)" />
+  </div>
+</details>
 
 </div>
 

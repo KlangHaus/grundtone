@@ -2,6 +2,7 @@ import {
   defineNuxtModule,
   addComponentsDir,
   addImportsDir,
+  addImports,
   createResolver,
 } from '@nuxt/kit';
 import type { NuxtModule } from '@nuxt/schema';
@@ -34,7 +35,7 @@ export interface ModuleOptions {
 
   /**
    * Prefix for component names
-   * @default 'Grundtone'
+   * @default 'GT'
    */
   prefix?: string;
 }
@@ -44,48 +45,66 @@ export default defineNuxtModule<ModuleOptions>({
     name: '@grundtone/nuxt',
     configKey: 'grundtone',
     compatibility: {
-      nuxt: '^3.0.0',
+      nuxt: '>=3.0.0',
     },
   },
   // Default configuration options of the Nuxt module
   defaults: {
     components: true,
     composables: true,
-    prefix: 'Grundtone',
+    prefix: 'GT',
   },
   setup(options, nuxt) {
     const resolver = createResolver(import.meta.url);
 
+    // Inject design-system CSS (custom properties) via @grundtone/vue subpath
+    nuxt.options.css.push(resolver.resolve('../../vue/dist/index.css'));
+
     // Auto-import components
     if (options.components) {
-      addComponentsDir({
-        path: resolver.resolve('../../vue/src/atoms'),
-        pathPrefix: false,
-        prefix: options.prefix,
-        extensions: ['.vue'],
-        pattern: '**/*.vue',
-      });
-
-      addComponentsDir({
-        path: resolver.resolve('../../vue/src/molecules'),
-        pathPrefix: false,
-        prefix: options.prefix,
-        extensions: ['.vue'],
-        pattern: '**/*.vue',
-      });
-
-      addComponentsDir({
-        path: resolver.resolve('../../vue/src/organisms'),
-        pathPrefix: false,
-        prefix: options.prefix,
-        extensions: ['.vue'],
-        pattern: '**/*.vue',
-      });
+      const componentDirs = ['atoms', 'molecules', 'organisms'];
+      for (const dir of componentDirs) {
+        addComponentsDir({
+          path: resolver.resolve(`../../vue/src/${dir}`),
+          pathPrefix: false,
+          prefix: options.prefix,
+          extensions: ['.vue'],
+          pattern: '**/[A-Z]*.vue',
+        });
+      }
     }
 
     // Auto-import composables
     if (options.composables) {
-      addImportsDir(resolver.resolve('../../composables/src'));
+      addImportsDir(resolver.resolve('../../vue/src/composables'));
+
+      // Auto-import icon registry injection key
+      addImports([
+        {
+          name: 'GT_ICON_REGISTRY_KEY',
+          from: '@grundtone/vue',
+        },
+      ]);
+
+      // Auto-import validator factories from @grundtone/utils
+      const validators = [
+        'required',
+        'email',
+        'phone',
+        'cpr',
+        'cvr',
+        'minLength',
+        'maxLength',
+        'pattern',
+        'url',
+        'composeValidators',
+      ];
+      addImports(
+        validators.map(name => ({
+          name,
+          from: '@grundtone/utils',
+        })),
+      );
     }
 
     // Expose module options to runtime
@@ -93,7 +112,7 @@ export default defineNuxtModule<ModuleOptions>({
       theme: options.theme,
       components: options.components ?? true,
       composables: options.composables ?? true,
-      prefix: options.prefix ?? 'Grundtone',
+      prefix: options.prefix ?? 'GT',
     };
 
     // Dev warning if theme not configured

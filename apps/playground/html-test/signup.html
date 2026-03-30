@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="da">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tilmeld dig — Grundtone</title>
+    <link rel="stylesheet" href="./node_modules/@grundtone/design-system/dist/index.css" />
+  </head>
+
+  <body>
+    <a href="#main" class="skip-link">Spring til indhold</a>
+
+    <!-- ─── Header ─── -->
+    <header class="header" role="banner">
+      <a href="index.html" aria-label="Forside">Grundtone</a>
+      <nav aria-label="Primær navigation">
+        <a href="index.html">Playground</a>
+        <a href="blog.html">Blog</a>
+        <a href="shop.html">Shop</a>
+        <a href="signup.html" aria-current="page">Tilmeld</a>
+      </nav>
+    </header>
+
+    <!-- ─── Main ─── -->
+    <main id="main" class="container-sm p-4">
+      <h1 class="text-3xl font-bold mb-1">Opret konto</h1>
+      <p class="text-secondary mb-5">Tilmeld dig for at få adgang til alle funktioner.</p>
+
+      <!-- ─── Signup form ─── -->
+      <form novalidate>
+
+        <!-- ─── Tabs: account type ─── -->
+        <div class="tabs tabs--segment mb-4">
+          <div class="tabs__list" role="tablist">
+            <button type="button" class="tabs__tab tabs__tab--active" role="tab" aria-selected="true">Personlig</button>
+            <button type="button" class="tabs__tab" role="tab" aria-selected="false">Virksomhed</button>
+          </div>
+          <div class="tabs__panel" role="tabpanel">
+            <div class="flex flex-col gap-3 mt-3">
+              <div class="input-field">
+                <label class="input-label" for="signup-name">Fulde navn <span class="input-label__required">*</span></label>
+                <input id="signup-name" class="input input--md" type="text" placeholder="Anders Andersen" required aria-required="true" />
+              </div>
+              <div class="input-field">
+                <label class="input-label" for="signup-email">Email <span class="input-label__required">*</span></label>
+                <input id="signup-email" class="input input--md" type="email" placeholder="anders@example.dk" required aria-required="true" />
+              </div>
+              <div class="input-field">
+                <label class="input-label" for="signup-password">Adgangskode <span class="input-label__required">*</span></label>
+                <input id="signup-password" class="input input--md" type="password" placeholder="Minimum 8 tegn" required aria-required="true" />
+                <p class="input-help">Brug mindst 8 tegn med bogstaver og tal</p>
+              </div>
+            </div>
+          </div>
+          <div class="tabs__panel" role="tabpanel">
+            <div class="flex flex-col gap-3 mt-3">
+              <div class="input-field">
+                <label class="input-label" for="signup-company">Virksomhedsnavn <span class="input-label__required">*</span></label>
+                <input id="signup-company" class="input input--md" type="text" placeholder="Firma ApS" required aria-required="true" />
+              </div>
+              <div class="input-field">
+                <label class="input-label" for="signup-cvr">CVR-nummer</label>
+                <input id="signup-cvr" class="input input--md" type="text" placeholder="12345678" />
+              </div>
+              <div class="input-field">
+                <label class="input-label" for="signup-contact">Kontaktperson <span class="input-label__required">*</span></label>
+                <input id="signup-contact" class="input input--md" type="text" placeholder="Anders Andersen" required aria-required="true" />
+              </div>
+              <div class="input-field">
+                <label class="input-label" for="signup-biz-email">Email <span class="input-label__required">*</span></label>
+                <input id="signup-biz-email" class="input input--md" type="email" placeholder="info@firma.dk" required aria-required="true" />
+              </div>
+              <div class="input-field">
+                <label class="input-label" for="signup-biz-password">Adgangskode <span class="input-label__required">*</span></label>
+                <input id="signup-biz-password" class="input input--md" type="password" placeholder="Minimum 8 tegn" required aria-required="true" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── Birth date (date input) ─── -->
+        <div class="input-field mb-4">
+          <label class="input-label" id="signup-bday-label">Fødselsdato</label>
+          <p class="input-help" id="signup-bday-hint">For eksempel: 27 03 1990</p>
+          <div class="date-input" role="group" aria-labelledby="signup-bday-label" aria-describedby="signup-bday-hint">
+            <div class="date-input__field">
+              <label class="date-input__label" for="signup-bday-day">Dag</label>
+              <input id="signup-bday-day" class="input input--md date-input__input--day"
+                type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2"
+                autocomplete="bday-day" />
+            </div>
+            <div class="date-input__field">
+              <label class="date-input__label" for="signup-bday-month">Måned</label>
+              <input id="signup-bday-month" class="input input--md date-input__input--month"
+                type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2"
+                autocomplete="bday-month" />
+            </div>
+            <div class="date-input__field">
+              <label class="date-input__label" for="signup-bday-year">År</label>
+              <input id="signup-bday-year" class="input input--md date-input__input--year"
+                type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4"
+                autocomplete="bday-year" />
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── Region select ─── -->
+        <div class="input-field mb-4">
+          <label class="input-label" for="signup-region">Region</label>
+          <select id="signup-region" class="select select--md">
+            <option value="" disabled selected>Vælg region...</option>
+            <option value="hovedstaden">Hovedstaden</option>
+            <option value="midtjylland">Midtjylland</option>
+            <option value="nordjylland">Nordjylland</option>
+            <option value="sjaelland">Sjælland</option>
+            <option value="syddanmark">Syddanmark</option>
+          </select>
+        </div>
+
+        <!-- ─── Toggles: preferences ─── -->
+        <fieldset class="mb-4">
+          <legend class="text-base font-semibold mb-3">Præferencer</legend>
+          <div class="flex flex-col gap-3">
+            <div class="toggle-field">
+              <label class="toggle-label">Modtag nyhedsbrev</label>
+              <button type="button" class="toggle toggle--md toggle--checked" role="switch" aria-checked="true">
+                <span class="toggle__track"></span>
+                <span class="toggle__thumb"></span>
+              </button>
+            </div>
+            <div class="toggle-field">
+              <label class="toggle-label">Tillad push-notifikationer</label>
+              <button type="button" class="toggle toggle--md" role="switch" aria-checked="false">
+                <span class="toggle__track"></span>
+                <span class="toggle__thumb"></span>
+              </button>
+            </div>
+            <div class="toggle-field">
+              <label class="toggle-label">Dark mode</label>
+              <button type="button" class="toggle toggle--md" role="switch" aria-checked="false">
+                <span class="toggle__track"></span>
+                <span class="toggle__thumb"></span>
+              </button>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ─── Alert: info ─── -->
+        <div class="alert alert--info mb-4" data-dismissible role="status">
+          <div class="alert__content">
+            <p class="alert__heading">Gratis i 30 dage</p>
+            <div class="alert__body"><p>Du kan altid opgradere eller annullere. Ingen kreditkort påkrævet.</p></div>
+          </div>
+          <button class="alert__close" aria-label="Luk">&times;</button>
+        </div>
+
+        <!-- ─── Tooltip ─── -->
+        <div class="mb-4">
+          <p class="text-base font-semibold mb-2">Tooltip</p>
+          <span class="tooltip-trigger">
+            <span>Felt med hjælp</span>
+            <button class="tooltip-trigger__icon" aria-expanded="false">?</button>
+          </span>
+        </div>
+
+        <!-- ─── Toast (static preview) ─── -->
+        <div class="mb-4">
+          <p class="text-base font-semibold mb-2">Toast</p>
+          <div class="toast toast--success" role="status" aria-live="polite" aria-atomic="true" style="position: relative; min-width: auto">
+            <div class="toast__content">
+              <p class="toast__message">Din ansøgning er afsendt</p>
+              <p class="toast__description">Sed ut perspiciatis unde omnis iste natus error.</p>
+            </div>
+            <div class="toast__countdown toast--success" style="animation-duration: 5000ms; width: 60%"></div>
+          </div>
+        </div>
+
+        <!-- ─── Textarea ─── -->
+        <div class="input-field mb-4">
+          <label class="input-label" for="signup-comment">Kommentar</label>
+          <p class="input-help">Beskriv din baggrund</p>
+          <textarea id="signup-comment" class="textarea" rows="3" placeholder="Skriv her..."></textarea>
+        </div>
+
+        <!-- ─── Tags ─── -->
+        <div class="mb-4">
+          <p class="text-base font-semibold mb-2">Tags</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag tag--md" tabindex="0"><span class="tag__label">Design</span></span>
+            <span class="tag tag--md" tabindex="0">
+              <span class="tag__label">Vue 3</span>
+              <button class="tag__dismiss" aria-label="Fjern Vue 3">&times;</button>
+            </span>
+            <span class="tag tag--md tag--selected" tabindex="0" role="option" aria-selected="true">
+              <span class="tag__label">Aktiv</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- ─── Search Field ─── -->
+        <div class="mb-4">
+          <p class="text-base font-semibold mb-2">Søgefelt</p>
+          <form class="search-field search-field--md" role="search" style="max-width: 360px">
+            <label for="signup-search" class="sr-only">Søg</label>
+            <input id="signup-search" class="search-field__input" type="search" placeholder="Søg..." inputmode="search" />
+            <button class="search-field__button" type="submit" aria-label="Søg"><span class="sr-only">Søg</span></button>
+          </form>
+        </div>
+
+        <!-- ─── Overflow Menu ─── -->
+        <div class="mb-4">
+          <p class="text-base font-semibold mb-2">Overflow menu</p>
+          <div class="overflow-menu">
+            <button class="overflow-menu__trigger" aria-haspopup="menu" aria-expanded="false">⋯</button>
+            <div class="overflow-menu__panel" role="menu">
+              <ul class="overflow-menu__list">
+                <li class="overflow-menu__item"><button class="overflow-menu__link" role="menuitem">Redigér</button></li>
+                <li class="overflow-menu__item"><button class="overflow-menu__link" role="menuitem">Dupliker</button></li>
+                <li class="overflow-menu__item"><button class="overflow-menu__link overflow-menu__link--danger" role="menuitem">Slet</button></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── Radio & Checkbox ─── -->
+        <fieldset class="choice-group mb-4">
+          <legend class="choice-group__legend">Kontotype</legend>
+          <div class="choice-group__list" role="radiogroup">
+            <label class="choice choice--radio choice--checked" for="signup-type-personal">
+              <input id="signup-type-personal" class="choice__input" type="radio" name="account-type" value="personal" checked />
+              <span class="choice__indicator" aria-hidden="true"></span>
+              <span class="choice__body"><span class="choice__label">Personlig</span></span>
+            </label>
+            <label class="choice choice--radio" for="signup-type-business">
+              <input id="signup-type-business" class="choice__input" type="radio" name="account-type" value="business" />
+              <span class="choice__indicator" aria-hidden="true"></span>
+              <span class="choice__body"><span class="choice__label">Virksomhed</span></span>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="choice-group mb-4">
+          <legend class="choice-group__legend">Interesser</legend>
+          <p class="choice-group__hint">Vælg alle der gælder</p>
+          <div class="choice-group__list">
+            <label class="choice choice--checkbox" for="signup-interest-design">
+              <input id="signup-interest-design" class="choice__input" type="checkbox" name="interests" value="design" />
+              <span class="choice__indicator" aria-hidden="true"></span>
+              <span class="choice__body"><span class="choice__label">Design</span></span>
+            </label>
+            <label class="choice choice--checkbox" for="signup-interest-dev">
+              <input id="signup-interest-dev" class="choice__input" type="checkbox" name="interests" value="development" />
+              <span class="choice__indicator" aria-hidden="true"></span>
+              <span class="choice__body"><span class="choice__label">Udvikling</span></span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- ─── Spinner demo ─── -->
+        <div class="mb-4">
+          <p class="text-base font-semibold mb-2">Loading spinner</p>
+          <div class="flex items-center gap-4" style="font-size: 1.25rem">
+            <div class="spinner spinner--sm spinner--dark" role="status" aria-live="polite">
+              <span class="spinner__circle" aria-hidden="true"></span>
+              <span class="sr-only">Indlæser…</span>
+            </div>
+            <div class="spinner spinner--lg spinner--dark" role="status" aria-live="polite">
+              <span class="spinner__circle" aria-hidden="true"></span>
+              <span class="spinner__text">Henter data…</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── Submit ─── -->
+        <button type="submit" class="gt-btn gt-btn--primary gt-btn--md w-full">Opret konto</button>
+      </form>
+
+      <!-- ─── Modal demo ─── -->
+      <h2 class="text-xl font-bold mt-5 mb-3">Modal</h2>
+      <div class="flex gap-2 mb-4">
+        <button type="button" class="gt-btn gt-btn--primary gt-btn--sm" data-modal-target="#demo-modal">Åbn modal</button>
+        <button type="button" class="gt-btn gt-btn--negative gt-btn--sm" data-modal-target="#demo-persistent">Persistent modal</button>
+      </div>
+
+      <div class="modal" id="demo-modal" aria-hidden="true" style="display: none" data-transition="scale">
+        <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="demo-modal-title">
+          <div class="modal__header">
+            <h3 class="modal__title" id="demo-modal-title">Bekræft handling</h3>
+            <button class="modal__close" aria-label="Luk">&times;</button>
+          </div>
+          <div class="modal__body">
+            <p>Er du sikker på at du vil fortsætte?</p>
+          </div>
+          <div class="modal__footer">
+            <button class="gt-btn gt-btn--outlined gt-btn--sm" onclick="Grundtone.Modal.getInstance(document.getElementById('demo-modal'))?.close()">Annuller</button>
+            <button class="gt-btn gt-btn--primary gt-btn--sm" onclick="Grundtone.Modal.getInstance(document.getElementById('demo-modal'))?.close()">Bekræft</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal modal--persistent" id="demo-persistent" data-persistent aria-hidden="true" style="display: none">
+        <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="demo-persistent-title">
+          <div class="modal__header">
+            <h3 class="modal__title" id="demo-persistent-title">Slet konto?</h3>
+          </div>
+          <div class="modal__body">
+            <p>Denne handling kan ikke fortrydes.</p>
+          </div>
+          <div class="modal__footer">
+            <button class="gt-btn gt-btn--outlined gt-btn--sm" onclick="Grundtone.Modal.getInstance(document.getElementById('demo-persistent'))?.close()">Annuller</button>
+            <button class="gt-btn gt-btn--negative gt-btn--sm" onclick="Grundtone.Modal.getInstance(document.getElementById('demo-persistent'))?.close()">Slet</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── FAQ ─── -->
+      <h2 class="text-xl font-bold mt-5 mb-3">Ofte stillede spørgsmål</h2>
+      <div class="accordion accordion--bordered mb-5" data-transition="slide" role="region" aria-label="Tilmeldings-FAQ">
+        <div class="accordion__item">
+          <button class="accordion__header" aria-expanded="false">
+            <span class="accordion__icon" aria-hidden="true"></span>
+            <span class="accordion__heading">Koster det noget?</span>
+          </button>
+          <div class="accordion__panel" role="region">
+            <div class="accordion__body">
+              <p>Nej — Grundtone er gratis og open source under MIT-licensen.</p>
+            </div>
+          </div>
+        </div>
+        <div class="accordion__item">
+          <button class="accordion__header" aria-expanded="false">
+            <span class="accordion__icon" aria-hidden="true"></span>
+            <span class="accordion__heading">Kan jeg bruge det kommercielt?</span>
+          </button>
+          <div class="accordion__panel" role="region">
+            <div class="accordion__body">
+              <p>Ja — MIT-licensen tillader kommerciel brug, modifikation og distribution.</p>
+            </div>
+          </div>
+        </div>
+        <div class="accordion__item">
+          <button class="accordion__header" aria-expanded="false">
+            <span class="accordion__icon" aria-hidden="true"></span>
+            <span class="accordion__heading">Hvordan sletter jeg min konto?</span>
+          </button>
+          <div class="accordion__panel" role="region">
+            <div class="accordion__body">
+              <p>Kontakt os på support@grundtone.dk, så sletter vi alt data inden for 24 timer.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <footer class="footer text-xs text-tertiary text-center" role="contentinfo">
+      <p>&copy; 2026 Grundtone. Bygget med semantiske design tokens.</p>
+    </footer>
+
+    <script src="./node_modules/@grundtone/design-system/dist/behaviors.umd.global.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        Grundtone.initAll();
+      });
+    </script>
+  </body>
+</html>

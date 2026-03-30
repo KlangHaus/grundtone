@@ -25,7 +25,7 @@ graph TB
     subgraph "Grundtone Ecosystem"
         subgraph "Core Layer"
             Core[core - Base styles]
-            Tokens[design-tokens - Design token system]
+            Tokens[design-system - Design token system]
             Shared[shared - Utilities]
         end
 
@@ -79,7 +79,7 @@ graph TB
 import '@grundtone/core/dist/index.css';
 ```
 
-#### `@grundtone/design-tokens`
+#### `@grundtone/design-system`
 
 **Purpose**: Complete design token implementation with tokens, functions, and utilities
 **Dependencies**: None **Architecture**:
@@ -106,7 +106,7 @@ src/
     └── _position.scss    # Position utilities
 ```
 
-#### `@grundtone/shared`
+#### `@grundtone/utils`
 
 **Purpose**: Framework-agnostic utilities and helpers **Dependencies**: `@grundtone/core`
 **Exports**:
@@ -126,7 +126,7 @@ export type { BaseComponent, ComponentSize } from './types';
 #### `@grundtone/vue`
 
 **Purpose**: Vue 3 component library following atomic design **Dependencies**: `@grundtone/core`,
-`@grundtone/shared` **Architecture**:
+`@grundtone/utils` **Architecture**:
 
 ```
 src/
@@ -163,31 +163,11 @@ ComponentName/
 └── README.md               # Component documentation
 ```
 
-#### `@grundtone/composables`
-
-**Purpose**: Vue 3 composables for shared logic **Dependencies**: `@grundtone/core`,
-`@grundtone/shared` **Exports**:
-
-```typescript
-// DOM utilities
-export { useClickOutside } from './clickOutside';
-export { useLocalStorage } from './localStorage';
-
-// Form utilities
-export { useFormValidation } from './formValidation';
-export { useDanishValidation } from './danishValidation';
-
-// UI utilities
-export { useBreakpoints } from './breakpoints';
-export { useTheme } from './theme';
-```
-
 ### Integration Layer
 
 #### `@grundtone/nuxt`
 
-**Purpose**: Nuxt 3 module for seamless integration **Dependencies**: `@grundtone/vue`,
-`@grundtone/composables` **Features**:
+**Purpose**: Nuxt 3 module for seamless integration **Dependencies**: `@grundtone/vue` **Features**:
 
 - Auto-imports for components and composables
 - SCSS preprocessing configuration
@@ -339,7 +319,7 @@ graph TB
 
     subgraph "Level 1: Foundation"
         A1[core]
-        A2[design-tokens]
+        A2[design-system]
         A3[shared]
     end
 

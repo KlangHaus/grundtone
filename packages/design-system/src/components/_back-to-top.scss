@@ -1,0 +1,72 @@
+// Component: Back to Top
+// Sticky button in bottom-right corner. Hidden until scroll threshold.
+
+.back-to-top {
+  position: fixed;
+  bottom: var(--space-lg);
+  right: var(--space-lg);
+  z-index: var(--z-fixed);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border-medium);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(1rem);
+  transition:
+    opacity var(--duration-fast) var(--ease-ease),
+    visibility var(--duration-fast) var(--ease-ease),
+    transform var(--duration-fast) var(--ease-ease);
+
+  &--visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  &:hover {
+    background: var(--color-surface-alt);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+
+  &__icon {
+    display: inline-block;
+    width: 1.25em;
+    height: 1.25em;
+    flex-shrink: 0;
+    background: currentColor;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 15l-6-6-6 6'/%3E%3C/svg%3E");
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 15l-6-6-6 6'/%3E%3C/svg%3E");
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+  }
+
+  // Mobile: icon only
+  @media (max-width: 639px) {
+    padding: var(--space-sm);
+
+    &__label {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+    transform: none;
+  }
+}

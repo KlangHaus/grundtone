@@ -1,0 +1,47 @@
+{
+  "name": "@grundtone/icons",
+  "version": "2.2.0",
+  "description": "Icon registry and SVG data for Grundtone",
+  "license": "MIT",
+  "private": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist/**"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grundtone/grundtone.git",
+    "directory": "packages/icons"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "generate:icons": "tsx scripts/generate-icon-registry.ts",
+    "build": "pnpm generate:icons && tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint src",
+    "test": "vitest --passWithNoTests",
+    "clean": "rimraf .turbo node_modules dist",
+    "prepublishOnly": "test -d dist || pnpm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.45",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.57.1",
+    "rimraf": "^5.0.5",
+    "tsup": "^8.0.2",
+    "tsx": "^4.19.4"
+  }
+}

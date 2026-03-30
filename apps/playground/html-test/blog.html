@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="da">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog — Grundtone</title>
+    <link rel="stylesheet" href="./node_modules/@grundtone/design-system/dist/index.css" />
+  </head>
+
+  <body>
+    <a href="#main" class="skip-link">Spring til indhold</a>
+
+    <header class="header" role="banner">
+      <a href="index.html" aria-label="Forside">Grundtone</a>
+      <nav aria-label="Primær navigation">
+        <a href="index.html">Playground</a>
+        <a href="blog.html" aria-current="page">Blog</a>
+        <a href="shop.html">Shop</a>
+        <a href="signup.html">Tilmeld</a>
+      </nav>
+    </header>
+
+    <main id="main" class="container-md p-4">
+      <section aria-labelledby="blog-heading">
+        <h1 id="blog-heading" class="text-3xl font-bold mb-1">Blog</h1>
+        <p class="text-secondary mb-5">
+          Seneste artikler om design systems, tilgængelighed og frontend-arkitektur.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" role="feed" aria-label="Blogindlæg">
+
+          <a href="blog-post.html" class="card card--nav shadow-sm" aria-labelledby="post-1-title">
+            <div class="card__media">
+              <img src="assets/placeholder-400x300-blog.png" alt="" loading="lazy" />
+            </div>
+            <div class="card__content">
+              <div class="card__subheading">
+                <span class="badge badge--info badge--sm">Design</span>
+                <time datetime="2026-03-01">1. marts 2026</time>
+              </div>
+              <h2 id="post-1-title" class="card__title">Semantiske farvetokens i praksis</h2>
+              <div class="card__body">
+                <p>Hvordan semantiske farvetokens skaber konsistens på tværs af platforme og gør dark mode trivielt.</p>
+              </div>
+            </div>
+          </a>
+
+          <a href="blog-post.html" class="card card--nav shadow-sm" aria-labelledby="post-2-title">
+            <div class="card__media">
+              <img src="assets/placeholder-400x300-blog.png" alt="" loading="lazy" />
+            </div>
+            <div class="card__content">
+              <div class="card__subheading">
+                <span class="badge badge--info badge--sm">Tilgængelighed</span>
+                <time datetime="2026-02-22">22. februar 2026</time>
+              </div>
+              <h2 id="post-2-title" class="card__title">WCAG 2.2 og komponentbiblioteker</h2>
+              <div class="card__body">
+                <p>Hvad ændrer sig med WCAG 2.2, og hvordan bygger man tilgængelige komponenter fra start.</p>
+              </div>
+            </div>
+          </a>
+
+          <a href="blog-post.html" class="card card--nav shadow-sm" aria-labelledby="post-3-title">
+            <div class="card__media">
+              <img src="assets/placeholder-400x300-blog.png" alt="" loading="lazy" />
+            </div>
+            <div class="card__content">
+              <div class="card__subheading">
+                <span class="badge badge--info badge--sm">Arkitektur</span>
+                <time datetime="2026-02-14">14. februar 2026</time>
+              </div>
+              <h2 id="post-3-title" class="card__title">Cross-platform design tokens</h2>
+              <div class="card__body">
+                <p>Strukturerede shadow-objekter der virker på web, iOS og Android uden konvertering.</p>
+              </div>
+            </div>
+          </a>
+
+          <a href="blog-post.html" class="card card--nav shadow-sm" aria-labelledby="post-4-title">
+            <div class="card__media">
+              <img src="assets/placeholder-400x300-blog.png" alt="" loading="lazy" />
+            </div>
+            <div class="card__content">
+              <div class="card__subheading">
+                <span class="badge badge--info badge--sm">Frontend</span>
+                <time datetime="2026-02-05">5. februar 2026</time>
+              </div>
+              <h2 id="post-4-title" class="card__title">Utility-first CSS uden Tailwind</h2>
+              <div class="card__body">
+                <p>Hvorfor vi byggede vores eget utility-lag — og hvornår det giver mening.</p>
+              </div>
+            </div>
+          </a>
+
+          <a href="blog-post.html" class="card card--nav shadow-sm" aria-labelledby="post-5-title">
+            <div class="card__media">
+              <img src="assets/placeholder-400x300-blog.png" alt="" loading="lazy" />
+            </div>
+            <div class="card__content">
+              <div class="card__subheading">
+                <span class="badge badge--info badge--sm">Design</span>
+                <time datetime="2026-01-28">28. januar 2026</time>
+              </div>
+              <h2 id="post-5-title" class="card__title">Spacing-skalaer og det visuelle hierarki</h2>
+              <div class="card__body">
+                <p>En gennemgang af lineære vs. geometriske spacing-skalaer og hvordan de påvirker layout.</p>
+              </div>
+            </div>
+          </a>
+
+          <a href="blog-post.html" class="card card--nav shadow-sm" aria-labelledby="post-6-title">
+            <div class="card__media">
+              <img src="assets/placeholder-400x300-blog.png" alt="" loading="lazy" />
+            </div>
+            <div class="card__content">
+              <div class="card__subheading">
+                <span class="badge badge--info badge--sm">Open Source</span>
+                <time datetime="2026-01-15">15. januar 2026</time>
+              </div>
+              <h2 id="post-6-title" class="card__title">Vanilla JS behaviors i v2.7</h2>
+              <div class="card__body">
+                <p>Nye framework-agnostiske behavior-klasser gør accordion, tabs og toggle interaktive uden Vue.</p>
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer text-xs text-tertiary text-center" role="contentinfo">
+      <p>&copy; 2026 Grundtone. Bygget med semantiske design tokens.</p>
+    </footer>
+  </body>
+</html>

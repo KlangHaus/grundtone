@@ -1,6 +1,6 @@
 # Width
 
-Width utilities. Included in `@grundtone/design-tokens` CSS — see
+Width utilities. Included in `@grundtone/design-system` CSS — see
 [Installation](/guide/installation) for setup.
 
 All utilities support responsive prefixes: `sm:`, `md:`, `lg:`, `xl:`, `2xl:`.

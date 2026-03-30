@@ -1,13 +1,15 @@
 import js from '@eslint/js';
+import globals from 'globals';
 import tseslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import vue from 'eslint-plugin-vue';
 import vueParser from 'vue-eslint-parser';
+import prettierConfig from 'eslint-config-prettier';
 
 export default [
   // Base JavaScript configuration
   js.configs.recommended,
-  
+
   // TypeScript files
   {
     files: ['**/*.{ts,tsx}'],
@@ -18,69 +20,9 @@ export default [
         sourceType: 'module',
       },
       globals: {
-        console: 'readonly',
-        process: 'readonly',
-        Buffer: 'readonly',
-        __dirname: 'readonly',
-        __filename: 'readonly',
-        global: 'readonly',
-        window: 'readonly',
-        document: 'readonly',
-        require: 'readonly',
+        ...globals.browser,
+        ...globals.node,
         defineNuxtConfig: 'readonly',
-        setTimeout: 'readonly',
-        clearTimeout: 'readonly',
-        URL: 'readonly',
-        HTMLElement: 'readonly',
-        HTMLCanvasElement: 'readonly',
-        MouseEvent: 'readonly',
-        Node: 'readonly',
-        ResizeObserver: 'readonly',
-        EventTarget: 'readonly',
-        Element: 'readonly',
-        CSS: 'readonly',
-        getComputedStyle: 'readonly',
-        requestAnimationFrame: 'readonly',
-        MutationObserver: 'readonly',
-        MediaQueryList: 'readonly',
-        MediaQueryListEvent: 'readonly',
-        alert: 'readonly',
-      },
-    },
-    plugins: {
-      '@typescript-eslint': tseslint,
-    },
-    rules: {
-      'no-console': 'warn',
-      'no-debugger': 'error',
-      'prefer-const': 'error',
-      'no-var': 'error',
-      'no-unused-vars': 'off', // Use TypeScript version instead
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-    },
-  },
-  
-  // Vue files - use flat config format
-  ...vue.configs['flat/essential'],
-  {
-    files: ['**/*.vue'],
-    languageOptions: {
-      parser: vueParser,
-      parserOptions: {
-        parser: tsParser,
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-      },
-      globals: {
-        console: 'readonly',
-        process: 'readonly',
-        window: 'readonly',
-        document: 'readonly',
-        navigator: 'readonly',
-        setTimeout: 'readonly',
-        clearTimeout: 'readonly',
-        MediaQueryList: 'readonly',
-        MediaQueryListEvent: 'readonly',
       },
     },
     plugins: {
@@ -92,11 +34,47 @@ export default [
       'prefer-const': 'error',
       'no-var': 'error',
       'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-      'vue/multi-word-component-names': 'off', // Allow single-word component names
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
+      'no-undef': 'off',
     },
   },
-  
+
+  // Vue files
+  ...vue.configs['flat/essential'],
+  {
+    files: ['**/*.vue'],
+    languageOptions: {
+      parser: vueParser,
+      parserOptions: {
+        parser: tsParser,
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+      },
+      globals: {
+        ...globals.browser,
+      },
+    },
+    plugins: {
+      '@typescript-eslint': tseslint,
+    },
+    rules: {
+      'no-console': 'warn',
+      'no-debugger': 'error',
+      'prefer-const': 'error',
+      'no-var': 'error',
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
+      'vue/multi-word-component-names': 'off',
+      'no-undef': 'off',
+    },
+  },
+
   // JavaScript files
   {
     files: ['**/*.{js,jsx}'],
@@ -104,14 +82,8 @@ export default [
       ecmaVersion: 'latest',
       sourceType: 'module',
       globals: {
-        console: 'readonly',
-        process: 'readonly',
-        Buffer: 'readonly',
-        __dirname: 'readonly',
-        __filename: 'readonly',
-        global: 'readonly',
-        window: 'readonly',
-        document: 'readonly',
+        ...globals.browser,
+        ...globals.node,
       },
     },
     rules: {
@@ -122,7 +94,7 @@ export default [
       'no-unused-vars': 'error',
     },
   },
-  
+
   // Test files
   {
     files: ['**/*.{test,spec}.{js,ts,jsx,tsx,vue}'],
@@ -131,17 +103,63 @@ export default [
     },
   },
 
+  // Scripts (Node.js utilities)
+  {
+    files: ['**/scripts/**/*.{js,ts,mjs}'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+    rules: {
+      'no-console': 'off',
+    },
+  },
+
+  // Nuxt playground auto-imports
+  {
+    files: ['apps/playground/nuxt/**/*.{vue,ts}'],
+    languageOptions: {
+      globals: {
+        useField: 'readonly',
+        useFormValidation: 'readonly',
+        useTheme: 'readonly',
+        required: 'readonly',
+        email: 'readonly',
+        phone: 'readonly',
+        cpr: 'readonly',
+        cvr: 'readonly',
+        minLength: 'readonly',
+        maxLength: 'readonly',
+        pattern: 'readonly',
+        url: 'readonly',
+        composeValidators: 'readonly',
+        defineNuxtPlugin: 'readonly',
+        defineNuxtConfig: 'readonly',
+      },
+    },
+  },
+
+  // Disable ESLint rules that conflict with Prettier
+  prettierConfig,
+
   // Ignore patterns
   {
     ignores: [
       'dist/**',
       'node_modules/**',
       '.nuxt/**',
-      'docs/.vitepress/dist/**',
-      'docs/.vitepress/cache/**',
+      '.output/**',
+      '**/.nuxt/**',
+      '**/.output/**',
+      '**/.vitepress/dist/**',
+      '**/.vitepress/cache/**',
       '**/*.d.ts',
       'apps/*/dist/**',
       'packages/*/dist/**',
+      'packages/design-system/apps/**',
+      'apps/playground/*/dist/**',
+      'packages/vue/test-*.mjs',
     ],
   },
 ];

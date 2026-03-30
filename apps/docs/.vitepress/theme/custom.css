@@ -3,3 +3,96 @@
   --vp-c-brand-1: var(--color-primary, #646cff);
   --vp-c-brand-2: var(--color-primary-light, #747bff);
 }
+
+/* Do / Don't component shared styles */
+.dos-donts-item {
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin: 0.75rem 0;
+}
+
+.dos-donts-item__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+}
+
+.dos-donts-item__icon {
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.dos-donts-item__label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dos-donts-item__body {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.dos-donts-item__body p {
+  margin: 0;
+}
+
+.dos-donts-item__body p + p {
+  margin-top: 0.5rem;
+}
+
+/*
+ * Neutralize VitePress .vp-doc table styles for design-system components.
+ * VitePress sets display:block, cell borders, and its own padding/font on all
+ * tables inside .vp-doc — this clashes with .table and .structured-list.
+ */
+.vp-doc .table,
+.vp-doc .summary-list,
+.vp-doc .summary-card {
+  display: table;
+  overflow: visible;
+  margin: 0;
+}
+
+.vp-doc .table th,
+.vp-doc .table td,
+.vp-doc .summary-list dt,
+.vp-doc .summary-list dd {
+  border: none;
+  padding: revert-layer;
+  font-size: revert-layer;
+  font-weight: revert-layer;
+  background-color: transparent;
+}
+
+.vp-doc .table thead {
+  background-color: transparent;
+}
+
+.vp-doc .table tr {
+  border-top: none;
+  background-color: transparent;
+  transition: none;
+}
+
+/* Reset for figure and carousel inside .vp-doc */
+.vp-doc .figure,
+.vp-doc .carousel {
+  display: revert-layer;
+  margin: 0;
+  overflow: revert-layer;
+}
+
+/* Also reset for responsive wrapper */
+.vp-doc .table-wrapper {
+  overflow-x: auto;
+}
+
+.vp-doc .table-wrapper .table {
+  display: table;
+}

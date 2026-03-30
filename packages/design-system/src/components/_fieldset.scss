@@ -1,0 +1,56 @@
+// Component: Fieldset
+// Groups related form inputs with a legend. Pure CSS — no JavaScript needed.
+
+.fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0; // fix flexbox overflow in Firefox
+
+  &__legend {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    line-height: var(--line-height-tight);
+    margin-bottom: var(--space-sm);
+    padding: 0;
+    width: 100%;
+  }
+
+  &__hint {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-md);
+  }
+
+  &__error {
+    font-size: var(--font-size-sm);
+    color: var(--color-error);
+    font-weight: var(--font-weight-semibold);
+    margin: 0 0 var(--space-md);
+  }
+
+  &__fields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  // Horizontal layout for short fields (e.g. postal + city)
+  &__fields--row {
+    flex-direction: row;
+    gap: var(--space-md);
+
+    > * {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+
+  // Bordered variant for visual grouping
+  &--bordered {
+    border: 1px solid var(--color-border-medium);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+  }
+}

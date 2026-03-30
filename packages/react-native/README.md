@@ -9,7 +9,7 @@ the same semantic tokens as the web packages.
 npm install @grundtone/react-native @grundtone/core
 ```
 
-You do **not** need `@grundtone/design-tokens` - that package is web-only (SCSS/CSS). For React
+You do **not** need `@grundtone/design-system` - that package is web-only (SCSS/CSS). For React
 Native, tokens are delivered via the theme object.
 
 ## Usage

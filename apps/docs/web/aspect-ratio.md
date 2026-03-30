@@ -41,7 +41,7 @@ All classes support breakpoint prefixes: `sm:`, `md:`, `lg:`, `xl:`, `2xl:`.
 ## SCSS
 
 ```scss
-@use '@grundtone/design-tokens/scss/lib' as gt;
+@use '@grundtone/design-system/scss/lib' as gt;
 
 .hero {
   aspect-ratio: 21 / 9;

@@ -1,7 +1,7 @@
 # Columns & Layout
 
 Alignment, ordering, display, and positioning utilities for flex and grid layouts. Included in
-`@grundtone/design-tokens` CSS — see [Installation](/guide/installation) for setup.
+`@grundtone/design-system` CSS — see [Installation](/guide/installation) for setup.
 
 All utilities support responsive prefixes: `sm:`, `md:`, `lg:`, `xl:`, `2xl:`. Mobile-first — base
 classes apply at all sizes, prefixed classes from that breakpoint up.

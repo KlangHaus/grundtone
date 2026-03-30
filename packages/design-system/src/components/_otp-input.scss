@@ -1,0 +1,53 @@
+// Component: OTP Input
+// Sequence of single-digit inputs for one-time codes.
+
+.otp-input {
+  display: flex;
+  gap: var(--space-sm);
+
+  &__field {
+    width: 3rem;
+    height: 3rem;
+    text-align: center;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    font-family: var(--font-family-mono, var(--font-family-base));
+    border: 1px solid var(--color-border-medium);
+    border-radius: var(--radius-md);
+    background: var(--color-background);
+    color: var(--color-text);
+    transition:
+      border-color var(--duration-fast) var(--ease-ease),
+      box-shadow var(--duration-fast) var(--ease-ease);
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px var(--color-focus-ring);
+    }
+
+    &--error {
+      border-color: var(--color-error);
+
+      &:focus {
+        border-color: var(--color-error);
+        box-shadow: 0 0 0 3px
+          color-mix(in srgb, var(--color-error) 25%, transparent);
+      }
+    }
+
+    &--filled {
+      border-color: var(--color-primary);
+      background: color-mix(
+        in srgb,
+        var(--color-primary) 4%,
+        var(--color-background)
+      );
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}

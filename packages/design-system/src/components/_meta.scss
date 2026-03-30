@@ -1,0 +1,9 @@
+// Component: .meta
+// Metadata row — use in cards, articles, lists, etc.
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+}

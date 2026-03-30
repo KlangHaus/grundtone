@@ -26,7 +26,7 @@ The source code is on [GitHub](https://github.com/grundtone/grundtone).
 ### Option 1: Fork and publish to npm
 
 1. Fork the [repository](https://github.com/grundtone/grundtone)
-2. Update `package.json` names if desired (e.g. `@your-org/design-tokens`)
+2. Update `package.json` names if desired (e.g. `@your-org/design-system`)
 3. Configure your npm registry and publish:
 
 ```bash
@@ -48,7 +48,7 @@ registry=https://your-registry.example.com/
 Then install as usual:
 
 ```bash
-pnpm add @your-org/design-tokens @your-org/vue
+pnpm add @your-org/design-system @your-org/vue
 ```
 
 ### Option 3: Use workspace packages (monorepo)
@@ -95,8 +95,8 @@ Use this theme in your app (Vue, Nuxt, or React Native) – see
 
 To change spacing, typography, breakpoints, or component structure:
 
-1. **Design tokens** – Edit `packages/design-tokens/src/index.scss` and
-   `packages/design-tokens/src/core/`
+1. **Design tokens** – Edit `packages/design-system/src/index.scss` and
+   `packages/design-system/src/core/`
 2. **Default theme** – Edit `packages/core/src/theme-preset.ts`
 3. **Components** – Edit Vue components in `packages/vue/src/`
 

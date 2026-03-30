@@ -54,7 +54,7 @@ the input — whichever reads most naturally in context.
 ### SCSS
 
 ```scss
-@use '@grundtone/design-tokens/scss/lib' as gt;
+@use '@grundtone/design-system/scss/lib' as gt;
 
 .custom-hint {
   @include gt.form-hint;
@@ -113,7 +113,7 @@ Combine with a red border on the input to make the error visually clear.
 ### SCSS
 
 ```scss
-@use '@grundtone/design-tokens/scss/lib' as gt;
+@use '@grundtone/design-system/scss/lib' as gt;
 
 .custom-error {
   @include gt.form-error;

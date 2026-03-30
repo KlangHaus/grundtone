@@ -53,10 +53,9 @@ Location: `.changeset/config.json`
 
 - **Linked Packages**: All packages version together when any package changes
   - `@grundtone/core`
-  - `@grundtone/shared`
+  - `@grundtone/utils`
   - `@grundtone/vue`
-  - `@grundtone/composables`
-  - `@grundtone/design-tokens`
+  - `@grundtone/design-system`
   - `@grundtone/nuxt`
 - **Base Branch**: `develop` - changesets compare against this branch
 - **Access**: `public` - all packages publish publicly to npm

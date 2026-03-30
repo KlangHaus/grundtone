@@ -1,0 +1,42 @@
+// Component: .breadcrumb
+// Navigation breadcrumb trail — semantic <nav> + <ol> hierarchy.
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+}
+
+.breadcrumb__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+}
+
+.breadcrumb__link {
+  color: var(--color-primary);
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration: underline;
+  }
+}
+
+.breadcrumb__separator {
+  color: var(--color-text-tertiary);
+  user-select: none;
+}
+
+.breadcrumb__current {
+  color: var(--color-text);
+  font-weight: var(--font-weight-medium);
+}

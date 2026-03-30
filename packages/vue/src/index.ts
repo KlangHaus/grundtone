@@ -1,57 +1,224 @@
+/**
+ * @grundtone/vue
+ *
+ * Vue 3 component library for the Grundtone design system.
+ */
+
+// Design system tokens (CSS custom properties) — bundled into dist/index.css
+import '@grundtone/design-system/dist/index.css';
+
 // Atoms
-export { Button } from './atoms/Button';
-export { ThemeToggle } from './atoms/ThemeToggle';
+export { GTBackLink } from './atoms/BackLink';
+export type { BackLinkProps } from './atoms/BackLink';
+export { GTBackToTop } from './atoms/BackToTop';
+export type { BackToTopProps } from './atoms/BackToTop';
+export { GTAutocomplete } from './atoms/Autocomplete';
+export type {
+  AutocompleteProps,
+  AutocompleteSuggestion,
+  AutocompleteSize,
+} from './atoms/Autocomplete';
+export { GTFileUpload } from './atoms/FileUpload';
+export type { FileUploadProps } from './atoms/FileUpload';
+export { GTBadge } from './atoms/Badge';
+export type { BadgeProps, BadgeVariant, BadgeSize } from './atoms/Badge';
+export { GTButton } from './atoms/Button';
+export { GTDetails } from './atoms/Details';
+export type { DetailsProps, DetailsVariant } from './atoms/Details';
+export type {
+  ButtonProps,
+  ButtonVariant,
+  ButtonSize,
+  ButtonRadius,
+} from './atoms/Button';
+export { GTIcon } from './atoms/Icon';
+export type { IconProps, IconSize } from './atoms/Icon';
+export { GT_ICON_REGISTRY_KEY } from './atoms/Icon';
+export type { IconDefinition, IconRegistry } from '@grundtone/core';
+export { GTCheckbox } from './atoms/Checkbox';
+export type { CheckboxProps } from './atoms/Checkbox';
+export { GTDateInput } from './atoms/DateInput';
+export type {
+  DateInputProps,
+  DateInputValue,
+  DateInputSize,
+} from './atoms/DateInput';
+export { GTInput } from './atoms/Input';
+export { GTOtpInput } from './atoms/OtpInput';
+export type { OtpInputProps } from './atoms/OtpInput';
+export { GTPasswordInput } from './atoms/PasswordInput';
+export type { PasswordInputProps } from './atoms/PasswordInput';
+export { GTSelect } from './atoms/Select';
+export { GTSlider } from './atoms/Slider';
+export type { SliderProps } from './atoms/Slider';
+export { GTSkipLink } from './atoms/SkipLink';
+export type { SkipLinkProps } from './atoms/SkipLink';
+export { GTTag } from './atoms/Tag';
+export type { TagProps, TagSize } from './atoms/Tag';
+export { GTTextarea } from './atoms/Textarea';
+export type { TextareaProps } from './atoms/Textarea';
+export { GTTooltip } from './atoms/Tooltip';
+export type {
+  TooltipProps,
+  TooltipPosition,
+  TooltipTrigger,
+} from './atoms/Tooltip';
+export { GTSpinner } from './atoms/Spinner';
+export type {
+  SpinnerProps,
+  SpinnerSize,
+  SpinnerVariant,
+} from './atoms/Spinner';
+export type {
+  SelectProps,
+  SelectOption,
+  SelectOptionGroup,
+  SelectSize,
+} from './atoms/Select';
+export type {
+  InputProps,
+  InputSize,
+  InputType,
+  InputRadius,
+  InputWidth,
+  InputCharWidth,
+} from './atoms/Input';
+export { GTToggle } from './atoms/Toggle';
+export type { ToggleProps, ToggleSize } from './atoms/Toggle';
 
-// Icon System - Configurable
+// Theme
+export { default as GrundtoneThemeProvider } from './ThemeProvider.vue';
+export { applyThemeToDOM } from './applyThemeToDOM';
+export { getSystemThemeMode } from '@grundtone/utils';
+
+// Composables
+export { useTheme } from './composables/useTheme';
+export { useDawaAutocomplete } from './composables/useDawaAutocomplete';
+export type {
+  DawaType,
+  DawaResult,
+  UseDawaAutocompleteOptions,
+  UseDawaAutocompleteReturn,
+} from './composables/useDawaAutocomplete';
+export { useField } from './composables/useField';
+export type { UseFieldOptions, UseFieldReturn } from './composables/useField';
+export { useDateField } from './composables/useDateField';
+export type {
+  UseDateFieldOptions,
+  UseDateFieldReturn,
+} from './composables/useDateField';
+export { useFormValidation } from './composables/useFormValidation';
+export type { UseFormValidationReturn } from './composables/useFormValidation';
+export { useToast } from './composables/useToast';
+export type { UseToastReturn } from './composables/useToast';
+
+// Validators (re-exported from @grundtone/utils)
 export {
-  Icon,
-  IconProvider,
-  // Utilities
-  grundtoneIcons,
-  createHeroiconsConfig,
-  createLucideConfig,
-  createCustomIconsConfig,
-  createHybridIconsConfig,
-  iconMappings,
-  mapIconName,
-  // Composables
-  useIconConfig,
-  useIconExists,
-  useAvailableIcons,
-  createIconRegistry,
-} from './atoms/Icon';
-
-// Icon System - Individual Icons (for backward compatibility)
-export { SunIcon, MoonIcon } from './atoms/Icon';
+  required,
+  email,
+  phone,
+  cpr,
+  cvr,
+  date,
+  datePast,
+  dateFuture,
+  password,
+  passwordStrength,
+  otp,
+  minLength,
+  maxLength,
+  pattern,
+  url,
+  composeValidators,
+} from '@grundtone/utils';
+export type { Validator, ValidationResult } from '@grundtone/utils';
 
 // Molecules
-export { ThemeProvider } from './molecules/ThemeProvider';
-
-// Types
-export * from './types';
-export type { ThemeToggleProps, ThemeToggleEmits } from './atoms/ThemeToggle';
-
-// Icon System Types
+export { GTAccordion, GTAccordionItem } from './molecules/Accordion';
+export { GTCarousel, GTCarouselSlide } from './molecules/Carousel';
+export type { CarouselProps, CarouselSlideProps } from './molecules/Carousel';
+export { GTChartContainer, GTChartLegend } from './molecules/Chart';
 export type {
-  IconProps,
-  ConfigurableIconProps,
-  IconLibrary,
-  IconRegistry,
-  IconConfig,
-} from './atoms/Icon';
-// export { InputGroup } from './molecules/InputGroup'
-// export { FormField } from './molecules/FormField'
-// export { Card } from './molecules/Card'
+  ChartConfig,
+  ChartConfigItem,
+  ChartContainerProps,
+  ChartLegendProps,
+} from './molecules/Chart';
+export type {
+  AccordionProps,
+  AccordionVariant,
+  AccordionTransition,
+  AccordionItemProps,
+} from './molecules/Accordion';
+export { GTAddressInput } from './molecules/AddressInput';
+export type {
+  AddressInputProps,
+  AddressInputSize,
+} from './molecules/AddressInput';
+export { GTDatePicker } from './molecules/DatePicker';
+export { GTErrorPage } from './molecules/ErrorPage';
+export type { ErrorPageProps } from './molecules/ErrorPage';
+export type { DatePickerProps } from './molecules/DatePicker';
+export { GTAlert } from './molecules/Alert';
+export { GTAnchorLinks } from './molecules/AnchorLinks';
+export type { AnchorLinksProps, AnchorLinkItem } from './molecules/AnchorLinks';
+export type { AlertProps, AlertVariant } from './molecules/Alert';
+export { GTBreadcrumb } from './molecules/Breadcrumb';
+export type { BreadcrumbProps, BreadcrumbItem } from './molecules/Breadcrumb';
+export { GTCard } from './molecules/Card';
+export type { CardProps, CardVariant } from './molecules/Card';
+export { GTCheckboxGroup } from './molecules/CheckboxGroup';
+export type {
+  CheckboxGroupProps,
+  CheckboxOption,
+} from './molecules/CheckboxGroup';
+export { GTModal } from './molecules/Modal';
+export type { ModalProps, ModalTransition } from './molecules/Modal';
+export { GTOverflowMenu } from './molecules/OverflowMenu';
+export type {
+  OverflowMenuProps,
+  OverflowMenuItem,
+} from './molecules/OverflowMenu';
+export { GTSearchField } from './molecules/SearchField';
+export type {
+  SearchFieldProps,
+  SearchSuggestion,
+} from './molecules/SearchField';
+export { GTCookieMessage } from './molecules/CookieMessage';
+export type { CookieMessageProps } from './molecules/CookieMessage';
+export { GTTabs, GTTabPanel } from './molecules/Tabs';
+export type {
+  TabsProps,
+  TabsVariant,
+  TabItem,
+  TabPanelProps,
+} from './molecules/Tabs';
+export { GTStepper } from './molecules/Stepper';
+export type { StepperProps, StepperStep } from './molecules/Stepper';
+export { GTToast, GTToastContainer } from './molecules/Toast';
+export type {
+  ToastProps,
+  ToastContainerProps,
+  ToastItem,
+  ToastVariant,
+  ToastPosition,
+  ToastOptions,
+} from './molecules/Toast';
+export { GTRadioGroup } from './molecules/RadioGroup';
+export type { RadioGroupProps, RadioOption } from './molecules/RadioGroup';
+export { GTSummaryList, GTSummaryItem } from './molecules/SummaryList';
+export type {
+  SummaryListProps,
+  SummaryListVariant,
+  SummaryItemProps,
+} from './molecules/SummaryList';
+export { GTTable } from './molecules/Table';
+export type {
+  TableProps,
+  TableColumn,
+  TableVariant,
+  TableDensity,
+  SortDirection,
+} from './molecules/Table';
 
 // Organisms
-// export { Header } from './organisms/Header'
-// export { Footer } from './organisms/Footer'
-// export { Modal } from './organisms/Modal'
-
-// Templates
-// export { DefaultLayout } from './templates/DefaultLayout'
-// export { AuthLayout } from './templates/AuthLayout'
-
-// Pages
-// export { HomePage } from './pages/HomePage'
-// export { LoginPage } from './pages/LoginPage'

@@ -48,7 +48,7 @@ container max-widths, `:root` CSS custom properties, and `@property` registratio
 this one map. When you override `$grid-breakpoints`, everything updates automatically.
 
 ```scss
-@use '@grundtone/design-tokens/scss' with (
+@use '@grundtone/design-system/scss' with (
   $grid-breakpoints: (
     xs: 0,
     sm: 576px,
@@ -64,17 +64,17 @@ this one map. When you override `$grid-breakpoints`, everything updates automati
 
 ## Media queries
 
-The design-tokens package provides Sass mixins for responsive layouts. When writing custom SCSS that
-imports from the design-tokens source, use the mixins. (If using only the pre-built CSS, use the
+The design-system package provides Sass mixins for responsive layouts. When writing custom SCSS that
+imports from the design-system source, use the mixins. (If using only the pre-built CSS, use the
 utility class prefixes like `md:`, `lg:` instead.)
 
 ### Min-width
 
-Apply styles from a breakpoint and up. Use the `media-breakpoint-up` mixin from the design-tokens
+Apply styles from a breakpoint and up. Use the `media-breakpoint-up` mixin from the design-system
 breakpoints module:
 
 ```scss
-@use '@grundtone/design-tokens/scss/breakpoints' as bp;
+@use '@grundtone/design-system/scss/breakpoints' as bp;
 
 // No media query for xs – it's effectively min-width: 0
 @include bp.media-breakpoint-up(sm) {
@@ -113,7 +113,7 @@ Compiled CSS:
 Apply styles at a breakpoint and down (given screen size or smaller):
 
 ```scss
-@use '@grundtone/design-tokens/scss/breakpoints' as bp;
+@use '@grundtone/design-system/scss/breakpoints' as bp;
 
 @include bp.media-breakpoint-down(sm) {
   /* styles for <640px */
@@ -152,7 +152,7 @@ Compiled CSS (`.02px` is subtracted to avoid overlap at fractional viewport widt
 Target a single range of screen sizes:
 
 ```scss
-@use '@grundtone/design-tokens/scss/breakpoints' as bp;
+@use '@grundtone/design-system/scss/breakpoints' as bp;
 
 @include bp.media-breakpoint-only(md) {
   .my-class {
@@ -176,7 +176,7 @@ Compiled:
 Target a range spanning multiple breakpoints:
 
 ```scss
-@use '@grundtone/design-tokens/scss/breakpoints' as bp;
+@use '@grundtone/design-system/scss/breakpoints' as bp;
 
 @include bp.media-breakpoint-between(md, xl) {
   .my-class {
@@ -219,7 +219,7 @@ All files live in `src/` — there is no separate `scss/` directory.
 | -------------------------------------- | ------------------------------------------------------------------------- |
 | `src/core/_breakpoints-defaults.scss`  | **Single source of truth** — defines `$grid-breakpoints-default` map      |
 | `src/core/_breakpoints.scss`           | Mixins (`media-breakpoint-up`, etc.), functions, `:root` CSS var export   |
-| `src/breakpoints.scss`                 | Public entry point for `@use '@grundtone/design-tokens/scss/breakpoints'` |
+| `src/breakpoints.scss`                 | Public entry point for `@use '@grundtone/design-system/scss/breakpoints'` |
 | `src/utilities/_grid.scss`             | Responsive grid classes (`sm:grid-cols-N`, etc.)                          |
 | `src/utilities/_containers.scss`       | Layout containers (`.container`, `.container-{bp}`, etc.)                 |
 | `src/core/_registered-properties.scss` | `@property --breakpoint-*` declarations (generated from map)              |

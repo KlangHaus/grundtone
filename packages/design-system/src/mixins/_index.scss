@@ -1,0 +1,167 @@
+// Design System Mixins
+// Only genuinely useful, non-trivial abstractions.
+// Broken/dead mixins removed — see git history for old button, container, grid mixins.
+
+@use 'sass:map';
+@use '../core/breakpoints' as *;
+@use '../core/typography' as type;
+@use '../functions' as func;
+
+// ─── Typography ──────────────────────────────────────────────────────────────
+
+/// Responsive heading styles (h1–h6).
+/// Uses the $responsive-typography map from _typography.scss so sizes are
+/// defined once and this mixin just applies them.
+///
+/// @param {String} $level - 'h1' through 'h6'
+/// @example @include heading('h2');
+@mixin heading($level) {
+  $sizes: map.get(type.$responsive-typography, $level);
+
+  @if not $sizes {
+    @error "heading(): unknown level '#{$level}'. Use h1–h6.";
+  }
+
+  $weight: func.font-weight('semibold');
+  @if $level == 'h1' or $level == 'h2' or $level == 'h3' {
+    $weight: func.font-weight('bold');
+  }
+
+  font-size: map.get($sizes, 'base');
+  font-weight: $weight;
+  line-height: type.$line-height-heading;
+
+  @each $bp in ('md', 'lg', 'xl') {
+    $size: map.get($sizes, $bp);
+    @if $size {
+      @include media-breakpoint-up($bp) {
+        font-size: $size;
+      }
+    }
+  }
+}
+
+// Shorthand aliases
+@mixin h1 {
+  @include heading('h1');
+}
+@mixin h2 {
+  @include heading('h2');
+}
+@mixin h3 {
+  @include heading('h3');
+}
+@mixin h4 {
+  @include heading('h4');
+}
+@mixin h5 {
+  @include heading('h5');
+}
+@mixin h6 {
+  @include heading('h6');
+}
+
+/// Body copy — standard paragraph text.
+@mixin body-text {
+  font-size: func.font-size('base');
+  line-height: func.line-height('normal');
+}
+
+/// Small/secondary text.
+@mixin small-text {
+  font-size: func.font-size('sm');
+  line-height: func.line-height('normal');
+}
+
+/// Lead paragraph — slightly larger intro text.
+@mixin lead-text {
+  font-size: func.font-size('xl');
+  line-height: func.line-height('normal');
+  font-weight: func.font-weight('normal');
+}
+
+// ─── Form typography ─────────────────────────────────────────────────────────
+
+@mixin form-label {
+  font-size: func.font-size('lg');
+  font-weight: func.font-weight('semibold');
+  line-height: func.line-height('normal');
+}
+
+@mixin form-hint {
+  font-size: func.font-size('sm');
+  line-height: func.line-height('normal');
+  color: func.color('text-secondary');
+}
+
+@mixin form-error {
+  font-size: func.font-size('sm');
+  line-height: func.line-height('normal');
+  color: func.color('error');
+  font-weight: func.font-weight('semibold');
+}
+
+// ─── Focus ───────────────────────────────────────────────────────────────────
+
+@mixin focus {
+  outline: 3px solid func.color('focus');
+  outline-offset: 1px;
+}
+
+@mixin focus-reset {
+  outline: none;
+  outline-offset: 0;
+}
+
+// ─── Accessibility ───────────────────────────────────────────────────────────
+
+@mixin sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+@mixin sr-only-focusable {
+  &:active,
+  &:focus {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    clip: auto !important;
+    white-space: normal !important;
+  }
+}
+
+// ─── Text ────────────────────────────────────────────────────────────────────
+
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin unstyled-list {
+  padding-left: 0;
+  list-style: none;
+}
+
+// ─── Print ───────────────────────────────────────────────────────────────────
+
+@mixin print-only {
+  @media print {
+    @content;
+  }
+}
+
+@mixin screen-only {
+  @media screen {
+    @content;
+  }
+}

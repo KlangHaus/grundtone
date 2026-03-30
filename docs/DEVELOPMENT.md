@@ -9,14 +9,14 @@ This guide provides detailed information for developing the Grundtone Design Sys
 ```
 grundtone/
 ├── packages/              # Core packages
-│   ├── ui/               # Vue components
 │   ├── core/             # Types and constants
-│   ├── shared/           # Utilities and helpers
-│   ├── composables/      # Vue composables
-│   ├── design-tokens/    # Design tokens
-│   └── nuxt/             # Nuxt module
-├── apps/                 # Demo applications
+│   ├── design-system/    # SCSS functions, mixins, CSS utilities
+│   ├── utils/            # Shared utilities, formatters, validation
+│   ├── vue/              # Vue 3 components and composables
+│   ├── nuxt/             # Nuxt 3 module
+│   └── react-native/    # React Native theme provider
 ├── apps/docs/            # VitePress documentation
+├── apps/html-test/       # Plain HTML test pages
 └── docs/                 # Additional documentation
 ```
 
@@ -24,12 +24,10 @@ grundtone/
 
 ```mermaid
 graph TD
-    UI[ui] --> CORE[core]
-    UI --> SHARED[shared]
-    UI --> TOKENS[design-tokens]
-    COMPOSABLES[composables] --> CORE
-    NUXT[nuxt] --> UI
-    NUXT --> COMPOSABLES
+    VUE[vue] --> CORE[core]
+    VUE --> UTILS[utils]
+    VUE --> DS[design-system]
+    NUXT[nuxt] --> VUE
     PLAYGROUND[playground] --> UI
     PLAYGROUND --> COMPOSABLES
 ```
@@ -166,7 +164,7 @@ pnpm test --filter=@grundtone/vue
 - Use SCSS for component styles
 - Follow BEM naming convention
 - Scope styles with `scoped` attribute
-- Use design tokens from `@grundtone/design-tokens`
+- Use design tokens from `@grundtone/design-system`
 
 ### Git Workflow
 

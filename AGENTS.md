@@ -31,7 +31,7 @@ pnpm lint                  # Lint all packages
 turbo run dev --filter=@grundtone/vue
 
 # Run tests for single package
-pnpm test --filter=@grundtone/composables
+pnpm test --filter=@grundtone/vue
 ```
 
 ### Versioning and Publishing
@@ -116,21 +116,20 @@ Changelogs are created in each package's `CHANGELOG.md` file when running `pnpm 
 ### Package Structure and Dependencies
 
 - **@grundtone/core** - Foundation types, constants, base interfaces
-- **@grundtone/shared** - Utilities, formatters, validation (depends on core)
-- **@grundtone/design-tokens** - SCSS variables, colors, typography, spacing (web only)
-- **@grundtone/vue** - Vue 3 components using atomic design (depends on core, shared)
-- **@grundtone/composables** - Vue 3 composables/hooks (depends on core, shared)
-- **@grundtone/nuxt** - Nuxt 3 module (depends on vue, composables)
+- **@grundtone/utils** - Utilities, formatters, validation (depends on core)
+- **@grundtone/design-system** - SCSS functions, mixins, CSS utilities, grid system (web only)
+- **@grundtone/vue** - Vue 3 components + composables using atomic design (depends on core, utils)
+- **@grundtone/nuxt** - Nuxt 3 module (depends on vue)
 - **@grundtone/react-native** - React Native theme provider (depends on core)
-- **@grundtone/playground** - Demo application (depends on all packages)
 
 ### Build Pipeline (Turborepo)
 
 The build system uses dependency-aware parallel execution:
 
-1. **core** and **shared** build first (no dependencies)
-2. **design-tokens**, **ui**, **composables** build in parallel (depend on core/shared)
-3. **nuxt** and **playground** build last (depend on ui/composables)
+1. **core** and **utils** build first (no dependencies)
+2. **design-system**, **react-native** build in parallel (depend on core)
+3. **vue** builds next (depends on core, design-system, utils)
+4. **nuxt** builds last (depends on vue)
 
 Tests depend on build completion. Turborepo caches outputs based on file changes and dependencies.
 
@@ -168,7 +167,7 @@ ComponentName/
 
 This design system includes Danish-specific utilities:
 
-- CPR (Danish social security) number validation in `@grundtone/shared`
+- CPR (Danish social security) number validation in `@grundtone/utils`
 - Danish phone number formatting and validation
 - Danish currency formatting (`formatCurrency` outputs "kr.")
 - Danish date formatting
@@ -380,8 +379,8 @@ export function isValidCPR(cpr: string): boolean {
   - Required format: `type(scope): description`
   - Valid types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`,
     `revert`
-  - Valid scopes: `ui`, `core`, `shared`, `composables`, `design-tokens`, `nuxt`, `playground`,
-    `deps`, `config`, `ci`, `docs`, `release`
+  - Valid scopes: `vue`, `core`, `utils`, `design-system`, `nuxt`, `react-native`, `deps`, `config`,
+    `ci`, `docs`, `release`
   - Example: `feat(ui): add new button variant`
 
 **Pre-commit Hooks (AUTOMATIC)**

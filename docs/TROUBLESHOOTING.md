@@ -47,7 +47,7 @@ turbo run build --force  # Force rebuild without cache
 
 ### TypeScript Compilation Errors
 
-**Problem**: `Cannot find module '@grundtone/design-tokens'`
+**Problem**: `Cannot find module '@grundtone/design-system'`
 
 **Causes**:
 
@@ -61,10 +61,10 @@ turbo run build --force  # Force rebuild without cache
 
 ```bash
 # Build foundation packages first
-turbo run build --filter=@grundtone/core --filter=@grundtone/design-tokens --filter=@grundtone/shared
+turbo run build --filter=@grundtone/core --filter=@grundtone/design-system --filter=@grundtone/utils
 
 # Then build dependent packages
-turbo run build --filter=@grundtone/vue --filter=@grundtone/composables
+turbo run build --filter=@grundtone/vue --filter=@grundtone/nuxt
 ```
 
 2. **Verify TypeScript path mapping**:
@@ -219,7 +219,7 @@ rules: {
 
 ### Design Token Import Errors
 
-**Problem**: `@use '@grundtone/design-tokens' as tokens;` not resolving
+**Problem**: `@use '@grundtone/design-system' as tokens;` not resolving
 
 **Causes**:
 
@@ -229,10 +229,10 @@ rules: {
 
 **Solutions**:
 
-1. **Build design-tokens package first**:
+1. **Build design-system package first**:
 
 ```bash
-turbo run build --filter=@grundtone/design-tokens
+turbo run build --filter=@grundtone/design-system
 ```
 
 2. **Verify SCSS import in Vite config**:
@@ -243,7 +243,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@use '@grundtone/design-tokens' as tokens;`,
+        additionalData: `@use '@grundtone/design-system' as tokens;`,
       },
     },
   },

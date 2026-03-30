@@ -161,7 +161,7 @@ export const defaultColorPresetDark: ColorPreset = {
 };
 ```
 
-After editing, rebuild the packages (`pnpm build`). Every downstream package — design-tokens, Vue,
+After editing, rebuild the packages (`pnpm build`). Every downstream package — design-system, Vue,
 Nuxt, React Native — derives its defaults from these objects, so the change propagates
 automatically.
 

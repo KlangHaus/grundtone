@@ -1,0 +1,97 @@
+// Component: Tag
+// Interactive metadata element — categories, filters, keywords.
+// For static status indicators, use Badge instead.
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  border: 1px solid var(--color-border-medium);
+  border-radius: var(--radius-full);
+  background: var(--color-background);
+  color: var(--color-text);
+  cursor: pointer;
+  white-space: nowrap;
+  vertical-align: middle;
+  transition:
+    background-color var(--duration-fast) var(--ease-ease),
+    border-color var(--duration-fast) var(--ease-ease),
+    color var(--duration-fast) var(--ease-ease);
+
+  &:hover {
+    background: var(--color-surface-alt);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+
+  // Sizes
+  &--sm {
+    padding: 0.0625rem var(--space-sm);
+    font-size: var(--font-size-xs);
+    line-height: var(--line-height-normal);
+  }
+
+  &--md {
+    padding: var(--space-xs) var(--space-md);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-normal);
+  }
+
+  // Selected state (filter mode)
+  &--selected {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-on-primary, #fff);
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  // Disabled
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  // Elements
+  &__icon {
+    flex-shrink: 0;
+  }
+
+  &__label {
+    // inherits font from parent
+  }
+
+  &__dismiss {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    opacity: 0.6;
+    padding: 0;
+    margin-left: calc(-1 * var(--space-xs));
+    font-size: 1em;
+    line-height: 1;
+    border-radius: var(--radius-full);
+    width: 1.25em;
+    height: 1.25em;
+    transition: opacity var(--duration-fast) var(--ease-ease);
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-focus-ring);
+      outline-offset: 1px;
+    }
+  }
+}

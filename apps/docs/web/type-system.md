@@ -124,7 +124,7 @@ Line spacing is based on the text types' line heights. See [Line Height](/web/fo
 Override any typography token via `@use ... with ()`:
 
 ```scss
-@use '@grundtone/design-tokens/scss/lib' as gt with (
+@use '@grundtone/design-system/scss/lib' as gt with (
   $font-family-base: 'Inter', sans-serif,
   $font-family-heading: 'Inter', sans-serif,
 );

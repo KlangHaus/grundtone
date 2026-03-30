@@ -1,0 +1,254 @@
+// Component: .accordion
+// Grouped disclosure sections with expand/collapse all.
+// Three variants: default (separators), bordered (outlined), card (boxed).
+
+.accordion {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-base);
+  color: var(--color-text);
+}
+
+// Toggle all button
+.accordion__toggle-all {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) 0;
+  margin-bottom: var(--space-sm);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+  letter-spacing: 0.025em;
+
+  &:hover {
+    color: var(--color-primary-dark);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+}
+
+// Single accordion item
+.accordion__item {
+  border-top: 1px solid var(--color-border-light);
+
+  &:last-child {
+    border-bottom: 1px solid var(--color-border-light);
+  }
+}
+
+// Item header — the clickable trigger
+.accordion__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+  padding: var(--space-md) 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: var(--color-text);
+  transition: background var(--duration-fast) var(--ease-out);
+  border-radius: 0;
+
+  &:hover {
+    background: color-mix(in srgb, var(--color-text) 4%, transparent);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: -2px;
+    border-radius: var(--radius-sm);
+  }
+}
+
+// Plus/minus icon
+.accordion__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  color: var(--color-primary);
+  position: relative;
+
+  // Horizontal bar (always visible)
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    background: currentColor;
+    border-radius: 1px;
+    transition: transform var(--duration-fast) var(--ease-ease);
+  }
+
+  &::before {
+    width: 0.75rem;
+    height: 2px;
+  }
+
+  &::after {
+    width: 2px;
+    height: 0.75rem;
+  }
+}
+
+// Rotate vertical bar to 0 (becomes horizontal = minus)
+.accordion__item--open > .accordion__header .accordion__icon::after {
+  transform: rotate(90deg);
+}
+
+// Heading text
+.accordion__heading {
+  flex: 1;
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+}
+
+// Optional summary under heading
+.accordion__summary {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  font-weight: var(--font-weight-normal);
+  margin-top: var(--space-xs);
+}
+
+// Content panel
+.accordion__panel {
+  // Slide transition (JS-driven height)
+  &--slide {
+    overflow: hidden;
+    height: 0;
+    transition: height var(--duration-base) var(--ease-out);
+
+    &.accordion__panel--open {
+      height: auto;
+    }
+  }
+
+  // Fade transition
+  &--fade {
+    opacity: 0;
+    transition: opacity var(--duration-base) var(--ease-ease);
+    pointer-events: none;
+
+    &.accordion__panel--open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  // No transition
+  &--none:not(.accordion__panel--open) {
+    display: none;
+  }
+}
+
+.accordion__body {
+  padding: 0 0 var(--space-md) calc(1.25rem + var(--space-sm));
+  color: var(--color-text);
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+// ─── Reduced motion ───
+@media (prefers-reduced-motion: reduce) {
+  .accordion__icon::before,
+  .accordion__icon::after {
+    transition: none;
+  }
+
+  .accordion__header {
+    transition: none;
+  }
+
+  .accordion__panel--slide {
+    transition: none;
+  }
+
+  .accordion__panel--fade {
+    transition: none;
+  }
+}
+
+// ─── Variant: default (separators only) ───
+// Base styles above are the default. No extra rules needed.
+
+// ─── Variant: bordered ───
+.accordion--bordered {
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+
+  .accordion__toggle-all {
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+    margin-bottom: 0;
+    padding-top: var(--space-sm);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--color-border-light);
+    width: 100%;
+  }
+
+  .accordion__item {
+    border-top: 1px solid var(--color-border-light);
+
+    &:first-child {
+      border-top: none;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .accordion__header {
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+  }
+
+  .accordion__body {
+    padding-left: calc(var(--space-md) + 1.25rem + var(--space-sm));
+    padding-right: var(--space-md);
+  }
+}
+
+// ─── Variant: card ───
+.accordion--card {
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-xl);
+  padding: var(--space-sm) var(--space-lg);
+
+  .accordion__toggle-all {
+    margin-bottom: 0;
+    padding-bottom: var(--space-sm);
+  }
+
+  .accordion__item:last-child {
+    border-bottom: none;
+  }
+
+  .accordion__header {
+    border-radius: var(--radius-md);
+    padding-left: var(--space-xs);
+    padding-right: var(--space-xs);
+  }
+
+  .accordion__body {
+    padding-left: calc(var(--space-xs) + 1.25rem + var(--space-sm));
+  }
+}

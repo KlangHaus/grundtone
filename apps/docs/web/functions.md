@@ -4,7 +4,7 @@ Convenience accessors for CSS custom properties. Each function returns a `var(--
 keeping your SCSS decoupled from hardcoded values.
 
 ```scss
-@use '@grundtone/design-tokens/scss/lib' as gt;
+@use '@grundtone/design-system/scss/lib' as gt;
 
 .card {
   color: gt.color('text');

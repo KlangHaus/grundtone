@@ -1,0 +1,31 @@
+// Figure
+// Semantic image + caption container.
+
+.figure {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin: 0;
+}
+
+.figure__img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+}
+
+// .figure__caption inherits from .caption — use either class
+.figure__caption {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-tertiary);
+}
+
+.figure--center {
+  margin-inline: auto;
+}
+
+.figure--end .figure__caption {
+  text-align: end;
+}

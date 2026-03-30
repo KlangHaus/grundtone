@@ -1,9 +1,0 @@
-// Breakpoint mixins for responsive layouts
-// Use with: @use '@grundtone/design-tokens/scss/breakpoints' as bp;
-// Override: @use '...' as bp with ($grid-breakpoints: (...));
-@use 'core/breakpoints-defaults' as def;
-$grid-breakpoints: def.$grid-breakpoints-default !default;
-
-@forward 'core/breakpoints' with (
-  $grid-breakpoints: $grid-breakpoints
-);

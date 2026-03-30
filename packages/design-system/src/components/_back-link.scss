@@ -1,0 +1,37 @@
+// Component: .back-link
+// Navigation link to return to a previous page or step.
+// Arrow is rendered via CSS ::before pseudo-element.
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+  text-decoration: none;
+  line-height: var(--line-height-normal);
+  transition: color var(--duration-fast) var(--ease-ease);
+
+  &::before {
+    content: '←';
+    display: inline-block;
+    font-size: 1.1em;
+    transition: transform var(--duration-fast) var(--ease-ease);
+  }
+
+  &:hover {
+    text-decoration: underline;
+
+    &::before {
+      transform: translateX(-2px);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+    text-decoration: underline;
+  }
+}

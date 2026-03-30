@@ -1,0 +1,36 @@
+.date-input {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.date-input__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.date-input__label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+// Override .input { width: 100% } — date fields size to their content
+.date-input__input--day,
+.date-input__input--month,
+.date-input__input--year {
+  width: auto;
+  // Prevent padding from eating all visible space:
+  // ch units set the content width, padding is added on top via box-sizing
+  box-sizing: content-box;
+}
+
+// Dag og måned: 2 cifre
+.date-input__input--day,
+.date-input__input--month {
+  width: 2ch;
+}
+
+// År: 4 cifre
+.date-input__input--year {
+  width: 4ch;
+}

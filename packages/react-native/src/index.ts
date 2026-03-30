@@ -34,11 +34,144 @@
 export { GrundtoneThemeProvider, GrundtoneThemeContext } from './ThemeContext';
 export type { GrundtoneThemeContextValue, ThemeMode } from './ThemeContext';
 export { useGrundtoneTheme } from './useGrundtoneTheme';
+export { createTheme } from '@grundtone/core';
 export type { Theme } from '@grundtone/core';
 
 // Shadows
 export { shadowToRN } from './shadows';
 export type { RNShadowStyle } from './shadows';
+
+// Hooks
+export { useDawaAutocomplete } from './hooks/useDawaAutocomplete';
+export type {
+  DawaType,
+  DawaResult,
+  UseDawaAutocompleteOptions,
+} from './hooks/useDawaAutocomplete';
+
+// Components
+export { GTBackLink } from './components/BackLink';
+export type { BackLinkProps as RNBackLinkProps } from './components/BackLink';
+export { GTBackToTop } from './components/BackToTop';
+export type { BackToTopProps as RNBackToTopProps } from './components/BackToTop';
+export { GTAutocomplete } from './components/Autocomplete';
+export type {
+  AutocompleteProps,
+  AutocompleteSuggestion,
+} from './components/Autocomplete';
+export { GTAddressInput } from './components/AddressInput';
+export type { AddressInputProps } from './components/AddressInput';
+export { GTDatePicker } from './components/DatePicker';
+export type { DatePickerProps as RNDatePickerProps } from './components/DatePicker';
+export { GTIcon } from './components/Icon';
+export type { IconProps, IconSize } from './components/Icon';
+export { GTTabs, GTTabPanel } from './components/Tabs';
+export type {
+  TabsProps,
+  TabsVariant,
+  TabItem,
+  TabPanelProps,
+} from './components/Tabs';
+
+// Icon registry provider
+export { IconRegistryProvider, useIconRegistry } from './IconRegistryContext';
+export type { IconRegistryProviderProps } from './IconRegistryContext';
+export type { IconDefinition, IconRegistry } from '@grundtone/core';
+export { GTButton } from './components/Button';
+export type {
+  ButtonProps,
+  ButtonVariant,
+  ButtonSize,
+  ButtonRadius,
+} from './components/Button';
+export { GTInput } from './components/Input';
+export type {
+  InputProps,
+  InputSize,
+  InputType,
+  InputRadius,
+} from './components/Input';
+export { GTToggle } from './components/Toggle';
+export type { ToggleProps, ToggleSize } from './components/Toggle';
+export { GTAccordion, GTAccordionItem } from './components/Accordion';
+export type {
+  AccordionProps,
+  AccordionVariant,
+  AccordionItemProps,
+} from './components/Accordion';
+export { GTAlert } from './components/Alert';
+export type { AlertProps, AlertVariant } from './components/Alert';
+export { GTBadge } from './components/Badge';
+export type { BadgeProps, BadgeVariant, BadgeSize } from './components/Badge';
+export { GTCard } from './components/Card';
+export { GTCheckboxGroup } from './components/CheckboxGroup';
+export type {
+  CheckboxGroupProps as RNCheckboxGroupProps,
+  CheckboxOption as RNCheckboxOption,
+} from './components/CheckboxGroup';
+export { GTDetails } from './components/Details';
+export { GTModal } from './components/Modal';
+export type {
+  ModalProps as RNModalProps,
+  ModalTransition as RNModalTransition,
+} from './components/Modal';
+export { GTOverflowMenu } from './components/OverflowMenu';
+export type {
+  OverflowMenuProps as RNOverflowMenuProps,
+  OverflowMenuItem as RNOverflowMenuItem,
+} from './components/OverflowMenu';
+export { GTRadioGroup } from './components/RadioGroup';
+export { GTSearchField } from './components/SearchField';
+export type { SearchFieldProps as RNSearchFieldProps } from './components/SearchField';
+export type {
+  RadioGroupProps as RNRadioGroupProps,
+  RadioOption as RNRadioOption,
+} from './components/RadioGroup';
+export { GTSpinner } from './components/Spinner';
+export { GTStepper } from './components/Stepper';
+export type {
+  StepperProps as RNStepperProps,
+  StepperStep as RNStepperStep,
+} from './components/Stepper';
+export type {
+  SpinnerProps as RNSpinnerProps,
+  SpinnerSize as RNSpinnerSize,
+  SpinnerVariant as RNSpinnerVariant,
+} from './components/Spinner';
+export { GTTag } from './components/Tag';
+export type { TagProps as RNTagProps } from './components/Tag';
+export { GTTextarea } from './components/Textarea';
+export type { TextareaProps as RNTextareaProps } from './components/Textarea';
+export { GTTooltip } from './components/Tooltip';
+export type { TooltipProps as RNTooltipProps } from './components/Tooltip';
+export { GTToast } from './components/Toast';
+export type {
+  ToastProps as RNToastProps,
+  ToastVariant as RNToastVariant,
+} from './components/Toast';
+export type { DetailsProps, DetailsVariant } from './components/Details';
+export type { CardProps, CardVariant } from './components/Card';
+
+// Hooks
+export { useField } from './useField';
+export type { UseFieldOptions, UseFieldReturn } from './useField';
+export { useFormValidation } from './useFormValidation';
+export type { UseFormValidationReturn } from './useFormValidation';
+
+// Validators (re-exported from @grundtone/utils)
+export {
+  required,
+  email,
+  phone,
+  cpr,
+  cvr,
+  minLength,
+  maxLength,
+  pattern,
+  url,
+  composeValidators,
+} from '@grundtone/utils';
+export type { Validator, ValidationResult } from '@grundtone/utils';
 
 // Branding
 export {

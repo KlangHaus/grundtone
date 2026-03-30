@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "name": "@grundtone/nuxt-playground",
+  "type": "module",
+  "scripts": {
+    "dev": "nuxi dev",
+    "build": "nuxi build",
+    "generate": "nuxi generate"
+  },
+  "dependencies": {
+    "@grundtone/core": "workspace:*",
+    "@grundtone/icons": "workspace:*",
+    "@grundtone/nuxt": "workspace:*",
+    "@grundtone/utils": "workspace:*",
+    "@grundtone/vue": "workspace:*",
+    "nuxt": "^4.4.2"
+  }
+}

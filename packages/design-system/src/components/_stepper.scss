@@ -1,0 +1,185 @@
+// Component: Stepper (Step Indicator)
+// Horizontal step progress with dots, checkmarks, and connecting lines.
+
+.stepper {
+  display: flex;
+  align-items: flex-start;
+  list-style: none !important;
+  padding: 0 !important;
+  padding-left: 0 !important;
+  margin: 0;
+  counter-reset: step;
+
+  &__step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    text-align: center;
+    list-style: none;
+    padding: 0;
+    margin-top: 0 !important;
+
+    &::before,
+    &::marker {
+      content: none;
+    }
+  }
+
+  // Connecting line between steps
+  &__step + &__step::after {
+    content: '';
+    position: absolute;
+    top: calc(0.75rem - 1px);
+    left: calc(-50% + 0.75rem);
+    right: calc(50% + 0.75rem);
+    height: 2px;
+    background: var(--color-border-medium);
+    z-index: 0;
+  }
+
+  &__step--completed + &__step::after {
+    background: var(--color-primary);
+  }
+
+  // Dot indicator
+  &__dot {
+    position: relative;
+    z-index: 1;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: var(--radius-full);
+    border: 2px solid var(--color-border-medium);
+    background: var(--color-background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      border-color var(--duration-fast) var(--ease-ease),
+      background-color var(--duration-fast) var(--ease-ease);
+    flex-shrink: 0;
+  }
+
+  // Active dot
+  &__step--active &__dot {
+    border-color: var(--color-primary);
+
+    &::after {
+      content: '';
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: var(--radius-full);
+      background: var(--color-primary);
+    }
+  }
+
+  // Completed dot (checkmark)
+  &__step--completed &__dot {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+
+    &::after {
+      content: '';
+      width: 0.5rem;
+      height: 0.3rem;
+      border-left: 2px solid var(--color-background);
+      border-bottom: 2px solid var(--color-background);
+      transform: rotate(-45deg) translateY(-0.0625rem);
+    }
+  }
+
+  // Error dot
+  &__step--error &__dot {
+    border-color: var(--color-error);
+    background: var(--color-error);
+
+    &::after {
+      content: '×';
+      color: var(--color-background);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-bold);
+      line-height: 1;
+      width: auto;
+      height: auto;
+      border: none;
+      border-radius: 0;
+      transform: none;
+    }
+  }
+
+  // Clickable step
+  &__step--clickable {
+    cursor: pointer;
+
+    &:hover .stepper__dot {
+      border-color: var(--color-primary);
+    }
+  }
+
+  &__step--disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  // Label
+  &__label {
+    margin-top: var(--space-xs);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-normal);
+  }
+
+  &__step--active &__label {
+    color: var(--color-text);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  &__step--error &__label {
+    color: var(--color-error);
+  }
+
+  // Info text
+  &__info {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+    margin-top: var(--space-xs);
+  }
+
+  // Simple variant: just "Trin X af Y"
+  &--simple {
+    display: block;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
+  }
+
+  // Mobile: collapse to button
+  @media (max-width: 767px) {
+    &:not(&--simple) {
+      display: none;
+    }
+  }
+}
+
+// Mobile trigger button
+.stepper-mobile {
+  display: none;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-medium);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+
+  @media (max-width: 767px) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

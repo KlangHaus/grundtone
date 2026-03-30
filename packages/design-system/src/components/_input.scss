@@ -1,0 +1,101 @@
+// Component: Input
+// Class-based input field with label, help text, and error state.
+
+.input-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+
+  &--block {
+    width: 100%;
+  }
+}
+
+.input-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  line-height: var(--line-height-tight);
+
+  &__required {
+    color: var(--color-error);
+    margin-left: 0.125em;
+  }
+}
+
+.input {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--color-border-medium);
+  border-radius: var(--radius-md);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-family-base);
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+
+  &::placeholder {
+    color: var(--color-text-secondary);
+    opacity: 0.7;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-focus-ring);
+  }
+
+  // Sizes
+  &--sm {
+    font-size: var(--font-size-sm);
+    padding: var(--space-xs) var(--space-sm);
+  }
+
+  &--md {
+    font-size: var(--font-size-base);
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  &--lg {
+    font-size: var(--font-size-lg);
+    padding: var(--space-md) var(--space-xl);
+  }
+
+  // States
+  &--error {
+    border-color: var(--color-error);
+
+    &:focus {
+      border-color: var(--color-error);
+      box-shadow: 0 0 0 3px
+        color-mix(in srgb, var(--color-error) 25%, transparent);
+    }
+  }
+
+  &--disabled,
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--color-surface-alt);
+  }
+
+  &--readonly,
+  &:read-only {
+    background-color: var(--color-surface-alt);
+    cursor: default;
+  }
+}
+
+.input-help {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-secondary);
+}
+
+.input-error {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  color: var(--color-error);
+  font-weight: var(--font-weight-semibold);
+}

@@ -1,0 +1,229 @@
+// Breakpoint System
+// Responsive breakpoints for mobile-first design
+
+@use 'sass:map';
+@use 'sass:string';
+@use 'breakpoints-defaults' as defaults;
+
+$grid-breakpoints: defaults.$grid-breakpoints-default !default;
+
+// Grid configuration
+$grid-columns: 12 !default;
+$grid-gutter-width: 32px !default;
+
+// Breakpoint infix function
+@function breakpoint-infix($name, $breakpoints: $grid-breakpoints) {
+  @if breakpoint-min($name, $breakpoints) == null {
+    @return '';
+  } @else {
+    @return '-#{$name}';
+  }
+}
+
+// Minimum breakpoint width
+@function breakpoint-min($name, $breakpoints: $grid-breakpoints) {
+  $min: map.get($breakpoints, $name);
+  @if $min != 0 {
+    @return $min;
+  } @else {
+    @return null;
+  }
+}
+
+// Maximum breakpoint width
+@function breakpoint-max($name, $breakpoints: $grid-breakpoints) {
+  $max: map.get($breakpoints, $name);
+  @if $max and $max > 0 {
+    @return $max - 0.02;
+  } @else {
+    @return null;
+  }
+}
+
+// Next breakpoint name
+@function breakpoint-next(
+  $name,
+  $breakpoints: $grid-breakpoints,
+  $breakpoint-names: map.keys($breakpoints)
+) {
+  $n: index($breakpoint-names, $name);
+  @if $n < length($breakpoint-names) {
+    @return nth($breakpoint-names, $n + 1);
+  } @else {
+    @return null;
+  }
+}
+
+// Media queries
+@mixin media-breakpoint-up($name, $breakpoints: $grid-breakpoints) {
+  $min: breakpoint-min($name, $breakpoints);
+  @if $min {
+    @media (min-width: $min) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-down($name, $breakpoints: $grid-breakpoints) {
+  $max: breakpoint-max($name, $breakpoints);
+  @if $max {
+    @media (max-width: $max) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-between(
+  $lower,
+  $upper,
+  $breakpoints: $grid-breakpoints
+) {
+  $min: breakpoint-min($lower, $breakpoints);
+  $max: breakpoint-max($upper, $breakpoints);
+
+  @if $min != null and $max != null {
+    @media (min-width: $min) and (max-width: $max) {
+      @content;
+    }
+  } @else if $max == null {
+    @include media-breakpoint-up($lower, $breakpoints) {
+      @content;
+    }
+  } @else if $min == null {
+    @include media-breakpoint-down($upper, $breakpoints) {
+      @content;
+    }
+  }
+}
+
+@mixin media-breakpoint-only($name, $breakpoints: $grid-breakpoints) {
+  $min: breakpoint-min($name, $breakpoints);
+  $max: breakpoint-max($name, $breakpoints);
+
+  @if $min != null and $max != null {
+    @media (min-width: $min) and (max-width: $max) {
+      @content;
+    }
+  } @else if $max == null {
+    @include media-breakpoint-up($name, $breakpoints) {
+      @content;
+    }
+  } @else if $min == null {
+    @include media-breakpoint-down($name, $breakpoints) {
+      @content;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Responsive utility variant generator
+// Generates base + responsive classes for all breakpoints including 2xl.
+// Usage: @include responsive-variants using ($p) { .#{$p}flex { display: flex; } }
+// ---------------------------------------------------------------------------
+@mixin responsive-variants {
+  // Base (no prefix)
+  @content ('');
+
+  // sm through xl
+  @each $bp in (sm, md, lg, xl) {
+    @include media-breakpoint-up($bp) {
+      @content ('#{$bp}\\:');
+    }
+  }
+
+  // 2xl — CSS class names starting with a digit need unicode escaping (\32 = "2")
+  @each $key, $val in $grid-breakpoints {
+    @if $val == 1536px {
+      @include media-breakpoint-up($key) {
+        @content ('\\32 xl\\:');
+      }
+    }
+  }
+}
+
+// Responsive font size mixin
+@mixin responsive-font-size(
+  $min-font-size,
+  $max-font-size,
+  $min-vw: 640px,
+  $max-vw: 1280px
+) {
+  font-size: $min-font-size;
+
+  @media (min-width: $min-vw) {
+    font-size: calc(
+      #{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} *
+        ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})
+    );
+  }
+
+  @media (min-width: $max-vw) {
+    font-size: $max-font-size;
+  }
+}
+
+// Strip unit function
+@function strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+  @return $number;
+}
+
+// High DPI media query
+@mixin high-dpi {
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    @content;
+  }
+}
+
+// Print media query
+@mixin print {
+  @media print {
+    @content;
+  }
+}
+
+// Screen media query
+@mixin screen {
+  @media screen {
+    @content;
+  }
+}
+
+// Reduced motion query
+@mixin prefers-reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+// Dark mode query
+@mixin prefers-dark {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}
+
+// Light mode query
+@mixin prefers-light {
+  @media (prefers-color-scheme: light) {
+    @content;
+  }
+}
+
+// Export for CSS custom properties
+:root {
+  --breakpoint-xs: #{map.get($grid-breakpoints, xs)};
+  --breakpoint-sm: #{map.get($grid-breakpoints, sm)};
+  --breakpoint-md: #{map.get($grid-breakpoints, md)};
+  --breakpoint-lg: #{map.get($grid-breakpoints, lg)};
+  --breakpoint-xl: #{map.get($grid-breakpoints, xl)};
+  --breakpoint-2xl: #{map.get($grid-breakpoints, 2xl)};
+  --grid-gutter-width: #{$grid-gutter-width};
+  --grid-columns: #{$grid-columns};
+}

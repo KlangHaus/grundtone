@@ -1,5 +1,382 @@
 # @grundtone/vue
 
+## 2.15.0
+
+### Minor Changes
+
+- 366ae17: Add Slider component
+
+  GTSlider: single and dual-thumb range input with pointer drag, keyboard navigation, ARIA slider
+  pattern, vertical orientation, step snapping, and vanilla JS behavior.
+
+### Patch Changes
+
+- Updated dependencies [366ae17]
+  - @grundtone/design-system@2.15.0
+
+## 2.14.0
+
+### Minor Changes
+
+- 7e77c0b: Add Image utilities, Figure, Carousel, Chart, and Error Page components
+
+  **Image**: .img-fluid, .img-thumbnail, .img-cover, .img-contain CSS utilities. **Figure**:
+  Semantic figure/figcaption with .figure CSS classes. **Carousel** (GTCarousel + GTCarouselSlide):
+  Slide/fade transitions, continuous touch drag with rubber-band resistance, keyboard nav, autoplay
+  with reduced-motion respect. Vanilla JS behavior included. **Chart** (GTChartContainer +
+  GTChartLegend): 5 semantic color tokens (--chart-1 to --chart-5), chart-lib agnostic container
+  with CSS custom properties per series. **Error Page** (GTErrorPage): Musical staff-line SVG
+  illustrations per HTTP status code (404, 403, 500, 503). Auto-resolves title/description.
+
+  Also adds vanilla JS behaviors for Tooltip, Toast, Stepper, and SearchField. Replaces manual
+  ESLint globals with globals.browser package. Switches changeset changelog to
+  @changesets/changelog-git.
+
+### Patch Changes
+
+- Updated dependencies [7e77c0b]
+  - @grundtone/design-system@2.14.0
+
+## 2.13.0
+
+### Minor Changes
+
+- dbd9c2c: Add Table and Summary List components
+
+  **Table** (`GTTable`): Data table with sorting, selection, responsive stacking, and variants
+  (default, borderless, zebra, compact). Includes vanilla JS behavior for HTML-only usage.
+
+  **Summary List** (`GTSummaryList` + `GTSummaryItem`): Key-value pair display with `<dl>`
+  semantics, optional actions, and a card variant. Replaces the old `.structured-list` CSS.
+
+### Patch Changes
+
+- Updated dependencies [dbd9c2c]
+  - @grundtone/design-system@2.13.0
+
+## 2.12.0 - 2026-03-22
+
+### Minor Changes
+
+- [`fc456bf`](https://github.com/grundtone/grundtone/commit/fc456bfc25e1263f3fc19140f8108698072c269d)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add FileUpload, PasswordInput, OtpInput,
+  Fieldset, and password/OTP validators
+
+  - **design-system**: Add `_file-upload.scss` (modern drop zone), `_password-input.scss` (show/hide
+    toggle), `_otp-input.scss` (single-digit fields), `_fieldset.scss` (form grouping). Web docs for
+    all four with CodePreview.
+  - **vue**: Add `GTFileUpload` (drag-and-drop, file validation, 12 tests), `GTPasswordInput`
+    (eye/eye-off icon toggle, spellcheck=false, 12 tests), `GTOtpInput` (auto-advance, paste, filled
+    state, 12 tests)
+  - **utils**: Add `isStrongPassword`, `getPasswordStrength`, `isValidOtp` validation functions +
+    `password()`, `passwordStrength()`, `otp()` validator factories
+  - **icons**: Add eye, eye-off, upload, file SVG icons (17 total)
+
+### Patch Changes
+
+- Updated dependencies
+  [[`fc456bf`](https://github.com/grundtone/grundtone/commit/fc456bfc25e1263f3fc19140f8108698072c269d)]:
+  - @grundtone/design-system@2.12.0
+  - @grundtone/utils@2.12.0
+  - @grundtone/icons@2.2.0
+
+## 2.11.0 - 2026-03-22
+
+### Minor Changes
+
+- [`c37762e`](https://github.com/grundtone/grundtone/commit/c37762e4ae7944dffc13d04de43a5b0ba83fcf32)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add Stepper component, checkout flow, and fixes
+
+  - **design-system**: Add `_stepper.scss` (horizontal dots, checkmarks, connecting lines,
+    error/simple variants)
+  - **vue**: Add `GTStepper` molecule (14 tests) with v-model:activeStep, allClickable, simple
+    variant. Fix Input charWidth with padding compensation. Fix Breadcrumb li margin override. Add
+    checkout flow to Vue playground (4-step: Cart → Delivery → Payment → Confirm using GTStepper,
+    GTAddressInput, GTCard, GTRadioGroup, GTCheckbox, useField, useToast).
+  - **react-native**: Add `GTStepper` with Pressable steps and dot/check/error indicators
+
+### Patch Changes
+
+- Updated dependencies
+  [[`c37762e`](https://github.com/grundtone/grundtone/commit/c37762e4ae7944dffc13d04de43a5b0ba83fcf32)]:
+  - @grundtone/design-system@2.11.0
+
+## 2.10.0 - 2026-03-22
+
+### Minor Changes
+
+- [`200846b`](https://github.com/grundtone/grundtone/commit/200846b19a450ca48fc97919cf858989483c4318)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add Tooltip component, Toast playground updates
+
+  - **design-system**: Add `_tooltip.scss` (dark minimal Sonner-style bubble with auto-positioning
+    and arrow)
+  - **vue**: Add `GTTooltip` atom (click with help icon, hover with 300ms delay, auto-flips
+    top↔bottom, 13 tests). Toast icons vertically centered. Toast added to all playgrounds with
+    variant icons.
+  - **react-native**: Add `GTTooltip` (long-press trigger with Modal overlay). Toast vertically
+    centered.
+
+### Patch Changes
+
+- Updated dependencies
+  [[`200846b`](https://github.com/grundtone/grundtone/commit/200846b19a450ca48fc97919cf858989483c4318)]:
+  - @grundtone/design-system@2.10.0
+
+## 2.9.1 - 2026-03-21
+
+### Patch Changes
+
+- [`009ab18`](https://github.com/grundtone/grundtone/commit/009ab18cbff1652f5b42665bfcc7bc37a4e310b7)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add Toast component, chevron-up icon, and
+  prefix refactor for all new components
+
+  - **vue**: Add `GTToast`, `GTToastContainer`, and `useToast` composable (Sonner-style with
+    countdown bar, stacking, rich colors, 15 tests). Add chevron-up icon for BackToTop.
+  - **vue**: Prefix refactor — all new components (Tag, BackLink, BackToTop, Textarea, Checkbox,
+    RadioGroup, CheckboxGroup, SearchField, OverflowMenu, Toast, Modal) now use `getClassPrefix()`
+    in templates and `<style lang="scss">` blocks with `$prefix` and `tokens.*` namespace, matching
+    the existing Badge/Input/Button pattern.
+  - **icons**: Add `chevron-up` SVG icon to navigation category (13 icons total).
+
+- Updated dependencies
+  [[`009ab18`](https://github.com/grundtone/grundtone/commit/009ab18cbff1652f5b42665bfcc7bc37a4e310b7)]:
+  - @grundtone/icons@2.1.2
+
+## 2.9.0 - 2026-03-21
+
+### Minor Changes
+
+- [`efee6cf`](https://github.com/grundtone/grundtone/commit/efee6cfe57c2ec6f038bd2ddc7bd7004a71e2a67)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add OverflowMenu, SearchField, Tag, Textarea,
+  BackLink, and BackToTop components
+
+  - **design-system**: Add `_overflow-menu.scss` (dropdown with keyboard nav, smart positioning),
+    `_search-field.scss` (input + submit with magnifying glass icon, suggestions dropdown),
+    `_tag.scss` (interactive metadata: display, dismissible, selectable), `_textarea.scss`
+    (multi-line input with character count), redesign `_back-link.scss` (baked-in styling with CSS
+    arrow), `_back-to-top.scss` (sticky scroll button, mobile icon-only). Add OverflowMenu and
+    BackToTop vanilla JS behaviors.
+  - **vue**: Add `GTOverflowMenu` (18 tests), `GTSearchField` (17 tests), `GTTag` (15 tests),
+    `GTTextarea` (20 tests), `GTBackLink` (5 tests), `GTBackToTop` (8 tests). Move SearchField from
+    atoms to molecules.
+  - **react-native**: Add `GTOverflowMenu` (Modal + FlatList), `GTSearchField` (TextInput + submit),
+    `GTTag` (Pressable with selected/dismissible), `GTTextarea` (multiline with count), `GTBackLink`
+    (chevron + optional label), `GTBackToTop` (ScrollView ref).
+  - **icons**: Add missing `external-link` SVG icon to navigation category (fixes Card component
+    warning).
+
+### Patch Changes
+
+- Updated dependencies
+  [[`efee6cf`](https://github.com/grundtone/grundtone/commit/efee6cfe57c2ec6f038bd2ddc7bd7004a71e2a67)]:
+  - @grundtone/design-system@2.9.0
+  - @grundtone/icons@2.1.1
+
+## 2.8.0 - 2026-03-21
+
+### Minor Changes
+
+- [`ccb6a4e`](https://github.com/grundtone/grundtone/commit/ccb6a4e5833b18115cf520ef625c802ed55c42ba)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add DateInput component for day/month/year date
+  entry
+
+  - **design-system**: Add `_date-input.scss` with flex layout, field widths
+    (`box-sizing: content-box` for correct sizing across all input sizes), and sub-labels
+  - **vue**: Add `GTDateInput` component with auto-advance, numeric filtering, accessible markup
+    (`role="group"`, `aria-labelledby`, per-field labels, `inputmode="numeric"`)
+  - **vue**: Add `useDateField` composable — reactive date validation with
+    `UseFieldReturn`-compatible interface for `useFormValidation` integration
+  - **utils**: Add `isValidDate`, `isDateInPast`, `isDateInFuture` validation functions and
+    `date()`, `datePast()`, `dateFuture()` validators
+
+- [`8fc757a`](https://github.com/grundtone/grundtone/commit/8fc757a37e5cb862f4d6c48b8a1271088535ff6d)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add Radio, Checkbox, and CheckboxGroup
+  components
+
+  - **design-system**: Add `_choice.scss` with shared BEM for radio/checkbox (native hidden inputs +
+    custom indicators), CodePreview examples for Modal/Radio/Checkbox
+  - **vue**: Add `GTCheckbox` (standalone atom), `GTRadioGroup` and `GTCheckboxGroup` (molecules)
+    with option hints and collapse content slots
+  - **react-native**: Add `GTRadioGroup` and `GTCheckboxGroup` with Pressable + custom indicators
+
+- [`9cf5217`](https://github.com/grundtone/grundtone/commit/9cf52174c298cab51259a2ca948523eef26a1516)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add SkipLink, Spinner, and Modal components
+  with shared animations and utilities
+
+  - **design-system**: Add `_animations.scss` (shared keyframes: fade, scale, slide-up/down/right,
+    spin), `_modal.scss` (BEM + 6 transition modes), `_spinner.scss`, Modal vanilla JS behavior
+    (focus trap, scroll lock, open/close events)
+  - **vue**: Add `GTSkipLink` (keyboard-only skip-to-content link), `GTSpinner` (sm/lg, light/dark,
+    text, backdrop), `GTModal` (Teleport, Vue Transition, persistent variant, 6 animation modes)
+  - **react-native**: Add `GTSpinner` (Animated.View rotation) and `GTModal` (RN Modal wrapper with
+    theme tokens)
+  - **utils**: Add `createFocusTrap()` and `createScrollLock()` (framework-agnostic DOM utilities)
+  - Fix Dart Sass deprecations (nth→list.nth, slash division→interpolated strings)
+  - Fix Accordion test, docs changelog frontmatter, docs missing dependencies
+  - Add CLAUDE.md files for AI-assisted development context
+  - Add blog, shop, login, signup pages to Vue playground
+
+### Patch Changes
+
+- Updated dependencies
+  [[`ccb6a4e`](https://github.com/grundtone/grundtone/commit/ccb6a4e5833b18115cf520ef625c802ed55c42ba),
+  [`8fc757a`](https://github.com/grundtone/grundtone/commit/8fc757a37e5cb862f4d6c48b8a1271088535ff6d),
+  [`9cf5217`](https://github.com/grundtone/grundtone/commit/9cf52174c298cab51259a2ca948523eef26a1516)]:
+  - @grundtone/design-system@2.8.0
+  - @grundtone/utils@2.8.0
+
+## 2.7.1 - 2026-03-21
+
+### Patch Changes
+
+- Updated dependencies
+  [[`f41cfa6`](https://github.com/grundtone/grundtone/commit/f41cfa697d66f842719621865c8ddafe96cf3b25)]:
+  - @grundtone/design-system@2.7.1
+
+## 2.7.0 - 2026-03-21
+
+### Patch Changes
+
+- Updated dependencies
+  [[`98a30f3`](https://github.com/grundtone/grundtone/commit/98a30f3c7786ac7425b5249740cb22e351874f16)]:
+  - @grundtone/design-system@2.7.0
+
+## 2.6.1 - 2026-03-21
+
+### Patch Changes
+
+- [`fd7b9e7`](https://github.com/grundtone/grundtone/commit/fd7b9e736af8c3b2964a8bb9089c55583c18f1ae)
+  Thanks [@allanasp](https://github.com/allanasp)! - fix(accordion): improve accessibility — English
+  defaults, sr-only show/hide labels, prefers-reduced-motion
+- Updated dependencies
+  [[`fd7b9e7`](https://github.com/grundtone/grundtone/commit/fd7b9e736af8c3b2964a8bb9089c55583c18f1ae)]:
+  - @grundtone/design-system@2.6.1
+
+## 2.6.0 - 2026-03-21
+
+### Minor Changes
+
+- [`a8f16af`](https://github.com/grundtone/grundtone/commit/a8f16af2101e8fddec6e5e7e08cf287ca76937f4)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add GTTabs with underline, segment, pill
+  variants and slide transitions
+
+### Patch Changes
+
+- Updated dependencies
+  [[`a8f16af`](https://github.com/grundtone/grundtone/commit/a8f16af2101e8fddec6e5e7e08cf287ca76937f4)]:
+  - @grundtone/design-system@2.6.0
+
+## 2.5.0 - 2026-03-21
+
+### Minor Changes
+
+- [`47eec5f`](https://github.com/grundtone/grundtone/commit/47eec5f72d7299faf3b97bfc32513d6df4ff9ea4)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add GTSelect, GTAutocomplete, GTAddressInput
+  with DAWA integration
+
+### Patch Changes
+
+- Updated dependencies
+  [[`47eec5f`](https://github.com/grundtone/grundtone/commit/47eec5f72d7299faf3b97bfc32513d6df4ff9ea4)]:
+  - @grundtone/design-system@2.5.0
+
+## 2.4.0 - 2026-03-21
+
+### Minor Changes
+
+- [`b24dbd9`](https://github.com/grundtone/grundtone/commit/b24dbd9a10bf80685d571ab69ff40ec1098fc9a6)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add GTAccordion with 3 variants, 3 transitions,
+  animated RN expand/collapse
+
+### Patch Changes
+
+- Updated dependencies
+  [[`b24dbd9`](https://github.com/grundtone/grundtone/commit/b24dbd9a10bf80685d571ab69ff40ec1098fc9a6)]:
+  - @grundtone/design-system@2.4.0
+
+## 2.3.0 - 2026-03-21
+
+### Minor Changes
+
+- [`f155ea5`](https://github.com/grundtone/grundtone/commit/f155ea5b91ab9e7393a96dc3654aa92b46210db5)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add GTDetails disclosure component with
+  default, subtle, and card variants
+
+### Patch Changes
+
+- Updated dependencies
+  [[`f155ea5`](https://github.com/grundtone/grundtone/commit/f155ea5b91ab9e7393a96dc3654aa92b46210db5)]:
+  - @grundtone/design-system@2.3.0
+
+## 2.2.0 - 2026-03-21
+
+### Minor Changes
+
+- [`d087e51`](https://github.com/grundtone/grundtone/commit/d087e51106acb475d92a51e063ce540a0ea41d47)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add GTBadge component, replace legacy .tag, fix
+  AnchorLinks click highlight
+
+### Patch Changes
+
+- Updated dependencies
+  [[`d087e51`](https://github.com/grundtone/grundtone/commit/d087e51106acb475d92a51e063ce540a0ea41d47)]:
+  - @grundtone/design-system@2.2.0
+
+## 2.1.0 - 2026-03-21
+
+### Minor Changes
+
+- [`36758db`](https://github.com/grundtone/grundtone/commit/36758db0b2b3823e5a71e5bc7b14ed80b7ee4a25)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add GTInput component with label, help text,
+  error state, and accessibility support across all platforms. Includes generateId utility, SCSS
+  element reset and component classes, Vue SFC with 27 tests, React Native component, docs for
+  Vue/web/RN, demos, and playground examples.
+
+- [`1e90785`](https://github.com/grundtone/grundtone/commit/1e90785ab0b0ad5df1437a1b87e15db602582cd6)
+  Thanks [@allanasp](https://github.com/allanasp)! - Add GTCookieMessage and GTAnchorLinks
+  components, cookie icon, fix RN Card shadow types
+
+- [`33219d3`](https://github.com/grundtone/grundtone/commit/33219d309b4ad6f56df0f02083a5730f5543a1d4)
+  Thanks [@allanasp](https://github.com/allanasp)! - feat: add GTAlert component with Expo Snack
+  embeds
+
+  - New status icons: info-circle, check-circle, alert-triangle, alert-circle (status category)
+  - Design system: `.alert` CSS component with 4 semantic variants, transparent backgrounds
+  - Vue: GTAlert molecule with heading, icon, dismissible, footer slot
+  - React Native: GTAlert with theme-driven transparent backgrounds
+  - Re-export `createTheme` from `@grundtone/react-native`
+  - Replace callout with alert (breaking: `.callout` removed)
+  - Docs: Expo Snack embeds for interactive RN component previews
+
+- [`fe730ff`](https://github.com/grundtone/grundtone/commit/fe730ff700a9801f6985aa326d899fdb03e0f88f)
+  Thanks [@allanasp](https://github.com/allanasp)! - feat: icon categories, configurable icon color,
+  RN components (GTIcon, GTButton), Expo playground
+
+  - Icon system: subdirectory-based categories, auto-generated registry with category metadata
+  - Core config: add `iconColor` to `defineGrundtoneConfig` with three-layer resolution (prop →
+    config → currentColor)
+  - Design system: icon utility SCSS classes with prefix support (`{prefix}-icon`)
+  - Vue Icon: add `color` prop with config fallback
+  - React Native: GTIcon (react-native-svg) and GTButton (Pressable) components with full theme
+    support
+  - Expo playground: SDK 54, pnpm workspace, expo-router with Grundtone theme provider
+  - Docs: web icon classes, RN icons, icon gallery component, nav restructure (Design System,
+    Frameworks dropdown, Core Concepts dropdown)
+  - Third-party: credit react-native-svg
+
+### Patch Changes
+
+- Updated dependencies
+  [[`36758db`](https://github.com/grundtone/grundtone/commit/36758db0b2b3823e5a71e5bc7b14ed80b7ee4a25),
+  [`1e90785`](https://github.com/grundtone/grundtone/commit/1e90785ab0b0ad5df1437a1b87e15db602582cd6),
+  [`33219d3`](https://github.com/grundtone/grundtone/commit/33219d309b4ad6f56df0f02083a5730f5543a1d4),
+  [`fe730ff`](https://github.com/grundtone/grundtone/commit/fe730ff700a9801f6985aa326d899fdb03e0f88f),
+  [`c7e2fbe`](https://github.com/grundtone/grundtone/commit/c7e2fbed5d370449cb61e92b3bcade97897e0581)]:
+  - @grundtone/utils@2.1.0
+  - @grundtone/design-system@2.1.0
+  - @grundtone/icons@2.1.0
+  - @grundtone/core@2.1.0
+
 ## 2.0.0 - 2026-03-09
 
 ### Major Changes
@@ -27,8 +404,8 @@
   - Expand from 26 to 37 semantic color tokens (add `backgroundAlt`, `surfaceRaised`,
     `surfaceOverlay`, `textInverse`, `textPlaceholder`, `textDisabled`, `borderMedium`,
     `borderInverse`, status `*Dark` variants)
-  - Fix value drift in design-tokens (`success: #28a745` → `#198754`, `info: #17a2b8` → `#0dcaf0`)
-  - Remove duplicate semantic maps from design-tokens `_color-palette.scss` (raw palette retained)
+  - Fix value drift in design-system (`success: #28a745` → `#198754`, `info: #17a2b8` → `#0dcaf0`)
+  - Remove duplicate semantic maps from design-system `_color-palette.scss` (raw palette retained)
   - Remove duplicate `$color-primary-*` variables from `_variables.scss`
   - Add background utility classes: `.bg-alt`, `.bg-surface`, `.bg-surface-alt`,
     `.bg-surface-raised`, `.bg-overlay`
@@ -91,9 +468,9 @@
   [`27c611f`](https://github.com/grundtone/grundtone/commit/27c611f19752d39182178a4e44d8942c090a18e7),
   [`611ce6e`](https://github.com/grundtone/grundtone/commit/611ce6e80d8588fd3c525061a2bc74e1ff585389),
   [`b538711`](https://github.com/grundtone/grundtone/commit/b538711d025c26a6eaaf7f56e2abdb3e003def1c)]:
-  - @grundtone/design-tokens@2.0.0
+  - @grundtone/design-system@2.0.0
   - @grundtone/core@2.0.0
-  - @grundtone/shared@2.0.0
+  - @grundtone/utils@2.0.0
 
 ## 1.0.0 - 2025-12-31
 
@@ -108,4 +485,4 @@
 - Updated dependencies
   [[`8174960`](https://github.com/allanasp/grundtone/commit/817496074311a1eee4da2f14603eb79e633636e5)]:
   - @grundtone/core@1.0.0
-  - @grundtone/shared@1.0.0
+  - @grundtone/utils@1.0.0

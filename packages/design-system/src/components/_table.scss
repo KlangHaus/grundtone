@@ -1,0 +1,243 @@
+// Table
+// A systematic layout for displaying data in columns and rows.
+// Modern aesthetic: airy spacing, soft borders, smooth micro-interactions.
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+// Responsive: stack rows as cards on small screens
+@media (max-width: 40rem) {
+  .table-wrapper--responsive .table thead {
+    display: none;
+  }
+
+  .table-wrapper--responsive .table tbody tr {
+    display: block;
+    margin-bottom: var(--space-sm);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xs) 0;
+  }
+
+  .table-wrapper--responsive .table tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-md);
+    text-align: right;
+    padding: var(--space-xs) var(--space-md);
+    border-bottom: none;
+  }
+
+  .table-wrapper--responsive .table tbody td::before {
+    content: attr(data-label);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-align: left;
+    flex-shrink: 0;
+  }
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text);
+
+  // Header — single thin border, no heavy 2px line
+  thead {
+    border-bottom: 1px solid var(--color-border-light);
+  }
+
+  th {
+    text-align: left;
+    font-weight: var(--font-weight-medium);
+    font-size: 0.6875rem; // 11px — smaller than xs for a refined look
+    color: var(--color-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: var(--space-sm) var(--space-md) var(--space-md);
+    white-space: nowrap;
+    vertical-align: bottom;
+  }
+
+  // Body
+  td {
+    padding: var(--space-md);
+    vertical-align: middle;
+    border-bottom: 1px solid var(--color-border-light);
+  }
+
+  tbody tr {
+    transition: background-color 150ms cubic-bezier(0.2, 0, 0, 1);
+
+    &:hover {
+      background-color: color-mix(
+        in oklch,
+        var(--color-text) 2.5%,
+        transparent
+      );
+    }
+
+    &:last-child td {
+      border-bottom: none;
+    }
+  }
+
+  // Caption
+  caption {
+    text-align: left;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-tertiary);
+    padding: var(--space-xs) var(--space-md) var(--space-sm);
+    caption-side: bottom;
+  }
+
+  // Numeric alignment
+  &__num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+  }
+
+  // Sortable header
+  &__sort {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    background: none;
+    border: none;
+    margin: -2px -4px;
+    padding: 2px 4px;
+    font: inherit;
+    color: inherit;
+    text-transform: inherit;
+    letter-spacing: inherit;
+    cursor: pointer;
+    user-select: none;
+    border-radius: var(--radius-sm);
+    transition: color 150ms cubic-bezier(0.2, 0, 0, 1);
+
+    &:hover {
+      color: var(--color-text);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-focus-ring);
+      outline-offset: 2px;
+    }
+  }
+
+  &__sort-icon {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 1px;
+    font-size: 0.5rem;
+    line-height: 1;
+    opacity: 0.3;
+    transition: opacity 150ms cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  &__sort:hover &__sort-icon {
+    opacity: 0.6;
+  }
+
+  &__sort--active &__sort-icon {
+    opacity: 1;
+    color: var(--color-text);
+  }
+
+  // Selectable row
+  &__select {
+    width: 2.5rem;
+    padding-right: 0;
+
+    input[type='checkbox'] {
+      accent-color: var(--color-primary);
+    }
+  }
+
+  tbody tr.table__row--selected {
+    background-color: color-mix(in oklch, var(--color-primary) 5%, transparent);
+
+    &:hover {
+      background-color: color-mix(
+        in oklch,
+        var(--color-primary) 8%,
+        transparent
+      );
+    }
+  }
+
+  // Variants
+  &--borderless {
+    thead {
+      border-bottom-color: transparent;
+    }
+
+    td {
+      border-bottom-color: transparent;
+    }
+
+    tbody tr:hover {
+      background-color: color-mix(in oklch, var(--color-text) 2%, transparent);
+    }
+  }
+
+  &--zebra {
+    tbody tr:nth-child(even) {
+      background-color: color-mix(in oklch, var(--color-text) 2%, transparent);
+    }
+
+    tbody tr:hover {
+      background-color: color-mix(in oklch, var(--color-text) 4%, transparent);
+    }
+  }
+
+  &--compact {
+    th,
+    td {
+      padding: var(--space-sm) var(--space-md);
+    }
+
+    th {
+      padding-bottom: var(--space-sm);
+    }
+  }
+
+  &--extra-compact {
+    th,
+    td {
+      padding: 0.375rem var(--space-md);
+    }
+
+    th {
+      padding-bottom: 0.375rem;
+    }
+  }
+
+  // Status footer
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-sm) var(--space-md);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-tertiary);
+    border-top: 1px solid var(--color-border-light);
+  }
+
+  &__count {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+// Structured list is now .summary-list — see _summary-list.scss

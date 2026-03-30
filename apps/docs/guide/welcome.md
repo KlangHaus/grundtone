@@ -6,8 +6,9 @@ typography) powers your UI on **Vue**, **Nuxt**, and **React Native**.
 - **Semantic colors** – Use tokens like `primary`, `background`, `text` instead of hex values.
   Configure once with `createTheme()` to match your brand.
 - **Self-hosting** – Fork the repo, change the default colors in
-  [`theme-preset.ts`](/guide/theme-configuration#changing-the-default-colors-self-hosting), rebuild,
-  and every package ships with your brand out of the box.
+  [`theme-preset.ts`](/guide/theme-configuration#changing-the-default-colors-self-hosting), set your
+  own [component prefix](/guide/prefix) (e.g. `KH` instead of `GT`), rebuild, and every package
+  ships with your brand out of the box.
 - **Open source (MIT)** – Use it, fork it, self-host it, and customize the design. See
   [Open Source & Self-Hosting](/core/open-source).
 
@@ -18,7 +19,7 @@ typography) powers your UI on **Vue**, **Nuxt**, and **React Native**.
 | **Vue 3**        | @grundtone/vue           | Components, ThemeProvider, design tokens, SCSS |
 | **Nuxt 3**       | @grundtone/nuxt          | Auto-setup: components, composables, theme     |
 | **React Native** | @grundtone/react-native  | ThemeProvider, useGrundtoneTheme, tokens       |
-| **Plain Web**    | @grundtone/design-tokens | Design tokens only (CSS, SCSS), no components  |
+| **Plain Web**    | @grundtone/design-system | Design tokens only (CSS, SCSS), no components  |
 
 ## Next Steps
 
