@@ -40,8 +40,8 @@ jobs:
       - name: Validate PR title
         run: echo "${{ github.event.pull_request.title }}" | npx commitlint
 
-  lint-and-test:
-    name: Lint & Test
+  setup:
+    name: Setup & Build
     runs-on: ubuntu-latest
 
     steps:
@@ -77,11 +77,48 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps chromium
-
       - name: Build packages
         run: pnpm build:packages
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: |
+            packages/*/dist
+            packages/vue/scss
+          retention-days: 1
+
+  lint:
+    name: Lint & Typecheck
+    runs-on: ubuntu-latest
+    needs: [setup]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.14.0
+          run_install: false
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+          path: packages
 
       - name: Check for changesets
         if: github.base_ref == 'develop'
@@ -98,6 +135,38 @@ jobs:
 
       - name: Type check
         run: pnpm typecheck
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    needs: [setup]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.14.0
+          run_install: false
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+          path: packages
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
 
       - name: Run tests with coverage
         run: pnpm test:coverage
@@ -123,6 +192,7 @@ jobs:
   size-check:
     name: Bundle Size Check
     runs-on: ubuntu-latest
+    needs: [setup]
 
     steps:
       - name: Checkout
@@ -144,8 +214,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build packages
-        run: pnpm build:packages
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+          path: packages
 
       - name: Analyze bundle size
         uses: preactjs/compressed-size-action@v2
@@ -183,7 +256,7 @@ jobs:
   vercel-preview:
     name: Vercel Preview Deployment
     runs-on: ubuntu-latest
-    needs: [lint-and-test]
+    needs: [lint, test]
     permissions:
       contents: read
       pull-requests: write
