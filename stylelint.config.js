@@ -36,7 +36,6 @@ export default {
     
     // SCSS specific
     'scss/at-rule-no-unknown': true,
-    'scss/dollar-variable-colon-space-after': 'always',
     'scss/dollar-variable-colon-space-before': 'never',
     
     // Code quality

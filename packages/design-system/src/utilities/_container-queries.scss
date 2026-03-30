@@ -51,7 +51,8 @@ $container-breakpoints: (
 // Display utilities (sm–xl)
 // ---------------------------------------------------------------------------
 
-$_cq-displays: block, inline-block, inline, flex, inline-flex, grid, inline-grid;
+$_cq-displays:
+  block, inline-block, inline, flex, inline-flex, grid, inline-grid;
 $_cq-display-breakpoints: sm, md, lg, xl;
 
 @each $bp in $_cq-display-breakpoints {
