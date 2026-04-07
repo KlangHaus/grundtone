@@ -16,6 +16,8 @@ export interface IconProps {
   color?: string;
 }
 
-/** Injection key for providing an icon registry to GTIcon components. */
+/** Injection key for providing an icon registry to GTIcon components.
+ * Uses Symbol.for() so the key is shared across module instances
+ * (e.g. when the same package is loaded both as src/ and dist/). */
 export const GT_ICON_REGISTRY_KEY: InjectionKey<IconRegistry> =
-  Symbol('gt-icon-registry');
+  Symbol.for('gt-icon-registry');

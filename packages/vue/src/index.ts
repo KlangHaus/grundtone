@@ -220,5 +220,11 @@ export type {
   TableDensity,
   SortDirection,
 } from './molecules/Table';
+export { GTMasonry } from './molecules/Masonry';
+export type { MasonryProps } from './molecules/Masonry';
 
 // Organisms
+export { GTHeader } from './organisms/Header';
+export type { HeaderProps, HeaderNavItem } from './organisms/Header';
+export { GTFooter } from './organisms/Footer';
+export type { FooterProps, FooterNavItem } from './organisms/Footer';

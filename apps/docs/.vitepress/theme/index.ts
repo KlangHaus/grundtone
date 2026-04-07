@@ -48,6 +48,7 @@ import TableDemo from '../../../../packages/vue/src/molecules/Table/demo.vue';
 import TabsDemo from '../../../../packages/vue/src/molecules/Tabs/demo.vue';
 import ToastDemo from '../../../../packages/vue/src/molecules/Toast/demo.vue';
 import CookieMessageDemo from '../../../../packages/vue/src/molecules/CookieMessage/demo.vue';
+import MasonryDemo from '../../../../packages/vue/src/molecules/Masonry/demo.vue';
 import IconGallery from './components/IconGallery.vue';
 import SnackEmbed from './components/SnackEmbed.vue';
 import { GT_ICON_REGISTRY_KEY } from '../../../../packages/vue/src/atoms/Icon/types';
@@ -110,6 +111,7 @@ export default {
     app.component('TabsDemo', TabsDemo);
     app.component('ToastDemo', ToastDemo);
     app.component('CookieMessageDemo', CookieMessageDemo);
+    app.component('MasonryDemo', MasonryDemo);
     app.component('IconGallery', IconGallery);
     app.component('SnackEmbed', SnackEmbed);
     app.component('DiagramPreview', DiagramPreview);

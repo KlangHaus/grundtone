@@ -1,5 +1,30 @@
 # @grundtone/design-system
 
+## 2.17.0
+
+### Minor Changes
+
+- Extend createTheme() to accept typography, radius, transitions, and spacing overrides in addition
+  to colors. Backwards-compatible — flat color overrides still work.
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/core@2.17.0
+
+## 2.16.3
+
+### Patch Changes
+
+- Nuxt module now auto-injects SCSS preprocessor config so component style blocks can use the tokens
+  namespace. Also adds ./package.json to design-system exports.
+
+## 2.16.0
+
+### Minor Changes
+
+- Add GTMasonry molecule component for responsive masonry grid layouts
+
 ## 2.15.0
 
 ### Minor Changes

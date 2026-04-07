@@ -1,5 +1,12 @@
 # @grundtone/core
 
+## 2.17.0
+
+### Minor Changes
+
+- Extend createTheme() to accept typography, radius, transitions, and spacing overrides in addition
+  to colors. Backwards-compatible — flat color overrides still work.
+
 ## 2.1.0 - 2026-03-21
 
 ### Minor Changes

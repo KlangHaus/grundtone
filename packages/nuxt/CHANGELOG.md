@@ -1,5 +1,166 @@
 # @grundtone/nuxt
 
+## 2.21.6
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/vue@2.21.6
+
+## 2.21.5
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/vue@2.21.5
+
+## 2.21.4
+
+### Patch Changes
+
+- Set plugin enforce: 'pre' so icon registry is provided before all components render (fixes GTIcon
+  SSR warnings)
+
+## 2.21.3
+
+### Patch Changes
+
+- Register runtime plugin via addPlugin so icon registry is provided in SSR and client. Fixes GTIcon
+  warnings about missing registry.
+
+## 2.21.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/vue@2.21.2
+
+## 2.21.1
+
+### Patch Changes
+
+- Fix @layer gt-theme wrapper being stripped from theme CSS during module build
+
+## 2.21.0
+
+### Minor Changes
+
+- Use CSS @layer to guarantee theme overrides always win over design-system defaults regardless of
+  bundle load order. Design-system CSS is wrapped in @layer gt-defaults, theme CSS in @layer
+  gt-theme.
+
+## 2.20.3
+
+### Patch Changes
+
+- Write theme CSS to node_modules/.cache/grundtone/ for reliable path resolution in Nuxt 4
+
+## 2.20.2
+
+### Patch Changes
+
+- Fix theme CSS file path resolution using absolute rootDir
+
+## 2.20.1
+
+### Patch Changes
+
+- Write theme CSS to file and inject after design-system defaults so custom properties correctly
+  override light-dark() fallbacks
+
+## 2.20.0
+
+### Minor Changes
+
+- Inject theme CSS custom properties as inline style in head during SSR/SSG so tokens are available
+  before client hydration. Supports light theme and dark mode via prefers-color-scheme media query.
+
+## 2.19.2
+
+### Patch Changes
+
+- Rebuild plugin with icon registry provider
+
+## 2.19.1
+
+### Patch Changes
+
+- Ensure icon registry is provided in Nuxt plugin for SSR
+
+## 2.19.0
+
+### Minor Changes
+
+- Add GTHeader and GTFooter organism components with transparent mode, sticky scroll, mobile menu,
+  and responsive layout.
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/vue@2.19.0
+
+## 2.18.0
+
+### Minor Changes
+
+- Auto-import formatDate, formatCurrency, formatPhoneNumber, formatCPR, generateId from
+  @grundtone/utils. Auto-provide icon registry in Nuxt plugin so GTCard nav and other icon-using
+  components work without manual setup.
+
+## 2.17.0
+
+### Minor Changes
+
+- Extend createTheme() to accept typography, radius, transitions, and spacing overrides in addition
+  to colors. Backwards-compatible — flat color overrides still work.
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/core@2.17.0
+  - @grundtone/vue@2.17.0
+  - @grundtone/design-system@2.17.0
+
+## 2.16.3
+
+### Patch Changes
+
+- Nuxt module now auto-injects SCSS preprocessor config so component style blocks can use the tokens
+  namespace. Also adds ./package.json to design-system exports.
+
+- Updated dependencies []:
+  - @grundtone/design-system@2.16.3
+  - @grundtone/vue@2.16.3
+
+## 2.16.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/vue@2.16.2
+
+## 2.16.1
+
+### Patch Changes
+
+- Fix Nuxt module to resolve @grundtone/vue via node_modules instead of relative paths. Include src/
+  in published @grundtone/vue package for Nuxt auto-imports.
+
+- Updated dependencies []:
+  - @grundtone/vue@2.16.1
+
+## 2.16.0
+
+### Minor Changes
+
+- Add GTMasonry molecule component for responsive masonry grid layouts
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/vue@2.16.0
+  - @grundtone/design-system@2.16.0
+
 ## 2.15.0
 
 ### Patch Changes

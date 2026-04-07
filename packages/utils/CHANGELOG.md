@@ -1,5 +1,12 @@
 # @grundtone/utils
 
+## 2.17.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/core@2.17.0
+
 ## 2.12.0 - 2026-03-22
 
 ### Minor Changes

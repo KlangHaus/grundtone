@@ -20,9 +20,39 @@
  * <ThemeProvider :theme="defaultTheme" />
  */
 
-import type { ShadowLayer, Theme, ThemeShadows } from './theme';
+import type {
+  ShadowLayer,
+  Theme,
+  ThemeShadows,
+  ThemeTypography,
+  ThemeRadius,
+  ThemeTransitions,
+  ThemeSpacing,
+} from './theme';
 
 export type ColorPreset = Theme['colors'];
+
+/**
+ * Overrides accepted by `createTheme()`.
+ * Every field is optional — unset fields use sensible defaults.
+ */
+export interface CreateThemeOverrides {
+  /** Semantic color overrides (light mode) */
+  colors?: Partial<ColorPreset>;
+  /** Font families, sizes, weights, and line heights */
+  typography?: DeepPartial<ThemeTypography>;
+  /** Border radius scale */
+  radius?: Partial<ThemeRadius>;
+  /** Transition durations and timing functions */
+  transitions?: DeepPartial<ThemeTransitions>;
+  /** Spacing scale */
+  spacing?: Partial<ThemeSpacing>;
+}
+
+/** Utility type for nested partial overrides. */
+type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends object ? Partial<T[P]> : T[P];
+};
 
 /**
  * Semantic color keys – all colors your app should configure.
@@ -342,38 +372,107 @@ export const defaultZIndex = {
   toast: 1080,
 } as const;
 
-function buildLightTheme(colors: Partial<ColorPreset>): Theme {
-  const c = { ...defaultColorPreset, ...colors };
+function mergeTypography(
+  base: ThemeTypography,
+  overrides?: DeepPartial<ThemeTypography>,
+): ThemeTypography {
+  if (!overrides) return { ...base };
   return {
-    mode: 'light',
+    fontFamily: { ...base.fontFamily, ...overrides.fontFamily },
+    fontSize: { ...base.fontSize, ...overrides.fontSize },
+    fontWeight: { ...base.fontWeight, ...overrides.fontWeight },
+    lineHeight: { ...base.lineHeight, ...overrides.lineHeight },
+  };
+}
+
+function mergeTransitions(
+  base: ThemeTransitions,
+  overrides?: DeepPartial<ThemeTransitions>,
+): ThemeTransitions {
+  if (!overrides) return { ...base };
+  return {
+    duration: { ...base.duration, ...overrides.duration },
+    timing: { ...base.timing, ...overrides.timing },
+  };
+}
+
+function buildTheme(
+  mode: 'light' | 'dark',
+  colorDefaults: ColorPreset,
+  overrides: CreateThemeOverrides,
+): Theme {
+  const c = { ...colorDefaults, ...overrides.colors };
+  return {
+    mode,
     colors: c as Theme['colors'],
-    spacing: { ...defaultSpacing },
-    typography: { ...defaultTypography },
+    spacing: { ...defaultSpacing, ...overrides.spacing },
+    typography: mergeTypography(defaultTypography, overrides.typography),
     shadows: { ...defaultShadows },
     shadowDefinitions: { ...defaultShadowDefinitions },
-    radius: { ...defaultRadius },
-    transitions: { ...defaultTransitions },
+    radius: { ...defaultRadius, ...overrides.radius },
+    transitions: mergeTransitions(defaultTransitions, overrides.transitions),
     zIndex: { ...defaultZIndex },
   };
 }
 
-function buildDarkTheme(colors: Partial<ColorPreset>): Theme {
-  const base = buildLightTheme(defaultColorPresetDark);
-  const c = { ...defaultColorPresetDark, ...colors };
-  return { ...base, mode: 'dark', colors: c as Theme['colors'] };
+function buildLightTheme(overrides: CreateThemeOverrides): Theme {
+  return buildTheme('light', defaultColorPreset, overrides);
+}
+
+function buildDarkTheme(overrides: CreateThemeOverrides): Theme {
+  return buildTheme('dark', defaultColorPresetDark, overrides);
 }
 
 /**
- * Create a theme with your brand colors.
- * Override only what you need – rest uses standard defaults.
+ * Create a theme with your brand identity.
+ * Override only what you need — everything else uses sensible defaults.
+ *
+ * @example
+ * // Colors only (backwards-compatible shorthand)
+ * createTheme({
+ *   light: { primary: '#996600' },
+ *   dark: { primary: '#cc9966' },
+ * })
+ *
+ * @example
+ * // Full customisation: colors, fonts, radius, transitions
+ * createTheme({
+ *   light: {
+ *     colors: { primary: '#996600' },
+ *     typography: {
+ *       fontFamily: { base: "'Poppins', sans-serif", heading: "'DM Sans', sans-serif" },
+ *     },
+ *     radius: { none: '0', xs: '0', sm: '0', md: '0', lg: '0', xl: '0', '2xl': '0', '3xl': '0', full: '9999px' },
+ *     transitions: { timing: { ease: 'cubic-bezier(0.645, 0.045, 0.355, 1)' } },
+ *   },
+ * })
  */
 export function createTheme(overrides: {
-  light?: Partial<ColorPreset>;
-  dark?: Partial<ColorPreset>;
+  light?: Partial<ColorPreset> | CreateThemeOverrides;
+  dark?: Partial<ColorPreset> | CreateThemeOverrides;
 }): { light: Theme; dark: Theme } {
+  // Detect whether overrides use the new format (has 'colors' key)
+  // or legacy format (flat color keys like 'primary')
+  function normalise(
+    input?: Partial<ColorPreset> | CreateThemeOverrides,
+  ): CreateThemeOverrides {
+    if (!input) return {};
+    if (
+      'colors' in input ||
+      'typography' in input ||
+      'radius' in input ||
+      'transitions' in input ||
+      'spacing' in input
+    ) {
+      return input as CreateThemeOverrides;
+    }
+    // Legacy: flat color overrides
+    return { colors: input as Partial<ColorPreset> };
+  }
+
   return {
-    light: buildLightTheme(overrides.light ?? {}),
-    dark: buildDarkTheme(overrides.dark ?? {}),
+    light: buildLightTheme(normalise(overrides.light)),
+    dark: buildDarkTheme(normalise(overrides.dark)),
   };
 }
 

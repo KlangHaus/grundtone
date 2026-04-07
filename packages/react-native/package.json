@@ -1,6 +1,6 @@
 {
   "name": "@grundtone/react-native",
-  "version": "2.12.0",
+  "version": "2.17.0",
   "description": "React Native theme provider and hooks for Grundtone design system",
   "license": "MIT",
   "private": false,

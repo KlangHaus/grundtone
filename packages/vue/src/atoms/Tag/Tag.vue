@@ -8,7 +8,7 @@
     value: undefined,
     icon: undefined,
     dismissible: false,
-    selected: false,
+    selected: undefined,
     size: 'md',
     disabled: false,
   });
@@ -28,6 +28,8 @@
     emit('update:selected', !props.selected);
   }
 
+  const isSelectable = computed(() => props.selected !== undefined);
+
   function handleDismiss(e: Event) {
     e.stopPropagation();
     if (props.disabled) return;
@@ -45,10 +47,10 @@
         [`${base}--disabled`]: disabled,
       },
     ]"
-    :role="selected !== undefined ? 'option' : undefined"
-    :aria-selected="selected !== undefined ? selected : undefined"
+    :role="isSelectable ? 'option' : undefined"
+    :aria-selected="isSelectable ? selected : undefined"
     :aria-disabled="disabled || undefined"
-    tabindex="0"
+    :tabindex="isSelectable || dismissible ? 0 : undefined"
     @click="handleClick"
     @keydown.enter.prevent="handleClick"
     @keydown.space.prevent="handleClick"

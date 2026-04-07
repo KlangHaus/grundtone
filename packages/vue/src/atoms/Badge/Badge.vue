@@ -34,7 +34,7 @@
     display: inline-flex;
     align-items: center;
     gap: tokens.space('xs');
-    border-radius: tokens.radius('full');
+    border-radius: tokens.radius('sm');
     font-weight: tokens.font-weight('semibold');
     letter-spacing: 0.025em;
     white-space: nowrap;

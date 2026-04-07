@@ -61,8 +61,12 @@ See [Colors](/web/colors) for the full token reference with swatches.
 
 ## `createTheme()`
 
-All packages use `createTheme()` from `@grundtone/core` to build themes. Override only the colors
-you need; everything else (spacing, typography, shadows, radius, transitions, z-index) uses defaults.
+All packages use `createTheme()` from `@grundtone/core` to build themes. Override only what you
+need — colors, typography, radius, transitions, spacing — everything else uses sensible defaults.
+
+### Colors only (simple)
+
+Pass flat color overrides directly — backwards-compatible with earlier versions:
 
 ```ts
 import { createTheme } from '@grundtone/core';
@@ -73,7 +77,6 @@ const { light, dark } = createTheme({
     primaryLight: '#3381cc',
     primaryDark: '#003a7a',
     onPrimary: '#ffffff',
-    // Override any semantic color
   },
   dark: {
     primary: '#4dabf7',
@@ -84,8 +87,63 @@ const { light, dark } = createTheme({
 });
 ```
 
+### Full customisation
+
+Use the expanded format to override any token group. Nest colors under `colors`:
+
+```ts
+import { createTheme } from '@grundtone/core';
+
+const { light, dark } = createTheme({
+  light: {
+    colors: {
+      primary: '#996600',
+      primaryDark: '#7a5200',
+      text: '#1a1a1a',
+      textSecondary: '#666666',
+    },
+    typography: {
+      fontFamily: {
+        base: "'Poppins', sans-serif",
+        heading: "'DM Sans', sans-serif",
+        mono: "'Libre Baskerville', serif",
+      },
+    },
+    radius: {
+      none: '0', xs: '0', sm: '0', md: '0',
+      lg: '0', xl: '0', '2xl': '0', '3xl': '0',
+      full: '9999px',
+    },
+    transitions: {
+      timing: {
+        ease: 'cubic-bezier(0.645, 0.045, 0.355, 1)',
+      },
+    },
+  },
+  dark: {
+    colors: {
+      primary: '#cc9966',
+    },
+  },
+});
+```
+
+### What you can override
+
+| Key | What it controls | Default |
+| --- | --- | --- |
+| `colors` | All semantic color tokens | Bootstrap-inspired palette |
+| `typography.fontFamily` | `base`, `heading`, `mono` | IBM Plex Sans / Mono |
+| `typography.fontSize` | `xs`–`5xl` scale | 0.75rem – 3rem |
+| `typography.fontWeight` | `thin`–`extrabold` | 100 – 800 |
+| `typography.lineHeight` | `none`–`loose` | 1 – 2 |
+| `radius` | `none`–`full` scale | 0 – 9999px |
+| `transitions.duration` | `fast`, `base`, `slow` | 150ms, 300ms, 500ms |
+| `transitions.timing` | `ease`, `easeIn`, `easeOut`, `easeInOut`, `linear` | Material-style curves |
+| `spacing` | `xs`–`4xl` scale | 4px – 96px (8px grid) |
+
 The returned `light` and `dark` objects are complete `Theme` instances with all token groups
-populated.
+populated. Unset fields use defaults.
 
 ---
 
@@ -122,8 +180,10 @@ React Native converts structured layers to native shadow styles via
 
 ## Non-Color Tokens
 
-The following token groups use sensible defaults. To customise them for a self-hosted fork, edit the
-corresponding export in `packages/core/src/theme-preset.ts` and rebuild:
+Typography, radius, transitions, and spacing can all be customised via `createTheme()` — see the
+[full customisation example](#full-customisation) above.
+
+For reference, the default values are exported from `@grundtone/core`:
 
 | Export                        | Controls                              |
 | ----------------------------- | ------------------------------------- |

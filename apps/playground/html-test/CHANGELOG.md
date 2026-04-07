@@ -1,5 +1,71 @@
 # @grundtone/html-test
 
+## 0.0.28
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/vue@2.21.6
+
+## 0.0.27
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/vue@2.21.5
+
+## 0.0.26
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/vue@2.21.2
+
+## 0.0.25
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/vue@2.19.0
+
+## 0.0.24
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/vue@2.17.0
+  - @grundtone/design-system@2.17.0
+
+## 0.0.23
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/design-system@2.16.3
+  - @grundtone/vue@2.16.3
+
+## 0.0.22
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/vue@2.16.2
+
+## 0.0.21
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/vue@2.16.1
+
+## 0.0.20
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/vue@2.16.0
+  - @grundtone/design-system@2.16.0
+
 ## 0.0.19
 
 ### Patch Changes

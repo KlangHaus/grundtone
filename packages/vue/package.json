@@ -1,6 +1,6 @@
 {
   "name": "@grundtone/vue",
-  "version": "2.15.0",
+  "version": "2.21.6",
   "description": "Vue 3 UI components for Grundtone",
   "license": "MIT",
   "private": false,
@@ -35,11 +35,13 @@
     "./scss/color-palette": {
       "sass": "./scss/color-palette.scss",
       "default": "./scss/color-palette.scss"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "files": [
     "dist",
-    "scss"
+    "scss",
+    "src"
   ],
   "repository": {
     "type": "git",

@@ -1,5 +1,82 @@
 # @grundtone/vue
 
+## 2.21.6
+
+### Patch Changes
+
+- a11y fixes:
+  - GTTag: only apply role="option", aria-selected, and tabindex when used in selectable context
+    (selected prop passed). Prevents "aria-required-parent" warnings when used standalone.
+  - GTSearchField: only apply role="combobox", aria-autocomplete, and aria-expanded when suggestions
+    are provided. Prevents "aria-allowed-attr" warnings when used as plain search field.
+
+## 2.21.5
+
+### Patch Changes
+
+- Use Symbol.for('gt-icon-registry') for the icon registry injection key so it's shared across
+  module instances. Fixes GTIcon warnings in Nuxt where the package is loaded both via dist/ and
+  src/ (auto-imports from src, plugin from dist).
+
+## 2.21.2
+
+### Patch Changes
+
+- Change GTBadge border-radius from radius-full (pill) to radius-sm so it respects theme radius
+  tokens. Projects with radius 0 now get sharp badges automatically.
+
+## 2.19.0
+
+### Minor Changes
+
+- Add GTHeader and GTFooter organism components with transparent mode, sticky scroll, mobile menu,
+  and responsive layout.
+
+## 2.17.0
+
+### Minor Changes
+
+- Extend createTheme() to accept typography, radius, transitions, and spacing overrides in addition
+  to colors. Backwards-compatible — flat color overrides still work.
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/core@2.17.0
+  - @grundtone/design-system@2.17.0
+  - @grundtone/utils@2.17.0
+
+## 2.16.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/design-system@2.16.3
+
+## 2.16.2
+
+### Patch Changes
+
+- Add ./package.json to exports map so Nuxt module can resolve the package root
+
+## 2.16.1
+
+### Patch Changes
+
+- Fix Nuxt module to resolve @grundtone/vue via node_modules instead of relative paths. Include src/
+  in published @grundtone/vue package for Nuxt auto-imports.
+
+## 2.16.0
+
+### Minor Changes
+
+- Add GTMasonry molecule component for responsive masonry grid layouts
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/design-system@2.16.0
+
 ## 2.15.0
 
 ### Minor Changes

@@ -26,6 +26,7 @@
     GTSlider,
     GTCarousel,
     GTCarouselSlide,
+    GTMasonry,
     GTChartContainer,
     GTChartLegend,
     GTErrorPage,
@@ -206,6 +207,7 @@
             { label: 'Error Page', href: '#pg-error' },
             { label: 'Chart', href: '#pg-chart' },
             { label: 'Carousel', href: '#pg-carousel' },
+            { label: 'Masonry', href: '#pg-masonry' },
             { label: 'Summary List', href: '#pg-summary-list' },
             { label: 'Table', href: '#pg-table' },
             { label: 'Tabs', href: '#pg-tabs' },
@@ -1022,6 +1024,37 @@
               </div>
             </GTCarouselSlide>
           </GTCarousel>
+        </section>
+
+        <section class="mb-6">
+          <h2 id="pg-masonry" style="scroll-margin-top: 1rem">Masonry</h2>
+          <GTMasonry
+            :items="[
+              {
+                title: 'Design Tokens',
+                body: 'Learn how design tokens power the system.',
+              },
+              { title: 'Typography', body: 'A short note on type.' },
+              {
+                title: 'Color System',
+                body: 'Semantic color tokens adapt to light and dark mode automatically, ensuring consistent contrast across themes.',
+              },
+              { title: 'Spacing', body: 'An 8-step scale.' },
+              {
+                title: 'Components',
+                body: 'Atoms, molecules, and organisms — a layered approach to building interfaces.',
+              },
+              { title: 'Theming', body: 'Custom themes with createTheme().' },
+            ]"
+            :gap="16"
+            :column-width="250"
+          >
+            <template #default="{ item }">
+              <GTCard :title="(item as any).title" variant="bordered">
+                <p>{{ (item as any).body }}</p>
+              </GTCard>
+            </template>
+          </GTMasonry>
         </section>
 
         <section class="mb-6">

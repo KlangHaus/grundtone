@@ -1,6 +1,6 @@
 {
   "name": "@grundtone/design-system",
-  "version": "2.15.0",
+  "version": "2.17.0",
   "description": "Design system for Grundtone - SCSS functions, mixins, CSS utilities, and grid system",
   "license": "MIT",
   "private": false,
@@ -45,7 +45,8 @@
       "import": "./dist/behaviors.js",
       "require": "./dist/behaviors.cjs"
     },
-    "./behaviors/umd": "./dist/behaviors.umd.global.js"
+    "./behaviors/umd": "./dist/behaviors.umd.global.js",
+    "./package.json": "./package.json"
   },
   "files": [
     "dist",

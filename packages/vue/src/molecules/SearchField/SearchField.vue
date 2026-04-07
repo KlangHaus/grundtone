@@ -114,8 +114,13 @@
       :value="modelValue"
       :disabled="disabled"
       autocomplete="off"
-      aria-autocomplete="list"
-      :aria-expanded="showSuggestions && hasSuggestions"
+      :role="suggestions !== undefined ? 'combobox' : undefined"
+      :aria-autocomplete="suggestions !== undefined ? 'list' : undefined"
+      :aria-expanded="
+        suggestions !== undefined
+          ? showSuggestions && hasSuggestions
+          : undefined
+      "
       @input="handleInput"
       @keydown="handleKeydown"
       @blur="handleBlur"

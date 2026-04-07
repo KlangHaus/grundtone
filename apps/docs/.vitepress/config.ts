@@ -220,6 +220,10 @@ export default defineConfig({
               text: 'Component Prefix',
               link: '/guide/prefix',
             },
+            {
+              text: 'CLAUDE.md Reference',
+              link: '/guide/claude-md',
+            },
           ],
         },
       ],
@@ -248,6 +252,7 @@ export default defineConfig({
             { text: 'Cookie Message', link: '/vue/cookie-message' },
             { text: 'Details', link: '/vue/details' },
             { text: 'Error Page', link: '/vue/error-page' },
+            { text: 'Masonry', link: '/vue/masonry' },
             { text: 'Modal', link: '/vue/modal' },
             { text: 'Overflow Menu', link: '/vue/overflow-menu' },
             { text: 'Skip Link', link: '/vue/skip-link' },

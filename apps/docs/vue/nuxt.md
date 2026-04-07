@@ -10,21 +10,39 @@ npm install -D @grundtone/nuxt
 
 ```ts
 // nuxt.config.ts
+import { createTheme } from '@grundtone/core';
+
 export default defineNuxtConfig({
   modules: ['@grundtone/nuxt'],
   grundtone: {
-    prefix: 'GT',        // Component name prefix (default)
-    components: true,     // Auto-import components (default)
-    composables: true,    // Auto-import composables (default)
+    theme: createTheme({
+      light: {
+        colors: { primary: '#996600' },
+        typography: {
+          fontFamily: {
+            base: "'Poppins', sans-serif",
+            heading: "'DM Sans', sans-serif",
+            mono: "'Libre Baskerville', serif",
+          },
+        },
+        radius: { none: '0', xs: '0', sm: '0', md: '0', lg: '0', xl: '0', '2xl': '0', '3xl': '0', full: '9999px' },
+      },
+      dark: {
+        colors: { primary: '#cc9966' },
+      },
+    }),
   },
 });
 ```
 
+See [Theme Configuration](/guide/theme-configuration) for the full list of overridable tokens.
+
 The module automatically:
 - Auto-imports all components with the configured prefix
 - Injects the design-system CSS (custom properties and component styles)
+- Configures SCSS tokens for component styles
 
-No manual CSS imports needed.
+No manual CSS imports or SCSS config needed.
 
 ## Use components
 
@@ -68,25 +86,8 @@ export default defineNuxtConfig({
 
 ## SCSS tokens in Nuxt
 
-To use design-system SCSS tokens in your own components, configure Vite in `nuxt.config.ts`:
-
-```ts
-// nuxt.config.ts
-export default defineNuxtConfig({
-  modules: ['@grundtone/nuxt'],
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: `@use "@grundtone/design-system/scss/lib" as tokens;`,
-        },
-      },
-    },
-  },
-});
-```
-
-Then use tokens in any component:
+The Nuxt module automatically injects SCSS token config — the `tokens` namespace is available in
+all component `<style lang="scss">` blocks without any manual Vite configuration:
 
 ```vue
 <style lang="scss">
