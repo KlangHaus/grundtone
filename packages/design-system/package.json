@@ -1,6 +1,6 @@
 {
   "name": "@grundtone/design-system",
-  "version": "2.17.0",
+  "version": "2.22.0",
   "description": "Design system for Grundtone - SCSS functions, mixins, CSS utilities, and grid system",
   "license": "MIT",
   "private": false,

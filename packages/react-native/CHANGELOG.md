@@ -1,5 +1,24 @@
 # @grundtone/react-native
 
+## 2.22.0
+
+### Minor Changes
+
+- Unified version 2.22.0 release:
+
+  - @grundtone/vue: TypeScript declarations now shipped in dist/types/index.d.ts (fixes TS users
+    getting 'any' types)
+  - @grundtone/vue: Re-exports createTheme, iconRegistry, and all core types — users no longer need
+    to install @grundtone/core or @grundtone/icons separately
+  - All packages: Unified version number (was split across 2.2.0, 2.17.0, 2.21.6)
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/core@2.22.0
+  - @grundtone/icons@2.22.0
+  - @grundtone/utils@2.22.0
+
 ## 2.17.0
 
 ### Patch Changes

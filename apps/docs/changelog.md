@@ -1,5 +1,15 @@
 ---
 
+## 1.0.29
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/core@2.22.0
+  - @grundtone/design-system@2.22.0
+  - @grundtone/icons@2.22.0
+  - @grundtone/vue@2.22.0
+  - @grundtone/utils@2.22.0
+
 ## 1.0.28
 ### Patch Changes
 

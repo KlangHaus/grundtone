@@ -1,6 +1,6 @@
 {
   "name": "@grundtone/vue",
-  "version": "2.21.6",
+  "version": "2.22.0",
   "description": "Vue 3 UI components for Grundtone",
   "license": "MIT",
   "private": false,
@@ -75,6 +75,7 @@
     "@vue/test-utils": "^2.4.0",
     "axe-core": "^4.10.3",
     "sass": "^1.87.0",
+    "vite-plugin-dts": "^4.5.4",
     "vitest-axe": "^0.1.0"
   }
 }

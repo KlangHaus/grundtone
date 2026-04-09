@@ -228,3 +228,22 @@ export { GTHeader } from './organisms/Header';
 export type { HeaderProps, HeaderNavItem } from './organisms/Header';
 export { GTFooter } from './organisms/Footer';
 export type { FooterProps, FooterNavItem } from './organisms/Footer';
+
+// Re-export from @grundtone/core — so users don't need to install it separately
+export { createTheme } from '@grundtone/core';
+export type {
+  Theme,
+  ThemeConfig,
+  ThemeColors,
+  ThemeTypography,
+  ThemeRadius,
+  ThemeTransitions,
+  ThemeSpacing,
+  ThemeShadows,
+  ThemeMode,
+} from '@grundtone/core';
+export type { CreateThemeOverrides } from '@grundtone/core';
+
+// Re-export from @grundtone/icons — so users don't need to install it separately
+export { iconRegistry } from '@grundtone/icons';
+export type { IconDefinition, IconRegistry } from '@grundtone/core';
