@@ -296,6 +296,8 @@ export default defineConfig({
             { text: 'useField', link: '/vue/use-field' },
             { text: 'useDateField', link: '/vue/use-date-field' },
             { text: 'useFormValidation', link: '/vue/use-form-validation' },
+            { text: 'useToast', link: '/vue/use-toast' },
+            { text: 'useDawaAutocomplete', link: '/vue/use-dawa-autocomplete' },
           ],
         },
       ],

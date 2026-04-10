@@ -1,4 +1,4 @@
----
+# Changelog
 
 ## 1.0.29
 ### Patch Changes

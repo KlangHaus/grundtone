@@ -10,3 +10,5 @@ All composables and validators are available from `@grundtone/vue`. In Nuxt, com
 | [useField](/vue/use-field) | Field state with validation |
 | [useDateField](/vue/use-date-field) | Date field state with validation (for GTDateInput) |
 | [useFormValidation](/vue/use-form-validation) | Form-level validation aggregator |
+| [useToast](/vue/use-toast) | Imperative toast notifications |
+| [useDawaAutocomplete](/vue/use-dawa-autocomplete) | Danish address autocomplete (DAWA API) |
