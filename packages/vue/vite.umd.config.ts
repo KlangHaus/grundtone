@@ -25,7 +25,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/index-umd.ts'),
       name: 'GrundtoneUI',
-      fileName: 'index',
+      fileName: () => 'index.umd.js',
       formats: ['umd'],
     },
     cssCodeSplit: false,

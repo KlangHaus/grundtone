@@ -25,4 +25,13 @@ for (const { src, dest } of copies) {
   }
 }
 
+// Rename UMD CSS output (vue.css → index.css) so the ./css export works
+const vueCss = resolve(__dirname, '../dist/vue.css');
+const indexCss = resolve(__dirname, '../dist/index.css');
+if (existsSync(vueCss)) {
+  cpSync(vueCss, indexCss);
+  const { unlinkSync } = await import('node:fs');
+  unlinkSync(vueCss);
+}
+
 console.log(`✓ Copied bundles (${(total / 1024).toFixed(1)} KB)`);
