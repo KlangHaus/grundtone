@@ -73,6 +73,19 @@ export default defineNuxtModule<ModuleOptions>({
     const vuePkgPath = require_.resolve('@grundtone/vue/package.json');
     const vueRoot = dirname(vuePkgPath);
 
+    // Ensure Vite processes @grundtone/vue during SSR instead of letting Node
+    // try to load .css imports directly (which fails with ERR_UNKNOWN_FILE_EXTENSION).
+    nuxt.options.vite = nuxt.options.vite || {};
+    nuxt.options.vite.ssr = nuxt.options.vite.ssr || {};
+    const noExternal = nuxt.options.vite.ssr.noExternal;
+    if (Array.isArray(noExternal)) {
+      noExternal.push('@grundtone/vue');
+    } else if (noExternal instanceof RegExp || typeof noExternal === 'string') {
+      nuxt.options.vite.ssr.noExternal = [noExternal, '@grundtone/vue'];
+    } else {
+      nuxt.options.vite.ssr.noExternal = ['@grundtone/vue'];
+    }
+
     // Cache dir for generated CSS files (theme overrides).
     // Component CSS is auto-imported via ESM side effects — no manual injection.
     const cacheDir = join(
