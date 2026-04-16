@@ -1,5 +1,11 @@
 # @grundtone/vue
 
+## 2.23.2
+
+### Patch Changes
+
+- fix: rename UMD bundle from .cjs to .js for CDN MIME compatibility
+
 ## 2.23.0
 
 ### Minor Changes

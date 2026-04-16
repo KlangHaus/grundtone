@@ -1,7 +1,7 @@
 {
   "name": "@grundtone/html-test",
   "private": true,
-  "version": "0.0.30",
+  "version": "0.0.31",
   "scripts": {
     "dev": "npx serve . --symlinks"
   },

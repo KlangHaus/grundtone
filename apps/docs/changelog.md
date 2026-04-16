@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.31
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/vue@2.23.2
+
 ## 1.0.30
 
 ### Patch Changes
