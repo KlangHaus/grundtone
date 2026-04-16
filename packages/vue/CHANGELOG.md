@@ -1,5 +1,23 @@
 # @grundtone/vue
 
+## 2.23.0
+
+### Minor Changes
+
+- feat: auto CSS per component — zero-config tree-shaking
+
+  Each Grundtone component now imports its own CSS automatically. Just import components — CSS
+  follows. Unused components are tree-shaken from both JS and CSS.
+
+  - `@grundtone/vue/css` unchanged — full bundle for CDN/legacy
+  - `@grundtone/vue/css/utilities` new — opt-in utility classes
+  - `@grundtone/nuxt` no longer injects CSS bundle — relies on Vite side-effect imports
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/design-system@2.23.0
+
 ## 2.22.0
 
 ### Minor Changes

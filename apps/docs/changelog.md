@@ -1,6 +1,15 @@
 # Changelog
 
+## 1.0.30
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/design-system@2.23.0
+  - @grundtone/vue@2.23.0
+
 ## 1.0.29
+
 ### Patch Changes
 
 - Updated dependencies []:
@@ -11,30 +20,35 @@
   - @grundtone/utils@2.22.0
 
 ## 1.0.28
+
 ### Patch Changes
 
 - Updated dependencies []:
   - @grundtone/vue@2.21.6
 
 ## 1.0.27
+
 ### Patch Changes
 
 - Updated dependencies []:
   - @grundtone/vue@2.21.5
 
 ## 1.0.26
+
 ### Patch Changes
 
 - Updated dependencies []:
   - @grundtone/vue@2.21.2
 
 ## 1.0.25
+
 ### Patch Changes
 
 - Updated dependencies []:
   - @grundtone/vue@2.19.0
 
 ## 1.0.24
+
 ### Patch Changes
 
 - Updated dependencies []:
@@ -44,6 +58,7 @@
   - @grundtone/utils@2.17.0
 
 ## 1.0.23
+
 ### Patch Changes
 
 - Updated dependencies []:
@@ -51,24 +66,27 @@
   - @grundtone/vue@2.16.3
 
 ## 1.0.22
+
 ### Patch Changes
 
 - Updated dependencies []:
   - @grundtone/vue@2.16.2
 
 ## 1.0.21
+
 ### Patch Changes
 
 - Updated dependencies []:
   - @grundtone/vue@2.16.1
 
 ## 1.0.20
+
 ### Patch Changes
 
 - Updated dependencies []:
   - @grundtone/vue@2.16.0
-  - @grundtone/design-system@2.16.0
-outline: [2, 3]
+  - @grundtone/design-system@2.16.0 outline: [2, 3]
+
 ---
 
 ## 1.0.19
