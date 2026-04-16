@@ -4,8 +4,9 @@
  * Vue 3 component library for the Grundtone design system.
  */
 
-// Design system tokens (CSS custom properties) — bundled into dist/index.css
-import '@grundtone/design-system/dist/index.css';
+// Base styles (element resets, .sr-only, .gt-icon sizing).
+// Always included when any component is imported.
+import './base.scss';
 
 // Atoms
 export { GTBackLink } from './atoms/BackLink';

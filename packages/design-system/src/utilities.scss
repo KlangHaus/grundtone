@@ -1,0 +1,48 @@
+// Utility classes bundle — spacing, display, flex, grid, text, colors, etc.
+//
+// Use this alongside `base.css` + cherry-picked components when your project
+// uses Grundtone utility classes in templates (`.flex`, `.grid-cols-3`,
+// `.text-lg`, `.m-4`, etc.) but you don't want the full 335 KB bundle.
+//
+// Build output: dist/utilities.css
+//
+// Usage:
+//   import '@grundtone/vue/css/base';
+//   import '@grundtone/vue/css/utilities';
+//   import '@grundtone/vue/css/components/button';
+
+@use 'core/breakpoints-defaults' as bp-def;
+
+$grid-breakpoints: bp-def.$grid-breakpoints-default !default;
+
+// Grid must be loaded first with configuration before other utilities load
+// core/breakpoints without configuration.
+@use 'utilities/grid' with (
+  $grid-breakpoints-config: $grid-breakpoints
+);
+@use 'utilities/display';
+@use 'utilities/alignment';
+@use 'utilities/order';
+@use 'utilities/spacing';
+@use 'utilities/containers';
+@use 'utilities/container-queries';
+@use 'utilities/aspect-ratio';
+@use 'utilities/z-index';
+@use 'utilities/position';
+@use 'utilities/background';
+@use 'utilities/text-align';
+@use 'utilities/border';
+@use 'utilities/rounded';
+@use 'utilities/overflow';
+@use 'utilities/width';
+@use 'utilities/sizing';
+@use 'utilities/text-color';
+@use 'utilities/typography';
+@use 'utilities/text-decoration';
+@use 'utilities/text-transform';
+@use 'utilities/letter-spacing';
+@use 'utilities/opacity';
+@use 'utilities/interactivity';
+@use 'utilities/transition';
+@use 'utilities/shadow';
+@use 'utilities/accessibility';

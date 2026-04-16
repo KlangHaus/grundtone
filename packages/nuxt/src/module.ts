@@ -73,7 +73,8 @@ export default defineNuxtModule<ModuleOptions>({
     const vuePkgPath = require_.resolve('@grundtone/vue/package.json');
     const vueRoot = dirname(vuePkgPath);
 
-    // Inject design-system CSS wrapped in @layer so theme overrides always win
+    // Cache dir for generated CSS files (theme overrides).
+    // Component CSS is auto-imported via ESM side effects — no manual injection.
     const cacheDir = join(
       nuxt.options.rootDir,
       'node_modules',
@@ -81,12 +82,6 @@ export default defineNuxtModule<ModuleOptions>({
       'grundtone',
     );
     mkdirSync(cacheDir, { recursive: true });
-    const layeredCSSPath = join(cacheDir, 'design-system.css');
-    writeFileSync(
-      layeredCSSPath,
-      `@layer gt-defaults, gt-theme;\n@import "${join(vueRoot, 'dist/index.css').replace(/\\/g, '/')}" layer(gt-defaults);\n`,
-    );
-    nuxt.options.css.push(layeredCSSPath);
 
     // Resolve @grundtone/design-system for SCSS token imports
     const dsPkgPath = require_.resolve('@grundtone/design-system/package.json');

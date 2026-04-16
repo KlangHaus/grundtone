@@ -8,6 +8,10 @@
   "main": "./dist/index.umd.cjs",
   "module": "./dist/index.js",
   "types": "./dist/types/index.d.ts",
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss"
+  ],
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
@@ -15,7 +19,7 @@
       "require": "./dist/index.umd.cjs"
     },
     "./css": "./dist/index.css",
-    "./dist/style.css": "./dist/index.css",
+    "./css/utilities": "./dist/utilities.css",
     "./scss": {
       "sass": "./scss/index.scss",
       "default": "./scss/index.scss"
@@ -23,18 +27,6 @@
     "./scss/lib": {
       "sass": "./scss/lib.scss",
       "default": "./scss/lib.scss"
-    },
-    "./scss/breakpoints": {
-      "sass": "./scss/breakpoints.scss",
-      "default": "./scss/breakpoints.scss"
-    },
-    "./scss/colors": {
-      "sass": "./scss/colors.scss",
-      "default": "./scss/colors.scss"
-    },
-    "./scss/color-palette": {
-      "sass": "./scss/color-palette.scss",
-      "default": "./scss/color-palette.scss"
     },
     "./package.json": "./package.json"
   },
@@ -53,7 +45,7 @@
   },
   "scripts": {
     "lint": "eslint src",
-    "build": "vite build",
+    "build": "vite build && node scripts/inject-css-imports.mjs && vite build --config vite.umd.config.ts && node scripts/copy-bundles.mjs",
     "dev": "vite build --watch",
     "clean": "rm -rf .turbo node_modules dist",
     "test": "vitest",
