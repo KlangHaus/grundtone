@@ -1,5 +1,11 @@
 # @grundtone/nuxt
 
+## 2.23.1
+
+### Patch Changes
+
+- fix: add @grundtone/vue to vite.ssr.noExternal so CSS side-effect imports work during SSR
+
 ## 2.23.0
 
 ### Minor Changes
