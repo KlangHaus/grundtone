@@ -1,5 +1,12 @@
 # @grundtone/nuxt
 
+## 2.23.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @grundtone/vue@2.23.3
+
 ## 2.23.2
 
 ### Patch Changes

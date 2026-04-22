@@ -1,5 +1,11 @@
 # @grundtone/vue
 
+## 2.23.3
+
+### Patch Changes
+
+- fix: disable ESM minification to prevent 'h' variable collision in consumer Rollup builds
+
 ## 2.23.2
 
 ### Patch Changes
