@@ -1,10 +1,12 @@
-# Nuxt 3 Installation
+# Nuxt Installation
 
-Install the Nuxt module — it pulls in `@grundtone/vue`, `@grundtone/design-system`, and all dependencies automatically:
+Install the Nuxt module:
 
 ```bash
-npm install -D @grundtone/nuxt
+npm install @grundtone/nuxt
 ```
+
+That's it. The module pulls in `@grundtone/vue` and all dependencies automatically.
 
 ## Module configuration
 
@@ -22,10 +24,8 @@ export default defineNuxtConfig({
           fontFamily: {
             base: "'Poppins', sans-serif",
             heading: "'DM Sans', sans-serif",
-            mono: "'Libre Baskerville', serif",
           },
         },
-        radius: { none: '0', xs: '0', sm: '0', md: '0', lg: '0', xl: '0', '2xl': '0', '3xl': '0', full: '9999px' },
       },
       dark: {
         colors: { primary: '#cc9966' },
@@ -35,59 +35,44 @@ export default defineNuxtConfig({
 });
 ```
 
-See [Theme Configuration](/guide/theme-configuration) for the full list of overridable tokens.
-
-The module automatically:
-- Auto-imports all components with the configured prefix
-- Injects the design-system CSS (custom properties and component styles)
-- Configures SCSS tokens for component styles
-
-No manual CSS imports or SCSS config needed.
+See [Theme Configuration](/guide/theme-configuration) for all available tokens.
 
 ## Use components
 
-Components are auto-imported with the configured prefix — no import statements needed:
+Components are auto-imported — no import statements needed:
 
 ```vue
 <template>
   <GTButton variant="primary">Submit</GTButton>
-  <GTButton variant="outlined" rounded="full">Cancel</GTButton>
+  <GTCard title="My card" variant="raised">
+    <p>Card content</p>
+  </GTCard>
 </template>
 ```
 
-## Options
+## How CSS works
 
-| Option | Type | Default | Description |
-| --- | --- | --- | --- |
-| `prefix` | `string` | `'GT'` | Component name prefix |
-| `components` | `boolean` | `true` | Auto-import components |
-| `composables` | `boolean` | `true` | Auto-import composables |
-| `theme` | `object` | `undefined` | Theme configuration |
+Component CSS is auto-imported via ESM side effects. When Nuxt auto-imports `GTButton`, the button's CSS follows automatically. Unused components are tree-shaken from both JS and CSS.
 
-## Remove prefix
+No manual CSS imports needed for components.
 
-Set `prefix: ''` to use component names directly:
+## Utility classes (optional)
+
+If your templates use Grundtone utility classes (`.flex`, `.grid-cols-3`, `.m-4`, etc.), add the utilities bundle to your CSS:
 
 ```ts
 // nuxt.config.ts
 export default defineNuxtConfig({
-  modules: ['@grundtone/nuxt'],
-  grundtone: {
-    prefix: '',
-  },
+  css: [
+    '@grundtone/vue/css/utilities',
+    '~/assets/scss/global.scss',
+  ],
 });
 ```
 
-```vue
-<template>
-  <Button variant="primary">Submit</Button>
-</template>
-```
+## SCSS tokens
 
-## SCSS tokens in Nuxt
-
-The Nuxt module automatically injects SCSS token config — the `tokens` namespace is available in
-all component `<style lang="scss">` blocks without any manual Vite configuration:
+The module automatically injects SCSS token config. The `tokens` namespace is available in all `<style lang="scss">` blocks without any manual Vite configuration:
 
 ```vue
 <style lang="scss">
@@ -95,19 +80,23 @@ all component `<style lang="scss">` blocks without any manual Vite configuration
   background: tokens.color('surface');
   padding: tokens.space('md');
   border-radius: tokens.radius('lg');
-  box-shadow: tokens.shadow('sm');
 }
 </style>
 ```
 
+## Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `prefix` | `string` | `'GT'` | Component name prefix |
+| `components` | `boolean` | `true` | Auto-import components |
+| `composables` | `boolean` | `true` | Auto-import composables |
+| `theme` | `object` | `undefined` | Theme configuration via `createTheme()` |
+
 ## What gets auto-imported
 
-The Nuxt module scans these directories from `@grundtone/vue`:
+**Components:** All atoms, molecules, and organisms from `@grundtone/vue` with the configured prefix.
 
-- `atoms/` — Basic components (Button, etc.)
-- `molecules/` — Component combinations
-- `organisms/` — Complex components
+**Composables:** `useTheme`, `useField`, `useDateField`, `useFormValidation`, `useDawaAutocomplete`, `useToast`.
 
-Only components (PascalCase `.vue` files) are imported. Demo files and utilities are excluded.
-
-Composables from `@grundtone/vue/composables` are also auto-imported when `composables: true`.
+**Validators:** `required`, `email`, `phone`, `cpr`, `cvr`, `date`, `datePast`, `dateFuture`, `minLength`, `maxLength`, `pattern`, `url`, `composeValidators`.

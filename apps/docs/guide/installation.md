@@ -1,114 +1,47 @@
 # Installation
 
-Step-by-step setup for each framework.
-
----
-
 ## Vue 3
 
-### Step 1: Install packages
-
 ```bash
-pnpm add @grundtone/vue @grundtone/core
-# or
-npm install @grundtone/vue @grundtone/core
+npm install @grundtone/vue
 ```
 
-### Step 2: Import CSS
-
-In your app entry (e.g. `main.ts`):
-
-```ts
-import '@grundtone/vue/dist/style.css';
-```
-
-### Step 3: Configure Vite for SCSS (optional)
-
-If you use design tokens in your own SCSS, add to `vite.config.ts`:
-
-```ts
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-
-export default defineConfig({
-  plugins: [vue()],
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: `@use '@grundtone/design-system' as tokens;`,
-      },
-    },
-  },
-});
-```
-
-### Step 4: Wrap app with ThemeProvider
-
-Add theme customization via the `theme` prop. Configure both light and dark themes – see
-[Theme Configuration](/guide/theme-configuration#vue-3).
+Import components — CSS follows automatically:
 
 ```vue
-<!-- App.vue -->
-<template>
-  <ThemeProvider :theme="themeConfig" mode="auto">
-    <RouterView />
-  </ThemeProvider>
-</template>
-
-<script setup lang="ts">
-  import { ThemeProvider } from '@grundtone/vue';
-  import { createTheme } from '@grundtone/core';
-
-  const { light, dark } = createTheme({
-    light: { primary: '#0059b3', primaryLight: '#3381cc', onPrimary: '#ffffff' },
-    dark: { primary: '#4dabf7', primaryLight: '#74c0fc', onPrimary: '#121212' },
-  });
-
-  const themeConfig = {
-    light: { colors: light.colors },
-    dark: { colors: dark.colors },
-  };
-</script>
-```
-
-### Step 5: Use components and utilities
-
-```vue
-<template>
-  <GrundtoneButton>Click me</GrundtoneButton>
-</template>
-```
-
-Grid and other utilities are available – see [Grid Utility](/web/grid-utility).
-
-Or import explicitly:
-
-```vue
-<script setup lang="ts">
-  import { Button } from '@grundtone/vue';
+<script setup>
+import { GTButton } from '@grundtone/vue';
 </script>
 
 <template>
-  <Button>Click me</Button>
+  <GTButton variant="primary">Click me</GTButton>
 </template>
 ```
+
+Apply your theme at startup:
+
+```ts
+// main.ts
+import { createApp } from 'vue';
+import { applyThemeToDOM, createTheme } from '@grundtone/vue';
+import App from './App.vue';
+
+applyThemeToDOM(createTheme({
+  light: { colors: { primary: '#0059b3' } },
+}).light);
+
+createApp(App).mount('#app');
+```
+
+See the full [Vue 3 guide](/vue/installation) for icons, SCSS tokens, and utility classes.
 
 ---
 
-## Nuxt 3
-
-### Step 1: Install the module
+## Nuxt
 
 ```bash
-pnpm add -D @grundtone/nuxt
-# or
-npm install -D @grundtone/nuxt
+npm install @grundtone/nuxt
 ```
-
-### Step 2: Add module to Nuxt config
-
-Configure your brand colors with `createTheme()` – see
-[Theme Configuration](/guide/theme-configuration#nuxt-3) for all options.
 
 ```ts
 // nuxt.config.ts
@@ -118,178 +51,128 @@ export default defineNuxtConfig({
   modules: ['@grundtone/nuxt'],
   grundtone: {
     theme: createTheme({
-      light: {
-        primary: '#0059b3',
-        primaryLight: '#3381cc',
-        primaryDark: '#003a7a',
-      },
-      dark: {
-        primary: '#4dabf7',
-        primaryLight: '#74c0fc',
-        primaryDark: '#339af0',
-      },
+      light: { colors: { primary: '#0059b3' } },
     }),
-    components: true,
-    composables: true,
-    prefix: 'Grundtone',
   },
 });
 ```
 
-### Step 3: Use components and utilities
-
-Components and composables are auto-imported. Grid utilities are included – see
-[Grid Utility](/web/grid-utility).
+Components and composables are auto-imported. CSS follows automatically.
 
 ```vue
 <template>
-  <GrundtoneButton>Click me</GrundtoneButton>
+  <GTButton variant="primary">Click me</GTButton>
 </template>
+```
+
+See the full [Nuxt guide](/vue/nuxt) for utility classes and SCSS tokens.
+
+---
+
+## CDN
+
+For use without a bundler:
+
+```html
+<!-- CSS -->
+<link rel="stylesheet" href="https://unpkg.com/@grundtone/vue/dist/index.css">
+
+<!-- Vue 3 -->
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<!-- Grundtone -->
+<script src="https://unpkg.com/@grundtone/vue/dist/index.umd.cjs"></script>
+```
+
+```html
+<div id="app">
+  <gt-button variant="primary">Click me</gt-button>
+</div>
+
+<script>
+const { createApp } = Vue;
+const { GTButton } = GrundtoneUI;
+
+createApp({
+  components: { 'gt-button': GTButton }
+}).mount('#app');
+</script>
+```
+
+The CDN build includes all components and the full CSS bundle (~335 KB). For production, use the npm package — it tree-shakes automatically.
+
+Also available on **jsdelivr**:
+
+```
+https://cdn.jsdelivr.net/npm/@grundtone/vue/dist/index.css
+https://cdn.jsdelivr.net/npm/@grundtone/vue/dist/index.umd.cjs
 ```
 
 ---
 
 ## React Native
 
-### Step 1: Install packages
-
 ```bash
-pnpm add @grundtone/react-native @grundtone/core
-# or
 npm install @grundtone/react-native @grundtone/core
 ```
 
-### Step 2: Create theme
-
-Use `createTheme()` to set your brand colors – see
-[Theme Configuration](/guide/theme-configuration#react-native) for all semantic color keys.
-
 ```tsx
-// theme.ts
+import { GrundtoneThemeProvider } from '@grundtone/react-native';
 import { createTheme } from '@grundtone/core';
 
-export const { light, dark } = createTheme({
-  light: {
-    primary: '#007aff',
-    background: '#ffffff',
-    text: '#1c1c1e',
-    // Override only what you need
-  },
-  dark: {
-    primary: '#0a84ff',
-    background: '#000000',
-    text: '#ffffff',
-  },
+const theme = createTheme({
+  light: { colors: { primary: '#007aff' } },
+  dark: { colors: { primary: '#0a84ff' } },
 });
-```
-
-### Step 3: Wrap app with GrundtoneThemeProvider
-
-```tsx
-// App.tsx
-import { GrundtoneThemeProvider } from '@grundtone/react-native';
-import { light, dark } from './theme';
 
 export default function App() {
   return (
-    <GrundtoneThemeProvider light={light} dark={dark}>
+    <GrundtoneThemeProvider light={theme.light} dark={theme.dark}>
       <RootNavigator />
     </GrundtoneThemeProvider>
   );
 }
 ```
 
-### Step 4: Use theme in components
-
-```tsx
-import { StyleSheet, View, Text } from 'react-native';
-import { useGrundtoneTheme } from '@grundtone/react-native';
-
-function MyScreen() {
-  const { theme } = useGrundtoneTheme();
-
-  return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <Text style={{ color: theme.colors.text }}>Hello</Text>
-      <View style={[styles.button, { backgroundColor: theme.colors.primary }]}>
-        <Text style={{ color: theme.colors.onPrimary }}>Submit</Text>
-      </View>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16 },
-  button: { padding: 12, borderRadius: 8 },
-});
-```
-
 ---
 
-## Plain Web (no framework)
+## Plain HTML + CSS
 
-Use design tokens only: CSS variables and SCSS. No Vue or React components.
-
-### Step 1: Install
+For using design tokens without a framework:
 
 ```bash
-pnpm add @grundtone/design-system @grundtone/core
-# or
-npm install @grundtone/design-system @grundtone/core
+npm install @grundtone/design-system
 ```
-
-### Step 2: Import CSS
 
 ```html
-<link rel="stylesheet" href="node_modules/@grundtone/design-system/dist/index.css" />
+<link rel="stylesheet" href="node_modules/@grundtone/design-system/dist/index.css">
 ```
 
-Or with a bundler (Vite, webpack):
+Or via CDN:
 
-```ts
-import '@grundtone/design-system/dist/index.css';
+```html
+<link rel="stylesheet" href="https://unpkg.com/@grundtone/design-system/dist/index.css">
 ```
 
-### Step 3: Use CSS variables
-
-Override colors in `:root` to match your brand – see
-[Theme Configuration](/guide/theme-configuration#plain-web-no-framework).
+Use CSS custom properties directly:
 
 ```css
 .button {
-  background-color: var(--color-primary);
+  background: var(--color-primary);
   color: var(--color-on-primary);
   padding: var(--space-md);
   border-radius: var(--radius-md);
 }
 ```
 
-### Step 4: Use SCSS and grid (optional)
-
-```scss
-@use '@grundtone/design-system' as tokens;
-
-.card {
-  padding: tokens.space('md');
-  background-color: tokens.color('surface');
-  box-shadow: tokens.shadow('md');
-}
-```
-
-For grid layouts, use the utility classes – see [Grid Utility](/web/grid-utility).
-
 ---
-
-## Next Step
-
-After installing, see [Theme Configuration](/guide/theme-configuration) to customize colors for your
-brand.
 
 ## Summary
 
-| Framework    | Packages            | Theme setup                          |
-| ------------ | ------------------- | ------------------------------------ |
-| Vue 3        | vue, core           | ThemeProvider in App.vue             |
-| Nuxt 3       | nuxt (dev)          | grundtone.theme in nuxt.config.ts    |
-| React Native | react-native, core  | GrundtoneThemeProvider + createTheme |
-| Plain Web    | design-system, core | Import CSS, use CSS vars or SCSS     |
+| Framework | Package | CSS | Theme |
+|-----------|---------|-----|-------|
+| Vue 3 | `@grundtone/vue` | Automatic (per component) | `applyThemeToDOM(createTheme(...))` |
+| Nuxt | `@grundtone/nuxt` | Automatic (per component) | `grundtone.theme` in nuxt.config.ts |
+| React Native | `@grundtone/react-native` + `@grundtone/core` | N/A | `GrundtoneThemeProvider` |
+| Plain HTML | `@grundtone/design-system` | Manual `<link>` | CSS custom properties |
+| CDN | — | `unpkg.com/@grundtone/vue/dist/index.css` | — |

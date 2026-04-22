@@ -300,6 +300,10 @@ export default defineConfig({
             { text: 'useDawaAutocomplete', link: '/vue/use-dawa-autocomplete' },
           ],
         },
+        {
+          text: 'Optimization',
+          items: [{ text: 'Tree-shaking & CSS', link: '/vue/tree-shaking' }],
+        },
       ],
       '/icons/': [
         {

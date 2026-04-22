@@ -1,6 +1,6 @@
 {
   "name": "@grundtone/design-system",
-  "version": "2.22.0",
+  "version": "2.23.0",
   "description": "Design system for Grundtone - SCSS functions, mixins, CSS utilities, and grid system",
   "license": "MIT",
   "private": false,
@@ -15,6 +15,8 @@
       "require": "./dist/index.cjs"
     },
     "./dist/index.css": "./dist/index.css",
+    "./css": "./dist/index.css",
+    "./css/utilities": "./dist/utilities.css",
     "./scss": {
       "sass": "./src/index.scss",
       "default": "./src/index.scss"
@@ -63,7 +65,7 @@
   "scripts": {
     "lint": "eslint src scripts",
     "generate:tokens": "tsx scripts/generate-token-defaults.ts",
-    "build": "pnpm generate:tokens && tsup && sass --silence-deprecation=if-function src/index.scss dist/index.css",
+    "build": "pnpm generate:tokens && tsup && sass --no-source-map --silence-deprecation=if-function src/index.scss dist/index.css && sass --no-source-map --silence-deprecation=if-function src/utilities.scss dist/utilities.css",
     "dev": "tsup --watch",
     "clean": "rm -rf .turbo node_modules dist",
     "prepublishOnly": "test -d dist || pnpm run build"

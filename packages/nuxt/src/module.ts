@@ -73,7 +73,21 @@ export default defineNuxtModule<ModuleOptions>({
     const vuePkgPath = require_.resolve('@grundtone/vue/package.json');
     const vueRoot = dirname(vuePkgPath);
 
-    // Inject design-system CSS wrapped in @layer so theme overrides always win
+    // Ensure Vite processes @grundtone/vue during SSR instead of letting Node
+    // try to load .css imports directly (which fails with ERR_UNKNOWN_FILE_EXTENSION).
+    nuxt.options.vite = nuxt.options.vite || {};
+    nuxt.options.vite.ssr = nuxt.options.vite.ssr || {};
+    const noExternal = nuxt.options.vite.ssr.noExternal;
+    if (Array.isArray(noExternal)) {
+      noExternal.push('@grundtone/vue');
+    } else if (noExternal instanceof RegExp || typeof noExternal === 'string') {
+      nuxt.options.vite.ssr.noExternal = [noExternal, '@grundtone/vue'];
+    } else {
+      nuxt.options.vite.ssr.noExternal = ['@grundtone/vue'];
+    }
+
+    // Cache dir for generated CSS files (theme overrides).
+    // Component CSS is auto-imported via ESM side effects — no manual injection.
     const cacheDir = join(
       nuxt.options.rootDir,
       'node_modules',
@@ -81,12 +95,6 @@ export default defineNuxtModule<ModuleOptions>({
       'grundtone',
     );
     mkdirSync(cacheDir, { recursive: true });
-    const layeredCSSPath = join(cacheDir, 'design-system.css');
-    writeFileSync(
-      layeredCSSPath,
-      `@layer gt-defaults, gt-theme;\n@import "${join(vueRoot, 'dist/index.css').replace(/\\/g, '/')}" layer(gt-defaults);\n`,
-    );
-    nuxt.options.css.push(layeredCSSPath);
 
     // Resolve @grundtone/design-system for SCSS token imports
     const dsPkgPath = require_.resolve('@grundtone/design-system/package.json');

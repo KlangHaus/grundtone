@@ -1,0 +1,17 @@
+// Base styles — auto-imported when any Grundtone component is used.
+// Contains element resets, accessibility utilities.
+
+@use '../../design-system/src/elements/box-sizing';
+@use '../../design-system/src/elements/body';
+@use '../../design-system/src/elements/headings';
+@use '../../design-system/src/elements/hgroup';
+@use '../../design-system/src/elements/blockquote';
+@use '../../design-system/src/elements/button';
+@use '../../design-system/src/elements/input' as element-input;
+@use '../../design-system/src/elements/list';
+@use '../../design-system/src/elements/dl';
+@use '../../design-system/src/elements/hr';
+@use '../../design-system/src/elements/address';
+@use '../../design-system/src/elements/header' as element-header;
+@use '../../design-system/src/elements/footer' as element-footer;
+@use '../../design-system/src/utilities/accessibility';
