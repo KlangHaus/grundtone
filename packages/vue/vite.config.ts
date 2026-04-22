@@ -38,12 +38,16 @@ export default defineConfig({
       formats: ['es'],
     },
     cssCodeSplit: true,
+    minify: false,
     rollupOptions: {
       external,
       output: {
         preserveModules: true,
         preserveModulesRoot: 'src',
         entryFileNames: '[name].js',
+        // Prevent short variable names (like `h`) that conflict with Vue's
+        // `h` function when consumers bundle with Rollup/Vite.
+        minifyInternalExports: false,
       },
     },
   },
