@@ -1,0 +1,68 @@
+import { describe, it, expect } from 'vitest';
+import {
+  defineTemplate,
+  compileTemplate,
+  renderTemplate,
+  renderEmail,
+} from './template';
+
+const demo = defineTemplate({
+  key: 'demo',
+  variables: ['name', 'url'],
+  locales: {
+    en: {
+      subject: 'Hi {{name}}',
+      preheader: 'Preview',
+      build: b => ({
+        content:
+          b.heading({ text: 'Hi {{name}}' }) +
+          b.button({ label: 'Open', href: '{{url}}' }),
+      }),
+    },
+  },
+});
+
+describe('compileTemplate', () => {
+  it('returns the publishable artifact with placeholders intact', () => {
+    const c = compileTemplate(demo, 'en', {
+      mjml: { validationLevel: 'strict' },
+    });
+    expect(c.errors).toEqual([]);
+    expect(c.subject).toBe('Hi {{name}}');
+    expect(c.html).toContain('{{name}}');
+    expect(c.html).toContain('{{url}}');
+    expect(c.variables).toEqual(['name', 'url']);
+  });
+
+  it('throws on an unknown locale', () => {
+    // @ts-expect-error — 'da' is not a locale of demo
+    expect(() => compileTemplate(demo, 'da')).toThrow(/no locale/);
+  });
+});
+
+describe('renderTemplate', () => {
+  const compiled = compileTemplate(demo, 'en');
+
+  it('fills placeholders and HTML-escapes recipient data in the body', () => {
+    const r = renderTemplate(compiled, {
+      name: "O'Brien & Co",
+      url: 'https://x/a',
+    });
+    expect(r.html).not.toContain('{{');
+    expect(r.html).toMatch(/O(&#x27;|&#39;)Brien &amp; Co/);
+  });
+
+  it('does not HTML-escape the subject', () => {
+    const r = renderTemplate(compiled, { name: 'A & B' });
+    expect(r.subject).toBe('Hi A & B');
+  });
+});
+
+describe('renderEmail', () => {
+  it('compiles and renders in one step', () => {
+    const r = renderEmail(demo, 'en', { name: 'Allan', url: 'https://x/a' });
+    expect(r.subject).toBe('Hi Allan');
+    expect(r.html).toContain('Allan');
+    expect(r.text).toContain('Allan');
+  });
+});

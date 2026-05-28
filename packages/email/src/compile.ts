@@ -71,7 +71,7 @@ export function toPlainText(
   html: string,
   options: PlainTextOptions = {},
 ): string {
-  return convert(html, {
+  const out = convert(html, {
     wordwrap: options.wordwrap ?? 78,
     selectors: [
       { selector: '.gt-preheader', format: 'skip' },
@@ -79,4 +79,7 @@ export function toPlainText(
       { selector: 'a', options: { hideLinkHrefIfSameAsText: true } },
     ],
   }).trim();
+  // Word-wrap can split a `{{ ... }}` expression across lines; collapse inner
+  // whitespace so the send-time layer always sees intact placeholders.
+  return out.replace(/\{\{[\s\S]*?\}\}/g, m => m.replace(/\s+/g, ' '));
 }
