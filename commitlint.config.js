@@ -29,6 +29,7 @@ export default {
         'design-system', // @grundtone/design-system package
         'react-native', // @grundtone/react-native package
         'nuxt',         // @grundtone/nuxt package
+        'email',        // @grundtone/email package
         'deps',         // Dependencies
         'config',       // Configuration files
         'ci',           // CI/CD
