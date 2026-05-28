@@ -117,11 +117,16 @@ export interface RenderedEmail {
 /**
  * Fill `{{placeholders}}` in a compiled artifact with data, using Handlebars.
  *
- * HTML is rendered with escaping on (recipient data is HTML-safe); subject and
- * text are rendered without escaping (those media have no markup). The Go
- * notifications service performs the equivalent substitution on the published
- * artifact — this is the JS-side path for previews, tests, and direct sends
- * from TypeScript consumers.
+ * HTML is rendered with escaping on, so recipient data is safe in HTML *text*
+ * and quoted attribute contexts. Subject and text are rendered without escaping
+ * (those media have no markup). The Go notifications service performs the
+ * equivalent substitution on the published artifact — this is the JS-side path
+ * for previews, tests, and direct sends from TypeScript consumers.
+ *
+ * Escaping does NOT validate URL schemes: a value substituted into `href="{{…}}"`
+ * is still emitted verbatim, so `javascript:`/`data:` URLs survive. Callers must
+ * pass trusted/validated URLs for link placeholders (the built-in templates use
+ * system-generated URLs). URL-scheme allowlisting belongs at the data boundary.
  */
 export function renderTemplate(
   compiled: CompiledTemplate,

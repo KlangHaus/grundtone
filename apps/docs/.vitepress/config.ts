@@ -187,6 +187,7 @@ export default defineConfig({
       },
       { text: 'Icons', link: '/icons/' },
       { text: 'Design System', link: '/web/colors' },
+      { text: 'Email', link: '/email/' },
       {
         text: 'Core Concepts',
         items: [
@@ -503,6 +504,16 @@ export default defineConfig({
               text: 'useFormValidation',
               link: '/react-native/use-form-validation',
             },
+          ],
+        },
+      ],
+      '/email/': [
+        {
+          text: 'Email',
+          items: [
+            { text: 'Overview', link: '/email/' },
+            { text: 'Blocks', link: '/email/blocks' },
+            { text: 'Templates', link: '/email/templates' },
           ],
         },
       ],

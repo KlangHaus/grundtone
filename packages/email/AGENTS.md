@@ -14,7 +14,9 @@ Framework-agnostic, token-themed email building blocks. MJML in → bulletproof 
   still token-derived, not hand-picked.
 - **Placeholders survive compilation.** `{{var}}`, `{{#each}}`, `{{#if}}` must pass through MJML
   untouched. The build/publish step compiles MJML → HTML; it does **not** fill data.
-- **HTML body escapes recipient data; subject and text do not.** See `renderTemplate`.
+- **HTML body escapes recipient data; subject and text do not.** See `renderTemplate`. Escaping
+  covers HTML-text and quoted-attribute contexts, but does NOT validate URL schemes —
+  `href="{{url}}"` emits the value verbatim, so callers must pass trusted URLs.
 
 ## Layout of the package
 

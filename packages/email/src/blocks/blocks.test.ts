@@ -61,6 +61,15 @@ describe('blocks', () => {
     expect(table).toContain('{{total}}');
   });
 
+  it('invoiceTable clamps the total colspan to at least 1 for a single column', () => {
+    const table = b.invoiceTable({
+      columns: [{ header: 'Item', cell: '{{this.name}}' }],
+      total: { label: 'Total', value: '{{total}}' },
+    });
+    expect(table).toContain('colspan="1"');
+    expect(table).not.toContain('colspan="0"');
+  });
+
   it('footer can include an unsubscribe link', () => {
     const f = b.footer({
       text: 'ACME',

@@ -1,5 +1,5 @@
 import type { EmailTheme } from '../theme';
-import { attrs } from '../internal';
+import { attrs, section } from '../internal';
 
 export interface FooterOpts {
   /**
@@ -28,9 +28,7 @@ export function footer(theme: EmailTheme, opts: FooterOpts): string {
     'font-size': fontSize.sm,
     'line-height': lineHeight.normal,
   });
-  return `    <mj-section padding="${spacing.lg} ${spacing.xl}">
-      <mj-column>
-        <mj-text ${textAttrs}>${opts.text}${unsub}</mj-text>
-      </mj-column>
-    </mj-section>`;
+  return section(`<mj-text ${textAttrs}>${opts.text}${unsub}</mj-text>`, {
+    section: `padding="${spacing.lg} ${spacing.xl}"`,
+  });
 }

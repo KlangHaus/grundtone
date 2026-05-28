@@ -92,9 +92,14 @@ Built-in templates (`magic-link`, `verify-email`, `org-invite`, `invoice`) are e
 
 The compiled artifact carries **Handlebars** syntax:
 
-- `{{var}}` — HTML-escaped in the HTML body (XSS-safe), raw in subject/text.
+- `{{var}}` — HTML-escaped in the HTML body, raw in subject/text.
 - `{{#each items}} … {{/each}}` — loops (e.g. invoice line items).
 - `{{#if name}} … {{/if}}` — conditionals.
+
+Escaping makes recipient data safe in HTML **text** and quoted **attribute** contexts, but it does
+**not** validate URL schemes — a value placed in `href="{{url}}"` is emitted verbatim, so
+`javascript:`/`data:` URLs survive. Pass trusted/validated URLs for link placeholders (the built-in
+templates use system-generated URLs); URL-scheme allowlisting belongs at the data boundary.
 
 `renderTemplate(artifact, data)` performs the substitution in JS (for previews, tests, and
 TypeScript consumers). The Go notifications service performs the equivalent substitution on the

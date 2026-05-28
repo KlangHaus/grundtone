@@ -1,6 +1,6 @@
 import type { Align } from './types';
 import type { EmailTheme } from '../theme';
-import { attrs } from '../internal';
+import { attrs, section } from '../internal';
 
 export interface HeaderOpts {
   /** Absolute URL to the logo image. */
@@ -24,9 +24,5 @@ export function header(theme: EmailTheme, opts: HeaderOpts): string {
     align: opts.align ?? 'center',
     padding: `0 0 ${theme.spacing.lg} 0`,
   });
-  return `    <mj-section>
-      <mj-column>
-        <mj-image ${imgAttrs} />
-      </mj-column>
-    </mj-section>`;
+  return section(`<mj-image ${imgAttrs} />`);
 }

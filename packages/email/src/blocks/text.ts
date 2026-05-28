@@ -1,6 +1,6 @@
 import type { Align } from './types';
 import type { EmailTheme } from '../theme';
-import { attrs } from '../internal';
+import { attrs, section } from '../internal';
 
 export interface HeadingOpts {
   /** Heading content. May contain `{{placeholders}}` and inline markup. */
@@ -13,11 +13,9 @@ export interface HeadingOpts {
 /** A themed heading using the `h1`/`h2` named type styles from the head. */
 export function heading(_theme: EmailTheme, opts: HeadingOpts): string {
   const mjClass = opts.level === 2 ? 'h2' : 'h1';
-  return `    <mj-section>
-      <mj-column>
-        <mj-text ${attrs({ 'mj-class': mjClass, align: opts.align })}>${opts.text}</mj-text>
-      </mj-column>
-    </mj-section>`;
+  return section(
+    `<mj-text ${attrs({ 'mj-class': mjClass, align: opts.align })}>${opts.text}</mj-text>`,
+  );
 }
 
 export interface TextOpts {
@@ -35,9 +33,7 @@ export function text(theme: EmailTheme, opts: TextOpts): string {
   const mjClass =
     opts.size === 'lead' ? 'lead' : opts.size === 'small' ? 'small' : undefined;
   const color = opts.muted ? theme.colors.textSecondary : undefined;
-  return `    <mj-section>
-      <mj-column>
-        <mj-text ${attrs({ 'mj-class': mjClass, align: opts.align, color })}>${opts.text}</mj-text>
-      </mj-column>
-    </mj-section>`;
+  return section(
+    `<mj-text ${attrs({ 'mj-class': mjClass, align: opts.align, color })}>${opts.text}</mj-text>`,
+  );
 }

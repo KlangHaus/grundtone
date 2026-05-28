@@ -1,5 +1,6 @@
 import type { Align } from './types';
 import type { EmailTheme } from '../theme';
+import { section } from '../internal';
 
 export interface InvoiceColumn {
   /** Header label. May contain `{{placeholders}}`. */
@@ -43,17 +44,14 @@ export function invoiceTable(
   const headRow = `<tr>${opts.columns.map(headCell).join('')}</tr>`;
   const bodyRows = `{{#each ${each}}}<tr>${opts.columns.map(bodyCell).join('')}</tr>{{/each}}`;
 
+  const labelColspan = Math.max(1, opts.columns.length - 1);
   const totalRow = opts.total
-    ? `<tr><td colspan="${opts.columns.length - 1}" style="text-align:right;padding:${cellPad};border-top:2px solid ${colors.border};color:${colors.textSecondary};font-weight:${fontWeight.semibold};">${opts.total.label}</td><td style="text-align:right;padding:${cellPad};border-top:2px solid ${colors.border};color:${colors.text};font-weight:${fontWeight.bold};">${opts.total.value}</td></tr>`
+    ? `<tr><td colspan="${labelColspan}" style="text-align:right;padding:${cellPad};border-top:2px solid ${colors.border};color:${colors.textSecondary};font-weight:${fontWeight.semibold};">${opts.total.label}</td><td style="text-align:right;padding:${cellPad};border-top:2px solid ${colors.border};color:${colors.text};font-weight:${fontWeight.bold};">${opts.total.value}</td></tr>`
     : '';
 
-  return `    <mj-section>
-      <mj-column>
-        <mj-table cellpadding="0" cellspacing="0" width="100%">
+  return section(`<mj-table cellpadding="0" cellspacing="0" width="100%">
           ${headRow}
           ${bodyRows}
           ${totalRow}
-        </mj-table>
-      </mj-column>
-    </mj-section>`;
+        </mj-table>`);
 }

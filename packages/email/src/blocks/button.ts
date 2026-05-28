@@ -1,6 +1,6 @@
 import type { Align } from './types';
 import type { EmailTheme } from '../theme';
-import { attrs } from '../internal';
+import { attrs, section } from '../internal';
 
 export interface ButtonOpts {
   /** Button label. May contain `{{placeholders}}`. */
@@ -28,9 +28,5 @@ export function button(theme: EmailTheme, opts: ButtonOpts): string {
     align: opts.align,
     ...variantAttrs,
   });
-  return `    <mj-section>
-      <mj-column>
-        <mj-button ${btn}>${opts.label}</mj-button>
-      </mj-column>
-    </mj-section>`;
+  return section(`<mj-button ${btn}>${opts.label}</mj-button>`);
 }

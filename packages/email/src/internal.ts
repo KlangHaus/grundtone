@@ -33,6 +33,25 @@ export function attrs(
     .join(' ');
 }
 
+/**
+ * Wrap column-level MJML (mj-text, mj-button, mj-image, …) in the standard
+ * section → column scaffold every block shares. Pass already-rendered
+ * attribute strings (e.g. from {@link attrs}) for the section/column when a
+ * block needs them.
+ */
+export function section(
+  inner: string,
+  opts: { section?: string; column?: string } = {},
+): string {
+  const s = opts.section ? ` ${opts.section}` : '';
+  const c = opts.column ? ` ${opts.column}` : '';
+  return `    <mj-section${s}>
+      <mj-column${c}>
+        ${inner}
+      </mj-column>
+    </mj-section>`;
+}
+
 /** Drop blank lines and normalise indentation noise in composed MJML fragments. */
 export function compact(mjml: string): string {
   return mjml

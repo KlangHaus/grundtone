@@ -1,5 +1,5 @@
 import type { EmailTheme } from '../theme';
-import { attrs } from '../internal';
+import { attrs, section } from '../internal';
 
 export type InfoTone = 'info' | 'success' | 'warning' | 'error';
 
@@ -46,12 +46,10 @@ export function infobox(theme: EmailTheme, opts: InfoboxOpts): string {
     padding: spacing.md,
   });
   const titleRow = opts.title
-    ? `<mj-text ${attrs({ color: p.fg, 'font-weight': theme.fontWeight.semibold, padding: `0 0 ${spacing.xs} 0` })}>${opts.title}</mj-text>`
+    ? `<mj-text ${attrs({ color: p.fg, 'font-weight': theme.fontWeight.semibold, padding: `0 0 ${spacing.xs} 0` })}>${opts.title}</mj-text>\n        `
     : '';
-  return `    <mj-section padding="0 0 ${spacing.md} 0">
-      <mj-column ${column}>
-        ${titleRow}
-        <mj-text ${attrs({ color: p.fg, padding: '0' })}>${opts.text}</mj-text>
-      </mj-column>
-    </mj-section>`;
+  return section(
+    `${titleRow}<mj-text ${attrs({ color: p.fg, padding: '0' })}>${opts.text}</mj-text>`,
+    { section: `padding="0 0 ${spacing.md} 0"`, column },
+  );
 }
