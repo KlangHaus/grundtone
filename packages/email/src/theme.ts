@@ -105,7 +105,14 @@ export interface ResolveEmailThemeOptions {
   webFonts?: EmailWebFont[];
 }
 
-/** grundtone's default web font, matching the `IBM Plex Sans` token stack. */
+/**
+ * grundtone's default web font, matching the `IBM Plex Sans` token stack.
+ *
+ * Hosted by Google Fonts. Email clients that load it expose the recipient's IP
+ * to Google — for GDPR-strict deployments, pass a self-hosted alternative via
+ * `resolveEmailTheme(theme, { webFonts: [...] })` or disable web fonts entirely
+ * with `webFonts: []` (the token fallback stack still covers all clients).
+ */
 export const IBM_PLEX_SANS: EmailWebFont = {
   name: 'IBM Plex Sans',
   href: 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap',

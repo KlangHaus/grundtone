@@ -108,10 +108,10 @@ published artifact before sending via Resend.
 ## Publishing
 
 `pnpm compile:templates` compiles every built-in template × locale to a versioned, CDN-shaped
-artifact tree under `dist/published/` (`v{version}/{key}/{locale}.json` + `manifest.json`). This
-mirrors the design-token publish pipeline: change a token → re-compile → re-publish → email design
-updates. The script does not upload — it produces the artifact a deploy step (or the studio publish
-pipeline) consumes.
+artifact tree under `published/` (`v{version}/{key}/{locale}.json` + `manifest.json`). This mirrors
+the design-token publish pipeline: change a token → re-compile → re-publish → email design updates.
+The script does not upload — it produces the artifact a deploy step (or the studio publish pipeline)
+consumes.
 
 ## Blocks
 

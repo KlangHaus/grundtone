@@ -51,6 +51,13 @@ export interface CompileTemplateOptions {
   theme?: EmailTheme;
   /** `<html lang>`. Defaults to the locale. */
   lang?: string;
+  /**
+   * MJML compile options. The default `validationLevel` is `soft`, which means
+   * validation errors are reported via `CompiledTemplate.errors` rather than
+   * thrown — publish flows MUST either read `errors` and refuse to ship on a
+   * non-empty list, or set `validationLevel: 'strict'` to throw instead. The
+   * built-in `scripts/build-templates.ts` and `templates.test.ts` do both.
+   */
   mjml?: CompileOptions;
 }
 
@@ -58,6 +65,10 @@ export interface CompileTemplateOptions {
  * The publishable artifact for one template+locale: HTML and text still
  * containing `{{placeholders}}`. This is what gets versioned to the CDN and
  * fed to the send-time layer (e.g. the Go notifications service).
+ *
+ * Field shape is the stable contract between this package, the studio publish
+ * pipeline, and the notifications service — keep `{key, locale, version,
+ * subject, preheader?, variables, html, text}` synchronised when changing.
  */
 export interface CompiledTemplate {
   key: string;

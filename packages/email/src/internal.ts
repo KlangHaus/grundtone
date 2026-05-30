@@ -4,7 +4,8 @@
  */
 
 /**
- * Convert a rem/px/unitless length token to a px string.
+ * Convert a `rem`/`em` length token to a px string. Values in any other unit
+ * (px, unitless, percent, …) pass through unchanged.
  *
  * Email clients — Outlook in particular — are unreliable with `rem`, so the
  * grundtone tokens (authored in rem) are converted to px for the email medium.

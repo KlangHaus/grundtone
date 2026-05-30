@@ -3,7 +3,8 @@
  * artifact tree — the same publish concept as design-tokens: when a token
  * changes you re-run this and re-publish, and the email design updates.
  *
- * Output (under dist/published/, which a deploy step would upload to the CDN):
+ * Output (under published/ at the package root — sibling to dist so the npm
+ * tarball doesn't ship the CDN artifacts):
  *   v{version}/{key}/{locale}.json   — the publishable artifact (placeholders intact)
  *   v{version}/manifest.json         — index of templates, locales and variables
  *   manifest.json                    — "current" pointer to the latest manifest
@@ -24,7 +25,7 @@ const require = createRequire(import.meta.url);
 const { version } = require('../package.json') as { version: string };
 
 const here = dirname(fileURLToPath(import.meta.url));
-const outRoot = resolve(here, '../dist/published');
+const outRoot = resolve(here, '../published');
 const versionDir = resolve(outRoot, `v${version}`);
 
 interface Artifact {

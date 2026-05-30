@@ -62,7 +62,7 @@ instead.
 ## Publishing
 
 `pnpm compile:templates` compiles every built-in template × locale into a versioned, CDN-shaped
-artifact tree under `dist/published/`:
+artifact tree under `published/` (sibling to `dist`, so the npm tarball stays clean):
 
 ```
 v{version}/{key}/{locale}.json   the publishable artifact (placeholders intact)

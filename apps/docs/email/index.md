@@ -73,6 +73,13 @@ Lengths are converted from the token `rem` scale to `px` (Outlook is unreliable 
 values still come from tokens. Web fonts default to IBM Plex Sans via `<mj-font>`, with the token
 font stack as the fallback for clients that block web fonts.
 
+::: warning GDPR
+The default IBM Plex Sans web font is loaded from Google Fonts — email clients that fetch it expose
+the recipient's IP to Google. For GDPR-strict deployments, pass a self-hosted alternative via
+`webFonts: [...]` or disable web fonts entirely with `webFonts: []` (the fallback stack still covers
+every client).
+:::
+
 See [Blocks](/email/blocks) for the building blocks and [Templates](/email/templates) for authoring,
 the send-time variable contract, and the CDN publish pipeline.
 
