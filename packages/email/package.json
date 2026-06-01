@@ -1,0 +1,59 @@
+{
+  "name": "@grundtone/email",
+  "version": "0.0.0",
+  "description": "Framework-agnostic, token-themed email building blocks for Grundtone — compile to bulletproof inlined HTML",
+  "license": "MIT",
+  "private": false,
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./templates": {
+      "types": "./dist/templates/index.d.ts",
+      "import": "./dist/templates/index.js",
+      "require": "./dist/templates/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grundtone/grundtone.git",
+    "directory": "packages/email"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint src scripts",
+    "test": "vitest --passWithNoTests",
+    "compile:templates": "tsx scripts/build-templates.ts",
+    "clean": "rimraf .turbo node_modules dist",
+    "prepublishOnly": "test -d dist || pnpm run build"
+  },
+  "dependencies": {
+    "@grundtone/core": "workspace:*",
+    "handlebars": "^4.7.8",
+    "html-to-text": "^9.0.5",
+    "mjml": "^4.15.3"
+  },
+  "devDependencies": {
+    "@types/html-to-text": "^9.0.4",
+    "@types/mjml": "^4.7.4",
+    "@types/node": "^22.15.17",
+    "rimraf": "^6.0.1",
+    "tsup": "^8.0.2",
+    "tsx": "^4.19.2"
+  }
+}

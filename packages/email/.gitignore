@@ -1,0 +1,3 @@
+# CDN publish artifacts produced by `pnpm compile:templates`. Kept out of the
+# npm tarball by living outside dist/ (see package.json "files").
+published/
