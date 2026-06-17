@@ -1,0 +1,37 @@
+name: Auto-add to GitHub Project
+
+on:
+  issues:
+    types: [opened, labeled]
+  pull_request:
+    types: [opened, labeled]
+
+permissions:
+  repository-projects: write
+  issues: read
+  pull-requests: read
+
+jobs:
+  route:
+    name: Route by label
+    runs-on: ubuntu-latest
+    steps:
+      - name: Route to project
+        uses: actions/add-to-project@v1.0.2
+        with:
+          project-url: ${{ vars.PROJECT_URL }}
+          github-token: ${{ secrets.KLANGHAUS_PROJECT_TOKEN }}
+          labeled: ${{ vars.PROJECT_LABELS }}
+          label-operator: OR
+
+      - name: Flag unlabeled item
+        if: github.event.issue && !contains(github.event.issue.labels.*.name, 'product:grundtone') && !contains(github.event.issue.labels.*.name, 'product:backstage') && !contains(github.event.issue.labels.*.name, 'product:explainers') && !contains(github.event.issue.labels.*.name, 'product:etude') && !contains(github.event.issue.labels.*.name, 'system:infra') && !contains(github.event.issue.labels.*.name, 'system:notifications') && !contains(github.event.issue.labels.*.name, 'system:auth') && !contains(github.event.issue.labels.*.name, 'system:permissions') && !contains(github.event.issue.labels.*.name, 'system:observability') && !contains(github.event.issue.labels.*.name, 'roadmap')
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Issue mangler routing-label (`product:*`, `system:*` eller `roadmap`). Beslutning M kræver strikt label-routing — tilføj relevant label.'
+            })

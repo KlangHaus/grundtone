@@ -1,0 +1,43 @@
+name: OSV-Scanner
+
+# Direkte CLI-kald frem for reusable workflow.
+# Begrundelse: reusable workflow forsøger SARIF-upload til GitHub Code Scanning,
+# hvilket kræver GHAS (Code Security) aktiveret. På private repos uden GHAS
+# fejler upload-stepet selv om scannen kører grønt. Direkte CLI undgår det
+# trade-off — fund logges i job-output (synligt i PR-checks).
+#
+# Når GHAS er aktiveret org-bredt, kan vi skifte tilbage til reusable workflow
+# for at få SARIF-fund i Security-tab'en.
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+  schedule:
+    - cron: "17 4 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    name: Dependency vuln-scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install osv-scanner
+        run: |
+          curl -sSfL https://github.com/google/osv-scanner/releases/download/v1.9.2/osv-scanner_linux_amd64 \
+            -o /usr/local/bin/osv-scanner
+          chmod +x /usr/local/bin/osv-scanner
+          osv-scanner --version
+
+      - name: Scan dependencies
+        run: |
+          if [ -f osv-scanner.toml ]; then
+            osv-scanner --recursive --skip-git --config=osv-scanner.toml ./
+          else
+            osv-scanner --recursive --skip-git ./
+          fi

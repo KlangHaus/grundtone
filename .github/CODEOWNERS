@@ -1,0 +1,27 @@
+# grundtone ejes af [grundtone]-tab per Beslutning I.
+# Allan = code-owner i single-committer-fasen.
+
+*                       @allanasp
+
+# Quality + workflow konfig — særligt følsomt for systemisk drift
+.github/                @allanasp
+.husky/                 @allanasp
+
+# Pakke-tokens + design-system kerne
+packages/core/          @allanasp
+packages/design-system/ @allanasp
+packages/design-tokens/ @allanasp
+
+# Pakker (multi-framework)
+packages/vue/           @allanasp
+packages/react-native/  @allanasp
+packages/nuxt/          @allanasp
+packages/email/         @allanasp
+
+# Utility-pakker
+packages/utils/         @allanasp
+packages/icons/         @allanasp
+
+# Quality-config consumption
+commitlint.config.js    @allanasp
+eslint.config.js        @allanasp
