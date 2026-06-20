@@ -39,6 +39,9 @@ coverage
 .env.*
 !.env.example
 
+# Sentry CLI local config (auth tokens; project-level config lives in code/vercel.json)
+.sentryclirc
+
 # TypeScript
 *.tsbuildinfo
 
