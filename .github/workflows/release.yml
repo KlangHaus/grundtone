@@ -36,6 +36,13 @@ jobs:
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
 
+      # OIDC trusted publishing requires npm CLI >= 11.5.1. Node 24's bundled
+      # npm may be older; force-upgrade so `changeset publish` -> `npm publish`
+      # can exchange the GitHub OIDC token for a registry publish token instead
+      # of falling back to NPM_TOKEN auth.
+      - name: Upgrade npm for OIDC trusted publishing
+        run: npm install -g npm@latest
+
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
