@@ -6,10 +6,13 @@ on:
   pull_request:
     types: [opened, labeled]
 
+# write-permissions er påkrævet for at "Flag unlabeled item"-step kan poste
+# kommentar via github.rest.issues.createComment ([review] systemic fund 06-18:
+# read-only fejler med "Resource not accessible by integration").
 permissions:
   repository-projects: write
-  issues: read
-  pull-requests: read
+  issues: write
+  pull-requests: write
 
 jobs:
   route:

@@ -1,9 +1,13 @@
 name: Gitleaks
 
+# Kun pull_request — IKKE push på main/develop.
+# Begrundelse: pre-merge gitleaks-scan på PR fanger secrets før de når main.
+# Push på main efter merge ville scanne det allerede-merged commit = duplicate work
+# + fakturerer minutter dobbelt på samme indhold ([review] systemic fund 06-18).
+# Hvis main alligevel skal scannes som backup, kør weekly cron + leakage-detection-
+# rapport — ikke per-commit.
 on:
   pull_request:
-    branches: [main, develop]
-  push:
     branches: [main, develop]
 
 permissions:
