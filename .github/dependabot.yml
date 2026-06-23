@@ -40,91 +40,91 @@ updates:
       # ─── Cross-service stacks — koordineret version på tværs af alle services ───
       otel-stack:
         patterns:
-          - "@opentelemetry/*"
+          - '@opentelemetry/*'
         update-types: [minor, patch]
       sentry-stack:
         patterns:
-          - "@sentry/*"
-          - "sentry-*"
+          - '@sentry/*'
+          - 'sentry-*'
         update-types: [minor, patch]
       connect-stack:
         patterns:
-          - "@connectrpc/*"
-          - "@bufbuild/*"
+          - '@connectrpc/*'
+          - '@bufbuild/*'
         update-types: [minor, patch]
       test-stack:
         patterns:
-          - "vitest"
-          - "@vitest/*"
-          - "jest"
-          - "@jest/*"
-          - "@testing-library/*"
-          - "jsdom"
-          - "happy-dom"
+          - 'vitest'
+          - '@vitest/*'
+          - 'jest'
+          - '@jest/*'
+          - '@testing-library/*'
+          - 'jsdom'
+          - 'happy-dom'
         update-types: [minor, patch]
       ts-stack:
         patterns:
-          - "typescript"
-          - "@types/*"
-          - "typescript-eslint"
-          - "@typescript-eslint/*"
+          - 'typescript'
+          - '@types/*'
+          - 'typescript-eslint'
+          - '@typescript-eslint/*'
         update-types: [minor, patch]
       eslint-prettier-stack:
         patterns:
-          - "eslint"
-          - "@eslint/*"
-          - "eslint-*"
-          - "prettier"
-          - "prettier-*"
+          - 'eslint'
+          - '@eslint/*'
+          - 'eslint-*'
+          - 'prettier'
+          - 'prettier-*'
         update-types: [minor, patch]
       commitlint-husky-stack:
         patterns:
-          - "@commitlint/*"
-          - "commitlint"
-          - "husky"
-          - "lint-staged"
+          - '@commitlint/*'
+          - 'commitlint'
+          - 'husky'
+          - 'lint-staged'
         update-types: [minor, patch]
       changesets-stack:
         patterns:
-          - "@changesets/*"
+          - '@changesets/*'
         update-types: [minor, patch]
       # ─── Hono/Fastify-server-stacks (service-repos) ───
       hono-server-stack:
         patterns:
-          - "hono"
-          - "@hono/*"
+          - 'hono'
+          - '@hono/*'
         update-types: [minor, patch]
       fastify-server-stack:
         patterns:
-          - "fastify"
-          - "@fastify/*"
+          - 'fastify'
+          - '@fastify/*'
         update-types: [minor, patch]
       # ─── Auth/DB-stacks ───
       betterauth-stack:
         patterns:
-          - "better-auth"
-          - "better-auth-*"
+          - 'better-auth'
+          - 'better-auth-*'
         update-types: [minor, patch]
       drizzle-stack:
         patterns:
-          - "drizzle-orm"
-          - "drizzle-*"
-          - "@drizzle-team/*"
+          - 'drizzle-orm'
+          - 'drizzle-*'
+          - '@drizzle-team/*'
         update-types: [minor, patch]
       # ─── Frontend-stacks (apps der bruger Nuxt/Vue/React) ───
       nuxt-stack:
         patterns:
-          - "nuxt"
-          - "nuxt-*"
-          - "@nuxt/*"
-          - "@nuxtjs/*"
+          - 'nuxt'
+          - 'nuxt-*'
+          - '@nuxt/*'
+          - '@nuxtjs/*'
         update-types: [minor, patch]
       vue-stack:
         patterns:
-          - "vue"
-          - "@vue/*"
-          - "vue-*"
-          - "eslint-plugin-vue"
+          - 'vue'
+          - '@vue/*'
+          - 'vue-*'
+          - 'eslint-plugin-vue'
         update-types: [minor, patch]
       # ─── Remainder-grupperinger ───
       # Fanger alt der IKKE er i en specifik stack — undgår individual PRs for små bumps.
@@ -134,7 +134,6 @@ updates:
       dev-remainder:
         dependency-type: development
         update-types: [minor, patch]
-
 # Major-bumps håndteres IKKE af dependabot — kør quarterly koordineret cross-repo
 # sprint (Q1/Q2/Q3/Q4) hvor [quality] åbner template-PR med samme version overalt.
 # Cross-service traces kan break hvis versioner divergerer (især otel-stack).
