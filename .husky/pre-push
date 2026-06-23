@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+# Affected-only tests + full typecheck. Tests over ~30s flyttes til CI (Beslutning L1).
+pnpm exec vitest related --run || exit 1
+pnpm exec tsc --noEmit || exit 1

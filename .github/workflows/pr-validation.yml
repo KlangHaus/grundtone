@@ -1,0 +1,38 @@
+name: PR validation
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  pull-requests: read
+  contents: read
+
+jobs:
+  validate:
+    name: Closes-link + branch-name
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Closes / Refs link in body
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.pull_request.body || ''
+            const hasLink = /(?:Closes|Fixes|Refs)\s+#\d+/i.test(body)
+            const isDependabot = context.payload.pull_request.user.login.startsWith('dependabot')
+            if (!hasLink && !isDependabot) {
+              core.warning('PR-body mangler `Closes #N` eller `Refs #N` (Beslutning M).')
+              // Soft-block i 2 uger (Beslutning M) — switch til core.setFailed() når required-check aktiveres
+            }
+
+      - name: Check branch naming
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const branch = context.payload.pull_request.head.ref
+            const pattern = /^(feat|fix|chore|docs|style|refactor|perf|test|build|ci|revert|deps)\/\d+-[a-z0-9-]+$/
+            const isDependabot = branch.startsWith('dependabot/')
+            const isReleasePlease = branch.startsWith('release-please/')
+            if (!pattern.test(branch) && !isDependabot && !isReleasePlease) {
+              core.warning(`Branch "${branch}" matcher ikke <type>/<issue#>-<slug> (Beslutning M).`)
+            }

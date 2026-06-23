@@ -1,0 +1,49 @@
+name: OSSF Scorecard
+
+# NB: OSSF Scorecard er designet til OFFENTLIGE repos. På PRIVATE repos kræver
+# det en classic PAT med `repo`-scope gemt som `SCORECARD_TOKEN` repo-secret
+# (default GITHUB_TOKEN har ikke GraphQL-adgang til private commits) + sæt
+# `publish_results: false`. Skabelonen nedenfor er konfigureret til offentlige
+# repos; tilpas inputs hvis dit repo er privat. Se GITHUB-RULES.md "GHAS"-sektion.
+
+on:
+  schedule:
+    - cron: '33 2 * * 2'
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  analysis:
+    name: Scorecard analysis
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      id-token: write
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: ossf/scorecard-action@v2.4.0
+        with:
+          results_file: results.sarif
+          results_format: sarif
+          publish_results: true
+          # For private repos, uncomment:
+          # repo_token: ${{ secrets.SCORECARD_TOKEN }}
+          # publish_results: false
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: scorecard-results
+          path: results.sarif
+          retention-days: 14
+
+      - uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: results.sarif
