@@ -25,12 +25,12 @@ jobs:
           fetch-depth: 0
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: 10.14.0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
@@ -52,6 +52,13 @@ jobs:
       - name: Build Docs
         run: pnpm docs:build
 
+      # TEMPORARY, dual-deploy transition: keep Vercel live while [infra]
+      # provisions the docs.grundtone.com Bunny zone + Pull Zone and verifies
+      # the Bunny-served site (see infra/docs/BUNNY-SETUP.md). Remove this
+      # step in a follow-up PR once DNS has cut over — don't drop the only
+      # working deploy target before its replacement is confirmed live,
+      # mirroring the "records before NS-switch" discipline already used for
+      # the grundtone.com DNS migration itself.
       - name: Deploy to Vercel Production
         uses: amondnet/vercel-action@v25
         id: vercel-deploy
@@ -63,6 +70,24 @@ jobs:
           vercel-args: '--prod'
           working-directory: ./
           scope: ${{ secrets.VERCEL_ORG_ID }}
+
+      # Publishes the built docs site (grundtone.com architecture decision:
+      # docs.grundtone.com = Bunny Edge Storage + Pull Zone, replacing Vercel
+      # — see infra/docs/BUNNY-SETUP.md + infra/docs/MASTER-PLAN.md #3).
+      # Skips cleanly (exit 0) until [infra] provisions the zone and sets the
+      # secrets below; runs on every push to develop, independent of whether
+      # any package was released this run (a docs-only content change should
+      # still deploy).
+      - name: Publish docs to Bunny
+        run: |
+          pnpm --filter @grundtone/docs publish:bunny
+        env:
+          BUNNY_DOCS_STORAGE_ZONE: ${{ secrets.BUNNY_DOCS_STORAGE_ZONE }}
+          BUNNY_DOCS_STORAGE_API_KEY: ${{ secrets.BUNNY_DOCS_STORAGE_API_KEY }}
+          BUNNY_DOCS_STORAGE_REGION: ${{ vars.BUNNY_DOCS_STORAGE_REGION }}
+          BUNNY_DOCS_STORAGE_PATH_PREFIX: ${{ vars.BUNNY_DOCS_STORAGE_PATH_PREFIX }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          SENTRY_ENVIRONMENT: ci
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
@@ -87,3 +112,27 @@ jobs:
           echo "\`\`\`json" >> $GITHUB_STEP_SUMMARY
           echo '${{ steps.changesets.outputs.publishedPackages }}' | jq '.' >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+
+      # Publishes the compiled email-template artifacts (grundtone#6) to Bunny
+      # Edge Storage so notifications' CDNRenderer can fetch them. Only runs
+      # when @grundtone/email itself was among this release's published
+      # packages — an unrelated package bump (e.g. @grundtone/vue) shouldn't
+      # re-upload an already-current template version. publish-cdn.ts skips
+      # cleanly (exit 0) if the Bunny secrets aren't provisioned yet, so this
+      # step can land ahead of [infra] setting them up.
+      - name: Publish email templates to CDN
+        if: steps.changesets.outputs.published == 'true'
+        run: |
+          if echo '${{ steps.changesets.outputs.publishedPackages }}' | jq -e '.[] | select(.name == "@grundtone/email")' > /dev/null; then
+            pnpm --filter @grundtone/email compile:templates
+            pnpm --filter @grundtone/email publish:cdn
+          else
+            echo "@grundtone/email not in this release — skipping CDN publish."
+          fi
+        env:
+          BUNNY_STORAGE_ZONE: ${{ secrets.BUNNY_EMAIL_STORAGE_ZONE }}
+          BUNNY_STORAGE_API_KEY: ${{ secrets.BUNNY_EMAIL_STORAGE_API_KEY }}
+          BUNNY_STORAGE_REGION: ${{ vars.BUNNY_EMAIL_STORAGE_REGION }}
+          BUNNY_STORAGE_PATH_PREFIX: ${{ vars.BUNNY_EMAIL_STORAGE_PATH_PREFIX }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          SENTRY_ENVIRONMENT: ci
