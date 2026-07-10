@@ -50,6 +50,7 @@
     "mjml": "^4.15.3"
   },
   "devDependencies": {
+    "@sentry/node": "^10.65.0",
     "@types/html-to-text": "^9.0.4",
     "@types/mjml": "^4.7.4",
     "@types/node": "^22.15.17",
