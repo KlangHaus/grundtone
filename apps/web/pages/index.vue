@@ -31,11 +31,11 @@ ${'<'}/script>
   <!-- Følger theme.primary — live, uden rebuild -->
   <GTButton variant="primary">Køb billet</GTButton>
 </template>`,
-    'react-native': `import { Button } from '@grundtone/react-native';
+    'react-native': `import { GTButton } from '@grundtone/react-native';
 
 // Samme token-sæt, native styling
 export const Checkout = () => (
-  <Button variant="primary">Køb billet</Button>
+  <GTButton variant="primary">Køb billet</GTButton>
 );`,
     email: `import { createBlocks, resolveEmailTheme } from '@grundtone/email';
 
