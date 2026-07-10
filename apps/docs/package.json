@@ -20,9 +20,9 @@
   "devDependencies": {
     "@sentry/node": "^10.65.0",
     "@types/node": "^22.15.17",
-    "tsx": "^4.19.2",
+    "tsx": "^4.23.0",
     "vitepress": "^1.6.4",
-    "vitepress-plugin-color-preview": "^0.3.2",
-    "vitepress-plugin-mermaid-diagram": "^0.2.4"
+    "vitepress-plugin-color-preview": "^0.4.1",
+    "vitepress-plugin-mermaid-diagram": "^0.3.2"
   }
 }
