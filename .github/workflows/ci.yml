@@ -120,8 +120,14 @@ jobs:
           name: build-output
           path: packages
 
+      # Dependabot bumps deliberately carry no changeset: merging a deps bump
+      # must not force a release of the linked 2.x packages (publish-frozen on
+      # develop until the main/develop reconciliation — a lower-version publish
+      # would retag npm `latest` backwards). Failing this step also aborted the
+      # job before ESLint/typecheck ever ran, so dependabot PRs got NO lint
+      # signal at all. Skip the gate for dependabot, keep the real checks.
       - name: Check for changesets
-        if: github.base_ref == 'develop'
+        if: github.base_ref == 'develop' && github.actor != 'dependabot[bot]'
         run: pnpm changeset:status --since=origin/develop
 
       - name: Run ESLint
