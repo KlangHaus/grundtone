@@ -96,17 +96,25 @@ async function upload(localPath: string, remotePath: string): Promise<void> {
 
       let lastErr: unknown;
       for (let attempt = 1; attempt <= 3; attempt++) {
-        const res = await fetch(url, {
-          method: 'PUT',
-          headers: { AccessKey: apiKey!, 'Content-Type': 'application/json' },
-          body,
-        });
-        if (res.ok) return;
-        lastErr = new Error(
-          `PUT ${remotePath} → ${res.status} ${await res.text()}`,
-        );
-        const retryable = res.status >= 500 || res.status === 429;
-        if (!retryable || attempt === 3) break;
+        try {
+          const res = await fetch(url, {
+            method: 'PUT',
+            headers: { AccessKey: apiKey!, 'Content-Type': 'application/json' },
+            body,
+          });
+          if (res.ok) return;
+          lastErr = new Error(
+            `PUT ${remotePath} → ${res.status} ${await res.text()}`,
+          );
+          const retryable = res.status >= 500 || res.status === 429;
+          if (!retryable || attempt === 3) break;
+        } catch (err) {
+          // Transport-level failures (DNS, connection reset, TLS, timeout)
+          // never reach the status-code check — they're inherently transient,
+          // so retry them like a 5xx instead of failing the publish outright.
+          lastErr = err;
+          if (attempt === 3) break;
+        }
         await new Promise(r => setTimeout(r, attempt * 500));
       }
       throw lastErr;
