@@ -30,6 +30,7 @@ export default {
         'react-native', // @grundtone/react-native package
         'nuxt',         // @grundtone/nuxt package
         'email',        // @grundtone/email package
+        'web',          // apps/web — grundtone.com landing site
         'deps',         // Dependencies
         'config',       // Configuration files
         'ci',           // CI/CD

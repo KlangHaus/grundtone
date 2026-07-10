@@ -1,0 +1,27 @@
+{
+  "name": "@grundtone/web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxi dev",
+    "build": "nuxi generate",
+    "generate": "nuxi generate",
+    "preview": "nuxi preview",
+    "lint": "eslint .",
+    "publish:bunny": "tsx scripts/publish-bunny.ts"
+  },
+  "dependencies": {
+    "@grundtone/core": "workspace:*",
+    "@grundtone/icons": "workspace:*",
+    "@grundtone/nuxt": "workspace:*",
+    "@grundtone/utils": "workspace:*",
+    "@grundtone/vue": "workspace:*",
+    "nuxt": "^4.4.2"
+  },
+  "devDependencies": {
+    "@sentry/node": "^10.65.0",
+    "@types/node": "^22.15.17",
+    "tsx": "^4.19.2"
+  }
+}
