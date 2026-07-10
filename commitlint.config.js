@@ -31,6 +31,7 @@ export default {
         'nuxt',         // @grundtone/nuxt package
         'email',        // @grundtone/email package
         'deps',         // Dependencies
+        'deps-dev',     // Dev-dependencies (dependabot's devDependencies prefix)
         'config',       // Configuration files
         'ci',           // CI/CD
         'docs',         // Documentation
