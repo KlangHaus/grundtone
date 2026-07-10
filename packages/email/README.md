@@ -49,7 +49,7 @@ const mjml = baseLayout({
   ].join('\n'),
 });
 
-const { html, errors } = compileMjml(mjml, { validationLevel: 'strict' });
+const { html, errors } = await compileMjml(mjml, { validationLevel: 'strict' });
 const text = toPlainText(html); // plain-text fallback, {{url}} preserved
 ```
 
@@ -79,10 +79,13 @@ const welcome = defineTemplate({
 });
 
 // Compile once to the publishable artifact (placeholders intact):
-const artifact = compileTemplate(welcome, 'en'); // { subject, html, text, variables, errors }
+const artifact = await compileTemplate(welcome, 'en'); // { subject, html, text, variables, errors }
 
 // Or compile + fill data in one step (direct send from TypeScript):
-const { subject, html, text } = renderEmail(welcome, 'en', { name: 'Allan', url: 'https://…' });
+const { subject, html, text } = await renderEmail(welcome, 'en', {
+  name: 'Allan',
+  url: 'https://…',
+});
 ```
 
 Built-in templates (`magic-link`, `verify-email`, `org-invite`, `invoice`) are exported from

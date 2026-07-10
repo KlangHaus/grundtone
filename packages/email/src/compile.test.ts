@@ -1,8 +1,8 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll } from 'vitest';
 import { resolveEmailTheme } from './theme';
 import { createBlocks } from './blocks';
 import { baseLayout } from './layout';
-import { compileMjml, toPlainText } from './compile';
+import { compileMjml, toPlainText, type CompileResult } from './compile';
 
 const theme = resolveEmailTheme();
 const b = createBlocks(theme);
@@ -22,32 +22,36 @@ function sampleMjml(): string {
 }
 
 describe('compileMjml', () => {
-  const { html, errors } = compileMjml(sampleMjml(), {
-    validationLevel: 'strict',
+  let result: CompileResult;
+  beforeAll(async () => {
+    result = await compileMjml(sampleMjml(), { validationLevel: 'strict' });
   });
 
   it('compiles without MJML errors', () => {
-    expect(errors).toEqual([]);
+    expect(result.errors).toEqual([]);
   });
 
   it('produces a full HTML document', () => {
-    expect(html).toContain('<!doctype html>');
-    expect(html.toLowerCase()).toContain('<html');
+    expect(result.html).toContain('<!doctype html>');
+    expect(result.html.toLowerCase()).toContain('<html');
   });
 
   it('keeps handlebars placeholders intact in text and href', () => {
-    expect(html).toContain('{{name}}');
-    expect(html).toContain('{{url}}');
+    expect(result.html).toContain('{{name}}');
+    expect(result.html).toContain('{{url}}');
   });
 
   it('inlines token-derived styles', () => {
-    expect(html).toContain(theme.colors.primary);
+    expect(result.html).toContain(theme.colors.primary);
   });
 });
 
 describe('toPlainText', () => {
-  const { html } = compileMjml(sampleMjml());
-  const text = toPlainText(html);
+  let text: string;
+  beforeAll(async () => {
+    const { html } = await compileMjml(sampleMjml());
+    text = toPlainText(html);
+  });
 
   it('skips the hidden preheader', () => {
     expect(text).not.toContain('Preview {{name}}');
@@ -58,18 +62,16 @@ describe('toPlainText', () => {
     expect(text).toContain('{{url}}');
   });
 
-  it('never splits a handlebars expression across lines', () => {
-    const wrapped = toPlainText(
-      compileMjml(
-        baseLayout({
-          theme,
-          content: b.text({
-            text: 'A very long sentence designed to force word wrapping near the placeholder {{someLongVariableName}} so we can assert it stays intact across the wrap boundary.',
-          }),
+  it('never splits a handlebars expression across lines', async () => {
+    const compiled = await compileMjml(
+      baseLayout({
+        theme,
+        content: b.text({
+          text: 'A very long sentence designed to force word wrapping near the placeholder {{someLongVariableName}} so we can assert it stays intact across the wrap boundary.',
         }),
-      ).html,
-      { wordwrap: 40 },
+      }),
     );
+    const wrapped = toPlainText(compiled.html, { wordwrap: 40 });
     expect(wrapped).toContain('{{someLongVariableName}}');
   });
 });

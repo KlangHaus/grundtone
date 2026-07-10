@@ -1,9 +1,10 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll } from 'vitest';
 import {
   defineTemplate,
   compileTemplate,
   renderTemplate,
   renderEmail,
+  type CompiledTemplate,
 } from './template';
 
 const demo = defineTemplate({
@@ -23,8 +24,8 @@ const demo = defineTemplate({
 });
 
 describe('compileTemplate', () => {
-  it('returns the publishable artifact with placeholders intact', () => {
-    const c = compileTemplate(demo, 'en', {
+  it('returns the publishable artifact with placeholders intact', async () => {
+    const c = await compileTemplate(demo, 'en', {
       mjml: { validationLevel: 'strict' },
     });
     expect(c.errors).toEqual([]);
@@ -34,14 +35,17 @@ describe('compileTemplate', () => {
     expect(c.variables).toEqual(['name', 'url']);
   });
 
-  it('throws on an unknown locale', () => {
+  it('throws on an unknown locale', async () => {
     // @ts-expect-error — 'da' is not a locale of demo
-    expect(() => compileTemplate(demo, 'da')).toThrow(/no locale/);
+    await expect(compileTemplate(demo, 'da')).rejects.toThrow(/no locale/);
   });
 });
 
 describe('renderTemplate', () => {
-  const compiled = compileTemplate(demo, 'en');
+  let compiled: CompiledTemplate;
+  beforeAll(async () => {
+    compiled = await compileTemplate(demo, 'en');
+  });
 
   it('fills placeholders and HTML-escapes recipient data in the body', () => {
     const r = renderTemplate(compiled, {
@@ -59,8 +63,11 @@ describe('renderTemplate', () => {
 });
 
 describe('renderEmail', () => {
-  it('compiles and renders in one step', () => {
-    const r = renderEmail(demo, 'en', { name: 'Allan', url: 'https://x/a' });
+  it('compiles and renders in one step', async () => {
+    const r = await renderEmail(demo, 'en', {
+      name: 'Allan',
+      url: 'https://x/a',
+    });
     expect(r.subject).toBe('Hi Allan');
     expect(r.html).toContain('Allan');
     expect(r.text).toContain('Allan');

@@ -8,8 +8,8 @@ describe('built-in templates', () => {
   // MJML for every locale, or the CDN build refuses to publish it.
   for (const template of templates) {
     for (const locale of BUILTIN_LOCALES) {
-      it(`${template.key}/${locale} compiles under strict MJML`, () => {
-        const c = compileTemplate(template, locale, {
+      it(`${template.key}/${locale} compiles under strict MJML`, async () => {
+        const c = await compileTemplate(template, locale, {
           mjml: { validationLevel: 'strict' },
         });
         expect(c.errors).toEqual([]);
@@ -19,8 +19,8 @@ describe('built-in templates', () => {
     }
   }
 
-  it('invoice expands its line-item loop when rendered', () => {
-    const c = compileTemplate(invoice, 'da');
+  it('invoice expands its line-item loop when rendered', async () => {
+    const c = await compileTemplate(invoice, 'da');
     const r = renderTemplate(c, {
       invoiceNumber: '2026-001',
       name: 'Allan',

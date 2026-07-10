@@ -47,12 +47,12 @@
     "@grundtone/core": "workspace:*",
     "handlebars": "^4.7.8",
     "html-to-text": "^9.0.5",
-    "mjml": "^4.15.3"
+    "mjml": "^5.4.0"
   },
   "devDependencies": {
     "@sentry/node": "^10.65.0",
     "@types/html-to-text": "^9.0.4",
-    "@types/mjml": "^4.7.4",
+    "@types/mjml": "^5.0.0",
     "@types/node": "^22.15.17",
     "rimraf": "^6.0.1",
     "tsup": "^8.0.2",
