@@ -118,15 +118,23 @@ async function putWithRetry(
 ): Promise<void> {
   let lastErr: unknown;
   for (let attempt = 1; attempt <= 3; attempt++) {
-    const res = await fetch(url, {
-      method: 'PUT',
-      headers: { AccessKey: apiKey!, 'Content-Type': contentType },
-      body,
-    });
-    if (res.ok) return;
-    lastErr = new Error(`PUT ${url} → ${res.status} ${await res.text()}`);
-    const retryable = res.status >= 500 || res.status === 429;
-    if (!retryable || attempt === 3) break;
+    try {
+      const res = await fetch(url, {
+        method: 'PUT',
+        headers: { AccessKey: apiKey!, 'Content-Type': contentType },
+        body,
+      });
+      if (res.ok) return;
+      lastErr = new Error(`PUT ${url} → ${res.status} ${await res.text()}`);
+      const retryable = res.status >= 500 || res.status === 429;
+      if (!retryable || attempt === 3) break;
+    } catch (err) {
+      // Transport-level failures (DNS, connection reset, TLS, timeout) never
+      // reach the status-code check — they're inherently transient, so retry
+      // them like a 5xx instead of failing the deploy on first attempt.
+      lastErr = err;
+      if (attempt === 3) break;
+    }
     await new Promise(r => setTimeout(r, attempt * 500));
   }
   throw lastErr;
@@ -155,20 +163,24 @@ interface RemoteEntry {
   IsDirectory: boolean;
 }
 
-/** Recursively list everything currently on the zone under `remoteDir`. */
+/** Recursively list everything currently on the zone under `remoteDir` ('' = zone root). */
 async function listRemoteFiles(remoteDir: string): Promise<string[]> {
-  const url = `${zoneBase}/${remoteDir}${remoteDir.endsWith('/') ? '' : '/'}`;
+  const dir = remoteDir.replace(/\/+$/, '');
+  const url = dir ? `${zoneBase}/${dir}/` : `${zoneBase}/`;
   const res = await fetch(url, { headers: { AccessKey: apiKey! } });
   if (res.status === 404) return []; // nothing published yet
   if (!res.ok)
-    throw new Error(`list ${remoteDir} → ${res.status} ${await res.text()}`);
+    throw new Error(`list ${dir || '/'} → ${res.status} ${await res.text()}`);
   const entries = (await res.json()) as RemoteEntry[];
 
   const out: string[] = [];
   for (const entry of entries) {
-    const childPath = `${remoteDir.replace(/\/$/, '')}/${entry.ObjectName}`;
+    // Root-level entries must NOT get a leading slash — that both broke the
+    // recursive list URLs (`…/zone//assets/` → 404 → empty list) and made the
+    // orphan comparison skip everything nested (Bugbot medium on #49).
+    const childPath = dir ? `${dir}/${entry.ObjectName}` : entry.ObjectName;
     if (entry.IsDirectory) out.push(...(await listRemoteFiles(childPath)));
-    else out.push(childPath.replace(/^\//, ''));
+    else out.push(childPath);
   }
   return out;
 }

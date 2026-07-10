@@ -409,6 +409,9 @@ importers:
         specifier: ^4.15.3
         version: 4.18.0
     devDependencies:
+      '@sentry/node':
+        specifier: ^10.65.0
+        version: 10.65.0(@opentelemetry/core@2.9.0(@opentelemetry/api@1.9.1))
       '@types/html-to-text':
         specifier: ^9.0.4
         version: 9.0.4
