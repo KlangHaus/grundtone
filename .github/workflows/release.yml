@@ -87,3 +87,27 @@ jobs:
           echo "\`\`\`json" >> $GITHUB_STEP_SUMMARY
           echo '${{ steps.changesets.outputs.publishedPackages }}' | jq '.' >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+
+      # Publishes the compiled email-template artifacts (grundtone#6) to Bunny
+      # Edge Storage so notifications' CDNRenderer can fetch them. Only runs
+      # when @grundtone/email itself was among this release's published
+      # packages — an unrelated package bump (e.g. @grundtone/vue) shouldn't
+      # re-upload an already-current template version. publish-cdn.ts skips
+      # cleanly (exit 0) if the Bunny secrets aren't provisioned yet, so this
+      # step can land ahead of [infra] setting them up.
+      - name: Publish email templates to CDN
+        if: steps.changesets.outputs.published == 'true'
+        run: |
+          if echo '${{ steps.changesets.outputs.publishedPackages }}' | jq -e '.[] | select(.name == "@grundtone/email")' > /dev/null; then
+            pnpm --filter @grundtone/email compile:templates
+            pnpm --filter @grundtone/email publish:cdn
+          else
+            echo "@grundtone/email not in this release — skipping CDN publish."
+          fi
+        env:
+          BUNNY_STORAGE_ZONE: ${{ secrets.BUNNY_EMAIL_STORAGE_ZONE }}
+          BUNNY_STORAGE_API_KEY: ${{ secrets.BUNNY_EMAIL_STORAGE_API_KEY }}
+          BUNNY_STORAGE_REGION: ${{ vars.BUNNY_EMAIL_STORAGE_REGION }}
+          BUNNY_STORAGE_PATH_PREFIX: ${{ vars.BUNNY_EMAIL_STORAGE_PATH_PREFIX }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          SENTRY_ENVIRONMENT: ci
