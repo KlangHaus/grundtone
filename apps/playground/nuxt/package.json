@@ -13,6 +13,6 @@
     "@grundtone/nuxt": "workspace:*",
     "@grundtone/utils": "workspace:*",
     "@grundtone/vue": "workspace:*",
-    "nuxt": "^4.4.2"
+    "nuxt": "^4.4.8"
   }
 }
