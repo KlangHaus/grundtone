@@ -7,7 +7,8 @@
     "lint": "eslint . --ignore-pattern .vitepress/cache --ignore-pattern .vitepress/dist",
     "dev": "vitepress dev",
     "build": "vitepress build",
-    "preview": "vitepress preview"
+    "preview": "vitepress preview",
+    "publish:bunny": "tsx scripts/publish-bunny.ts"
   },
   "dependencies": {
     "@grundtone/core": "workspace:*",
@@ -17,6 +18,9 @@
     "@grundtone/vue": "workspace:*"
   },
   "devDependencies": {
+    "@sentry/node": "^10.65.0",
+    "@types/node": "^22.15.17",
+    "tsx": "^4.19.2",
     "vitepress": "^1.6.4",
     "vitepress-plugin-color-preview": "^0.3.2",
     "vitepress-plugin-mermaid-diagram": "^0.2.4"
