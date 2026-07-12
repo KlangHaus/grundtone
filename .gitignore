@@ -56,3 +56,7 @@ packages/*/apps/
 
 
 TEMPLATES/*
+
+# Rust build artifacts (grundtone-tokens crate)
+packages/tokens-rust/target/
+packages/tokens-rust/Cargo.lock
