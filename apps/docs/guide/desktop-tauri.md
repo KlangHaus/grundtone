@@ -75,18 +75,19 @@ The classic Tauri papercut: the window paints white before the webview loads,
 which flashes hard in dark mode. Set the window's background from the token:
 
 ```rust
-use grundtone_tokens::{Mode, Rgb};
+use grundtone_tokens::{Mode, Rgba};
 
-let bg = Rgb::parse(Mode::Dark.colors().background).unwrap();
+let bg = Rgba::parse(Mode::Dark.colors().background).unwrap();
 // with tauri 2:
 // WebviewWindowBuilder::new(&app, "main", WebviewUrl::default())
-//     .background_color(tauri::webview::Color(bg.r, bg.g, bg.b, 255))
+//     .background_color(tauri::webview::Color(bg.r, bg.g, bg.b, bg.a))
 //     .build()?;
 ```
 
-All 39 semantic color slots are available on `LIGHT` / `DARK` as `#rrggbb`
-strings (`primary`, `surface_raised`, `text_inverse`, …), plus `SPACING_*` /
-`RADIUS_*` constants in px.
+All 39 semantic color slots (`primary`, `surface_raised`, `text_inverse`, …)
+are available on `LIGHT` / `DARK` — most as `#rrggbb` hex, four as
+`rgba(...)` (overlays/focus rings). `Rgba::parse` handles both forms.
+`SPACING_*` / `RADIUS_*` constants ship in px.
 
 ### Runtime brands (Studio)
 

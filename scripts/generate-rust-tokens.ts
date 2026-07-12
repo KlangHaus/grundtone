@@ -64,7 +64,31 @@ function colorsStruct(): string {
   const fields = colorKeys
     .map(k => `    pub ${toSnake(k)}: &'static str,`)
     .join('\n');
-  return `/// Every semantic color slot grundtone defines, as \`#rrggbb\` hex strings.\n#[derive(Debug, Clone, Copy, PartialEq, Eq)]\npub struct Colors {\n${fields}\n}`;
+  const slotArms = colorKeys
+    .map(k => `            "${k}" => Some(self.${toSnake(k)}),`)
+    .join('\n');
+  const slotNames = colorKeys.map(k => `        "${k}",`).join('\n');
+  return `/// Every semantic color slot grundtone defines. Values are \`#rrggbb\`/\`#rgb\`
+/// hex or \`rgba(r,g,b,a)\` strings — both parse via \`Rgba::parse\`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Colors {
+${fields}
+}
+
+impl Colors {
+    /// Every slot's camelCase name, matching grundtone's TypeScript/JSON keys.
+    pub const SLOT_NAMES: [&'static str; ${colorKeys.length}] = [
+${slotNames}
+    ];
+
+    /// Look up a slot by its camelCase name (the TypeScript/JSON key).
+    pub fn slot(&self, name: &str) -> Option<&'static str> {
+        match name {
+${slotArms}
+            _ => None,
+        }
+    }
+}`;
 }
 
 function colorsConst(

@@ -4,7 +4,8 @@
 // fails if this file drifts from the TypeScript source.
 #![allow(clippy::excessive_precision)]
 
-/// Every semantic color slot grundtone defines, as `#rrggbb` hex strings.
+/// Every semantic color slot grundtone defines. Values are `#rrggbb`/`#rgb`
+/// hex or `rgba(r,g,b,a)` strings — both parse via `Rgba::parse`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Colors {
     pub primary: &'static str,
@@ -46,6 +47,97 @@ pub struct Colors {
     pub focus: &'static str,
     pub focus_ring: &'static str,
     pub neutral: &'static str,
+}
+
+impl Colors {
+    /// Every slot's camelCase name, matching grundtone's TypeScript/JSON keys.
+    pub const SLOT_NAMES: [&'static str; 39] = [
+        "primary",
+        "primaryLight",
+        "primaryDark",
+        "onPrimary",
+        "secondary",
+        "secondaryLight",
+        "secondaryDark",
+        "success",
+        "successLight",
+        "successDark",
+        "warning",
+        "warningLight",
+        "warningDark",
+        "error",
+        "errorLight",
+        "errorDark",
+        "info",
+        "infoLight",
+        "infoDark",
+        "background",
+        "backgroundAlt",
+        "surface",
+        "surfaceAlt",
+        "surfaceRaised",
+        "surfaceOverlay",
+        "modalBackdrop",
+        "text",
+        "textSecondary",
+        "textTertiary",
+        "textInverse",
+        "textPlaceholder",
+        "textDisabled",
+        "borderLight",
+        "borderMedium",
+        "borderStrong",
+        "borderInverse",
+        "focus",
+        "focusRing",
+        "neutral",
+    ];
+
+    /// Look up a slot by its camelCase name (the TypeScript/JSON key).
+    pub fn slot(&self, name: &str) -> Option<&'static str> {
+        match name {
+            "primary" => Some(self.primary),
+            "primaryLight" => Some(self.primary_light),
+            "primaryDark" => Some(self.primary_dark),
+            "onPrimary" => Some(self.on_primary),
+            "secondary" => Some(self.secondary),
+            "secondaryLight" => Some(self.secondary_light),
+            "secondaryDark" => Some(self.secondary_dark),
+            "success" => Some(self.success),
+            "successLight" => Some(self.success_light),
+            "successDark" => Some(self.success_dark),
+            "warning" => Some(self.warning),
+            "warningLight" => Some(self.warning_light),
+            "warningDark" => Some(self.warning_dark),
+            "error" => Some(self.error),
+            "errorLight" => Some(self.error_light),
+            "errorDark" => Some(self.error_dark),
+            "info" => Some(self.info),
+            "infoLight" => Some(self.info_light),
+            "infoDark" => Some(self.info_dark),
+            "background" => Some(self.background),
+            "backgroundAlt" => Some(self.background_alt),
+            "surface" => Some(self.surface),
+            "surfaceAlt" => Some(self.surface_alt),
+            "surfaceRaised" => Some(self.surface_raised),
+            "surfaceOverlay" => Some(self.surface_overlay),
+            "modalBackdrop" => Some(self.modal_backdrop),
+            "text" => Some(self.text),
+            "textSecondary" => Some(self.text_secondary),
+            "textTertiary" => Some(self.text_tertiary),
+            "textInverse" => Some(self.text_inverse),
+            "textPlaceholder" => Some(self.text_placeholder),
+            "textDisabled" => Some(self.text_disabled),
+            "borderLight" => Some(self.border_light),
+            "borderMedium" => Some(self.border_medium),
+            "borderStrong" => Some(self.border_strong),
+            "borderInverse" => Some(self.border_inverse),
+            "focus" => Some(self.focus),
+            "focusRing" => Some(self.focus_ring),
+            "neutral" => Some(self.neutral),
+            _ => None,
+        }
+    }
 }
 
 /// grundtone default light theme.
