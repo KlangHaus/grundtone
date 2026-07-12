@@ -6,6 +6,8 @@
   "scripts": {
     "build": "turbo run build",
     "build:packages": "turbo run build --filter=./packages/*",
+    "gen:rust-tokens": "tsx scripts/generate-rust-tokens.ts",
+    "gen:rust-tokens:check": "tsx scripts/generate-rust-tokens.ts --check",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "test": "turbo run test",

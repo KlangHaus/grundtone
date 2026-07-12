@@ -1,0 +1,20 @@
+[package]
+name = "grundtone-tokens"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "grundtone design tokens for the native side of Tauri apps — generated from @grundtone/core"
+repository = "https://github.com/KlangHaus/grundtone"
+# Not published to crates.io yet (separate decision) — consume as a git
+# dependency:
+#   grundtone-tokens = { git = "https://github.com/KlangHaus/grundtone", branch = "develop" }
+publish = false
+
+[dependencies]
+serde = { version = "1", features = ["derive"], optional = true }
+
+[dev-dependencies]
+serde_json = "1"
+
+[features]
+serde = ["dep:serde"]

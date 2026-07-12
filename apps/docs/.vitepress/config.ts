@@ -221,6 +221,10 @@ export default defineConfig({
               text: 'Component Prefix',
               link: '/guide/prefix',
             },
+            {
+              text: 'Desktop (Tauri)',
+              link: '/guide/desktop-tauri',
+            },
           ],
         },
       ],
