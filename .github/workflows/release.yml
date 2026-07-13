@@ -52,25 +52,6 @@ jobs:
       - name: Build Docs
         run: pnpm docs:build
 
-      # TEMPORARY, dual-deploy transition: keep Vercel live while [infra]
-      # provisions the docs.grundtone.com Bunny zone + Pull Zone and verifies
-      # the Bunny-served site (see infra/docs/BUNNY-SETUP.md). Remove this
-      # step in a follow-up PR once DNS has cut over — don't drop the only
-      # working deploy target before its replacement is confirmed live,
-      # mirroring the "records before NS-switch" discipline already used for
-      # the grundtone.com DNS migration itself.
-      - name: Deploy to Vercel Production
-        uses: amondnet/vercel-action@v25
-        id: vercel-deploy
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-version: latest
-          vercel-args: '--prod'
-          working-directory: ./
-          scope: ${{ secrets.VERCEL_ORG_ID }}
-
       # Publishes the built docs site (grundtone.com architecture decision:
       # docs.grundtone.com = Bunny Edge Storage + Pull Zone, replacing Vercel
       # — see infra/docs/BUNNY-SETUP.md + infra/docs/MASTER-PLAN.md #3).
@@ -103,6 +84,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # The runner has husky hooks installed via `pnpm install` (prepare
+          # script); changesets' push of the Version Packages branch was being
+          # killed by the pre-push tsc gate (#46's react-native errors). CI
+          # already runs every real gate as workflow jobs — git hooks are a
+          # local-dev safety net, not a CI one.
+          HUSKY: '0'
 
       - name: Generate summary
         if: steps.changesets.outputs.published == 'true'
