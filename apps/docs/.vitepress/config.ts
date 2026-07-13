@@ -135,6 +135,13 @@ export default defineConfig({
   },
 
   vite: {
+    // esbuild 0.28 (hoisted af nyere workspace-deps) kan ikke transformere til
+    // VitePress' konservative default-browser-targets sammen med vite 5 —
+    // "Transforming destructuring ... is not supported yet". Docs-sitet er
+    // internt/moderne browsere; esnext springer transpile-fasen helt over.
+    build: {
+      target: 'esnext',
+    },
     plugins: [codePreviewHighlightPlugin()],
     resolve: {
       dedupe: ['vue'],
