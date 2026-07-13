@@ -14,7 +14,7 @@
 //!
 //! let bg = Rgba::parse(DARK.background).unwrap();
 //! // tauri::WebviewWindowBuilder::new(...)
-//! //     .background_color(tauri::window::Color(bg.r, bg.g, bg.b, bg.a))
+//! //     .background_color(tauri::webview::Color(bg.r, bg.g, bg.b, bg.a))
 //! ```
 //!
 //! With the `serde` feature, [`RuntimeColors`] deserializes a JSON object of
