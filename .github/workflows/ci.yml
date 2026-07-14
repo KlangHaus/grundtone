@@ -130,6 +130,22 @@ jobs:
         if: github.base_ref == 'develop' && github.actor != 'dependabot[bot]'
         run: pnpm changeset:status --since=origin/develop
 
+      # The published 2.x line (main-era, npm latest = 2.22/2.23) is FROZEN on
+      # develop until the main/develop reconciliation (Allan-call 2026-06-23):
+      # develop's 2.15.x versions are BEHIND npm, so versioning+publishing them
+      # from here would flip npm's `latest` tag backwards for every consumer.
+      # This guard fails any PR whose changesets touch a frozen package.
+      - name: Guard frozen 2.x packages
+        if: github.base_ref == 'develop'
+        run: |
+          FROZEN='@grundtone/(core|utils|icons|vue|design-system|nuxt|react-native)'
+          HITS=$(grep -rlE "$FROZEN" .changeset/*.md 2>/dev/null | grep -v README || true)
+          if [ -n "$HITS" ]; then
+            echo "::error::Changesets reference frozen 2.x packages (publish-frozen until main/develop reconciliation): $HITS"
+            exit 1
+          fi
+          echo "No changesets touch the frozen 2.x line."
+
       - name: Run ESLint
         run: pnpm lint:js:check
 

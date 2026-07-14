@@ -200,8 +200,7 @@ export const THEME_INJECTION_KEY: InjectionKey<ThemeProviderContext> =
  * or separate light/dark overrides for proper dark mode support.
  */
 export type ThemeConfig =
-  | Partial<Theme>
-  | { light?: Partial<Theme>; dark?: Partial<Theme> };
+  Partial<Theme> | { light?: Partial<Theme>; dark?: Partial<Theme> };
 
 export interface ThemeProviderProps {
   mode?: ThemeMode;
