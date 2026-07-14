@@ -1,12 +1,6 @@
 export type InputSize = 'sm' | 'md' | 'lg';
 export type InputType =
-  | 'text'
-  | 'email'
-  | 'password'
-  | 'number'
-  | 'tel'
-  | 'url'
-  | 'search';
+  'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search';
 export type InputRadius = 'none' | 'sm' | 'md' | 'lg' | 'full';
 export type InputWidth = 'xxs' | 'xs' | 's' | 'm' | 'l' | 'xl';
 export type InputCharWidth = 4 | 8 | 11 | 27;

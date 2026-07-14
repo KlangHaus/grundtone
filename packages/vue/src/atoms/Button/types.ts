@@ -1,9 +1,5 @@
 export type ButtonVariant =
-  | 'primary'
-  | 'secondary'
-  | 'outlined'
-  | 'negative'
-  | 'unstyled';
+  'primary' | 'secondary' | 'outlined' | 'negative' | 'unstyled';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 export type ButtonRadius = 'none' | 'sm' | 'md' | 'lg' | 'full';
 

@@ -1,10 +1,5 @@
 export type ModalTransition =
-  | 'fade'
-  | 'scale'
-  | 'slide-up'
-  | 'slide-down'
-  | 'slide-right'
-  | 'none';
+  'fade' | 'scale' | 'slide-up' | 'slide-down' | 'slide-right' | 'none';
 
 export interface ModalProps {
   /** Controls visibility (v-model:open) */

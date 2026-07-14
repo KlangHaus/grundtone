@@ -1,11 +1,7 @@
 import type { ReactNode } from 'react';
 
 export type ButtonVariant =
-  | 'primary'
-  | 'secondary'
-  | 'outlined'
-  | 'negative'
-  | 'unstyled';
+  'primary' | 'secondary' | 'outlined' | 'negative' | 'unstyled';
 
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
