@@ -1,15 +1,5 @@
 # @grundtone/vue
 
-## 2.15.1 - 2026-07-13
-
-### Patch Changes
-
-- [#47](https://github.com/KlangHaus/grundtone/pull/47)
-  [`049a1db`](https://github.com/KlangHaus/grundtone/commit/049a1dbbbc38098d3861d00a535499db9887c238)
-  Thanks [@allanasp](https://github.com/allanasp)! - Add `types/shims-vue.d.ts` ambient module
-  declaration so `.vue` SFC imports resolve under plain `tsc` (not just `vue-tsc`). No change to the
-  package's public API or runtime behaviour.
-
 ## 2.15.0 - 2026-07-13
 
 ### Minor Changes
