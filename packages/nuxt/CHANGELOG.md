@@ -1,6 +1,14 @@
 # @grundtone/nuxt
 
-## 2.15.0
+## 2.15.1 - 2026-07-13
+
+### Patch Changes
+
+- Updated dependencies
+  [[`049a1db`](https://github.com/KlangHaus/grundtone/commit/049a1dbbbc38098d3861d00a535499db9887c238)]:
+  - @grundtone/vue@2.15.1
+
+## 2.15.0 - 2026-07-13
 
 ### Patch Changes
 
@@ -8,7 +16,7 @@
   - @grundtone/design-system@2.15.0
   - @grundtone/vue@2.15.0
 
-## 2.14.0
+## 2.14.0 - 2026-07-13
 
 ### Patch Changes
 
@@ -16,7 +24,7 @@
   - @grundtone/design-system@2.14.0
   - @grundtone/vue@2.14.0
 
-## 2.13.0
+## 2.13.0 - 2026-07-13
 
 ### Patch Changes
 
