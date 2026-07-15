@@ -246,6 +246,10 @@ jobs:
         uses: preactjs/compressed-size-action@v3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+          # v3 gjorde build-script required (havde default 'build' i v2). Actionen
+          # bygger selv både base- og head-ref for at sammenligne; peg på vores
+          # workspace-build. (#67's v2→v3-bump brød ellers checket på al develop.)
+          build-script: 'build:packages'
           pattern: 'packages/*/dist/**/*.{js,css}'
           exclude: '{**/*.map,**/node_modules/**}'
           compression: gzip
