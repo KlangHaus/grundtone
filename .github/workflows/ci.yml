@@ -242,14 +242,17 @@ jobs:
           name: build-output
           path: packages
 
+      # Pinnet til v2 bevidst. v3 gjorde build-script required OG ændrede
+      # invocations-modellen til `exec(buildScript)` (rå kommando) + install
+      # og build af BÅDE base- og head-ref internt — inkompatibelt med dette
+      # jobs "download pre-byggede artifacts og mål dem"-design (#67's v2→v3-
+      # bump brød Bundle Size Check på al develop). At adoptere v3 kræver at
+      # redesigne jobbet (install-script/clean-script til pnpm-workspace) —
+      # bevidst udskudt. Major-bumps af denne action ignoreres i dependabot.yml.
       - name: Analyze bundle size
-        uses: preactjs/compressed-size-action@v3
+        uses: preactjs/compressed-size-action@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          # v3 gjorde build-script required (havde default 'build' i v2). Actionen
-          # bygger selv både base- og head-ref for at sammenligne; peg på vores
-          # workspace-build. (#67's v2→v3-bump brød ellers checket på al develop.)
-          build-script: 'build:packages'
           pattern: 'packages/*/dist/**/*.{js,css}'
           exclude: '{**/*.map,**/node_modules/**}'
           compression: gzip
