@@ -19,6 +19,14 @@ updates:
     labels:
       - dependencies
       - github-actions
+    ignore:
+      # v3 ændrede invocations-modellen (required build-script + intern
+      # install/build af base+head-ref) på en måde der er inkompatibel med
+      # size-check-jobbets "mål pre-byggede artifacts"-design — brød Bundle
+      # Size Check på al develop (#67). Pinnet til v2 i ci.yml indtil jobbet
+      # evt. redesignes bevidst; ignorér major-bumps så loopet ikke gentages.
+      - dependency-name: 'preactjs/compressed-size-action'
+        update-types: [version-update:semver-major]
     groups:
       actions-minor-patch:
         update-types: [minor, patch]
