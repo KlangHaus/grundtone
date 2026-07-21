@@ -18,7 +18,7 @@
     "@grundtone/vue": "workspace:*"
   },
   "devDependencies": {
-    "@sentry/node": "^10.65.0",
+    "@sentry/node": "^10.67.0",
     "@types/node": "^26.1.1",
     "tsx": "^4.23.1",
     "vitepress": "^1.6.4",
