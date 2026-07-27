@@ -17,7 +17,7 @@
     "@grundtone/nuxt": "workspace:*",
     "@grundtone/utils": "workspace:*",
     "@grundtone/vue": "workspace:*",
-    "nuxt": "^4.4.8"
+    "nuxt": "^4.5.1"
   },
   "devDependencies": {
     "@sentry/node": "^10.65.0",
