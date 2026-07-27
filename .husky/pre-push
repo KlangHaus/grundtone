@@ -1,4 +1,9 @@
 #!/usr/bin/env sh
-# Affected-only tests + full typecheck. Tests over ~30s flyttes til CI (Beslutning L1).
+# Affected-only tests + per-package typecheck. Tests over ~30s flyttes til CI (Beslutning L1).
+#
+# Typecheck runs per-package via turbo so each package uses the right checker +
+# its own tsconfig (e.g. vue-tsc for .vue). Bare root `tsc --noEmit` cannot
+# resolve .vue / react-native JSX / nuxt #app and was permanently red. Packages
+# opt in by adding a `typecheck` script; add them as each is made green.
 pnpm exec vitest related --run || exit 1
-pnpm exec tsc --noEmit || exit 1
+pnpm exec turbo run typecheck || exit 1
