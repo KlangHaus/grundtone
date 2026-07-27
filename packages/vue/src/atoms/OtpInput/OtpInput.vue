@@ -91,7 +91,7 @@
       <input
         v-for="(digit, i) in digits"
         :key="i"
-        :ref="el => setRef(el, i)"
+        :ref="(el: unknown) => setRef(el, i)"
         :id="`${baseId}-${i}`"
         :class="[
           `${base}__field`,

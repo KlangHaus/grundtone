@@ -63,7 +63,7 @@
         </GTButton>
         <GTButton
           v-if="settingsLabel"
-          variant="tertiary"
+          variant="unstyled"
           size="sm"
           :aria-expanded="slots.settings ? settingsOpen : undefined"
           @click="toggleSettings"

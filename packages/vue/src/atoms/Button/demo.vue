@@ -52,7 +52,6 @@
         <GTButton rounded="sm">sm</GTButton>
         <GTButton>md (default)</GTButton>
         <GTButton rounded="lg">lg</GTButton>
-        <GTButton rounded="xl">xl</GTButton>
         <GTButton rounded="full">full</GTButton>
       </div>
     </section>

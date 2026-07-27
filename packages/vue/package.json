@@ -51,6 +51,7 @@
   },
   "scripts": {
     "lint": "eslint src",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.typecheck.json",
     "build": "vite build",
     "dev": "vite build --watch",
     "clean": "rm -rf .turbo node_modules dist",
