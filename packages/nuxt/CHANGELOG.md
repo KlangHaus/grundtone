@@ -1,6 +1,6 @@
 # @grundtone/nuxt
 
-## 2.15.0
+## 2.15.0 - 2026-07-13
 
 ### Patch Changes
 
@@ -8,7 +8,7 @@
   - @grundtone/design-system@2.15.0
   - @grundtone/vue@2.15.0
 
-## 2.14.0
+## 2.14.0 - 2026-07-13
 
 ### Patch Changes
 
@@ -16,7 +16,7 @@
   - @grundtone/design-system@2.14.0
   - @grundtone/vue@2.14.0
 
-## 2.13.0
+## 2.13.0 - 2026-07-13
 
 ### Patch Changes
 

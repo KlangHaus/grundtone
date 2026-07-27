@@ -1,12 +1,6 @@
 export type InputSize = 'sm' | 'md' | 'lg';
 export type InputType =
-  | 'text'
-  | 'email'
-  | 'password'
-  | 'number'
-  | 'tel'
-  | 'url'
-  | 'search';
+  'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search';
 export type InputRadius = 'none' | 'sm' | 'md' | 'lg' | 'full';
 
 export interface InputProps {

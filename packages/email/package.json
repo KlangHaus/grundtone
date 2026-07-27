@@ -1,6 +1,6 @@
 {
   "name": "@grundtone/email",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Framework-agnostic, token-themed email building blocks for Grundtone — compile to bulletproof inlined HTML",
   "license": "MIT",
   "private": false,
@@ -39,6 +39,7 @@
     "lint": "eslint src scripts",
     "test": "vitest --passWithNoTests",
     "compile:templates": "tsx scripts/build-templates.ts",
+    "publish:cdn": "tsx scripts/publish-cdn.ts",
     "clean": "rimraf .turbo node_modules dist",
     "prepublishOnly": "test -d dist || pnpm run build"
   },
@@ -46,14 +47,15 @@
     "@grundtone/core": "workspace:*",
     "handlebars": "^4.7.8",
     "html-to-text": "^9.0.5",
-    "mjml": "^4.15.3"
+    "mjml": "^5.4.0"
   },
   "devDependencies": {
+    "@sentry/node": "^10.65.0",
     "@types/html-to-text": "^9.0.4",
-    "@types/mjml": "^4.7.4",
-    "@types/node": "^22.15.17",
+    "@types/mjml": "^5.0.0",
+    "@types/node": "^26.1.1",
     "rimraf": "^6.0.1",
     "tsup": "^8.0.2",
-    "tsx": "^4.19.2"
+    "tsx": "^4.23.1"
   }
 }

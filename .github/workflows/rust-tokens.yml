@@ -1,0 +1,76 @@
+# CI for the grundtone-tokens Rust crate (packages/tokens-rust) — issue #57.
+# Deliberately a SEPARATE workflow so the Rust toolchain never touches the TS
+# pipeline: it only runs when the crate, its codegen, or the token source
+# changes, and it is not a required check.
+name: Rust tokens
+
+on:
+  pull_request:
+    branches: [develop]
+    paths:
+      - 'packages/tokens-rust/**'
+      - 'scripts/generate-rust-tokens.ts'
+      - 'packages/core/src/**'
+      - '.github/workflows/rust-tokens.yml'
+  push:
+    branches: [develop]
+    paths:
+      - 'packages/tokens-rust/**'
+      - 'scripts/generate-rust-tokens.ts'
+      - 'packages/core/src/**'
+      - '.github/workflows/rust-tokens.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  crate:
+    name: cargo build + test + lint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/tokens-rust
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+
+      - name: Build
+        run: cargo build --all-features
+
+      - name: Test (default + all features)
+        run: |
+          cargo test
+          cargo test --all-features
+
+      - name: Clippy
+        run: cargo clippy --all-features -- -D warnings
+
+      - name: Format check
+        run: cargo fmt --check
+
+  codegen-drift:
+    name: generated.rs matches @grundtone/core
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10.14.0
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build @grundtone/core
+        run: pnpm --filter @grundtone/core build
+
+      - name: Check generated.rs is up to date
+        run: pnpm gen:rust-tokens:check

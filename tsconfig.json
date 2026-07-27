@@ -16,6 +16,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
+    "jsx": "react-jsx",
     "isolatedModules": true,
     "allowJs": false,
     "declaration": true,
@@ -33,7 +34,13 @@
     "packages/*/index.ts",
     "packages/*/index.js"
   ],
-  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    "packages/nuxt/src/runtime"
+  ],
   "vueCompilerOptions": {
     "target": 3,
     "extensions": [".vue"]

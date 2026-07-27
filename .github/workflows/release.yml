@@ -19,29 +19,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # This makes Actions fetch all Git history so that Changesets can generate changelogs with correct commits
           fetch-depth: 0
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: 10.14.0
 
+      # NB: deliberately NO `registry-url:` here. setup-node's registry-url
+      # writes an .npmrc with `//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}`;
+      # with NPM_TOKEN removed (OIDC trusted publishing) that token is empty, and
+      # npm treats a present-but-empty _authToken as ENEEDAUTH instead of falling
+      # back to the OIDC exchange. No .npmrc auth line = clean OIDC publish.
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
-          registry-url: 'https://registry.npmjs.org'
 
-      # OIDC trusted publishing requires npm CLI >= 11.5.1. Node 24's bundled
-      # npm may be older; force-upgrade so `changeset publish` -> `npm publish`
-      # can exchange the GitHub OIDC token for a registry publish token instead
-      # of falling back to NPM_TOKEN auth.
-      - name: Upgrade npm for OIDC trusted publishing
-        run: npm install -g npm@latest
+      # OIDC trusted publishing requires npm CLI >= 11.5.1. Pin to the 11.x
+      # line: `npm@latest` became npm 12, which requires node >= 24.15 and
+      # fails on .nvmrc's 24.13 (EBADENGINE) — that single failing step blocked
+      # every develop release (incl. docs deploys) from 2026-07-10 to -13.
+      - name: Ensure npm CLI supports OIDC trusted publishing
+        run: npm install -g npm@11
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
@@ -52,17 +56,23 @@ jobs:
       - name: Build Docs
         run: pnpm docs:build
 
-      - name: Deploy to Vercel Production
-        uses: amondnet/vercel-action@v25
-        id: vercel-deploy
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-version: latest
-          vercel-args: '--prod'
-          working-directory: ./
-          scope: ${{ secrets.VERCEL_ORG_ID }}
+      # Publishes the built docs site (grundtone.com architecture decision:
+      # docs.grundtone.com = Bunny Edge Storage + Pull Zone, replacing Vercel
+      # — see infra/docs/BUNNY-SETUP.md + infra/docs/MASTER-PLAN.md #3).
+      # Skips cleanly (exit 0) until [infra] provisions the zone and sets the
+      # secrets below; runs on every push to develop, independent of whether
+      # any package was released this run (a docs-only content change should
+      # still deploy).
+      - name: Publish docs to Bunny
+        run: |
+          pnpm --filter @grundtone/docs publish:bunny
+        env:
+          BUNNY_DOCS_STORAGE_ZONE: ${{ secrets.BUNNY_DOCS_STORAGE_ZONE }}
+          BUNNY_DOCS_STORAGE_API_KEY: ${{ secrets.BUNNY_DOCS_STORAGE_API_KEY }}
+          BUNNY_DOCS_STORAGE_REGION: ${{ vars.BUNNY_DOCS_STORAGE_REGION }}
+          BUNNY_DOCS_STORAGE_PATH_PREFIX: ${{ vars.BUNNY_DOCS_STORAGE_PATH_PREFIX }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          SENTRY_ENVIRONMENT: ci
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
@@ -76,8 +86,16 @@ jobs:
           title: 'chore(release): version packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # No NPM_TOKEN / NODE_AUTH_TOKEN: publishing goes through GitHub OIDC
+          # trusted publishing (id-token: write above + trusted publisher config
+          # on npmjs for @grundtone/email). An empty NODE_AUTH_TOKEN here would
+          # short-circuit npm to ENEEDAUTH before it ever attempts the exchange.
+          # The runner has husky hooks installed via `pnpm install` (prepare
+          # script); changesets' push of the Version Packages branch was being
+          # killed by the pre-push tsc gate (#46's react-native errors). CI
+          # already runs every real gate as workflow jobs — git hooks are a
+          # local-dev safety net, not a CI one.
+          HUSKY: '0'
 
       - name: Generate summary
         if: steps.changesets.outputs.published == 'true'
@@ -87,3 +105,27 @@ jobs:
           echo "\`\`\`json" >> $GITHUB_STEP_SUMMARY
           echo '${{ steps.changesets.outputs.publishedPackages }}' | jq '.' >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+
+      # Publishes the compiled email-template artifacts (grundtone#6) to Bunny
+      # Edge Storage so notifications' CDNRenderer can fetch them. Only runs
+      # when @grundtone/email itself was among this release's published
+      # packages — an unrelated package bump (e.g. @grundtone/vue) shouldn't
+      # re-upload an already-current template version. publish-cdn.ts skips
+      # cleanly (exit 0) if the Bunny secrets aren't provisioned yet, so this
+      # step can land ahead of [infra] setting them up.
+      - name: Publish email templates to CDN
+        if: steps.changesets.outputs.published == 'true'
+        run: |
+          if echo '${{ steps.changesets.outputs.publishedPackages }}' | jq -e '.[] | select(.name == "@grundtone/email")' > /dev/null; then
+            pnpm --filter @grundtone/email compile:templates
+            pnpm --filter @grundtone/email publish:cdn
+          else
+            echo "@grundtone/email not in this release — skipping CDN publish."
+          fi
+        env:
+          BUNNY_STORAGE_ZONE: ${{ secrets.BUNNY_EMAIL_STORAGE_ZONE }}
+          BUNNY_STORAGE_API_KEY: ${{ secrets.BUNNY_EMAIL_STORAGE_API_KEY }}
+          BUNNY_STORAGE_REGION: ${{ vars.BUNNY_EMAIL_STORAGE_REGION }}
+          BUNNY_STORAGE_PATH_PREFIX: ${{ vars.BUNNY_EMAIL_STORAGE_PATH_PREFIX }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          SENTRY_ENVIRONMENT: ci

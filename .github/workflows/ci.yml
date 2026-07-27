@@ -21,15 +21,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: 10.14.0
           run_install: false
@@ -46,17 +46,17 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: 10.14.0
           run_install: false
@@ -67,7 +67,7 @@ jobs:
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
       - name: Setup pnpm cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ${{ env.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -81,7 +81,7 @@ jobs:
         run: pnpm build:packages
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: build-output
           path: |
@@ -96,17 +96,17 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: 10.14.0
           run_install: false
@@ -115,14 +115,36 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Download build artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: build-output
           path: packages
 
+      # Dependabot bumps deliberately carry no changeset: merging a deps bump
+      # must not force a release of the linked 2.x packages (publish-frozen on
+      # develop until the main/develop reconciliation — a lower-version publish
+      # would retag npm `latest` backwards). Failing this step also aborted the
+      # job before ESLint/typecheck ever ran, so dependabot PRs got NO lint
+      # signal at all. Skip the gate for dependabot, keep the real checks.
       - name: Check for changesets
-        if: github.base_ref == 'develop'
+        if: github.base_ref == 'develop' && github.actor != 'dependabot[bot]'
         run: pnpm changeset:status --since=origin/develop
+
+      # The published 2.x line (main-era, npm latest = 2.22/2.23) is FROZEN on
+      # develop until the main/develop reconciliation (Allan-call 2026-06-23):
+      # develop's 2.15.x versions are BEHIND npm, so versioning+publishing them
+      # from here would flip npm's `latest` tag backwards for every consumer.
+      # This guard fails any PR whose changesets touch a frozen package.
+      - name: Guard frozen 2.x packages
+        if: github.base_ref == 'develop'
+        run: |
+          FROZEN='@grundtone/(core|utils|icons|vue|design-system|nuxt|react-native)'
+          HITS=$(grep -rlE "$FROZEN" .changeset/*.md 2>/dev/null | grep -v README || true)
+          if [ -n "$HITS" ]; then
+            echo "::error::Changesets reference frozen 2.x packages (publish-frozen until main/develop reconciliation): $HITS"
+            exit 1
+          fi
+          echo "No changesets touch the frozen 2.x line."
 
       - name: Run ESLint
         run: pnpm lint:js:check
@@ -143,15 +165,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: 10.14.0
           run_install: false
@@ -160,7 +182,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Download build artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: build-output
           path: packages
@@ -172,7 +194,7 @@ jobs:
         run: pnpm test:coverage
 
       - name: Upload Test Results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: test-results
@@ -181,7 +203,7 @@ jobs:
           if-no-files-found: ignore
 
       - name: Coverage Report
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v7
         if: success() || failure()
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -196,17 +218,17 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: 10.14.0
           run_install: false
@@ -215,11 +237,18 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Download build artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: build-output
           path: packages
 
+      # Pinnet til v2 bevidst. v3 gjorde build-script required OG ændrede
+      # invocations-modellen til `exec(buildScript)` (rå kommando) + install
+      # og build af BÅDE base- og head-ref internt — inkompatibelt med dette
+      # jobs "download pre-byggede artifacts og mål dem"-design (#67's v2→v3-
+      # bump brød Bundle Size Check på al develop). At adoptere v3 kræver at
+      # redesigne jobbet (install-script/clean-script til pnpm-workspace) —
+      # bevidst udskudt. Major-bumps af denne action ignoreres i dependabot.yml.
       - name: Analyze bundle size
         uses: preactjs/compressed-size-action@v2
         with:
@@ -234,15 +263,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: 10.14.0
           run_install: false
@@ -252,59 +281,3 @@ jobs:
 
       - name: Run security audit
         run: pnpm audit --audit-level moderate
-
-  vercel-preview:
-    name: Vercel Preview Deployment
-    runs-on: ubuntu-latest
-    needs: [lint, test]
-    permissions:
-      contents: read
-      pull-requests: write
-      deployments: write
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10.14.0
-          run_install: false
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Build packages
-        run: pnpm build:packages
-
-      - name: Build docs
-        run: pnpm docs:build
-
-      - name: Deploy to Vercel Preview
-        uses: amondnet/vercel-action@v25
-        id: vercel-deploy
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-version: latest
-          working-directory: ./
-          scope: ${{ secrets.VERCEL_ORG_ID }}
-
-      - name: Comment Preview URL
-        uses: actions/github-script@v7
-        if: success()
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `✅ **Vercel Preview Deployment**\n\n🔗 **Preview URL:** ${{ steps.vercel-deploy.outputs.preview-url }}\n\n📦 **Deployment:** ${{ steps.vercel-deploy.outputs.deployment-url }}`
-            })

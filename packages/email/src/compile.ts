@@ -8,13 +8,13 @@ interface MjmlError {
   tagName?: string;
 }
 
-// The `mjml` package's render is synchronous, but @types/mjml-core mistypes it
-// as returning a Promise. Cast to the real synchronous signature.
-type SyncMjml2Html = (
+// mjml 5 renders asynchronously (returns a Promise) — the whole compile
+// chain is async accordingly.
+type Mjml2Html = (
   mjml: string,
   options?: Record<string, unknown>,
-) => { html: string; errors: MjmlError[] };
-const render = mjml2html as unknown as SyncMjml2Html;
+) => Promise<{ html: string; errors: MjmlError[] }>;
+const render = mjml2html as unknown as Mjml2Html;
 
 export interface CompileOptions {
   /** MJML validation. Defaults to `soft` (warn, don't throw). */
@@ -37,20 +37,20 @@ export interface CompileResult {
 /**
  * Compile token-themed MJML to bulletproof, responsive, CSS-inlined HTML.
  * `{{placeholders}}` in the source pass through untouched for the send-time
- * templating layer.
+ * templating layer. Async since mjml 5 (render returns a Promise).
  */
-export function compileMjml(
+export async function compileMjml(
   mjml: string,
   options: CompileOptions = {},
-): CompileResult {
-  const { html, errors } = render(mjml, {
+): Promise<CompileResult> {
+  const { html, errors } = await render(mjml, {
     validationLevel: options.validationLevel ?? 'soft',
     keepComments: false,
     ...(options.minify ? { minify: true } : {}),
   });
   return {
     html,
-    errors: errors.map(e => ({
+    errors: (errors ?? []).map(e => ({
       message: e.formattedMessage ?? e.message,
       line: e.line,
       tagName: e.tagName,

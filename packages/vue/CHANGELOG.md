@@ -1,6 +1,6 @@
 # @grundtone/vue
 
-## 2.15.0
+## 2.15.0 - 2026-07-13
 
 ### Minor Changes
 
@@ -14,7 +14,7 @@
 - Updated dependencies [366ae17]
   - @grundtone/design-system@2.15.0
 
-## 2.14.0
+## 2.14.0 - 2026-07-13
 
 ### Minor Changes
 
@@ -37,7 +37,7 @@
 - Updated dependencies [7e77c0b]
   - @grundtone/design-system@2.14.0
 
-## 2.13.0
+## 2.13.0 - 2026-07-13
 
 ### Minor Changes
 

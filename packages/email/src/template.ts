@@ -81,12 +81,15 @@ export interface CompiledTemplate {
   errors: CompileError[];
 }
 
-/** Compile a template+locale to its publishable, placeholder-bearing artifact. */
-export function compileTemplate<L extends string>(
+/**
+ * Compile a template+locale to its publishable, placeholder-bearing artifact.
+ * Async since mjml 5 (render returns a Promise).
+ */
+export async function compileTemplate<L extends string>(
   template: EmailTemplate<L>,
   locale: L,
   options: CompileTemplateOptions = {},
-): CompiledTemplate {
+): Promise<CompiledTemplate> {
   const content = template.locales[locale];
   if (!content) {
     throw new Error(`Template "${template.key}" has no locale "${locale}"`);
@@ -103,7 +106,7 @@ export function compileTemplate<L extends string>(
     lang: options.lang ?? locale,
   });
 
-  const { html, errors } = compileMjml(mjml, options.mjml);
+  const { html, errors } = await compileMjml(mjml, options.mjml);
   const text = content.text ?? toPlainText(html);
 
   return {
@@ -151,11 +154,11 @@ export function renderTemplate(
 }
 
 /** Convenience: compile then render in one step (skips the CDN artifact). */
-export function renderEmail<L extends string>(
+export async function renderEmail<L extends string>(
   template: EmailTemplate<L>,
   locale: L,
   data: Record<string, unknown> = {},
   options: CompileTemplateOptions = {},
-): RenderedEmail {
-  return renderTemplate(compileTemplate(template, locale, options), data);
+): Promise<RenderedEmail> {
+  return renderTemplate(await compileTemplate(template, locale, options), data);
 }

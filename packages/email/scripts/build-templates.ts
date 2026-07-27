@@ -55,7 +55,7 @@ for (const template of templates) {
   for (const locale of BUILTIN_LOCALES) {
     try {
       // `soft` renders AND reports validation errors (vs `strict`, which throws).
-      const compiled = compileTemplate(template, locale, {
+      const compiled = await compileTemplate(template, locale, {
         mjml: { validationLevel: 'soft' },
       });
       if (compiled.errors.length > 0) {

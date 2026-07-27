@@ -93,9 +93,7 @@ npm install @grundtone/react-native @grundtone/core
 import { GrundtoneThemeProvider } from '@grundtone/react-native';
 import { createTheme } from '@grundtone/core';
 
-const { light, dark } = createTheme({
-  /* ... */
-});
+const { light, dark } = createTheme({/* ... */});
 
 export default function App() {
   return (

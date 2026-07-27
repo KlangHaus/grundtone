@@ -253,7 +253,6 @@ When `@grundtone/vue` depends on `@grundtone/core` and `@grundtone/core` gets bu
 
 // @grundtone/core bumps from 1.0.0 to 1.1.0
 
-
 // After: @grundtone/vue bumps to 1.0.1
 ```
 
