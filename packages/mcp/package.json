@@ -1,0 +1,35 @@
+{
+  "name": "@grundtone/mcp",
+  "version": "0.1.0",
+  "description": "MCP server exposing the Grundtone design system (components, tokens, changes) to agents",
+  "license": "MIT",
+  "private": false,
+  "type": "module",
+  "bin": {
+    "grundtone-mcp": "dist/index.js"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "catalog.json"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "generate": "tsx src/catalog.ts",
+    "build": "tsc && tsx src/catalog.ts",
+    "dev": "tsx src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf .turbo node_modules dist catalog.json"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.18.0",
+    "typescript": "^5.7.3",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.17",
+    "tsx": "^4.22.4"
+  }
+}
