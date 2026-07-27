@@ -13,11 +13,5 @@
     "jsx": true
   },
   "include": ["src/**/*", "types/**/*"],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.test.ts",
-    "**/*.spec.ts",
-    "src/molecules/ThemeProvider"
-  ]
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"]
 }
