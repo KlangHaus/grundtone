@@ -171,6 +171,14 @@ export { GTConfirmDialog } from './molecules/ConfirmDialog';
 export type { ConfirmDialogProps } from './molecules/ConfirmDialog';
 export { GTCodeBlock } from './atoms/CodeBlock';
 export type { CodeBlockProps } from './atoms/CodeBlock';
+export { GTMeter } from './atoms/Meter';
+export type {
+  MeterProps,
+  MeterVariant,
+  MeterTone,
+  MeterThreshold,
+  ThresholdDirection,
+} from './atoms/Meter';
 export { GTBreadcrumb } from './molecules/Breadcrumb';
 export type { BreadcrumbProps, BreadcrumbItem } from './molecules/Breadcrumb';
 export { GTCard } from './molecules/Card';
