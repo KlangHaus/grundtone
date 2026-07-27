@@ -169,6 +169,8 @@ export { GTDrawer } from './molecules/Drawer';
 export type { DrawerProps, DrawerSide } from './molecules/Drawer';
 export { GTConfirmDialog } from './molecules/ConfirmDialog';
 export type { ConfirmDialogProps } from './molecules/ConfirmDialog';
+export { GTRichText } from './molecules/RichText';
+export type { RichTextProps, RichTextFeature } from './molecules/RichText';
 export { GTCodeBlock } from './atoms/CodeBlock';
 export type { CodeBlockProps } from './atoms/CodeBlock';
 export { GTBreadcrumb } from './molecules/Breadcrumb';
