@@ -46,7 +46,7 @@ jobs:
       contents: read
       id-token: write # OIDC trusted publishing — no long-lived NPM_TOKEN
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: develop
 
