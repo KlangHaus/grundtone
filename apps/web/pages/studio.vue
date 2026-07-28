@@ -3,15 +3,17 @@
   // grundtone-huset, ikke et frit svævende brand). Ingen priser (ikke sat) —
   // kun "per brand, ikke per bruger"-princippet + early access-CTA.
   //
-  // Early access-CTA er en mailto indtil en waitlist-endpoint findes:
-  // grundtone.com har ingen mail (null-SPF anbefalet), klanghaus.dk-mail er
-  // live på Proton — adressen skal bekræftes af Allan/[infra] før launch.
+  // Early access-CTA er en mailto indtil en waitlist-endpoint findes.
+  // hello@grundtone.com er nu fuldt live (MX på Proton, SPF/DKIM/DMARC grønt,
+  // domænet verificeret — bekræftet af [infra] 2026-07-28). Vi bruger
+  // brand-domænets adresse frem for @klanghaus.dk, så en grundtone-flade ikke
+  // eksponerer det interne org-navn.
   useHead({
     title: 'grundtone Studio — dit brand, overalt, uden at røre koden',
   });
 
   const EARLY_ACCESS_MAILTO =
-    'mailto:studio@klanghaus.dk?subject=Tidlig%20adgang%20til%20grundtone%20Studio';
+    'mailto:hello@grundtone.com?subject=Tidlig%20adgang%20til%20grundtone%20Studio';
 </script>
 
 <template>
