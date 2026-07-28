@@ -1,0 +1,89 @@
+# Prerelease "next" channel for the @grundtone/vue consumer graph.
+#
+# Ruling (b) by [infra]/CTO: publish from develop under the `next` npm dist-tag
+# WITHOUT changesets. This keeps the prerelease channel fully decoupled from the
+# changesets/freeze machinery — it never touches `latest` and never trips the
+# "Guard frozen 2.x packages" guard (that guard only evaluates changesets; this
+# path has none). The main/develop reconciliation remains the clean long-term
+# fix; `next` is the interim so studio/etude/resonans can consume the new
+# components (GTAppShell/GTDrawer/GTConfirmDialog/GTCodeBlock/GTMeter/GTRichText
+# + @grundtone/mcp) now.
+#
+# Manual-dispatch only: the first publish is outward-facing (public npm), so
+# rollout gates on an Allan-go (typing "publish" in the confirm input).
+#
+# ── [infra] REVIEW POINTS ────────────────────────────────────────────────────
+# 1. npm-auth: this uses OIDC trusted publishing (permissions.id-token: write +
+#    `--provenance`), no long-lived token — aligned with the trusted-publishing
+#    track. CONFIRM the npm trusted-publisher config for @grundtone/* covers this
+#    workflow + prerelease tag. If you prefer a token instead, drop `--provenance`,
+#    remove the id-token permission, and add `NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}`
+#    to the publish step's env.
+# 2. Package set: core/utils/icons/design-system/vue/nuxt/mcp (see
+#    scripts/prerelease-next-version.mjs). email + react-native are excluded.
+# 3. Trigger ownership: infra owns when this runs (manual for now).
+
+name: Prerelease (next)
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "publish" to confirm publishing @grundtone/*@next to npm'
+        required: true
+        type: string
+
+concurrency:
+  group: prerelease-next
+  cancel-in-progress: false
+
+jobs:
+  prerelease:
+    # Only from develop, only on explicit confirmation.
+    if: ${{ github.ref == 'refs/heads/develop' && inputs.confirm == 'publish' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # OIDC trusted publishing — no long-lived NPM_TOKEN
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: develop
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Stamp <base>-next.<run> versions
+        run: node scripts/prerelease-next-version.mjs "${{ github.run_number }}"
+
+      - name: Build the consumer graph
+        run: >-
+          pnpm turbo run build
+          --filter=@grundtone/vue
+          --filter=@grundtone/nuxt
+          --filter=@grundtone/mcp
+
+      - name: Publish @next
+        # pnpm rewrites workspace:* deps to the stamped -next version, so the
+        # published graph is self-consistent. --no-git-checks: the stamp dirties
+        # the tree on purpose. Prerelease versions never become `latest`.
+        run: >-
+          pnpm publish
+          --filter=@grundtone/core
+          --filter=@grundtone/utils
+          --filter=@grundtone/icons
+          --filter=@grundtone/design-system
+          --filter=@grundtone/vue
+          --filter=@grundtone/nuxt
+          --filter=@grundtone/mcp
+          --tag next
+          --no-git-checks
+          --access public
+          --provenance
