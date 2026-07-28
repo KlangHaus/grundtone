@@ -173,6 +173,14 @@ export { GTRichText } from './molecules/RichText';
 export type { RichTextProps, RichTextFeature } from './molecules/RichText';
 export { GTCodeBlock } from './atoms/CodeBlock';
 export type { CodeBlockProps } from './atoms/CodeBlock';
+export { GTMeter } from './atoms/Meter';
+export type {
+  MeterProps,
+  MeterVariant,
+  MeterTone,
+  MeterThreshold,
+  ThresholdDirection,
+} from './atoms/Meter';
 export { GTBreadcrumb } from './molecules/Breadcrumb';
 export type { BreadcrumbProps, BreadcrumbItem } from './molecules/Breadcrumb';
 export { GTCard } from './molecules/Card';
