@@ -159,6 +159,11 @@ export default [
       'packages/*/dist/**',
       'packages/design-system/apps/**',
       'apps/playground/*/dist/**',
+      // The Expo playground is a separate React-Native/Expo toolchain with its
+      // own eslint.config.js (eslint-config-expo). The root config's Vue/TS
+      // ruleset doesn't apply, and ESLint 10's nested-config resolution would
+      // otherwise try to load that config — kept out of the root sweep here.
+      'apps/playground/expo/**',
       'packages/vue/test-*.mjs',
     ],
   },

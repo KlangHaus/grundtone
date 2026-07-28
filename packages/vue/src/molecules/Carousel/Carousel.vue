@@ -58,7 +58,7 @@
   function goTo(index: number) {
     if (slideCount.value === 0) return;
 
-    let target = index;
+    let target: number;
     if (props.loop) {
       target =
         ((index % slideCount.value) + slideCount.value) % slideCount.value;

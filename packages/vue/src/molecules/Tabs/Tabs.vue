@@ -44,7 +44,7 @@
   function handleKeydown(event: KeyboardEvent) {
     const ids = props.tabs.map(t => t.id);
     const currentIndex = ids.indexOf(activeTab.value);
-    let nextIndex = currentIndex;
+    let nextIndex: number;
 
     switch (event.key) {
       case 'ArrowRight':
