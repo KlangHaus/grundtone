@@ -95,7 +95,7 @@ export class Tabs extends GtComponent {
     const currentIndex = this.tabs.findIndex(t => t === document.activeElement);
     if (currentIndex === -1) return;
 
-    let nextIndex: number | null = null;
+    let nextIndex: number;
 
     switch (e.key) {
       case 'ArrowRight':

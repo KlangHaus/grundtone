@@ -168,7 +168,7 @@
   // Keyboard
   function onKeydown(e: KeyboardEvent, thumb: 'low' | 'high') {
     const current = thumb === 'low' ? lowValue.value : highValue.value;
-    let next = current;
+    let next: number;
 
     switch (e.key) {
       case 'ArrowRight':

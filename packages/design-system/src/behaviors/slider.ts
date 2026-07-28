@@ -139,7 +139,7 @@ export class Slider extends GtComponent {
 
   private onKeydown(e: KeyboardEvent, thumbIndex: number): void {
     const current = this.values[thumbIndex];
-    let next = current;
+    let next: number;
 
     switch (e.key) {
       case 'ArrowRight':
