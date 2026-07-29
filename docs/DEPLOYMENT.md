@@ -33,7 +33,7 @@ The changeset prompt will ask you to:
 
 ```bash
 git commit -m "feat(ui): add new Button component variant"
-git push origin main
+git push origin develop
 ```
 
 3. **Changesets analyzes version bumps**:
@@ -44,7 +44,7 @@ git push origin main
 
 4. **GitHub Actions workflow** (`.github/workflows/release.yml`) automatically:
 
-   - Detects changesets on push to `main` branch
+   - Detects changesets on push to `develop` branch (the default/release branch)
    - Creates/updates a "Version Packages" PR
    - Generates CHANGELOGs with GitHub integration:
      - Links to commits and pull requests
@@ -87,7 +87,8 @@ pnpm version-packages
 git add .
 git commit -m "chore(release): version packages"
 
-# 6. Publish to npm (requires NPM_TOKEN)
+# 6. Publish to npm (CI uses OIDC trusted publishing — no token;
+#    local manual publish requires an npm login with publish rights)
 pnpm release
 
 # 7. Push changes and tags
@@ -508,22 +509,29 @@ jobs:
       - name: Build packages
         run: pnpm build
 
+      # npm publish runs via OIDC trusted publishing: the job has
+      # `permissions: id-token: write` and deliberately NO NPM_TOKEN — an empty
+      # NODE_AUTH_TOKEN would short-circuit npm to ENEEDAUTH. See the real
+      # workflow in .github/workflows/release.yml.
       - name: Release
         run: pnpm release
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ## 🔐 Security Considerations
 
-### NPM Token Management
+### npm Trusted Publishing (OIDC)
 
-1. **Generate NPM token** with publish permissions
-2. **Add to GitHub Secrets** as `NPM_TOKEN`
-3. **Use automation tokens** for CI/CD (not user tokens)
-4. **Rotate tokens** regularly
-5. **Restrict token scope** to specific packages
+CI publishes without any long-lived npm token: the npm org's trusted-publisher configuration
+authorises the `release.yml` workflow directly via GitHub OIDC.
+
+1. **No `NPM_TOKEN` secret exists** — do not add one; an empty `NODE_AUTH_TOKEN` makes npm fail with
+   a misleading `ENEEDAUTH`
+2. **Per-package config**: each published package needs a trusted-publisher entry (repo + workflow)
+   on npmjs.com — and note that a package's FIRST publish cannot use OIDC (bootstrap with a granular
+   token once)
+3. **Provenance**: publishes run with `--provenance` where enabled
 
 ### Package Security
 
