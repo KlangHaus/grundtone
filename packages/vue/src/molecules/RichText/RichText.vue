@@ -1,12 +1,17 @@
 <script setup lang="ts">
-  import { computed, watch, onBeforeUnmount } from 'vue';
+  import { computed, nextTick, ref, watch, onBeforeUnmount } from 'vue';
   import { getClassPrefix } from '@grundtone/core';
-  import { generateId } from '@grundtone/utils';
+  import {
+    createFocusTrap,
+    generateId,
+    type FocusTrap,
+  } from '@grundtone/utils';
   import { useEditor, EditorContent, type JSONContent } from '@tiptap/vue-3';
   import { generateHTML } from '@tiptap/html';
   import StarterKit from '@tiptap/starter-kit';
   import Placeholder from '@tiptap/extension-placeholder';
   import type { AnyExtension } from '@tiptap/core';
+  import { isSafeLinkUrl } from './link';
   import type { RichTextProps, RichTextFeature } from './types';
 
   const props = withDefaults(defineProps<RichTextProps>(), {
@@ -94,13 +99,28 @@
             id: editorId,
             class: `${base.value}__editor`,
           },
+          // ⌘/Ctrl+K opens the link popover (add or edit, depending on
+          // context) — matches the prototype's trigger contract.
+          handleKeyDown: (_view, event) => {
+            if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
+              event.preventDefault();
+              openLinkPopover();
+              return true;
+            }
+            return false;
+          },
         },
         onUpdate: ({ editor: ed }) => {
+          editorTick.value++;
           emit('update:modelValue', ed.getJSON());
           emit('update:html', ed.getHTML());
         },
         onFocus: () => emit('focus'),
         onBlur: () => emit('blur'),
+        onSelectionUpdate: () => {
+          editorTick.value++;
+          syncLinkBubble();
+        },
       });
 
   // External model changes → sync into the editor without emitting a loop.
@@ -120,34 +140,190 @@
     d => editor?.value?.setEditable(!d),
   );
 
-  onBeforeUnmount(() => editor?.value?.destroy());
+  onBeforeUnmount(() => {
+    linkTrap?.deactivate();
+    editor?.value?.destroy();
+  });
 
-  // ── Toolbar ────────────────────────────────────────────────────────────────
-  interface ToolItem {
-    feature: RichTextFeature;
-    label: string;
-    text: string;
-    isActive: () => boolean;
-    run: () => void;
-  }
+  // TipTap transactions don't invalidate Vue computeds on their own — the
+  // tick is bumped on every update/selection change so canLink + the
+  // toolbar's active states re-evaluate.
+  const editorTick = ref(0);
 
   function ed() {
     return editor?.value ?? null;
   }
 
-  function promptLink() {
+  // Public escape hatch: consumers (and tests) get the underlying TipTap
+  // editor for programmatic control — standard for TipTap wrappers.
+  defineExpose({ editor });
+
+  // ── Link popover + bubble (iteration 2, designer anatomy:
+  //    docs/design/grundtone/prototypes/gtrichtext-link-popover.html) ────────
+  //
+  // Popover = the ONE deliberate focus trap in GTRichText (spec §a11y): focus
+  // moves into the URL field on open, Tab cycles inside, Enter applies,
+  // Escape closes and returns focus to the selection. The compact bubble
+  // (caret inside an existing link) is NOT trapped — its ✎ opens the trapped
+  // popover.
+  const rootEl = ref<HTMLElement | null>(null);
+  const popoverEl = ref<HTMLElement | null>(null);
+  const urlInputEl = ref<HTMLInputElement | null>(null);
+
+  const linkPopover = ref<{
+    open: boolean;
+    mode: 'add' | 'edit';
+    url: string;
+    text: string;
+    newTab: boolean;
+    showError: boolean;
+  }>({
+    open: false,
+    mode: 'add',
+    url: '',
+    text: '',
+    newTab: false,
+    showError: false,
+  });
+
+  const bubble = ref<{ open: boolean; href: string }>({
+    open: false,
+    href: '',
+  });
+  const overlayPos = ref({ top: 0, left: 0 });
+  let linkTrap: FocusTrap | null = null;
+
+  const urlIsValid = computed(() => isSafeLinkUrl(linkPopover.value.url));
+
+  const canLink = computed(() => {
+    void editorTick.value;
+    const e = ed();
+    if (!e) return false;
+    return e.isActive('link') || !e.state.selection.empty;
+  });
+
+  function positionOverlayAtSelection() {
+    const e = ed();
+    const root = rootEl.value;
+    if (!e || !root) return;
+    // coordsAtPos needs real layout APIs (getClientRects) — absent in
+    // non-browser environments (tests/SSR hydration edge). Fall back to the
+    // toolbar anchor instead of crashing the overlay open.
+    try {
+      const coords = e.view.coordsAtPos(e.state.selection.from);
+      const rect = root.getBoundingClientRect();
+      overlayPos.value = {
+        top: coords.bottom - rect.top + 6,
+        left: Math.max(8, coords.left - rect.left),
+      };
+    } catch {
+      overlayPos.value = { top: 44, left: 8 };
+    }
+  }
+
+  function syncLinkBubble() {
+    const e = ed();
+    if (!e || linkPopover.value.open) return;
+    if (e.isActive('link') && e.state.selection.empty) {
+      bubble.value = { open: true, href: e.getAttributes('link').href ?? '' };
+      positionOverlayAtSelection();
+    } else {
+      bubble.value.open = false;
+    }
+  }
+
+  function openLinkPopover() {
+    const e = ed();
+    if (!e || !canLink.value) return;
+    bubble.value.open = false;
+    const editing = e.isActive('link');
+    const attrs = editing ? e.getAttributes('link') : {};
+    linkPopover.value = {
+      open: true,
+      mode: editing ? 'edit' : 'add',
+      url: (attrs.href as string) ?? '',
+      text: '',
+      newTab: attrs.target === '_blank',
+      showError: false,
+    };
+    positionOverlayAtSelection();
+    nextTick(() => {
+      urlInputEl.value?.focus();
+      if (popoverEl.value) {
+        linkTrap = createFocusTrap(popoverEl.value);
+        linkTrap.activate();
+      }
+    });
+  }
+
+  function closeLinkPopover() {
+    linkTrap?.deactivate();
+    linkTrap = null;
+    linkPopover.value.open = false;
+    // Escape/close returns focus to the selection (prototype focus flow).
+    ed()?.commands.focus();
+  }
+
+  function applyLink() {
     const e = ed();
     if (!e) return;
-    if (e.isActive('link')) {
-      e.chain().focus().unsetLink().run();
+    if (!urlIsValid.value) {
+      linkPopover.value.showError = true;
       return;
     }
-    // v1 interim — a proper GT link-popover (focus-trapped) is the follow-up.
-    const url = window.prompt('Link-URL');
-    if (url) e.chain().focus().setLink({ href: url }).run();
+    const { url, text, newTab, mode } = linkPopover.value;
+    const attrs = {
+      href: url.trim(),
+      target: newTab ? '_blank' : null,
+      rel: newTab ? 'noopener' : null,
+    };
+    if (mode === 'edit') {
+      e.chain().focus().extendMarkRange('link').setLink(attrs).run();
+    } else if (text.trim()) {
+      // Custom text replaces the selection with a linked text node.
+      e.chain()
+        .focus()
+        .insertContent({
+          type: 'text',
+          text: text.trim(),
+          marks: [{ type: 'link', attrs }],
+        })
+        .run();
+    } else {
+      e.chain().focus().setLink(attrs).run();
+    }
+    linkTrap?.deactivate();
+    linkTrap = null;
+    linkPopover.value.open = false;
+  }
+
+  function unlink() {
+    ed()?.chain().focus().extendMarkRange('link').unsetLink().run();
+    bubble.value.open = false;
+  }
+
+  function onPopoverKeydown(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      event.stopPropagation();
+      closeLinkPopover();
+    } else if (event.key === 'Enter') {
+      event.preventDefault();
+      applyLink();
+    }
+  }
+
+  // ── Toolbar (roving tabindex: ONE tab stop, arrows move) ─────────────────
+  interface ToolItem {
+    feature: RichTextFeature;
+    label: string;
+    text: string;
+    isActive: () => boolean;
+    isDisabled?: () => boolean;
+    run: () => void;
   }
 
   const tools = computed<ToolItem[]>(() => {
+    void editorTick.value;
     const e = ed();
     const items: ToolItem[] = [];
     if (has('bold'))
@@ -212,14 +388,46 @@
         label: 'Link',
         text: '🔗',
         isActive: () => !!e?.isActive('link'),
-        run: promptLink,
+        isDisabled: () => !canLink.value,
+        run: openLinkPopover,
       });
     return items;
   });
+
+  const rovingIndex = ref(0);
+  const toolbarEl = ref<HTMLElement | null>(null);
+
+  function onToolbarKeydown(event: KeyboardEvent) {
+    const count = tools.value.length;
+    if (count === 0) return;
+    let next: number;
+    switch (event.key) {
+      case 'ArrowRight':
+        next = (rovingIndex.value + 1) % count;
+        break;
+      case 'ArrowLeft':
+        next = (rovingIndex.value - 1 + count) % count;
+        break;
+      case 'Home':
+        next = 0;
+        break;
+      case 'End':
+        next = count - 1;
+        break;
+      default:
+        return;
+    }
+    event.preventDefault();
+    rovingIndex.value = next;
+    const buttons =
+      toolbarEl.value?.querySelectorAll<HTMLButtonElement>('button');
+    buttons?.[next]?.focus();
+  }
 </script>
 
 <template>
   <div
+    ref="rootEl"
     :class="[
       base,
       {
@@ -235,10 +443,12 @@
     <!-- Editable: toolbar + live editor. -->
     <template v-else>
       <div
+        ref="toolbarEl"
         :class="`${base}__toolbar`"
         role="toolbar"
         aria-label="Formatering"
         :aria-controls="editorId"
+        @keydown="onToolbarKeydown"
       >
         <button
           v-for="(t, i) in tools"
@@ -250,8 +460,10 @@
           ]"
           :aria-label="t.label"
           :aria-pressed="t.isActive() ? 'true' : 'false'"
-          :disabled="disabled"
+          :disabled="disabled || t.isDisabled?.()"
+          :tabindex="i === rovingIndex ? 0 : -1"
           @click="t.run"
+          @focus="rovingIndex = i"
         >
           {{ t.text }}
         </button>
@@ -261,6 +473,103 @@
         :editor="editor"
         :class="`${base}__content`"
       />
+
+      <!-- Compact bubble: caret inside an existing link (not focus-trapped;
+           ✎ opens the trapped popover). -->
+      <div
+        v-if="bubble.open && !linkPopover.open"
+        :class="`${base}__bubble`"
+        :style="{ top: `${overlayPos.top}px`, left: `${overlayPos.left}px` }"
+      >
+        <span :class="`${base}__bubble-href`">{{ bubble.href }}</span>
+        <a
+          :class="`${base}__bubble-action`"
+          :href="bubble.href"
+          target="_blank"
+          rel="noopener"
+          aria-label="Åbn link i nyt faneblad"
+          >↗</a
+        >
+        <button
+          type="button"
+          :class="`${base}__bubble-action`"
+          aria-label="Redigér link"
+          @click="openLinkPopover"
+        >
+          ✎
+        </button>
+        <button
+          type="button"
+          :class="`${base}__bubble-action`"
+          aria-label="Fjern link"
+          @click="unlink"
+        >
+          ⛓️‍💥
+        </button>
+      </div>
+
+      <!-- Link popover: the ONE deliberate focus trap. -->
+      <div
+        v-if="linkPopover.open"
+        ref="popoverEl"
+        :class="`${base}__popover`"
+        :style="{ top: `${overlayPos.top}px`, left: `${overlayPos.left}px` }"
+        role="dialog"
+        aria-label="Link"
+        @keydown="onPopoverKeydown"
+      >
+        <label :class="`${base}__popover-field`">
+          <span>URL</span>
+          <input
+            ref="urlInputEl"
+            v-model="linkPopover.url"
+            type="text"
+            :class="`${base}__popover-input`"
+            placeholder="https://…"
+            :aria-invalid="
+              linkPopover.showError && !urlIsValid ? 'true' : 'false'
+            "
+          />
+        </label>
+        <p
+          v-if="linkPopover.showError && !urlIsValid"
+          :class="`${base}__popover-error`"
+          role="alert"
+        >
+          ⚠ Ugyldig URL — skal starte med https:// eller /
+        </p>
+        <label
+          v-if="linkPopover.mode === 'add'"
+          :class="`${base}__popover-field`"
+        >
+          <span>Tekst (valgfri — bruger selektionen)</span>
+          <input
+            v-model="linkPopover.text"
+            type="text"
+            :class="`${base}__popover-input`"
+          />
+        </label>
+        <label :class="`${base}__popover-check`">
+          <input v-model="linkPopover.newTab" type="checkbox" />
+          <span>Åbn i nyt faneblad <small>(rel=noopener)</small></span>
+        </label>
+        <div :class="`${base}__popover-actions`">
+          <button
+            type="button"
+            :class="`${base}__popover-btn`"
+            @click="closeLinkPopover"
+          >
+            Annullér
+          </button>
+          <button
+            type="button"
+            :class="[`${base}__popover-btn`, `${base}__popover-btn--primary`]"
+            @click="applyLink"
+          >
+            {{ linkPopover.mode === 'edit' ? 'Gem link' : 'Tilføj link' }}
+          </button>
+        </div>
+      </div>
     </template>
   </div>
 </template>
@@ -269,6 +578,7 @@
   $prefix: 'gt' !default;
 
   .#{$prefix}-rich-text {
+    position: relative;
     border: 1px solid tokens.color('border-medium');
     border-radius: tokens.radius('md');
     background: tokens.color('surface-raised');
@@ -295,6 +605,11 @@
 
       &:hover {
         background: tokens.color('surface-alt');
+      }
+
+      &:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
       }
 
       &--active {
@@ -329,6 +644,134 @@
         float: inline-start;
         block-size: 0;
         pointer-events: none;
+      }
+    }
+
+    // Link bubble + popover share the anchored-overlay recipe (surface +
+    // border + shadow tokens; z-index on the dropdown tier).
+    &__bubble,
+    &__popover {
+      position: absolute;
+      z-index: tokens.z-index('dropdown');
+      background: tokens.color('surface-raised');
+      border: 1px solid tokens.color('border-medium');
+      border-radius: tokens.radius('md');
+      box-shadow: tokens.shadow('lg');
+    }
+
+    &__bubble {
+      display: flex;
+      align-items: center;
+      gap: tokens.space('xs');
+      padding: tokens.space('xs') tokens.space('sm');
+      font-size: tokens.font-size('sm');
+    }
+
+    &__bubble-href {
+      font-family: tokens.font-family('mono');
+      color: tokens.color('text-secondary');
+      max-inline-size: 16rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &__bubble-action {
+      border: none;
+      background: none;
+      cursor: pointer;
+      padding: 0 tokens.space('2xs');
+      color: tokens.color('text');
+      text-decoration: none;
+      border-radius: tokens.radius('sm');
+
+      &:hover {
+        background: tokens.color('surface-alt');
+      }
+
+      &:focus-visible {
+        outline: 2px solid tokens.color('focus');
+        outline-offset: 1px;
+      }
+    }
+
+    &__popover {
+      display: flex;
+      flex-direction: column;
+      gap: tokens.space('sm');
+      padding: tokens.space('md');
+      min-inline-size: 18rem;
+    }
+
+    &__popover-field {
+      display: flex;
+      flex-direction: column;
+      gap: tokens.space('2xs');
+      font-size: tokens.font-size('sm');
+      font-weight: 600;
+    }
+
+    &__popover-input {
+      padding: tokens.space('xs') tokens.space('sm');
+      border: 1px solid tokens.color('border-medium');
+      border-radius: tokens.radius('sm');
+      background: tokens.color('surface');
+      color: tokens.color('text');
+      font-size: tokens.font-size('sm');
+
+      // Focus recipe — identical to GT-input.
+      &:focus-visible {
+        outline: none;
+        border-color: tokens.color('primary');
+        box-shadow: 0 0 0 3px tokens.color('focus-ring');
+      }
+
+      &[aria-invalid='true'] {
+        border-color: tokens.color('error');
+      }
+    }
+
+    &__popover-error {
+      margin: 0;
+      color: tokens.color('error');
+      font-size: tokens.font-size('sm');
+    }
+
+    &__popover-check {
+      display: flex;
+      align-items: center;
+      gap: tokens.space('xs');
+      font-size: tokens.font-size('sm');
+    }
+
+    &__popover-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: tokens.space('xs');
+    }
+
+    &__popover-btn {
+      padding: tokens.space('xs') tokens.space('md');
+      border: 1px solid tokens.color('border-medium');
+      border-radius: tokens.radius('sm');
+      background: none;
+      color: tokens.color('text');
+      font-size: tokens.font-size('sm');
+      cursor: pointer;
+
+      &:hover {
+        background: tokens.color('surface-alt');
+      }
+
+      &:focus-visible {
+        outline: 2px solid tokens.color('focus');
+        outline-offset: 2px;
+      }
+
+      &--primary {
+        background: tokens.color('primary');
+        border-color: tokens.color('primary');
+        color: var(--color-on-primary, #fff);
       }
     }
 
