@@ -3,8 +3,9 @@ import { magicLink } from './magic-link';
 import { verifyEmail } from './verify-email';
 import { orgInvite } from './org-invite';
 import { invoice } from './invoice';
+import { viesVerificationFailed } from './vies-verification-failed';
 
-export { magicLink, verifyEmail, orgInvite, invoice };
+export { magicLink, verifyEmail, orgInvite, invoice, viesVerificationFailed };
 
 /** Locales every built-in template ships. */
 export type BuiltinLocale = 'da' | 'en';
@@ -16,4 +17,5 @@ export const templates: EmailTemplate<BuiltinLocale>[] = [
   verifyEmail,
   orgInvite,
   invoice,
+  viesVerificationFailed,
 ];
