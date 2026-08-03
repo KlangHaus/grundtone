@@ -12,13 +12,16 @@
 # Manual-dispatch only: the first publish is outward-facing (public npm), so
 # rollout gates on an Allan-go (typing "publish" in the confirm input).
 #
-# ── [infra] REVIEW POINTS ────────────────────────────────────────────────────
-# 1. npm-auth: this uses OIDC trusted publishing (permissions.id-token: write +
-#    `--provenance`), no long-lived token — aligned with the trusted-publishing
-#    track. CONFIRM the npm trusted-publisher config for @grundtone/* covers this
-#    workflow + prerelease tag. If you prefer a token instead, drop `--provenance`,
-#    remove the id-token permission, and add `NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}`
-#    to the publish step's env.
+# ── [infra] REVIEW 2026-08-03: OPTION B VALGT ────────────────────────────────
+# npm tillader kun ÉN trusted publisher pr. pakke (valideret mod ENTRY-workflow-
+# filnavnet) — release.yml er/bliver den ene. Denne kanal kører derfor på et
+# GRANULAR AUTOMATION-TOKEN (NPM_PRERELEASE_TOKEN, Allan-provisioneret via
+# `gh secret set`): ingen provenance, ingen id-token-permission. Option A (ét
+# fælles entry-workflow for begge kanaler) er slutmålet ved main/develop-
+# rekonciliationen. NB: setup-node må IKKE få registry-url her uden token i
+# env — det skriver en .npmrc-authToken-linje der kortslutter til ENEEDAUTH
+# (samme fælde som release.yml's kommentar dokumenterer); med token SKAL
+# registry-url + NODE_AUTH_TOKEN følges ad, hvilket de gør nedenfor.
 # 2. Package set: core/utils/icons/design-system/vue/nuxt/mcp (see
 #    scripts/prerelease-next-version.mjs). email + react-native are excluded.
 # 3. Trigger ownership: infra owns when this runs (manual for now).
@@ -44,7 +47,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write # OIDC trusted publishing — no long-lived NPM_TOKEN
     steps:
       - uses: actions/checkout@v7
         with:
@@ -74,6 +76,8 @@ jobs:
         # pnpm rewrites workspace:* deps to the stamped -next version, so the
         # published graph is self-consistent. --no-git-checks: the stamp dirties
         # the tree on purpose. Prerelease versions never become `latest`.
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PRERELEASE_TOKEN }}
         run: >-
           pnpm publish
           --filter=@grundtone/core
@@ -86,4 +90,3 @@ jobs:
           --tag next
           --no-git-checks
           --access public
-          --provenance
