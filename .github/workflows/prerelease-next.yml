@@ -56,7 +56,15 @@ jobs:
 
       - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          # .nvmrc frem for en hardcodet major: repoets engines.node kræver
+          # >=24.15.0, og en pinnet 22 fejlede installen med
+          # ERR_PNPM_UNSUPPORTED_ENGINE før publish-steppet overhovedet blev
+          # nået (første rigtige kørsel, 2026-08-04). Filen er i forvejen
+          # kilden i ci.yml, så næste Node-bump følger automatisk med her.
+          node-version-file: '.nvmrc'
+          # registry-url SKAL følges ad med NODE_AUTH_TOKEN i publish-steppet
+          # (option B) — se filhovedet. Uden token ville denne linje skrive en
+          # tom authToken og kortslutte til ENEEDAUTH.
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install
