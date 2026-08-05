@@ -35,3 +35,50 @@ overrides:
   # packages/vue > vitest-axe > vitest, so force the whole family up.
   vitest@<3.2.7: '>=3.2.7'
   '@vitest/browser@<3.2.7': '>=3.2.7'
+  file-type: '>=16.5.4'
+  node-fetch: '>=2.6.7'
+  brace-expansion: '>=5.0.8'
+  esbuild: '>=0.28.1'
+  flatted: '>=3.4.2'
+  minimatch: '>=9.0.7'
+  node-forge: '>=1.4.0'
+  picomatch: '>=4.0.4'
+  serialize-javascript: '>=7.0.5'
+  srvx: '>=0.11.13'
+  yaml: '>=2.8.3'
+  html-minifier: 'npm:html-minifier-terser@^7.2.0'
+  js-cookie: '>=3.0.7'
+  defu: '>=6.1.5'
+  '@xmldom/xmldom': '>=0.8.13'
+  simple-git: '>=3.36.0'
+  fast-uri: '>=3.1.4'
+  unhead: '>=2.1.13'
+  postcss: '>=8.5.18'
+  nitropack: '>=2.13.4'
+  ws: '>=8.20.1'
+  uuid: '>=11.1.1'
+  turbo: '>=2.9.14'
+  undici: '>=6.27.0'
+  svgo: '>=4.0.2'
+  markdown-it: '>=14.2.0'
+
+# Flyttet fra package.json's `pnpm.auditConfig` (2026-08-05). pnpm læser
+# ikke længere `pnpm`-feltet i package.json, så listen havde stille været
+# uvirksom. Indholdet er UÆNDRET — dette er en genoprettelse, ikke en ny
+# beslutning om hvad vi ignorerer.
+auditConfig:
+  ignoreCves:
+    - CVE-2026-33128
+    - CVE-2026-33131
+    - CVE-2026-33490
+  ignoreGhsas:
+    - GHSA-4hxc-9384-m385
+    - GHSA-q5pr-72pq-83v3
+    - GHSA-wr4h-v87w-p3r7
+    - GHSA-xffm-g5w8-qvg7
+    - GHSA-r5fr-rjxr-66jc
+    - GHSA-f23m-r3pf-42rh
+    - GHSA-45h5-66jx-r2wf
+    - GHSA-v2wj-q39q-566r
+    - GHSA-p9ff-h696-f583
+    - GHSA-4w7w-66w2-5vf9
