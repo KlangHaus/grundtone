@@ -70,6 +70,23 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
+      # 🔴 HÅRD GATE — dette er leddet der ikke kan fortrydes.
+      #
+      # Ligger FØR stemplingen med vilje: den skal måle det, git siger, ikke
+      # det, stemplingen lige har skrevet. Der er et tilsvarende check på
+      # develop-PRs (ci.yml), men det er den tidlige advarsel — dette her er
+      # det der forhindrer et forbigået PR-check i at nå registret.
+      #
+      # Baggrund (2026-08-05): alle syv pakker var BAGUD for npm `latest`,
+      # fordi releases cuttes fra main/frozen-2.x og aldrig flyder tilbage til
+      # develop. Uden denne gate ville kørslen have publiceret fx
+      # @grundtone/vue@2.15.0-next.N mens `latest` var 2.23.3 — en kanal der
+      # udgav sig for at være ældre kode end den udgivne. Kun en EOTP-fejl på
+      # tokenet forhindrede det. npm-unpublish er 72 timer og frarådet, så
+      # den fejl ville have stået permanent.
+      - name: Gate — develop must be ahead of npm latest
+        run: node scripts/assert-develop-ahead-of-latest.mjs
+
       - name: Stamp <base>-next.<run> versions
         run: node scripts/prerelease-next-version.mjs "${{ github.run_number }}"
 

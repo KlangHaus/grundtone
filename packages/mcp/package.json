@@ -1,6 +1,6 @@
 {
   "name": "@grundtone/mcp",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "MCP server exposing the Grundtone design system (components, tokens, changes) to agents",
   "license": "MIT",
   "private": false,
