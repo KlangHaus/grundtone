@@ -100,25 +100,6 @@
     ]
   },
   "pnpm": {
-    "auditConfig": {
-      "ignoreCves": [
-        "CVE-2026-33128",
-        "CVE-2026-33131",
-        "CVE-2026-33490"
-      ],
-      "ignoreGhsas": [
-        "GHSA-4hxc-9384-m385",
-        "GHSA-q5pr-72pq-83v3",
-        "GHSA-wr4h-v87w-p3r7",
-        "GHSA-xffm-g5w8-qvg7",
-        "GHSA-r5fr-rjxr-66jc",
-        "GHSA-f23m-r3pf-42rh",
-        "GHSA-45h5-66jx-r2wf",
-        "GHSA-v2wj-q39q-566r",
-        "GHSA-p9ff-h696-f583",
-        "GHSA-4w7w-66w2-5vf9"
-      ]
-    },
     "overrides": {
       "file-type": ">=16.5.4",
       "node-fetch": ">=2.6.7",
@@ -159,7 +140,10 @@
       "brace-expansion@>=2.0.0 <2.1.4": "^2.1.4",
       "brace-expansion@>=3.0.0 <3.0.6": "^3.0.6",
       "brace-expansion@>=4.0.0 <5.0.9": "^5.0.9",
-      "hono@<4.12.34": ">=4.12.34"
+      "hono@<4.12.34": ">=4.12.34",
+      "lodash-es@<4.18.0": "^4.18.0",
+      "js-yaml@>=4.0.0 <4.3.1": "^4.3.1",
+      "nanoid@<3.3.17": "^3.3.17"
     }
   },
   "repository": "KlangHaus/grundtone",

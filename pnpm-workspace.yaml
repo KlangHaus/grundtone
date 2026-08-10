@@ -35,3 +35,27 @@ overrides:
   # packages/vue > vitest-axe > vitest, so force the whole family up.
   vitest@<3.2.7: '>=3.2.7'
   '@vitest/browser@<3.2.7': '>=3.2.7'
+
+# Vuln-accepter for `pnpm audit`. Her frem for i package.json, fordi JSON ikke
+# kan baere en begrundelse — og en accept uden begrundelse er praecis den
+# doedvaegt, denne aendring rydder ud ([jura], consent-tekster.md).
+#
+# Maalt: naar package.json IKKE har auditConfig, er det denne fil der gaelder.
+# (Har begge den, VINDER package.json — se reference-noten om prioritering.)
+auditConfig:
+  ignoreGhsas:
+    # GHSA-5p2g-fcmc-qvqq · GHSA-w3rx-r6r6-pgpr — image-size DoS i ICNS- og
+    # JXL/HEIF-parserne. **Der findes INGEN patch**: advisory'et angiver
+    # `Patched versions <0.0.0`, og npms nyeste (2.0.2) er selv saarbar. En
+    # override er derfor ikke mulig — det er ikke et valg mellem fix og accept.
+    #
+    # Naabarhed: udelukkende via apps/playground/expo -> expo -> @expo/metro
+    # -> metro. Et PLAYGROUND, der aldrig shippes, og som parser billeder, vi
+    # selv laegger ind.
+    #
+    # 🔴 EXIT: falder bort naar (a) image-size udgiver en patch, ELLER
+    # (b) expo-playgroundet fjernes. (b) er sandsynlig — produkt-taksonomien
+    # siger NativeScript, ikke Expo. Genvurdér DA, ikke paa en dato.
+    - GHSA-5p2g-fcmc-qvqq
+    - GHSA-w3rx-r6r6-pgpr
+
