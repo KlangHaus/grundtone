@@ -58,4 +58,3 @@ auditConfig:
     # siger NativeScript, ikke Expo. Genvurdér DA, ikke paa en dato.
     - GHSA-5p2g-fcmc-qvqq
     - GHSA-w3rx-r6r6-pgpr
-
