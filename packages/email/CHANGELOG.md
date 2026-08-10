@@ -1,5 +1,16 @@
 # @grundtone/email
 
+## 0.3.0 - 2026-08-05
+
+### Minor Changes
+
+- [#111](https://github.com/KlangHaus/grundtone/pull/111)
+  [`180ca8e`](https://github.com/KlangHaus/grundtone/commit/180ca8eea0beea013358f3119aba2d20b804a06a)
+  Thanks [@allanasp](https://github.com/allanasp)! - Ny skabelon `vies-verification-failed` (da+en):
+  momsnummer kunne ikke verificeres hos VIES — ruling-konform copy (ToS §5.5: 14-dages frist, ingen
+  efteropkrævning ved rettidig rettelse), deep link til /orgs/:slug/billing. Vars: fornavn,
+  momsnummer, plan_navn, org_slug.
+
 ## 0.2.0 - 2026-07-13
 
 ### Minor Changes
