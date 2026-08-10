@@ -54,7 +54,13 @@ auditConfig:
     # selv laegger ind.
     #
     # 🔴 EXIT: falder bort naar (a) image-size udgiver en patch, ELLER
-    # (b) expo-playgroundet fjernes. (b) er sandsynlig — produkt-taksonomien
-    # siger NativeScript, ikke Expo. Genvurdér DA, ikke paa en dato.
+    # (b) expo-playgroundet fjernes. Genvurdér DA, ikke paa en dato.
+    #
+    # Jeg skrev foerst, at (b) var "sandsynlig", fordi produkt-taksonomien
+    # siger NativeScript og ikke Expo. Den paastand er MAALT og holder ikke:
+    # expos sidste menneske-commit er 2026-03-22 — men nuxt-playgroundets er
+    # 2026-03-30, otte dage senere. Begge er i dvale, og dvale skelner dem
+    # ikke. Om expo-playgroundet skal fjernes, er en produktbeslutning, ingen
+    # har truffet, ikke noget der kan udledes af git-historikken.
     - GHSA-5p2g-fcmc-qvqq
     - GHSA-w3rx-r6r6-pgpr
