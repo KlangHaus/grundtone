@@ -41,48 +41,51 @@
  */
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { execFileSync } from 'node:child_process';
 import { gt } from './lib/semver-gt.mjs';
+import { lookupPublished } from './lib/npm-dist-tag.mjs';
 
 // Keep in sync with PACKAGE_DIRS in prerelease-next-version.mjs — same channel.
-const PACKAGE_DIRS = ['core', 'utils', 'icons', 'design-system', 'vue', 'nuxt', 'mcp'];
+const PACKAGE_DIRS = [
+  'core',
+  'utils',
+  'icons',
+  'design-system',
+  'vue',
+  'nuxt',
+  'mcp',
+];
 const TAG = process.env.NPM_DIST_TAG ?? 'latest';
-
-function publishedVersion(name) {
-  try {
-    return execFileSync('npm', ['view', name, `dist-tags.${TAG}`], {
-      encoding: 'utf8',
-      stdio: ['ignore', 'pipe', 'pipe'],
-    }).trim();
-  } catch {
-    return ''; // never published under this tag — nothing to be behind of
-  }
-}
 
 const failures = [];
 const rows = [];
 
 for (const dir of PACKAGE_DIRS) {
-  const pkg = JSON.parse(readFileSync(join('packages', dir, 'package.json'), 'utf8'));
+  const pkg = JSON.parse(
+    readFileSync(join('packages', dir, 'package.json'), 'utf8'),
+  );
   const local = pkg.version;
-  const published = publishedVersion(pkg.name);
+  // Kaster ved et opslag der ikke lykkedes — se lib/npm-dist-tag.mjs. Et
+  // registry-udfald må ikke kunne gøre denne gate grøn.
+  const result = lookupPublished(pkg.name, TAG);
 
-  if (!published) {
+  if (result.state === 'unpublished') {
     rows.push([pkg.name, local, '(unpublished)', 'ok']);
     continue;
   }
-  const ok = gt(local, published);
-  rows.push([pkg.name, local, published, ok ? 'ok' : 'BEHIND']);
-  if (!ok) failures.push({ name: pkg.name, local, published });
+  const ok = gt(local, result.version);
+  rows.push([pkg.name, local, result.version, ok ? 'ok' : 'BEHIND']);
+  if (!ok) failures.push({ name: pkg.name, local, published: result.version });
 }
 
-const w = (i) => Math.max(...rows.map((r) => r[i].length));
+const w = i => Math.max(...rows.map(r => r[i].length));
 const [w0, w1, w2] = [w(0), w(1), w(2)];
 console.log(
   `${'package'.padEnd(w0)}  ${'develop'.padEnd(w1)}  ${TAG.padEnd(w2)}  status`,
 );
 for (const r of rows) {
-  console.log(`${r[0].padEnd(w0)}  ${r[1].padEnd(w1)}  ${r[2].padEnd(w2)}  ${r[3]}`);
+  console.log(
+    `${r[0].padEnd(w0)}  ${r[1].padEnd(w1)}  ${r[2].padEnd(w2)}  ${r[3]}`,
+  );
 }
 
 if (failures.length === 0) {
@@ -92,7 +95,9 @@ if (failures.length === 0) {
 
 console.error(
   `\n${failures.length} package(s) are not strictly ahead of \`${TAG}\`:\n` +
-    failures.map((f) => `  ${f.name}: develop ${f.local} <= ${TAG} ${f.published}`).join('\n') +
+    failures
+      .map(f => `  ${f.name}: develop ${f.local} <= ${TAG} ${f.published}`)
+      .join('\n') +
     `\n
 The \`next\` channel stamps <develop version>-next.<id>, so publishing now
 would put \`next\` at or below \`latest\` — a prerelease that claims to be
