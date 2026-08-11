@@ -257,6 +257,35 @@ jobs:
           exclude: '{**/*.map,**/node_modules/**}'
           compression: gzip
 
+  # Fanger main→develop-driften DÉR hvor den opstår, frem for den dag vi vil
+  # udgive. Rodårsagen er ikke versionsnumre, men at releases fra
+  # main/frozen-2.x aldrig flyder tilbage til develop — så uden dette check
+  # står vi samme sted efter næste main-release. Der er en TILSVARENDE hård
+  # gate i prerelease-next.yml før publish; denne her er den tidlige advarsel,
+  # den anden er den der ikke kan omgås. Begge er nødvendige.
+  version-drift:
+    name: Version drift (develop ahead of npm latest)
+    runs-on: ubuntu-latest
+    # KUN på develop-PR'er. På main ER de udgivne versioner `latest` — main
+    # er dét, npm har fået — så "strengt højere" er per definition falsk dér,
+    # og gaten ville gøre enhver main-PR rød uden at der var noget galt.
+    # Kravet gælder develop, fordi det er develop `next` stempler fra.
+    if: github.base_ref == 'develop'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+
+      # Ingen pnpm install: scriptet læser package.json-filer og kalder
+      # `npm view`. Det holder checket hurtigt og uafhængigt af lockfilen.
+      - name: Assert every next-channel package is ahead of latest
+        run: node scripts/assert-develop-ahead-of-latest.mjs
+
   security:
     name: Security Audit
     runs-on: ubuntu-latest
