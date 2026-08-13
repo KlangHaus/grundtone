@@ -43,6 +43,13 @@ jobs:
     name: SonarQube analyse
     runs-on: ubuntu-latest
     timeout-minutes: 15
+
+    # 🔴 Job-niveau `env`, ikke kun paa scanner-steppet. `secrets`-konteksten
+    # er IKKE tilladt i et steps `if:`, saa vaerdierne skal loeftes hertil for
+    # at kunne testes nedenfor.
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
     permissions:
       contents: read
 
@@ -89,10 +96,31 @@ jobs:
           fi
           echo "lcov.info: $(wc -l < coverage/lcov.info) linjer"
 
+      # 🔴 DEPENDABOT-VAERN. Dependabot-udloeste `pull_request`-runs laeser
+      # secrets fra DEPENDABOT-scopet, ikke Actions-scopet. SONAR_TOKEN
+      # ankommer derfor TOM, scanneren fejler, og HVER ugentlig
+      # Dependabot-PR ville faa et roedt `SonarQube analyse`.
+      #
+      # **Et check der altid er roedt paa én bestemt slags PR, laerer folk at
+      # se bort fra det** — og saa er gaten reelt slaaet fra, ogsaa naar den
+      # har ret.
+      #
+      # STEP-skip, ALDRIG job-skip: et oversprunget JOB rapporterer ingen
+      # status, og goeres checket senere required, ville Dependabot-PR'er
+      # blokere paa noget der aldrig ankommer.
+      #
+      # Kanonisk form: [quality]s QUALITY-GATES.md (4ef962b), samme moenster
+      # som auth#131 og permissions#98.
       - uses: SonarSource/sonarqube-scan-action@fd88b7d7ccbaefd23d8f36f73b59db7a3d246602 # v6.0.0
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        if: ${{ env.SONAR_TOKEN != '' && env.SONAR_HOST_URL != '' }}
+
+      # Ikke pynt: uden den er et groent check paa en Dependabot-PR
+      # uskelneligt fra en ren analyse.
+      - name: Forklar hvis analysen blev udeladt
+        if: ${{ env.SONAR_TOKEN == '' || env.SONAR_HOST_URL == '' }}
+        run: |
+          echo "::notice::SonarQube sprunget over — SONAR_TOKEN/SONAR_HOST_URL er tomme."
+          echo "::notice::Groent betyder her 'ikke analyseret', IKKE 'analyseret uden fund'."
 
       # Naar checket skal GATE frem for at rapportere, fjernes kommentaren her
       # — og FOERST derefter tilfoejes "SonarQube analyse" til required checks.
