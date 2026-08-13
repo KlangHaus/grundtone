@@ -1,0 +1,22 @@
+[extend]
+useDefault = true
+
+# 🔴 Undtagelser er farlige, fordi de er tavse. Derfor: ÉN eksakt vaerdi, ikke
+# en fil og ikke et moenster.
+#
+# `generic-api-key` slaar ud paa SonarQubes projectKey, fordi den indeholder
+# en UUID og dermed har hoej entropi. Nøglen er en OFFENTLIG projekt-adresse
+# paa vores egen Sonar-instans — adgang kraever SONAR_TOKEN, som ligger i
+# GitHub Secrets og aldrig i repoet. En IDENTIFIKATOR er ikke en afsloering;
+# mekanismen er.
+#
+# Foerste udgave brugte `paths = ['sonar-project\.properties']`. Det undtog
+# HELE filen — maalt med en negativ kontrol: en indsat `ghp_…`-token i samme
+# fil blev IKKE fanget. **En undtagelse der er bredere end sin begrundelse,
+# er en slukket scanner med en kommentar ovenover.**
+#
+# Bundet til den literale vaerdi i stedet: skifter projektet nøgle, fejler
+# scanningen og nogen skal tage stilling igen. Det er med vilje.
+[allowlist]
+description = "SonarQube projectKey — offentlig identifikator, ikke en credential"
+regexes = ['''KlangHaus_grundtone_7614edb4-1c54-485f-89b0-0867d3e04552''']
