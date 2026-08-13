@@ -1,0 +1,103 @@
+# SonarQube-analyse mod vores egen instans (sonar.klanghaus.dk).
+#
+# 🔴 FIRE AFVIGELSER FRA SONARS ONBOARDING-GUIDE, alle med vilje:
+#
+# 1. FILNAVN. Guiden foreslaar `build.yml` med `name: Build`. Dette repo har
+#    ikke en build.yml, saa der er ingen kollision paa disk — men studio havde
+#    netop et job `build` og et andet job `Build`, og forskellen paa ét
+#    bogstav gjorde en roed main usynlig i fire runs. Et navn der beskriver
+#    hvad jobbet MAALER, er billigere end et der beskriver at det koerer.
+#
+# 2. `runs-on`. Guiden gav `macos-latest`, fordi dens spoergsmaal var "hvilket
+#    OS bruger du?" — det handlede om udviklermaskinen, ikke om runneren.
+#    macOS-minutter koster 10x Linux hos GitHub, og scanneren er identisk.
+#
+# 3. TRIGGER. Guiden gav kun `push` til develop, altsaa EFTER merge. Vi
+#    tilfoejer `pull_request`: et resultat der foerst opstaar efter merge er
+#    en rapport, ikke en barriere. (Samme grund til at studios image-build
+#    blev flyttet til PR-tid.)
+#
+# 4. DAEKNING. Guiden naevner den ikke. Uden et koert `test:coverage` FOER
+#    scanneren finder den ingen lcov og melder 0% — som laeses som en
+#    regression frem for en manglende konfiguration.
+#
+# Quality gate-steppet staar bevidst UDKOMMENTERET: checket rapporterer i dag,
+# det gater ikke. At goere det til en gate er en selvstaendig beslutning
+# ([quality] ejer flip-proceduren), og et job der pludselig begynder at fejle
+# uden at nogen valgte det, er den daarligste maade at indfoere en gate paa.
+
+name: SonarQube
+
+on:
+  push:
+    branches: [develop, main]
+  pull_request:
+    branches: [develop, main]
+
+concurrency:
+  group: sonar-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  sonarqube:
+    name: SonarQube analyse
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Sonar bruger historikken til at afgoere hvad der er NY kode i en
+          # aendring. Med en shallow klon ser alt nyt ud, og "new code"-
+          # maalingerne bliver meningsloese.
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10.14.0
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      # 🔴 Pakkerne SKAL bygges foerst. Testene importerer `@grundtone/core`
+      # m.fl. via workspace-links der peger paa `dist/` — i en frisk klon
+      # findes den ikke, og suiten fejlede med
+      # `Failed to resolve import "@grundtone/core"` paa 7 filer. Maalt: uden
+      # dette trin 0 lcov-filer, med det 457.
+      - name: Byg pakker
+        run: pnpm build:packages
+
+      # Skal koere FOER scanneren. Fejler suiten, vil vi hellere have et roedt
+      # test-resultat end en groen analyse uden daekningstal.
+      - name: Test med coverage
+        run: pnpm test:coverage
+
+      # Gør det aflaeseligt i loggen om lcov'en faktisk blev produceret —
+      # ellers er "0% daekning" i Sonar umuligt at skelne fra "ingen fil".
+      - name: Bekræft at lcov findes
+        run: |
+          if [ ! -s coverage/lcov.info ]; then
+            echo "::error::coverage/lcov.info mangler eller er tom — Sonar ville melde 0% uden grund"
+            exit 1
+          fi
+          echo "lcov.info: $(wc -l < coverage/lcov.info) linjer"
+
+      - uses: SonarSource/sonarqube-scan-action@fd88b7d7ccbaefd23d8f36f73b59db7a3d246602 # v6.0.0
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+      # Naar checket skal GATE frem for at rapportere, fjernes kommentaren her
+      # — og FOERST derefter tilfoejes "SonarQube analyse" til required checks.
+      # Omvendt raekkefoelge laaser PR-koeen i "Expected — waiting for status".
+      # - uses: SonarSource/sonarqube-quality-gate-action@cf038b0e0cdecfa9e56c198bbb7d21d751d62c3b # v1.2.0
+      #   timeout-minutes: 5
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
