@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import Hero from './Hero.vue';
 
@@ -65,5 +65,32 @@ describe('GTHero', () => {
     expect(all.find('.hero__eyebrow span').exists()).toBe(true);
     expect(all.find('.hero__actions button').exists()).toBe(true);
     expect(all.find('.hero__visual img').exists()).toBe(true);
+  });
+});
+
+describe('GTHero — valgfri title (slot-kontrakten)', () => {
+  it('kræver ikke title-prop når title-slotten bruges', () => {
+    const w = mount(Hero, {
+      slots: { title: 'Kun <mark>slot</mark>' },
+    });
+    expect(w.find('.hero__title').text()).toBe('Kun slot');
+    expect(w.find('.hero__title mark').text()).toBe('slot');
+  });
+});
+
+describe('GTHero — accessible-name-værn', () => {
+  it('warner når hverken title-prop eller title-slot er givet', () => {
+    const spy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    mount(Hero);
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining('[GTHero]'));
+    spy.mockRestore();
+  });
+
+  it('warner IKKE når en af delene er givet', () => {
+    const spy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    mount(Hero, { props: { title: 't' } });
+    mount(Hero, { slots: { title: 'slot' } });
+    expect(spy).not.toHaveBeenCalled();
+    spy.mockRestore();
   });
 });
