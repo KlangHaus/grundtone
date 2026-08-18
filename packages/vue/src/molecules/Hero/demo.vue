@@ -12,7 +12,6 @@
         subtitle="Runtime-tokens via CDN — kørende apps opdaterer uden ny deploy."
         background="gradient-mesh"
         :heading-level="2"
-        title="Ét designsystem, alle flader"
       >
         <template #eyebrow>
           <GTBadge variant="neutral">Open source</GTBadge>
