@@ -18,14 +18,19 @@
 
 <template>
   <div>
-    <section class="hero hero--studio">
-      <GTTag class="hero__tag">En del af grundtone open source</GTTag>
-      <h1 class="hero__title">Dit brand, overalt — uden at røre koden.</h1>
-      <p class="hero__sub">
-        Skift farver, typografi og logo på tværs af web, app og email i ét
-        visuelt interface. Live på sekunder. Per brand, ikke per bruger.
-      </p>
-      <div class="hero__actions">
+    <!-- GTHero (#128) — landing.css' lokale .hero-styles er fjernet; begge
+         sider konsumerer nu samme organism. Dansk copy her består indtil
+         [cmo] leverer engelsk kanon for /studio (Side 2 i briefen). -->
+    <GTHero
+      title="Dit brand, overalt — uden at røre koden."
+      subtitle="Skift farver, typografi og logo på tværs af web, app og email i ét visuelt interface. Live på sekunder. Per brand, ikke per bruger."
+      align="center"
+      background="gradient-mesh"
+    >
+      <template #eyebrow>
+        <GTTag label="En del af grundtone open source" />
+      </template>
+      <template #actions>
         <GTButton
           as="a"
           :href="EARLY_ACCESS_MAILTO"
@@ -34,8 +39,8 @@
         >
           Få tidlig adgang →
         </GTButton>
-      </div>
-    </section>
+      </template>
+    </GTHero>
 
     <section class="section" aria-labelledby="problem-heading">
       <h2 id="problem-heading" class="visually-hidden">Problemet</h2>
@@ -65,14 +70,14 @@
     <section class="section" aria-labelledby="who-heading">
       <h2 id="who-heading">Hvem er det til?</h2>
       <div class="cards">
-        <GTCard heading="Bureauer">
+        <GTCard title="Bureauer">
           Én klient, ét brand. Slip for at vente på dev.
         </GTCard>
-        <GTCard heading="SaaS der white-labeler">
+        <GTCard title="SaaS der white-labeler">
           Per-tenant brand ud af kassen — umuligt at bygge med build-time
           theming.
         </GTCard>
-        <GTCard heading="Produktteams">
+        <GTCard title="Produktteams">
           Design-beslutninger ét sted. Ingen token-drift på tværs af kodebaser.
         </GTCard>
       </div>
