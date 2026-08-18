@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed, useId } from 'vue';
+  import { computed, useId, useSlots } from 'vue';
   import type { HeroProps } from './types';
 
   const props = withDefaults(defineProps<HeroProps>(), {
@@ -11,6 +11,18 @@
   });
 
   const titleId = useId();
+  const slots = useSlots();
+
+  // [review]-fund på #132: med hverken prop eller slot renderes en TOM
+  // heading som sektionens aria-labelledby peger på — et landmark uden
+  // accessible name, og efter at title blev valgfri fanger Vues egen
+  // required-prop-check det ikke længere. Samme warn-mønster som GTIcon.
+  if (!props.title && !slots.title) {
+    // eslint-disable-next-line no-console
+    console.warn(
+      '[GTHero] Neither a `title` prop nor a `title` slot was given — the heading renders empty and the section has no accessible name.',
+    );
+  }
 
   const classes = computed(() => [
     'hero',
