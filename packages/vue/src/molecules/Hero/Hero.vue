@@ -3,6 +3,7 @@
   import type { HeroProps } from './types';
 
   const props = withDefaults(defineProps<HeroProps>(), {
+    title: undefined,
     subtitle: undefined,
     align: 'center',
     background: 'none',

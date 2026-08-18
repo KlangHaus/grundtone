@@ -2,8 +2,13 @@ export type HeroAlign = 'center' | 'left';
 export type HeroBackground = 'none' | 'dot-grid' | 'gradient-mesh';
 
 export interface HeroProps {
-  /** Main heading. Override with the `title` slot for partial accent colouring via `<mark>` */
-  title: string;
+  /**
+   * Main heading. Optional when the `title` slot is used (the slot enables
+   * partial accent colouring via `<mark>`) — first consumer (#130) had to
+   * write `title=""` to satisfy a prop the slot made dead. Provide one of
+   * the two; with neither, the heading renders empty and unlabelled.
+   */
+  title?: string;
   /** Supporting text under the title */
   subtitle?: string;
   /** Horizontal alignment of the content */

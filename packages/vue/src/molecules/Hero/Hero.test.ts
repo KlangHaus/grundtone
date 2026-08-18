@@ -67,3 +67,13 @@ describe('GTHero', () => {
     expect(all.find('.hero__visual img').exists()).toBe(true);
   });
 });
+
+describe('GTHero — valgfri title (slot-kontrakten)', () => {
+  it('kræver ikke title-prop når title-slotten bruges', () => {
+    const w = mount(Hero, {
+      slots: { title: 'Kun <mark>slot</mark>' },
+    });
+    expect(w.find('.hero__title').text()).toBe('Kun slot');
+    expect(w.find('.hero__title mark').text()).toBe('slot');
+  });
+});
