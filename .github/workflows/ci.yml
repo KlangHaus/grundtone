@@ -286,6 +286,41 @@ jobs:
       - name: Assert every next-channel package is ahead of latest
         run: node scripts/assert-develop-ahead-of-latest.mjs
 
+  # C8 — artefakt-bevis. At bygge i monorepoet beviser kun at TypeScript kan
+  # se filerne; denne gate pakker de 9 udgivne pakker og installerer dem fra
+  # tarballs i et TOMT projekt uden for workspacet, og verificerer at hvert
+  # deklareret entry-point baade resolver OG findes paa disk.
+  #
+  # Fandt i sin foerste koersel en aegte defekt: design-system/branding stod
+  # i exports men blev aldrig bygget — MODULE_NOT_FOUND for enhver forbruger,
+  # ogsaa fra npm. `exports` er et loefte; denne gate maaler om builden
+  # holder det. Intet sti-filter (jf. paths-ignore-laeren fra studio #213).
+  pack-smoke:
+    name: Artefakt-bevis (pack + install-smoke)
+    runs-on: ubuntu-latest
+    needs: [setup]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.14.0
+          run_install: false
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Download build artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: build-output
+          path: packages
+      - name: Pack + install-smoke
+        run: node scripts/pack-smoke.mjs
+
   security:
     name: Security Audit
     runs-on: ubuntu-latest
