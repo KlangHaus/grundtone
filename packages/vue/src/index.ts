@@ -171,6 +171,8 @@ export { GTConfirmDialog } from './molecules/ConfirmDialog';
 export type { ConfirmDialogProps } from './molecules/ConfirmDialog';
 export { GTRichText } from './molecules/RichText';
 export type { RichTextProps, RichTextFeature } from './molecules/RichText';
+export { GTHero } from './molecules/Hero';
+export type { HeroProps, HeroAlign, HeroBackground } from './molecules/Hero';
 export { GTCodeBlock } from './atoms/CodeBlock';
 export type { CodeBlockProps } from './atoms/CodeBlock';
 export { GTMeter } from './atoms/Meter';
