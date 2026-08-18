@@ -1,8 +1,16 @@
 /*
- * Landing-page layout. Design-systemet dækker komponenter og utilities, men
- * ikke marketing-site-komposition (hero, showcase-grid, sticky header) —
- * derfor dette ene, dokumenterede stylesheet. Alle farver/spacing går gennem
- * grundtone-tokens (CSS-variabler) — ingen hardcodede værdier.
+ * Landing-page layout. The design system covers components and utilities but
+ * not marketing-site composition (sticky header, section rhythm, showcase
+ * grid) — hence this one documented stylesheet. The hero itself is GTHero
+ * (design-system `_hero.scss`) as of 2026-08-04 — no local .hero styles.
+ *
+ * NOTE (bugfix 2026-08-04): this file previously referenced `--gt-color-*`
+ * variables that are defined NOWHERE — the design system emits `--color-*` /
+ * `--space-*` / `--radius-*`. Every rule silently rendered its hardcoded
+ * fallback, which happened to match the defaults, so nobody noticed — and
+ * runtime theming (applyThemeToDOM) would never have touched this CSS. All
+ * vars below now use the real token names, without fallbacks, so a silent
+ * mismatch can never look "fine" again.
  */
 
 .site {
@@ -20,88 +28,120 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  background: var(--gt-color-surface, #fff);
-  border-bottom: 1px solid var(--gt-color-border, #e5e5e5);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border-light);
 }
 
 .site-header__inner {
   display: flex;
   align-items: center;
-  gap: var(--gt-spacing-lg, 1.5rem);
+  gap: var(--space-lg);
   max-width: 72rem;
   margin: 0 auto;
-  padding: var(--gt-spacing-sm, 0.75rem) var(--gt-spacing-lg, 1.5rem);
+  padding: var(--space-sm) var(--space-lg);
 }
 
 .site-header__brand {
   font-weight: 700;
   font-size: 1.15rem;
   text-decoration: none;
-  color: var(--gt-color-text, inherit);
+  color: var(--color-text);
 }
 
 .site-header__tier {
   margin-left: 0.4rem;
   font-weight: 500;
-  color: var(--gt-color-primary, #0059b3);
+  color: var(--color-primary);
 }
 
 .site-header__links {
   display: flex;
-  gap: var(--gt-spacing-md, 1rem);
+  gap: var(--space-md);
   margin-inline-start: auto;
 }
 
 .site-header__links a {
   text-decoration: none;
-  color: var(--gt-color-text-secondary, inherit);
+  color: var(--color-text-secondary);
 }
 
 .site-header__links a:hover {
-  color: var(--gt-color-primary, #0059b3);
+  color: var(--color-primary);
 }
 
-/* ── Hero ───────────────────────────────────────────────── */
-.hero {
-  max-width: 56rem;
-  margin: 0 auto;
-  padding: clamp(3rem, 8vw, 6rem) var(--gt-spacing-lg, 1.5rem) 3rem;
-  text-align: center;
+/* ── Theme switcher (hero visual slot) ──────────────────── */
+.themesw {
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-md) var(--space-lg);
+  text-align: left;
 }
 
-.hero__tag {
-  margin-bottom: var(--gt-spacing-md, 1rem);
-}
-
-.hero__title {
-  font-size: clamp(2rem, 5vw, 3.25rem);
-  line-height: 1.15;
-  margin: 0 0 var(--gt-spacing-md, 1rem);
-}
-
-.hero__sub {
-  font-size: clamp(1.05rem, 2vw, 1.3rem);
-  color: var(--gt-color-text-secondary, inherit);
-  max-width: 40rem;
-  margin: 0 auto var(--gt-spacing-lg, 1.5rem);
-}
-
-.hero__actions {
+.themesw__row {
   display: flex;
-  gap: var(--gt-spacing-md, 1rem);
-  justify-content: center;
+  align-items: center;
+  gap: var(--space-sm);
   flex-wrap: wrap;
+  margin-bottom: var(--space-sm);
 }
 
-/* ── Sektioner ──────────────────────────────────────────── */
+.themesw__pill {
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--color-border-medium);
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.themesw__pill--on {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.themesw__pill--soon {
+  opacity: 0.45;
+  cursor: not-allowed;
+  border-style: dashed;
+}
+
+.themesw__status {
+  font-family: var(--font-family-mono);
+  font-size: 0.66rem;
+  color: var(--color-text-tertiary);
+  padding-top: var(--space-sm);
+  border-top: 1px dashed var(--color-border-light);
+}
+
+.themesw__caption {
+  font-size: 0.66rem;
+  color: var(--color-text-tertiary);
+  margin: var(--space-sm) 0 0;
+}
+
+/* ── Sections ───────────────────────────────────────────── */
 .section {
   max-width: 72rem;
   margin: 0 auto;
-  padding: clamp(2rem, 5vw, 4rem) var(--gt-spacing-lg, 1.5rem);
+  padding: clamp(2rem, 5vw, 4rem) var(--space-lg);
+}
+
+.section__eyebrow {
+  font-size: 0.69rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--color-primary);
+  margin: 0 0 0.5rem;
 }
 
 .section__lead {
-  color: var(--gt-color-text-secondary, inherit);
+  color: var(--color-text-secondary);
   max-width: 44rem;
 }
 
@@ -121,11 +161,11 @@
   margin-inline: auto;
 }
 
-/* ── Framework-showcase ─────────────────────────────────── */
+/* ── Framework showcase ─────────────────────────────────── */
 .showcase {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--gt-spacing-lg, 1.5rem);
+  gap: var(--space-lg);
   align-items: start;
 }
 
@@ -136,42 +176,107 @@
 }
 
 .showcase pre {
-  background: var(--gt-color-surface-raised, #f6f6f6);
-  border: 1px solid var(--gt-color-border, #e5e5e5);
-  border-radius: var(--gt-radius-lg, 0.75rem);
-  padding: var(--gt-spacing-md, 1rem);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
   overflow-x: auto;
   font-size: 0.85rem;
   line-height: 1.55;
 }
 
-/* ── Kort-grid ──────────────────────────────────────────── */
+/* ── Card grid ──────────────────────────────────────────── */
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-  gap: var(--gt-spacing-lg, 1.5rem);
+  gap: var(--space-lg);
 }
 
-/* ── Studio demo-placeholder ────────────────────────────── */
+/* ── Rollback micro-demo ────────────────────────────────── */
+.rollback {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  margin-top: var(--space-sm);
+  font-size: 0.72rem;
+}
+
+.rollback__state {
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-sm);
+  padding: 0.2rem 0.5rem;
+}
+
+/* ── Pricing ────────────────────────────────────────────── */
+.pricing-oss {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  background: var(--color-success-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md) var(--space-lg);
+  margin: var(--space-lg) auto;
+  max-width: 44rem;
+  text-align: left;
+}
+
+.tierrow {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: var(--space-md) 0;
+}
+
+.pricing-link {
+  font-size: 0.78rem;
+  color: var(--color-text-secondary);
+}
+
+.pricing-link a {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.pricing-link__note {
+  color: var(--color-text-tertiary);
+  font-size: 0.69rem;
+}
+
+/* ── Logo strip ─────────────────────────────────────────── */
+.logostrip {
+  display: flex;
+  gap: var(--space-xl);
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: var(--space-lg);
+  opacity: 0.75;
+  font-size: 0.81rem;
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+}
+
+/* ── Studio demo placeholder ────────────────────────────── */
 .demo-placeholder {
   display: grid;
   place-items: center;
   min-height: 18rem;
-  border: 2px dashed var(--gt-color-border, #e5e5e5);
-  border-radius: var(--gt-radius-lg, 0.75rem);
-  color: var(--gt-color-text-secondary, inherit);
+  border: 2px dashed var(--color-border-light);
+  border-radius: var(--radius-lg);
+  color: var(--color-text-secondary);
 }
 
 /* ── Footer ─────────────────────────────────────────────── */
 .site-footer {
-  border-top: 1px solid var(--gt-color-border, #e5e5e5);
-  background: var(--gt-color-surface-raised, #f6f6f6);
+  border-top: 1px solid var(--color-border-light);
+  background: var(--color-surface);
 }
 
 .site-footer__inner {
   max-width: 72rem;
   margin: 0 auto;
-  padding: var(--gt-spacing-lg, 1.5rem);
+  padding: var(--space-lg);
 }
 
 .site-footer__upsell {
@@ -182,14 +287,21 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: var(--gt-spacing-md, 1rem);
-  color: var(--gt-color-text-secondary, inherit);
+  gap: var(--space-md);
+  color: var(--color-text-secondary);
   font-size: 0.9rem;
 }
 
 .site-footer__meta-links {
   display: flex;
-  gap: var(--gt-spacing-md, 1rem);
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.site-footer__legal {
+  font-size: 0.69rem;
+  color: var(--color-text-tertiary);
+  margin-top: var(--space-sm);
 }
 
 /* ── A11y ───────────────────────────────────────────────── */

@@ -32,14 +32,17 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      htmlAttrs: { lang: 'da' },
+      // English is canonical site copy (Allan-direktiv 2026-08-04, cmo 46b3447).
+      // NB: den gamle description nævnte "React" (web) — den pakke findes ikke;
+      // rettet samtidig med sprogskiftet.
+      htmlAttrs: { lang: 'en' },
       title: 'grundtone — open source design system',
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
           name: 'description',
           content:
-            'Open source design system der fungerer i Vue, React, React Native og email på samme tid. Token-native. Framework-agnostisk.',
+            'Open source design system for Vue/Nuxt with the same tokens theming your email templates. Token-native. Framework-agnostic. Runtime theming, no rebuild.',
         },
       ],
       link: [{ rel: 'icon', type: 'image/png', href: '/favicon-32x32.png' }],

@@ -1,6 +1,7 @@
 <script setup lang="ts">
   const route = useRoute();
   const onStudio = computed(() => route.path.startsWith('/studio'));
+  const year = new Date().getFullYear();
 </script>
 
 <template>
@@ -9,22 +10,30 @@
       <!-- Sentry-mønsteret: relationen mellem OSS og tier kommunikeres som én
            diskret service-linje i footeren — begge veje. -->
       <p v-if="!onStudio" class="site-footer__upsell">
-        Vil du bruge grundtone uden at røre koden?
+        Want to edit tokens visually, without code?
         <NuxtLink to="/studio">→ grundtone Studio</NuxtLink>
       </p>
       <p v-else class="site-footer__upsell">
-        Bygget på
+        Built on
         <NuxtLink to="/">grundtone open source →</NuxtLink>
       </p>
 
       <div class="site-footer__meta">
-        <span>© {{ new Date().getFullYear() }} KlangHaus · MIT-licens</span>
+        <span>© {{ year }} KlangHaus · MIT license</span>
         <span class="site-footer__meta-links">
           <a href="https://github.com/KlangHaus/grundtone">GitHub</a>
-          <a href="https://docs.grundtone.com">Dokumentation</a>
+          <a href="https://docs.grundtone.com">Documentation</a>
           <a href="https://www.npmjs.com/package/@grundtone/vue">npm</a>
+          <a href="mailto:hello@grundtone.com">hello@grundtone.com</a>
         </span>
       </div>
+      <!-- E-handelslovens identifikationskrav ([jura], landing-forlæggets
+           runde 3): navn · geografisk adresse · e-mail · CVR. E-mailen står i
+           link-rækken ovenfor. Pre-launch: verificér at hello@ faktisk
+           modtager post (MX er verificeret, postkassen er ikke). -->
+      <p class="site-footer__legal">
+        Asp Productions ApS · CVR 36708077 · Raffinaderivej 20, 2300 København S
+      </p>
     </div>
   </footer>
 </template>

@@ -55,6 +55,11 @@
       #000 40%,
       transparent 100%
     );
+    -webkit-mask-image: radial-gradient(
+      ellipse 80% 70% at 50% 30%,
+      #000 40%,
+      transparent 100%
+    );
   }
 
   &--bg-gradient-mesh::before {
