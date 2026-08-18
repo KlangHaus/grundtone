@@ -95,7 +95,30 @@
       </p>
       <p class="section__lead">
         Har du 8 klienter, betaler du for 8 brands — uanset hvor mange på dit
-        team der arbejder i dem. Konkrete priser annonceres ved launch.
+        team der arbejder i dem.
+      </p>
+      <!-- Priserne er LÅSTE (Beslutning AI) og spejler landing-page-v2-
+           forlægget. Teksten her sagde tidligere "annonceres ved launch" —
+           en side der modsiger en låst beslutning er værre end ingen tal. -->
+      <div class="section__grid" role="list" aria-label="Prisplaner">
+        <GTCard role="listitem" heading="Free — 0 kr">
+          2 projekter. Kom i gang, ingen kort.
+        </GTCard>
+        <GTCard role="listitem" heading="Solo — 29 €/md">
+          3 brands (hård grænse).
+        </GTCard>
+        <GTCard role="listitem" heading="Studio — 59 €/md">
+          10 brands, +8 € pr. ekstra.
+        </GTCard>
+        <GTCard role="listitem" heading="Scale — 179 €/md">
+          50 brands, +5 € pr. ekstra.
+        </GTCard>
+        <GTCard role="listitem" heading="Enterprise — kontakt os">
+          SSO/SCIM, ubegrænsede brands.
+        </GTCard>
+      </div>
+      <p class="section__lead">
+        12-måneders intro-pris-garanti på alle betalte planer.
       </p>
       <GTButton as="a" :href="EARLY_ACCESS_MAILTO" variant="primary" size="lg">
         Få tidlig adgang →
