@@ -10,6 +10,10 @@
   // eksponerer det interne org-navn.
   useHead({
     title: 'grundtone Studio — dit brand, overalt, uden at røre koden',
+    // Sitets globale lang er "en" (nuxt.config), men denne side består på
+    // dansk til [cmo] leverer Side 2-kanonen — uden override læser
+    // skærmlæsere dansk tekst med engelsk stemme.
+    htmlAttrs: { lang: 'da' },
   });
 
   const EARLY_ACCESS_MAILTO =

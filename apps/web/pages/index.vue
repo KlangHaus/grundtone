@@ -104,7 +104,11 @@ b.button({ label: 'Buy ticket', href: '{{url}}' });`,
       <template #eyebrow>
         <GTBadge variant="neutral">MIT license</GTBadge>
         <GTBadge variant="neutral">npm · @grundtone/vue</GTBadge>
-        <GTBadge variant="success" dot>48 components</GTBadge>
+        <!-- "40+" i stedet for et eksakt tal: 48 var sandt da forlægget blev målt,
+             50 da PR-reviewet blev kørt — eksakte tal drifter for hver release.
+             Eksakt build-genereret tal kræver `import *` af hele pakken (dræber
+             tree-shaking på en statisk side). cmo kan overstyre formen. -->
+        <GTBadge variant="success" dot>40+ components</GTBadge>
       </template>
       <template #title>
         Change your brand <mark>in one place</mark>.<br />
