@@ -327,3 +327,145 @@
   clip: rect(0 0 0 0);
   white-space: nowrap;
 }
+
+/* ── Hero: ikon-cyklus ([designer]s forlæg hero-icon-cycle.html) ──────────────
+   Syv stablede lag med samme keyframe og forskudt animation-delay. Negative
+   delays gør at billede 1 er synligt ved load — uden dem starter siden på et
+   tomt felt i 0,6 s. Ingen JS: en JS-drevet cyklus ville flimre ved hydrering
+   på en statisk genereret side. */
+.icon-cycle {
+  position: relative;
+  width: min(100%, 360px);
+  aspect-ratio: 1;
+  margin: 0 auto var(--space-lg);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow:
+    0 30px 80px rgb(27 26 46 / 22%),
+    0 0 0 1px rgb(27 26 46 / 6%);
+}
+
+.icon-cycle img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+
+  /* 🔴 `linear` er BÆRENDE, ikke stil: to eased ramper der krydser summer
+     ikke til 1, og tile'n ville dykke i gennemsigtighed midt i hvert skift.
+     Med linear er ud-rampen præcis komplementær til ind-rampen. */
+  animation: gt-icon-cycle 21s linear infinite;
+}
+
+/* Vinduet er 3,6 s i en 21 s-cyklus med 3 s mellem lagene — altså 0,6 s
+   OVERLAP, hvor det udgående lag fader ud mens det næste fader ind.
+   Målt fejl i første udgave (2026-08-19): vinduet var 3,0 s = præcis
+   afstanden, så ramperne lå EFTER hinanden i stedet for at krydse. Resultat:
+   0,9 s under 90 % dækning og et helt gennemsigtigt billede hvert 3. sekund.
+   Et gab ser i CSS ud som et crossfade — det kan kun ses ved at måle summen
+   af lagenes opacity hen over cyklussen. */
+@keyframes gt-icon-cycle {
+  0% {
+    opacity: 0;
+  }
+
+  2.857% {
+    opacity: 1;
+  }
+
+  14.286% {
+    opacity: 1;
+  }
+
+  17.143% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.icon-cycle img:nth-child(1) {
+  animation-delay: -0.6s;
+}
+
+.icon-cycle img:nth-child(2) {
+  animation-delay: -3.6s;
+}
+
+.icon-cycle img:nth-child(3) {
+  animation-delay: -6.6s;
+}
+
+.icon-cycle img:nth-child(4) {
+  animation-delay: -9.6s;
+}
+
+.icon-cycle img:nth-child(5) {
+  animation-delay: -12.6s;
+}
+
+.icon-cycle img:nth-child(6) {
+  animation-delay: -15.6s;
+}
+
+.icon-cycle img:nth-child(7) {
+  animation-delay: -18.6s;
+}
+
+/* Frys på første billede — ikke valgfrit. */
+@media (prefers-reduced-motion: reduce) {
+  .icon-cycle img {
+    animation: none;
+    opacity: 0;
+  }
+
+  .icon-cycle img:first-child {
+    opacity: 1;
+  }
+}
+
+/* ── "Why grundtone" ([designer]s forlæg section-meaning.html) ────────────── */
+.meaning {
+  display: grid;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+@media (min-width: 48rem) {
+  .meaning {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl);
+  }
+}
+
+.meaning__origin {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.meaning__def {
+  padding: var(--space-lg);
+  border-left: 3px solid var(--color-primary);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+}
+
+.meaning__term {
+  margin: 0 0 var(--space-sm);
+  font-family: var(--font-family-mono, monospace);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.meaning__def p:last-child,
+.meaning__bridge p:last-child {
+  margin-bottom: 0;
+}
+
+.meaning__bridge {
+  margin-top: var(--space-lg);
+}
