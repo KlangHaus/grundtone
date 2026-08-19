@@ -144,6 +144,16 @@ b.button({ label: 'Buy ticket', href: '{{url}}' });`,
              påstanden om runtime-theming, lige over switcheren der beviser
              den. Ren CSS; ingen JS, ingen hydrerings-flimmer.
              Assets er vendorede WebP'er, se public/hero/VENDORED.md. -->
+        <!-- 🔴 role="img" er BEVIDST og bliver stående. Sonar flager den:
+             "Use <img> or <svg> instead of the img role to ensure
+             accessibility across all devices." Den regel er skrevet mod det
+             almindelige misbrug — role="img" på én div med et CSS-baggrunds-
+             billede, hvor et ægte <img> giver bedre semantik. Her er mønstret
+             det modsatte: SYV dekorative alt=""-lag der tilsammen er ÉT
+             logisk billede. role="img" gør netop lagene præsentationelle og
+             giver helheden ét tilgængeligt navn. Alternativet ville skjule
+             mærket helt for skærmlæsere. Vurderet med [review] 2026-08-19 mod
+             annotationens ordlyd; ret den ikke uden at genlæse den. -->
         <div
           class="icon-cycle"
           role="img"
