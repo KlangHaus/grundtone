@@ -177,7 +177,11 @@ jobs:
     # tre gange i traek paa #143, uden at testene startede. En haengning skal
     # blive en FEJL man kan genstarte ([quality] 7cf4465; samme mangel fundet i
     # 67 required jobs paa tvaers af 13 repos).
-    timeout-minutes: 15
+    #
+    # 20 og ikke 15: maalt varighed for install alene er 3,8-5,2 min, og
+    # testene tager ~2. Et jobloft skal ligge over NORMAL + varians, ellers
+    # faelder det arbejde der virker.
+    timeout-minutes: 20
     needs: [setup]
 
     steps:
@@ -214,9 +218,15 @@ jobs:
           path: ~/.cache/ms-playwright
           key: pw-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
 
+      # 🔴 10 og ikke 5: min foerste taerskel var sat paa en ANTAGELSE om at
+      # langsom == haengt. Maalt samme dag: 3,8 min (groen) og 5,2 min (faeldet
+      # af den 5-minutters graense) — installationen er legitimt langsom, ikke
+      # haengt, fordi --with-deps ogsaa henter OS-pakker. En timeout under
+      # normal-plus-varians faelder arbejde der virker; den skal ligge over,
+      # men langt under de 21 min en aegte haengning tog.
       - name: Install Playwright browsers
         if: steps.pw-cache.outputs.cache-hit != 'true'
-        timeout-minutes: 5
+        timeout-minutes: 10
         run: pnpm exec playwright install --with-deps chromium
 
       - name: Run tests with coverage

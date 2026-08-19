@@ -39,6 +39,11 @@
   max-width: 72rem;
   margin: 0 auto;
   padding: var(--space-sm) var(--space-lg);
+
+  /* Målt 2026-08-19: uden wrap er brand (140px) + links (213px) + CTA bredere
+     end en 375px-skærm, og headeren trak /studio 186px ud over kanten — dér
+     var den ENESTE årsag. */
+  flex-wrap: wrap;
 }
 
 .site-header__brand {
@@ -65,6 +70,28 @@
   display: flex;
   gap: var(--space-md);
   margin-inline-start: auto;
+}
+
+/* Under ~30rem får navigationen sin egen række under mærket, så hverken
+   logoet eller CTA'en skubbes ud. Ingen burger-menu: den ville skjule tre
+   links bag et klik uden at spare plads nok til at retfærdiggøre det.
+   [designer] kan overtage med et rigtigt mobil-nav-mønster hvis de vil. */
+@media (max-width: 30rem) {
+  .site-header__inner {
+    gap: var(--space-sm);
+    column-gap: var(--space-md);
+  }
+
+  .site-header__links {
+    order: 3;
+    width: 100%;
+    margin-inline-start: 0;
+    justify-content: flex-start;
+  }
+
+  .site-header__cta {
+    margin-inline-start: auto;
+  }
 }
 
 .site-header__links a {
@@ -174,6 +201,14 @@
   grid-template-columns: 1fr;
   gap: var(--space-lg);
   align-items: start;
+}
+
+/* 🔴 Grid-børn har min-width: auto som default, altså MIN-CONTENT-bredden.
+   For en <pre> med lange linjer er det hele linjen — så barnet voksede til
+   452px i en 327px-kolonne, og dens egen `overflow-x: auto` fik aldrig noget
+   at gøre: den havde jo plads. Målt på den live side 2026-08-19. */
+.showcase > * {
+  min-width: 0;
 }
 
 @media (min-width: 56rem) {
