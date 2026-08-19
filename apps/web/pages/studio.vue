@@ -101,19 +101,19 @@
            forlægget. Teksten her sagde tidligere "annonceres ved launch" —
            en side der modsiger en låst beslutning er værre end ingen tal. -->
       <div class="section__grid" role="list" aria-label="Prisplaner">
-        <GTCard role="listitem" heading="Free — €0">
+        <GTCard role="listitem" title="Free — €0">
           2 projekter. Kom i gang, ingen kort.
         </GTCard>
-        <GTCard role="listitem" heading="Solo — 29 €/md">
+        <GTCard role="listitem" title="Solo — 29 €/md">
           3 brands (hård grænse).
         </GTCard>
-        <GTCard role="listitem" heading="Studio — 59 €/md">
+        <GTCard role="listitem" title="Studio — 59 €/md">
           10 brands, +8 € pr. ekstra.
         </GTCard>
-        <GTCard role="listitem" heading="Scale — 179 €/md">
+        <GTCard role="listitem" title="Scale — 179 €/md">
           50 brands, +5 € pr. ekstra.
         </GTCard>
-        <GTCard role="listitem" heading="Enterprise — kontakt os">
+        <GTCard role="listitem" title="Enterprise — kontakt os">
           SSO/SCIM, ubegrænsede brands.
         </GTCard>
       </div>
