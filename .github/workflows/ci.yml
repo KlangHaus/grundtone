@@ -120,6 +120,36 @@ jobs:
           name: build-output
           path: packages
 
+      - name: Run ESLint
+        run: pnpm lint:js:check
+
+      - name: Run Stylelint
+        run: pnpm lint:styles:check
+
+      - name: Check formatting
+        run: pnpm lint:format
+
+      - name: Type check
+        run: pnpm typecheck
+
+      # 🔴 Vendorede assets FRYSER. Scriptet kan opdage det, men et script der
+      # aldrig koeres beskytter intet — praecis den klasse dets egen kommentar
+      # citerer (studio#225: en placeholder-logo overlevede maaneder, fordi
+      # ingen kunne se at kopien var gammel). [review]-fund paa #142: scriptet
+      # optraadte ingen steder i CI. Verify-tilstanden exiter 1 ved drift.
+      - name: Hero-ikoner svarer til kilden
+        run: node apps/web/scripts/vendor-hero-icons.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # 🔴 Changeset-ceremonien koerer SIDST med vilje. Den stod foerst indtil
+      # 2026-08-19, hvor en falsk roed fra frozen-2.x-guarden faeldede jobbet
+      # FOER ESLint, Stylelint, formatering, typecheck og drift-gaten — fem
+      # substantielle checks skjult af én ceremoniel. Man retter saa det gaten
+      # raaber om og opdager foerst bagefter at der laa noget under.
+      # Raekkefoelgen i et flertrins-job er ikke kun et spoergsmaal om
+      # hastighed: den afgoer hvad man overhovedet FAAR at vide, naar noget
+      # fejler. ([projektleder]s sidefund paa #146.)
       # Dependabot bumps deliberately carry no changeset: merging a deps bump
       # must not force a release of the linked 2.x packages (publish-frozen on
       # develop until the main/develop reconciliation — a lower-version publish
@@ -158,28 +188,6 @@ jobs:
             exit 1
           fi
           echo "No changesets touch the frozen 2.x line."
-
-      - name: Run ESLint
-        run: pnpm lint:js:check
-
-      - name: Run Stylelint
-        run: pnpm lint:styles:check
-
-      - name: Check formatting
-        run: pnpm lint:format
-
-      - name: Type check
-        run: pnpm typecheck
-
-      # 🔴 Vendorede assets FRYSER. Scriptet kan opdage det, men et script der
-      # aldrig koeres beskytter intet — praecis den klasse dets egen kommentar
-      # citerer (studio#225: en placeholder-logo overlevede maaneder, fordi
-      # ingen kunne se at kopien var gammel). [review]-fund paa #142: scriptet
-      # optraadte ingen steder i CI. Verify-tilstanden exiter 1 ved drift.
-      - name: Hero-ikoner svarer til kilden
-        run: node apps/web/scripts/vendor-hero-icons.mjs
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   test:
     name: Test
