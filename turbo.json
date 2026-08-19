@@ -10,7 +10,8 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".nuxt/**", ".output/**", ".vitepress/dist/**"],
       "outputLogs": "new-only",
-      "cache": true
+      "cache": true,
+      "env": ["BUILD_SHA"]
     },
     "dev": {
       "cache": false,
