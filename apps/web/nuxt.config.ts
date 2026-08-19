@@ -39,6 +39,10 @@ export default defineNuxtConfig({
       title: 'grundtone — open source design system',
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        // Build-sha i HTML'en, så deploy-smoken kan binde "sitet svarer" til
+        // "DENNE commits build er live" — ellers består smoken på enhver
+        // tidligere deploy ([review]-fund på #136). 'dev' lokalt.
+        { name: 'build-sha', content: process.env.BUILD_SHA ?? 'dev' },
         {
           name: 'description',
           content:

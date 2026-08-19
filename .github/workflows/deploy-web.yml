@@ -77,14 +77,17 @@ jobs:
       # rent tjek-ud (maalt 2026-08-19).
       - name: Build grundtone.com
         run: pnpm turbo run build --filter=./apps/web...
+        env:
+          BUILD_SHA: ${{ github.sha }}
 
       - name: Assertér at outputtet er reelt
         run: |
           out=apps/web/.output/public
           n=$(find "$out" -name 'index.html' | wc -l | tr -d ' ')
           [ "$n" -ge 2 ] || { echo "::error::kun $n index.html i $out — forventede mindst forsiden + /studio"; exit 1; }
-          grep -q 'grundtone' "$out/index.html" || { echo "::error::forsiden indeholder ikke 'grundtone' — tom skal?"; exit 1; }
-          echo "✓ $n ruter genereret"
+          grep -q "build-sha\" content=\"${GITHUB_SHA}\"" "$out/index.html" \
+            || { echo "::error::build-sha ${GITHUB_SHA} er ikke bagt ind i forsiden — smoken ville ikke kunne binde deployet til denne commit"; exit 1; }
+          echo "✓ $n ruter genereret, build-sha ${GITHUB_SHA:0:7} bagt ind"
 
       - name: Publish til Bunny Edge Storage
         run: pnpm --filter @grundtone/web publish:bunny
@@ -101,9 +104,11 @@ jobs:
       - name: Smoke mod grundtone.com
         run: |
           for i in $(seq 1 12); do
-            if curl -sf --max-time 10 https://grundtone.com/ | grep -q 'grundtone'; then
-              echo "✓ grundtone.com svarer med indhold"; exit 0
+            # Ikke "svarer der noget" men "svarer DENNE commits build". Et site fra
+            # forrige deploy svarer også 200 med ordet grundtone i.
+            if curl -sf --max-time 10 https://grundtone.com/ | grep -q "build-sha\" content=\"${GITHUB_SHA}\""; then
+              echo "✓ grundtone.com serverer build ${GITHUB_SHA:0:7}"; exit 0
             fi
             echo "venter på edge ($i/12)…"; sleep 10
           done
-          echo "::error::grundtone.com svarede ikke med indhold inden for 2 min efter publish"; exit 1
+          echo "::error::grundtone.com serverer ikke build ${GITHUB_SHA:0:7} inden for 2 min efter publish — edge-cache eller upload-fejl"; exit 1
