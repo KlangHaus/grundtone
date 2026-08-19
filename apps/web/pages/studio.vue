@@ -95,7 +95,48 @@
       </p>
       <p class="section__lead">
         Har du 8 klienter, betaler du for 8 brands — uanset hvor mange på dit
-        team der arbejder i dem. Konkrete priser annonceres ved launch.
+        team der arbejder i dem.
+      </p>
+      <!-- Priserne er LÅSTE (Beslutning AI) og spejler landing-page-v2-
+           forlægget. Teksten her sagde tidligere "annonceres ved launch" —
+           en side der modsiger en låst beslutning er værre end ingen tal. -->
+      <div class="section__grid" role="list" aria-label="Prisplaner">
+        <GTCard role="listitem" title="Free — €0">
+          2 projekter. Kom i gang, ingen kort.
+        </GTCard>
+        <GTCard role="listitem" title="Solo — 29 €/md">
+          3 brands (hård grænse).
+        </GTCard>
+        <GTCard role="listitem" title="Studio — 59 €/md">
+          10 brands, +8 € pr. ekstra.
+        </GTCard>
+        <GTCard role="listitem" title="Scale — 179 €/md">
+          50 brands, +5 € pr. ekstra.
+        </GTCard>
+        <GTCard role="listitem" title="Enterprise — kontakt os">
+          SSO/SCIM, ubegrænsede brands.
+        </GTCard>
+      </div>
+      <!-- 🔴 Garanti-formuleringen er KANONISK ([jura], vilkaars-bilaget
+           1ed4892) og bevidst snaevrere end eller lig med §6 — aldrig bredere.
+           Tre led der ikke maa falde vaek hver for sig: (1) "din plan" — §6.3(a)
+           binder garantien til PLANEN, ikke kontoen; et planskifte starter en
+           ny periode til dagspris. (2) "din foerste betalte periode" — §6.2's
+           startpunkt; "tegningstidspunktet" er IKKE det samme (proeveperiode,
+           midt-i-maaned, forsinket foerste betaling). (3) §6-henvisningen.
+           Ret ALDRIG denne tekst frit — kopiér fra bilaget. -->
+      <p class="section__lead">
+        <strong>Intro-pris-garanti:</strong> tegner du en betalt plan nu, stiger
+        prisen på <strong>din plan</strong> ikke i
+        <strong>12 måneder regnet fra din første betalte periode</strong>.
+        Betingelserne står i abonnementsvilkårenes §6.
+      </p>
+      <p class="section__lead">
+        Alle priser er ekskl. moms. Den gældende prisside er
+        <a href="https://studio.grundtone.com/plans"
+          >studio.grundtone.com/plans</a
+        >
+        — den er en del af aftalen (vilkårenes §4.1); denne side er en oversigt.
       </p>
       <GTButton as="a" :href="EARLY_ACCESS_MAILTO" variant="primary" size="lg">
         Få tidlig adgang →
