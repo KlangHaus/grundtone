@@ -11,8 +11,23 @@
 <template>
   <header class="site-header">
     <nav class="site-header__inner" aria-label="Main navigation">
-      <NuxtLink to="/" class="site-header__brand">
-        grundtone<span v-if="onStudio" class="site-header__tier">Studio</span>
+      <!-- Official wordmark (KlangHaus/public "Grundtone logo/Wordmark") — light/dark
+           variant via <picture> so the mark reads on both themes without JS. -->
+      <NuxtLink to="/" class="site-header__brand" aria-label="grundtone — home">
+        <picture>
+          <source
+            srcset="/wordmark-white.svg"
+            media="(prefers-color-scheme: dark)"
+          />
+          <img
+            src="/wordmark.svg"
+            alt="grundtone"
+            class="site-header__wordmark"
+            width="140"
+            height="30"
+          />
+        </picture>
+        <span v-if="onStudio" class="site-header__tier">Studio</span>
       </NuxtLink>
 
       <div class="site-header__links">

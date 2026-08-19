@@ -32,6 +32,26 @@ export interface LogoVariants {
   pwa192: string;
   /** PWA manifest icon (512×512) */
   pwa512: string;
+  /**
+   * Vector variants (SVG) — added 2026-08-04 with the official identity.
+   * Optional so existing consumer overrides keep type-checking.
+   */
+  /** Iconic mark: gold "g" on navy (square) */
+  iconSvg?: string;
+  /** Iconic mark, inverted (navy "g" on gold) */
+  iconInvertedSvg?: string;
+  /** Wordmark: mark + "grundtone" — default header logo */
+  wordmarkSvg?: string;
+  /** Wordmark for dark backgrounds */
+  wordmarkWhiteSvg?: string;
+  /** Wordmark, monochrome black */
+  wordmarkBlackSvg?: string;
+  /** Full lockup incl. "-a part of klanghaus" — footer / endorsed-brand use */
+  lockupFullSvg?: string;
+  /** Full lockup for dark backgrounds */
+  lockupFullWhiteSvg?: string;
+  /** Full lockup, monochrome black */
+  lockupFullBlackSvg?: string;
 }
 
 export interface BrandingConfig {
@@ -54,15 +74,26 @@ export const LOGO_VARIANT_SIZES: Record<
   appleTouchIcon: { width: 180, height: 180 },
   pwa192: { width: 192, height: 192 },
   pwa512: { width: 512, height: 512 },
+  // SVG: viewBox dimensions (aspect ratio), not pixel size
+  iconSvg: { width: 1280, height: 1280 },
+  iconInvertedSvg: { width: 1280, height: 1280 },
+  wordmarkSvg: { width: 1256.45, height: 268.2 },
+  wordmarkWhiteSvg: { width: 1256.45, height: 268.2 },
+  wordmarkBlackSvg: { width: 1256.45, height: 268.2 },
+  lockupFullSvg: { width: 1280, height: 488.63 },
+  lockupFullWhiteSvg: { width: 1280, height: 488.63 },
+  lockupFullBlackSvg: { width: 1280, height: 488.63 },
 } as const;
 
 /**
- * Default branding — Grundtone reference assets.
- * Paths are relative to `@grundtone/core/assets/`.
+ * Default branding — the OFFICIAL grundtone identity (source: KlangHaus/public,
+ * "Grundtone logo/"): gold "g" mark on navy #1b1a2e, navy/coral #e94560 blocks,
+ * gold #c4a359. grundtone is an endorsed brand — the full lockup carries
+ * "-a part of klanghaus". Paths are relative to `@grundtone/core/assets/`.
  */
 export const defaultBranding: BrandingConfig = {
   name: 'Grundtone',
-  tagline: 'A cross-platform design system',
+  tagline: 'A cross-platform design system — a part of klanghaus',
   logos: {
     primary: '@grundtone/core/assets/logo.png',
     favicon32: '@grundtone/core/assets/logo-32x32.png',
@@ -70,6 +101,14 @@ export const defaultBranding: BrandingConfig = {
     appleTouchIcon: '@grundtone/core/assets/logo-180x180.png',
     pwa192: '@grundtone/core/assets/logo-192x192.png',
     pwa512: '@grundtone/core/assets/logo-512x512.png',
+    iconSvg: '@grundtone/core/assets/logo.svg',
+    iconInvertedSvg: '@grundtone/core/assets/logo-inverted.svg',
+    wordmarkSvg: '@grundtone/core/assets/wordmark.svg',
+    wordmarkWhiteSvg: '@grundtone/core/assets/wordmark-white.svg',
+    wordmarkBlackSvg: '@grundtone/core/assets/wordmark-black.svg',
+    lockupFullSvg: '@grundtone/core/assets/lockup-full.svg',
+    lockupFullWhiteSvg: '@grundtone/core/assets/lockup-full-white.svg',
+    lockupFullBlackSvg: '@grundtone/core/assets/lockup-full-black.svg',
   },
 };
 

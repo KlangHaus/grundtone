@@ -18,6 +18,20 @@
         <NuxtLink to="/">grundtone open source →</NuxtLink>
       </p>
 
+      <!-- Full lockup incl. "-a part of klanghaus" — the endorsed-brand relation
+           belongs in the footer, once, as the identity itself says it. -->
+      <picture class="site-footer__lockup">
+        <source
+          srcset="/lockup-full-white.svg"
+          media="(prefers-color-scheme: dark)"
+        />
+        <img
+          src="/lockup-full.svg"
+          alt="grundtone — a part of klanghaus"
+          width="220"
+          height="84"
+        />
+      </picture>
       <div class="site-footer__meta">
         <span>© {{ year }} KlangHaus · MIT license</span>
         <span class="site-footer__meta-links">

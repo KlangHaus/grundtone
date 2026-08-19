@@ -42,10 +42,17 @@
 }
 
 .site-header__brand {
-  font-weight: 700;
-  font-size: 1.15rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   text-decoration: none;
   color: var(--color-text);
+}
+
+.site-header__wordmark {
+  display: block;
+  height: 1.875rem;
+  width: auto;
 }
 
 .site-header__tier {
@@ -281,6 +288,13 @@
 
 .site-footer__upsell {
   font-weight: 500;
+}
+
+.site-footer__lockup img {
+  display: block;
+  height: 5.25rem;
+  width: auto;
+  margin-bottom: var(--space-md);
 }
 
 .site-footer__meta {

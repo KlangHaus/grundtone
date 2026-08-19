@@ -49,7 +49,20 @@ export default defineNuxtConfig({
             'Open source design system for Vue/Nuxt with the same tokens theming your email templates. Token-native. Framework-agnostic. Runtime theming, no rebuild.',
         },
       ],
-      link: [{ rel: 'icon', type: 'image/png', href: '/favicon-32x32.png' }],
+      // Served from apps/web/public — copies of @grundtone/core/assets (official mark).
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '32x32',
+          href: '/favicon-32x32.png',
+        },
+        {
+          rel: 'apple-touch-icon',
+          sizes: '180x180',
+          href: '/apple-touch-icon.png',
+        },
+      ],
     },
   },
   devtools: { enabled: false },
