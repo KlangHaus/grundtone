@@ -13,7 +13,7 @@ import {
   planFor,
   renderManifest,
   sha,
-} from './vendor-hero-icons.mjs';
+} from './hero-icons.mjs';
 
 const buf = s => Buffer.from(s);
 // Kilden som scriptet ville producere den: variantnavn → indhold.
