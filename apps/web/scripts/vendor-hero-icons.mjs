@@ -36,7 +36,6 @@ import {
   QUALITY,
   VARIANTS,
   sha,
-  fileFor,
   planFor,
   renderManifest,
   fetchSource,
