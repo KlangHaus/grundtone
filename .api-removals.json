@@ -1,0 +1,7 @@
+{
+  "$comment": "Bevidst fjernede offentlige eksporter, håndhævet af scripts/assert-no-public-api-loss.mjs. En fjernelse er lovlig — den skal bare ERKLÆRES her, så den er en beslutning frem for et uheld. Alt der står her KRÆVER en major bump ved næste publish.",
+  "@grundtone/core": ["CreateThemeOverrides"],
+  "$notes": {
+    "CreateThemeOverrides": "Beskriver en ÆLDRE createTheme-form ({colors, typography, radius, transitions, spacing}). Develops createTheme tager {light, dark} — typen passer altså på ingen funktion længere, og at genindføre den ville eksportere en løgn. Fjernelsen er reel og kræver major bump; afventer Allans forsonings-beslutning (main/develop, 2026-06-23)."
+  }
+}

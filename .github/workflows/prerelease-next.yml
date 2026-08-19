@@ -97,6 +97,25 @@ jobs:
           --filter=@grundtone/nuxt
           --filter=@grundtone/mcp
 
+      # 🔴 Sidste vagt foer et publish der ikke kan goeres om (npm unpublish er
+      # 72 timer og frarådet). Version-drift-gaten ovenfor asserterer at develop
+      # er NYERE end latest — den er groen saa laenge 2.24.0 > 2.23.3, uanset
+      # hvad versionerne INDEHOLDER. Maalt 2026-08-19: den udgivne @grundtone/vue
+      # har 20 offentlige eksporter develop ikke har (GTFooter, GTHeader,
+      # GTMasonry, hele theme-typefladen, createTheme, iconRegistry). Et publish
+      # ville slette dem og levere det som en opgradering.
+      #
+      # Gaten staar HER og ikke i ci.yml med vilje: den skal blokere den farlige
+      # HANDLING, ikke alt arbejde. Et kendt tab maa ikke goere hver urelateret
+      # PR roed — men det skal vaere umuligt at UDGIVE det uden at erklaere det
+      # i .api-removals.json (og dermed vaelge en major bump).
+      #
+      # Koeres EFTER build, fordi den sammenligner bygget .d.ts mod bygget
+      # .d.ts. Sammenlignes kilde mod bygget, rapporterer den falske tab for
+      # hver `export *` — maalt: 126 falske paa foerste forsoeg.
+      - name: Intet offentligt API går tabt ved publish
+        run: node scripts/assert-no-public-api-loss.mjs
+
       - name: Publish @next
         # pnpm rewrites workspace:* deps to the stamped -next version, so the
         # published graph is self-consistent. --no-git-checks: the stamp dirties
