@@ -1,0 +1,114 @@
+# Deploy af grundtone.com (apps/web, statisk Nuxt-generate) til Bunny Edge
+# Storage. Separat fra release.yml med vilje: landing-siden skal kunne rulles
+# uden at vente paa changesets-toget, og et roedt docs-/npm-trin maa ikke
+# holde en tekstrettelse paa forsiden tilbage.
+#
+# 🔴 FAIL-LOUD, ikke skip. publish-bunny.ts exiter 0 med en advarsel naar
+# BUNNY_WEB_STORAGE_*-secrets mangler — rigtigt for et lokalt `pnpm build`,
+# forkert i et deploy-job: et groent "deploy" der ikke uploadede noget er den
+# stille-200-klasse vi har betalt for foer. Derfor asserterer jobbet at
+# secrets FINDES foer buildet overhovedet startes.
+#
+# Forudsaetninger UDEN FOR repoet ([infra] provisionerer, status 2026-08-19):
+#   - Bunny storage-zone + pull-zone for grundtone.com (findes IKKE endnu)
+#   - Actions-secrets BUNNY_WEB_STORAGE_ZONE / BUNNY_WEB_STORAGE_API_KEY
+#     (findes IKKE endnu — kun DOCS og EMAIL er sat)
+#   - DNS: grundtone.com / www opløser til INTET i dag
+# Indtil de er paa plads fejler jobbet hoejt paa assertionen — det er
+# meningen. Det maa ikke se ud som om forsiden er deployet.
+
+name: Deploy grundtone.com
+
+on:
+  push:
+    branches: [develop]
+    paths:
+      - 'apps/web/**'
+      - 'packages/**'
+      - '.github/workflows/deploy-web.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-web-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: build + publish til Bunny
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      packages: read
+    environment:
+      name: grundtone-com
+      url: https://grundtone.com
+
+    steps:
+      - name: Assertér at deploy-secrets findes (fail-loud)
+        env:
+          ZONE: ${{ secrets.BUNNY_WEB_STORAGE_ZONE }}
+          KEY: ${{ secrets.BUNNY_WEB_STORAGE_API_KEY }}
+        run: |
+          missing=""
+          [ -z "$ZONE" ] && missing="$missing BUNNY_WEB_STORAGE_ZONE"
+          [ -z "$KEY" ] && missing="$missing BUNNY_WEB_STORAGE_API_KEY"
+          if [ -n "$missing" ]; then
+            echo "::error::Mangler secrets:$missing — grundtone.com er IKKE deployet. Provisionér Bunny-zonen ([infra]) og sæt secrets på environment 'grundtone-com'."
+            exit 1
+          fi
+          echo "✓ begge Bunny-secrets er sat"
+
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10.14.0
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+
+      - run: pnpm install --frozen-lockfile
+
+      # Turbo bygger workspace-afhaengighederne (core/vue/nuxt/design-system)
+      # FOER apps/web — `nuxi generate` alene fejler paa modul-resolution i et
+      # rent tjek-ud (maalt 2026-08-19).
+      - name: Build grundtone.com
+        run: pnpm turbo run build --filter=./apps/web...
+        env:
+          BUILD_SHA: ${{ github.sha }}
+
+      - name: Assertér at outputtet er reelt
+        run: |
+          out=apps/web/.output/public
+          n=$(find "$out" -name 'index.html' | wc -l | tr -d ' ')
+          [ "$n" -ge 2 ] || { echo "::error::kun $n index.html i $out — forventede mindst forsiden + /studio"; exit 1; }
+          grep -q "build-sha\" content=\"${GITHUB_SHA}\"" "$out/index.html" \
+            || { echo "::error::build-sha ${GITHUB_SHA} er ikke bagt ind i forsiden — smoken ville ikke kunne binde deployet til denne commit"; exit 1; }
+          echo "✓ $n ruter genereret, build-sha ${GITHUB_SHA:0:7} bagt ind"
+
+      - name: Publish til Bunny Edge Storage
+        run: pnpm --filter @grundtone/web publish:bunny
+        env:
+          BUNNY_WEB_STORAGE_ZONE: ${{ secrets.BUNNY_WEB_STORAGE_ZONE }}
+          BUNNY_WEB_STORAGE_API_KEY: ${{ secrets.BUNNY_WEB_STORAGE_API_KEY }}
+          BUNNY_WEB_STORAGE_REGION: ${{ vars.BUNNY_WEB_STORAGE_REGION }}
+          BUNNY_WEB_STORAGE_PATH_PREFIX: ${{ vars.BUNNY_WEB_STORAGE_PATH_PREFIX }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          SENTRY_ENVIRONMENT: ci
+
+      # Deploy-effekt maales mod det OFFENTLIGE svar, ikke mod uploadens exit.
+      # Et tekststykke fra DENNE commit skal kunne hentes tilbage.
+      - name: Smoke mod grundtone.com
+        run: |
+          for i in $(seq 1 12); do
+            # Ikke "svarer der noget" men "svarer DENNE commits build". Et site fra
+            # forrige deploy svarer også 200 med ordet grundtone i.
+            if curl -sf --max-time 10 https://grundtone.com/ | grep -q "build-sha\" content=\"${GITHUB_SHA}\""; then
+              echo "✓ grundtone.com serverer build ${GITHUB_SHA:0:7}"; exit 0
+            fi
+            echo "venter på edge ($i/12)…"; sleep 10
+          done
+          echo "::error::grundtone.com serverer ikke build ${GITHUB_SHA:0:7} inden for 2 min efter publish — edge-cache eller upload-fejl"; exit 1
