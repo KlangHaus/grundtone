@@ -171,6 +171,13 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+    # 🔴 Uden timeout er GitHubs default 360 min. En REQUIRED check der haenger
+    # blokerer saa hver PR i op til seks timer som "pending" — hverken ja eller
+    # nej. Maalt 2026-08-19: Playwright-installationen hang 21 min paa #138 og
+    # tre gange i traek paa #143, uden at testene startede. En haengning skal
+    # blive en FEJL man kan genstarte ([quality] 7cf4465; samme mangel fundet i
+    # 67 required jobs paa tvaers af 13 repos).
+    timeout-minutes: 15
     needs: [setup]
 
     steps:
@@ -197,7 +204,19 @@ jobs:
           name: build-output
           path: packages
 
+      # Cachen fjerner den hyppigste aarsag til haengningen: selve downloaden.
+      # Foerste koersel installerer stadig — og faelder paa step-timeouten i
+      # stedet for at staa i timevis.
+      - name: Cache Playwright browsers
+        id: pw-cache
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: pw-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+
       - name: Install Playwright browsers
+        if: steps.pw-cache.outputs.cache-hit != 'true'
+        timeout-minutes: 5
         run: pnpm exec playwright install --with-deps chromium
 
       - name: Run tests with coverage
