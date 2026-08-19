@@ -19,8 +19,10 @@
  * vises ved 360 CSS-px — og sparer ~70 %: 63 KB for alle syv mod 208 KB.
  * Det tæller, fordi lagene er stablede: ALLE SYV loader ved first paint.
  *
- * Ingen PNG-fallback: enhver browser der kan rendere tile'n (aspect-ratio,
- * 2021) understøtter WebP (Safari 14, 2020) — fallbacken ville være død kode.
+ * Ingen PNG-fallback: enhver browser der kan rendere tile'n understøtter WebP.
+ * WebP kom i Safari 14 (2020), `aspect-ratio` først i Safari 15 (2021) — så
+ * kravet til layoutet er STRENGERE end kravet til formatet, og en fallback
+ * ville være død kode. ([review] rettede mig: jeg havde byttet de to årstal.)
  *
  *   node apps/web/scripts/vendor-hero-icons.mjs            # verificér
  *   node apps/web/scripts/vendor-hero-icons.mjs --write     # hent + skriv
