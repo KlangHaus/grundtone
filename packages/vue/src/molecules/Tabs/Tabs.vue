@@ -118,18 +118,33 @@
     font-size: tokens.font-size('sm');
     line-height: tokens.line-height('base');
 
+    // Uden denne kan komponenten ikke krympe som flex-/grid-barn: et
+    // min-content-bredt panel (fx en <pre> med lange linjer) presser i
+    // stedet hele siden bred.
+    min-width: 0;
+
     &__list {
       display: flex;
       gap: 0;
       margin: 0;
       padding: 0;
       list-style: none;
+
+      // 🔴 Faner der ikke passer SKAL scrolle vandret, ikke skubbe siden
+      // bred. Målt på grundtone.com 2026-08-19 ved 375px: tre faner målte
+      // 378px og trak dokumentet 111px ud over kanten. En fane-række har
+      // ingen naturlig maksbredde — konsumenten kan altid have én label for
+      // meget — så håndteringen hører til her, ikke hos hver konsument.
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
     }
 
     &__tab {
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      // Uden denne squasher flex fanerne i stedet for at scrolle.
+      flex-shrink: 0;
       gap: tokens.space('xs');
       padding: tokens.space('sm') tokens.space('md');
       min-height: 2.5rem;
@@ -163,6 +178,9 @@
     }
 
     &__panel {
+      // Bredt indhold (kodeblokke, tabeller) skal scrolle i SIT eget felt
+      // frem for at udvide panelet.
+      min-width: 0;
       padding-top: tokens.space('lg');
     }
 

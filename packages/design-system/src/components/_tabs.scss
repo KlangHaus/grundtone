@@ -4,6 +4,11 @@
 .tabs {
   font-size: var(--font-size-sm);
   line-height: var(--line-height-base);
+
+  // Uden denne kan komponenten ikke krympe som flex-/grid-barn: et
+  // min-content-bredt panel (fx en <pre> med lange linjer) presser i stedet
+  // hele siden bred. Panelets eget indhold skal scrolle, ikke layoutet.
+  min-width: 0;
 }
 
 // Tab list — the row of tab buttons
@@ -13,6 +18,20 @@
   margin: 0;
   padding: 0;
   list-style: none;
+
+  // 🔴 Faner der ikke passer SKAL scrolle vandret, ikke skubbe siden bred.
+  // Målt på grundtone.com 2026-08-19 ved 375px: tre faner målte 378px og
+  // trak hele dokumentet 111px ud over kanten. En fane-række har ingen
+  // naturlig maksbredde — konsumenten kan altid have én label for meget —
+  // så håndteringen hører til i komponenten, ikke hos hver konsument.
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.tabs__list .tabs__tab {
+  // Uden denne squasher flex fanerne i stedet for at scrolle, og labels
+  // brækker midt i et ord.
+  flex-shrink: 0;
 }
 
 // Single tab button
@@ -56,6 +75,10 @@
 // Tab panel
 .tabs__panel {
   padding-top: var(--space-lg);
+
+  // Samme grund som .tabs: bredt indhold (kodeblokke, tabeller) skal kunne
+  // scrolle i SIT eget felt frem for at udvide panelet.
+  min-width: 0;
 }
 
 // ─── Variant: underline ───
