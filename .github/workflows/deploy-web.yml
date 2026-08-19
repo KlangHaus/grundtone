@@ -75,6 +75,13 @@ jobs:
       # Turbo bygger workspace-afhaengighederne (core/vue/nuxt/design-system)
       # FOER apps/web — `nuxi generate` alene fejler paa modul-resolution i et
       # rent tjek-ud (maalt 2026-08-19).
+      # BUILD_SHA staar ogsaa i turbo.json's build-task `env` — uden den
+      # filtrerer turbo variablen vaek (strict env-mode), og forsiden bygges
+      # med `dev` i stedet for commit'ens sha. Maalt paa foerste rigtige
+      # deploy-forsoeg: assertionen herunder fangede det, foer noget blev
+      # uploadet. `env` og ikke `passThroughEnv`: sha'en SKAL indgaa i
+      # cache-noeglen, ellers kan turbo servere et cachet build med en anden
+      # commits sha bagt ind — og saa maaler smoken det forkerte deploy.
       - name: Build grundtone.com
         run: pnpm turbo run build --filter=./apps/web...
         env:
