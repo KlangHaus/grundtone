@@ -15,6 +15,21 @@
 /** Udtrækker eksporterede navne fra en index.ts/d.ts-tekst. */
 export function exportedNames(source) {
   const names = new Set();
+  // 🔴 `export * from './x'` kan denne parser ikke folde ud — den ser ingen
+  // navne og ville rapportere "intet eksporteret", altså TAVS hvor den burde
+  // larme. I dag kan det ikke ske: begge sider maales paa byggede .d.ts, og
+  // vite-plugin-dts/tsup flader stjerner ud til navngivne eksporter
+  // ([review] verificerede: nul forekomster i den genererede dist). Skulle en
+  // fremtidig build holde op med at flade dem ud, skal gaten faelde det frem
+  // for at blive stille.
+  const star = source.match(/^\s*export\s+\*(?:\s+as\s+\w+)?\s+from\s+.*$/m);
+  if (star) {
+    throw new Error(
+      `public-api: kan ikke folde en stjerne-eksport ud: ${star[0].trim()}. ` +
+        `Maal paa en bygget .d.ts, hvor den er fladet ud — ellers ville gaten se ` +
+        `faerre eksporter end der findes og tie om et reelt tab.`,
+    );
+  }
   // `export { A, B as C }` og `export type { … }`
   for (const m of source.matchAll(/export\s+(?:type\s+)?\{([^}]*)\}/g)) {
     for (const part of m[1].split(',')) {

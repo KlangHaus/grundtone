@@ -80,3 +80,18 @@ describe('type-modifikatoren', () => {
     expect(removedExports(pub, next, ['Gone'])).toEqual([]);
   });
 });
+
+describe('stjerne-eksporter', () => {
+  it('fejler HØJT frem for at tie — en parser der ser 0 navne ville skjule et tab', () => {
+    expect(() => exportedNames(`export * from './x';`)).toThrow(
+      /stjerne-eksport/,
+    );
+    expect(() => exportedNames(`export * as ns from './x';`)).toThrow(
+      /stjerne-eksport/,
+    );
+  });
+
+  it('rører ikke almindelige eksporter', () => {
+    expect([...exportedNames(`export { A } from './a';`)]).toEqual(['A']);
+  });
+});

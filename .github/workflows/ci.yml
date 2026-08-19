@@ -139,7 +139,20 @@ jobs:
         if: github.base_ref == 'develop'
         run: |
           FROZEN='@grundtone/(core|utils|icons|vue|design-system|nuxt|react-native)'
-          HITS=$(grep -rlE "$FROZEN" .changeset/*.md 2>/dev/null | grep -v README || true)
+          # 🔴 KUN frontmatteren, ikke hele filen. Gatens paastand er "intet
+          # changeset ERKLAERER en bump af en frossen pakke" — men maalingen var
+          # "ingen fil INDEHOLDER navnet nogen steder", og de to er ikke det
+          # samme. Maalt paa #146: et changeset med TOM frontmatter (altsaa nul
+          # bumps) fejlede gaten, fordi broedteksten naturligt naevnte
+          # @grundtone/vue — PR'en handlede jo om den. Og fejlen kom FOER
+          # typecheck i samme job, saa den skjulte ogsaa alt efter sig.
+          # ([review]-fund. Roed-foer-groen: prosa-omtale slipper nu igennem,
+          # en aegte bump i frontmatteren fanges fortsat.)
+          HITS=$(for f in .changeset/*.md; do
+            case "$f" in */README.md) continue ;; esac
+            awk 'NR==1 && $0=="---" { inb=1; next } inb && $0=="---" { exit } inb { print }' "$f" \
+              | grep -qE "$FROZEN" && echo "$f"
+          done || true)
           if [ -n "$HITS" ]; then
             echo "::error::Changesets reference frozen 2.x packages (publish-frozen until main/develop reconciliation): $HITS"
             exit 1
