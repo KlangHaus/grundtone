@@ -138,6 +138,46 @@ b.button({ label: 'Buy ticket', href: '{{url}}' });`,
         </GTButton>
       </template>
       <template #visual>
+        <!-- Ikon-cyklus ([designer]s forlæg hero-icon-cycle.html, Allan-
+             direktiv 2026-08-19): de syv IKKE-inverterede Iconic Mark-
+             varianter. Det er ikke pynt — samme mærke i syv farver ER
+             påstanden om runtime-theming, lige over switcheren der beviser
+             den. Ren CSS; ingen JS, ingen hydrerings-flimmer.
+             Assets er vendorede WebP'er, se public/hero/VENDORED.md. -->
+        <div
+          class="icon-cycle"
+          role="img"
+          aria-label="The grundtone mark cycling through its seven colour pairings"
+        >
+          <img src="/hero/icon-bluegold.webp" alt="" width="720" height="720" />
+          <img src="/hero/icon-bluepink.webp" alt="" width="720" height="720" />
+          <img
+            src="/hero/icon-bluewhite.webp"
+            alt=""
+            width="720"
+            height="720"
+          />
+          <img
+            src="/hero/icon-blackwhite.webp"
+            alt=""
+            width="720"
+            height="720"
+          />
+          <img
+            src="/hero/icon-goldwhite.webp"
+            alt=""
+            width="720"
+            height="720"
+          />
+          <img src="/hero/icon-pinkgold.webp" alt="" width="720" height="720" />
+          <img
+            src="/hero/icon-pinkwhite.webp"
+            alt=""
+            width="720"
+            height="720"
+          />
+        </div>
+
         <div class="themesw">
           <div
             class="themesw__row"
@@ -184,6 +224,54 @@ b.button({ label: 'Buy ticket', href: '{{url}}' });`,
         </div>
       </template>
     </GTHero>
+
+    <!-- Mening før mekanik ([designer]s forlæg section-meaning.html, Allan-
+         direktiv 2026-08-19). Definitionen er hentet fra Allans egen
+         navngivningspost, ikke opfundet. -->
+    <section class="section" aria-labelledby="meaning-heading">
+      <p class="section__eyebrow">The name</p>
+      <div class="meaning">
+        <div>
+          <h2 id="meaning-heading">Why "grundtone"?</h2>
+          <p class="section__lead">
+            Danish for <em>root note</em> — the tone every other tone in a piece
+            of music is tuned against.
+          </p>
+          <p class="meaning__origin">
+            grundtone is one of four KlangHaus open-source projects named after
+            Danish music terms, not generic tech words — a deliberate choice,
+            not a coincidence.
+          </p>
+        </div>
+        <div>
+          <div class="meaning__def">
+            <p class="meaning__term">Grundtone, n. (music theory)</p>
+            <p>
+              The fundamental frequency. The note you build the harmony on top
+              of — <em>remove it, and the chord falls apart.</em> It's invisible
+              in the finished piece, but everything sounds wrong without it.
+            </p>
+          </div>
+          <div class="meaning__bridge">
+            <p>
+              That's what a design system actually is. Not a component library —
+              <strong
+                >the tone every other tone in your product vibrates
+                from.</strong
+              >
+            </p>
+            <p>
+              Colors, spacing, type — set once, tuned against everywhere. Change
+              the root note and every chord built on it changes with it, live.
+              <strong
+                >Whether you're building a UI or a piece of music, you start on
+                the grundtone.</strong
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <section class="section" aria-labelledby="showcase-heading">
       <p class="section__eyebrow">One source, every surface</p>
