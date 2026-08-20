@@ -170,9 +170,11 @@ jobs:
       # hastighed: den afgoer hvad man overhovedet FAAR at vide, naar noget
       # fejler. ([projektleder]s sidefund paa #146.)
       # Dependabot bumps deliberately carry no changeset: merging a deps bump
-      # must not force a release of the linked 2.x packages (publish-frozen on
-      # develop until the main/develop reconciliation — a lower-version publish
-      # would retag npm `latest` backwards). Failing this step also aborted the
+      # must not force a release of the linked packages. (Until 3.0.0 the reason
+      # given here was "publish-frozen until the main/develop reconciliation" —
+      # that reconciliation is decided and the freeze is gone, but the reason
+      # for skipping dependabot is unchanged: a dependency bump is not a reason
+      # to cut a release.) Failing this step also aborted the
       # job before ESLint/typecheck ever ran, so dependabot PRs got NO lint
       # signal at all. Skip the gate for dependabot, keep the real checks.
       - name: Check for changesets
