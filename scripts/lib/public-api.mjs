@@ -72,3 +72,73 @@ export function removedExports(
   const allowed = new Set(allowedRemovals);
   return [...published].filter(n => !next.has(n) && !allowed.has(n)).sort();
 }
+
+/**
+ * Eksport-map-noegler er ogsaa offentligt API — og de er USYNLIGE for en
+ * .d.ts-sammenligning.
+ *
+ * 🔴 Maalt 2026-08-19 ([backstage]s fund): den udgivne @grundtone/vue@2.23.3
+ * har `./css/utilities` i sin exports-map; develop har den ikke. En forbruger
+ * med `import '@grundtone/vue/css/utilities'` knaekker — og gaten sagde groent,
+ * fordi den kun sammenlignede typenavne. Paastanden var "intet offentligt API
+ * gaar tabt"; maalingen var "ingen .d.ts-eksport gaar tabt". Afstanden mellem
+ * de to var et helt export-map.
+ *
+ * `.` medregnes ikke: den findes altid, og dens INDHOLD daekkes af
+ * .d.ts-sammenligningen.
+ */
+export function removedEntryPoints(
+  publishedPkg,
+  nextPkg,
+  allowedRemovals = [],
+) {
+  const keys = pkg =>
+    new Set(
+      Object.keys(pkg?.exports ?? {}).filter(
+        k => k.startsWith('.') && k !== '.',
+      ),
+    );
+  const allowed = new Set(allowedRemovals);
+  const next = keys(nextPkg);
+  return [...keys(publishedPkg)]
+    .filter(k => !next.has(k) && !allowed.has(k))
+    .sort();
+}
+
+/**
+ * Sammenligner EN pakkes udgivne offentlige flade med den, et publish ville
+ * give. Samler begge former for tab, saa deres indbyrdes uafhaengighed er en
+ * egenskab ved koden frem for ved kaldsrækkefølgen i et script.
+ *
+ * 🔴 Hvorfor den ligger her og ikke i scriptet ([review]s fund 2026-08-20):
+ * entry-point-tjekket blev to gange placeret efter en guard, der kun handlede
+ * om TYPER — og begge gange saa gaten groen ud, fordi den sprang maalingen
+ * over frem for at foretage den. Anden gang flyttede vi tjekket "op", men kun
+ * forbi to af tre guards. Saa laenge raekkefolgen kunne slaa et tjek fra, var
+ * en enhedstest af `removedEntryPoints()` alene blind for fejlen: funktionen
+ * var rigtig, kaldet skete bare aldrig. Her er uafhaengigheden strukturel —
+ * entry-points beregnes altid, typer kun naar begge sider har dem.
+ *
+ * `localDts`/`publishedDts` er .d.ts-KILDETEKST eller null. null betyder
+ * "ingen typer at sammenligne", aldrig "ingenting gaar tabt".
+ */
+export function auditPackage({
+  localPkg,
+  publishedPkg,
+  localDts = null,
+  publishedDts = null,
+  allowedRemovals = [],
+}) {
+  return {
+    entryPointsRemoved: removedEntryPoints(
+      publishedPkg,
+      localPkg,
+      allowedRemovals,
+    ),
+    exportsRemoved:
+      localDts != null && publishedDts != null
+        ? removedExports(publishedDts, localDts, allowedRemovals)
+        : [],
+    comparedTypes: localDts != null && publishedDts != null,
+  };
+}
