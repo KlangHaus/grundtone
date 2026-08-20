@@ -72,3 +72,35 @@ export function removedExports(
   const allowed = new Set(allowedRemovals);
   return [...published].filter(n => !next.has(n) && !allowed.has(n)).sort();
 }
+
+/**
+ * Eksport-map-noegler er ogsaa offentligt API — og de er USYNLIGE for en
+ * .d.ts-sammenligning.
+ *
+ * 🔴 Maalt 2026-08-19 ([backstage]s fund): den udgivne @grundtone/vue@2.23.3
+ * har `./css/utilities` i sin exports-map; develop har den ikke. En forbruger
+ * med `import '@grundtone/vue/css/utilities'` knaekker — og gaten sagde groent,
+ * fordi den kun sammenlignede typenavne. Paastanden var "intet offentligt API
+ * gaar tabt"; maalingen var "ingen .d.ts-eksport gaar tabt". Afstanden mellem
+ * de to var et helt export-map.
+ *
+ * `.` medregnes ikke: den findes altid, og dens INDHOLD daekkes af
+ * .d.ts-sammenligningen.
+ */
+export function removedEntryPoints(
+  publishedPkg,
+  nextPkg,
+  allowedRemovals = [],
+) {
+  const keys = pkg =>
+    new Set(
+      Object.keys(pkg?.exports ?? {}).filter(
+        k => k.startsWith('.') && k !== '.',
+      ),
+    );
+  const allowed = new Set(allowedRemovals);
+  const next = keys(nextPkg);
+  return [...keys(publishedPkg)]
+    .filter(k => !next.has(k) && !allowed.has(k))
+    .sort();
+}

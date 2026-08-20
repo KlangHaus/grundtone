@@ -32,7 +32,7 @@ import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { removedExports } from './lib/public-api.mjs';
+import { removedExports, removedEntryPoints } from './lib/public-api.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PACKAGES = [
@@ -99,6 +99,26 @@ for (const pkg of PACKAGES) {
   const pkgJson = JSON.parse(
     readFileSync(join(dir, 'package', 'package.json'), 'utf8'),
   );
+  // 🔴 Entry-point-tjekket ligger FOER de typeafhaengige `continue`s med vilje.
+  // Foerste udgave laa efter dem, saa en pakke uden typedefinitioner (nuxt,
+  // mcp) fik SPRUNGET ogsaa export-map-sammenligningen over — en check
+  // deaktiveret af en grund der intet har med den at goere. Eksport-map og
+  // typer er to uafhaengige former for offentligt API.
+  const removedEntries = removedEntryPoints(
+    pkgJson,
+    localPkg,
+    declared[name] ?? [],
+  );
+  if (removedEntries.length) {
+    console.error(
+      `::error::${name}: et publish ville FJERNE ${removedEntries.length} entry-point(s) fra ` +
+        `exports-mappen, som ${pkgJson.version} har: ${removedEntries.join(', ')}. ` +
+        `En forbruger der importerer dem knaekker. Genskab dem, eller erklaer ` +
+        `fjernelsen i .api-removals.json (og udgiv som major).`,
+    );
+    failed++;
+  }
+
   const typesPath = (pkgJson.types ?? pkgJson.typings ?? '').replace(
     /^\.\//,
     '',
@@ -117,6 +137,9 @@ for (const pkg of PACKAGES) {
     declared[name] ?? [],
   );
 
+  // Eksport-map-noeglerne er ogsaa offentligt API — og usynlige for
+  // .d.ts-sammenligningen ovenfor ([backstage]s fund: ./css/utilities var
+  // tabt uden at gaten saa det).
   if (removed.length) {
     console.error(
       `::error::${name}: et publish ville FJERNE ${removed.length} offentlige eksporter, ` +
