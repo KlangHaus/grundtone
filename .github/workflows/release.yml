@@ -74,6 +74,15 @@ jobs:
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           SENTRY_ENVIRONMENT: ci
 
+      # Sidste stop foer et uigenkaldeligt publish. Maalt 2026-08-20:
+      # @grundtone/react-native stod 2.12.0 paa develop mod 2.22.0 paa npm, og
+      # denne sti er den eneste, der ville have udgivet den. Gaten er generel
+      # frem for en note om at udelade netop den pakke — en undtagelse, ingen
+      # haandhaever, bliver glemt praecis under den samlede udgivelse, den
+      # skulle beskytte imod.
+      - name: Ingen pakke udgives som en nedgradering
+        run: node scripts/assert-no-downgrade-publish.mjs
+
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1

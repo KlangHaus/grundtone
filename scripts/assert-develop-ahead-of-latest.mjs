@@ -45,6 +45,21 @@ import { gt } from './lib/semver-gt.mjs';
 import { lookupPublished } from './lib/npm-dist-tag.mjs';
 
 // Keep in sync with PACKAGE_DIRS in prerelease-next-version.mjs — same channel.
+//
+// 🔴 @grundtone/react-native and @grundtone/email are absent ON PURPOSE: they
+// are not part of the `next` channel. What that exception does NOT cover:
+//
+//   · it is not an exemption from version checking. Every publishable package,
+//     these two included, is checked by assert-no-downgrade-publish.mjs before
+//     any publish.
+//   · it is not a statement that the package does not matter. react-native is
+//     published on npm and has consumers.
+//
+// Spelling that out is the point. The absence used to carry only the reason
+// "not in this channel", and it was read as "outside version checking" — which
+// is how react-native reached 2.12.0 on develop against 2.22.0 on npm without
+// anyone noticing. An exception has to name the control it is an exception
+// FROM, or the next reader will generalise it to every control there is.
 const PACKAGE_DIRS = [
   'core',
   'utils',
