@@ -1,12 +1,20 @@
 import { describe, it, expect } from 'vitest';
 
-import { gt, parse } from './semver-gt.mjs';
+import { baseVersion, gt, parse } from './semver-gt.mjs';
 
 describe('parse', () => {
   it('læser kerne og prerelease', () => {
-    expect(parse('2.24.0')).toEqual({ major: 2, minor: 24, patch: 0, pre: null });
+    expect(parse('2.24.0')).toEqual({
+      major: 2,
+      minor: 24,
+      patch: 0,
+      pre: null,
+    });
     expect(parse('0.1.0-next.5')).toEqual({
-      major: 0, minor: 1, patch: 0, pre: 'next.5',
+      major: 0,
+      minor: 1,
+      patch: 0,
+      pre: 'next.5',
     });
   });
 
@@ -56,5 +64,24 @@ describe('gt', () => {
     expect(gt('1.0.0-alpha', '1.0.0-1')).toBe(true);
     expect(gt('1.0.0-alpha.1', '1.0.0-alpha')).toBe(true);
     expect(gt('1.0.0-alpha', '1.0.0-alpha.1')).toBe(false);
+  });
+});
+
+describe('baseVersion', () => {
+  it('dropper prerelease-suffikset', () => {
+    expect(baseVersion('2.24.0-next.5')).toBe('2.24.0');
+    expect(baseVersion('2.24.0')).toBe('2.24.0');
+  });
+
+  // 🔴 [quality]s fund: `version.split('-')[0]` lod metadata blive staaende,
+  // saa stemplingen producerede `2.1.0+build-next.5` — ugyldig, fordi
+  // build-metadata skal staa SIDST (§10).
+  it('dropper OGSAA build-metadata', () => {
+    expect(baseVersion('2.1.0+build')).toBe('2.1.0');
+    expect(baseVersion('2.1.0-next.5+build.7')).toBe('2.1.0');
+  });
+
+  it('kaster frem for at stemple noget uparsebart', () => {
+    expect(() => baseVersion('v2.1')).toThrow(/unparseable/);
   });
 });

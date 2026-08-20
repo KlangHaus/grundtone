@@ -81,3 +81,22 @@ export function gt(a, b) {
   if (x.pre === null && y.pre === null) return false;
   return comparePre(x.pre, y.pre) > 0;
 }
+
+/**
+ * `major.minor.patch` alene — prerelease OG build-metadata droppet.
+ *
+ * 🔴 Grunden til at den ligger her og ikke som `version.split('-')[0]` i
+ * stemplings-scriptet ([quality]s fund 2026-08-20): den naive form lader
+ * build-metadata staa tilbage, saa `2.1.0+build` bliver til
+ * `2.1.0+build-next.5` — ugyldig semver, fordi metadata skal staa SIDST
+ * (§10). Ingen af vores pakker bruger metadata i dag, saa den var ikke naabar
+ * — praecis samme form som den vendte prerelease-sammenligning i samme fil:
+ * en utaendt tripwire, der ventede paa den foerste der ramte den.
+ *
+ * `parse()` kaster paa noget uparsebart, og det er den rigtige udgang her: et
+ * stemplings-script koerer umiddelbart foer et publish, der ikke kan goeres om.
+ */
+export function baseVersion(v) {
+  const { major, minor, patch } = parse(v);
+  return `${major}.${minor}.${patch}`;
+}
