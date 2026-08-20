@@ -113,7 +113,7 @@
     &__body {
       font-size: tokens.font-size('sm');
       color: tokens.color('text-secondary');
-      line-height: tokens.line-height('base');
+      line-height: tokens.line-height('normal');
 
       p {
         margin: 0;

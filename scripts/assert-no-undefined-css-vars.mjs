@@ -29,7 +29,13 @@ import { undefinedCustomProperties } from './lib/css-custom-properties.mjs';
 
 // Properties som en FORBRUGER sætter (inline style, egen regel). De er ikke
 // tabt — de er en kontrakt. Tilføj kun her med den kontrakt skrevet ned.
-const CONSUMER_PROVIDED = [];
+const CONSUMER_PROVIDED = [
+  // GTAppShell saetter selv denne inline paa rod-elementet
+  // (`:style="{ [--${p}-app-shell-sidebar]: sidebarInlineSize }"`), saa CSS'en
+  // kan ikke definere den. Kontrakten er: komponenten SKAL saette den, og gør
+  // det ubetinget — sidebar-bredden er ikke valgfri.
+  '--gt-app-shell-sidebar',
+];
 
 const files = process.argv.slice(2);
 if (!files.length) {

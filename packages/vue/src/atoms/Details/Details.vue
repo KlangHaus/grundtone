@@ -36,7 +36,7 @@
 
   .#{$prefix}-details {
     font-size: tokens.font-size('sm');
-    line-height: tokens.line-height('base');
+    line-height: tokens.line-height('normal');
     color: tokens.color('text');
 
     &__summary {

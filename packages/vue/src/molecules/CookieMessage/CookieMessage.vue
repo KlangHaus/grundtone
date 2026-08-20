@@ -106,7 +106,7 @@
     border-top: 1px solid tokens.color('border-light');
     box-shadow: tokens.shadow('lg');
     font-size: tokens.font-size('sm');
-    line-height: tokens.line-height('base');
+    line-height: tokens.line-height('normal');
     color: tokens.color('text');
 
     &--static {

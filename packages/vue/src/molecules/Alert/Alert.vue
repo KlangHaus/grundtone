@@ -63,7 +63,7 @@
     border-radius: tokens.radius('lg');
     border: 1px solid transparent;
     font-size: tokens.font-size('sm');
-    line-height: tokens.line-height('base');
+    line-height: tokens.line-height('normal');
 
     &__icon {
       flex-shrink: 0;
