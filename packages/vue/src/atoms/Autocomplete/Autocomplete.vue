@@ -1,7 +1,6 @@
 <script setup lang="ts">
-  import { computed, ref, watch, nextTick } from 'vue';
+  import { computed, nextTick, ref, useId, watch } from 'vue';
   import { getClassPrefix } from '@grundtone/core';
-  import { generateId } from '@grundtone/utils';
   import type { AutocompleteProps, AutocompleteSuggestion } from './types';
 
   const props = withDefaults(defineProps<AutocompleteProps>(), {
@@ -31,7 +30,8 @@
   const base = computed(() => `${p.value}-autocomplete`);
   const inputBase = computed(() => `${p.value}-input`);
 
-  const inputId = computed(() => props.id ?? generateId('autocomplete'));
+  const autoId = `autocomplete-${useId()}`;
+  const inputId = computed(() => props.id ?? autoId);
   const listboxId = computed(() => `${inputId.value}-listbox`);
   const descriptionId = computed(() =>
     props.errorText || props.helpText ? `${inputId.value}-desc` : undefined,

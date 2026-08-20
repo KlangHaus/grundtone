@@ -1,7 +1,6 @@
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import { computed, useId } from 'vue';
   import { getClassPrefix } from '@grundtone/core';
-  import { generateId } from '@grundtone/utils';
   import type { InputProps } from './types';
 
   const props = withDefaults(defineProps<InputProps>(), {
@@ -28,7 +27,8 @@
   const p = computed(() => getClassPrefix());
   const base = computed(() => `${p.value}-input`);
 
-  const inputId = computed(() => props.id ?? generateId('input'));
+  const autoId = `input-${useId()}`;
+  const inputId = computed(() => props.id ?? autoId);
   const descriptionId = computed(() =>
     props.errorText || props.helpText ? `${inputId.value}-desc` : undefined,
   );

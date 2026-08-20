@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed, ref } from 'vue';
+  import { computed, ref, useId } from 'vue';
   import { getClassPrefix } from '@grundtone/core';
   import { generateId } from '@grundtone/utils';
   import { GTIcon } from '../Icon';
@@ -25,7 +25,8 @@
   const p = computed(() => getClassPrefix());
   const base = computed(() => `${p.value}-file-upload`);
   const inputBase = computed(() => `${p.value}-input`);
-  const inputId = computed(() => props.id ?? generateId('file'));
+  const autoId = `file-${useId()}`;
+  const inputId = computed(() => props.id ?? autoId);
   const descId = computed(() =>
     props.errorText || props.helpText ? `${inputId.value}-desc` : undefined,
   );

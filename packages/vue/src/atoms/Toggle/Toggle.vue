@@ -1,7 +1,6 @@
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import { computed, useId } from 'vue';
   import { getClassPrefix } from '@grundtone/core';
-  import { generateId } from '@grundtone/utils';
   import type { ToggleProps } from './types';
 
   const props = withDefaults(defineProps<ToggleProps>(), {
@@ -16,7 +15,8 @@
 
   const p = computed(() => getClassPrefix());
   const base = computed(() => `${p.value}-toggle`);
-  const toggleId = computed(() => props.id ?? generateId('toggle'));
+  const autoId = `toggle-${useId()}`;
+  const toggleId = computed(() => props.id ?? autoId);
 
   function toggle() {
     if (props.disabled) return;

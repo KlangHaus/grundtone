@@ -1,7 +1,6 @@
 <script setup lang="ts">
-  import { computed, ref, nextTick } from 'vue';
+  import { computed, nextTick, ref, useId } from 'vue';
   import { getClassPrefix } from '@grundtone/core';
-  import { generateId } from '@grundtone/utils';
   import type { OtpInputProps } from './types';
 
   const props = withDefaults(defineProps<OtpInputProps>(), {
@@ -17,7 +16,8 @@
   const p = computed(() => getClassPrefix());
   const inputBase = computed(() => `${p.value}-input`);
   const base = computed(() => `${p.value}-otp-input`);
-  const baseId = computed(() => props.id ?? generateId('otp'));
+  const autoId = `otp-${useId()}`;
+  const baseId = computed(() => props.id ?? autoId);
   const descId = computed(() =>
     props.errorText || props.helpText ? `${baseId.value}-desc` : undefined,
   );

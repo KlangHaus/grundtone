@@ -1,7 +1,6 @@
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import { computed, useId } from 'vue';
   import { getClassPrefix } from '@grundtone/core';
-  import { generateId } from '@grundtone/utils';
   import type { CheckboxGroupProps } from './types';
 
   const props = withDefaults(defineProps<CheckboxGroupProps>(), {
@@ -23,7 +22,8 @@
   const group = computed(() => `${pr.value}-choice-group`);
   const choice = computed(() => `${pr.value}-choice`);
 
-  const baseId = computed(() => props.id ?? generateId('cbgroup'));
+  const autoId = `cbgroup-${useId()}`;
+  const baseId = computed(() => props.id ?? autoId);
   const descId = computed(() =>
     props.errorText || props.helpText ? `${baseId.value}-desc` : undefined,
   );

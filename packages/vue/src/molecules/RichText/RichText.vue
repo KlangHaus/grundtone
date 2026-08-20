@@ -1,11 +1,7 @@
 <script setup lang="ts">
-  import { computed, nextTick, ref, watch, onBeforeUnmount } from 'vue';
+  import { computed, nextTick, onBeforeUnmount, ref, useId, watch } from 'vue';
   import { getClassPrefix } from '@grundtone/core';
-  import {
-    createFocusTrap,
-    generateId,
-    type FocusTrap,
-  } from '@grundtone/utils';
+  import { createFocusTrap, type FocusTrap } from '@grundtone/utils';
   import { useEditor, EditorContent, type JSONContent } from '@tiptap/vue-3';
   import { generateHTML } from '@tiptap/html';
   import StarterKit from '@tiptap/starter-kit';
@@ -41,7 +37,7 @@
 
   const p = computed(() => getClassPrefix());
   const base = computed(() => `${p.value}-rich-text`);
-  const editorId = generateId('rich-text');
+  const editorId = `rich-text-${useId()}`;
   const has = (f: RichTextFeature) => props.features.includes(f);
 
   // The extension set IS the schema — and the schema IS the paste allow-list.

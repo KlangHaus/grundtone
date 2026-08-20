@@ -1,7 +1,6 @@
 <script setup lang="ts">
-  import { computed, ref, nextTick, onBeforeUnmount } from 'vue';
+  import { computed, nextTick, onBeforeUnmount, ref, useId } from 'vue';
   import { getClassPrefix } from '@grundtone/core';
-  import { generateId } from '@grundtone/utils';
   import type { OverflowMenuProps, OverflowMenuItem } from './types';
 
   const props = withDefaults(defineProps<OverflowMenuProps>(), {
@@ -17,7 +16,7 @@
   const p = computed(() => getClassPrefix());
   const base = computed(() => `${p.value}-overflow-menu`);
 
-  const menuId = generateId('overflow');
+  const menuId = `overflow-${useId()}`;
   const isOpen = ref(false);
   const triggerRef = ref<HTMLElement | null>(null);
   const panelRef = ref<HTMLElement | null>(null);

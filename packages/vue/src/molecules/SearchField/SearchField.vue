@@ -1,7 +1,6 @@
 <script setup lang="ts">
-  import { computed, ref, watch } from 'vue';
+  import { computed, ref, useId, watch } from 'vue';
   import { getClassPrefix } from '@grundtone/core';
-  import { generateId } from '@grundtone/utils';
   import type { SearchFieldProps, SearchSuggestion } from './types';
 
   const props = withDefaults(defineProps<SearchFieldProps>(), {
@@ -26,7 +25,8 @@
   const p = computed(() => getClassPrefix());
   const base = computed(() => `${p.value}-search-field`);
 
-  const inputId = computed(() => props.id ?? generateId('search'));
+  const autoId = `search-${useId()}`;
+  const inputId = computed(() => props.id ?? autoId);
   const showSuggestions = ref(false);
   const highlightIndex = ref(-1);
 

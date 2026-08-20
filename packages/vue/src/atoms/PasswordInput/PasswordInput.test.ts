@@ -87,4 +87,36 @@ describe('PasswordInput', () => {
     expect(wrapper.find('.gt-input-error').text()).toBe('Required');
     expect(wrapper.find('input').classes()).toContain('gt-input--error');
   });
+
+  describe('focus and blur', () => {
+    it('emits focus when focus enters the control', async () => {
+      const wrapper = mountPw();
+      await wrapper.find('input').trigger('focusin');
+      expect(wrapper.emitted('focus')).toHaveLength(1);
+    });
+
+    it('emits blur when focus leaves the control entirely', async () => {
+      const wrapper = mountPw();
+      await wrapper.find('input').trigger('focusin');
+      await wrapper
+        .find('input')
+        .trigger('focusout', { relatedTarget: document.body });
+      expect(wrapper.emitted('blur')).toHaveLength(1);
+    });
+
+    it('stays silent when focus moves to its own show/hide toggle', async () => {
+      const wrapper = mountPw();
+      await wrapper.find('input').trigger('focusin');
+      const toggle = wrapper.find(`.${BASE}__toggle`).element;
+      await wrapper
+        .find('input')
+        .trigger('focusout', { relatedTarget: toggle });
+      await wrapper.find(`.${BASE}__toggle`).trigger('focusin');
+
+      // Revealing the password must not read as "the user left the field" —
+      // a consumer validating on blur would otherwise flag a half-typed value.
+      expect(wrapper.emitted('blur')).toBeUndefined();
+      expect(wrapper.emitted('focus')).toHaveLength(1);
+    });
+  });
 });
