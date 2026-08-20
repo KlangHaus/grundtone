@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 
 import {
+  auditPackage,
   exportedNames,
   removedExports,
   removedEntryPoints,
@@ -139,5 +140,62 @@ describe('removedEntryPoints — eksport-map-nøgler', () => {
       './css/utilities',
       './scss',
     ]);
+  });
+});
+
+// 🔴 Regressionen fra [review]s fund 2026-08-20. De ti eksisterende tests var
+// alle grønne, mens gaten var blind for nuxt og mcp: `removedEntryPoints()`
+// var rigtig, men blev aldrig kaldt for dem, fordi en type-guard lå foran.
+// En test af funktionen alene kunne per konstruktion ikke se det. Denne
+// tester det led, fejlen sad i — at de to tab er uafhængige.
+describe('auditPackage', () => {
+  const localPkg = { exports: { '.': './dist/index.js' } };
+  const publishedPkg = {
+    exports: { '.': './dist/index.js', './css': './dist/index.css' },
+  };
+
+  it('sammenligner exports-mappen for en pakke UDEN typer', () => {
+    const result = auditPackage({ localPkg, publishedPkg });
+
+    expect(result.entryPointsRemoved).toEqual(['./css']);
+    expect(result.comparedTypes).toBe(false);
+    expect(result.exportsRemoved).toEqual([]);
+  });
+
+  it('sammenligner begge dele når typer findes på begge sider', () => {
+    const result = auditPackage({
+      localPkg,
+      publishedPkg,
+      localDts: `export { A } from './a';`,
+      publishedDts: `export { A } from './a';\nexport { B } from './b';`,
+    });
+
+    expect(result.entryPointsRemoved).toEqual(['./css']);
+    expect(result.exportsRemoved).toEqual(['B']);
+    expect(result.comparedTypes).toBe(true);
+  });
+
+  it('respekterer erklærede fjernelser i begge tab', () => {
+    const result = auditPackage({
+      localPkg,
+      publishedPkg,
+      localDts: `export { A } from './a';`,
+      publishedDts: `export { A } from './a';\nexport { B } from './b';`,
+      allowedRemovals: ['./css', 'B'],
+    });
+
+    expect(result.entryPointsRemoved).toEqual([]);
+    expect(result.exportsRemoved).toEqual([]);
+  });
+
+  it('kun én side har typer: exports-mappen måles stadig', () => {
+    for (const half of [
+      { localDts: `export { A } from './a';` },
+      { publishedDts: `export { A } from './a';` },
+    ]) {
+      const result = auditPackage({ localPkg, publishedPkg, ...half });
+      expect(result.comparedTypes).toBe(false);
+      expect(result.entryPointsRemoved).toEqual(['./css']);
+    }
   });
 });

@@ -104,3 +104,41 @@ export function removedEntryPoints(
     .filter(k => !next.has(k) && !allowed.has(k))
     .sort();
 }
+
+/**
+ * Sammenligner EN pakkes udgivne offentlige flade med den, et publish ville
+ * give. Samler begge former for tab, saa deres indbyrdes uafhaengighed er en
+ * egenskab ved koden frem for ved kaldsrækkefølgen i et script.
+ *
+ * 🔴 Hvorfor den ligger her og ikke i scriptet ([review]s fund 2026-08-20):
+ * entry-point-tjekket blev to gange placeret efter en guard, der kun handlede
+ * om TYPER — og begge gange saa gaten groen ud, fordi den sprang maalingen
+ * over frem for at foretage den. Anden gang flyttede vi tjekket "op", men kun
+ * forbi to af tre guards. Saa laenge raekkefolgen kunne slaa et tjek fra, var
+ * en enhedstest af `removedEntryPoints()` alene blind for fejlen: funktionen
+ * var rigtig, kaldet skete bare aldrig. Her er uafhaengigheden strukturel —
+ * entry-points beregnes altid, typer kun naar begge sider har dem.
+ *
+ * `localDts`/`publishedDts` er .d.ts-KILDETEKST eller null. null betyder
+ * "ingen typer at sammenligne", aldrig "ingenting gaar tabt".
+ */
+export function auditPackage({
+  localPkg,
+  publishedPkg,
+  localDts = null,
+  publishedDts = null,
+  allowedRemovals = [],
+}) {
+  return {
+    entryPointsRemoved: removedEntryPoints(
+      publishedPkg,
+      localPkg,
+      allowedRemovals,
+    ),
+    exportsRemoved:
+      localDts != null && publishedDts != null
+        ? removedExports(publishedDts, localDts, allowedRemovals)
+        : [],
+    comparedTypes: localDts != null && publishedDts != null,
+  };
+}
