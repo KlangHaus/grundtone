@@ -29,12 +29,22 @@ else
     "  \(.severity) \(.type) \(.rule)\n    \(.component | split(":") | last):\(.line // "?")\n    \(.message)"'
 fi
 
+# 🔴 Denne gren SKAL sige noget uanset udfald. Foerste udgave sprang tavst
+# hotspots over, naar opslaget fejlede — og en gate-melding om "0.00% Security
+# Hotspots Reviewed" med INTET i loggen er praecis den tilstand, steppet findes
+# for at fjerne. Fravaer maa ikke oploese sig til tavshed.
 hotspots=$(api "hotspots/search?projectKey=${SONAR_PROJECT_KEY}&pullRequest=${PR_NUMBER}&ps=100")
-if echo "$hotspots" | jq -e .hotspots >/dev/null 2>&1; then
+if [ -z "$hotspots" ]; then
+  echo "::warning::hotspot-opslaget gav intet svar — se dashboardet. Dette siger INTET om hvorvidt der er hotspots."
+elif ! echo "$hotspots" | jq -e .hotspots >/dev/null 2>&1; then
+  echo "::warning::hotspot-opslaget kunne ikke laeses. Sonar svarede:"
+  echo "$hotspots" | head -c 500
+  echo
+else
   n=$(echo "$hotspots" | jq '.hotspots | length')
-  echo "security hotspots: $n  (kræver manuel gennemgang i Sonar — kan ikke lukkes herfra)"
+  echo "security hotspots: $n  (kraever manuel gennemgang i Sonars UI — kan ikke lukkes herfra)"
   echo "$hotspots" | jq -r '.hotspots[] |
-    "  \(.vulnerabilityProbability) \(.securityCategory)\n    \(.component | split(":") | last):\(.line // "?")\n    \(.message)"'
+    "  \(.vulnerabilityProbability) \(.securityCategory) \(.status)\n    \(.component | split(":") | last):\(.line // "?")\n    \(.message)"'
 fi
 
 exit 0
