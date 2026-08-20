@@ -107,7 +107,7 @@
       cursor: pointer;
       text-align: left;
       color: tokens.color('text');
-      transition: background tokens.duration('fast') tokens.ease('out');
+      transition: background tokens.duration('fast') tokens.ease('ease-out');
       border-radius: 0;
 
       &:hover {

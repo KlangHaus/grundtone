@@ -157,10 +157,10 @@
       color: tokens.color('text-secondary');
       white-space: nowrap;
       transition:
-        color tokens.duration('fast') tokens.ease('out'),
-        background tokens.duration('fast') tokens.ease('out'),
-        border-color tokens.duration('fast') tokens.ease('out'),
-        box-shadow tokens.duration('fast') tokens.ease('out');
+        color tokens.duration('fast') tokens.ease('ease-out'),
+        background tokens.duration('fast') tokens.ease('ease-out'),
+        border-color tokens.duration('fast') tokens.ease('ease-out'),
+        box-shadow tokens.duration('fast') tokens.ease('ease-out');
 
       &:hover {
         color: tokens.color('text');
@@ -190,8 +190,8 @@
     &__slide-left-enter-active,
     &__slide-left-leave-active {
       transition:
-        opacity tokens.duration('fast') tokens.ease('out'),
-        transform tokens.duration('fast') tokens.ease('out');
+        opacity tokens.duration('fast') tokens.ease('ease-out'),
+        transform tokens.duration('fast') tokens.ease('ease-out');
     }
 
     &__slide-right-enter-from {
@@ -234,7 +234,7 @@
           right: 0;
           height: 2px;
           background: transparent;
-          transition: background tokens.duration('fast') tokens.ease('out');
+          transition: background tokens.duration('fast') tokens.ease('ease-out');
         }
 
         &--active {
