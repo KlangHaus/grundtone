@@ -69,8 +69,12 @@ export function removedExports(
 ) {
   const published = exportedNames(publishedSource);
   const next = exportedNames(nextSource);
+  // Sorteringen er eksplicit og locale-UAFHAENGIG. Sonars S2871 foreslaar
+  // localeCompare — men den er ICU-afhaengig, saa samme input kan sortere
+  // forskelligt paa forskellige runnere. I en gate er DETERMINISME kravet,
+  // ikke menneske-alfabetisk korrekthed; S2871 sigter reelt mod tal-arrays.
   const allowed = new Set(allowedRemovals);
-  return [...published].filter(n => !next.has(n) && !allowed.has(n)).sort();
+  return [...published].filter(n => !next.has(n) && !allowed.has(n)).sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
 }
 
 /**
@@ -102,7 +106,7 @@ export function removedEntryPoints(
   const next = keys(nextPkg);
   return [...keys(publishedPkg)]
     .filter(k => !next.has(k) && !allowed.has(k))
-    .sort();
+    .sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
 }
 
 /**

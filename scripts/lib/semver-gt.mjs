@@ -7,11 +7,48 @@
  * install, so it must have zero dependencies.
  */
 
-/** Parse a SemVer core (major.minor.patch) plus optional prerelease. */
+/**
+ * Parse a SemVer core (major.minor.patch) plus optional prerelease.
+ *
+ * Build metadata is stripped: SemVer §10 says it is ignored when determining
+ * precedence, so `1.0.0+a` and `1.0.0+b` are the same version. Anything else
+ * unparseable THROWS rather than returning a default — a gate that cannot read
+ * a version must stop, not guess a comparison.
+ */
 export function parse(v) {
-  const m = /^(\d+)\.(\d+)\.(\d+)(?:-(.+))?$/.exec(v);
+  const m = /^(\d+)\.(\d+)\.(\d+)(?:-([^+]+))?(?:\+[0-9A-Za-z.-]+)?$/.exec(v);
   if (!m) throw new Error(`unparseable version: ${v}`);
   return { major: +m[1], minor: +m[2], patch: +m[3], pre: m[4] ?? null };
+}
+
+/**
+ * Compare two prerelease strings per SemVer §11: dot-separated identifiers,
+ * compared left to right; all-numeric identifiers compare NUMERICALLY, numeric
+ * ranks below alphanumeric, and a longer identifier list wins when all the
+ * shared ones are equal.
+ *
+ * 🔴 This used to be a plain `a > b` string comparison, with a comment saying
+ * lexical was "enough for our `next.<runid>` shape". Measured 2026-08-20 — it
+ * is not: `next.10` sorts BELOW `next.9` as strings, so the comparison was
+ * inverted for every run number that grew a digit. It happens not to be
+ * reachable today, because nothing compares two prereleases to each other; the
+ * bug was waiting for the first caller that did.
+ */
+function comparePre(a, b) {
+  const A = a.split('.');
+  const B = b.split('.');
+  for (let i = 0; i < Math.max(A.length, B.length); i += 1) {
+    if (A[i] === undefined) return -1;
+    if (B[i] === undefined) return 1;
+    if (A[i] === B[i]) continue;
+
+    const numA = /^\d+$/.test(A[i]);
+    const numB = /^\d+$/.test(B[i]);
+    if (numA && numB) return +A[i] - +B[i];
+    if (numA !== numB) return numA ? -1 : 1;
+    return A[i] < B[i] ? -1 : 1;
+  }
+  return 0;
 }
 
 /**
@@ -33,5 +70,5 @@ export function gt(a, b) {
   if (x.pre === null && y.pre !== null) return true;
   if (x.pre !== null && y.pre === null) return false;
   if (x.pre === null && y.pre === null) return false;
-  return x.pre > y.pre; // lexical is enough for our `next.<runid>` shape
+  return comparePre(x.pre, y.pre) > 0;
 }

@@ -126,4 +126,37 @@ describe('Button', () => {
     const wrapper = mount(Button);
     expect(wrapper.attributes('aria-busy')).toBe('false');
   });
+
+  // 🔴 GTButton erklaerer ingen `type`-prop, saa den naar knappen som
+  // gennemfaldende attribut. Den vej er BAERENDE: taktart bruger den i ~20
+  // kaldesteder, og [backstage]s login-formular afhaenger af, at deres
+  // `type="submit"` faktisk giver en submit-knap og ikke en tavs no-op.
+  //
+  // Kontrakten er hverken deklareret eller dokumenteret, saa intet ville have
+  // stoppet en senere `inheritAttrs: false` — en rimelig aendring i sig selv —
+  // i at goere alle de knapper virkningsloese paa en gang, i to andre repoer,
+  // uden en eneste roed test. Denne test er det eneste, der siger det hoejt.
+  describe('the type attribute falls through', () => {
+    it('passes an explicit type on to the button', () => {
+      for (const type of ['submit', 'button', 'reset']) {
+        const wrapper = mount(Button, { attrs: { type } });
+        expect(wrapper.find('button').attributes('type')).toBe(type);
+      }
+    });
+
+    it('sets no type of its own, leaving the HTML default in place', () => {
+      const wrapper = mount(Button);
+
+      expect(wrapper.find('button').attributes('type')).toBeUndefined();
+    });
+
+    it('still falls through when rendered as another element', () => {
+      const wrapper = mount(Button, {
+        props: { as: 'a' },
+        attrs: { href: '#x' },
+      });
+
+      expect(wrapper.find('a').attributes('href')).toBe('#x');
+    });
+  });
 });
