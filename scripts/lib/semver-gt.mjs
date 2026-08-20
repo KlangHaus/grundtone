@@ -1,3 +1,5 @@
+import { byName } from './order.mjs';
+
 /**
  * Minimal SemVer "strictly greater than" — the comparison the version-drift
  * gate depends on. Its own module so the gate and its tests share ONE
@@ -34,19 +36,26 @@ export function parse(v) {
  * reachable today, because nothing compares two prereleases to each other; the
  * bug was waiting for the first caller that did.
  */
+const NUMERIC = /^\d+$/;
+
+/** Ét prerelease-led, sammenlignet efter SemVer §11. */
+function compareIdentifier(a, b) {
+  const numA = NUMERIC.test(a);
+  const numB = NUMERIC.test(b);
+  if (numA && numB) return Number(a) - Number(b);
+  if (numA) return -1;
+  if (numB) return 1;
+  return byName(a, b);
+}
+
 function comparePre(a, b) {
   const A = a.split('.');
   const B = b.split('.');
   for (let i = 0; i < Math.max(A.length, B.length); i += 1) {
     if (A[i] === undefined) return -1;
     if (B[i] === undefined) return 1;
-    if (A[i] === B[i]) continue;
-
-    const numA = /^\d+$/.test(A[i]);
-    const numB = /^\d+$/.test(B[i]);
-    if (numA && numB) return +A[i] - +B[i];
-    if (numA !== numB) return numA ? -1 : 1;
-    return A[i] < B[i] ? -1 : 1;
+    const order = compareIdentifier(A[i], B[i]);
+    if (order !== 0) return order;
   }
   return 0;
 }
