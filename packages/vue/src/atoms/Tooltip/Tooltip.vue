@@ -1,7 +1,6 @@
 <script setup lang="ts">
-  import { computed, ref, nextTick, onBeforeUnmount } from 'vue';
+  import { computed, nextTick, onBeforeUnmount, ref, useId } from 'vue';
   import { getClassPrefix } from '@grundtone/core';
-  import { generateId } from '@grundtone/utils';
   import type { TooltipProps } from './types';
 
   const props = withDefaults(defineProps<TooltipProps>(), {
@@ -12,7 +11,7 @@
 
   const p = computed(() => getClassPrefix());
   const base = computed(() => `${p.value}-tooltip`);
-  const tooltipId = generateId('tooltip');
+  const tooltipId = `tooltip-${useId()}`;
 
   const visible = ref(false);
   const actualPosition = ref(props.position);

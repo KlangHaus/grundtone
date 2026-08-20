@@ -1,8 +1,8 @@
 <script setup lang="ts">
-  import { computed, ref } from 'vue';
+  import { computed, ref, useId } from 'vue';
   import { getClassPrefix } from '@grundtone/core';
-  import { generateId } from '@grundtone/utils';
   import { GTIcon } from '../Icon';
+  import { useControlFocus } from '../../composables/useControlFocus';
   import type { PasswordInputProps } from './types';
 
   const props = withDefaults(defineProps<PasswordInputProps>(), {
@@ -17,12 +17,17 @@
 
   const emit = defineEmits<{
     'update:modelValue': [value: string];
+    focus: [event: FocusEvent];
+    blur: [event: FocusEvent];
   }>();
+
+  const { onFocusin, onFocusout } = useControlFocus(emit);
 
   const p = computed(() => getClassPrefix());
   const inputBase = computed(() => `${p.value}-input`);
   const base = computed(() => `${p.value}-password-input`);
-  const inputId = computed(() => props.id ?? generateId('password'));
+  const autoId = `password-${useId()}`;
+  const inputId = computed(() => props.id ?? autoId);
   const descId = computed(() =>
     props.errorText || props.helpText ? `${inputId.value}-desc` : undefined,
   );
@@ -39,7 +44,11 @@
 </script>
 
 <template>
-  <div :class="`${inputBase}-field`">
+  <div
+    :class="`${inputBase}-field`"
+    @focusin="onFocusin"
+    @focusout="onFocusout"
+  >
     <label v-if="label" :for="inputId" :class="`${inputBase}-label`">
       {{ label }}
     </label>

@@ -1,7 +1,6 @@
 <script setup lang="ts">
-  import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+  import { computed, onBeforeUnmount, onMounted, ref, useId, watch } from 'vue';
   import { getClassPrefix } from '@grundtone/core';
-  import { generateId } from '@grundtone/utils';
   import GTDrawer from '../Drawer/Drawer.vue';
   import GTToastContainer from '../Toast/ToastContainer.vue';
   import GTSkipLink from '../../atoms/SkipLink/SkipLink.vue';
@@ -23,7 +22,7 @@
 
   const p = computed(() => getClassPrefix());
   const base = computed(() => `${p.value}-app-shell`);
-  const drawerId = generateId('app-shell-drawer');
+  const drawerId = `app-shell-drawer-${useId()}`;
 
   // Two independent axes: `collapsed` governs the persistent sidebar at/above
   // the breakpoint; `drawerOpen` governs the overlay below it. They never both

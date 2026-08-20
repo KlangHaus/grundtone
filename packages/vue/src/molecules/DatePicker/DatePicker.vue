@@ -1,7 +1,6 @@
 <script setup lang="ts">
-  import { computed, ref, nextTick, onBeforeUnmount } from 'vue';
+  import { computed, nextTick, onBeforeUnmount, ref, useId } from 'vue';
   import { getClassPrefix } from '@grundtone/core';
-  import { generateId } from '@grundtone/utils';
   import {
     getCalendarGrid,
     getMonthNames,
@@ -30,7 +29,8 @@
   const p = computed(() => getClassPrefix());
   const base = computed(() => `${p.value}-date-picker`);
   const inputBase = computed(() => `${p.value}-input`);
-  const inputId = computed(() => props.id ?? generateId('datepicker'));
+  const autoId = `datepicker-${useId()}`;
+  const inputId = computed(() => props.id ?? autoId);
   const descId = computed(() =>
     props.errorText || props.helpText ? `${inputId.value}-desc` : undefined,
   );

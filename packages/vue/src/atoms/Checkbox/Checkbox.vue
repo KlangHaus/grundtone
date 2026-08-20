@@ -1,7 +1,6 @@
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import { computed, useId } from 'vue';
   import { getClassPrefix } from '@grundtone/core';
-  import { generateId } from '@grundtone/utils';
   import type { CheckboxProps } from './types';
 
   const props = withDefaults(defineProps<CheckboxProps>(), {
@@ -15,7 +14,8 @@
 
   const p = computed(() => getClassPrefix());
   const base = computed(() => `${p.value}-choice`);
-  const inputId = computed(() => props.id ?? generateId('checkbox'));
+  const autoId = `checkbox-${useId()}`;
+  const inputId = computed(() => props.id ?? autoId);
 
   function handleChange() {
     if (props.disabled) return;

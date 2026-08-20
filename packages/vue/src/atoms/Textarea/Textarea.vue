@@ -1,7 +1,6 @@
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import { computed, useId } from 'vue';
   import { getClassPrefix } from '@grundtone/core';
-  import { generateId } from '@grundtone/utils';
   import type { TextareaProps } from './types';
 
   const props = withDefaults(defineProps<TextareaProps>(), {
@@ -24,7 +23,8 @@
   const base = computed(() => `${p.value}-input`); // reuse input-field pattern
   const ta = computed(() => `${p.value}-textarea`);
 
-  const textareaId = computed(() => props.id ?? generateId('textarea'));
+  const autoId = `textarea-${useId()}`;
+  const textareaId = computed(() => props.id ?? autoId);
   const descriptionId = computed(() =>
     props.errorText || props.helpText ? `${textareaId.value}-desc` : undefined,
   );

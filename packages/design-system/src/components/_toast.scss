@@ -100,12 +100,12 @@
   gap: var(--space-sm);
   overflow: hidden;
   transition:
-    transform var(--duration-fast) var(--ease-ease),
-    opacity var(--duration-fast) var(--ease-ease);
+    transform var(--duration-fast) var(--ease),
+    opacity var(--duration-fast) var(--ease);
 
   // Enter animation
   &--entering {
-    animation: toast-enter var(--duration-fast) var(--ease-ease-out);
+    animation: toast-enter var(--duration-fast) var(--ease-out);
   }
 
   &--leaving {
@@ -161,7 +161,7 @@
     padding: var(--space-xs);
     border-radius: var(--radius-sm);
     opacity: 0;
-    transition: opacity var(--duration-fast) var(--ease-ease);
+    transition: opacity var(--duration-fast) var(--ease);
 
     &:hover {
       color: var(--color-text);

@@ -21,6 +21,15 @@ and built for teams that need full control over their UI foundation.
 | [`@grundtone/vue`](./packages/vue)                     | Vue 3 component library (17 components, 5 composables)         |
 | [`@grundtone/nuxt`](./packages/nuxt)                   | Nuxt 3 module with auto-imports                                |
 | [`@grundtone/react-native`](./packages/react-native)   | React Native theme provider and hooks                          |
+| [`@grundtone/mcp`](./packages/mcp)                     | MCP server exposing components and tokens to AI tools          |
+| [`@grundtone/email`](./packages/email)                 | Email templates and MJML build                                 |
+
+> **The version numbers are not synchronised, and are not meant to be.** Each package is versioned
+> by what changed in it, so a bump means something happened there. The packages are still pinned to
+> each other: a published `@grundtone/vue` names the exact `@grundtone/core` and
+> `@grundtone/design-system` it was built against, so installing one version resolves the rest
+> unambiguously. Matching numbers would add nothing that the pins do not already guarantee — and
+> would cost the meaning of a bump.
 
 ### Apps
 

@@ -116,7 +116,7 @@
 
   .#{$prefix}-tabs {
     font-size: tokens.font-size('sm');
-    line-height: tokens.line-height('base');
+    line-height: tokens.line-height('normal');
 
     // Uden denne kan komponenten ikke krympe som flex-/grid-barn: et
     // min-content-bredt panel (fx en <pre> med lange linjer) presser i

@@ -1,7 +1,6 @@
 <script setup lang="ts">
-  import { computed, watch, onBeforeUnmount, ref } from 'vue';
+  import { computed, onBeforeUnmount, ref, useId, watch } from 'vue';
   import { getClassPrefix } from '@grundtone/core';
-  import { generateId } from '@grundtone/utils';
   import { createFocusTrap, createScrollLock } from '@grundtone/utils';
   import type { FocusTrap } from '@grundtone/utils';
   import type { ModalProps } from './types';
@@ -19,7 +18,8 @@
 
   const p = computed(() => getClassPrefix());
   const base = computed(() => `${p.value}-modal`);
-  const titleId = computed(() => generateId('modal-title'));
+  const autoId = `modal-title-${useId()}`;
+  const titleId = computed(() => autoId);
 
   const dialogRef = ref<HTMLElement | null>(null);
   let focusTrap: FocusTrap | null = null;

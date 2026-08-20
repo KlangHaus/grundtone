@@ -15,8 +15,8 @@
   resize: vertical;
   min-height: 6rem;
   transition:
-    border-color var(--duration-fast) var(--ease-ease-out),
-    box-shadow var(--duration-fast) var(--ease-ease-out);
+    border-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
 
   &::placeholder {
     color: var(--color-text-secondary);

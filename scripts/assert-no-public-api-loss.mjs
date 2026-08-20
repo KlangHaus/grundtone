@@ -32,7 +32,7 @@ import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { removedExports } from './lib/public-api.mjs';
+import { auditPackage } from './lib/public-api.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PACKAGES = [
@@ -53,30 +53,13 @@ let failed = 0;
 
 for (const pkg of PACKAGES) {
   const name = `@grundtone/${pkg}`;
-  // Lokalt BYGGET typedefinition, fundet via pakkens EGEN types-erklæring —
-  // ikke via gættede stier. Lover pakken ingen typer, er der intet at
-  // sammenligne (og intet at tabe).
   const localPkg = JSON.parse(
     readFileSync(join(root, 'packages', pkg, 'package.json'), 'utf8'),
   );
-  const localTypes = (localPkg.types ?? localPkg.typings ?? '').replace(
-    /^\.\//,
-    '',
-  );
-  if (!localTypes) {
-    console.log(`· ${name}: erklærer ingen typer — springes over`);
-    continue;
-  }
-  const localDts = join(root, 'packages', pkg, localTypes);
-  if (!existsSync(localDts)) {
-    console.error(
-      `::error::${name}: package.json lover "${localPkg.types}", men filen findes ikke efter build. ` +
-        `Enhver TypeScript-forbruger ville miste typerne — tavst, fordi JS stadig virker.`,
-    );
-    failed++;
-    continue;
-  }
 
+  // Hent den udgivne pakke FOERST. Baade exports-mappen og typerne
+  // sammenlignes mod den, og uden den er der ingen udgivet flade at tabe
+  // noget fra.
   let dir;
   try {
     dir = mkdtempSync(join(tmpdir(), 'apiloss-'));
@@ -87,46 +70,90 @@ for (const pkg of PACKAGES) {
     const tgz = readdirSync(dir).find(f => f.endsWith('.tgz'));
     execFileSync('tar', ['xzf', tgz], { cwd: dir });
   } catch {
-    // Aldrig udgivet, eller registry utilgængeligt. Vi skelner IKKE her:
-    // begge betyder "ingen udgivet flade at tabe noget fra", og et forsøg på
-    // at gætte ville gøre gaten grøn på en fejl (jf. lib/npm-dist-tag.mjs).
+    // Aldrig udgivet, eller registry utilgaengeligt. Vi skelner IKKE her:
+    // begge betyder "ingen udgivet flade at tabe noget fra", og et forsoeg paa
+    // at gaette ville goere gaten groen paa en fejl (jf. lib/npm-dist-tag.mjs).
     console.log(
       `· ${name}: ingen udgivet pakke at sammenligne med — springes over`,
     );
     continue;
   }
 
-  const pkgJson = JSON.parse(
+  const publishedPkg = JSON.parse(
     readFileSync(join(dir, 'package', 'package.json'), 'utf8'),
   );
-  const typesPath = (pkgJson.types ?? pkgJson.typings ?? '').replace(
+
+  // Lokalt BYGGET typedefinition, fundet via pakkens EGEN types-erklaering —
+  // ikke via gaettede stier. Lover pakken typer den ikke byggede, ville enhver
+  // TypeScript-forbruger miste dem tavst, fordi JS stadig virker.
+  const localTypes = (localPkg.types ?? localPkg.typings ?? '').replace(
     /^\.\//,
     '',
   );
-  const dts = typesPath && join(dir, 'package', typesPath);
-  if (!dts || !existsSync(dts)) {
+  const localDts = localTypes ? join(root, 'packages', pkg, localTypes) : null;
+  if (localDts && !existsSync(localDts)) {
+    console.error(
+      `::error::${name}: package.json lover "${localPkg.types}", men filen findes ikke efter build. ` +
+        `Enhver TypeScript-forbruger ville miste typerne — tavst, fordi JS stadig virker.`,
+    );
+    failed++;
+    continue;
+  }
+
+  const publishedTypes = (
+    publishedPkg.types ??
+    publishedPkg.typings ??
+    ''
+  ).replace(/^\.\//, '');
+  const publishedDts = publishedTypes
+    ? join(dir, 'package', publishedTypes)
+    : null;
+
+  // 🔴 Scriptet TRAEFFER ingen beslutning her; det laeser filer og rapporterer.
+  // Begge tab afgoeres af auditPackage(), hvor entry-points beregnes
+  // ubetinget. Det er med vilje: to gange laa entry-point-tjekket bag en guard,
+  // der kun handlede om TYPER, og begge gange saa gaten groen ud, fordi den
+  // sprang maalingen over frem for at foretage den. Saa laenge raekkefolgen i
+  // dette script kunne slaa et tjek fra, kunne ingen enhedstest af de enkelte
+  // funktioner se fejlen.
+  const audit = auditPackage({
+    localPkg,
+    publishedPkg,
+    localDts: localDts ? readFileSync(localDts, 'utf8') : null,
+    publishedDts:
+      publishedDts && existsSync(publishedDts)
+        ? readFileSync(publishedDts, 'utf8')
+        : null,
+    allowedRemovals: declared[name] ?? [],
+  });
+
+  if (audit.entryPointsRemoved.length) {
+    console.error(
+      `::error::${name}: et publish ville FJERNE ${audit.entryPointsRemoved.length} entry-point(s) fra ` +
+        `exports-mappen, som ${publishedPkg.version} har: ${audit.entryPointsRemoved.join(', ')}. ` +
+        `En forbruger der importerer dem knaekker. Genskab dem, eller erklaer ` +
+        `fjernelsen i .api-removals.json (og udgiv som major).`,
+    );
+    failed++;
+  }
+
+  if (!audit.comparedTypes) {
     console.log(
-      `· ${name}: udgiver ingen typedefinitioner — kan ikke sammenlignes`,
+      `· ${name}: ingen typer at sammenligne — kun exports-mappen maalt`,
     );
     continue;
   }
 
-  const removed = removedExports(
-    readFileSync(dts, 'utf8'),
-    readFileSync(localDts, 'utf8'),
-    declared[name] ?? [],
-  );
-
-  if (removed.length) {
+  if (audit.exportsRemoved.length) {
     console.error(
-      `::error::${name}: et publish ville FJERNE ${removed.length} offentlige eksporter, ` +
-        `som ${pkgJson.version} har: ${removed.join(', ')}. ` +
+      `::error::${name}: et publish ville FJERNE ${audit.exportsRemoved.length} offentlige eksporter, ` +
+        `som ${publishedPkg.version} har: ${audit.exportsRemoved.join(', ')}. ` +
         `Port dem, eller erklær fjernelsen i .api-removals.json (og udgiv som major).`,
     );
     failed++;
   } else {
     console.log(
-      `✓ ${name}: ingen offentlige eksporter går tabt (udgivet ${pkgJson.version})`,
+      `✓ ${name}: ingen offentlige eksporter går tabt (udgivet ${publishedPkg.version})`,
     );
   }
 }

@@ -67,6 +67,15 @@ Du skulle nu se `NPM_TOKEN` i listen over secrets. Den vises som `***`.
 2. **Pusher til `main` branch**
 3. **GitHub Actions opretter automatisk en "Version Packages" PR**
 4. **Du reviewer PR'en** (tjek versioner og changelogs)
+
+> **Pakkerne har med vilje FORSKELLIGE versionsnumre.** Ser du 2.23.0 ved siden af 2.24.0 i denne
+> PR, er det ikke en fejl, der skal rettes. Hver pakke versioneres efter, hvad der er ændret i den —
+> bumper vi uændrede pakker med, holder et bump op med at betyde "her skete noget". Sammenhængen er
+> sikret et andet sted: pnpm omskriver `workspace:*` til den nøjagtige version ved publish, så en
+> udgivet `@grundtone/vue` navngiver præcis den `core` og `design-system`, den blev bygget mod.
+> **Forbrugeren har intet at gætte på, og der er derfor ingen tvetydighed, en synkronisering kunne
+> fjerne.**
+
 5. **Merger PR'en**
 6. **GitHub Actions publicerer automatisk til NPM**
 

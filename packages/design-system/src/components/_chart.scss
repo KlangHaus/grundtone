@@ -86,7 +86,7 @@
   font-size: var(--font-size-xs);
   color: var(--color-text);
   pointer-events: none;
-  z-index: var(--z-index-tooltip);
+  z-index: var(--z-tooltip);
 }
 
 .chart__tooltip-label {

@@ -1,3 +1,5 @@
+import { byName } from './order.mjs';
+
 /**
  * Minimal SemVer "strictly greater than" — the comparison the version-drift
  * gate depends on. Its own module so the gate and its tests share ONE
@@ -7,11 +9,55 @@
  * install, so it must have zero dependencies.
  */
 
-/** Parse a SemVer core (major.minor.patch) plus optional prerelease. */
+/**
+ * Parse a SemVer core (major.minor.patch) plus optional prerelease.
+ *
+ * Build metadata is stripped: SemVer §10 says it is ignored when determining
+ * precedence, so `1.0.0+a` and `1.0.0+b` are the same version. Anything else
+ * unparseable THROWS rather than returning a default — a gate that cannot read
+ * a version must stop, not guess a comparison.
+ */
 export function parse(v) {
-  const m = /^(\d+)\.(\d+)\.(\d+)(?:-(.+))?$/.exec(v);
+  const m = /^(\d+)\.(\d+)\.(\d+)(?:-([^+]+))?(?:\+[0-9A-Za-z.-]+)?$/.exec(v);
   if (!m) throw new Error(`unparseable version: ${v}`);
   return { major: +m[1], minor: +m[2], patch: +m[3], pre: m[4] ?? null };
+}
+
+/**
+ * Compare two prerelease strings per SemVer §11: dot-separated identifiers,
+ * compared left to right; all-numeric identifiers compare NUMERICALLY, numeric
+ * ranks below alphanumeric, and a longer identifier list wins when all the
+ * shared ones are equal.
+ *
+ * 🔴 This used to be a plain `a > b` string comparison, with a comment saying
+ * lexical was "enough for our `next.<runid>` shape". Measured 2026-08-20 — it
+ * is not: `next.10` sorts BELOW `next.9` as strings, so the comparison was
+ * inverted for every run number that grew a digit. It happens not to be
+ * reachable today, because nothing compares two prereleases to each other; the
+ * bug was waiting for the first caller that did.
+ */
+const NUMERIC = /^\d+$/;
+
+/** Ét prerelease-led, sammenlignet efter SemVer §11. */
+function compareIdentifier(a, b) {
+  const numA = NUMERIC.test(a);
+  const numB = NUMERIC.test(b);
+  if (numA && numB) return Number(a) - Number(b);
+  if (numA) return -1;
+  if (numB) return 1;
+  return byName(a, b);
+}
+
+function comparePre(a, b) {
+  const A = a.split('.');
+  const B = b.split('.');
+  for (let i = 0; i < Math.max(A.length, B.length); i += 1) {
+    if (A[i] === undefined) return -1;
+    if (B[i] === undefined) return 1;
+    const order = compareIdentifier(A[i], B[i]);
+    if (order !== 0) return order;
+  }
+  return 0;
 }
 
 /**
@@ -33,5 +79,24 @@ export function gt(a, b) {
   if (x.pre === null && y.pre !== null) return true;
   if (x.pre !== null && y.pre === null) return false;
   if (x.pre === null && y.pre === null) return false;
-  return x.pre > y.pre; // lexical is enough for our `next.<runid>` shape
+  return comparePre(x.pre, y.pre) > 0;
+}
+
+/**
+ * `major.minor.patch` alene — prerelease OG build-metadata droppet.
+ *
+ * 🔴 Grunden til at den ligger her og ikke som `version.split('-')[0]` i
+ * stemplings-scriptet ([quality]s fund 2026-08-20): den naive form lader
+ * build-metadata staa tilbage, saa `2.1.0+build` bliver til
+ * `2.1.0+build-next.5` — ugyldig semver, fordi metadata skal staa SIDST
+ * (§10). Ingen af vores pakker bruger metadata i dag, saa den var ikke naabar
+ * — praecis samme form som den vendte prerelease-sammenligning i samme fil:
+ * en utaendt tripwire, der ventede paa den foerste der ramte den.
+ *
+ * `parse()` kaster paa noget uparsebart, og det er den rigtige udgang her: et
+ * stemplings-script koerer umiddelbart foer et publish, der ikke kan goeres om.
+ */
+export function baseVersion(v) {
+  const { major, minor, patch } = parse(v);
+  return `${major}.${minor}.${patch}`;
 }

@@ -114,6 +114,17 @@ jobs:
       - uses: SonarSource/sonarqube-scan-action@22918119ff8e1ca75a623e15c8296b6ea4fbe28f # v8.2.1
         if: ${{ env.SONAR_TOKEN != '' && env.SONAR_HOST_URL != '' }}
 
+      # Gatens melding siger HVOR MANGE fund der er, ikke HVILKE — og
+      # detaljen ligger bag tokenet, som kun findes her. Uden dette step er
+      # den, der skal rette fejlen, praecis den, der ikke kan se den.
+      # Diagnostisk og aldrig blokerende; gaten selv afgoer roedt/groent.
+      - name: Print Sonar-fund i loggen
+        if: ${{ always() && github.event_name == 'pull_request' && env.SONAR_TOKEN != '' && env.SONAR_HOST_URL != '' }}
+        env:
+          SONAR_PROJECT_KEY: KlangHaus_grundtone_7614edb4-1c54-485f-89b0-0867d3e04552
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: bash scripts/print-sonar-findings.sh
+
       # Ikke pynt: uden den er et groent check paa en Dependabot-PR
       # uskelneligt fra en ren analyse.
       - name: Forklar hvis analysen blev udeladt

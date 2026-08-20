@@ -53,8 +53,8 @@
   opacity: 0;
   transform: scale(0.95);
   transition:
-    opacity var(--duration-fast) var(--ease-ease-out),
-    transform var(--duration-fast) var(--ease-ease-out);
+    opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
 
   &--visible {
     opacity: 1;

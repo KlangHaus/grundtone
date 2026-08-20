@@ -116,6 +116,12 @@ jobs:
       - name: Intet offentligt API går tabt ved publish
         run: node scripts/assert-no-public-api-loss.mjs
 
+      # Samme spoergsmaal som ovenfor, men stillet til ALLE udgivelige pakker
+      # frem for de syv i next-kanalen. De to overlapper og erstatter ikke
+      # hinanden.
+      - name: Ingen pakke udgives som en nedgradering
+        run: node scripts/assert-no-downgrade-publish.mjs
+
       - name: Publish @next
         # pnpm rewrites workspace:* deps to the stamped -next version, so the
         # published graph is self-consistent. --no-git-checks: the stamp dirties

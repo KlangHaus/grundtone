@@ -1,7 +1,6 @@
 <script setup lang="ts">
-  import { computed, ref } from 'vue';
+  import { computed, ref, useId } from 'vue';
   import { getClassPrefix } from '@grundtone/core';
-  import { generateId } from '@grundtone/utils';
   import type { DateInputProps } from './types';
 
   const props = withDefaults(defineProps<DateInputProps>(), {
@@ -21,7 +20,8 @@
   const p = computed(() => getClassPrefix());
   const inputBase = computed(() => `${p.value}-input`);
 
-  const baseId = computed(() => props.id ?? generateId('date'));
+  const autoId = `date-${useId()}`;
+  const baseId = computed(() => props.id ?? autoId);
   const labelId = computed(() => `${baseId.value}-label`);
   const descriptionId = computed(() =>
     props.errorText || props.helpText ? `${baseId.value}-desc` : undefined,

@@ -18,21 +18,33 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
+import { baseVersion } from './lib/semver-gt.mjs';
+
 const id = process.argv[2] ?? process.env.PRERELEASE_ID;
 if (!id || !/^[A-Za-z0-9.]+$/.test(id)) {
-  console.error('usage: prerelease-next-version <id>  (alphanumeric, e.g. a run number or short git sha)');
+  console.error(
+    'usage: prerelease-next-version <id>  (alphanumeric, e.g. a run number or short git sha)',
+  );
   process.exit(1);
 }
 
 // The graph consumers (studio/etude/resonans/backstage) need for the new
 // components. @grundtone/email + react-native keep their own release cadence
 // and are intentionally excluded from the component `next` channel.
-const PACKAGE_DIRS = ['core', 'utils', 'icons', 'design-system', 'vue', 'nuxt', 'mcp'];
+const PACKAGE_DIRS = [
+  'core',
+  'utils',
+  'icons',
+  'design-system',
+  'vue',
+  'nuxt',
+  'mcp',
+];
 
 for (const dir of PACKAGE_DIRS) {
   const pkgPath = join('packages', dir, 'package.json');
   const pkg = JSON.parse(readFileSync(pkgPath, 'utf8'));
-  const base = pkg.version.split('-')[0]; // strip any existing prerelease suffix
+  const base = baseVersion(pkg.version);
   pkg.version = `${base}-next.${id}`;
   writeFileSync(pkgPath, `${JSON.stringify(pkg, null, 2)}\n`);
   console.error(`${pkg.name} → ${pkg.version}`);

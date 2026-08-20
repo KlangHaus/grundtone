@@ -1,7 +1,6 @@
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import { computed, useId } from 'vue';
   import { getClassPrefix } from '@grundtone/core';
-  import { generateId } from '@grundtone/utils';
   import type { SelectProps, SelectOptionGroup } from './types';
 
   const props = withDefaults(defineProps<SelectProps>(), {
@@ -26,7 +25,8 @@
   const base = computed(() => `${p.value}-select`);
   const inputBase = computed(() => `${p.value}-input`);
 
-  const selectId = computed(() => props.id ?? generateId('select'));
+  const autoId = `select-${useId()}`;
+  const selectId = computed(() => props.id ?? autoId);
   const descriptionId = computed(() =>
     props.errorText || props.helpText ? `${selectId.value}-desc` : undefined,
   );
