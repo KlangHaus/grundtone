@@ -2,7 +2,9 @@
   "$schema": "https://unpkg.com/@changesets/config@3.1.2/schema.json",
   "changelog": [
     "@changesets/changelog-github",
-    { "repo": "KlangHaus/grundtone" }
+    {
+      "repo": "KlangHaus/grundtone"
+    }
   ],
   "commit": false,
   "fixed": [],
@@ -13,14 +15,13 @@
       "@grundtone/icons",
       "@grundtone/vue",
       "@grundtone/design-system",
-      "@grundtone/nuxt",
-      "@grundtone/react-native"
+      "@grundtone/nuxt"
     ]
   ],
   "access": "public",
   "baseBranch": "develop",
   "updateInternalDependencies": "patch",
-  "ignore": ["@grundtone/docs", "@grundtone/web"],
+  "ignore": ["@grundtone/docs", "@grundtone/web", "@grundtone/react-native"],
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
     "onlyUpdatePeerDependentsWhenOutOfRange": true
   },
