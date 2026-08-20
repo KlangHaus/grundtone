@@ -37,8 +37,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # 🔴 Titlen gaar gennem env og IKKE ind i `run:`-strengen. Interpoleres
+      # `${{ ... }}` direkte i en shell-kommando, bliver den en del af scriptet
+      # FOER shellen parser det — og en PR-titel er angriber-kontrolleret, saa
+      # `$(...)` eller backticks i en titel ville eksekvere paa runneren.
+      # commitlint.yml gjorde det allerede rigtigt; denne var kopien der ikke.
       - name: Validate PR title
-        run: echo "${{ github.event.pull_request.title }}" | npx commitlint
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: echo "$PR_TITLE" | npx commitlint
 
   setup:
     name: Setup & Build
