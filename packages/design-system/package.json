@@ -14,6 +14,7 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
+    "./css": "./dist/index.css",
     "./dist/index.css": "./dist/index.css",
     "./scss": {
       "sass": "./src/index.scss",

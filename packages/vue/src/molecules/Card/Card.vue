@@ -149,8 +149,8 @@
       position: relative;
       cursor: pointer;
       transition:
-        box-shadow tokens.duration('fast') tokens.ease('out'),
-        transform tokens.duration('fast') tokens.ease('out');
+        box-shadow tokens.duration('fast') tokens.ease('ease-out'),
+        transform tokens.duration('fast') tokens.ease('ease-out');
 
       &:hover,
       &:focus-visible {
