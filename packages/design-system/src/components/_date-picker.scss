@@ -110,8 +110,8 @@
     border: none;
     background: none;
     transition:
-      background-color var(--duration-fast) var(--ease-ease),
-      color var(--duration-fast) var(--ease-ease);
+      background-color var(--duration-fast) var(--ease),
+      color var(--duration-fast) var(--ease);
 
     &:hover {
       background: var(--color-surface-alt);

@@ -11,13 +11,13 @@
   color: var(--color-primary);
   text-decoration: none;
   line-height: var(--line-height-normal);
-  transition: color var(--duration-fast) var(--ease-ease);
+  transition: color var(--duration-fast) var(--ease);
 
   &::before {
     content: '←';
     display: inline-block;
     font-size: 1.1em;
-    transition: transform var(--duration-fast) var(--ease-ease);
+    transition: transform var(--duration-fast) var(--ease);
   }
 
   &:hover {

@@ -59,8 +59,8 @@
     border: 2px solid var(--color-border-medium);
     background: var(--color-background);
     transition:
-      border-color var(--duration-fast) var(--ease-ease),
-      background-color var(--duration-fast) var(--ease-ease);
+      border-color var(--duration-fast) var(--ease),
+      background-color var(--duration-fast) var(--ease);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -100,7 +100,7 @@
       height: 0.5rem;
       border-radius: var(--radius-full);
       background: transparent;
-      transition: background-color var(--duration-fast) var(--ease-ease);
+      transition: background-color var(--duration-fast) var(--ease);
     }
   }
 
@@ -115,7 +115,7 @@
       border-left: 2px solid transparent;
       border-bottom: 2px solid transparent;
       transform: rotate(-45deg) translateY(-0.0625rem);
-      transition: border-color var(--duration-fast) var(--ease-ease);
+      transition: border-color var(--duration-fast) var(--ease);
     }
   }
 

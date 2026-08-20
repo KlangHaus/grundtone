@@ -57,8 +57,8 @@ blockquote {
 // Magazine-style pull-quote
 .blockquote--pull {
   border-left: none;
-  border-top: 2px solid var(--color-border);
-  border-bottom: 2px solid var(--color-border);
+  border-top: 2px solid var(--color-border-light);
+  border-bottom: 2px solid var(--color-border-light);
   background: none;
   border-radius: 0;
   padding: var(--space-lg) 0;

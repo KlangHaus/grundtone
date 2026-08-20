@@ -4,7 +4,7 @@
 
 .accordion {
   font-size: var(--font-size-sm);
-  line-height: var(--line-height-base);
+  line-height: var(--line-height-normal);
   color: var(--color-text);
 }
 
@@ -87,7 +87,7 @@
     position: absolute;
     background: currentColor;
     border-radius: 1px;
-    transition: transform var(--duration-fast) var(--ease-ease);
+    transition: transform var(--duration-fast) var(--ease);
   }
 
   &::before {
@@ -137,7 +137,7 @@
   // Fade transition
   &--fade {
     opacity: 0;
-    transition: opacity var(--duration-base) var(--ease-ease);
+    transition: opacity var(--duration-base) var(--ease);
     pointer-events: none;
 
     &.accordion__panel--open {
