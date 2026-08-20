@@ -260,7 +260,7 @@
       cursor: pointer;
       font-size: tokens.font-size('sm');
       color: tokens.color('text');
-      transition: background tokens.duration('fast') tokens.ease('out');
+      transition: background tokens.duration('fast') tokens.ease('ease-out');
 
       &:hover,
       &--active {

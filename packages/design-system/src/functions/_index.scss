@@ -72,7 +72,24 @@
 
 /// Returns a timing CSS var. Keys map directly to CSS var names.
 /// @param {String} $type ['ease-out'] - ease | ease-in | ease-out | ease-in-out | linear
+// 🔴 Validerer noeglen. Uden dette returnerede ease() glad var(--#{$type}) for
+// HVAD SOM HELST — og ease('ease-out') gav var(--out), som ikke er defineret nogen
+// steder (noeglen skal vaere 'ease-out'). Maalt 2026-08-19 ([backstage]):
+// 13 doede transitions i Tabs, Card,
+// Accordion, Autocomplete og Select. En udefineret custom property fejler ikke;
+// browseren dropper deklarationen, og overgangen forsvinder i stilhed.
+//
+// At det ikke blev opdaget skyldtes at vi maalte `dist` — som er GITIGNORED og
+// bygget lokalt. En groen dist siger kun hvornaar nogen sidst byggede, ikke at
+// kilden er ren. Med @error kan den forkerte noegle ikke kompilere, og
+// spoergsmaalet "er dist frisk" holder op med at afgoere noget.
+$_eases: ('ease', 'ease-in', 'ease-out', 'ease-in-out', 'linear');
+
 @function ease($type: 'ease-out') {
+  @if not index($_eases, $type) {
+    @error "ease(): ukendt easing '#{$type}'. Gyldige: #{$_eases}. "
+      + "Den hyppigste fejl var noeglen 'out', som gav var(--out) — findes ikke.";
+  }
   @return var(--#{$type});
 }
 

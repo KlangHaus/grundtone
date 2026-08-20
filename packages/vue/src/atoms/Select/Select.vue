@@ -133,8 +133,8 @@
     font-family: tokens.font-family('base');
     cursor: pointer;
     transition:
-      border-color tokens.duration('fast') tokens.ease('out'),
-      box-shadow tokens.duration('fast') tokens.ease('out');
+      border-color tokens.duration('fast') tokens.ease('ease-out'),
+      box-shadow tokens.duration('fast') tokens.ease('ease-out');
 
     // Reset native + custom chevron
     appearance: none;
