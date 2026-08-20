@@ -3,7 +3,7 @@
 
 .tabs {
   font-size: var(--font-size-sm);
-  line-height: var(--line-height-base);
+  line-height: var(--line-height-normal);
 
   // Uden denne kan komponenten ikke krympe som flex-/grid-barn: et
   // min-content-bredt panel (fx en <pre> med lange linjer) presser i stedet

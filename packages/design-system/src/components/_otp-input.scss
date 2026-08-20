@@ -17,8 +17,8 @@
     background: var(--color-background);
     color: var(--color-text);
     transition:
-      border-color var(--duration-fast) var(--ease-ease),
-      box-shadow var(--duration-fast) var(--ease-ease);
+      border-color var(--duration-fast) var(--ease),
+      box-shadow var(--duration-fast) var(--ease);
 
     &:focus {
       outline: none;

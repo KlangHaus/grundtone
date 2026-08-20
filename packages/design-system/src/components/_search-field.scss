@@ -17,8 +17,8 @@
     color: var(--color-text);
     font-family: var(--font-family-base);
     transition:
-      border-color var(--duration-fast) var(--ease-ease),
-      box-shadow var(--duration-fast) var(--ease-ease);
+      border-color var(--duration-fast) var(--ease),
+      box-shadow var(--duration-fast) var(--ease);
 
     &::placeholder {
       color: var(--color-text-secondary);
@@ -45,7 +45,7 @@
     cursor: pointer;
     font-weight: var(--font-weight-medium);
     white-space: nowrap;
-    transition: background-color var(--duration-fast) var(--ease-ease);
+    transition: background-color var(--duration-fast) var(--ease);
 
     &:hover {
       opacity: 0.9;

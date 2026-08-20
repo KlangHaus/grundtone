@@ -108,7 +108,7 @@
     background: tokens.color('surface-alt');
     border-radius: tokens.radius('xl');
     font-size: tokens.font-size('sm');
-    line-height: tokens.line-height('base');
+    line-height: tokens.line-height('normal');
 
     &__heading {
       font-weight: tokens.font-weight('semibold');

@@ -78,56 +78,54 @@
 
   // Transitions — backdrop always fades
   &--entering {
-    animation: gt-fade-in var(--duration-fast) var(--ease-ease-out);
+    animation: gt-fade-in var(--duration-fast) var(--ease-out);
   }
 
   &--leaving {
-    animation: gt-fade-out var(--duration-fast) var(--ease-ease-in, ease-in);
+    animation: gt-fade-out var(--duration-fast) var(--ease-in);
   }
 
   // Dialog transitions (data-transition attribute)
   &--entering &__dialog,
   &[data-transition='scale'] &--entering &__dialog {
-    animation: gt-scale-in var(--duration-fast) var(--ease-ease-out);
+    animation: gt-scale-in var(--duration-fast) var(--ease-out);
   }
 
   &--leaving &__dialog,
   &[data-transition='scale'] &--leaving &__dialog {
-    animation: gt-scale-out var(--duration-fast) var(--ease-ease-in, ease-in);
+    animation: gt-scale-out var(--duration-fast) var(--ease-in);
   }
 
   &[data-transition='fade'] &--entering &__dialog {
-    animation: gt-fade-in var(--duration-fast) var(--ease-ease-out);
+    animation: gt-fade-in var(--duration-fast) var(--ease-out);
   }
 
   &[data-transition='fade'] &--leaving &__dialog {
-    animation: gt-fade-out var(--duration-fast) var(--ease-ease-in, ease-in);
+    animation: gt-fade-out var(--duration-fast) var(--ease-in);
   }
 
   &[data-transition='slide-up'] &--entering &__dialog {
-    animation: gt-slide-up-in var(--duration-fast) var(--ease-ease-out);
+    animation: gt-slide-up-in var(--duration-fast) var(--ease-out);
   }
 
   &[data-transition='slide-up'] &--leaving &__dialog {
-    animation: gt-slide-up-out var(--duration-fast) var(--ease-ease-in, ease-in);
+    animation: gt-slide-up-out var(--duration-fast) var(--ease-in);
   }
 
   &[data-transition='slide-down'] &--entering &__dialog {
-    animation: gt-slide-down-in var(--duration-fast) var(--ease-ease-out);
+    animation: gt-slide-down-in var(--duration-fast) var(--ease-out);
   }
 
   &[data-transition='slide-down'] &--leaving &__dialog {
-    animation: gt-slide-down-out var(--duration-fast)
-      var(--ease-ease-in, ease-in);
+    animation: gt-slide-down-out var(--duration-fast) var(--ease-in);
   }
 
   &[data-transition='slide-right'] &--entering &__dialog {
-    animation: gt-slide-right-in var(--duration-fast) var(--ease-ease-out);
+    animation: gt-slide-right-in var(--duration-fast) var(--ease-out);
   }
 
   &[data-transition='slide-right'] &--leaving &__dialog {
-    animation: gt-slide-right-out var(--duration-fast)
-      var(--ease-ease-in, ease-in);
+    animation: gt-slide-right-out var(--duration-fast) var(--ease-in);
   }
 
   // Reduced motion

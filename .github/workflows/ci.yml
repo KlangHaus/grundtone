@@ -80,6 +80,18 @@ jobs:
       - name: Build packages
         run: pnpm build:packages
 
+      # Koeres EFTER build, fordi den maaler den BYGGEDE stylesheet. Kilden
+      # fortaeller hvad nogen skrev; kun resultatet fortaeller, hvad der endte
+      # med at vaere defineret. En `var(--x)` uden fallback og uden definition
+      # kasseres af browseren sammen med hele deklarationen — den ser rigtig ud
+      # i baade diff og grep og goer ingenting. Maalt 2026-08-20: 61 saadanne,
+      # den aeldste fra marts.
+      #
+      # Denne staar i ci.yml og ikke kun paa publish-stien, fordi den er groen
+      # i dag: der er ingen kendt tilstand, den ville goere hver PR roed paa.
+      - name: Ingen døde CSS-deklarationer
+        run: node scripts/assert-no-undefined-css-vars.mjs packages/design-system/dist/index.css packages/vue/dist/index.css
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v7
         with:

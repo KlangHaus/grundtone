@@ -676,7 +676,7 @@
       border: none;
       background: none;
       cursor: pointer;
-      padding: 0 tokens.space('2xs');
+      padding: 0 tokens.space('xs');
       color: tokens.color('text');
       text-decoration: none;
       border-radius: tokens.radius('sm');
@@ -702,7 +702,7 @@
     &__popover-field {
       display: flex;
       flex-direction: column;
-      gap: tokens.space('2xs');
+      gap: tokens.space('xs');
       font-size: tokens.font-size('sm');
       font-weight: 600;
     }
