@@ -119,6 +119,18 @@ jobs:
       # Samme spoergsmaal som ovenfor, men stillet til ALLE udgivelige pakker
       # frem for de syv i next-kanalen. De to overlapper og erstatter ikke
       # hinanden.
+      # Egenskaben, ikke raekkefoelgen. 2026-08-23 blev release-PR'en merget
+      # foer den nuxt-rettelse, den var betinget af; betingelsen stod kun i
+      # beskeder mellem mennesker. Udgivelsen blev stoppet — men af
+      # nedgraderings-vagten, paa en anden pakke der tilfaeldigvis stod bagud.
+      # Vaernet virkede ved SAMMENFALD, ikke ved design.
+      #
+      # Denne gate eksekverer det BYGGEDE modul og fejler, hvis wiringen ikke
+      # er der. Den holder uanset merge-raekkefoelge og uanset om nogen husker
+      # betingelsen om tre maaneder.
+      - name: Udgivelses-invarianter holder på artefaktet
+        run: node scripts/assert-release-invariants.mjs
+
       - name: Ingen pakke udgives som en nedgradering
         run: node scripts/assert-no-downgrade-publish.mjs
 
