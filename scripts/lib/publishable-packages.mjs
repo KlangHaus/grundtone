@@ -52,6 +52,16 @@ export function publishablePackages(root, fs, { ignore = [] } = {}) {
  *
  * Laeses fra changesets' EGEN config frem for en liste her: to lister over det
  * samme kan blive uenige, og uenigheden ville foerst vise sig ved en udgivelse.
+ *
+ * 🔴 FEJL-RETNINGEN ER MED VILJE, og den er kontraintuitiv nok til at nogen kan
+ * komme til at "rette" den: manglende fil, ugyldig JSON eller et `ignore`-felt
+ * der ikke er en liste giver alle TOM liste. Tom liste = intet ignoreres = alle
+ * pakker maales = gaten bliver STRENGERE, ikke loesere.
+ *
+ * Efterproevet af [review] 2026-08-23 paa alle tre fejl-tilstande. En ulaeselig
+ * config kan altsaa ikke aabne gaten — den kan kun lukke den haardere. Skift
+ * aldrig denne fallback til noget "mere tilgivende": det ville goere en
+ * konfigurationsfejl til en vej udenom.
  */
 export function changesetIgnored(root, fs) {
   try {
