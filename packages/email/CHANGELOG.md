@@ -1,5 +1,13 @@
 # @grundtone/email
 
+## 0.3.1 - 2026-08-23
+
+### Patch Changes
+
+- Updated dependencies
+  [[`e4ae9d6`](https://github.com/KlangHaus/grundtone/commit/e4ae9d6947bd21716476c776fdea80b2f51d307c)]:
+  - @grundtone/core@3.0.0
+
 ## 0.3.0 - 2026-08-05
 
 ### Minor Changes
