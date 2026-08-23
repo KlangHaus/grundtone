@@ -110,9 +110,9 @@ function extractProps(typesPath: string): {
 function extractExportNames(indexPath: string): string[] {
   if (!existsSync(indexPath)) return [];
   const text = readFileSync(indexPath, 'utf8');
-  return [
-    ...text.matchAll(/export\s*\{\s*default\s+as\s+(GT[A-Za-z0-9_]+)/g),
-  ].map(m => m[1]);
+  return [...text.matchAll(/export\s*\{\s*default\s+as\s+(GT\w+)/g)].map(
+    m => m[1],
+  );
 }
 
 function scanComponents(vueSrc: string, importPath: string): ComponentDoc[] {

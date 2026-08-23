@@ -191,6 +191,9 @@ server.registerTool(
         summary: c.summary,
       })),
     };
+    // Bygget foer strengen: en indlejret template literal er svaerere at
+    // laese end den er kort (S4624).
+    const quoted = terms.map(t => '"' + t + '"').join(', ');
     const md = hits.length
       ? [
           `# Matches for "${query}" — ${hits.length}`,
@@ -200,7 +203,7 @@ server.registerTool(
               `- **${c.name}** (${c.kind})${c.summary ? ` — ${c.summary}` : ''}`,
           ),
         ].join('\n')
-      : `No component matches any of: ${terms.map(t => `"${t}"`).join(', ')}.\n\n` +
+      : `No component matches any of: ${quoted}.\n\n` +
         `Each word was tried separately, so this is not a "too many words" ` +
         `result — none of them appears in a component name, summary or prop. ` +
         `Try a different word, or grundtone_list_components for the full list ` +
