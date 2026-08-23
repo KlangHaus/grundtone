@@ -74,7 +74,12 @@ const nuxtModule = (await import(modulePath)).default;
 // ligger uden for dem.
 const nuxt = {
   _version: '4.5.1',
-  options: { css: [], vite: {}, runtimeConfig: { public: {} }, devtools: false },
+  options: {
+    css: [],
+    vite: {},
+    runtimeConfig: { public: {} },
+    devtools: false,
+  },
   hook: () => {},
   callHook: async () => {},
   hooks: { hook: () => {}, callHook: async () => {} },
