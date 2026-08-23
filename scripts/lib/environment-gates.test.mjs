@@ -27,6 +27,29 @@ describe('referencedEnvironments', () => {
     expect([...referencedEnvironments(wf)]).toEqual(['production']);
   });
 
+  // 🔴 [quality]s krav om kommentar-filtrering, efterproevet frem for antaget.
+  // Linje-kommentarer virkede allerede; INLINE gjorde ikke — `production # x`
+  // blev fanget med kommentaren, opslaget fejlede, og gaten meldte "kunne ikke
+  // slås op": en falsk positiv paa en helt korrekt workflow.
+  it('ignorerer udkommenterede referencer', () => {
+    expect([...referencedEnvironments('  # environment: production\n')]).toEqual([]);
+    expect(
+      [...referencedEnvironments('  # environment:\n  #   name: production\n')],
+    ).toEqual([]);
+  });
+
+  it('strippper inline-kommentar og anførselstegn fra værdien', () => {
+    expect([...referencedEnvironments('  environment: production # midlertidig\n')]).toEqual(
+      ['production'],
+    );
+    expect([...referencedEnvironments('  environment: "production"\n')]).toEqual([
+      'production',
+    ]);
+    expect(
+      [...referencedEnvironments('  environment:\n    name: production # x\n')],
+    ).toEqual(['production']);
+  });
+
   it('finder intet i en workflow uden environments', () => {
     expect([...referencedEnvironments('jobs:\n  a:\n    steps: []\n')]).toEqual(
       [],
