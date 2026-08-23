@@ -73,29 +73,38 @@ export function changesetIgnored(root, fs) {
  * alligevel — og saa udgiver vi netop det, undtagelsen skulle holde ude. Fejlen
  * er altsaa usynlig i den ene retning og farlig i den anden.
  */
+/** Pakkenavnet i en mappe, eller null hvis den ikke har en laesbar manifest. */
+function packageNameIn(dir, fs) {
+  try {
+    return (
+      JSON.parse(fs.readFileSync(join(dir, 'package.json'), 'utf8'))?.name ??
+      null
+    );
+  } catch {
+    return null;
+  }
+}
+
+/** Mapper direkte under `area`, eller tom liste hvis den ikke findes. */
+function subdirectories(root, area, fs) {
+  try {
+    return fs
+      .readdirSync(join(root, area), { withFileTypes: true })
+      .filter(e => e.isDirectory())
+      .map(e => join(root, area, e.name));
+  } catch {
+    return [];
+  }
+}
+
 export function workspacePackageNames(root, fs) {
   const names = new Set();
   for (const area of ['packages', 'apps']) {
-    let entries;
-    try {
-      entries = fs.readdirSync(join(root, area), { withFileTypes: true });
-    } catch {
-      continue;
-    }
-    for (const e of entries) {
-      if (!e.isDirectory()) continue;
-      for (const rel of [
-        join(root, area, e.name, 'package.json'),
-        // apps/playground/<x>/package.json — ét niveau dybere
-        join(root, area, e.name),
-      ]) {
-        try {
-          const pkg = JSON.parse(fs.readFileSync(rel, 'utf8'));
-          if (pkg?.name) names.add(pkg.name);
-          break;
-        } catch {
-          /* videre */
-        }
+    for (const dir of subdirectories(root, area, fs)) {
+      // Ét niveau dybere ogsaa: apps/playground/<x> ligger der.
+      for (const candidate of [dir, ...subdirectories(dir, '', fs)]) {
+        const name = packageNameIn(candidate, fs);
+        if (name) names.add(name);
       }
     }
   }
