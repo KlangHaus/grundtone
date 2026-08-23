@@ -10,6 +10,8 @@ import {
 } from '@nuxt/kit';
 import type { NuxtModule } from '@nuxt/schema';
 
+import { composeAdditionalData } from './scss-options';
+
 // Module options TypeScript interface definition
 export interface ModuleOptions {
   /**
@@ -95,14 +97,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     nuxt.options.vite.css.preprocessorOptions.scss = {
       ...scssOptions,
-      // Existing additionalData is PREPENDED to, never replaced — a consumer
-      // may have their own, and silently dropping it would be a second bug of
-      // the same kind as the one this fixes.
-      additionalData:
-        typeof existing === 'function'
-          ? (source: string, filename: string) =>
-              `${tokenImport}\n${existing(source, filename)}`
-          : `${tokenImport}\n${typeof existing === 'string' ? existing : ''}`,
+      additionalData: composeAdditionalData(tokenImport, existing),
       includePaths: [...(scssOptions.includePaths ?? []), dsSrc],
       silenceDeprecations: [
         ...(scssOptions.silenceDeprecations ?? []),
