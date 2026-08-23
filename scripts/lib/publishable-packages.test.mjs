@@ -3,6 +3,7 @@ import { describe, it, expect } from 'vitest';
 import {
   changesetIgnored,
   publishablePackages,
+  workspacePackageNames,
 } from './publishable-packages.mjs';
 
 /** Minimal fs-stub: en mappe -> indholdet af dens package.json. */
@@ -149,5 +150,50 @@ describe('changesetIgnored', () => {
 
   it('ignorerer et ignore-felt der ikke er en liste', () => {
     expect(changesetIgnored('/repo', cfg('{"ignore":"nej"}'))).toEqual([]);
+  });
+});
+
+describe('workspacePackageNames', () => {
+  const fs = tree => ({
+    readdirSync: dir =>
+      dir.endsWith('packages')
+        ? [{ name: 'vue', isDirectory: () => true }]
+        : [{ name: 'web', isDirectory: () => true }],
+    readFileSync: path => {
+      const dir = path.split('/').at(-2);
+      if (tree[dir] === undefined) throw new Error('ENOENT');
+      return tree[dir];
+    },
+  });
+
+  it('samler navne fra både packages/ og apps/', () => {
+    const names = workspacePackageNames('/repo', fs({
+      vue: pkg('@grundtone/vue', '2.24.0'),
+      web: pkg('@grundtone/web', '1.0.0'),
+    }));
+
+    expect([...names].sort()).toEqual(['@grundtone/vue', '@grundtone/web']);
+  });
+
+  // 🔴 Det, assertionen findes for: et navn i changesets' ignore, som ikke
+  // peger på noget, betyder at changesets versionerer pakken alligevel.
+  it('afslører et navn der ikke matcher nogen pakke', () => {
+    const names = workspacePackageNames('/repo', fs({
+      vue: pkg('@grundtone/vue', '2.24.0'),
+      web: pkg('@grundtone/web', '1.0.0'),
+    }));
+
+    expect(names.has('@grundtone/react-nativ')).toBe(false);
+  });
+
+  it('tåler at en mappe ikke findes', () => {
+    expect(
+      workspacePackageNames('/repo', {
+        readdirSync: () => {
+          throw new Error('ENOENT');
+        },
+        readFileSync: () => '',
+      }).size,
+    ).toBe(0);
   });
 });

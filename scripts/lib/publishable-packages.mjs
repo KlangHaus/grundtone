@@ -63,3 +63,41 @@ export function changesetIgnored(root, fs) {
     return [];
   }
 }
+
+/**
+ * Alle pakkenavne i workspacet — bade `packages/` og `apps/`.
+ *
+ * Bruges til at bevise, at hvert navn i changesets' `ignore` faktisk PEGER paa
+ * noget. En tastefejl dér er ikke harmloes: gaten ville blive strengere (den
+ * ignorerer intet og fejler larmende), men CHANGESETS ville versionere pakken
+ * alligevel — og saa udgiver vi netop det, undtagelsen skulle holde ude. Fejlen
+ * er altsaa usynlig i den ene retning og farlig i den anden.
+ */
+export function workspacePackageNames(root, fs) {
+  const names = new Set();
+  for (const area of ['packages', 'apps']) {
+    let entries;
+    try {
+      entries = fs.readdirSync(join(root, area), { withFileTypes: true });
+    } catch {
+      continue;
+    }
+    for (const e of entries) {
+      if (!e.isDirectory()) continue;
+      for (const rel of [
+        join(root, area, e.name, 'package.json'),
+        // apps/playground/<x>/package.json — ét niveau dybere
+        join(root, area, e.name),
+      ]) {
+        try {
+          const pkg = JSON.parse(fs.readFileSync(rel, 'utf8'));
+          if (pkg?.name) names.add(pkg.name);
+          break;
+        } catch {
+          /* videre */
+        }
+      }
+    }
+  }
+  return names;
+}

@@ -45,15 +45,37 @@ import { lookupPublished } from './lib/npm-dist-tag.mjs';
 import {
   changesetIgnored,
   publishablePackages,
+  workspacePackageNames,
 } from './lib/publishable-packages.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const TAG = process.env.NPM_DIST_TAG ?? 'latest';
 
 const fs = { readdirSync, readFileSync };
-const packages = publishablePackages(root, fs, {
-  ignore: changesetIgnored(root, fs),
-});
+const ignore = changesetIgnored(root, fs);
+
+// 🔴 Hvert navn i changesets' `ignore` skal PEGE paa en pakke der findes.
+// En tastefejl dér er farlig i den ene retning og usynlig i den anden: DENNE
+// gate ville blive strengere (den ignorerer intet og fejler larmende), men
+// CHANGESETS ville versionere pakken alligevel — og saa udgiver vi praecis
+// det, undtagelsen skulle holde ude.
+//
+// Undtagelsen har med vilje ingen egen liste her: den eneste maade at holde en
+// pakke ude af gaten paa er at fortaelle changesets, at den aldrig maa
+// versioneres. Det er en reel beslutning med en reel konsekvens, synlig i en
+// diff — ikke en doer man kan aabne, naar en udgivelse haster.
+const known = workspacePackageNames(root, fs);
+const phantom = ignore.filter(n => !known.has(n));
+if (phantom.length) {
+  console.error(
+    `::error::.changeset/config.json ignorerer ${phantom.join(', ')}, som ikke ` +
+      `findes i workspacet. Enten er navnet stavet forkert — og saa versionerer ` +
+      `changesets pakken alligevel — eller ogsaa er posten foraeldet.`,
+  );
+  process.exit(1);
+}
+
+const packages = publishablePackages(root, fs, { ignore });
 if (!packages.length) {
   console.error(
     '::error::fandt ingen udgivelige pakker under packages/ — gaten ville ' +
