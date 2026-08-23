@@ -96,6 +96,15 @@ jobs:
       #
       # Denne staar i ci.yml og ikke kun paa publish-stien, fordi den er groen
       # i dag: der er ingen kendt tilstand, den ville goere hver PR roed paa.
+      # Et environment uden protection_rules venter ikke paa nogen — men
+      # `environment:` i en workflow LIGNER en godkendelses-gate og bliver
+      # refereret som et vaern. Maalt i studio i dag: to jobs bag environments
+      # med tomme regler. Undtagelser skal erklaeres i scriptet, ikke antages.
+      - name: Refererede environments beskytter noget
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/assert-environment-gates.mjs
+
       - name: Ingen døde CSS-deklarationer
         run: node scripts/assert-no-undefined-css-vars.mjs packages/design-system/dist/index.css packages/vue/dist/index.css
 
