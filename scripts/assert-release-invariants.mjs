@@ -42,9 +42,11 @@
  *
  * Usage: node scripts/assert-release-invariants.mjs   (efter build)
  */
-import { existsSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+import { publishablePackages } from './lib/publishable-packages.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const failures = [];
@@ -56,6 +58,42 @@ function check(name, ok, detail) {
   }
   failures.push(name);
   console.error(`::error::${name} — ${detail}`);
+}
+
+// ── Pakke-metadata ──────────────────────────────────────────────────────────
+// 🔴 Maalt 2026-08-23: @grundtone/mcp havde intet `repository`-felt, og npm
+// AFVISTE udgivelsen:
+//
+//   E422  Error verifying sigstore provenance bundle: package.json
+//         "repository.url" is "", expected to match the repo
+//
+// OIDC-provenansen validerer, at pakkens erklaerede repository matcher
+// attesteringen — et tomt felt kan ikke matche. **Vaernet gjorde sit arbejde:
+// en pakke uden sporbar oprindelse kom ikke ud.** Havde vi udgivet med et token
+// frem for OIDC, var den gaaet igennem uden bemaerkning.
+//
+// Feltet tjekkes derfor FOER publish frem for at blive opdaget af registryet:
+// den ene retning fejler larmende, den anden ville have udgivet en pakke uden
+// sporbarhed.
+for (const { name, dir } of publishablePackages(root, {
+  readdirSync,
+  readFileSync,
+})) {
+  const repo = JSON.parse(
+    readFileSync(join(root, 'packages', dir, 'package.json'), 'utf8'),
+  ).repository;
+
+  check(
+    `${name}: repository.url er sat`,
+    typeof repo?.url === 'string' && repo.url.length > 0,
+    'OIDC-provenansen afviser et publish, hvis feltet ikke matcher attesteringen — ' +
+      'og et tomt felt matcher ingenting.',
+  );
+  check(
+    `${name}: repository.directory er sat`,
+    typeof repo?.directory === 'string' && repo.directory.length > 0,
+    'uden den peger npm-siden paa repo-roden frem for pakkens mappe.',
+  );
 }
 
 // ── @grundtone/nuxt ─────────────────────────────────────────────────────────
