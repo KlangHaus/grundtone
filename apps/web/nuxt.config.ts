@@ -21,15 +21,6 @@ export default defineNuxtConfig({
     prefix: 'GT',
   },
   css: ['~/assets/css/landing.css'],
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: `@use "@grundtone/vue/scss/lib" as tokens;`,
-        },
-      },
-    },
-  },
   app: {
     head: {
       // English is canonical site copy (Allan-direktiv 2026-08-04, cmo 46b3447).

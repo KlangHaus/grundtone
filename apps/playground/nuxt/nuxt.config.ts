@@ -20,14 +20,5 @@ export default defineNuxtConfig({
     composables: true,
     prefix: 'GT',
   },
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: `@use "@grundtone/vue/scss/lib" as tokens;`,
-        },
-      },
-    },
-  },
   devtools: { enabled: true },
 });
