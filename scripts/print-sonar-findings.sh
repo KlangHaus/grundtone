@@ -19,6 +19,36 @@ api() {
 
 echo "── SonarQube-fund for PR #${PR_NUMBER} ──"
 
+# 🔴 Vent på at Sonar har BEHANDLET denne analyse, før vi spørger.
+#
+# Scanneren uploader og returnerer; serveren behandler asynkront. Spørger vi
+# straks, svarer API'et ud fra den FORRIGE analyse — og printer den som om den
+# var denne. Målt 2026-08-23 på PR #156: steppet skrev "issues: 0", mens
+# quality-gaten samtidig meldte 1. To instrumenter uenige om samme kørsel, og
+# det tavse af dem så mest autoritativt ud.
+#
+# Værre end altid at tage fejl: det er rigtigt for det meste, så uenigheden
+# opdages kun hvis nogen tilfældigvis sammenligner.
+REPORT=".scannerwork/report-task.txt"
+if [ -f "$REPORT" ]; then
+  CE_TASK_ID=$(grep '^ceTaskId=' "$REPORT" | cut -d= -f2- | tr -d '\r')
+  status=""
+  for _ in $(seq 1 40); do
+    status=$(api "ce/task?id=${CE_TASK_ID}" | jq -r '.task.status // empty' 2>/dev/null)
+    case "$status" in
+      SUCCESS) break ;;
+      FAILED|CANCELED) break ;;
+      *) sleep 3 ;;
+    esac
+  done
+  if [ "$status" != "SUCCESS" ]; then
+    # Fravær af bekræftelse må ikke læse som bekræftelse.
+    echo "::warning::analysen er ikke bekræftet færdigbehandlet (status: ${status:-ukendt}). Fundene nedenfor kan stamme fra en TIDLIGERE analyse."
+  fi
+else
+  echo "::warning::${REPORT} findes ikke — kan ikke binde opslaget til DENNE analyse. Fundene nedenfor kan være forældede."
+fi
+
 issues=$(api "issues/search?componentKeys=${SONAR_PROJECT_KEY}&pullRequest=${PR_NUMBER}&resolved=false&ps=100")
 if [ -z "$issues" ] || ! echo "$issues" | jq -e .issues >/dev/null 2>&1; then
   echo "::warning::kunne ikke hente issues — se dashboardet. Dette siger INTET om hvorvidt der er fund."
