@@ -18,6 +18,32 @@
  * En gate, der er grøn fordi den ikke måler noget, er den tilstand vi har brugt
  * to dage på at navngive.
  *
+ * ── Hvorfor .environment-gates.json ikke er en bagdør ───────────────────────
+ * 🔴 Det her er en gate om SYNLIGHED, ikke om TILSTAND, og forskellen afgør,
+ * hvad den må kræve.
+ *
+ * En tilstands-gate kræver, at verden er i orden: "dette environment SKAL have
+ * required reviewers". Den ville være uopfyldelig i vores private repoer —
+ * GitHub Team tillader ikke required reviewers på private repoer, og en gate,
+ * der kræver noget en PR ikke kan levere, er en påmindelse forklædt som en
+ * gate. Den lærer folk at merge forbi sig.
+ *
+ * En synligheds-gate kræver noget andet og altid opnåeligt: **at fraværet er
+ * sagt højt.** *"Dette environment scoper secrets, det gater ikke — planen
+ * tillader ikke andet"* er en sand sætning, enhver kan skrive, på enhver plan.
+ *
+ * Derfor åbner erklæringen ikke gaten — den flytter en tilstand fra
+ * *stiltiende* til *skrevet ned*. Det, gaten forhindrer, er ikke et
+ * ubeskyttet environment; det er et environment, som ingen VED er ubeskyttet,
+ * mens `environment:` i workflowen læses som et værn.
+ *
+ * ── Og hvorfor en falsk positiv her er værre end andre steder ───────────────
+ * Gatens hele formål er at sige "dette værn er en attrap". Råber den falsk om
+ * et ÆGTE værn, underminerer den sin egen troværdighed på præcis den akse, den
+ * skal bruges på — og så bliver den ignoreret, når den har ret. Målt: en inline
+ * YAML-kommentar blev fanget som en del af navnet og gav "kunne ikke slås op"
+ * på en helt korrekt workflow.
+ *
  * Usage: GH_TOKEN=… node scripts/assert-environment-gates.mjs
  */
 import { execFileSync } from 'node:child_process';
