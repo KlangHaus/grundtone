@@ -116,9 +116,20 @@ for (const pkg of PACKAGES) {
   // sprang maalingen over frem for at foretage den. Saa laenge raekkefolgen i
   // dette script kunne slaa et tjek fra, kunne ingen enhedstest af de enkelte
   // funktioner se fejlen.
+  // `./css` peger paa den stylesheet forbrugere faktisk importerer. Findes den
+  // ikke i en pakke, er der ingen keyframes at tabe.
+  const cssOf = (pkg, base) => {
+    const rel = pkg?.exports?.['./css'];
+    if (typeof rel !== 'string') return null;
+    const file = join(base, rel.replace(/^\.\//, ''));
+    return existsSync(file) ? readFileSync(file, 'utf8') : null;
+  };
+
   const audit = auditPackage({
     localPkg,
     publishedPkg,
+    localCss: cssOf(localPkg, join(root, 'packages', pkg)),
+    publishedCss: cssOf(publishedPkg, join(dir, 'package')),
     localDts: localDts ? readFileSync(localDts, 'utf8') : null,
     publishedDts:
       publishedDts && existsSync(publishedDts)
@@ -135,6 +146,19 @@ for (const pkg of PACKAGES) {
         `fjernelsen i .api-removals.json (og udgiv som major).`,
     );
     failed++;
+  }
+
+  if (audit.keyframesRemoved.length) {
+    console.error(
+      `::error::${name}: et publish ville FJERNE ${audit.keyframesRemoved.length} ` +
+        `gt-praefikset keyframe(s), som ${publishedPkg.version} har: ` +
+        `${audit.keyframesRemoved.join(', ')}. Et keyframe-navn er GLOBALT og ` +
+        `kan ikke scopes — en forbruger med \`animation: <navn>\` knaekker uden ` +
+        `advarsel. Genskab navnet, eller erklaer fjernelsen i .api-removals.json.`,
+    );
+    failed++;
+  } else if (audit.comparedKeyframes) {
+    console.log(`✓ ${name}: ingen gt-keyframes går tabt`);
   }
 
   if (!audit.comparedTypes) {

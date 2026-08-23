@@ -131,9 +131,16 @@ export function auditPackage({
   publishedPkg,
   localDts = null,
   publishedDts = null,
+  localCss = null,
+  publishedCss = null,
   allowedRemovals = [],
 }) {
   return {
+    keyframesRemoved:
+      localCss != null && publishedCss != null
+        ? removedKeyframes(publishedCss, localCss, allowedRemovals)
+        : [],
+    comparedKeyframes: localCss != null && publishedCss != null,
     entryPointsRemoved: removedEntryPoints(
       publishedPkg,
       localPkg,
@@ -145,4 +152,42 @@ export function auditPackage({
         : [],
     comparedTypes: localDts != null && publishedDts != null,
   };
+}
+
+/**
+ * @keyframes-navne i en stylesheet.
+ *
+ * 🔴 Hvorfor de hoerer til det offentlige API: et keyframe-navn er GLOBALT —
+ * CSS har ingen maade at scope det paa. Skriver en forbruger
+ * `animation: gt-fade-in …`, er de bundet til navnet, og de kan ikke se
+ * forskel paa "dette er en kontrakt" og "dette er implementering".
+ *
+ * `gt-`-praefikset ER signalet: man praefikser netop for at goere et globalt
+ * navn til noget, andre kan bruge. Men et loefte uden en maaling er kun et
+ * loefte — og [backstage] stillede det rigtige spoergsmaal: *"det overlever,
+ * indtil I omdoeber en keyframe, og ingen gate advarer."* Nu advarer den.
+ *
+ * Samme klasse som de flyttede filer, [backstage] fandt efter 3.0.0: gaten
+ * sammenlignede noegler og typenavne og kunne ikke se noget, forbrugere
+ * faktisk laener sig paa.
+ */
+export function keyframeNames(css) {
+  return new Set(
+    [...css.matchAll(/@keyframes\s+([a-zA-Z_][\w-]*)/g)].map(m => m[1]),
+  );
+}
+
+/**
+ * Praefiksede keyframes der findes i den UDGIVNE stylesheet og ikke i den nye.
+ *
+ * Kun `gt-`-praefiksede: de upraefiksede (`spinner-spin`, `toast-enter`) er
+ * utilsigtede globale navne fra en aeldre kopi og er ikke en kontrakt, vi har
+ * givet. At gate paa dem ville fastlaase et uheld.
+ */
+export function removedKeyframes(publishedCss, nextCss, allowedRemovals = []) {
+  const next = keyframeNames(nextCss);
+  const allowed = new Set(allowedRemovals);
+  return [...keyframeNames(publishedCss)]
+    .filter(n => n.startsWith('gt-') && !next.has(n) && !allowed.has(n))
+    .sort(byName);
 }
