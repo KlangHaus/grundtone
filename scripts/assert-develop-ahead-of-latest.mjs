@@ -109,12 +109,10 @@ for (const dir of PACKAGE_DIRS) {
   const ok = ALLOW_EQUAL
     ? !gt(result.version, local)
     : gt(local, result.version);
-  rows.push([
-    pkg.name,
-    local,
-    result.version,
-    ok ? 'ok' : ALLOW_EQUAL ? 'BEHIND' : 'NOT AHEAD',
-  ]);
+  // Ikke en indlejret ternaer: fjerde gang i dag Sonar fanger den form hos mig,
+  // og en navngiven variabel siger desuden hvad de to tilstande ER.
+  const failLabel = ALLOW_EQUAL ? 'BEHIND' : 'NOT AHEAD';
+  rows.push([pkg.name, local, result.version, ok ? 'ok' : failLabel]);
   if (!ok) failures.push({ name: pkg.name, local, published: result.version });
 }
 
