@@ -14,7 +14,8 @@ import { join } from 'node:path';
  * nægter at udgive sådan en pakke, så gaten og virkeligheden kan ikke komme
  * ud af trit.
  */
-export function publishablePackages(root, fs) {
+export function publishablePackages(root, fs, { ignore = [] } = {}) {
+  const ignored = new Set(ignore);
   const dir = join(root, 'packages');
   let entries;
   try {
@@ -30,8 +31,13 @@ export function publishablePackages(root, fs) {
         const pkg = JSON.parse(
           fs.readFileSync(join(dir, e.name, 'package.json'), 'utf8'),
         );
-        return pkg?.private === true || !pkg?.name || !pkg?.version
-          ? null
+        if (pkg?.private === true || !pkg?.name || !pkg?.version) return null;
+        // En pakke, changesets har faaet besked paa ALDRIG at versionere, er
+        // ikke en del af en udgivelse — saa der er intet publish at beskytte
+        // mod. Gaten spurgte foer: "kan nogen pakke i repoet gaa baglaens";
+        // spoergsmaalet er "kan noget i DENNE udgivelse gaa baglaens".
+        return ignored.has(pkg.name)
+          ? { name: pkg.name, version: pkg.version, dir: e.name, ignored: true }
           : { name: pkg.name, version: pkg.version, dir: e.name };
       } catch {
         return null;
@@ -39,4 +45,21 @@ export function publishablePackages(root, fs) {
     })
     .filter(Boolean)
     .sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/**
+ * Pakker som changesets har faaet besked paa aldrig at versionere.
+ *
+ * Laeses fra changesets' EGEN config frem for en liste her: to lister over det
+ * samme kan blive uenige, og uenigheden ville foerst vise sig ved en udgivelse.
+ */
+export function changesetIgnored(root, fs) {
+  try {
+    const cfg = JSON.parse(
+      fs.readFileSync(join(root, '.changeset', 'config.json'), 'utf8'),
+    );
+    return Array.isArray(cfg?.ignore) ? cfg.ignore : [];
+  } catch {
+    return [];
+  }
 }

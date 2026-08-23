@@ -42,12 +42,18 @@ import { fileURLToPath } from 'node:url';
 
 import { gt } from './lib/semver-gt.mjs';
 import { lookupPublished } from './lib/npm-dist-tag.mjs';
-import { publishablePackages } from './lib/publishable-packages.mjs';
+import {
+  changesetIgnored,
+  publishablePackages,
+} from './lib/publishable-packages.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const TAG = process.env.NPM_DIST_TAG ?? 'latest';
 
-const packages = publishablePackages(root, { readdirSync, readFileSync });
+const fs = { readdirSync, readFileSync };
+const packages = publishablePackages(root, fs, {
+  ignore: changesetIgnored(root, fs),
+});
 if (!packages.length) {
   console.error(
     '::error::fandt ingen udgivelige pakker under packages/ — gaten ville ' +
@@ -57,11 +63,32 @@ if (!packages.length) {
 }
 
 const failures = [];
-for (const { name, version } of packages) {
+for (const { name, version, ignored } of packages) {
   const published = lookupPublished(name, TAG);
 
+  // 🔴 En sprunget-over pakke RAPPORTERES, den udelades ikke tavst. Bliver den
+  // usynlig, ser en pakke der er ti versioner bagud ud som en pakke der er i
+  // orden — og saa er undtagelsen blevet til et blindt punkt. Tilstanden vises
+  // netop fordi den ikke gater.
+  if (ignored) {
+    const state =
+      published.state === 'published'
+        ? `npm har ${published.version}`
+        : 'ikke udgivet';
+    const behind =
+      published.state === 'published' && gt(published.version, version)
+        ? '  🔴 BAGUD — udgives ikke, men tilstanden er reel'
+        : '';
+    console.log(
+      `· ${name}: ${version} — springes over, changesets ignorerer den (${state})${behind}`,
+    );
+    continue;
+  }
+
   if (published.state === 'unpublished') {
-    console.log(`· ${name}: ikke udgivet på \`${TAG}\` — intet at gå tilbage fra`);
+    console.log(
+      `· ${name}: ikke udgivet på \`${TAG}\` — intet at gå tilbage fra`,
+    );
     continue;
   }
 
