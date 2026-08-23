@@ -94,7 +94,7 @@ check(
   'nuxt: SCSS-token-namespacet er wired',
   additionalData.includes('as tokens'),
   'uden det fejler enhver forbrugers build med "There is no module with the ' +
-    'namespace \\"tokens\\"". Målt 25 fejl i playgroundet, da wiringen manglede.',
+    'namespace "tokens". Målt 25 fejl i playgroundet, da wiringen manglede.',
 );
 
 check(
