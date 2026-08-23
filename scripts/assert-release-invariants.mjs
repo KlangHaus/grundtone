@@ -72,6 +72,13 @@ const nuxtModule = (await import(modulePath)).default;
 
 // Auto-import-grenene kræver en ægte Nuxt-kontekst; alt det, der gik tabt,
 // ligger uden for dem.
+//
+// 🔴 Det er MÅLT, ikke skønnet ([review] 2026-08-23): kaldes modulet med
+// components/composables sat til true mod samme fake-objekt, kaster det
+// NUXT_B8001 "The active Nuxt instance is unavailable". De to flag er altså
+// præcis grænsen for, hvad et fake-objekt kan udføre — ikke et bekvemt snit,
+// der kunne have været bredere. Havde det bare været en vurdering, ville
+// afgrænsningen se identisk ud og betyde noget andet.
 const nuxt = {
   _version: '4.5.1',
   options: {
