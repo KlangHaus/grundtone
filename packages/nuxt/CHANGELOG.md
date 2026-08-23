@@ -1,5 +1,38 @@
 # @grundtone/nuxt
 
+## 3.0.0 - 2026-08-23
+
+### Major Changes
+
+- [#155](https://github.com/KlangHaus/grundtone/pull/155)
+  [`e4ae9d6`](https://github.com/KlangHaus/grundtone/commit/e4ae9d6947bd21716476c776fdea80b2f51d307c)
+  Thanks [@allanasp](https://github.com/allanasp)! - grundtone 3.0.0 — develop becomes the published
+  line.
+
+  The 2.x line was cut from main and never flowed back, so develop and npm drifted apart. Rather
+  than port main's surface onto develop, this release accepts develop as the source of truth and
+  declares what that costs.
+
+  BREAKING: 20 public exports and 4 export-map entry points are removed. Every one is declared in
+  .api-removals.json with the reason beside it. Nineteen of the twenty never existed in develop;
+  none of our three internal consumers import any of them. External consumers cannot be enumerated,
+  which is precisely why this is a major and not a minor.
+
+  Consumers must update their dependency explicitly: `^2.x` does not match 3.0.0.
+
+  @grundtone/react-native is deliberately NOT included — it sits ten minor versions behind npm on
+  develop, and publishing it here would ship a regression wrapped in a higher number. Its fate is a
+  separate decision.
+
+### Patch Changes
+
+- Updated dependencies
+  [[`e4ae9d6`](https://github.com/KlangHaus/grundtone/commit/e4ae9d6947bd21716476c776fdea80b2f51d307c)]:
+  - @grundtone/core@3.0.0
+  - @grundtone/icons@3.0.0
+  - @grundtone/design-system@3.0.0
+  - @grundtone/vue@3.0.0
+
 ## 2.15.0 - 2026-07-13
 
 ### Patch Changes
