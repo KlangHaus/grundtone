@@ -1,3 +1,5 @@
+import { byName } from './order.mjs';
+
 /**
  * Finder environments, som en workflow refererer, men som ikke beskytter noget.
  *
@@ -55,5 +57,5 @@ export function unprotectedReferences(referenced, protectionByName) {
         : null;
     })
     .filter(Boolean)
-    .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
+    .sort((a, b) => byName(a.name, b.name));
 }
