@@ -33,20 +33,17 @@ import {
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const REPO = process.env.GITHUB_REPOSITORY ?? 'KlangHaus/grundtone';
 
-// 🔴 Et environment har TO legitime brug, og gaten maa ikke blande dem sammen:
-// det kan beskytte (godkendelse, wait timer, gren-politik), og det kan holde
-// scoped secrets. Kun det foerste er en gate.
-//
-// Et environment der KUN scoper secrets, er ikke en attrap — men forskellen
-// skal vaere ERKLAERET, ikke antaget, praecis som en fjernet eksport skal
-// erklaeres frem for bare at forsvinde. Staar den ikke her, er en tom
-// protection_rules en fejl.
-const SECRETS_ONLY = {
-  'grundtone-com': `Scoper Bunny-secrets til deploy-web.yml (BUNNY_WEB_STORAGE_*).
-    Den gater ikke og skal ikke gate: deploy af det statiske site er ikke en
-    handling, der kraever godkendelse. Skal den nogensinde gate, fjernes den
-    herfra — og saa er den tomme protection_rules igen en fejl.`,
-};
+// Erklaeringen bor i en REPO-LOKAL fil, ikke i dette script: saa kan scriptet
+// deles paa tvaers af repos uden at baere andres undtagelser med sig, og en
+// undtagelse staar i det repo, der har den.
+const DECL = join(root, '.environment-gates.json');
+let SECRETS_ONLY = {};
+try {
+  SECRETS_ONLY = JSON.parse(readFileSync(DECL, 'utf8')).secretsOnly ?? {};
+} catch {
+  // Ingen fil = ingen erklaerede undtagelser. Det goer gaten STRENGERE, ikke
+  // loesere — en manglende erklaering kan ikke aabne den.
+}
 
 const referenced = new Set();
 const dir = join(root, '.github/workflows');
