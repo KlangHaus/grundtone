@@ -170,43 +170,16 @@ jobs:
       # hastighed: den afgoer hvad man overhovedet FAAR at vide, naar noget
       # fejler. ([projektleder]s sidefund paa #146.)
       # Dependabot bumps deliberately carry no changeset: merging a deps bump
-      # must not force a release of the linked 2.x packages (publish-frozen on
-      # develop until the main/develop reconciliation — a lower-version publish
-      # would retag npm `latest` backwards). Failing this step also aborted the
+      # must not force a release of the linked packages. (Until 3.0.0 the reason
+      # given here was "publish-frozen until the main/develop reconciliation" —
+      # that reconciliation is decided and the freeze is gone, but the reason
+      # for skipping dependabot is unchanged: a dependency bump is not a reason
+      # to cut a release.) Failing this step also aborted the
       # job before ESLint/typecheck ever ran, so dependabot PRs got NO lint
       # signal at all. Skip the gate for dependabot, keep the real checks.
       - name: Check for changesets
         if: github.base_ref == 'develop' && github.actor != 'dependabot[bot]'
         run: pnpm changeset:status --since=origin/develop
-
-      # The published 2.x line (main-era, npm latest = 2.22/2.23) is FROZEN on
-      # develop until the main/develop reconciliation (Allan-call 2026-06-23):
-      # develop's 2.15.x versions are BEHIND npm, so versioning+publishing them
-      # from here would flip npm's `latest` tag backwards for every consumer.
-      # This guard fails any PR whose changesets touch a frozen package.
-      - name: Guard frozen 2.x packages
-        if: github.base_ref == 'develop'
-        run: |
-          FROZEN='@grundtone/(core|utils|icons|vue|design-system|nuxt|react-native)'
-          # 🔴 KUN frontmatteren, ikke hele filen. Gatens paastand er "intet
-          # changeset ERKLAERER en bump af en frossen pakke" — men maalingen var
-          # "ingen fil INDEHOLDER navnet nogen steder", og de to er ikke det
-          # samme. Maalt paa #146: et changeset med TOM frontmatter (altsaa nul
-          # bumps) fejlede gaten, fordi broedteksten naturligt naevnte
-          # @grundtone/vue — PR'en handlede jo om den. Og fejlen kom FOER
-          # typecheck i samme job, saa den skjulte ogsaa alt efter sig.
-          # ([review]-fund. Roed-foer-groen: prosa-omtale slipper nu igennem,
-          # en aegte bump i frontmatteren fanges fortsat.)
-          HITS=$(for f in .changeset/*.md; do
-            case "$f" in */README.md) continue ;; esac
-            awk 'NR==1 && $0=="---" { inb=1; next } inb && $0=="---" { exit } inb { print }' "$f" \
-              | grep -qE "$FROZEN" && echo "$f"
-          done || true)
-          if [ -n "$HITS" ]; then
-            echo "::error::Changesets reference frozen 2.x packages (publish-frozen until main/develop reconciliation): $HITS"
-            exit 1
-          fi
-          echo "No changesets touch the frozen 2.x line."
 
   test:
     name: Test
