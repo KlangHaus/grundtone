@@ -2,6 +2,8 @@ import { describe, it, expect } from 'vitest';
 
 import {
   auditPackage,
+  keyframeNames,
+  removedKeyframes,
   exportedNames,
   removedExports,
   removedEntryPoints,
@@ -197,5 +199,36 @@ describe('auditPackage', () => {
       expect(result.comparedTypes).toBe(false);
       expect(result.entryPointsRemoved).toEqual(['./css']);
     }
+  });
+});
+
+describe('removedKeyframes', () => {
+  const pub = '@keyframes gt-fade-in{}@keyframes gt-spin{}@keyframes toast-enter{}';
+
+  it('finder et gt-keyframe der er væk', () => {
+    expect(removedKeyframes(pub, '@keyframes gt-spin{}')).toEqual(['gt-fade-in']);
+  });
+
+  // 🔴 De upraefiksede er utilsigtede globale navne fra en aeldre kopi. At gate
+  // paa dem ville fastlaase et uheld som en kontrakt.
+  it('ignorerer upræfiksede navne', () => {
+    expect(removedKeyframes(pub, '@keyframes gt-fade-in{}@keyframes gt-spin{}')).toEqual(
+      [],
+    );
+  });
+
+  it('respekterer en erklæret fjernelse', () => {
+    expect(removedKeyframes(pub, '@keyframes gt-spin{}', ['gt-fade-in'])).toEqual([]);
+  });
+
+  it('finder intet når intet mangler', () => {
+    expect(removedKeyframes(pub, pub)).toEqual([]);
+  });
+
+  it('læser navne med bindestreg og understreg', () => {
+    expect([...keyframeNames('@keyframes a_b-c{}@keyframes  d {}')]).toEqual([
+      'a_b-c',
+      'd',
+    ]);
   });
 });
