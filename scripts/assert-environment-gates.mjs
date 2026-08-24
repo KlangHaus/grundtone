@@ -18,6 +18,32 @@
  * En gate, der er grøn fordi den ikke måler noget, er den tilstand vi har brugt
  * to dage på at navngive.
  *
+ * ── Hvorfor .environment-gates.json ikke er en bagdør ───────────────────────
+ * 🔴 Det her er en gate om SYNLIGHED, ikke om TILSTAND, og forskellen afgør,
+ * hvad den må kræve.
+ *
+ * En tilstands-gate kræver, at verden er i orden: "dette environment SKAL have
+ * required reviewers". Den ville være uopfyldelig i vores private repoer —
+ * GitHub Team tillader ikke required reviewers på private repoer, og en gate,
+ * der kræver noget en PR ikke kan levere, er en påmindelse forklædt som en
+ * gate. Den lærer folk at merge forbi sig.
+ *
+ * En synligheds-gate kræver noget andet og altid opnåeligt: **at fraværet er
+ * sagt højt.** *"Dette environment scoper secrets, det gater ikke — planen
+ * tillader ikke andet"* er en sand sætning, enhver kan skrive, på enhver plan.
+ *
+ * Derfor åbner erklæringen ikke gaten — den flytter en tilstand fra
+ * *stiltiende* til *skrevet ned*. Det, gaten forhindrer, er ikke et
+ * ubeskyttet environment; det er et environment, som ingen VED er ubeskyttet,
+ * mens `environment:` i workflowen læses som et værn.
+ *
+ * ── Og hvorfor en falsk positiv her er værre end andre steder ───────────────
+ * Gatens hele formål er at sige "dette værn er en attrap". Råber den falsk om
+ * et ÆGTE værn, underminerer den sin egen troværdighed på præcis den akse, den
+ * skal bruges på — og så bliver den ignoreret, når den har ret. Målt: en inline
+ * YAML-kommentar blev fanget som en del af navnet og gav "kunne ikke slås op"
+ * på en helt korrekt workflow.
+ *
  * Usage: GH_TOKEN=… node scripts/assert-environment-gates.mjs
  */
 import { execFileSync } from 'node:child_process';
@@ -33,20 +59,17 @@ import {
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const REPO = process.env.GITHUB_REPOSITORY ?? 'KlangHaus/grundtone';
 
-// 🔴 Et environment har TO legitime brug, og gaten maa ikke blande dem sammen:
-// det kan beskytte (godkendelse, wait timer, gren-politik), og det kan holde
-// scoped secrets. Kun det foerste er en gate.
-//
-// Et environment der KUN scoper secrets, er ikke en attrap — men forskellen
-// skal vaere ERKLAERET, ikke antaget, praecis som en fjernet eksport skal
-// erklaeres frem for bare at forsvinde. Staar den ikke her, er en tom
-// protection_rules en fejl.
-const SECRETS_ONLY = {
-  'grundtone-com': `Scoper Bunny-secrets til deploy-web.yml (BUNNY_WEB_STORAGE_*).
-    Den gater ikke og skal ikke gate: deploy af det statiske site er ikke en
-    handling, der kraever godkendelse. Skal den nogensinde gate, fjernes den
-    herfra — og saa er den tomme protection_rules igen en fejl.`,
-};
+// Erklaeringen bor i en REPO-LOKAL fil, ikke i dette script: saa kan scriptet
+// deles paa tvaers af repos uden at baere andres undtagelser med sig, og en
+// undtagelse staar i det repo, der har den.
+const DECL = join(root, '.environment-gates.json');
+let SECRETS_ONLY = {};
+try {
+  SECRETS_ONLY = JSON.parse(readFileSync(DECL, 'utf8')).secretsOnly ?? {};
+} catch {
+  // Ingen fil = ingen erklaerede undtagelser. Det goer gaten STRENGERE, ikke
+  // loesere — en manglende erklaering kan ikke aabne den.
+}
 
 const referenced = new Set();
 const dir = join(root, '.github/workflows');

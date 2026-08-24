@@ -1,3 +1,5 @@
+import { byName } from './order.mjs';
+
 /**
  * Finder environments, som en workflow refererer, men som ikke beskytter noget.
  *
@@ -15,6 +17,21 @@
  */
 
 /** Environment-navne en workflow-tekst refererer. */
+/**
+ * Renser en YAML-skalar: fjerner inline-kommentar og anfoerselstegn.
+ *
+ * 🔴 YAML kraever whitespace foer `#` for at det er en kommentar, saa
+ * `production # midlertidig` er vaerdien "production". Uden det her blev
+ * kommentaren en del af navnet, opslaget fejlede, og gaten meldte "kunne ikke
+ * slaas op" — en FALSK positiv paa en helt korrekt workflow.
+ */
+function scalar(value) {
+  return value
+    .replace(/\s+#.*$/, '')
+    .trim()
+    .replace(/^['"]|['"]$/g, '');
+}
+
 export function referencedEnvironments(workflow) {
   const names = new Set();
   // 🔴 `[^\S\n]` og ikke `\s`: `\s` matcher OGSAA newline, saa
@@ -26,13 +43,14 @@ export function referencedEnvironments(workflow) {
     // `environment: name` — den korte form. Objektformen har navnet paa
     // naeste linje som `name: x`.
     if (value && !value.startsWith('#')) {
-      names.add(value.replace(/^['"]|['"]$/g, ''));
+      const name = scalar(value);
+      if (name) names.add(name);
     }
   }
   for (const m of workflow.matchAll(
     /^[^\S\n]*environment:[^\S\n]*\n[^\S\n]*name:[^\S\n]*(.+)$/gm,
   )) {
-    names.add(m[1].trim().replace(/^['"]|['"]$/g, ''));
+    names.add(scalar(m[1]));
   }
   return names;
 }
@@ -55,5 +73,5 @@ export function unprotectedReferences(referenced, protectionByName) {
         : null;
     })
     .filter(Boolean)
-    .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
+    .sort((a, b) => byName(a.name, b.name));
 }
