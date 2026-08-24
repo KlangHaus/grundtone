@@ -360,7 +360,11 @@ jobs:
       # Ingen pnpm install: scriptet læser package.json-filer og kalder
       # `npm view`. Det holder checket hurtigt og uafhængigt af lockfilen.
       - name: Assert every next-channel package is ahead of latest
-        run: node scripts/assert-develop-ahead-of-latest.mjs
+        # --allow-equal: lighed er den NORMALE tilstand paa en PR lige efter en
+        # udgivelse, fordi develop selv er udgivelseslinjen. Udgivelsesstien
+        # (prerelease-next.yml) koerer UDEN flaget og kraever stadig strengt
+        # stoerre — dér ville lighed udgive en prerelease under sin egen release.
+        run: node scripts/assert-develop-ahead-of-latest.mjs --allow-equal
 
   # C8 — artefakt-bevis. At bygge i monorepoet beviser kun at TypeScript kan
   # se filerne; denne gate pakker de 9 udgivne pakker og installerer dem fra
