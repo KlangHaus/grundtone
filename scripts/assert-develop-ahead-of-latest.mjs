@@ -71,6 +71,24 @@ const PACKAGE_DIRS = [
 ];
 const TAG = process.env.NPM_DIST_TAG ?? 'latest';
 
+// 🔴 To taerskler, fordi de beskytter to forskellige ting.
+//
+// PAA UDGIVELSESSTIEN kraeves STRENGT stoerre: `next` stempler
+// `<develop-version>-next.<id>`, og `3.0.0-next.5` sorterer UNDER sin egen
+// udgivne 3.0.0 (SemVer §11). Lighed dér ville udgive en prerelease, der
+// haevder at vaere aeldre kode end `latest`.
+//
+// PAA PR'ER er lighed den NORMALE tilstand. Gaten blev skrevet, da develop
+// kronisk laa BAGUD for main-linjen; efter 3.0.0 er develop selv
+// udgivelseslinjen, saa changesets saetter develop == npm i det oejeblik en
+// udgivelse lander. Kraevede vi "strengt stoerre" her, ville hver eneste PR
+// vaere roed fra en udgivelse til den naeste version-bump — en gate, der er
+// roed af strukturelle grunde, laerer folk at merge forbi sig.
+//
+// Maalt 2026-08-23: seks pakker stod develop 3.0.0 == latest 3.0.0 umiddelbart
+// efter udgivelsen, og to urelaterede PR'er blev roede paa det.
+const ALLOW_EQUAL = process.argv.includes('--allow-equal');
+
 const failures = [];
 const rows = [];
 
@@ -87,8 +105,14 @@ for (const dir of PACKAGE_DIRS) {
     rows.push([pkg.name, local, '(unpublished)', 'ok']);
     continue;
   }
-  const ok = gt(local, result.version);
-  rows.push([pkg.name, local, result.version, ok ? 'ok' : 'BEHIND']);
+  // "ikke bagud" naar lighed er tilladt; ellers "strengt foran".
+  const ok = ALLOW_EQUAL
+    ? !gt(result.version, local)
+    : gt(local, result.version);
+  // Ikke en indlejret ternaer: fjerde gang i dag Sonar fanger den form hos mig,
+  // og en navngiven variabel siger desuden hvad de to tilstande ER.
+  const failLabel = ALLOW_EQUAL ? 'BEHIND' : 'NOT AHEAD';
+  rows.push([pkg.name, local, result.version, ok ? 'ok' : failLabel]);
   if (!ok) failures.push({ name: pkg.name, local, published: result.version });
 }
 
