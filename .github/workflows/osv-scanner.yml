@@ -50,6 +50,12 @@ jobs:
       - name: Roed-foer-groen for selve tjekket
         run: ./.github/scripts/assert-osv-ignores-expire.test.sh
 
+      # De samme saarbarheder accepteres i TO filer for TO vaerktoejer, uden et
+      # faelles felt at binde dem med. Driften ville vaere tavs: én opdateres,
+      # den anden glemmes.
+      - name: Vuln-accepter er ens i begge lister
+        run: node scripts/assert-vuln-accepts-in-sync.mjs
+
   scan:
     name: Dependency vuln-scan
     runs-on: ubuntu-latest
