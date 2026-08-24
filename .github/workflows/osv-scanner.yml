@@ -1,0 +1,72 @@
+name: OSV-Scanner
+
+# Direkte CLI-kald frem for reusable workflow.
+# Begrundelse: reusable workflow forsøger SARIF-upload til GitHub Code Scanning,
+# hvilket kræver GHAS (Code Security) aktiveret. På private repos uden GHAS
+# fejler upload-stepet selv om scannen kører grønt. Direkte CLI undgår det
+# trade-off — fund logges i job-output (synligt i PR-checks).
+#
+# Når GHAS er aktiveret org-bredt, kan vi skifte tilbage til reusable workflow
+# for at få SARIF-fund i Security-tab'en.
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+  schedule:
+    - cron: '17 4 * * 1'
+
+permissions:
+  contents: read
+
+jobs:
+  # 🔴 EGET JOB med eget navn, saa det kan goeres required for sig.
+  #
+  # osv-scanner HAANDHAEVER IKKE `ignoreUntil` — bevist ved koersel ([quality],
+  # v2.5.0): en UDLOEBET dato undertrykker sarbarheden fuldstaendigt, exit 0.
+  # Datoen i configen er dekoration, saa uden dette tjek er hver "midlertidig"
+  # accept i praksis PERMANENT, og gaten afvikler sig selv i stilhed.
+  #
+  # Ligger foer scan-jobbet i filen, men koerer uafhaengigt: et udloebt
+  # ignoreUntil skal fejle SELV naar scannen er groen — det er hele pointen.
+  ignore-expiry:
+    name: Vuln-accepter udloeber
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      # OSV_EXPECTED er ANTALLET af accepter i dette repo. Scriptet holdes
+      # byte-identisk med [quality]s skabelon, saa fremtidige opdateringer kan
+      # kopieres rent ind; det repo-specifikke tal bor her.
+      #
+      # Tallet er selv en gate: stemmer det ikke, er enten en accept forsvundet
+      # eller tilfoejet uden at nogen opdaterede forventningen. "Alle 0 accepter
+      # er i orden" ser plausibelt ud, hvis man ikke ved, hvad man forventer.
+      - name: Assert ignoreUntil er sat og ikke passeret
+        env:
+          OSV_EXPECTED: '2'
+        run: python3 .github/scripts/assert-osv-ignores-expire.py osv-scanner.toml
+      - name: Roed-foer-groen for selve tjekket
+        run: ./.github/scripts/assert-osv-ignores-expire.test.sh
+
+  scan:
+    name: Dependency vuln-scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install osv-scanner
+        run: |
+          curl -sSfL https://github.com/google/osv-scanner/releases/download/v1.9.2/osv-scanner_linux_amd64 \
+            -o /usr/local/bin/osv-scanner
+          chmod +x /usr/local/bin/osv-scanner
+          osv-scanner --version
+
+      - name: Scan dependencies
+        run: |
+          if [ -f osv-scanner.toml ]; then
+            osv-scanner --recursive --skip-git --config=osv-scanner.toml ./
+          else
+            osv-scanner --recursive --skip-git ./
+          fi
