@@ -148,7 +148,7 @@ server.registerTool(
   {
     title: 'Search Grundtone components',
     description:
-      'Find components by keyword matched against name, summary, and prop names — e.g. "modal", "overlay", "date", "nav". Use when you know the UI need but not the component name, so you pick an existing component over building a new one.',
+      'Find components by keyword matched against name, summary, and prop names — e.g. "modal", "overlay", "date", "nav". Several words are matched SEPARATELY and ranked by how many hit, so more words widen the search rather than narrowing it to nothing. Use when you know the UI need but not the component name, so you pick an existing component over building a new one.',
     inputSchema: {
       query: z
         .string()
@@ -163,13 +163,25 @@ server.registerTool(
     },
   },
   async ({ query }: { query: string }) => {
-    const q = query.toLowerCase();
-    const hits = catalog.components.filter(
-      c =>
-        c.name.toLowerCase().includes(q) ||
-        c.summary.toLowerCase().includes(q) ||
-        c.props.some(p => p.name.toLowerCase().includes(q)),
-    );
+    // 🔴 Maalt 2026-08-23 ([backstage]s fund): hele forespoergslen blev matchet
+    // som ÉN sammenhaengende streng, saa "grid layout dashboard card panel" gav
+    // nul — mens "card" alene giver GTCard. Et nul fra et opslags-vaerktoej
+    // laeses som "findes ikke", ikke som "for mange ord", og backstage naaede
+    // at konkludere at grundtone intet masonry havde.
+    //
+    // Ord matches nu hver for sig og rangeres efter antal traeffere, saa flere
+    // ord goer svaret BEDRE frem for tomt.
+    const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
+    const matches = (c: (typeof catalog.components)[number], t: string) =>
+      c.name.toLowerCase().includes(t) ||
+      c.summary.toLowerCase().includes(t) ||
+      c.props.some(p => p.name.toLowerCase().includes(t));
+
+    const hits = catalog.components
+      .map(c => ({ c, score: terms.filter(t => matches(c, t)).length }))
+      .filter(h => h.score > 0)
+      .sort((a, b) => b.score - a.score || a.c.name.localeCompare(b.c.name))
+      .map(h => h.c);
     const output = {
       query,
       count: hits.length,
@@ -179,6 +191,9 @@ server.registerTool(
         summary: c.summary,
       })),
     };
+    // Bygget foer strengen: en indlejret template literal er svaerere at
+    // laese end den er kort (S4624).
+    const quoted = terms.map(t => '"' + t + '"').join(', ');
     const md = hits.length
       ? [
           `# Matches for "${query}" — ${hits.length}`,
@@ -188,7 +203,11 @@ server.registerTool(
               `- **${c.name}** (${c.kind})${c.summary ? ` — ${c.summary}` : ''}`,
           ),
         ].join('\n')
-      : `No components match "${query}". Try a broader term or grundtone_list_components.`;
+      : `No component matches any of: ${quoted}.\n\n` +
+        `Each word was tried separately, so this is not a "too many words" ` +
+        `result — none of them appears in a component name, summary or prop. ` +
+        `Try a different word, or grundtone_list_components for the full list ` +
+        `(${catalog.components.length} components, @grundtone/vue ${catalog.vueVersion}).`;
     return {
       content: [{ type: 'text', text: capText(md) }],
       structuredContent: output,

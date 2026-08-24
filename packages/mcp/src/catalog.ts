@@ -91,11 +91,28 @@ function extractProps(typesPath: string): {
   return { props, summary };
 }
 
-function extractExportName(indexPath: string): string | null {
-  if (!existsSync(indexPath)) return null;
+/**
+ * ALLE komponenter en mappe eksporterer — ikke kun den første.
+ *
+ * 🔴 Målt 2026-08-23 ([backstage]s fund): `.match()` uden `/g` returnerer kun
+ * første træf, og seks mapper eksporterer to komponenter hver — Accordion,
+ * Carousel, Chart, SummaryList, Tabs, Toast. Kataloget tabte derfor
+ * GTAccordionItem, GTCarouselSlide, GTChartLegend, GTSummaryItem, GTTabPanel og
+ * GTToastContainer.
+ *
+ * **Fraværet så ud som "komponenten findes ikke" frem for "værktøjet så den
+ * ikke".** Backstage konkluderede først, at grundtone intet masonry havde —
+ * på en komponent, der lå i pakken, de havde installeret. Et opslags-værktøj,
+ * der udelader, er værre end et der fejler: fejlen kan ses.
+ *
+ * Antagelsen bag fejlen var "én komponent pr. mappe", og den var aldrig sand.
+ */
+function extractExportNames(indexPath: string): string[] {
+  if (!existsSync(indexPath)) return [];
   const text = readFileSync(indexPath, 'utf8');
-  const m = text.match(/export\s*\{\s*default\s+as\s+(GT[A-Za-z0-9_]+)/);
-  return m ? m[1] : null;
+  return [...text.matchAll(/export\s*\{\s*default\s+as\s+(GT\w+)/g)].map(
+    m => m[1],
+  );
 }
 
 function scanComponents(vueSrc: string, importPath: string): ComponentDoc[] {
@@ -106,10 +123,16 @@ function scanComponents(vueSrc: string, importPath: string): ComponentDoc[] {
     for (const entry of readdirSync(dir, { withFileTypes: true })) {
       if (!entry.isDirectory()) continue;
       const compDir = join(dir, entry.name);
-      const name = extractExportName(join(compDir, 'index.ts'));
-      if (!name) continue; // not an exported component
+      const names = extractExportNames(join(compDir, 'index.ts'));
+      if (names.length === 0) continue; // not an exported component
       const { props, summary } = extractProps(join(compDir, 'types.ts'));
-      out.push({ name, kind: kind.slice(0, -1), importPath, summary, props });
+      // Props og summary er pr. MAPPE, ikke pr. komponent: en sekundaer
+      // eksport deler types.ts med sin primaere. At liste den med delte props
+      // er mindre forkert end at udelade den — fravaeret laeses som "findes
+      // ikke", en delt beskrivelse laeses som en beskrivelse.
+      for (const name of names) {
+        out.push({ name, kind: kind.slice(0, -1), importPath, summary, props });
+      }
     }
   }
   return out.sort((a, b) => a.name.localeCompare(b.name));
