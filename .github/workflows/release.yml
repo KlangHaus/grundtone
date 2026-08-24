@@ -89,6 +89,31 @@ jobs:
       # Denne gate eksekverer det BYGGEDE modul og fejler, hvis wiringen ikke
       # er der. Den holder uanset merge-raekkefoelge og uanset om nogen husker
       # betingelsen om tre maaneder.
+      # 🔴 Vuln-gaten koerer OGSAA her, ikke kun i ci.yml.
+      #
+      # Maalt 2026-08-24: `Security Audit` (pnpm audit) er required og blokerer
+      # PR'er — men hverken den eller osv koerte paa nogen udgivelsessti. En
+      # saarbar transitiv dependency kunne dermed shippe til forbrugerne af ni
+      # offentlige pakker uden at stoppe udgivelsen. Samme figur som
+      # nedgraderings-vagten: vaernet paa PR-niveau, den uigenkaldelige handling
+      # ved merge.
+      #
+      # Adopteres scanneren KUN i ci.yml, har vi to scannere paa PR-stien og
+      # stadig nul her — hullet uaendret, med et groent flueben foran.
+      - name: Vuln-scan før publish
+        run: |
+          curl -sSfL https://github.com/google/osv-scanner/releases/download/v1.9.2/osv-scanner_linux_amd64 \
+            -o /usr/local/bin/osv-scanner
+          chmod +x /usr/local/bin/osv-scanner
+          osv-scanner --recursive --skip-git --config=osv-scanner.toml ./
+
+      # Accepterne skal ogsaa vaere gyldige HER: en udloebet accept maa ikke
+      # kunne baere en udgivelse igennem, bare fordi scannen selv siger groent.
+      - name: Vuln-accepter er ikke udløbet
+        env:
+          OSV_EXPECTED: '2'
+        run: python3 .github/scripts/assert-osv-ignores-expire.py osv-scanner.toml
+
       - name: Udgivelses-invarianter holder på artefaktet
         run: node scripts/assert-release-invariants.mjs
 

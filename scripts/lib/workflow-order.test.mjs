@@ -9,6 +9,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '../..');
 const read = f => readFileSync(join(root, '.github/workflows', f), 'utf8');
 
 const GATE = 'scripts/assert-no-downgrade-publish.mjs';
+const VULN = 'osv-scanner --recursive';
 
 describe('nedgraderings-vagten dækker udgivelsesstierne', () => {
   // 🔴 Dette er beviset, frozen-2.x-guardens pensionering hviler på: den
@@ -24,6 +25,27 @@ describe('nedgraderings-vagten dækker udgivelsesstierne', () => {
     expect(gateRunsBeforePublish(read('prerelease-next.yml'), {
       gate: GATE, publish: 'Publish @next',
     })).toEqual({ ok: true, reason: 'gaten står før publish-trinnet' });
+  });
+
+  // 🔴 Samme krav for vuln-gaten. Maalt 2026-08-24: baade `pnpm audit` og osv
+  // koerte KUN paa PR-stien, saa en saarbar transitiv dependency kunne shippe
+  // til ni offentlige pakker uden at stoppe udgivelsen.
+  it('release.yml: vuln-scannen står før changesets publicerer', () => {
+    expect(
+      gateRunsBeforePublish(read('release.yml'), {
+        gate: VULN,
+        publish: 'changesets/action',
+      }).ok,
+    ).toBe(true);
+  });
+
+  it('prerelease-next.yml: vuln-scannen står før @next publiceres', () => {
+    expect(
+      gateRunsBeforePublish(read('prerelease-next.yml'), {
+        gate: VULN,
+        publish: 'Publish @next',
+      }).ok,
+    ).toBe(true);
   });
 });
 

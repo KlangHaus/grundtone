@@ -1,0 +1,33 @@
+# Vuln-accepter for osv-scanner.
+#
+# 🔴 `ignoreUntil` HÅNDHÆVES IKKE af osv-scanner selv — en udløbet dato
+# undertrykker sårbarheden fuldstændigt og giver exit 0 ([quality] beviste det
+# ved kørsel, v2.5.0). Derfor kører `assert-osv-ignores-expire.py` som eget job:
+# uden det er hver "midlertidig" accept i praksis permanent.
+#
+# Samme to accepter står i `pnpm-workspace.yaml` for `pnpm audit`. **To lister
+# over de samme to fund kan drive fra hinanden** — de har hver sit værktøj og
+# hvert sit format, og der findes ikke et fælles felt at binde dem med. Ændres
+# den ene, skal den anden med.
+
+[[IgnoredVulns]]
+id = "GHSA-5p2g-fcmc-qvqq"
+ignoreUntil = 2026-11-24T00:00:00Z
+reason = """
+image-size DoS i ICNS-parseren. INGEN patch findes: advisory'et angiver
+`Patched versions <0.0.0`, og npms nyeste (2.0.2) er selv sårbar — en override
+er derfor ikke mulig. Nåbar udelukkende via apps/playground/expo -> expo ->
+@expo/metro -> metro: et playground, der aldrig shippes, og som parser billeder,
+vi selv lægger ind. Datoen er en tvungen genvurdering, ikke exit-betingelsen:
+accepten falder bort, når (a) image-size udgiver en patch, ELLER (b)
+expo-playgroundet fjernes — produkt-taksonomien siger NativeScript, ikke Expo.
+"""
+
+[[IgnoredVulns]]
+id = "GHSA-w3rx-r6r6-pgpr"
+ignoreUntil = 2026-11-24T00:00:00Z
+reason = """
+Samme pakke og samme nåbarhed som GHSA-5p2g-fcmc-qvqq, men JXL/HEIF-parseren.
+Ingen patch, ingen override mulig, kun nåbar via expo-playgroundet. Samme
+exit-betingelse.
+"""
