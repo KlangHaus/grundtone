@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
+import { reactive } from 'vue';
 import { iconRegistry } from '@grundtone/icons';
 import Icon from './Icon.vue';
 import { GT_ICON_REGISTRY_KEY } from './types';
@@ -142,5 +143,124 @@ describe('Icon', () => {
       const wrapper = mountIcon({ name });
       expect(wrapper.find('svg').exists()).toBe(true);
     }
+  });
+});
+
+// SIK-020: `icon`-proppen er en tillidsgrænse. Testene her låser DETEKTOREN,
+// ikke en garanti — der er ingen sanitering, og det er et bevidst valg
+// (se kommentaren i Icon.vue). Det testen skal holde fast er, at en forbruger
+// der binder aktivt markup til proppen bliver ADVARET, og at den advarsel
+// ikke støjer på normal brug.
+describe('Icon — SIK-020 tillidsgrænse på icon-proppen', () => {
+  const safe = { body: '<path d="M0 0h24v24H0z" />', viewBox: '0 0 24 24' };
+
+  function warnSpy() {
+    return vi.spyOn(console, 'warn').mockImplementation(() => {});
+  }
+
+  it.each([
+    ['script-tag', '<script>alert(1)</script>'],
+    ['namespaced script', '<svg:script>alert(1)</svg:script>'],
+    ['event handler', '<path onload="alert(1)" d="M0 0" />'],
+    ['slash-separeret handler', '<path/onload=alert(1) d="M0 0" />'],
+    ['javascript: URL', '<a href="javascript:alert(1)"><path d="M0 0" /></a>'],
+    ['foreignObject', '<foreignObject><body>x</body></foreignObject>'],
+    [
+      'SMIL animate',
+      '<animate attributeName="href" values="javascript:alert(1)" />',
+    ],
+    ['SMIL set', '<set attributeName="onload" to="alert(1)" />'],
+  ])('advarer om %s i icon-proppen', (_navn, body) => {
+    const warn = warnSpy();
+    mountIcon({ icon: { body, viewBox: '0 0 24 24' } });
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('NOT sanitised'));
+    warn.mockRestore();
+  });
+
+  // 🔴 Uden denne ville en detektor der advarer om ALT bestå testene ovenfor.
+  // En advarsel der altid fyrer bliver ignoreret og er dermed ingen advarsel.
+  it('advarer IKKE om et almindeligt ikon', () => {
+    const warn = warnSpy();
+    mountIcon({ icon: safe });
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
+  });
+
+  it('advarer IKKE om registry-stien (name), som er trusted', () => {
+    const warn = warnSpy();
+    mountIcon({ name: 'check' });
+    expect(warn).not.toHaveBeenCalledWith(
+      expect.stringContaining('NOT sanitised'),
+    );
+    warn.mockRestore();
+  });
+
+  // 🔴 DET FARLIGE TILFÆLDE, og grunden til at detektoren er reaktiv:
+  // `:icon="apiData"` er undefined ved setup og ankommer senere. De
+  // eksisterende dev-advarsler i komponenten kører ÉN gang i setup og ville
+  // aldrig se den. En kontrol placeret hvor den ikke kan observere det den
+  // kontrollerer, måler ingenting.
+  it('opdager markup der først ankommer EFTER mount', async () => {
+    const warn = warnSpy();
+    const wrapper = mountIcon({ icon: undefined, name: 'check' });
+    expect(warn).not.toHaveBeenCalledWith(
+      expect.stringContaining('NOT sanitised'),
+    );
+    await wrapper.setProps({
+      icon: { body: '<script>alert(1)</script>', viewBox: '0 0 24 24' },
+    });
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('NOT sanitised'));
+    warn.mockRestore();
+  });
+});
+
+// [review]s to fund. Testene er skrevet fra DERES vektorer, før implementeringen
+// blev rørt — samme grund som resten af denne fil: en test skrevet fra koden
+// kan kun bekræfte koden.
+describe('Icon — SIK-020, huller fundet af [review]', () => {
+  function warnSpy() {
+    return vi.spyOn(console, 'warn').mockImplementation(() => {});
+  }
+
+  // 🔴 Uden separator: den lukkende anførselstegn ER afgrænsningen. Browserens
+  // tokenizer parser `"onload=` som en gyldig attribut, men et mønster der
+  // kræver whitespace eller `/` ser den ikke.
+  it('opdager en handler uden separator foran (…"onload=…)', () => {
+    const warn = warnSpy();
+    mountIcon({
+      icon: { body: '<path d="M0 0"onload="alert(1)"/>', viewBox: '0 0 24 24' },
+    });
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('NOT sanitised'));
+    warn.mockRestore();
+  });
+
+  // 🔴 Decoy: et attributnavn der INDEHOLDER "onload" må ikke fyre. Uden denne
+  // ville en for bred rettelse af ovenstående bestå — og en detektor der
+  // advarer om almindelig markup bliver slået fra af den første forbruger.
+  it('fyrer IKKE på et attributnavn der blot indeholder "on…"', () => {
+    const warn = warnSpy();
+    mountIcon({
+      icon: {
+        body: '<path data-iconload="x" fill="none" d="M0 0"/>',
+        viewBox: '0 0 24 24',
+      },
+    });
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
+  });
+
+  // 🔴 Mutation IN PLACE af samme reference. `watch` uden `deep` sammenligner
+  // referencen og ser derfor intet — og det er ikke en teoretisk brug: et
+  // reaktivt objekt hvis felter fyldes ud når et API svarer, er præcis
+  // mønsteret detektoren findes for.
+  it('opdager markup skrevet ind i det SAMME icon-objekt efter mount', async () => {
+    const warn = warnSpy();
+    const icon = reactive({ body: '<path d="M0 0"/>', viewBox: '0 0 24 24' });
+    const wrapper = mountIcon({ icon });
+    expect(warn).not.toHaveBeenCalled();
+    icon.body = '<script>alert(1)</script>';
+    await wrapper.vm.$nextTick();
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('NOT sanitised'));
+    warn.mockRestore();
   });
 });
