@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed, inject } from 'vue';
+  import { computed, inject, watch } from 'vue';
   import { getClassPrefix, getIconColor } from '@grundtone/core';
   import type { IconDefinition } from '@grundtone/core';
   import type { IconProps } from './types';
@@ -50,6 +50,44 @@
       console.warn(`[GTIcon] Icon "${props.name}" not found in registry.`);
     }
   }
+
+  // SIK-020: `icon.body` rendres med v-html. `name`-stien slaar op i et
+  // trusted first-party registry og er sikker; `icon`-proppen tager imod raa
+  // markup fra forbrugeren og er derfor en TILLIDSGRAENSE.
+  //
+  // 🔴 DETTE ER EN DETEKTOR, IKKE EN SANITIZER — og forskellen er bevidst.
+  // Husets `svg-sanitize` (studio) siger i sit eget hoved at CSP'en er
+  // forsvaret og saniteringen kun det ekstra lag, med fire dokumenterede
+  // konstruktioner der OVERLEVER den (`<svg/onload=>`, `<svg:script>`,
+  // `<animate attributeName="href">`, `<set attributeName="onload">`).
+  // GTIcon rendres inline i FORBRUGERENS dokument under FORBRUGERENS CSP, som
+  // vi hverken kender eller kontrollerer. Flyttede vi den regex herind, ville
+  // den gaa fra "ekstra lag" til ENESTE lag i en rolle den er dokumenteret
+  // utilstraekkelig til — og et footgun ville se daekket ud.
+  // En detektor der fejler aabent er aerlig. En sanitizer der fejler aabent
+  // er farlig.
+  //
+  // 🔴 Reaktiv med vilje: dev-advarslerne ovenfor koerer EN gang i setup, saa
+  // de ville aldrig se et `:icon` bundet til data der ankommer asynkront —
+  // praecis det tilfaelde der er farligt. En kontrol placeret hvor den ikke
+  // kan observere det den kontrollerer, maaler ingenting.
+  const UNSAFE_ICON_BODY =
+    /<\s*[a-z0-9]*:?script|[\s/]on[a-z]+\s*=|javascript:|<\s*foreignObject|<\s*(?:animate|set)\b/i;
+
+  watch(
+    () => props.icon,
+    icon => {
+      if (!icon?.body || !UNSAFE_ICON_BODY.test(icon.body)) return;
+      // eslint-disable-next-line no-console
+      console.warn(
+        `[GTIcon] The "icon" prop contains active markup (script, event handler, javascript: URL, foreignObject or SMIL). ` +
+          `Its body is rendered with v-html and is NOT sanitised. Never bind "icon" to user-controlled data — ` +
+          `use the "name" prop with a static registry instead. This check is a detector, not a defence: ` +
+          `it does not catch every vector.`,
+      );
+    },
+    { immediate: true },
+  );
 </script>
 
 <template>
