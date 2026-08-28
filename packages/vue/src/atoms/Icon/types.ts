@@ -4,7 +4,15 @@ import type { InjectionKey } from 'vue';
 export type IconSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 
 export interface IconProps {
-  /** Direct icon definition — takes precedence over name lookup */
+  /**
+   * Direct icon definition — takes precedence over name lookup.
+   *
+   * 🔴 TRUST BOUNDARY (SIK-020). `icon.body` is rendered with `v-html` and is
+   * NOT sanitised. Pass only static, first-party icon definitions. Never bind
+   * this prop to user-controlled or remote data — use {@link IconProps.name}
+   * with a provided registry for anything else. A runtime warning detects the
+   * common dangerous constructs, but it is a detector, not a defence.
+   */
   icon?: IconDefinition;
   /** Icon name to look up in the provided registry */
   name?: string;
