@@ -12,7 +12,8 @@
 // hinanden uden at nogen enkelt fil ser forkert ud.
 
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
-import { join, relative } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { join, relative, resolve } from 'node:path';
 
 const root = process.argv[2] ?? 'apps/web/.output/public';
 const SITE = 'https://grundtone.com';
@@ -52,101 +53,124 @@ if (!existsSync(root)) {
 }
 
 const all = htmlFiles(root);
-const routes = all.filter(f => !FALLBACKS.has(relative(root, f)));
-const fallbacks = all.filter(f => FALLBACKS.has(relative(root, f)));
+/**
+ * Ren kontrol-logik, adskilt fra filsystem og process.exit.
+ *
+ * 🔴 Adskillelsen er ikke pynt: som CLI kunne gaten kun proeves ved at bygge
+ * hele sitet og mutere det byggede HTML. Den maaling er stadig den vigtigste
+ * (den fangede twitter:title-fejlen), men den kan ikke koeres pr. regel.
+ * Her kan hver enkelt regel proeves mod en haandskrevet HTML-streng.
+ *
+ * @param files  [{ rel, html }] — ruter OG fallback-sider
+ * @param existsInOutput  (sti) => bool, saa og:image-tjekket kan proeves uden
+ *                        et rigtigt filsystem
+ */
+export function checkFladeMetadata(files, existsInOutput) {
+  const routeFiles = files.filter(f => !FALLBACKS.has(f.rel));
+  const fallbackFiles = files.filter(f => FALLBACKS.has(f.rel));
+  const errors = [];
+  const meta = (html, attr, key) =>
+    new RegExp(`<meta ${attr}="${key}" content="([^"]*)"`).exec(html)?.[1];
 
-// 🔴 Positiv kontrol: uden den ville en tom eller flyttet output-mappe give
-// nul filer og dermed nul fejl — gaten ville melde groent uden at maale noget.
-if (routes.length < 2) {
-  console.error(
-    `✗ fandt kun ${routes.length} rute-HTML i ${root} — forventede mindst 2.`,
-  );
-  console.error(
-    '  Enten er outputtet tomt, eller stien peger forkert. Et nul her er ikke et pas.',
-  );
-  process.exit(1);
-}
-
-const errors = [];
-const meta = (html, attr, key) =>
-  new RegExp(`<meta ${attr}="${key}" content="([^"]*)"`).exec(html)?.[1];
-
-for (const file of routes) {
-  const rel = relative(root, file);
-  const html = readFileSync(file, 'utf8');
-  const fail = msg => errors.push(`${rel}: ${msg}`);
-
-  const canonicals = html.match(/<link rel="canonical" href="([^"]*)"/g) ?? [];
-  if (canonicals.length !== 1) {
-    fail(`${canonicals.length} canonical-tags — forventede praecis 1`);
-  }
-  // exec frem for match: uden /g goer de det samme, men `match` signalerer
-  // "find alle" og returnerer noget andet hvis nogen senere tilfoejer flaget.
-  const canonical = /<link rel="canonical" href="([^"]*)"/.exec(html)?.[1];
-  if (canonical && !isOurOrigin(canonical)) {
-    fail(`canonical peger uden for ${SITE_ORIGIN}: ${canonical}`);
-  }
-
-  const ogUrl = meta(html, 'property', 'og:url');
-  if (!ogUrl) fail('mangler og:url');
-  if (canonical && ogUrl && canonical !== ogUrl) {
-    fail(`canonical (${canonical}) og og:url (${ogUrl}) er uenige`);
-  }
-
-  for (const key of ['og:type', 'og:site_name', 'og:locale']) {
-    if (!meta(html, 'property', key)) fail(`mangler ${key}`);
-  }
-
-  // Parrene. Det er HER den maalte fejl laa.
-  for (const [og, tw] of [
-    ['og:title', 'twitter:title'],
-    ['og:description', 'twitter:description'],
-  ]) {
-    const a = meta(html, 'property', og);
-    const b = meta(html, 'name', tw);
-    if (!a) fail(`mangler ${og}`);
-    if (!b) fail(`mangler ${tw}`);
-    if (a && b && a !== b)
-      fail(`${og} og ${tw} er uenige:\n      ${og}: ${a}\n      ${tw}: ${b}`);
-  }
-
-  // og:image er bevidst udeladt indtil [designer] leverer filen. Er den
-  // tilfoejet, skal filen findes: et kort med et doedt billede er vaerre end
-  // et kort uden.
-  const ogImage = meta(html, 'property', 'og:image');
-  if (ogImage) {
-    const absolute = /^https?:\/\//.test(ogImage);
-    if (absolute && !isOurOrigin(ogImage)) {
-      // Maalt aabent da origin-fixet blev lavet: et og:image paa et
-      // look-alike-domaene slap igennem, fordi kun LOKALE stier blev
-      // kontrolleret. Et delekort der henter sit billede fra en fremmed vaert
-      // er ikke vores kort. Skal billedet en dag ligge paa en CDN, skal denne
-      // gate aendres BEVIDST — ikke omgaas ved at pege udenfor.
-      fail(`og:image ligger uden for ${SITE_ORIGIN}: ${ogImage}`);
-    }
-    const path = absolute ? new URL(ogImage).pathname : ogImage;
-    if (path.startsWith('/') && !existsSync(join(root, path))) {
-      fail(`og:image peger paa en fil der ikke findes i outputtet: ${path}`);
-    }
-  }
-}
-
-for (const file of fallbacks) {
-  const html = readFileSync(file, 'utf8');
-  if (/<link rel="canonical"/.test(html)) {
+  // Positiv kontrol: et nul her er ikke et pas.
+  if (routeFiles.length < 2) {
     errors.push(
-      `${relative(root, file)}: fallback-siden har en canonical — den maa den ikke`,
+      `fandt kun ${routeFiles.length} rute-HTML — forventede mindst 2. Enten er outputtet tomt, eller stien peger forkert.`,
     );
+    return {
+      errors,
+      routes: routeFiles.length,
+      fallbacks: fallbackFiles.length,
+    };
   }
+
+  for (const { rel, html } of routeFiles) {
+    const fail = msg => errors.push(`${rel}: ${msg}`);
+
+    const canonicals =
+      html.match(/<link rel="canonical" href="([^"]*)"/g) ?? [];
+    if (canonicals.length !== 1) {
+      fail(`${canonicals.length} canonical-tags — forventede praecis 1`);
+    }
+    const canonical = /<link rel="canonical" href="([^"]*)"/.exec(html)?.[1];
+    if (canonical && !isOurOrigin(canonical)) {
+      fail(`canonical peger uden for ${SITE_ORIGIN}: ${canonical}`);
+    }
+
+    const ogUrl = meta(html, 'property', 'og:url');
+    if (!ogUrl) fail('mangler og:url');
+    if (canonical && ogUrl && canonical !== ogUrl) {
+      fail(`canonical (${canonical}) og og:url (${ogUrl}) er uenige`);
+    }
+
+    for (const key of ['og:type', 'og:site_name', 'og:locale']) {
+      if (!meta(html, 'property', key)) fail(`mangler ${key}`);
+    }
+
+    for (const [og, tw] of [
+      ['og:title', 'twitter:title'],
+      ['og:description', 'twitter:description'],
+    ]) {
+      const a = meta(html, 'property', og);
+      const b = meta(html, 'name', tw);
+      if (!a) fail(`mangler ${og}`);
+      if (!b) fail(`mangler ${tw}`);
+      if (a && b && a !== b)
+        fail(`${og} og ${tw} er uenige:\n      ${og}: ${a}\n      ${tw}: ${b}`);
+    }
+
+    const ogImage = meta(html, 'property', 'og:image');
+    if (ogImage) {
+      const absolute = /^https?:\/\//.test(ogImage);
+      if (absolute && !isOurOrigin(ogImage)) {
+        fail(`og:image ligger uden for ${SITE_ORIGIN}: ${ogImage}`);
+      }
+      const path = absolute ? new URL(ogImage).pathname : ogImage;
+      if (path.startsWith('/') && !existsInOutput(path)) {
+        fail(`og:image peger paa en fil der ikke findes i outputtet: ${path}`);
+      }
+    }
+  }
+
+  for (const { rel, html } of fallbackFiles) {
+    if (/<link rel="canonical"/.test(html)) {
+      errors.push(`${rel}: fallback-siden har en canonical — den maa den ikke`);
+    }
+  }
+
+  return { errors, routes: routeFiles.length, fallbacks: fallbackFiles.length };
 }
 
-if (errors.length) {
-  console.error(`✗ flade-metadata: ${errors.length} problem(er)`);
-  for (const e of errors) console.error(`  - ${e}`);
-  process.exit(1);
-}
+// ─── CLI ──────────────────────────────────────────────────────────────────
+// Koerer KUN ved direkte kald. Uden guarden ville en test-import eksekvere
+// hele kontrollen og kalde process.exit — modulet kunne ikke importeres.
+const invokedDirectly =
+  process.argv[1] &&
+  resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 
-console.log(
-  `✓ flade-metadata: ${routes.length} ruter kontrolleret (canonical, og:url, og/twitter-par), ` +
-    `${fallbacks.length} fallback-sider uden canonical.`,
-);
+if (invokedDirectly) {
+  if (!existsSync(root)) {
+    console.error(`✗ ${root} findes ikke — byg apps/web foer denne kontrol.`);
+    process.exit(1);
+  }
+
+  const files = htmlFiles(root).map(f => ({
+    rel: relative(root, f),
+    html: readFileSync(f, 'utf8'),
+  }));
+
+  const { errors, routes, fallbacks } = checkFladeMetadata(files, path =>
+    existsSync(join(root, path)),
+  );
+
+  if (errors.length) {
+    console.error(`✗ flade-metadata: ${errors.length} problem(er)`);
+    for (const e of errors) console.error(`  - ${e}`);
+    process.exit(1);
+  }
+
+  console.log(
+    `✓ flade-metadata: ${routes} ruter kontrolleret (canonical, og:url, og/twitter-par), ` +
+      `${fallbacks} fallback-sider uden canonical.`,
+  );
+}
