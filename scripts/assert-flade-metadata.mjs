@@ -69,7 +69,7 @@ if (routes.length < 2) {
 
 const errors = [];
 const meta = (html, attr, key) =>
-  html.match(new RegExp(`<meta ${attr}="${key}" content="([^"]*)"`))?.[1];
+  new RegExp(`<meta ${attr}="${key}" content="([^"]*)"`).exec(html)?.[1];
 
 for (const file of routes) {
   const rel = relative(root, file);
@@ -80,7 +80,9 @@ for (const file of routes) {
   if (canonicals.length !== 1) {
     fail(`${canonicals.length} canonical-tags — forventede praecis 1`);
   }
-  const canonical = html.match(/<link rel="canonical" href="([^"]*)"/)?.[1];
+  // exec frem for match: uden /g goer de det samme, men `match` signalerer
+  // "find alle" og returnerer noget andet hvis nogen senere tilfoejer flaget.
+  const canonical = /<link rel="canonical" href="([^"]*)"/.exec(html)?.[1];
   if (canonical && !isOurOrigin(canonical)) {
     fail(`canonical peger uden for ${SITE_ORIGIN}: ${canonical}`);
   }
