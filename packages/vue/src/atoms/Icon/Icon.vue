@@ -72,8 +72,12 @@
   // praecis det tilfaelde der er farligt. En kontrol placeret hvor den ikke
   // kan observere det den kontrollerer, maaler ingenting.
   const UNSAFE_ICON_BODY =
-    /<\s*[a-z0-9]*:?script|[\s/]on[a-z]+\s*=|javascript:|<\s*foreignObject|<\s*(?:animate|set)\b/i;
+    /<\s*[a-z0-9]*:?script|(?:^|[^a-z0-9_])on[a-z]+\s*=|javascript:|<\s*foreignObject|<\s*(?:animate|set)\b/i;
 
+  // 🔴 `deep` fordi en watch UDEN den sammenligner REFERENCEN. Et reaktivt
+  // icon-objekt hvis `body` fyldes ud naar et API svarer, ville aldrig blive
+  // set — og det er praecis det moenster detektoren findes for. Fundet af
+  // [review], som muterede in place og fik nul advarsler.
   watch(
     () => props.icon,
     icon => {
@@ -86,7 +90,7 @@
           `it does not catch every vector.`,
       );
     },
-    { immediate: true },
+    { immediate: true, deep: true },
   );
 </script>
 

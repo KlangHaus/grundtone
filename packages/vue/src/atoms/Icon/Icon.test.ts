@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
+import { reactive } from 'vue';
 import { iconRegistry } from '@grundtone/icons';
 import Icon from './Icon.vue';
 import { GT_ICON_REGISTRY_KEY } from './types';
@@ -208,6 +209,57 @@ describe('Icon — SIK-020 tillidsgrænse på icon-proppen', () => {
     await wrapper.setProps({
       icon: { body: '<script>alert(1)</script>', viewBox: '0 0 24 24' },
     });
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('NOT sanitised'));
+    warn.mockRestore();
+  });
+});
+
+// [review]s to fund. Testene er skrevet fra DERES vektorer, før implementeringen
+// blev rørt — samme grund som resten af denne fil: en test skrevet fra koden
+// kan kun bekræfte koden.
+describe('Icon — SIK-020, huller fundet af [review]', () => {
+  function warnSpy() {
+    return vi.spyOn(console, 'warn').mockImplementation(() => {});
+  }
+
+  // 🔴 Uden separator: den lukkende anførselstegn ER afgrænsningen. Browserens
+  // tokenizer parser `"onload=` som en gyldig attribut, men et mønster der
+  // kræver whitespace eller `/` ser den ikke.
+  it('opdager en handler uden separator foran (…"onload=…)', () => {
+    const warn = warnSpy();
+    mountIcon({
+      icon: { body: '<path d="M0 0"onload="alert(1)"/>', viewBox: '0 0 24 24' },
+    });
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('NOT sanitised'));
+    warn.mockRestore();
+  });
+
+  // 🔴 Decoy: et attributnavn der INDEHOLDER "onload" må ikke fyre. Uden denne
+  // ville en for bred rettelse af ovenstående bestå — og en detektor der
+  // advarer om almindelig markup bliver slået fra af den første forbruger.
+  it('fyrer IKKE på et attributnavn der blot indeholder "on…"', () => {
+    const warn = warnSpy();
+    mountIcon({
+      icon: {
+        body: '<path data-iconload="x" fill="none" d="M0 0"/>',
+        viewBox: '0 0 24 24',
+      },
+    });
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
+  });
+
+  // 🔴 Mutation IN PLACE af samme reference. `watch` uden `deep` sammenligner
+  // referencen og ser derfor intet — og det er ikke en teoretisk brug: et
+  // reaktivt objekt hvis felter fyldes ud når et API svarer, er præcis
+  // mønsteret detektoren findes for.
+  it('opdager markup skrevet ind i det SAMME icon-objekt efter mount', async () => {
+    const warn = warnSpy();
+    const icon = reactive({ body: '<path d="M0 0"/>', viewBox: '0 0 24 24' });
+    const wrapper = mountIcon({ icon });
+    expect(warn).not.toHaveBeenCalled();
+    icon.body = '<script>alert(1)</script>';
+    await wrapper.vm.$nextTick();
     expect(warn).toHaveBeenCalledWith(expect.stringContaining('NOT sanitised'));
     warn.mockRestore();
   });
