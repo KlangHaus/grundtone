@@ -9,7 +9,8 @@
     "generate": "nuxi generate",
     "preview": "nuxi preview",
     "lint": "eslint .",
-    "publish:bunny": "tsx scripts/publish-bunny.ts"
+    "publish:bunny": "tsx scripts/publish-bunny.ts",
+    "test": "vitest run"
   },
   "dependencies": {
     "@grundtone/core": "workspace:*",

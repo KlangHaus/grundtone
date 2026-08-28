@@ -67,7 +67,12 @@ export interface PageSeo {
  * alle ruter på ét URL ville bede søgemaskiner om at ignorere undersiderne.
  */
 export function pageSeo(opts: PageSeo) {
-  const url = `${SITE_URL}${opts.path === '/' ? '/' : opts.path}`;
+  // Bemaerk: ingen saerbehandling af '/'. En tidligere version havde
+  // `opts.path === '/' ? '/' : opts.path`, som returnerer det samme i BEGGE
+  // grene — ren stoej der lignede en kant-haandtering. Fundet ved
+  // mutationstest: den mutation OVERLEVEDE, fordi der ikke var nogen gren at
+  // aendre. En test kan ikke skelne to grene der goer det samme.
+  const url = `${SITE_URL}${opts.path}`;
   return {
     link: [{ rel: 'canonical', href: url }],
     meta: [
