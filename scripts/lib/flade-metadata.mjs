@@ -34,8 +34,24 @@ const FALLBACKS = new Set(['200.html', '404.html']);
  * @param existsInOutput  (sti) => bool, saa og:image-tjekket kan proeves uden
  *                        et rigtigt filsystem
  */
-const meta = (html, attr, key) =>
-  new RegExp(`<meta ${attr}="${key}" content="([^"]*)"`).exec(html)?.[1];
+// 🔴 Ingen dynamisk RegExp. Et moenster bygget af interpolerede vaerdier er
+// et Sonar security-hotspot, og med rette: det kraever at LAESEREN verificerer
+// at inputtet aldrig kan indeholde regex-metategn. Her er alle noegler
+// literaler, saa betingelsen er sand i dag — men den staar ingen steder og
+// kan brydes af en fremtidig kaldsside. Ét statisk moenster over alle
+// meta-tags fjerner spoergsmaalet frem for at besvare det.
+const META_TAG = /<meta\s+(property|name)="([^"]*)"\s+content="([^"]*)"/g;
+
+function metaMap(html) {
+  const out = new Map();
+  for (const [, attr, key, content] of html.matchAll(META_TAG)) {
+    // Foerste forekomst vinder, som i browserens egen laesning.
+    if (!out.has(`${attr}:${key}`)) out.set(`${attr}:${key}`, content);
+  }
+  return out;
+}
+
+const meta = (html, attr, key) => metaMap(html).get(`${attr}:${key}`);
 
 // Én funktion pr. regel. Sonar S3776 klagede over kognitiv kompleksitet 45
 // mod 15 tilladt, men opdelingen er bedre af en anden grund end tallet:
