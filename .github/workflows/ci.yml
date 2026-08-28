@@ -87,6 +87,23 @@ jobs:
       - name: Build packages
         run: pnpm build:packages
 
+      # Landingssiden blev IKKE bygget i CI foer dette. `build:packages` daekker
+      # kun packages/, saa en braekket apps/web shippede uopdaget — og
+      # flade-metadata kunne ikke maales, fordi den kun findes i outputtet.
+      # Bygget genbruger dette jobs allerede installerede deps og netop byggede
+      # pakker (apps/web afhaenger af @grundtone/nuxt), saa merudgiften er
+      # selve nuxi generate.
+      - name: Build landing site
+        run: pnpm --filter @grundtone/web generate
+
+      # Koeres EFTER build af samme grund som CSS-kontrollen nedenfor: kilden
+      # fortaeller hvad nogen skrev, kun resultatet hvad der endte i HTML'en.
+      # Maalt da den blev skrevet: siderne satte kun og:title, saa /studio
+      # serverede dansk og:title og ENGELSK twitter:title. Ingen enkelt fil saa
+      # forkert ud — uoverensstemmelsen opstod foerst i flettningen.
+      - name: Flade-metadata (canonical, og/twitter-par)
+        run: node scripts/assert-flade-metadata.mjs apps/web/.output/public
+
       # Koeres EFTER build, fordi den maaler den BYGGEDE stylesheet. Kilden
       # fortaeller hvad nogen skrev; kun resultatet fortaeller, hvad der endte
       # med at vaere defineret. En `var(--x)` uden fallback og uden definition

@@ -3,6 +3,8 @@
 // (infra/docs/MASTER-PLAN.md #3: apex via PullZone/Flatten-record).
 // studio.grundtone.com serves /studio — edge-rule/redirect until it warrants
 // its own build ([infra] call).
+import { OG_DESCRIPTION, OG_TITLE } from './lib/seo';
+
 export default defineNuxtConfig({
   compatibilityDate: '2026-03-13',
   ssr: true,
@@ -39,6 +41,21 @@ export default defineNuxtConfig({
           content:
             'Open source design system for Vue/Nuxt with the same tokens theming your email templates. Token-native. Framework-agnostic. Runtime theming, no rebuild.',
         },
+        // Site-brede Open Graph/Twitter-defaults. Teksten er [cmo]s, ordret fra
+        // seo-baseline-cmo-svar.md §G4 — se lib/seo.ts for kilde og for hvorfor
+        // og:image bevidst mangler. Pr.-rute-felterne (canonical, og:url) kan
+        // ikke stå her: de afhænger af ruten og sættes i siderne.
+        { property: 'og:type', content: 'website' },
+        { property: 'og:site_name', content: 'grundtone' },
+        { property: 'og:locale', content: 'en_US' },
+        { property: 'og:title', content: OG_TITLE },
+        { property: 'og:description', content: OG_DESCRIPTION },
+        // summary frem for summary_large_image: det store format viser et
+        // billede vi ikke har endnu, og et tomt stort kort er daarligere end
+        // et lille korrekt. Skiftes naar [designer] leverer og:image.
+        { name: 'twitter:card', content: 'summary' },
+        { name: 'twitter:title', content: OG_TITLE },
+        { name: 'twitter:description', content: OG_DESCRIPTION },
       ],
       // Served from apps/web/public — copies of @grundtone/core/assets (official mark).
       link: [

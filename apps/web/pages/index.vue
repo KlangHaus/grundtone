@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import { pageSeo } from '../lib/seo';
   // grundtone.com — OSS home (Sentry model: OSS IS the identity).
   // Rebuilt 2026-08-04 from [designer]'s approved forlæg
   // (docs/design/grundtone/prototypes/landing-page-v2.html, verified by
@@ -14,6 +15,10 @@
 
   useHead({
     title: 'grundtone — change your brand in one place, see it live everywhere',
+    // Canonical og og:url kan ikke staa i nuxt.config: de afhaenger af ruten.
+    // og:title/description arves fra de site-brede defaults, som netop er
+    // skrevet til forsiden.
+    ...pageSeo({ path: '/' }),
   });
 
   // ── Whole-page theme switcher ([klanghaus-ideas] #1) ──────────────────────
