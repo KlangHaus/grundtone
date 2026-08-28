@@ -25,9 +25,19 @@ export function gateRunsBeforePublish(workflow, { gate, publish }) {
   const g = positionOf(workflow, gate);
   const p = positionOf(workflow, publish);
 
-  if (g === -1 && p === -1) return { ok: false, reason: 'hverken gate eller publish-trin fundet' };
-  if (g === -1) return { ok: false, reason: `gaten (${gate}) findes ikke i workflowen` };
-  if (p === -1) return { ok: false, reason: `publish-trinnet (${publish}) findes ikke i workflowen` };
-  if (g > p) return { ok: false, reason: 'gaten står EFTER publish-trinnet — den beskytter intet' };
+  if (g === -1 && p === -1)
+    return { ok: false, reason: 'hverken gate eller publish-trin fundet' };
+  if (g === -1)
+    return { ok: false, reason: `gaten (${gate}) findes ikke i workflowen` };
+  if (p === -1)
+    return {
+      ok: false,
+      reason: `publish-trinnet (${publish}) findes ikke i workflowen`,
+    };
+  if (g > p)
+    return {
+      ok: false,
+      reason: 'gaten står EFTER publish-trinnet — den beskytter intet',
+    };
   return { ok: true, reason: 'gaten står før publish-trinnet' };
 }

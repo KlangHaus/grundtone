@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import { OG_DESCRIPTION_STUDIO_DA, pageSeo } from '../lib/seo';
   // studio.grundtone.com — tier/upgrade-siden (Sentry-model: en del af
   // grundtone-huset, ikke et frit svævende brand). Ingen priser (ikke sat) —
   // kun "per brand, ikke per bruger"-princippet + early access-CTA.
@@ -14,6 +15,18 @@
     // dansk til [cmo] leverer Side 2-kanonen — uden override læser
     // skærmlæsere dansk tekst med engelsk stemme.
     htmlAttrs: { lang: 'da' },
+    // og:title genbruger sidens EGEN godkendte titel frem for den site-brede
+    // engelske — kortet skal matche det man lander paa.
+    //
+    // og:description er nu ogsaa sidens egen: [cmo] leverede en dansk tekst
+    // til /studio (docs@ad140fe). Den er BEVIDST ikke en oversaettelse af
+    // apex-teksten — Studio er et andet produkt end biblioteket.
+    ...pageSeo({
+      path: '/studio',
+      title: 'grundtone Studio — dit brand, overalt, uden at røre koden',
+      description: OG_DESCRIPTION_STUDIO_DA,
+      locale: 'da_DK',
+    }),
   });
 
   const EARLY_ACCESS_MAILTO =

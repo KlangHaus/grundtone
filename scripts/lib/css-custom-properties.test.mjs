@@ -37,9 +37,9 @@ describe('undefinedCustomProperties', () => {
   it('tillader eksplicit erklærede forbruger-satte properties', () => {
     const css = `.a { aspect-ratio: var(--aspect-ratio); }`;
 
-    expect(undefinedCustomProperties(css, { allow: ['--aspect-ratio'] })).toEqual(
-      [],
-    );
+    expect(
+      undefinedCustomProperties(css, { allow: ['--aspect-ratio'] }),
+    ).toEqual([]);
   });
 
   // En tom stylesheet må aldrig læse som en bestået måling af noget.

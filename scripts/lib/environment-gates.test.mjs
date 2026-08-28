@@ -32,22 +32,24 @@ describe('referencedEnvironments', () => {
   // blev fanget med kommentaren, opslaget fejlede, og gaten meldte "kunne ikke
   // slås op": en falsk positiv paa en helt korrekt workflow.
   it('ignorerer udkommenterede referencer', () => {
-    expect([...referencedEnvironments('  # environment: production\n')]).toEqual([]);
-    expect(
-      [...referencedEnvironments('  # environment:\n  #   name: production\n')],
-    ).toEqual([]);
+    expect([
+      ...referencedEnvironments('  # environment: production\n'),
+    ]).toEqual([]);
+    expect([
+      ...referencedEnvironments('  # environment:\n  #   name: production\n'),
+    ]).toEqual([]);
   });
 
   it('strippper inline-kommentar og anførselstegn fra værdien', () => {
-    expect([...referencedEnvironments('  environment: production # midlertidig\n')]).toEqual(
-      ['production'],
-    );
-    expect([...referencedEnvironments('  environment: "production"\n')]).toEqual([
-      'production',
-    ]);
-    expect(
-      [...referencedEnvironments('  environment:\n    name: production # x\n')],
-    ).toEqual(['production']);
+    expect([
+      ...referencedEnvironments('  environment: production # midlertidig\n'),
+    ]).toEqual(['production']);
+    expect([
+      ...referencedEnvironments('  environment: "production"\n'),
+    ]).toEqual(['production']);
+    expect([
+      ...referencedEnvironments('  environment:\n    name: production # x\n'),
+    ]).toEqual(['production']);
   });
 
   it('finder intet i en workflow uden environments', () => {
@@ -65,7 +67,10 @@ describe('unprotectedReferences', () => {
     );
 
     expect(r).toEqual([
-      { name: 'production', reason: 'protection_rules er tom — venter ikke på nogen' },
+      {
+        name: 'production',
+        reason: 'protection_rules er tom — venter ikke på nogen',
+      },
     ]);
   });
 

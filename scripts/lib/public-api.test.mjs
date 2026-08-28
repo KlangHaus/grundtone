@@ -203,22 +203,27 @@ describe('auditPackage', () => {
 });
 
 describe('removedKeyframes', () => {
-  const pub = '@keyframes gt-fade-in{}@keyframes gt-spin{}@keyframes toast-enter{}';
+  const pub =
+    '@keyframes gt-fade-in{}@keyframes gt-spin{}@keyframes toast-enter{}';
 
   it('finder et gt-keyframe der er væk', () => {
-    expect(removedKeyframes(pub, '@keyframes gt-spin{}')).toEqual(['gt-fade-in']);
+    expect(removedKeyframes(pub, '@keyframes gt-spin{}')).toEqual([
+      'gt-fade-in',
+    ]);
   });
 
   // 🔴 De upraefiksede er utilsigtede globale navne fra en aeldre kopi. At gate
   // paa dem ville fastlaase et uheld som en kontrakt.
   it('ignorerer upræfiksede navne', () => {
-    expect(removedKeyframes(pub, '@keyframes gt-fade-in{}@keyframes gt-spin{}')).toEqual(
-      [],
-    );
+    expect(
+      removedKeyframes(pub, '@keyframes gt-fade-in{}@keyframes gt-spin{}'),
+    ).toEqual([]);
   });
 
   it('respekterer en erklæret fjernelse', () => {
-    expect(removedKeyframes(pub, '@keyframes gt-spin{}', ['gt-fade-in'])).toEqual([]);
+    expect(
+      removedKeyframes(pub, '@keyframes gt-spin{}', ['gt-fade-in']),
+    ).toEqual([]);
   });
 
   it('finder intet når intet mangler', () => {

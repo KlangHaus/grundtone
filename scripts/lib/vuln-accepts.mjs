@@ -19,9 +19,9 @@ import { byName } from './order.mjs';
  */
 export function declaredInToml(text) {
   return new Set(
-    [...text.matchAll(/^[^\S\n]*id[^\S\n]*=[^\S\n]*["'](GHSA-[\w-]+)["']/gm)].map(
-      m => m[1],
-    ),
+    [
+      ...text.matchAll(/^[^\S\n]*id[^\S\n]*=[^\S\n]*["'](GHSA-[\w-]+)["']/gm),
+    ].map(m => m[1]),
   );
 }
 
@@ -47,7 +47,8 @@ export function declaredInPnpmWorkspace(text) {
 export function acceptDrift(tomlIds, yamlIds) {
   const only = (a, b, where) =>
     [...a].filter(id => !b.has(id)).map(id => ({ id, onlyIn: where }));
-  return [...only(tomlIds, yamlIds, 'osv-scanner.toml'),
-          ...only(yamlIds, tomlIds, 'pnpm-workspace.yaml')]
-    .sort((x, y) => byName(x.id, y.id));
+  return [
+    ...only(tomlIds, yamlIds, 'osv-scanner.toml'),
+    ...only(yamlIds, tomlIds, 'pnpm-workspace.yaml'),
+  ].sort((x, y) => byName(x.id, y.id));
 }

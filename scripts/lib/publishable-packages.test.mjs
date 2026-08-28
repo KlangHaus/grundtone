@@ -111,7 +111,9 @@ describe('changesets ignore', () => {
     expect(result.find(p => p.name === '@grundtone/react-native').ignored).toBe(
       true,
     );
-    expect(result.find(p => p.name === '@grundtone/vue').ignored).toBeUndefined();
+    expect(
+      result.find(p => p.name === '@grundtone/vue').ignored,
+    ).toBeUndefined();
   });
 
   it('uden ignore er ingen markeret', () => {
@@ -167,10 +169,13 @@ describe('workspacePackageNames', () => {
   });
 
   it('samler navne fra både packages/ og apps/', () => {
-    const names = workspacePackageNames('/repo', fs({
-      vue: pkg('@grundtone/vue', '2.24.0'),
-      web: pkg('@grundtone/web', '1.0.0'),
-    }));
+    const names = workspacePackageNames(
+      '/repo',
+      fs({
+        vue: pkg('@grundtone/vue', '2.24.0'),
+        web: pkg('@grundtone/web', '1.0.0'),
+      }),
+    );
 
     expect([...names].sort()).toEqual(['@grundtone/vue', '@grundtone/web']);
   });
@@ -178,10 +183,13 @@ describe('workspacePackageNames', () => {
   // 🔴 Det, assertionen findes for: et navn i changesets' ignore, som ikke
   // peger på noget, betyder at changesets versionerer pakken alligevel.
   it('afslører et navn der ikke matcher nogen pakke', () => {
-    const names = workspacePackageNames('/repo', fs({
-      vue: pkg('@grundtone/vue', '2.24.0'),
-      web: pkg('@grundtone/web', '1.0.0'),
-    }));
+    const names = workspacePackageNames(
+      '/repo',
+      fs({
+        vue: pkg('@grundtone/vue', '2.24.0'),
+        web: pkg('@grundtone/web', '1.0.0'),
+      }),
+    );
 
     expect(names.has('@grundtone/react-nativ')).toBe(false);
   });
