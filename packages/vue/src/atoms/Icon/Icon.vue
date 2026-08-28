@@ -71,8 +71,24 @@
   // de ville aldrig se et `:icon` bundet til data der ankommer asynkront —
   // praecis det tilfaelde der er farligt. En kontrol placeret hvor den ikke
   // kan observere det den kontrollerer, maaler ingenting.
-  const UNSAFE_ICON_BODY =
-    /<\s*[a-z0-9]*:?script|(?:^|[^a-z0-9_])on[a-z]+\s*=|javascript:|<\s*foreignObject|<\s*(?:animate|set)\b/i;
+  // Ét moenster pr. vektor frem for en enkelt alternation. Sonar S5843 klagede
+  // over kompleksiteten (25 mod 20 tilladt), og opdelingen er bedre af en anden
+  // grund end tallet: hvert moenster kan laeses, begrundes og aendres for sig,
+  // og en fremtidig tilfoejelse behoever ikke roere de fire andre.
+  const UNSAFE_ICON_PATTERNS = [
+    // Script-elementer, ogsaa namespace-praefikset (`<svg:script>`).
+    /<\s*[a-z0-9]*:?script/i,
+    // Event-handlere. Separatoren kan vaere whitespace, `/` ELLER en lukkende
+    // anfoerselstegn (`…"onload=`) — browserens tokenizer accepterer alle tre.
+    /(?:^|[^a-z0-9_])on[a-z]+\s*=/i,
+    /javascript:/i,
+    /<\s*foreignObject/i,
+    // SMIL: saetter attributter paa RENDERTIDSPUNKTET, saa et handler-navn
+    // aldrig staar i markupen selv.
+    /<\s*(?:animate|set)\b/i,
+  ];
+  const isUnsafeIconBody = (body: string) =>
+    UNSAFE_ICON_PATTERNS.some(re => re.test(body));
 
   // 🔴 `deep` fordi en watch UDEN den sammenligner REFERENCEN. Et reaktivt
   // icon-objekt hvis `body` fyldes ud naar et API svarer, ville aldrig blive
@@ -81,7 +97,7 @@
   watch(
     () => props.icon,
     icon => {
-      if (!icon?.body || !UNSAFE_ICON_BODY.test(icon.body)) return;
+      if (!icon?.body || !isUnsafeIconBody(icon.body)) return;
       // eslint-disable-next-line no-console
       console.warn(
         `[GTIcon] The "icon" prop contains active markup (script, event handler, javascript: URL, foreignObject or SMIL). ` +
