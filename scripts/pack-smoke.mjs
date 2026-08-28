@@ -26,21 +26,36 @@
  *        KEEP=1 node scripts/pack-smoke.mjs   (behold smoke-projektet)
  */
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, mkdirSync, readdirSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
+import {
+  mkdtempSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+  rmSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 
 const ROOT = resolve(import.meta.dirname, '..');
 const run = (cmd, args, cwd) =>
-  execFileSync(cmd, args, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+  execFileSync(cmd, args, {
+    cwd,
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
 
 /** Pakker der faktisk udgives — udledt, ikke haandholdt. */
 function publishablePackages() {
   return readdirSync(join(ROOT, 'packages'))
-    .map((dir) => {
+    .map(dir => {
       try {
-        const pkg = JSON.parse(readFileSync(join(ROOT, 'packages', dir, 'package.json'), 'utf8'));
-        return pkg.private === true ? null : { dir, name: pkg.name, version: pkg.version, pkg };
+        const pkg = JSON.parse(
+          readFileSync(join(ROOT, 'packages', dir, 'package.json'), 'utf8'),
+        );
+        return pkg.private === true
+          ? null
+          : { dir, name: pkg.name, version: pkg.version, pkg };
       } catch {
         return null;
       }
@@ -60,10 +75,18 @@ mkdirSync(proj, { recursive: true });
 // ── 1. pak ──────────────────────────────────────────────────────────────────
 const tarballs = {};
 for (const p of packages) {
-  run('pnpm', ['pack', '--pack-destination', tgzDir], join(ROOT, 'packages', p.dir));
-  const file = readdirSync(tgzDir).find((f) => f === `${p.name.replace('@', '').replace('/', '-')}-${p.version}.tgz`);
+  run(
+    'pnpm',
+    ['pack', '--pack-destination', tgzDir],
+    join(ROOT, 'packages', p.dir),
+  );
+  const file = readdirSync(tgzDir).find(
+    f => f === `${p.name.replace('@', '').replace('/', '-')}-${p.version}.tgz`,
+  );
   if (!file) {
-    console.error(`::error::kunne ikke finde tarball for ${p.name}@${p.version} i ${tgzDir}`);
+    console.error(
+      `::error::kunne ikke finde tarball for ${p.name}@${p.version} i ${tgzDir}`,
+    );
     process.exit(1);
   }
   tarballs[p.name] = join(tgzDir, file);
@@ -81,19 +104,27 @@ writeFileSync(
       private: true,
       version: '0.0.0',
       type: 'module',
-      dependencies: Object.fromEntries(packages.map((p) => [p.name, `file:${tarballs[p.name]}`])),
-      overrides: Object.fromEntries(packages.map((p) => [p.name, `file:${tarballs[p.name]}`])),
+      dependencies: Object.fromEntries(
+        packages.map(p => [p.name, `file:${tarballs[p.name]}`]),
+      ),
+      overrides: Object.fromEntries(
+        packages.map(p => [p.name, `file:${tarballs[p.name]}`]),
+      ),
     },
     null,
     2,
   ),
 );
 
-console.log('\ninstallerer fra tarballs i et tomt projekt uden for workspacet…');
+console.log(
+  '\ninstallerer fra tarballs i et tomt projekt uden for workspacet…',
+);
 try {
   run('npm', ['install', '--no-audit', '--no-fund', '--loglevel=error'], proj);
 } catch (err) {
-  console.error('::error::install fra tarballs fejlede — pakkerne kan ikke installeres af en forbruger');
+  console.error(
+    '::error::install fra tarballs fejlede — pakkerne kan ikke installeres af en forbruger',
+  );
   console.error(String(err.stdout ?? '') + String(err.stderr ?? ''));
   process.exit(1);
 }
@@ -123,8 +154,8 @@ function entriesFor(pkg) {
   return [...out];
 }
 
-const specs = packages.flatMap((p) =>
-  entriesFor(p.pkg).map((e) => (e === '.' ? p.name : `${p.name}/${e.slice(2)}`)),
+const specs = packages.flatMap(p =>
+  entriesFor(p.pkg).map(e => (e === '.' ? p.name : `${p.name}/${e.slice(2)}`)),
 );
 
 writeFileSync(
@@ -148,13 +179,18 @@ console.log(JSON.stringify({ ok, bad }));
 
 const result = JSON.parse(run('node', ['probe.mjs'], proj));
 for (const spec of result.ok) console.log(`  ✔ resolver  ${spec}`);
-for (const [spec, why] of result.bad) console.log(`  ✗ FEJLER    ${spec}  (${why})`);
+for (const [spec, why] of result.bad)
+  console.log(`  ✗ FEJLER    ${spec}  (${why})`);
 
 if (!process.env.KEEP) rmSync(work, { recursive: true, force: true });
 else console.log(`\nsmoke-projekt beholdt: ${proj}`);
 
-console.log(`\n${result.ok.length} entry-points resolver · ${result.bad.length} fejler`);
+console.log(
+  `\n${result.ok.length} entry-points resolver · ${result.bad.length} fejler`,
+);
 if (result.bad.length) {
-  console.error('::error::mindst ét entry-point kan ikke resolves af en forbruger');
+  console.error(
+    '::error::mindst ét entry-point kan ikke resolves af en forbruger',
+  );
   process.exit(1);
 }

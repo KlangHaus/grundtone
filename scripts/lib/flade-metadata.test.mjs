@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { checkFladeMetadata } from '../assert-flade-metadata.mjs';
+import { checkFladeMetadata } from './flade-metadata.mjs';
 
 // Artefakt-målingen (byg sitet, muter HTML'en) er stadig den vigtigste — den
 // fangede twitter:title-fejlen, som ingen enkelt kildefil viser. Disse tests

@@ -2,15 +2,15 @@ import { describe, it, expect } from 'vitest';
 
 import { lookupPublished } from './npm-dist-tag.mjs';
 
-const fail = (props) => () => {
+const fail = props => () => {
   throw Object.assign(new Error('npm failed'), props);
 };
 
 describe('lookupPublished', () => {
   it('læser versionen på tagget', () => {
-    expect(lookupPublished('@grundtone/vue', 'latest', () => '2.23.3\n')).toEqual(
-      { state: 'published', version: '2.23.3' },
-    );
+    expect(
+      lookupPublished('@grundtone/vue', 'latest', () => '2.23.3\n'),
+    ).toEqual({ state: 'published', version: '2.23.3' });
   });
 
   // Pakken findes, men tagget gør ikke: npm svarer tom linje med exit 0.
@@ -22,7 +22,11 @@ describe('lookupPublished', () => {
 
   it('E404 betyder aldrig udgivet', () => {
     expect(
-      lookupPublished('@grundtone/nyt', 'latest', fail({ stderr: 'npm ERR! E404 Not Found' })),
+      lookupPublished(
+        '@grundtone/nyt',
+        'latest',
+        fail({ stderr: 'npm ERR! E404 Not Found' }),
+      ),
     ).toEqual({ state: 'unpublished' });
   });
 
@@ -35,9 +39,9 @@ describe('lookupPublished', () => {
       { stderr: 'npm ERR! network timeout' },
       { message: 'spawn npm ENOENT' },
     ]) {
-      expect(() => lookupPublished('@grundtone/vue', 'latest', fail(err))).toThrow(
-        /IKKE det samme som en pakke der ikke findes/,
-      );
+      expect(() =>
+        lookupPublished('@grundtone/vue', 'latest', fail(err)),
+      ).toThrow(/IKKE det samme som en pakke der ikke findes/);
     }
   });
 

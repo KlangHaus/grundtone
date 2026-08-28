@@ -26,5 +26,7 @@ export function undefinedCustomProperties(css, { allow = [] } = {}) {
 
   return [...counts.entries()]
     .map(([name, occurrences]) => ({ name, occurrences }))
-    .sort((a, b) => b.occurrences - a.occurrences || a.name.localeCompare(b.name));
+    .sort(
+      (a, b) => b.occurrences - a.occurrences || a.name.localeCompare(b.name),
+    );
 }
