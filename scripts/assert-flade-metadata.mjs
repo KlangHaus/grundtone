@@ -21,6 +21,21 @@ const SITE = 'https://grundtone.com';
 // fejlside der haevder et kanonisk URL beder om at blive indekseret som det.
 const FALLBACKS = new Set(['200.html', '404.html']);
 
+// 🔴 Sammenlign ORIGIN, ikke praefiks. `startsWith(SITE)` accepterer
+// `https://grundtone.com.andet-domaene.dk/` og `https://grundtone.comfoo/` —
+// ANDRE domaener, der bare deler de foerste tegn. Fundet af CodeQL
+// (js/incomplete-url-substring-sanitization) i denne fils foerste version;
+// den havde ret, og det er en korrektheds-fejl, ikke kun en sikkerhedsnit:
+// en canonical mod et look-alike-domaen ville have bestaaet gaten.
+const SITE_ORIGIN = new URL(SITE).origin;
+function isOurOrigin(url) {
+  try {
+    return new URL(url).origin === SITE_ORIGIN;
+  } catch {
+    return false;
+  }
+}
+
 function htmlFiles(dir) {
   const out = [];
   for (const name of readdirSync(dir)) {
@@ -66,8 +81,8 @@ for (const file of routes) {
     fail(`${canonicals.length} canonical-tags — forventede praecis 1`);
   }
   const canonical = html.match(/<link rel="canonical" href="([^"]*)"/)?.[1];
-  if (canonical && !canonical.startsWith(SITE)) {
-    fail(`canonical peger uden for ${SITE}: ${canonical}`);
+  if (canonical && !isOurOrigin(canonical)) {
+    fail(`canonical peger uden for ${SITE_ORIGIN}: ${canonical}`);
   }
 
   const ogUrl = meta(html, 'property', 'og:url');
@@ -98,9 +113,16 @@ for (const file of routes) {
   // et kort uden.
   const ogImage = meta(html, 'property', 'og:image');
   if (ogImage) {
-    const path = ogImage.startsWith(SITE)
-      ? ogImage.slice(SITE.length)
-      : ogImage;
+    const absolute = /^https?:\/\//.test(ogImage);
+    if (absolute && !isOurOrigin(ogImage)) {
+      // Maalt aabent da origin-fixet blev lavet: et og:image paa et
+      // look-alike-domaene slap igennem, fordi kun LOKALE stier blev
+      // kontrolleret. Et delekort der henter sit billede fra en fremmed vaert
+      // er ikke vores kort. Skal billedet en dag ligge paa en CDN, skal denne
+      // gate aendres BEVIDST — ikke omgaas ved at pege udenfor.
+      fail(`og:image ligger uden for ${SITE_ORIGIN}: ${ogImage}`);
+    }
+    const path = absolute ? new URL(ogImage).pathname : ogImage;
     if (path.startsWith('/') && !existsSync(join(root, path))) {
       fail(`og:image peger paa en fil der ikke findes i outputtet: ${path}`);
     }
