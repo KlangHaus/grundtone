@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { pageSeo } from '../lib/seo';
+  import { OG_DESCRIPTION_STUDIO_DA, pageSeo } from '../lib/seo';
   // studio.grundtone.com — tier/upgrade-siden (Sentry-model: en del af
   // grundtone-huset, ikke et frit svævende brand). Ingen priser (ikke sat) —
   // kun "per brand, ikke per bruger"-princippet + early access-CTA.
@@ -18,15 +18,13 @@
     // og:title genbruger sidens EGEN godkendte titel frem for den site-brede
     // engelske — kortet skal matche det man lander paa.
     //
-    // 🔴 og:description gør det IKKE: den arver [cmo]s engelske tekst, mens
-    // siden er dansk. Det er en KENDT uoverensstemmelse, ikke et valg — der
-    // findes ingen dansk OG-description i cmo's forlæg, og at opfinde en her
-    // ville skabe en kunde-vendt streng uden ophav (samme fejl som den
-    // engelske beta-badge i studio, hvor pinningen var grøn mod en streng
-    // ingen havde godkendt). Meldt til [cmo]; rettes naar teksten findes.
+    // og:description er nu ogsaa sidens egen: [cmo] leverede en dansk tekst
+    // til /studio (docs@ad140fe). Den er BEVIDST ikke en oversaettelse af
+    // apex-teksten — Studio er et andet produkt end biblioteket.
     ...pageSeo({
       path: '/studio',
       title: 'grundtone Studio — dit brand, overalt, uden at røre koden',
+      description: OG_DESCRIPTION_STUDIO_DA,
       locale: 'da_DK',
     }),
   });

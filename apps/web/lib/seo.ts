@@ -29,6 +29,18 @@ export const OG_DESCRIPTION =
   'Open source design system, Vue/Nuxt-first. Update tokens once — your app and email templates restyle instantly. No rebuild, no drift.';
 
 /**
+ * [cmo], leveret 2026-08-24 til `/studio` (docs@ad140fe, samme dokument §G4).
+ *
+ * 🔴 BEVIDST IKKE en oversaettelse af `OG_DESCRIPTION`: /studio er et ANDET
+ * produkt (SaaS, visuelt, no-code) end grundtone selv (OSS-bibliotek), saa
+ * beskrivelsen siger hvad Studio ER frem for at gengive bibliotekets
+ * kerneclaim. En oversaettelse ville have givet et delekort der beskriver det
+ * forkerte produkt.
+ */
+export const OG_DESCRIPTION_STUDIO_DA =
+  'grundtone Studio — rediger design-tokens visuelt, uden kode. Opdater ét sted, se ændringen live på tværs af alle dine brands. Bygget på open source grundtone.';
+
+/**
  * 🔴 og:image er BEVIDST UDELADT. [cmo] leverede et billed-KONCEPT til
  * [designer] (§G4: vis princippet — én tokenværdi reflekteret samtidig i
  * 2-3 synligt forskellige overflader), ikke en fil, og der findes ingen fil i
@@ -44,6 +56,8 @@ export interface PageSeo {
   title?: string;
   /** BCP-47-agtig OG-locale, fx 'da_DK'. */
   locale?: string;
+  /** Sidens egen OG-beskrivelse. Falder tilbage til den site-brede. */
+  description?: string;
 }
 
 /**
@@ -66,6 +80,12 @@ export function pageSeo(opts: PageSeo) {
         ? [
             { property: 'og:title', content: opts.title },
             { name: 'twitter:title', content: opts.title },
+          ]
+        : []),
+      ...(opts.description
+        ? [
+            { property: 'og:description', content: opts.description },
+            { name: 'twitter:description', content: opts.description },
           ]
         : []),
       ...(opts.locale ? [{ property: 'og:locale', content: opts.locale }] : []),
