@@ -34,12 +34,86 @@ const FALLBACKS = new Set(['200.html', '404.html']);
  * @param existsInOutput  (sti) => bool, saa og:image-tjekket kan proeves uden
  *                        et rigtigt filsystem
  */
+const meta = (html, attr, key) =>
+  new RegExp(`<meta ${attr}="${key}" content="([^"]*)"`).exec(html)?.[1];
+
+// Én funktion pr. regel. Sonar S3776 klagede over kognitiv kompleksitet 45
+// mod 15 tilladt, men opdelingen er bedre af en anden grund end tallet:
+// hver regel kan laeses og aendres for sig, og testfilen har allerede én
+// test pr. regel — nu staar de to i samme forhold.
+
+function checkCanonical(html, fail) {
+  const canonicals = html.match(/<link rel="canonical" href="([^"]*)"/g) ?? [];
+  if (canonicals.length !== 1) {
+    fail(`${canonicals.length} canonical-tags — forventede praecis 1`);
+  }
+  const canonical = /<link rel="canonical" href="([^"]*)"/.exec(html)?.[1];
+  if (canonical && !isOurOrigin(canonical)) {
+    fail(`canonical peger uden for ${SITE_ORIGIN}: ${canonical}`);
+  }
+  return canonical;
+}
+
+function checkOgUrl(html, canonical, fail) {
+  const ogUrl = meta(html, 'property', 'og:url');
+  if (!ogUrl) fail('mangler og:url');
+  if (canonical && ogUrl && canonical !== ogUrl) {
+    fail(`canonical (${canonical}) og og:url (${ogUrl}) er uenige`);
+  }
+}
+
+function checkRequiredOg(html, fail) {
+  for (const key of ['og:type', 'og:site_name', 'og:locale']) {
+    if (!meta(html, 'property', key)) fail(`mangler ${key}`);
+  }
+}
+
+// Parrene. Det er HER den maalte fejl laa: og:title sat uden twitter:title,
+// saa de to kort viste hver sin titel for samme side.
+function checkCardPairs(html, fail) {
+  for (const [og, tw] of [
+    ['og:title', 'twitter:title'],
+    ['og:description', 'twitter:description'],
+  ]) {
+    const a = meta(html, 'property', og);
+    const b = meta(html, 'name', tw);
+    if (!a) fail(`mangler ${og}`);
+    if (!b) fail(`mangler ${tw}`);
+    if (a && b && a !== b)
+      fail(`${og} og ${tw} er uenige: ${og}=${a} / ${tw}=${b}`);
+  }
+}
+
+// og:image er bevidst udeladt indtil [designer] leverer filen. Er den
+// tilfoejet, skal den ligge hos os OG findes: et kort med et doedt eller
+// fremmed billede er vaerre end et kort uden.
+function checkOgImage(html, existsInOutput, fail) {
+  const ogImage = meta(html, 'property', 'og:image');
+  if (!ogImage) return;
+  const absolute = /^https?:\/\//.test(ogImage);
+  if (absolute && !isOurOrigin(ogImage)) {
+    fail(`og:image ligger uden for ${SITE_ORIGIN}: ${ogImage}`);
+  }
+  const path = absolute ? new URL(ogImage).pathname : ogImage;
+  if (path.startsWith('/') && !existsInOutput(path)) {
+    fail(`og:image peger paa en fil der ikke findes i outputtet: ${path}`);
+  }
+}
+
+/**
+ * @param files  [{ rel, html }] — ruter OG fallback-sider
+ * @param existsInOutput  (sti) => bool, saa og:image-tjekket kan proeves uden
+ *                        et rigtigt filsystem
+ */
 export function checkFladeMetadata(files, existsInOutput) {
   const routeFiles = files.filter(f => !FALLBACKS.has(f.rel));
   const fallbackFiles = files.filter(f => FALLBACKS.has(f.rel));
   const errors = [];
-  const meta = (html, attr, key) =>
-    new RegExp(`<meta ${attr}="${key}" content="([^"]*)"`).exec(html)?.[1];
+  const result = () => ({
+    errors,
+    routes: routeFiles.length,
+    fallbacks: fallbackFiles.length,
+  });
 
   // 🔴 Positiv kontrol: uden den ville en tom eller flyttet output-mappe give
   // nul filer og dermed nul fejl — gaten ville melde groent uden at maale noget.
@@ -47,63 +121,16 @@ export function checkFladeMetadata(files, existsInOutput) {
     errors.push(
       `fandt kun ${routeFiles.length} rute-HTML — forventede mindst 2. Enten er outputtet tomt, eller stien peger forkert.`,
     );
-    return {
-      errors,
-      routes: routeFiles.length,
-      fallbacks: fallbackFiles.length,
-    };
+    return result();
   }
 
   for (const { rel, html } of routeFiles) {
     const fail = msg => errors.push(`${rel}: ${msg}`);
-
-    const canonicals =
-      html.match(/<link rel="canonical" href="([^"]*)"/g) ?? [];
-    if (canonicals.length !== 1) {
-      fail(`${canonicals.length} canonical-tags — forventede praecis 1`);
-    }
-    const canonical = /<link rel="canonical" href="([^"]*)"/.exec(html)?.[1];
-    if (canonical && !isOurOrigin(canonical)) {
-      fail(`canonical peger uden for ${SITE_ORIGIN}: ${canonical}`);
-    }
-
-    const ogUrl = meta(html, 'property', 'og:url');
-    if (!ogUrl) fail('mangler og:url');
-    if (canonical && ogUrl && canonical !== ogUrl) {
-      fail(`canonical (${canonical}) og og:url (${ogUrl}) er uenige`);
-    }
-
-    for (const key of ['og:type', 'og:site_name', 'og:locale']) {
-      if (!meta(html, 'property', key)) fail(`mangler ${key}`);
-    }
-
-    // Parrene. Det er HER den maalte fejl laa.
-    for (const [og, tw] of [
-      ['og:title', 'twitter:title'],
-      ['og:description', 'twitter:description'],
-    ]) {
-      const a = meta(html, 'property', og);
-      const b = meta(html, 'name', tw);
-      if (!a) fail(`mangler ${og}`);
-      if (!b) fail(`mangler ${tw}`);
-      if (a && b && a !== b)
-        fail(`${og} og ${tw} er uenige: ${og}=${a} / ${tw}=${b}`);
-    }
-
-    // og:image er bevidst udeladt indtil [designer] leverer filen. Er den
-    // tilfoejet, skal den ligge hos os OG findes: et kort med et doedt eller
-    // fremmed billede er vaerre end et kort uden.
-    const ogImage = meta(html, 'property', 'og:image');
-    if (ogImage) {
-      const absolute = /^https?:\/\//.test(ogImage);
-      if (absolute && !isOurOrigin(ogImage)) {
-        fail(`og:image ligger uden for ${SITE_ORIGIN}: ${ogImage}`);
-      }
-      const path = absolute ? new URL(ogImage).pathname : ogImage;
-      if (path.startsWith('/') && !existsInOutput(path)) {
-        fail(`og:image peger paa en fil der ikke findes i outputtet: ${path}`);
-      }
-    }
+    const canonical = checkCanonical(html, fail);
+    checkOgUrl(html, canonical, fail);
+    checkRequiredOg(html, fail);
+    checkCardPairs(html, fail);
+    checkOgImage(html, existsInOutput, fail);
   }
 
   for (const { rel, html } of fallbackFiles) {
@@ -112,5 +139,5 @@ export function checkFladeMetadata(files, existsInOutput) {
     }
   }
 
-  return { errors, routes: routeFiles.length, fallbacks: fallbackFiles.length };
+  return result();
 }
