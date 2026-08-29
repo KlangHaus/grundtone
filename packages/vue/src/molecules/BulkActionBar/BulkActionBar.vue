@@ -2,10 +2,12 @@
   import { computed, onBeforeUnmount, ref, watch } from 'vue';
   import { getClassPrefix } from '@grundtone/core';
   import type { BulkActionBarProps } from './types';
+  import { releaseSpace, reserveSpace } from './reserved-space';
 
   const props = withDefaults(defineProps<BulkActionBarProps>(), {
     state: 'idle',
     message: undefined,
+    selectionKey: undefined,
     clearLabel: 'Clear',
     ariaLabel: undefined,
   });
@@ -27,6 +29,7 @@
   const base = computed(() => `${p.value}-bulk-action-bar`);
 
   const barRef = ref<HTMLElement | null>(null);
+  const instanceId = Symbol('gt-bulk-action-bar');
 
   // A receipt the user has not dismissed yet. Tracked separately from
   // `props.message` because it must OUTLIVE the selection: on full success the
@@ -47,9 +50,15 @@
   // lives here rather than in each consumer: solved per-consumer, the fourth
   // one meets it from scratch and the first three each grew a variant.
   watch(
-    () => props.count,
-    (count, previous) => {
-      if (count > 0 && count !== previous) pendingReceipt.value = null;
+    () => [props.count, props.selectionKey] as const,
+    ([count, key], previous) => {
+      if (count === 0) return;
+      const [prevCount, prevKey] = previous ?? [count, key];
+      // 🔴 The key, when given, is the only thing that can express identity:
+      // swapping three rows for three others leaves the count untouched, and a
+      // stale receipt would sit beside a fresh selection reading as if it
+      // described it. Falls back to the count when no key is supplied.
+      if (key !== prevKey || count !== prevCount) pendingReceipt.value = null;
     },
   );
 
@@ -83,8 +92,8 @@
   }
 
   function applyPadding(value: string) {
-    if (typeof document === 'undefined') return;
-    document.body.style.setProperty('--gt-bulk-action-bar-space', value);
+    if (value === '0px') releaseSpace(instanceId);
+    else reserveSpace(instanceId, Number.parseFloat(value) || 0);
   }
 
   watch(
@@ -101,7 +110,7 @@
     { immediate: true },
   );
 
-  onBeforeUnmount(() => applyPadding('0px'));
+  onBeforeUnmount(() => releaseSpace(instanceId));
 </script>
 
 <template>

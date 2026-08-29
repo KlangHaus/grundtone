@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import BulkActionBar from './BulkActionBar.vue';
+import { resetReservations } from './reserved-space';
 
 // 🔴 These tests are written from the TRAP LIST agreed with the first consumer,
 // not from the implementation. A test written from the code can only confirm
@@ -116,6 +117,7 @@ describe('GTBulkActionBar — reserved space', () => {
       configurable: true,
       get: () => 56,
     });
+    resetReservations();
     document.body.style.removeProperty('--gt-bulk-action-bar-space');
   });
 
@@ -167,6 +169,94 @@ describe('GTBulkActionBar — reserved space', () => {
     await w.vm.$nextTick();
     w.unmount();
     expect(reserved()).toBe('0px');
+  });
+});
+
+describe('GTBulkActionBar — findings from review', () => {
+  const reserved = () =>
+    document.body.style.getPropertyValue('--gt-bulk-action-bar-space');
+
+  beforeEach(() => {
+    Object.defineProperty(HTMLElement.prototype, 'offsetHeight', {
+      configurable: true,
+      get: () => 56,
+    });
+    resetReservations();
+    document.body.style.removeProperty('--gt-bulk-action-bar-space');
+  });
+
+  afterEach(() => {
+    delete (HTMLElement.prototype as unknown as Record<string, unknown>)
+      .offsetHeight;
+  });
+
+  // 🔴 The reserved space lives on document.body, so it is shared. Unmounting
+  // ONE bar released it for every bar — including one still on screen, whose
+  // last row then slid underneath it. Worse than "they overwrite each other":
+  // the surviving instance is left with no reservation at all.
+  it('keeps the space reserved while another bar is still visible', async () => {
+    const a = mountBar();
+    const b = mountBar();
+    // Begge maalinger er asynkrone. Uden at vente paa BEGGE ville kun den
+    // foerste vaere registreret, og testen ville "bestaa" mod en komponent der
+    // slet ikke haandterer to instanser.
+    await a.vm.$nextTick();
+    await b.vm.$nextTick();
+    await Promise.resolve();
+    await Promise.resolve();
+    expect(reserved()).toBe('56px');
+
+    a.unmount();
+    await Promise.resolve();
+
+    expect(b.find(`.${BASE}`).exists()).toBe(true);
+    expect(reserved()).toBe('56px');
+  });
+
+  it('releases the space once the last bar is gone', async () => {
+    const a = mountBar();
+    const b = mountBar();
+    await a.vm.$nextTick();
+    await b.vm.$nextTick();
+    await Promise.resolve();
+    await Promise.resolve();
+
+    a.unmount();
+    b.unmount();
+    await Promise.resolve();
+
+    expect(reserved()).toBe('0px');
+  });
+
+  // 🔴 The receipt was discarded on a CHANGE OF COUNT. Swap three selected rows
+  // for three others and the count never changes value, so the watcher never
+  // fires — a stale "3 of 3 moved" sits beside a completely fresh selection and
+  // reads as describing it. A count cannot express selection identity; the
+  // consumer has to say when the selection became a different one.
+  it('discards the receipt when the selection is swapped for the same number of rows', async () => {
+    const w = mountBar({
+      count: 3,
+      label: '3 selected',
+      selectionKey: 'a,b,c',
+    });
+    await w.setProps({ state: 'receipt', message: '3 of 3 moved' });
+    expect(receipt(w).exists()).toBe(true);
+
+    await w.setProps({ count: 3, label: '3 selected', selectionKey: 'x,y,z' });
+
+    expect(receipt(w).exists()).toBe(false);
+  });
+
+  it('keeps the receipt when the same selection is re-reported', async () => {
+    const w = mountBar({
+      count: 3,
+      label: '3 selected',
+      selectionKey: 'a,b,c',
+    });
+    await w.setProps({ state: 'receipt', message: '3 of 3 moved' });
+    await w.setProps({ count: 3, label: '3 selected', selectionKey: 'a,b,c' });
+
+    expect(receipt(w).exists()).toBe(true);
   });
 });
 
