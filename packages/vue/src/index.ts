@@ -165,6 +165,11 @@ export type { AnchorLinksProps, AnchorLinkItem } from './molecules/AnchorLinks';
 export type { AlertProps, AlertVariant } from './molecules/Alert';
 export { GTAppShell } from './molecules/AppShell';
 export type { AppShellProps } from './molecules/AppShell';
+export { GTBulkActionBar } from './molecules/BulkActionBar';
+export type {
+  BulkActionBarProps,
+  BulkActionState,
+} from './molecules/BulkActionBar';
 export { GTDrawer } from './molecules/Drawer';
 export type { DrawerProps, DrawerSide } from './molecules/Drawer';
 export { GTConfirmDialog } from './molecules/ConfirmDialog';

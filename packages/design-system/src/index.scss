@@ -110,6 +110,20 @@ $_colors-dark: map.merge(c-def.$colors-dark, $color-overrides-dark);
   // Grid auto-fit min column width (override for custom layouts)
   --grid-auto-fit-min: 250px;
 
+  // Blur radius for overlaid surfaces (bulk action bar, carousel controls).
+  //
+  // Declared statically rather than generated from theme-preset.ts: a blur
+  // radius is a physical constant, independent of light/dark — unlike colour,
+  // which needs light-dark() and therefore belongs in the theme. Adding a
+  // `blur` section to the Theme type would also break every consumer that
+  // constructs a Theme literal, on a package that just reached 3.0.0.
+  //
+  // 8px is not invented: it is the value the carousel controls already used
+  // hard-coded, which now reference this token instead. Two independent
+  // consumers must land on the SAME physical value — that is what a shared
+  // token is for.
+  --blur-overlay: 8px;
+
   // Animation
   @each $key, $val in tr.$durations {
     --duration-#{$key}: #{$val};

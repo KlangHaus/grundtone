@@ -27,6 +27,7 @@ import ToggleDemo from '../../../../packages/vue/src/atoms/Toggle/demo.vue';
 import AutocompleteDemo from '../../../../packages/vue/src/atoms/Autocomplete/demo.vue';
 import BadgeDemo from '../../../../packages/vue/src/atoms/Badge/demo.vue';
 import AccordionDemo from '../../../../packages/vue/src/molecules/Accordion/demo.vue';
+import BulkActionBarDemo from '../../../../packages/vue/src/molecules/BulkActionBar/demo.vue';
 import AddressInputDemo from '../../../../packages/vue/src/molecules/AddressInput/demo.vue';
 import AlertDemo from '../../../../packages/vue/src/molecules/Alert/demo.vue';
 import DatePickerDemo from '../../../../packages/vue/src/molecules/DatePicker/demo.vue';
@@ -90,6 +91,7 @@ export default {
     app.component('AutocompleteDemo', AutocompleteDemo);
     app.component('BadgeDemo', BadgeDemo);
     app.component('AccordionDemo', AccordionDemo);
+    app.component('BulkActionBarDemo', BulkActionBarDemo);
     app.component('AddressInputDemo', AddressInputDemo);
     app.component('AlertDemo', AlertDemo);
     app.component('DatePickerDemo', DatePickerDemo);
