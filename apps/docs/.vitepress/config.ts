@@ -253,6 +253,7 @@ export default defineConfig({
             { text: 'Anchor Links', link: '/vue/anchor-links' },
             { text: 'Badge', link: '/vue/badge' },
             { text: 'Breadcrumb', link: '/vue/breadcrumb' },
+            { text: 'Bulk Action Bar', link: '/vue/bulk-action-bar' },
             { text: 'Button', link: '/vue/button' },
             { text: 'Card', link: '/vue/card' },
             { text: 'Carousel', link: '/vue/carousel' },
