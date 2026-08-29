@@ -106,9 +106,9 @@
 
 <template>
   <Transition :name="`${base}-slide`">
-    <!-- <section> frem for role="region", og <output> frem for role="status"
-         nedenfor: et native element baerer semantikken uden at afhaenge af at
-         rollen bliver respekteret. Sonar Web:S6819. -->
+    <!-- Native elementer frem for ARIA-roller her og paa kvitteringen nedenfor:
+         semantikken baeres af elementet selv og afhaenger ikke af at rollen
+         bliver respekteret af hjaelpeteknologien. Sonar Web:S6819. -->
     <section
       v-if="visible"
       ref="barRef"
