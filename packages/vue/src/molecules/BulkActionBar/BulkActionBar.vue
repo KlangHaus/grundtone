@@ -106,11 +106,13 @@
 
 <template>
   <Transition :name="`${base}-slide`">
-    <div
+    <!-- <section> frem for role="region", og <output> frem for role="status"
+         nedenfor: et native element baerer semantikken uden at afhaenge af at
+         rollen bliver respekteret. Sonar Web:S6819. -->
+    <section
       v-if="visible"
       ref="barRef"
       :class="base"
-      role="region"
       :aria-label="ariaLabel"
       :aria-busy="busy || undefined"
     >
@@ -123,9 +125,9 @@
           <slot :busy="busy" />
         </div>
 
-        <p v-if="hasReceipt" :class="`${base}__receipt`" role="status">
+        <output v-if="hasReceipt" :class="`${base}__receipt`">
           {{ pendingReceipt }}
-        </p>
+        </output>
 
         <button
           type="button"
@@ -136,7 +138,7 @@
           {{ clearLabel }}
         </button>
       </div>
-    </div>
+    </section>
   </Transition>
 </template>
 
@@ -181,6 +183,7 @@
     }
 
     &__receipt {
+      display: inline;
       margin: 0;
       color: var(--color-text-secondary);
       white-space: nowrap;

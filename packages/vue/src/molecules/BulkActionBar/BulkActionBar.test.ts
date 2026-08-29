@@ -170,6 +170,32 @@ describe('GTBulkActionBar — reserved space', () => {
   });
 });
 
+describe('GTBulkActionBar — semantics', () => {
+  // 🔴 These lock a deliberate choice that nothing else would catch. The tests
+  // above query by class, so swapping <section> back to a div with role="region"
+  // passed all seventeen of them unchanged — the semantics were true but not
+  // held. A native element carries the meaning without depending on the role
+  // being honoured (Sonar Web:S6819).
+  it('renders the bar as a section, not a div with a role', () => {
+    const w = mountBar();
+    expect(w.find(`section.${BASE}`).exists()).toBe(true);
+    expect(bar(w).attributes('role')).toBeUndefined();
+  });
+
+  it('renders the receipt as an output, not a p with a role', async () => {
+    const w = mountBar();
+    await w.setProps({ state: 'receipt', message: 'done' });
+    expect(w.find(`output.${BASE}__receipt`).exists()).toBe(true);
+    expect(receipt(w).attributes('role')).toBeUndefined();
+  });
+
+  it('marks the bar busy while sending', () => {
+    expect(bar(mountBar({ state: 'sending' })).attributes('aria-busy')).toBe(
+      'true',
+    );
+  });
+});
+
 describe('GTBulkActionBar — slot and labels', () => {
   it('renders consumer actions in the slot', () => {
     const w = mount(BulkActionBar, {
