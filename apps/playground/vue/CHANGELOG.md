@@ -1,5 +1,13 @@
 # @grundtone/vue-playground
 
+## 0.0.22
+
+### Patch Changes
+
+- Updated dependencies
+  [[`539ca9c`](https://github.com/KlangHaus/grundtone/commit/539ca9c312f8b683fc7be09212e7c10d0a6eeee1)]:
+  - @grundtone/vue@3.0.1
+
 ## 0.0.21
 
 ### Patch Changes
