@@ -18,10 +18,34 @@ jobs:
         with:
           script: |
             const body = context.payload.pull_request.body || ''
-            const hasLink = /(?:Closes|Fixes|Refs)\s+#\d+/i.test(body)
+            // GH-issue-formen (overgangs-tilstand).
+            const hasIssueLink = /(?:Closes|Fixes|Refs)\s+#\d+/i.test(body)
+            // 🔴 RIFF-FORMEN — Allan-beslutning 2026-08-24: et taktart-riff-id er et
+            // gyldigt alternativ til et GitHub-issue. Grunden er ikke smag: i
+            // permissions, grundtone-studio, notifications og auth er GitHub-issues
+            // SLÅET FRA, så et krav om `#N` kunne kun opfyldes ved at tænde dem igen
+            // — altså ved at bryde den regel gaten skulle understøtte.
+            //
+            // 🔴 HVORFOR EKSAKT 8 ELLER 24, IKKE ET INTERVAL — dette er beslutningen,
+            // skrevet ned så ingen rammer forskellen om tre måneder:
+            //   * taktarts CLI VISER 8 tegn; API/URL giver det fulde cuid2 på 24.
+            //     Begge er ægte referencer, alt efter hvor man kopierer fra.
+            //   * Et INTERVAL {8,32} opfinder længder der ikke findes og slipper
+            //     slugs igennem: `fix/otel-v1beta12345` passerede.
+            //   * Kun {24} (taktarts oprindelige form) afviser CLI-formen — altså
+            //     netop den form konventionen rækker folk.
+            // Derfor: de to længder der FINDES, og intet derimellem.
+            //
+            // Ciffer-kravet er den anden halvdel: et cuid2 indeholder ALTID mindst
+            // ét ciffer, et engelsk slug-ord gør ikke. Uden det matchede
+            // `fix/retracted-provenance-justification` (taktarts egen fælde).
+            const RIFF = '(?=(?:[a-z0-9]{8}|[a-z0-9]{24})\\b)(?=[a-z0-9]*[0-9])[a-z][a-z0-9]*'
+            const hasRiffLink = new RegExp(`(?:Closes|Fixes|Refs)\\s+riff\\s+${RIFF}\\b`,'i').test(body)
+              || new RegExp(`^\\s*Riff:\\s*${RIFF}\\b`,'im').test(body)
+            const hasLink = hasIssueLink || hasRiffLink
             const isDependabot = context.payload.pull_request.user.login.startsWith('dependabot')
             if (!hasLink && !isDependabot) {
-              core.warning('PR-body mangler `Closes #N` eller `Refs #N` (Beslutning M).')
+              core.warning('PR-body mangler `Closes #N`, `Refs #N` eller `Riff: <id>` (Beslutning M, amendet 2026-08-24). `Lukker #N` lukker IKKE issues og accepteres ikke.')
               // Soft-block i 2 uger (Beslutning M) — switch til core.setFailed() når required-check aktiveres
             }
 
@@ -30,9 +54,14 @@ jobs:
         with:
           script: |
             const branch = context.payload.pull_request.head.ref
-            const pattern = /^(feat|fix|chore|docs|style|refactor|perf|test|build|ci|revert|deps)\/\d+-[a-z0-9-]+$/
+            const types = '(feat|fix|chore|docs|style|refactor|perf|test|build|ci|revert|deps)'
+            const issuePattern = new RegExp(`^${types}\\/\\d+-[a-z0-9-]+$`)
+            // <type>/<slug>-<riffId>. Samme 8|24+ciffer-regel som i body-tjekket.
+            const riffPattern = new RegExp(
+              `^${types}\\/[a-z0-9-]+-(?=(?:[a-z0-9]{8}|[a-z0-9]{24})$)(?=[a-z0-9]*[0-9])[a-z][a-z0-9]*$`)
+            const pattern = { test: (b) => issuePattern.test(b) || riffPattern.test(b) }
             const isDependabot = branch.startsWith('dependabot/')
             const isReleasePlease = branch.startsWith('release-please/')
             if (!pattern.test(branch) && !isDependabot && !isReleasePlease) {
-              core.warning(`Branch "${branch}" matcher ikke <type>/<issue#>-<slug> (Beslutning M).`)
+              core.warning(`Branch "${branch}" matcher hverken <type>/<issue#>-<slug> eller <type>/<slug>-<riffId> (Beslutning M).`)
             }
