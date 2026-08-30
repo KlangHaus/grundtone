@@ -47,9 +47,9 @@
     }
   },
   "dependencies": {
-    "@grundtone/core": "workspace:*",
-    "@grundtone/icons": "workspace:*",
-    "@grundtone/utils": "workspace:*"
+    "@grundtone/core": "workspace:^",
+    "@grundtone/icons": "workspace:^",
+    "@grundtone/utils": "workspace:^"
   },
   "devDependencies": {
     "@types/react": "~19.2.17",
