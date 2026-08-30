@@ -46,6 +46,21 @@ export interface BulkActionBarProps {
    */
   message?: string;
 
+  /**
+   * Identity of the current selection — bump it whenever the selected rows
+   * change, whatever their number.
+   *
+   * 🔴 A count cannot express identity. Swap three selected rows for three
+   * others and the count never changes value, so the bar cannot tell a fresh
+   * selection from the one its receipt describes — and a stale
+   * "3 of 3 moved" sits beside it, reading as if it did. Any join of the ids
+   * works; the bar only checks whether it changed.
+   *
+   * Omit it and the receipt is discarded on a change of COUNT alone, which is
+   * correct until a selection can change without changing size.
+   */
+  selectionKey?: string | number;
+
   /** Label for the clear control. */
   clearLabel?: string;
 

@@ -120,6 +120,21 @@ Otherwise a stale result sits beside a fresh selection and reads as describing
 it. The rule lives in the component: solved per consumer, the fourth one meets
 it from scratch and the first three each grow a variant.
 
+🔴 **Pass `selectionKey` if your selection can change without changing size.**
+A count cannot express identity: swap three selected rows for three others and
+the count never changes value, so the bar cannot tell a fresh selection from the
+one its receipt describes. Any join of the ids works — the bar only checks
+whether it changed. Without a key the receipt is discarded on a change of count
+alone, which is correct right up until it isn't.
+
+### One reservation, many bars
+
+The reserved space is a single custom property on `document.body`, so instances
+reconcile rather than overwrite: the largest claim wins, and the property only
+returns to zero when the **last** bar releases it. An earlier version released
+it on unmount, which stripped it from every other bar too — including one still
+on screen, whose last row then slid underneath it.
+
 ### The label is yours, verbatim
 
 Pass the finished string (`"5 riffs selected"`), not a number. A design system
@@ -148,6 +163,7 @@ component that can report success without data will eventually do so.
 | `label` | `string` | — | Left-hand label, already formatted. Rendered verbatim. |
 | `state` | `'idle' \| 'sending' \| 'receipt' \| 'error'` | `'idle'` | `sending` disables actions; `sending` and `error` both keep the selection. |
 | `message` | `string` | — | Receipt text. Omit for no receipt. Keeps the bar visible while unacknowledged. |
+| `selectionKey` | `string \| number` | — | Identity of the selection. Bump it when the selected rows change, whatever their number. |
 | `clearLabel` | `string` | `'Clear'` | Label for the clear control. |
 | `ariaLabel` | `string` | — | Accessible name for the bar. |
 
