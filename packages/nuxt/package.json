@@ -1,6 +1,6 @@
 {
   "name": "@grundtone/nuxt",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "Nuxt module for Grundtone",
   "license": "MIT",
   "private": false,
