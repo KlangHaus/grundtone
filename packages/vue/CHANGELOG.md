@@ -1,5 +1,50 @@
 # @grundtone/vue
 
+## 3.1.0 - 2026-08-30
+
+### Minor Changes
+
+- [#171](https://github.com/KlangHaus/grundtone/pull/171)
+  [`b2a5085`](https://github.com/KlangHaus/grundtone/commit/b2a5085c7a2094c7585e980b5b22a022dc1ca492)
+  Thanks [@allanasp](https://github.com/allanasp)! - New `GTBulkActionBar`: a sticky bar that rises
+  from the bottom of the viewport when rows are selected, carrying the actions that apply to the
+  whole selection.
+
+  Three contracts are worth knowing before using it, each one there because the obvious alternative
+  produces a specific failure:
+
+  - **It outlives the selection.** Visibility is `count > 0` OR an unacknowledged receipt. On full
+    success the consumer clears the selection — bound to the count alone, the result would vanish in
+    the same tick it was set, and a successful action would be indistinguishable from no action.
+  - **It reserves its own space** on `document.body` and releases it again, so the last row of the
+    list never ends up under it. Consumers add no padding.
+  - **It never clears the selection** — it emits `clear`. The consumer clears conditionally on the
+    outcome so a partial success stays retryable on exactly the rows that were missed.
+
+  Also adds `--blur-overlay` (8px) as a foundation token for overlaid surfaces. The carousel
+  controls, which had the value hard-coded, now reference it — two independent surfaces landing on
+  the same physical value is what a shared token is for.
+
+### Patch Changes
+
+- [#173](https://github.com/KlangHaus/grundtone/pull/173)
+  [`bef6db7`](https://github.com/KlangHaus/grundtone/commit/bef6db7da98a0600d64de2055525876c44c34096)
+  Thanks [@allanasp](https://github.com/allanasp)! - `GTBulkActionBar`: two fixes from a
+  retrospective review.
+
+  - **Reserved space is now reconciled between instances.** It lives on a single custom property on
+    `document.body`, and releasing it on one bar's unmount used to strip it from every other bar too
+    — including one still on screen, whose last row then slid underneath it. The largest claim wins,
+    and the property only returns to zero when the last bar goes.
+  - **New optional `selectionKey`.** The receipt was discarded on a change of count, so swapping
+    three selected rows for three others left a stale "3 of 3 moved" beside a completely fresh
+    selection. A count cannot express identity; pass a key when your selection can change without
+    changing size.
+
+- Updated dependencies
+  [[`b2a5085`](https://github.com/KlangHaus/grundtone/commit/b2a5085c7a2094c7585e980b5b22a022dc1ca492)]:
+  - @grundtone/design-system@3.1.0
+
 ## 3.0.1 - 2026-08-28
 
 ### Patch Changes

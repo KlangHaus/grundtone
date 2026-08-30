@@ -1,5 +1,15 @@
 # @grundtone/html-test
 
+## 0.0.23
+
+### Patch Changes
+
+- Updated dependencies
+  [[`bef6db7`](https://github.com/KlangHaus/grundtone/commit/bef6db7da98a0600d64de2055525876c44c34096),
+  [`b2a5085`](https://github.com/KlangHaus/grundtone/commit/b2a5085c7a2094c7585e980b5b22a022dc1ca492)]:
+  - @grundtone/vue@3.1.0
+  - @grundtone/design-system@3.1.0
+
 ## 0.0.22
 
 ### Patch Changes
