@@ -23,6 +23,11 @@ Rich-text container for article/blog content. Styles headings, paragraphs, lists
 | `.prose pre` | Surface background, rounded-lg, overflow-x auto |
 | `.prose pre code` | Reset padding and background |
 
+### Print
+
+When printing, `.prose` adds page-break control, table/blockquote/image styles, and appends external
+link URLs. Use `.container-prose` for reading width. See [Print](/web/print).
+
 ### Preview
 
 <CodePreview name="c-prose" />

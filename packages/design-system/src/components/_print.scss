@@ -1,0 +1,80 @@
+// Print overrides for interactive / fixed UI components and data tables.
+
+@media print {
+  .modal,
+  .toast-container,
+  .toast,
+  .back-to-top,
+  .tooltip,
+  .tooltip-trigger::after,
+  .skip-link,
+  .overflow-menu,
+  .spinner,
+  .cookie-message:not(.cookie-message--static),
+  .carousel__prev,
+  .carousel__next,
+  .carousel__indicators,
+  .tabs__list {
+    display: none !important;
+  }
+
+  .table-wrapper {
+    overflow: visible;
+  }
+
+  // Restore tabular layout when responsive tables stack as cards on small screens.
+  .table-wrapper--responsive .table thead {
+    display: table-header-group;
+  }
+
+  .table-wrapper--responsive .table tbody tr {
+    display: table-row;
+    margin-bottom: 0;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+  }
+
+  .table-wrapper--responsive .table tbody td {
+    display: table-cell;
+    text-align: left;
+    padding: var(--space-md);
+    border-bottom: 1px solid var(--color-border-light);
+  }
+
+  .table-wrapper--responsive .table tbody td::before {
+    content: none;
+  }
+
+  .table thead {
+    display: table-header-group;
+  }
+
+  .table tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .carousel__track {
+    display: block;
+    transform: none !important;
+  }
+
+  .carousel__slide {
+    display: block !important;
+    opacity: 1 !important;
+    position: static;
+    width: 100%;
+    margin-bottom: var(--space-md);
+  }
+
+  .prose pre,
+  .prose code,
+  .prose th,
+  .table th,
+  .badge,
+  .alert {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

@@ -163,9 +163,11 @@ Remove default list styling.
 
 ## Print
 
-### `print-only` / `screen-only`
+Shipped utility classes and component overrides are documented in [Print](/web/print).
 
-Wrap content in a media query.
+### `print-only` / `screen-only` (SCSS mixins)
+
+Wrap custom rules in a media query when building with SCSS:
 
 ```scss
 .page-break { @include gt.print-only { page-break-before: always; } }

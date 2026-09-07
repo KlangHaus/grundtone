@@ -96,3 +96,27 @@
 .vp-doc .table-wrapper .table {
   display: table;
 }
+
+/* VitePress shell — hide chrome when printing docs */
+@media print {
+  .VPNav,
+  .VPSidebar,
+  .VPDocAside,
+  .VPDocFooter,
+  .vp-doc-footer,
+  .code-preview__tabs,
+  .code-preview__copy {
+    display: none !important;
+  }
+
+  .VPContent,
+  .VPDoc,
+  .vp-doc {
+    padding: 0 !important;
+    max-width: none !important;
+  }
+
+  .VPContent.has-sidebar {
+    padding-left: 0 !important;
+  }
+}

@@ -467,6 +467,7 @@ export default defineConfig({
             { text: 'CSS Custom Properties', link: '/web/custom-properties' },
             { text: 'SCSS Functions', link: '/web/functions' },
             { text: 'SCSS Mixins', link: '/web/mixins' },
+            { text: 'Print', link: '/web/print' },
             { text: 'Accessibility', link: '/web/accessibility' },
           ],
         },

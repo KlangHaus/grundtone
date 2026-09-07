@@ -1,0 +1,20 @@
+// Global print baseline — page margins and document flow fixes.
+
+@use 'breakpoints' as *;
+
+@include print {
+  @page {
+    margin: 1.5cm;
+  }
+
+  html,
+  body {
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  body {
+    background: var(--color-surface);
+    color: var(--color-text);
+  }
+}

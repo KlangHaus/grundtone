@@ -4,17 +4,10 @@
   import type { SelectProps, SelectOptionGroup } from './types';
 
   const props = withDefaults(defineProps<SelectProps>(), {
-    modelValue: undefined,
     size: 'md',
     placeholder: 'Vælg...',
-    label: undefined,
-    helpText: undefined,
-    errorText: undefined,
     disabled: false,
     required: false,
-    optionalLabel: undefined,
-    name: undefined,
-    id: undefined,
   });
 
   const emit = defineEmits<{

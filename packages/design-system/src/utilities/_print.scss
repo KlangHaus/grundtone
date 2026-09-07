@@ -1,0 +1,40 @@
+// Print utilities — shipped CSS classes for print layout control.
+
+@use '../core/breakpoints' as *;
+
+.print-only {
+  display: none !important;
+}
+
+@include print {
+  .no-print {
+    display: none !important;
+  }
+
+  .screen-only {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .print-only-inline {
+    display: inline !important;
+  }
+
+  .break-before {
+    break-before: page;
+    page-break-before: always;
+  }
+
+  .break-after {
+    break-after: page;
+    page-break-after: always;
+  }
+
+  .break-inside-avoid {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
