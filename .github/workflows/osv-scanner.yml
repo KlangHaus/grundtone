@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       # OSV_EXPECTED er ANTALLET af accepter i dette repo. Scriptet holdes
       # byte-identisk med [quality]s skabelon, saa fremtidige opdateringer kan
       # kopieres rent ind; det repo-specifikke tal bor her.
@@ -60,7 +60,7 @@ jobs:
     name: Dependency vuln-scan
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Install osv-scanner
         run: |
