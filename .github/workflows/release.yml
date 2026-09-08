@@ -102,9 +102,21 @@ jobs:
       # stadig nul her — hullet uaendret, med et groent flueben foran.
       - name: Vuln-scan før publish
         run: |
+          # 🔴 CHECKSUM FØR FØRSTE EKSEKVERING (riff kqnlreckpjgm8mvjot6wvrum).
+          # Formen var curl → chmod +x → `--version`: den spørger den
+          # UVERIFICEREDE binær hvem den er, og kører den for at få svaret.
+          # En to-linjers stub der printer versionen består.
+          # Digest'et står i GIT — ikke hentet fra udgivelsens egen SHA256SUMS:
+          # den kommer fra samme udgivelse som binæren og dækker transportfejl,
+          # ikke en byttet udgivelse. En digest i git er et løfte nogen har målt,
+          # og som en diff kan se ændre sig.
+          set -euo pipefail
+          OSV_SHA256="d6af4b67fa5de658598bd2d445efb99e90d1734b3146962418719c4350ecb74b"
           curl -sSfL https://github.com/google/osv-scanner/releases/download/v1.9.2/osv-scanner_linux_amd64 \
-            -o /usr/local/bin/osv-scanner
-          chmod +x /usr/local/bin/osv-scanner
+            -o /tmp/osv-scanner
+          echo "${OSV_SHA256}  /tmp/osv-scanner" | sha256sum -c -
+          sudo install -m 0755 /tmp/osv-scanner /usr/local/bin/osv-scanner
+          rm -f /tmp/osv-scanner
           osv-scanner --recursive --skip-git --config=osv-scanner.toml ./
 
       # Accepterne skal ogsaa vaere gyldige HER: en udloebet accept maa ikke

@@ -24,8 +24,18 @@ jobs:
 
       - name: Install gitleaks
         run: |
+          # 🔴 RØR-FORMEN KAN IKKE VERIFICERES (riff kqnlreckpjgm8mvjot6wvrum).
+          # `curl … | tar -xz` pakker ud direkte fra røret: der findes ikke et
+          # øjeblik hvor indholdet er en fil man kan måle. Derfor er kuren en
+          # FORM-ændring, ikke en tilføjet linje — hent til fil, verificér,
+          # pak så ud. Digest i git af samme grund som ved osv-scanner.
+          set -euo pipefail
+          GITLEAKS_SHA256="5bc41815076e6ed6ef8fbecc9d9b75bcae31f39029ceb55da08086315316e3ba"
           curl -sSfL https://github.com/gitleaks/gitleaks/releases/download/v8.21.2/gitleaks_8.21.2_linux_x64.tar.gz \
-            | tar -xz -C /usr/local/bin gitleaks
+            -o /tmp/gitleaks.tgz
+          echo "${GITLEAKS_SHA256}  /tmp/gitleaks.tgz" | sha256sum -c -
+          sudo tar -xz -C /usr/local/bin -f /tmp/gitleaks.tgz gitleaks
+          rm -f /tmp/gitleaks.tgz
           gitleaks version
 
       - name: Scan repo history
