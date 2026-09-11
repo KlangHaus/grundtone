@@ -5,10 +5,50 @@
 // its own build ([infra] call).
 import { OG_DESCRIPTION, OG_TITLE } from './lib/seo';
 
+// ─── Sentry: declare the branch OUT LOUD, and ship nothing when inert ────────
+//
+// FAILURE DIRECTION, DECLARED BEFORE THE CODE.
+// The tempting rule is "a production build without a DSN must fail". Measured,
+// it cannot be done today without breaking a deploy that currently works:
+// BUILD_SHA is set only by deploy-web.yml (absent in ci.yml and locally), so it
+// is a reliable production marker — but no DSN exists anywhere yet, so failing
+// on that branch would break the next grundtone.com deploy.
+//
+// So the fallback publishes NOTHING instead: with no DSN the module is not
+// registered at all, and no Sentry code reaches the bundle. That matters more
+// than the warning. Registering it anyway would leave an output that READS as
+// instrumented — module present, config present, @sentry/* in 17 chunks — while
+// reporting nothing, and nothing would say so. Something that resembles
+// coverage is worse than an absence, because an absence is visible.
+//
+// The declaration below is machine-readable on purpose (`WEB_SENTRY=`), so a
+// build log can be asserted on rather than read by a human who may not look.
+const sentryDsn = process.env.NUXT_PUBLIC_SENTRY_DSN ?? '';
+const isProductionDeploy = Boolean(process.env.BUILD_SHA);
+
+if (sentryDsn) {
+  console.info('WEB_SENTRY=active — browser error reporting is wired');
+} else if (isProductionDeploy) {
+  // GitHub Actions renders `::warning::` as an annotation, so this is visible
+  // on the run itself and not only in the log body.
+  console.warn(
+    '::warning title=grundtone.com ships without error reporting::' +
+      'WEB_SENTRY=absent — NUXT_PUBLIC_SENTRY_DSN is unset on a production ' +
+      'build (BUILD_SHA is present). The Sentry module is NOT registered, so ' +
+      'the site is uninstrumented rather than falsely instrumented. Client ' +
+      'errors reach nobody. This becomes a hard failure once a DSN exists.',
+  );
+} else {
+  console.info(
+    'WEB_SENTRY=absent — no NUXT_PUBLIC_SENTRY_DSN; Sentry module not ' +
+      'registered (expected outside a production deploy)',
+  );
+}
+
 export default defineNuxtConfig({
   compatibilityDate: '2026-03-13',
   ssr: true,
-  modules: ['@grundtone/nuxt', '@sentry/nuxt/module'],
+  modules: ['@grundtone/nuxt', ...(sentryDsn ? ['@sentry/nuxt/module'] : [])],
   nitro: {
     prerender: {
       crawlLinks: true,
