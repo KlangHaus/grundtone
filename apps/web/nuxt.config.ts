@@ -8,7 +8,7 @@ import { OG_DESCRIPTION, OG_TITLE } from './lib/seo';
 export default defineNuxtConfig({
   compatibilityDate: '2026-03-13',
   ssr: true,
-  modules: ['@grundtone/nuxt'],
+  modules: ['@grundtone/nuxt', '@sentry/nuxt/module'],
   nitro: {
     prerender: {
       crawlLinks: true,
@@ -71,6 +71,51 @@ export default defineNuxtConfig({
           href: '/apple-touch-icon.png',
         },
       ],
+    },
+  },
+  runtimeConfig: {
+    public: {
+      // Browser-facing Sentry DSN. Empty by default so a build without it is
+      // inert rather than half-configured — see sentry.client.config.ts.
+      //
+      // 🔴 Inlined at BUILD time. apps/web is prerendered, so this value is
+      // baked into the emitted bundles by `nuxi generate`; setting
+      // NUXT_PUBLIC_SENTRY_DSN at deploy time changes nothing. It must be
+      // present in the build environment.
+      //
+      // Deliberately NOT the existing `SENTRY_DSN` repository secret: that one
+      // feeds the build-time publish scripts, while a browser DSN is public by
+      // construction and ships to every visitor.
+      sentryDsn: '',
+      sentryEnvironment: '',
+    },
+  },
+  // 'hidden': emit client source maps for the Sentry upload without
+  // referencing them from the served bundles. Without this the upload has
+  // nothing to work with and stack traces point at minified output.
+  sourcemap: { client: 'hidden' },
+  sentry: {
+    // 🔴 Off by default. The plugin otherwise sends build-time telemetry to
+    // Sentry on every build — an outbound third-party data flow that arrived
+    // as a side effect of adding the module, not as a decision. The build log
+    // says so itself: "Sending telemetry data on issues and performance to
+    // Sentry". EU-first doctrine makes silent egress the wrong default.
+    telemetry: false,
+    sourceMapsUploadOptions: {
+      org: 'klanghaus',
+      // 🔴 The project name is a placeholder until someone provisions it.
+      // Upload requires SENTRY_AUTH_TOKEN, which grundtone does NOT have as a
+      // repository secret (grundtone-studio does). Without the token the
+      // upload step skips silently, and traces will point at minified lines —
+      // the acceptance criterion for this work is therefore not met by
+      // merging this file alone.
+      project: 'grundtone-web',
+      sourcemaps: {
+        // The maps exist ONLY for Sentry. grundtone.com is served as static
+        // files from edge storage, so a shipped .map is a public source
+        // disclosure — stricter here than for a private SaaS.
+        filesToDeleteAfterUpload: ['.output/public/**/*.map'],
+      },
     },
   },
   devtools: { enabled: false },
