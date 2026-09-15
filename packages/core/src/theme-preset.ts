@@ -378,8 +378,10 @@ const OVERRIDE_KEYS = [
  * object with any of OVERRIDE_KEYS, or a bare colour preset. 2.22.0 accepted
  * both; 3.0.0 lost the override form without declaring it, so every value in
  * such an object silently resolved to the defaults and the groups were spread
- * into the colour map. A colour preset has none of these keys, so the two
- * forms cannot be confused.
+ * into the colour map. A colour preset has none of these keys, so a preset is
+ * never read as overrides. The reverse is not guarded: any of these keys, even
+ * with an undefined value, makes the whole object the override form, and colour
+ * keys at its top level are ignored (2.22.0 parity, declared on createTheme).
  */
 function normalise(
   input: Partial<ColorPreset> | CreateThemeOverrides | undefined,
@@ -437,6 +439,12 @@ function buildTheme(
  * (`{ light: { primary } }`) or an override object
  * (`{ light: { colors, typography, radius, spacing, transitions } }`).
  * Override only what you need – the rest uses standard defaults.
+ *
+ * An object with any of `colors`, `typography`, `radius`, `spacing` or
+ * `transitions` as a key (even undefined) is read entirely as the override
+ * form, and colour keys at its top level are ignored without an error, as in
+ * 2.22.0: `{ light: { primary, radius } }` drops `primary`. Write
+ * `{ light: { colors: { primary }, radius } }` instead.
  */
 export function createTheme(overrides: {
   light?: Partial<ColorPreset> | CreateThemeOverrides;

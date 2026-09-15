@@ -13,3 +13,9 @@ reported an error.
 This patch restores the 2.22.0 behaviour. The `CreateThemeOverrides` type is exported again and
 describes that form. Partial `typography` and `transitions` groups merge with the defaults. Bare
 colour presets behave exactly as in 3.0.0.
+
+**Mixed objects are read as overrides, as in 2.22.0.** An object that has any of `colors`,
+`typography`, `radius`, `spacing` or `transitions` as a key, even with an `undefined` value, is read
+entirely as the override form. Colour keys at its top level are then ignored without an error:
+`{ light: { primary: '#ff0000', radius: { md: '4px' } } }` keeps the radius and drops `primary`. Put
+colours under `colors` when you combine them with other groups.
