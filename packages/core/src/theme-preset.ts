@@ -342,38 +342,109 @@ export const defaultZIndex = {
   toast: 1080,
 } as const;
 
-function buildLightTheme(colors: Partial<ColorPreset>): Theme {
-  const c = { ...defaultColorPreset, ...colors };
+/** Each nested group partial, one level deep. */
+type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends object ? Partial<T[P]> : T[P];
+};
+
+/**
+ * Overrides accepted by `createTheme()` per mode, as an alternative to a bare
+ * colour preset. Every field is optional — unset fields use the defaults, and
+ * partial `typography` / `transitions` groups merge with them.
+ */
+export interface CreateThemeOverrides {
+  /** Semantic colour overrides */
+  colors?: Partial<ColorPreset>;
+  /** Font families, sizes, weights and line heights */
+  typography?: DeepPartial<Theme['typography']>;
+  /** Border radius scale */
+  radius?: Partial<Theme['radius']>;
+  /** Transition durations and timing functions */
+  transitions?: DeepPartial<Theme['transitions']>;
+  /** Spacing scale */
+  spacing?: Partial<Theme['spacing']>;
+}
+
+const OVERRIDE_KEYS = [
+  'colors',
+  'typography',
+  'radius',
+  'transitions',
+  'spacing',
+] as const;
+
+/**
+ * Accepts both per-mode forms (riff qw9kcvy4x7whhmzcur84km4s): an override
+ * object with any of OVERRIDE_KEYS, or a bare colour preset. 2.22.0 accepted
+ * both; 3.0.0 lost the override form without declaring it, so every value in
+ * such an object silently resolved to the defaults and the groups were spread
+ * into the colour map. A colour preset has none of these keys, so the two
+ * forms cannot be confused.
+ */
+function normalise(
+  input: Partial<ColorPreset> | CreateThemeOverrides | undefined,
+): CreateThemeOverrides {
+  if (!input) return {};
+  if (OVERRIDE_KEYS.some(key => key in input))
+    return input as CreateThemeOverrides;
+  return { colors: input as Partial<ColorPreset> };
+}
+
+function mergeTypography(
+  base: Theme['typography'],
+  overrides?: DeepPartial<Theme['typography']>,
+): Theme['typography'] {
+  if (!overrides) return { ...base };
   return {
-    mode: 'light',
-    colors: c as Theme['colors'],
-    spacing: { ...defaultSpacing },
-    typography: { ...defaultTypography },
+    fontFamily: { ...base.fontFamily, ...overrides.fontFamily },
+    fontSize: { ...base.fontSize, ...overrides.fontSize },
+    fontWeight: { ...base.fontWeight, ...overrides.fontWeight },
+    lineHeight: { ...base.lineHeight, ...overrides.lineHeight },
+  };
+}
+
+function mergeTransitions(
+  base: Theme['transitions'],
+  overrides?: DeepPartial<Theme['transitions']>,
+): Theme['transitions'] {
+  if (!overrides) return { ...base };
+  return {
+    duration: { ...base.duration, ...overrides.duration },
+    timing: { ...base.timing, ...overrides.timing },
+  };
+}
+
+function buildTheme(
+  mode: Theme['mode'],
+  colorDefaults: ColorPreset,
+  overrides: CreateThemeOverrides,
+): Theme {
+  return {
+    mode,
+    colors: { ...colorDefaults, ...overrides.colors } as Theme['colors'],
+    spacing: { ...defaultSpacing, ...overrides.spacing },
+    typography: mergeTypography(defaultTypography, overrides.typography),
     shadows: { ...defaultShadows },
     shadowDefinitions: { ...defaultShadowDefinitions },
-    radius: { ...defaultRadius },
-    transitions: { ...defaultTransitions },
+    radius: { ...defaultRadius, ...overrides.radius },
+    transitions: mergeTransitions(defaultTransitions, overrides.transitions),
     zIndex: { ...defaultZIndex },
   };
 }
 
-function buildDarkTheme(colors: Partial<ColorPreset>): Theme {
-  const base = buildLightTheme(defaultColorPresetDark);
-  const c = { ...defaultColorPresetDark, ...colors };
-  return { ...base, mode: 'dark', colors: c as Theme['colors'] };
-}
-
 /**
- * Create a theme with your brand colors.
- * Override only what you need – rest uses standard defaults.
+ * Create a theme with your brand. Each mode takes either a bare colour preset
+ * (`{ light: { primary } }`) or an override object
+ * (`{ light: { colors, typography, radius, spacing, transitions } }`).
+ * Override only what you need – the rest uses standard defaults.
  */
 export function createTheme(overrides: {
-  light?: Partial<ColorPreset>;
-  dark?: Partial<ColorPreset>;
+  light?: Partial<ColorPreset> | CreateThemeOverrides;
+  dark?: Partial<ColorPreset> | CreateThemeOverrides;
 }): { light: Theme; dark: Theme } {
   return {
-    light: buildLightTheme(overrides.light ?? {}),
-    dark: buildDarkTheme(overrides.dark ?? {}),
+    light: buildTheme('light', defaultColorPreset, normalise(overrides.light)),
+    dark: buildTheme('dark', defaultColorPresetDark, normalise(overrides.dark)),
   };
 }
 
@@ -381,4 +452,4 @@ export function createTheme(overrides: {
  * Default theme (standard colors).
  * Use createTheme() to customize – do not ship without reviewing colors.
  */
-export const defaultTheme = buildLightTheme({});
+export const defaultTheme = buildTheme('light', defaultColorPreset, {});
