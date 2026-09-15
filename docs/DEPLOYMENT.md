@@ -528,10 +528,24 @@ authorises the `release.yml` workflow directly via GitHub OIDC.
 
 1. **No `NPM_TOKEN` secret exists** — do not add one; an empty `NODE_AUTH_TOKEN` makes npm fail with
    a misleading `ENEEDAUTH`
-2. **Per-package config**: each published package needs a trusted-publisher entry (repo + workflow)
-   on npmjs.com — and note that a package's FIRST publish cannot use OIDC (bootstrap with a granular
-   token once)
+2. **Per-package config**: each published package needs a trusted-publisher entry on npmjs.com with
+   repository `KlangHaus/grundtone`, workflow `release.yml` and environment `npmjs-publish` — and
+   note that a package's FIRST publish cannot use OIDC (bootstrap with a granular token once)
 3. **Provenance**: publishes run with `--provenance` where enabled
+
+### Release workflow jobs
+
+`release.yml` grants nothing at workflow level (`permissions: {}`); each job gets only what it uses,
+and each runs in a GitHub environment whose deployment branch policy allows `develop` only:
+
+| Job         | Environment     | Permissions                                                  | Secrets                     |
+| ----------- | --------------- | ------------------------------------------------------------ | --------------------------- |
+| `docs`      | `docs-deploy`   | `contents: read`                                             | `BUNNY_DOCS_STORAGE_*`      |
+| `release`   | `npmjs-publish` | `contents: write`, `pull-requests: write`, `id-token: write` | none besides `GITHUB_TOKEN` |
+| `email-cdn` | `email-deploy`  | `contents: read`                                             | `BUNNY_EMAIL_STORAGE_*`     |
+
+The npm publish job never sees a Bunny key, and neither Bunny job can mint an npm OIDC token.
+`email-cdn` runs only when `@grundtone/email` was among the packages the `release` job published.
 
 ### Package Security
 

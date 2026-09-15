@@ -7,16 +7,75 @@ on:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
-permissions:
-  contents: write
-  pull-requests: write
-  id-token: write
-  deployments: write
+# No workflow-level grants: each job asks for exactly what it uses (riff
+# zsritnday4em1si2cjh7ppig). Before the split one job held npm OIDC, repo write
+# AND both Bunny storage keys, so every step of the npm publish path could read
+# the CDN credentials and the docs upload ran with id-token: write.
+permissions: {}
 
 jobs:
+  # Publishes the built docs site (grundtone.com architecture decision:
+  # docs.grundtone.com = Bunny Edge Storage + Pull Zone, replacing Vercel
+  # — see infra/docs/BUNNY-SETUP.md + infra/docs/MASTER-PLAN.md #3).
+  # Runs on every push to develop, independent of whether any package was
+  # released (a docs-only content change should still deploy), and skips cleanly
+  # (exit 0) if the Bunny secrets are absent.
+  docs:
+    name: Deploy docs
+    runs-on: ubuntu-latest
+    # Branch policy `develop` on this environment is what keeps the docs storage
+    # key away from any other ref.
+    environment: docs-deploy
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+        with:
+          version: 10.14.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      # turbo builds the docs site's @grundtone/* dependencies first (^build).
+      - name: Build Docs
+        run: pnpm docs:build
+
+      - name: Publish docs to Bunny
+        run: |
+          pnpm --filter @grundtone/docs publish:bunny
+        env:
+          BUNNY_DOCS_STORAGE_ZONE: ${{ secrets.BUNNY_DOCS_STORAGE_ZONE }}
+          BUNNY_DOCS_STORAGE_API_KEY: ${{ secrets.BUNNY_DOCS_STORAGE_API_KEY }}
+          BUNNY_DOCS_STORAGE_REGION: ${{ vars.BUNNY_DOCS_STORAGE_REGION }}
+          BUNNY_DOCS_STORAGE_PATH_PREFIX: ${{ vars.BUNNY_DOCS_STORAGE_PATH_PREFIX }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          SENTRY_ENVIRONMENT: ci
+
   release:
     name: Release
     runs-on: ubuntu-latest
+    # The npm trusted publisher for each package names this environment, so an
+    # OIDC token minted on any other ref, or in any other job, cannot publish.
+    environment: npmjs-publish
+    permissions:
+      contents: write # changesets pushes the version branch
+      pull-requests: write # changesets opens the Version Packages PR
+      id-token: write # npm OIDC trusted publishing
+    outputs:
+      published: ${{ steps.changesets.outputs.published }}
+      publishedPackages: ${{ steps.changesets.outputs.publishedPackages }}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -53,63 +112,26 @@ jobs:
       - name: Build Packages
         run: pnpm build:packages
 
-      - name: Build Docs
-        run: pnpm docs:build
-
-      # Publishes the built docs site (grundtone.com architecture decision:
-      # docs.grundtone.com = Bunny Edge Storage + Pull Zone, replacing Vercel
-      # — see infra/docs/BUNNY-SETUP.md + infra/docs/MASTER-PLAN.md #3).
-      # Skips cleanly (exit 0) until [infra] provisions the zone and sets the
-      # secrets below; runs on every push to develop, independent of whether
-      # any package was released this run (a docs-only content change should
-      # still deploy).
-      - name: Publish docs to Bunny
-        run: |
-          pnpm --filter @grundtone/docs publish:bunny
-        env:
-          BUNNY_DOCS_STORAGE_ZONE: ${{ secrets.BUNNY_DOCS_STORAGE_ZONE }}
-          BUNNY_DOCS_STORAGE_API_KEY: ${{ secrets.BUNNY_DOCS_STORAGE_API_KEY }}
-          BUNNY_DOCS_STORAGE_REGION: ${{ vars.BUNNY_DOCS_STORAGE_REGION }}
-          BUNNY_DOCS_STORAGE_PATH_PREFIX: ${{ vars.BUNNY_DOCS_STORAGE_PATH_PREFIX }}
-          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-          SENTRY_ENVIRONMENT: ci
-
-      # Sidste stop foer et uigenkaldeligt publish. Maalt 2026-08-20:
-      # @grundtone/react-native stod 2.12.0 paa develop mod 2.22.0 paa npm, og
-      # denne sti er den eneste, der ville have udgivet den. Gaten er generel
-      # frem for en note om at udelade netop den pakke — en undtagelse, ingen
-      # haandhaever, bliver glemt praecis under den samlede udgivelse, den
-      # skulle beskytte imod.
-      # Egenskaben, ikke raekkefoelgen. 2026-08-23 blev release-PR'en merget
-      # foer den nuxt-rettelse, den var betinget af; betingelsen stod kun i
-      # beskeder mellem mennesker. Udgivelsen blev stoppet — men af
-      # nedgraderings-vagten, paa en anden pakke der tilfaeldigvis stod bagud.
-      # Vaernet virkede ved SAMMENFALD, ikke ved design.
+      # Last stop before an irreversible publish. The gates below must stay in
+      # this job and textually BEFORE the changesets step:
+      # scripts/lib/workflow-order.test.mjs measures exactly that order.
       #
-      # Denne gate eksekverer det BYGGEDE modul og fejler, hvis wiringen ikke
-      # er der. Den holder uanset merge-raekkefoelge og uanset om nogen husker
-      # betingelsen om tre maaneder.
-      # 🔴 Vuln-gaten koerer OGSAA her, ikke kun i ci.yml.
-      #
-      # Maalt 2026-08-24: `Security Audit` (pnpm audit) er required og blokerer
-      # PR'er — men hverken den eller osv koerte paa nogen udgivelsessti. En
-      # saarbar transitiv dependency kunne dermed shippe til forbrugerne af ni
-      # offentlige pakker uden at stoppe udgivelsen. Samme figur som
-      # nedgraderings-vagten: vaernet paa PR-niveau, den uigenkaldelige handling
-      # ved merge.
-      #
-      # Adopteres scanneren KUN i ci.yml, har vi to scannere paa PR-stien og
-      # stadig nul her — hullet uaendret, med et groent flueben foran.
+      # 🔴 The vuln gate runs HERE too, not only in ci.yml. Measured 2026-08-24:
+      # `Security Audit` (pnpm audit) is required and blocks PRs, but neither it
+      # nor osv ran on any release path, so a vulnerable transitive dependency
+      # could ship to the consumers of nine public packages without stopping the
+      # release. Same shape as the downgrade gate: the guard on the PR, the
+      # irreversible action at merge.
       - name: Vuln-scan før publish
         run: |
-          # 🔴 CHECKSUM FØR FØRSTE EKSEKVERING (riff kqnlreckpjgm8mvjot6wvrum).
-          # Formen var curl → chmod +x → `--version`: den spørger den
-          # UVERIFICEREDE binær hvem den er, og kører den for at få svaret.
-          # En to-linjers stub der printer versionen består.
-          # Digest'et står i GIT — ikke hentet fra udgivelsens egen SHA256SUMS:
-          # den kommer fra samme udgivelse som binæren og dækker transportfejl,
-          # ikke en byttet udgivelse. En digest i git er et løfte nogen har målt,
-          # og som en diff kan se ændre sig.
+          # 🔴 CHECKSUM BEFORE FIRST EXECUTION (riff kqnlreckpjgm8mvjot6wvrum).
+          # The old form was curl → chmod +x → `--version`: it asked the
+          # UNVERIFIED binary who it is, and ran it to get the answer. A two-line
+          # stub that prints the version passes that.
+          # The digest lives in GIT, not in the release's own SHA256SUMS: that
+          # file comes from the same release as the binary and covers transport
+          # errors, not a swapped release. A digest in git is a promise someone
+          # measured, and a diff can see it change.
           set -euo pipefail
           OSV_SHA256="d6af4b67fa5de658598bd2d445efb99e90d1734b3146962418719c4350ecb74b"
           curl -sSfL https://github.com/google/osv-scanner/releases/download/v1.9.2/osv-scanner_linux_amd64 \
@@ -119,22 +141,33 @@ jobs:
           rm -f /tmp/osv-scanner
           osv-scanner --recursive --skip-git --config=osv-scanner.toml ./
 
-      # Accepterne skal ogsaa vaere gyldige HER: en udloebet accept maa ikke
-      # kunne baere en udgivelse igennem, bare fordi scannen selv siger groent.
+      # The accepted findings must be valid HERE too: an expired acceptance must
+      # not carry a release through just because the scan itself says green.
       - name: Vuln-accepter er ikke udløbet
         env:
           OSV_EXPECTED: '2'
         run: python3 .github/scripts/assert-osv-ignores-expire.py osv-scanner.toml
 
+      # Measured 2026-08-23: the release PR was merged before the nuxt fix it
+      # depended on; the condition existed only in messages between people. The
+      # release was stopped by the downgrade gate on an unrelated package that
+      # happened to be behind — protection by coincidence, not by design. This
+      # gate executes the BUILT module and fails if the wiring is missing,
+      # regardless of merge order.
       - name: Udgivelses-invarianter holder på artefaktet
         run: node scripts/assert-release-invariants.mjs
 
+      # Measured 2026-08-20: @grundtone/react-native was 2.12.0 on develop against
+      # 2.22.0 on npm, and this path is the only one that would have published it.
+      # The gate is general rather than a note to leave that one package out: an
+      # exception nobody enforces is forgotten during exactly the combined release
+      # it was meant to protect.
       - name: Ingen pakke udgives som en nedgradering
         run: node scripts/assert-no-downgrade-publish.mjs
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
-        uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1.9.0 (var en GREN, ikke et tag)
+        uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1.9.0 (was a BRANCH, not a tag)
         with:
           # This expects you to have a script called version-packages which runs `changeset version`
           version: pnpm version-packages
@@ -145,8 +178,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # No NPM_TOKEN / NODE_AUTH_TOKEN: publishing goes through GitHub OIDC
-          # trusted publishing (id-token: write above + trusted publisher config
-          # on npmjs for @grundtone/email). An empty NODE_AUTH_TOKEN here would
+          # trusted publishing (id-token: write on this job + a trusted publisher
+          # on npmjs per package). An empty NODE_AUTH_TOKEN here would
           # short-circuit npm to ENEEDAUTH before it ever attempts the exchange.
           # The runner has husky hooks installed via `pnpm install` (prepare
           # script); changesets' push of the Version Packages branch was being
@@ -157,29 +190,64 @@ jobs:
 
       - name: Generate summary
         if: steps.changesets.outputs.published == 'true'
+        env:
+          PUBLISHED_PACKAGES: ${{ steps.changesets.outputs.publishedPackages }}
         run: |
-          echo "### Published packages" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`json" >> $GITHUB_STEP_SUMMARY
-          echo '${{ steps.changesets.outputs.publishedPackages }}' | jq '.' >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          {
+            echo "### Published packages"
+            echo ""
+            echo '```json'
+            jq '.' <<<"$PUBLISHED_PACKAGES"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
 
-      # Publishes the compiled email-template artifacts (grundtone#6) to Bunny
-      # Edge Storage so notifications' CDNRenderer can fetch them. Only runs
-      # when @grundtone/email itself was among this release's published
-      # packages — an unrelated package bump (e.g. @grundtone/vue) shouldn't
-      # re-upload an already-current template version. publish-cdn.ts skips
-      # cleanly (exit 0) if the Bunny secrets aren't provisioned yet, so this
-      # step can land ahead of [infra] setting them up.
+  # Publishes the compiled email-template artifacts (grundtone#6) to Bunny Edge
+  # Storage so notifications' CDNRenderer can fetch them. Only when
+  # @grundtone/email itself was among this run's published packages: an
+  # unrelated bump (e.g. @grundtone/vue) must not re-upload an already-current
+  # template version. publish-cdn.ts skips cleanly (exit 0) if the Bunny secrets
+  # are absent.
+  email-cdn:
+    name: Publish email templates to CDN
+    needs: release
+    if: >-
+      needs.release.outputs.published == 'true' &&
+      contains(fromJSON(needs.release.outputs.publishedPackages).*.name, '@grundtone/email')
+    runs-on: ubuntu-latest
+    # Branch policy `develop` on this environment keeps the email storage key
+    # away from any other ref, and from the npm publish job.
+    environment: email-deploy
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+        with:
+          version: 10.14.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      # compile:templates runs the email package's source, which imports
+      # @grundtone/core: build email and everything it depends on.
+      - name: Build email and its dependencies
+        run: pnpm turbo run build --filter=@grundtone/email...
+
       - name: Publish email templates to CDN
-        if: steps.changesets.outputs.published == 'true'
         run: |
-          if echo '${{ steps.changesets.outputs.publishedPackages }}' | jq -e '.[] | select(.name == "@grundtone/email")' > /dev/null; then
-            pnpm --filter @grundtone/email compile:templates
-            pnpm --filter @grundtone/email publish:cdn
-          else
-            echo "@grundtone/email not in this release — skipping CDN publish."
-          fi
+          pnpm --filter @grundtone/email compile:templates
+          pnpm --filter @grundtone/email publish:cdn
         env:
           BUNNY_STORAGE_ZONE: ${{ secrets.BUNNY_EMAIL_STORAGE_ZONE }}
           BUNNY_STORAGE_API_KEY: ${{ secrets.BUNNY_EMAIL_STORAGE_API_KEY }}
