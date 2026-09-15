@@ -528,10 +528,38 @@ authorises the `release.yml` workflow directly via GitHub OIDC.
 
 1. **No `NPM_TOKEN` secret exists** — do not add one; an empty `NODE_AUTH_TOKEN` makes npm fail with
    a misleading `ENEEDAUTH`
-2. **Per-package config**: each published package needs a trusted-publisher entry (repo + workflow)
-   on npmjs.com — and note that a package's FIRST publish cannot use OIDC (bootstrap with a granular
-   token once)
+2. **Per-package config**: each published package needs a trusted-publisher entry on npmjs.com with
+   repository `KlangHaus/grundtone`, workflow `release.yml` and environment `npmjs-publish` — and
+   note that a package's FIRST publish cannot use OIDC (bootstrap with a granular token once)
 3. **Provenance**: publishes run with `--provenance` where enabled
+
+### Release workflow jobs
+
+`release.yml` grants nothing at workflow level (`permissions: {}`); each job gets only what it uses,
+and each runs in a GitHub environment whose deployment branch policy allows `develop` only:
+
+| Job         | Environment     | Permissions                                                  | Secrets                     |
+| ----------- | --------------- | ------------------------------------------------------------ | --------------------------- |
+| `docs`      | `docs-deploy`   | `contents: read`                                             | `BUNNY_DOCS_STORAGE_*`      |
+| `release`   | `npmjs-publish` | `contents: write`, `pull-requests: write`, `id-token: write` | none besides `GITHUB_TOKEN` |
+| `email-cdn` | `email-deploy`  | `contents: read`                                             | `BUNNY_EMAIL_STORAGE_*`     |
+
+The npm publish job never sees a Bunny key, and neither Bunny job can mint an npm OIDC token.
+`email-cdn` runs only when `@grundtone/email` was among the packages the `release` job published.
+
+### Publish gates run only in the run that can publish
+
+The downgrade, vuln-scan, vuln-accept and release-invariant gates protect the publish. With pending
+changesets the `release` job opens or updates the Version Packages PR instead, so
+`scripts/release-mode.mjs` detects that case (with `@changesets/read` and `@changesets/pre`, as
+`changesets/action` does) and the gates are skipped with a `Publish gates skipped` notice. Without
+that, a gate failing on a package a pending changeset would bump blocks the Version PR that fixes
+it.
+
+It fails closed in three layers: the detection step exits 1 on anything it cannot read and the job
+stops; each gate is skipped only on an explicit `gates=skip`, never on a missing value; and the
+changesets step receives no publish script when the gates were skipped.
+`scripts/lib/release-workflow.test.mjs` checks all three on `release.yml`.
 
 ### Package Security
 
