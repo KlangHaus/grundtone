@@ -547,19 +547,27 @@ and each runs in a GitHub environment whose deployment branch policy allows `dev
 The npm publish job never sees a Bunny key, and neither Bunny job can mint an npm OIDC token.
 `email-cdn` runs only when `@grundtone/email` was among the packages the `release` job published.
 
-### Publish gates run only in the run that can publish
+### Publish gates are part of the publish command
 
-The downgrade, vuln-scan, vuln-accept and release-invariant gates protect the publish. With pending
-changesets the `release` job opens or updates the Version Packages PR instead, so
-`scripts/release-mode.mjs` detects that case (with `@changesets/read` and `@changesets/pre`, as
-`changesets/action` does) and the gates are skipped with a `Publish gates skipped` notice. Without
-that, a gate failing on a package a pending changeset would bump blocks the Version PR that fixes
-it.
+`changesets/action` runs its `publish` input, `pnpm release`, only in the run that publishes. The
+gates are chained into that command:
 
-It fails closed in three layers: the detection step exits 1 on anything it cannot read and the job
-stops; each gate is skipped only on an explicit `gates=skip`, never on a missing value; and the
-changesets step receives no publish script when the gates were skipped.
-`scripts/lib/release-workflow.test.mjs` checks all three on `release.yml`.
+```text
+release       = pnpm build:packages && pnpm release:gates && changeset publish
+release:gates = osv-scanner && assert-osv-ignores-expire.py
+                && assert-release-invariants.mjs && assert-no-downgrade-publish.mjs
+```
+
+So the gates run exactly when a publish can happen and always before it. With pending changesets the
+command never runs, and a gate can no longer block the Version Packages PR that would fix what it
+complains about. The downgrade gate measures the tree `changeset version` produced (the versions
+being published) and throws when npm cannot be reached. A missing `osv-scanner` binary stops the
+chain before anything is published.
+
+The workflow only installs the scanner (checksum-verified); pull requests and pushes to `develop`
+keep their own vuln-scan reader in `osv-scanner.yml`. `scripts/lib/release-workflow.test.mjs` checks
+the wiring: the publish input is exactly `pnpm release`, gates come before `changeset publish`,
+every link is `&&`, and nothing in the job continues on error.
 
 ### Package Security
 

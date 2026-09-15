@@ -112,42 +112,17 @@ jobs:
       - name: Build Packages
         run: pnpm build:packages
 
-      # Gates only in the run that can publish (riff fklbe0cwm8fth7c9jj1tx3ca).
-      # With pending changesets, the changesets step opens or updates the Version
-      # Packages PR and publishes nothing. Measured 2026-09-15: running the
-      # gates on that path let the downgrade gate block the very Version PR
-      # that would have cleared it, and held back a security patch for 8 days.
+      # Install only — the scan itself runs inside `pnpm release` (below), so it
+      # runs in the run that publishes and never blocks the Version Packages PR.
       #
-      # Fail-closed, in three layers:
-      # - this step exits 1 on anything it cannot count, and the job stops
-      # - each gate is skipped only on an explicit `skip`, never on a missing value
-      # - changesets gets no publish script when the gates were skipped
-      # scripts/lib/release-workflow.test.mjs measures all three on this file.
-      - name: Detect release mode
-        id: release_mode
-        run: node scripts/release-mode.mjs
-
-      # Last stop before an irreversible publish. The gates below must stay in
-      # this job and textually BEFORE the changesets step:
-      # scripts/lib/workflow-order.test.mjs measures exactly that order.
-      #
-      # 🔴 The vuln gate runs HERE too, not only in ci.yml. Measured 2026-08-24:
-      # `Security Audit` (pnpm audit) is required and blocks PRs, but neither it
-      # nor osv ran on any release path, so a vulnerable transitive dependency
-      # could ship to the consumers of nine public packages without stopping the
-      # release. Same shape as the downgrade gate: the guard on the PR, the
-      # irreversible action at merge.
-      - name: Vuln-scan før publish
-        if: steps.release_mode.outputs.gates != 'skip'
+      # 🔴 CHECKSUM BEFORE FIRST EXECUTION (riff kqnlreckpjgm8mvjot6wvrum).
+      # The old form was curl → chmod +x → `--version`: it asked the UNVERIFIED
+      # binary who it is, and ran it to get the answer. A two-line stub that
+      # prints the version passes that. The digest lives in GIT, not in the
+      # release's own SHA256SUMS: that file comes from the same release as the
+      # binary and covers transport errors, not a swapped release.
+      - name: Install osv-scanner (checksum verified)
         run: |
-          # 🔴 CHECKSUM BEFORE FIRST EXECUTION (riff kqnlreckpjgm8mvjot6wvrum).
-          # The old form was curl → chmod +x → `--version`: it asked the
-          # UNVERIFIED binary who it is, and ran it to get the answer. A two-line
-          # stub that prints the version passes that.
-          # The digest lives in GIT, not in the release's own SHA256SUMS: that
-          # file comes from the same release as the binary and covers transport
-          # errors, not a swapped release. A digest in git is a promise someone
-          # measured, and a diff can see it change.
           set -euo pipefail
           OSV_SHA256="d6af4b67fa5de658598bd2d445efb99e90d1734b3146962418719c4350ecb74b"
           curl -sSfL https://github.com/google/osv-scanner/releases/download/v1.9.2/osv-scanner_linux_amd64 \
@@ -155,49 +130,40 @@ jobs:
           echo "${OSV_SHA256}  /tmp/osv-scanner" | sha256sum -c -
           sudo install -m 0755 /tmp/osv-scanner /usr/local/bin/osv-scanner
           rm -f /tmp/osv-scanner
-          osv-scanner --recursive --skip-git --config=osv-scanner.toml ./
 
-      # The accepted findings must be valid HERE too: an expired acceptance must
-      # not carry a release through just because the scan itself says green.
-      - name: Vuln-accepter er ikke udløbet
-        if: steps.release_mode.outputs.gates != 'skip'
-        env:
-          OSV_EXPECTED: '2'
-        run: python3 .github/scripts/assert-osv-ignores-expire.py osv-scanner.toml
-
-      # Measured 2026-08-23: the release PR was merged before the nuxt fix it
-      # depended on; the condition existed only in messages between people. The
-      # release was stopped by the downgrade gate on an unrelated package that
-      # happened to be behind — protection by coincidence, not by design. This
-      # gate executes the BUILT module and fails if the wiring is missing,
-      # regardless of merge order.
-      - name: Udgivelses-invarianter holder på artefaktet
-        if: steps.release_mode.outputs.gates != 'skip'
-        run: node scripts/assert-release-invariants.mjs
-
-      # Measured 2026-08-20: @grundtone/react-native was 2.12.0 on develop against
-      # 2.22.0 on npm, and this path is the only one that would have published it.
-      # The gate is general rather than a note to leave that one package out: an
-      # exception nobody enforces is forgotten during exactly the combined release
-      # it was meant to protect.
-      - name: Ingen pakke udgives som en nedgradering
-        if: steps.release_mode.outputs.gates != 'skip'
-        run: node scripts/assert-no-downgrade-publish.mjs
-
+      # The publish gates live INSIDE the publish command (riff
+      # fklbe0cwm8fth7c9jj1tx3ca): `pnpm release` = build, then `pnpm
+      # release:gates`, then `changeset publish`, joined with `&&`. The changesets
+      # step runs that command only in the run that publishes, so the gates run
+      # exactly then and always before the publish. With pending changesets the
+      # command never runs, so the downgrade gate can no longer block the Version
+      # PR that would clear it (measured 2026-09-15: that held back
+      # GHSA-cp6q-959q-f8rh for 8 days).
+      #
+      # `release:gates` in package.json:
+      # - osv-scanner + assert-osv-ignores-expire.py (OSV_EXPECTED below). Measured
+      #   2026-08-24: no vuln scan ran on any release path. PRs and pushes to
+      #   develop keep their own reader in osv-scanner.yml.
+      # - assert-release-invariants.mjs executes the BUILT modules (2026-08-23:
+      #   a release PR merged before the nuxt fix it depended on).
+      # - assert-no-downgrade-publish.mjs: no package below its npm `latest`. It
+      #   runs on the tree `changeset version` produced, i.e. the versions that
+      #   are published, and throws when npm cannot be reached.
+      # scripts/lib/release-workflow.test.mjs and workflow-order.test.mjs measure
+      # this wiring on the files.
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1.9.0 (was a BRANCH, not a tag)
         with:
           # This expects you to have a script called version-packages which runs `changeset version`
           version: pnpm version-packages
-          # This expects you to have a script called release which runs `pnpm build:packages && changeset publish`.
-          # Handed over only when the gates ran: with an empty publish input the
-          # action cannot publish, even if its own changeset count disagrees with ours.
-          publish: ${{ steps.release_mode.outputs.gates != 'skip' && 'pnpm release' || '' }}
+          publish: pnpm release
           commit: 'chore(release): version packages'
           title: 'chore(release): version packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Read by assert-osv-ignores-expire.py inside `pnpm release`.
+          OSV_EXPECTED: '2'
           # No NPM_TOKEN / NODE_AUTH_TOKEN: publishing goes through GitHub OIDC
           # trusted publishing (id-token: write on this job + a trusted publisher
           # on npmjs per package). An empty NODE_AUTH_TOKEN here would
