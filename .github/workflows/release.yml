@@ -153,7 +153,7 @@ jobs:
       # this wiring on the files.
       - name: Create Release Pull Request or Publish to npm
         id: changesets
-        uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1.9.0 (was a BRANCH, not a tag)
+        uses: changesets/action@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v1.9.0 (was a BRANCH, not a tag)
         with:
           # This expects you to have a script called version-packages which runs `changeset version`
           version: pnpm version-packages
