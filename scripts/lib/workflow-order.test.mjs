@@ -11,15 +11,26 @@ const read = f => readFileSync(join(root, '.github/workflows', f), 'utf8');
 const GATE = 'scripts/assert-no-downgrade-publish.mjs';
 const VULN = 'osv-scanner --recursive';
 
+// release.yml publishes through `pnpm release`, and the gates are chained into
+// that command (riff fklbe0cwm8fth7c9jj1tx3ca). The order that matters is the
+// order inside the expanded command, not the order of workflow steps.
+const { scripts } = JSON.parse(
+  readFileSync(join(root, 'package.json'), 'utf8'),
+);
+const releaseCommand = scripts.release.replace(
+  'pnpm release:gates',
+  scripts['release:gates'],
+);
+
 describe('nedgraderings-vagten dækker udgivelsesstierne', () => {
   // 🔴 Dette er beviset, frozen-2.x-guardens pensionering hviler på: den
   // stabile sti er den ENESTE, der ville udgive react-native, og den havde
   // ingen versionsvagt overhovedet før i dag.
-  it('release.yml: gaten står før changesets publicerer', () => {
+  it('pnpm release: the downgrade gate runs before changeset publish', () => {
     expect(
-      gateRunsBeforePublish(read('release.yml'), {
+      gateRunsBeforePublish(releaseCommand, {
         gate: GATE,
-        publish: 'changesets/action',
+        publish: 'changeset publish',
       }),
     ).toEqual({ ok: true, reason: 'gaten står før publish-trinnet' });
   });
@@ -36,11 +47,11 @@ describe('nedgraderings-vagten dækker udgivelsesstierne', () => {
   // 🔴 Samme krav for vuln-gaten. Maalt 2026-08-24: baade `pnpm audit` og osv
   // koerte KUN paa PR-stien, saa en saarbar transitiv dependency kunne shippe
   // til ni offentlige pakker uden at stoppe udgivelsen.
-  it('release.yml: vuln-scannen står før changesets publicerer', () => {
+  it('pnpm release: the vuln scan runs before changeset publish', () => {
     expect(
-      gateRunsBeforePublish(read('release.yml'), {
+      gateRunsBeforePublish(releaseCommand, {
         gate: VULN,
-        publish: 'changesets/action',
+        publish: 'changeset publish',
       }).ok,
     ).toBe(true);
   });

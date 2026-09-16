@@ -528,10 +528,46 @@ authorises the `release.yml` workflow directly via GitHub OIDC.
 
 1. **No `NPM_TOKEN` secret exists** — do not add one; an empty `NODE_AUTH_TOKEN` makes npm fail with
    a misleading `ENEEDAUTH`
-2. **Per-package config**: each published package needs a trusted-publisher entry (repo + workflow)
-   on npmjs.com — and note that a package's FIRST publish cannot use OIDC (bootstrap with a granular
-   token once)
+2. **Per-package config**: each published package needs a trusted-publisher entry on npmjs.com with
+   repository `KlangHaus/grundtone`, workflow `release.yml` and environment `npmjs-publish` — and
+   note that a package's FIRST publish cannot use OIDC (bootstrap with a granular token once)
 3. **Provenance**: publishes run with `--provenance` where enabled
+
+### Release workflow jobs
+
+`release.yml` grants nothing at workflow level (`permissions: {}`); each job gets only what it uses,
+and each runs in a GitHub environment whose deployment branch policy allows `develop` only:
+
+| Job         | Environment     | Permissions                                                  | Secrets                     |
+| ----------- | --------------- | ------------------------------------------------------------ | --------------------------- |
+| `docs`      | `docs-deploy`   | `contents: read`                                             | `BUNNY_DOCS_STORAGE_*`      |
+| `release`   | `npmjs-publish` | `contents: write`, `pull-requests: write`, `id-token: write` | none besides `GITHUB_TOKEN` |
+| `email-cdn` | `email-deploy`  | `contents: read`                                             | `BUNNY_EMAIL_STORAGE_*`     |
+
+The npm publish job never sees a Bunny key, and neither Bunny job can mint an npm OIDC token.
+`email-cdn` runs only when `@grundtone/email` was among the packages the `release` job published.
+
+### Publish gates are part of the publish command
+
+`changesets/action` runs its `publish` input, `pnpm release`, only in the run that publishes. The
+gates are chained into that command:
+
+```text
+release       = pnpm build:packages && pnpm release:gates && changeset publish
+release:gates = osv-scanner && assert-osv-ignores-expire.py
+                && assert-release-invariants.mjs && assert-no-downgrade-publish.mjs
+```
+
+So the gates run exactly when a publish can happen and always before it. With pending changesets the
+command never runs, and a gate can no longer block the Version Packages PR that would fix what it
+complains about. The downgrade gate measures the tree `changeset version` produced (the versions
+being published) and throws when npm cannot be reached. A missing `osv-scanner` binary stops the
+chain before anything is published.
+
+The workflow only installs the scanner (checksum-verified); pull requests and pushes to `develop`
+keep their own vuln-scan reader in `osv-scanner.yml`. `scripts/lib/release-workflow.test.mjs` checks
+the wiring: the publish input is exactly `pnpm release`, gates come before `changeset publish`,
+every link is `&&`, and nothing in the job continues on error.
 
 ### Package Security
 
