@@ -47,7 +47,7 @@
     "@grundtone/core": "workspace:*",
     "handlebars": "^4.7.8",
     "html-to-text": "^9.0.5",
-    "mjml": "^5.4.0"
+    "mjml": "^5.4.1"
   },
   "devDependencies": {
     "@sentry/node": "^10.68.0",
