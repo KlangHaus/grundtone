@@ -74,13 +74,13 @@
     "@tiptap/vue-3": "^3.31.3"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.12.1",
+    "@axe-core/playwright": "^4.13.0",
     "@testing-library/jest-dom": "^6.8.0",
     "@vitejs/plugin-vue": "^6.0.8",
-    "@vue/test-utils": "^2.4.11",
-    "axe-core": "^4.12.1",
-    "sass": "^1.102.0",
-    "vite-plugin-dts": "^5.0.3",
+    "@vue/test-utils": "^2.5.0",
+    "axe-core": "^4.13.0",
+    "sass": "^1.104.1",
+    "vite-plugin-dts": "^5.1.0",
     "vitest-axe": "^0.1.0"
   }
 }
