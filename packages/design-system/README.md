@@ -84,7 +84,9 @@ const padding = spacing[4];
 
 - 9-shade color palette (gray, blue, green, red, yellow, indigo)
 - Semantic color mapping (primary, success, error, warning, info)
-- IBM Plex Sans typography system
+- IBM Plex Sans + Mono, self-hosted `@font-face` in `dist/index.css` (Latin-1, OFL; compiling the
+  SCSS yourself: set `$font-files-url`)
+- `hover:bg-*` / `hover:text-*` utilities for the background and text colours
 - 8px-based spacing scale
 - Responsive breakpoints and 12-column grid
 - Shadow, radius, and z-index tokens
