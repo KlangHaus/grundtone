@@ -7,10 +7,11 @@
 // product inherits it; no CDN (a font request to a third party shares the
 // visitor's IP on page view).
 //
+// Emitted through src/fonts.scss → dist/fonts.css, not index.css (see there).
 // $font-files-url is relative to the compiled CSS. The default fits
-// dist/index.css inside the published package. If you compile the SCSS
+// dist/fonts.css inside the published package. If you compile the SCSS
 // yourself, point it at wherever the files are served from, e.g.
-//   @use '@grundtone/design-system/scss' with ($font-files-url: '/fonts/ibm-plex/');
+//   @use '@grundtone/design-system/scss/fonts' with ($font-files-url: '/fonts/ibm-plex/');
 
 $font-files-url: '../src/fonts/ibm-plex/' !default;
 

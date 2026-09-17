@@ -185,19 +185,24 @@ for (const [spec, why] of result.bad)
 // ── 4. every url() in an exported CSS file must exist in the INSTALLED package
 // A broken font or image url fails silently in a browser: the fallback font
 // renders and nothing reports it. Checked on the tarball contents, so a file
-// missing from `files` is caught here. design-system's CSS must contain its
-// IBM Plex @font-face urls, so the check cannot pass on an empty count.
+// missing from `files` is caught here. design-system's fonts.css must contain
+// its IBM Plex @font-face urls, so the check cannot pass on an empty count.
+// No exported CSS may carry an inlined font either: Vite library mode turns
+// url() assets into base64, and fonts in design-system's index.css landed as
+// ~140 kB inside @grundtone/vue's CSS (grundtone#205).
 writeFileSync(
   join(proj, 'css-urls.mjs'),
   `import { existsSync, readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-const out = { checked: {}, missing: [] };
+const out = { checked: {}, missing: [], inlinedFonts: {} };
 for (const spec of ${JSON.stringify(specs)}) {
   let path;
   try { path = fileURLToPath(import.meta.resolve(spec)); } catch { continue; }
   if (!path.endsWith('.css') || !existsSync(path)) continue;
   const css = readFileSync(path, 'utf8');
+  const inlined = css.match(/url\\(\\s*['"]?data:(font\\/|application\\/(x-)?font)/g);
+  if (inlined) out.inlinedFonts[spec] = inlined.length;
   const urls = [...css.matchAll(/url\\(\\s*(['"]?)([^'")]+)\\1\\s*\\)/g)]
     .map(m => m[2])
     .filter(u => !/^(data:|https?:|#)/.test(u));
@@ -215,10 +220,18 @@ for (const [spec, n] of Object.entries(cssUrls.checked))
   console.log(`  ✔ css urls  ${spec}  (${n})`);
 for (const [spec, u] of cssUrls.missing)
   console.log(`  ✗ MANGLER   ${spec}  ${u}`);
-const fontUrls = cssUrls.checked['@grundtone/design-system/css'] ?? 0;
+for (const [spec, n] of Object.entries(cssUrls.inlinedFonts))
+  console.log(`  ✗ INLINET   ${spec}  (${n} fonte som data:-url)`);
+const fontUrls = cssUrls.checked['@grundtone/design-system/fonts.css'] ?? 0;
 if (fontUrls < 7) {
   console.error(
-    `::error::@grundtone/design-system/css har ${fontUrls} fil-url'er, forventet mindst 7 (IBM Plex @font-face)`,
+    `::error::@grundtone/design-system/fonts.css har ${fontUrls} fil-url'er, forventet mindst 7 (IBM Plex @font-face)`,
+  );
+  process.exit(1);
+}
+if (Object.keys(cssUrls.inlinedFonts).length) {
+  console.error(
+    '::error::en udgivet CSS-fil har fonte inlinet som data:-url (base64) i stedet for filer',
   );
   process.exit(1);
 }

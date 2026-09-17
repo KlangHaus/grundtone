@@ -1,0 +1,9 @@
+// Separate CSS entry for the self-hosted IBM Plex @font-face rules
+// (dist/fonts.css, export `@grundtone/design-system/fonts.css`).
+//
+// Not part of index.scss on purpose: @grundtone/vue imports dist/index.css and
+// Vite's library mode inlines every url() asset, so the seven woff2 files
+// landed as ~140 kB of base64 in @grundtone/vue/dist/index.css (measured
+// 2026-09-17, grundtone#205 bundle-size report). A separate file keeps the
+// fonts as real files that the consuming app's bundler emits and caches.
+@forward 'core/font-face';

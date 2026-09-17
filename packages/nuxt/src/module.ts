@@ -65,6 +65,15 @@ export default defineNuxtModule<ModuleOptions>({
     // Inject design-system CSS (custom properties) via @grundtone/vue subpath
     nuxt.options.css.push(resolver.resolve('../../vue/dist/index.css'));
 
+    // Self-hosted IBM Plex @font-face. A separate file, so the app's bundler
+    // emits the woff2 files as cacheable assets; inside a library CSS bundle
+    // they were inlined as base64 (grundtone#205).
+    nuxt.options.css.push(
+      createRequire(import.meta.url).resolve(
+        '@grundtone/design-system/fonts.css',
+      ),
+    );
+
     // Wire the SCSS token namespace so a consumer's own styles can call
     // tokens.space(), tokens.color() and friends without configuring anything.
     //
