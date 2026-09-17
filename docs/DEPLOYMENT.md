@@ -567,7 +567,11 @@ chain before anything is published.
 The workflow only installs the scanner (checksum-verified); pull requests and pushes to `develop`
 keep their own vuln-scan reader in `osv-scanner.yml`. `scripts/lib/release-workflow.test.mjs` checks
 the wiring: the publish input is exactly `pnpm release`, gates come before `changeset publish`,
-every link is `&&`, and nothing in the job continues on error.
+every link is `&&`, and nothing in the job continues on error. It also reads `changesets/action`'s
+contract for the pinned SHA: every `with:` key must be an input and every
+`steps.changesets.outputs.*` an output of that commit's `action.yml`. The runner only warns about an
+undeclared input, and v2 renamed both inputs and outputs, so a pin bump that keeps the v1 names
+would otherwise pass while the action ignores `pnpm release`.
 
 ### Package Security
 

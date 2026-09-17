@@ -2,7 +2,7 @@
  * Structural checks that keep the publish gates inside the publish command
  * (riff fklbe0cwm8fth7c9jj1tx3ca).
  *
- * `changesets/action` runs its `publish` input only in the run that publishes.
+ * `changesets/action` runs its publish input only in the run that publishes.
  * With the gates chained into that command before `changeset publish`, they
  * run exactly when a publish can happen and always before it. With pending
  * changesets the command never runs, so a gate cannot block the Version
@@ -12,7 +12,10 @@
  * release.yml runs only on push to develop, so it cannot be executed before it
  * is merged. These properties are measured on the files instead:
  *
- * - the changesets step's `publish` input is exactly the release script
+ * - the changesets step is pinned to a commit SHA whose contract is recorded
+ *   below, every `with:` key is an input of that contract, its publish input
+ *   is exactly the release script, and every `steps.<id>.outputs.<name>` the
+ *   job reads is an output of that contract
  * - the release script is an `&&` chain with the gates script before
  *   `changeset publish`
  * - the gates script is an `&&` chain containing each gate exactly once
@@ -48,6 +51,154 @@ function andChain(script) {
 }
 
 /**
+ * The inputs and outputs of `changesets/action`, per pinned commit, copied from
+ * that commit's action.yml. The runner only warns about a `with:` key the
+ * action does not declare, and an output the action never sets reads as an
+ * empty string, so a pin bump that keeps the old names passes every other
+ * check here while the action ignores the release command.
+ *
+ * v2 renamed inputs and outputs (v2.0.0, changesets/action#681). A bump fails
+ * this check until the new SHA's contract is added below: read its action.yml,
+ * not the release notes.
+ */
+export const CHANGESETS_ACTION_CONTRACTS = {
+  a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d: {
+    version: 'v1.9.0',
+    publishInput: 'publish',
+    inputs: [
+      'github-token',
+      'publish',
+      'version',
+      'cwd',
+      'commit',
+      'title',
+      'setupGitUser',
+      'createGithubReleases',
+      'commitMode',
+      'branch',
+      'prDraft',
+    ],
+    outputs: [
+      'published',
+      'publishedPackages',
+      'hasChangesets',
+      'pullRequestNumber',
+    ],
+    renamed: {},
+  },
+  ae32849d5ba541f9ae29e40e22a623bc13562f51: {
+    version: 'v2.1.2',
+    publishInput: 'publish-script',
+    inputs: [
+      'github-token',
+      'publish-script',
+      'version-script',
+      'commit-message',
+      'pr-title',
+      'pr-draft',
+      'pr-base-branch',
+      'create-github-releases',
+      'push-git-tags',
+      'push-with-git-cli',
+      'cwd',
+    ],
+    outputs: ['published', 'published-packages', 'has-changesets', 'pr-number'],
+    // src/index.ts throwOnRenamedInputs at this commit, plus the output renames.
+    renamed: {
+      publish: 'publish-script',
+      version: 'version-script',
+      commit: 'commit-message',
+      title: 'pr-title',
+      branch: 'pr-base-branch',
+      prDraft: 'pr-draft',
+      createGithubReleases: 'create-github-releases',
+      publishedPackages: 'published-packages',
+      hasChangesets: 'has-changesets',
+      pullRequestNumber: 'pr-number',
+    },
+  },
+};
+
+/** Direct child keys of a step's `with:` block. */
+function withKeys(step) {
+  const lines = step.split('\n');
+  const at = lines.findIndex(l => /^\s+with:\s*$/.test(l));
+  if (at === -1) return [];
+  const indent = lines[at].search(/\S/);
+  const keys = [];
+  let childIndent = -1;
+  for (const line of lines.slice(at + 1)) {
+    if (/^\s*(#.*)?$/.test(line)) continue;
+    const i = line.search(/\S/);
+    if (i <= indent) break;
+    if (childIndent === -1) childIndent = i;
+    const key = i === childIndent && line.match(/^\s*([A-Za-z0-9_-]+):/);
+    if (key) keys.push(key[1]);
+  }
+  return keys;
+}
+
+const unknownName = (kind, name, contract) => {
+  const renamed = contract.renamed[name];
+  return renamed
+    ? `${kind} "${name}" is not read by changesets/action ${contract.version}: it was renamed to "${renamed}"`
+    : `${kind} "${name}" is not an ${kind} of changesets/action ${contract.version}`;
+};
+
+function changesetsContractViolations(job, step) {
+  const pin = step.match(/uses: changesets\/action@(\S+)/)[1];
+  if (!/^[0-9a-f]{40}$/.test(pin)) {
+    return [
+      `changesets/action must be pinned to a full commit SHA, found "${pin}"`,
+    ];
+  }
+  const contract = CHANGESETS_ACTION_CONTRACTS[pin];
+  if (!contract) {
+    return [
+      `no recorded contract for changesets/action@${pin}: add its action.yml inputs and outputs to CHANGESETS_ACTION_CONTRACTS`,
+    ];
+  }
+  const violations = [];
+  for (const key of withKeys(step)) {
+    if (!contract.inputs.includes(key)) {
+      violations.push(unknownName('input', key, contract));
+    }
+  }
+
+  const escape = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const publishInputs =
+    step.match(new RegExp(`^\\s+${escape(contract.publishInput)}:.*$`, 'gm')) ??
+    [];
+  const expected = `${contract.publishInput}: pnpm ${job.releaseScript}`;
+  if (publishInputs.length !== 1 || publishInputs[0].trim() !== expected) {
+    violations.push(
+      `the changesets step must have exactly \`${expected}\`, found ${JSON.stringify(publishInputs.map(s => s.trim()))}`,
+    );
+  }
+
+  const id = step.match(/^\s+id:\s*(\S+)\s*$/m)?.[1];
+  if (id) {
+    const refs = new RegExp(
+      `steps\\.${escape(id)}\\.outputs(?:\\.([A-Za-z0-9_-]+)|\\[['"]([^'"]+)['"]\\])`,
+      'g',
+    );
+    const names = new Map();
+    for (const m of job.text.matchAll(refs)) {
+      const name = m[1] ?? m[2];
+      names.set(name, (names.get(name) ?? 0) + 1);
+    }
+    for (const [name, n] of names) {
+      if (!contract.outputs.includes(name)) {
+        violations.push(
+          `${unknownName('output', name, contract)} (read ${n}x as steps.${id}.outputs)`,
+        );
+      }
+    }
+  }
+  return violations;
+}
+
+/**
  * @returns {string[]} violations; empty means the properties hold.
  */
 export function releaseCommandViolations(
@@ -74,13 +225,9 @@ export function releaseCommandViolations(
 
   const publish = stepIndex('uses: changesets/action@');
   if (publish !== -1) {
-    const inputs = steps[publish].match(/^\s+publish:.*$/gm) ?? [];
-    const expected = `publish: pnpm ${releaseScript}`;
-    if (inputs.length !== 1 || inputs[0].trim() !== expected) {
-      violations.push(
-        `the changesets step must have exactly \`${expected}\`, found ${JSON.stringify(inputs.map(s => s.trim()))}`,
-      );
-    }
+    violations.push(
+      ...changesetsContractViolations({ text, releaseScript }, steps[publish]),
+    );
   }
 
   const install = stepIndex(installMarker);
