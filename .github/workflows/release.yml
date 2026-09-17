@@ -151,6 +151,12 @@ jobs:
       #   are published, and throws when npm cannot be reached.
       # scripts/lib/release-workflow.test.mjs and workflow-order.test.mjs measure
       # this wiring on the files.
+      #
+      # Bumping the pin: release-workflow.mjs holds each pinned SHA's inputs and
+      # outputs (CHANGESETS_ACTION_CONTRACTS) and fails until the new SHA's
+      # action.yml is recorded there. v2 renamed both (publish -> publish-script,
+      # publishedPackages -> published-packages, ...) and also requires
+      # @changesets/cli v3 (riff bcr5y2a63melb4trj4ornnda).
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1.9.0 (was a BRANCH, not a tag)
