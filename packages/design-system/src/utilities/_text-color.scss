@@ -2,50 +2,50 @@
 // Semantic text colors from theme tokens.
 @use '../core/breakpoints' as *;
 
-@include responsive-variants using ($p) {
-  .#{$p}text-default {
+@include responsive-and-hover-variants using ($p, $s) {
+  .#{$p}text-default#{$s} {
     color: var(--color-text);
   }
-  .#{$p}text-secondary {
+  .#{$p}text-secondary#{$s} {
     color: var(--color-text-secondary);
   }
-  .#{$p}text-tertiary {
+  .#{$p}text-tertiary#{$s} {
     color: var(--color-text-tertiary);
   }
-  .#{$p}text-inverse {
+  .#{$p}text-inverse#{$s} {
     color: var(--color-text-inverse);
   }
-  .#{$p}text-placeholder {
+  .#{$p}text-placeholder#{$s} {
     color: var(--color-text-placeholder);
   }
-  .#{$p}text-disabled {
+  .#{$p}text-disabled#{$s} {
     color: var(--color-text-disabled);
   }
 
   // Brand
-  .#{$p}text-primary {
+  .#{$p}text-primary#{$s} {
     color: var(--color-primary);
   }
-  .#{$p}text-on-primary {
+  .#{$p}text-on-primary#{$s} {
     color: var(--color-on-primary);
   }
 
   // Status
-  .#{$p}text-success {
+  .#{$p}text-success#{$s} {
     color: var(--color-success);
   }
-  .#{$p}text-warning {
+  .#{$p}text-warning#{$s} {
     color: var(--color-warning);
   }
-  .#{$p}text-error {
+  .#{$p}text-error#{$s} {
     color: var(--color-error);
   }
-  .#{$p}text-info {
+  .#{$p}text-info#{$s} {
     color: var(--color-info);
   }
 
   // Inherit
-  .#{$p}text-inherit {
+  .#{$p}text-inherit#{$s} {
     color: inherit;
   }
 }

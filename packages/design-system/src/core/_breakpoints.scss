@@ -145,6 +145,20 @@ $grid-gutter-width: 32px !default;
   }
 }
 
+// Responsive variants plus one hover pass: `hover:bg-surface-alt` applies on
+// :hover. The hover pass is emitted once, without breakpoint prefixes, to keep
+// the CSS small. Content receives ($prefix, $state): the state is '' for the
+// responsive passes and ':hover' for the hover pass, and is appended to the
+// selector. Until this existed there were no hover utilities at all, so a
+// consumer's `hover:*` class silently did nothing.
+@mixin responsive-and-hover-variants {
+  @include responsive-variants using ($p) {
+    @content ($p, '');
+  }
+
+  @content ('hover\\:', ':hover');
+}
+
 // Responsive font size mixin
 @mixin responsive-font-size(
   $min-font-size,
