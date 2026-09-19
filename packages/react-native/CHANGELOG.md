@@ -1,5 +1,35 @@
 # @grundtone/react-native
 
+## 3.0.0 - 2026-09-19
+
+### Major Changes
+
+- [#175](https://github.com/KlangHaus/grundtone/pull/175)
+  [`ce52263`](https://github.com/KlangHaus/grundtone/commit/ce522637f7362daf504b9efb03443f735dfffeae)
+  Thanks [@allanasp](https://github.com/allanasp)! - Brings `@grundtone/react-native` onto the 3.x
+  line with the rest of the family, and stops it pinning its siblings to an exact version.
+
+  **It was never broken against 3.x** — it builds and tests green against the 3.0 core today, and
+  none of the five APIs it imports (`createTheme`, `iconRegistry`, `resolveThemeMode`, `required`,
+  `email`) were touched by the 3.0 removals, which were confined to `@grundtone/vue`. The colour
+  palette is byte-for-byte the same 39 slots in 2.22.0 and 3.0.0.
+
+  **What it was, was isolated.** The published 2.22.0 pinned `@grundtone/core` to `2.22.0` exactly,
+  so a consumer following this package's own README —
+  `npm install @grundtone/react-native @grundtone/core` — ended up with two copies of core: 3.x at
+  the top and 2.22.0 nested underneath. It worked only because the two palettes happened to be
+  identical. The dependencies are now `workspace:^`, which publishes as `^3.0.0` and lets a
+  consumer's own 3.x satisfy them.
+
+### Patch Changes
+
+- Updated dependencies
+  [[`90bc07d`](https://github.com/KlangHaus/grundtone/commit/90bc07df2e7cdff7368a692fdd60f354da5445d2),
+  [`97e4bb9`](https://github.com/KlangHaus/grundtone/commit/97e4bb9b100dbe8ca98a71e52012ee9bc28c3005)]:
+  - @grundtone/core@3.2.0
+  - @grundtone/icons@3.2.0
+  - @grundtone/utils@3.2.0
+
 ## 2.12.0 - 2026-03-22
 
 ### Patch Changes

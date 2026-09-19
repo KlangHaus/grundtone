@@ -1,5 +1,34 @@
 # @grundtone/design-system
 
+## 3.2.0 - 2026-09-19
+
+### Minor Changes
+
+- [#205](https://github.com/KlangHaus/grundtone/pull/205)
+  [`97e4bb9`](https://github.com/KlangHaus/grundtone/commit/97e4bb9b100dbe8ca98a71e52012ee9bc28c3005)
+  Thanks [@allanasp](https://github.com/allanasp)! - **IBM Plex is now loaded.** The typography
+  tokens have always named `IBM Plex Sans` and `IBM Plex Mono` first, but nothing loaded them, so
+  every consumer without a local Plex install rendered the fallback fonts. The new entry
+  `@grundtone/design-system/fonts.css` declares `@font-face` for Plex Sans 400/500/600/700 and Plex
+  Mono 400/500/600: Latin-1 subsets, `font-display: swap`, self-hosted in the package
+  (`src/fonts/ibm-plex`, SIL OFL 1.1). No CDN request.
+
+  It is a separate file, not part of `index.css`, so bundlers that inline assets do not turn the
+  fonts into base64 inside other CSS. `@grundtone/nuxt` injects it for you. Without Nuxt:
+  `import '@grundtone/design-system/fonts.css';`
+
+  If you compile the SCSS yourself, set where the font files are served from:
+  `@use '@grundtone/design-system/scss/fonts' with ($font-files-url: '/fonts/ibm-plex/');`
+
+  **Hover utilities.** `hover:bg-*` and `hover:text-*` now exist for every background and text
+  colour utility (e.g. `hover:bg-surface-alt`). Until now a `hover:*` class compiled to nothing.
+
+### Patch Changes
+
+- Updated dependencies
+  [[`90bc07d`](https://github.com/KlangHaus/grundtone/commit/90bc07df2e7cdff7368a692fdd60f354da5445d2)]:
+  - @grundtone/core@3.2.0
+
 ## 3.1.0 - 2026-08-30
 
 ### Minor Changes
