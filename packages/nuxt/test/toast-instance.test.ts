@@ -1,3 +1,7 @@
+// @vitest-environment node
+//
+// The Nuxt build and its server need node; the repo-root vitest config runs
+// jsdom by default, where `import.meta.url` is not a file URL either.
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { $fetch, setup } from '@nuxt/test-utils/e2e';

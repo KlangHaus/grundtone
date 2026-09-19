@@ -1,3 +1,9 @@
+// @vitest-environment node
+//
+// 🔴 node, not the root config's jsdom: this file reads package manifests from
+// disk through `import.meta.url`, and under jsdom that is an http URL
+// (measured — CI went red here while the package-level run, which defaults to
+// node, was green).
 import { readFileSync } from 'node:fs';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
