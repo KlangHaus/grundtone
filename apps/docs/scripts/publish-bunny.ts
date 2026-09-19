@@ -28,6 +28,12 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { resolve, relative, join, dirname, sep, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as Sentry from '@sentry/node';
+// Shared with packages/email's publish-cdn.ts — one place for one failure class.
+import {
+  applyDeployMode,
+  checkUploaded,
+  resolveDeployMode,
+} from '../../../scripts/lib/bunny-deploy.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const distRoot = resolve(here, '../.vitepress/dist');
@@ -54,13 +60,21 @@ if (sentryEnabled) {
   );
 }
 
-if (!zone || !apiKey) {
-  console.warn(
-    'publish-bunny: BUNNY_DOCS_STORAGE_ZONE / BUNNY_DOCS_STORAGE_API_KEY not set — skipping deploy. ' +
-      'docs.grundtone.com stays on its current host until the Bunny zone is provisioned (see infra/docs/BUNNY-SETUP.md, [infra]).',
-  );
-  process.exit(0);
-}
+// 🔴 An absence no longer decides (riff ua771kpb): this script only runs in a
+// job that exists to deploy, so empty secrets are a failure. A skip needs
+// BUNNY_DEPLOY_OPTIONAL=1. See scripts/lib/bunny-deploy.mjs for what release
+// run 35459568087 measured, and why the gate opens only on `deploy`.
+applyDeployMode(
+  resolveDeployMode({
+    required: [
+      { name: 'BUNNY_DOCS_STORAGE_ZONE', value: zone },
+      { name: 'BUNNY_DOCS_STORAGE_API_KEY', value: apiKey },
+    ],
+    optional: process.env.BUNNY_DEPLOY_OPTIONAL,
+    label: 'publish-bunny',
+  }),
+  { warn: console.warn, error: console.error, exit: process.exit },
+);
 
 const host = region ? `${region}.storage.bunnycdn.com` : 'storage.bunnycdn.com';
 const zoneBase = `https://${host}/${zone}`;
@@ -224,6 +238,10 @@ async function main() {
         uploaded++;
       });
       console.log(`  ✓ uploaded ${uploaded}/${files.length} files`);
+      // 0 uploaded files is also "done" for a loop; the count is the only
+      // difference between "published nothing" and "published something".
+      const counted = checkUploaded(uploaded, 'publish-bunny');
+      if (!counted.ok) throw new Error(counted.reason);
     },
   );
 
