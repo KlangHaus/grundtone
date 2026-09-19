@@ -557,6 +557,9 @@ importers:
       '@grundtone/icons':
         specifier: workspace:*
         version: link:../icons
+      '@grundtone/utils':
+        specifier: workspace:*
+        version: link:../utils
       '@grundtone/vue':
         specifier: workspace:*
         version: link:../vue

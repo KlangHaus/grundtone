@@ -5,6 +5,9 @@
 // (measured — CI went red here while the package-level run, which defaults to
 // node, was green).
 import { readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import { fileURLToPath } from 'node:url';
+
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // The defect this pins (riff zh3ayeik): registering components or composables
@@ -156,6 +159,71 @@ describe('everything is registered from the package entry', () => {
         published.some(dirName => file!.startsWith(`./${dirName}/`)),
         `${file} is outside ${pkgName}'s published files (${pkg.files.join(', ')})`,
       ).toBe(true);
+    }
+  });
+
+  // 🔴 THE OTHER HALF OF THE SAME DEFECT (riff z1rljcoh, found by [quality] on
+  // #206). The cell above asks whether the RECEIVING package publishes the path.
+  // It cannot see the opposite hole: whether THIS package declares a dependency
+  // that makes the specifier reachable at all. `@grundtone/utils` was reachable
+  // only through `packages/vue/node_modules`, and a Nuxt build printed
+  //
+  //   [NUXT_B6005] Could not resolve `@grundtone/utils` used by the
+  //   auto-import `required`. … silently skipped
+  //
+  // on stdout while the suite stayed GREEN — measured here, 1 occurrence before
+  // the dependency was declared and 0 after. Nuxt resolves an auto-import's
+  // `from` against the CONSUMER's modulesDir, so the workspace playground, which
+  // declares @grundtone/utils itself, could never have shown this. The fixture,
+  // which declares only @grundtone/vue, does.
+  //
+  // Two cells, because the two halves fail independently: deleting the entry
+  // from package.json leaves the installed symlink (manifest red, resolution
+  // green), and deleting the symlink leaves the manifest (the reverse).
+  function registeredPackages(): string[] {
+    const registered = [...components, ...imports];
+    // Denominator, so neither cell can pass by registering nothing.
+    expect(registered.length).toBeGreaterThan(50);
+    const packages = [
+      ...new Set(
+        registered.map(entry => {
+          const [scope, name] = entry.from.split('/');
+          return scope.startsWith('@') ? `${scope}/${name}` : scope;
+        }),
+      ),
+    ];
+    expect(
+      packages.length,
+      'the module registers from one package only — this cell would not notice a second one going undeclared',
+    ).toBeGreaterThan(1);
+    return packages;
+  }
+
+  it('declares every package it registers from as its own dependency', async () => {
+    await module({}, fakeNuxt());
+    const manifest = JSON.parse(
+      readFileSync(new URL('../package.json', import.meta.url), 'utf8'),
+    ) as { dependencies?: Record<string, string> };
+    const declared = Object.keys(manifest.dependencies ?? {});
+
+    for (const pkgName of registeredPackages()) {
+      expect(
+        declared,
+        `@grundtone/nuxt registers from ${pkgName} but does not depend on it, so a consumer install cannot resolve it`,
+      ).toContain(pkgName);
+    }
+  });
+
+  it('can actually resolve every package it registers from', async () => {
+    await module({}, fakeNuxt());
+    const here = fileURLToPath(new URL('.', import.meta.url));
+    const require_ = createRequire(import.meta.url);
+
+    for (const pkgName of registeredPackages()) {
+      expect(
+        () => require_.resolve(pkgName, { paths: [here] }),
+        pkgName,
+      ).not.toThrow();
     }
   });
 
