@@ -28,6 +28,11 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { resolve, relative, join, dirname, sep, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as Sentry from '@sentry/node';
+// Delt med packages/email's publish-cdn.ts — samme fejlklasse, ét sted.
+import {
+  checkUploaded,
+  resolveDeployMode,
+} from '../../../scripts/lib/bunny-deploy.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const distRoot = resolve(here, '../.vitepress/dist');
@@ -54,12 +59,25 @@ if (sentryEnabled) {
   );
 }
 
-if (!zone || !apiKey) {
-  console.warn(
-    'publish-bunny: BUNNY_DOCS_STORAGE_ZONE / BUNNY_DOCS_STORAGE_API_KEY not set — skipping deploy. ' +
-      'docs.grundtone.com stays on its current host until the Bunny zone is provisioned (see infra/docs/BUNNY-SETUP.md, [infra]).',
-  );
+// 🔴 Et fravær beslutter ikke længere (riff ua771kpb): dette script kører kun
+// i et job, der findes for at deploye, så tomme secrets er en fejl. Et skip
+// kræver BUNNY_DEPLOY_OPTIONAL=1. Se scripts/lib/bunny-deploy.mjs for hvad der
+// blev målt i release-kørsel 35459568087.
+const deploy = resolveDeployMode({
+  required: [
+    { name: 'BUNNY_DOCS_STORAGE_ZONE', value: zone },
+    { name: 'BUNNY_DOCS_STORAGE_API_KEY', value: apiKey },
+  ],
+  optional: process.env.BUNNY_DEPLOY_OPTIONAL,
+  label: 'publish-bunny',
+});
+if (deploy.mode === 'skip') {
+  console.warn(deploy.reason);
   process.exit(0);
+}
+if (deploy.mode === 'fail') {
+  console.error(deploy.reason);
+  process.exit(1);
 }
 
 const host = region ? `${region}.storage.bunnycdn.com` : 'storage.bunnycdn.com';
@@ -224,6 +242,10 @@ async function main() {
         uploaded++;
       });
       console.log(`  ✓ uploaded ${uploaded}/${files.length} files`);
+      // Uploadede 0 filer er også "færdig" for et loop. Tallet er den eneste
+      // forskel mellem "udgav intet" og "udgav noget".
+      const counted = checkUploaded(uploaded, 'publish-bunny');
+      if (!counted.ok) throw new Error(counted.reason);
     },
   );
 

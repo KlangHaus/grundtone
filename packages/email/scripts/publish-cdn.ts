@@ -34,6 +34,10 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { resolve, relative, join, dirname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as Sentry from '@sentry/node';
+// Delt med apps/docs' publish-bunny.ts — samme fejlklasse, ét sted.
+// (Antallet behøver ingen vagt her: `versioned.length === 0` kaster allerede
+// nedenfor, så et tomt publish er umuligt i dette script.)
+import { resolveDeployMode } from '../../../scripts/lib/bunny-deploy.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const publishedRoot = resolve(here, '../published');
@@ -60,13 +64,24 @@ if (sentryEnabled) {
   );
 }
 
-if (!zone || !apiKey) {
-  console.warn(
-    'publish-cdn: BUNNY_STORAGE_ZONE / BUNNY_STORAGE_API_KEY not set — skipping CDN upload. ' +
-      'Run `pnpm compile:templates` output stays local-only until the Bunny zone for ' +
-      'email templates is provisioned (grundtone#6, pending [infra]).',
-  );
+// 🔴 Samme kur som apps/docs' publish-bunny.ts (riff ua771kpb): tomme secrets
+// i et deploy-job er en fejl, ikke et skip. Et skip kræver
+// BUNNY_DEPLOY_OPTIONAL=1.
+const deploy = resolveDeployMode({
+  required: [
+    { name: 'BUNNY_STORAGE_ZONE', value: zone },
+    { name: 'BUNNY_STORAGE_API_KEY', value: apiKey },
+  ],
+  optional: process.env.BUNNY_DEPLOY_OPTIONAL,
+  label: 'publish-cdn',
+});
+if (deploy.mode === 'skip') {
+  console.warn(deploy.reason);
   process.exit(0);
+}
+if (deploy.mode === 'fail') {
+  console.error(deploy.reason);
+  process.exit(1);
 }
 
 const host = region ? `${region}.storage.bunnycdn.com` : 'storage.bunnycdn.com';
