@@ -220,7 +220,14 @@ jobs:
           github.base_ref == 'develop'
           && github.actor != 'dependabot[bot]'
           && !startsWith(github.head_ref, 'changeset-release/')
-        run: pnpm changeset:status --since=origin/develop
+        # 🔴 NOT a bare `changeset status` (riff f9xld6w1). That command has one
+        # way to say "no release needed" — an EMPTY changeset — and an empty
+        # changeset makes changesets/action return before publishing, so the
+        # cheapest way past this gate switched releases off on develop. Three
+        # instances: #21/#76 and #208. This script accepts the honest answer
+        # instead: a package whose touched files cannot reach the published
+        # artifact needs no changeset and no placeholder.
+        run: node scripts/assert-changeset-decision.mjs origin/develop
 
   test:
     name: Test

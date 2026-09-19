@@ -179,7 +179,7 @@ describe('releaseCommandViolations sees each way a publish could go around the g
   it('a v1 output name read in its v2 kebab-case form', () => {
     expect(
       countOf(workflow, 'steps.changesets.outputs.publishedPackages'),
-    ).toBe(2);
+    ).toBe(3);
     expect(
       check({
         workflow: mutateWorkflow(
@@ -219,7 +219,14 @@ describe('releaseCommandViolations reads the changesets/action v2 contract', () 
         ),
       'steps.changesets.outputs.publishedPackages',
       'steps.changesets.outputs.published-packages',
-    );
+    )
+      // The release assertion added with riff f9xld6w1 reads this one too, and
+      // v2 renames it as well; without the rename here the fixture is not
+      // actually "the v2 names", and the cell fails for the wrong reason.
+      .replaceAll(
+        'steps.changesets.outputs.pullRequestNumber',
+        'steps.changesets.outputs.pr-number',
+      );
 
   it('the v2 pin with the v1 names is red, naming each rename', () => {
     const out = check({ workflow: v2Pin() });
@@ -237,7 +244,7 @@ describe('releaseCommandViolations reads the changesets/action v2 contract', () 
       /must have exactly `publish-script: pnpm release`, found \[\]/,
     );
     expect(out).toMatch(
-      /output "publishedPackages" is not read by changesets\/action v2\.1\.2: it was renamed to "published-packages" \(read 2x/,
+      /output "publishedPackages" is not read by changesets\/action v2\.1\.2: it was renamed to "published-packages" \(read 3x/,
     );
   });
 

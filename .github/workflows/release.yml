@@ -181,6 +181,19 @@ jobs:
           # local-dev safety net, not a CI one.
           HUSKY: '0'
 
+      # 🔴 UNCONDITIONAL, and that is the whole point (riff f9xld6w1). The only
+      # trace of "green but published nothing" was the summary step below
+      # showing as `skipped`, because it is gated on the same flag — and
+      # `skipped` reads as "the condition was false", not as an alarm
+      # ([sikkerhed], run 35463452057). A step gated on the flag cannot report
+      # on the state the flag describes, so this one runs always and decides.
+      - name: Release published, or says why not
+        env:
+          PUBLISHED: ${{ steps.changesets.outputs.published }}
+          PUBLISHED_PACKAGES: ${{ steps.changesets.outputs.publishedPackages }}
+          PULL_REQUEST_NUMBER: ${{ steps.changesets.outputs.pullRequestNumber }}
+        run: node scripts/assert-release-published.mjs
+
       - name: Generate summary
         if: steps.changesets.outputs.published == 'true'
         env:
