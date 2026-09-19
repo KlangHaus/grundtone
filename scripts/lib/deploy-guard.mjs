@@ -40,7 +40,13 @@
  * identically under both, so this is not a live bug; it is a comparator whose
  * result could change with the environment, feeding an equality assertion.
  */
-const byCodePoint = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
+const byCodePoint = (a, b) => {
+  // Spelled out rather than as a nested ternary: the compact form trips
+  // Sonar's S3358, and a comparator is read far more often than it is written.
+  if (a < b) return -1;
+  if (a > b) return 1;
+  return 0;
+};
 
 /** A file that names a Bunny zone/key secret, in any position. */
 export const BUNNY_SECRET = /\bBUNNY_[A-Z0-9_]*(ZONE|API_KEY)\b/;
