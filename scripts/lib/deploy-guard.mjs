@@ -35,12 +35,19 @@
  * assertions, so the cells would depend on the runner's ICU collation.
  *
  * Measured: `BUNNY_WEB_ZONE` vs `BUNNY_WEBSITE_ZONE` sorts OPPOSITE ways —
- * localeCompare gives -1, code points give +1, because `S` (0x53) is below
- * `_` (0x5F) while collation weights punctuation lower. Today's names sort
+ * localeCompare gives -1, `<`/`>` give +1, because `S` (0x53) is below `_`
+ * (0x5F) while collation weights punctuation lower. Today's names sort
  * identically under both, so this is not a live bug; it is a comparator whose
  * result could change with the environment, feeding an equality assertion.
+ *
+ * 🔴 NAMED FOR WHAT IT MEASURES ([sikkerhed]): `<` and `>` compare UTF-16 CODE
+ * UNITS, not code points. The two agree throughout the BMP and diverge only
+ * above it, where surrogates sort below U+E000–U+FFFF — irrelevant for
+ * `BUNNY_*` names and ASCII paths, and the property we need (deterministic, no
+ * locale) holds either way. It was called `byCodePoint` first, which claimed a
+ * guarantee the operator does not give.
  */
-const byCodePoint = (a, b) => {
+const byCodeUnit = (a, b) => {
   // Spelled out rather than as a nested ternary: the compact form trips
   // Sonar's S3358, and a comparator is read far more often than it is written.
   if (a < b) return -1;
@@ -135,7 +142,7 @@ export function deployScripts(files) {
     .filter(f => READS_SECRET.test(f.source))
     .filter(f => !/\.(test|spec)\.[cm]?[jt]s$/.test(f.path))
     .map(f => f.path)
-    .sort(byCodePoint);
+    .sort(byCodeUnit);
 }
 
 /**
@@ -191,7 +198,7 @@ export function secretNames(source) {
         m => m[0],
       ),
     ),
-  ].sort(byCodePoint);
+  ].sort(byCodeUnit);
 }
 
 /**

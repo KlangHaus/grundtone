@@ -56,6 +56,12 @@ const workflows = ['deploy-web.yml', 'release.yml'].map(name => ({
 describe('deployScripts', () => {
   // Walked from disk above, so this asserts what the REPO contains — the two
   // that were celled plus the one that was not.
+  //
+  // 🔴 THIS PIN IS NOT BOOKKEEPING ([sikkerhed], KH-1101). Together with
+  // assertPlausible() it carries the error direction for candidateFiles(),
+  // which skips unreadable directories and files SILENTLY. A walk that comes
+  // back short fails HERE, by naming a list that no longer matches. Removing
+  // this because "the list never changes" would make the silence total.
   it('finds all three real deploy scripts, not the two anyone remembered', () => {
     expect(SCRIPT_PATHS).toEqual([
       'apps/docs/scripts/publish-bunny.ts',

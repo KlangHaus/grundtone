@@ -52,6 +52,13 @@ export function globParents(globs) {
  * workspace. It must say so rather than let every dependent guard pass on an
  * empty denominator.
  *
+ * 🔴 DO NOT DELETE THIS AS "REDUNDANT" ([sikkerhed], KH-1101). It carries the
+ * error direction for a caller that cannot carry its own:
+ * `candidateFiles()` in deploy-guard.mjs skips unreadable directories and
+ * files SILENTLY, which is only defensible because a truncated walk fails
+ * here. The day this looks like a formality is the day the walk can come back
+ * short without anyone noticing.
+ *
  * @param {unknown[]} found
  * @param {number} floor  the smallest count the caller knows is real
  * @param {string} what
