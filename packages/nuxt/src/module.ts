@@ -3,14 +3,18 @@ import { dirname } from 'node:path';
 
 import {
   defineNuxtModule,
-  addComponentsDir,
-  addImportsDir,
+  addComponent,
   addImports,
   createResolver,
 } from '@nuxt/kit';
 import type { NuxtModule } from '@nuxt/schema';
 
 import { composeAdditionalData } from './scss-options';
+import {
+  COMPONENT_NAMES,
+  COMPOSABLE_NAMES,
+  VALUE_NAMES,
+} from './registrations';
 
 // Module options TypeScript interface definition
 export interface ModuleOptions {
@@ -125,31 +129,32 @@ export default defineNuxtModule<ModuleOptions>({
     //     the CSS bundle instead. Measured in the playground's SSR output:
     //     --color-primary carries the configured brand colour.
 
-    // Auto-import components
+    // 🔴 EVERYTHING COMES FROM THE PACKAGE ENTRY, never from ../../vue/src.
+    // See registrations.ts: src is not published, and a second copy of a
+    // composable would give the app its own toast state. The names are the
+    // ones the entry exports, and registrations.test.ts fails if they drift.
+    //
+    // `prefix` still applies: a component is registered under
+    // `<prefix><BaseName>`, so the default prefix keeps today's `GT*` names.
     if (options.components) {
-      const componentDirs = ['atoms', 'molecules', 'organisms'];
-      for (const dir of componentDirs) {
-        addComponentsDir({
-          path: resolver.resolve(`../../vue/src/${dir}`),
-          pathPrefix: false,
-          prefix: options.prefix,
-          extensions: ['.vue'],
-          pattern: '**/[A-Z]*.vue',
+      const prefix = options.prefix ?? 'GT';
+      for (const exported of COMPONENT_NAMES) {
+        addComponent({
+          name: prefix + exported.slice('GT'.length),
+          export: exported,
+          filePath: '@grundtone/vue',
         });
       }
     }
 
     // Auto-import composables
     if (options.composables) {
-      addImportsDir(resolver.resolve('../../vue/src/composables'));
-
-      // Auto-import icon registry injection key
-      addImports([
-        {
-          name: 'GT_ICON_REGISTRY_KEY',
+      addImports(
+        [...COMPOSABLE_NAMES, ...VALUE_NAMES].map(name => ({
+          name,
           from: '@grundtone/vue',
-        },
-      ]);
+        })),
+      );
 
       // Auto-import validator factories from @grundtone/utils
       const validators = [

@@ -1,5 +1,8 @@
 {
-  "private": false,
+  "private": true,
   "name": "basic",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@grundtone/vue": "workspace:*"
+  }
 }
