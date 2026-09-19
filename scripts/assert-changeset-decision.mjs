@@ -20,6 +20,11 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import readChangesets from '@changesets/read';
 import { changesetRequirement } from './lib/changeset-requirement.mjs';
+import {
+  assertPlausible,
+  globParents,
+  workspaceGlobs,
+} from './lib/workspace-packages.mjs';
 
 const root = process.cwd();
 const base = process.argv[2] ?? 'origin/develop';
@@ -35,9 +40,27 @@ const changedFiles = execFileSync(
   .split('\n')
   .filter(Boolean);
 
+// 🔴 DERIVED FROM pnpm-workspace.yaml, NOT LISTED HERE (riff KH-1101).
+// This used to read `['packages', 'apps']` while the workspace globs are
+// `packages/*`, `apps/*` AND `apps/playground/*`. A publishable package under a
+// parent nobody listed would be covered by neither guard, and the failure is
+// SILENT — the gate stays green because its denominator never grew.
+//
+// Measured honestly when this was written: the hardcoded list missed exactly
+// the four playground apps, and all four are `private`, so this gate skipped
+// them anyway. It changed no decision. Cured because the failure mode is
+// silent, not because it was biting.
 function workspacePackages() {
+  const parents = assertPlausible(
+    globParents(
+      workspaceGlobs(readFileSync(join(root, 'pnpm-workspace.yaml'), 'utf8')),
+    ),
+    2,
+    'workspace parents',
+  );
+
   const out = [];
-  for (const parent of ['packages', 'apps']) {
+  for (const parent of parents) {
     let entries;
     try {
       entries = readdirSync(join(root, parent));

@@ -40,6 +40,13 @@ const FONT_MIME = /^(font\/|application\/(x-)?font)/i;
 // Quoted forms are read to their closing quote rather than to the first ')':
 // a percent-decoded inline SVG legitimately contains parentheses, and a regex
 // that stops at ')' would UNDER-measure exactly the payloads that matter.
+//
+// 🔴 THE THIRD BRANCH IS NOT AN OVERSIGHT ([sikkerhed]'s verdict on #205/#212).
+// The UNQUOTED alternative `([^)\s]*)` deliberately stops at ')' — CSS forbids
+// an unescaped parenthesis in an unquoted url() token, so there is nothing to
+// read past. Written here rather than left implicit, because the next person
+// tightening the quoted forms would otherwise see the unquoted one as the weak
+// branch and "fix" it into something that swallows the rest of the stylesheet.
 const URL_TOKEN =
   /url\(\s*(?:"((?:[^"\\]|\\.)*)"|'((?:[^'\\]|\\.)*)'|([^)\s]*))\s*\)/g;
 
