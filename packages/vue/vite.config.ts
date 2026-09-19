@@ -20,7 +20,7 @@ export default defineConfig({
       // dét package.json peger paa. (En `outDir: dist/types` respekteres ikke
       // i lib-mode; maalt, saa vi flytter loeftet frem for at kaempe med den.)
       entryRoot: 'src',
-      tsconfigPath: 'tsconfig.typecheck.json',
+      tsconfigPath: 'tsconfig.dts.json',
     }),
   ],
   css: {
