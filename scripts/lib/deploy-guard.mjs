@@ -28,6 +28,20 @@
  * present, which is exactly the script that forgets it that we need to catch.
  */
 
+/**
+ * 🔴 DETERMINISTIC, NOT LOCALE-AWARE ([sikkerhed] on #215). Sonar's S2871 is
+ * satisfied by ANY explicit comparator, and `localeCompare` — the obvious
+ * reach — is the locale-dependent one. Both sorted lists feed order-sensitive
+ * assertions, so the cells would depend on the runner's ICU collation.
+ *
+ * Measured: `BUNNY_WEB_ZONE` vs `BUNNY_WEBSITE_ZONE` sorts OPPOSITE ways —
+ * localeCompare gives -1, code points give +1, because `S` (0x53) is below
+ * `_` (0x5F) while collation weights punctuation lower. Today's names sort
+ * identically under both, so this is not a live bug; it is a comparator whose
+ * result could change with the environment, feeding an equality assertion.
+ */
+const byCodePoint = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
+
 /** A file that names a Bunny zone/key secret, in any position. */
 export const BUNNY_SECRET = /\bBUNNY_[A-Z0-9_]*(ZONE|API_KEY)\b/;
 
@@ -115,7 +129,7 @@ export function deployScripts(files) {
     .filter(f => READS_SECRET.test(f.source))
     .filter(f => !/\.(test|spec)\.[cm]?[jt]s$/.test(f.path))
     .map(f => f.path)
-    .sort((a, b) => a.localeCompare(b));
+    .sort(byCodePoint);
 }
 
 /**
@@ -171,7 +185,7 @@ export function secretNames(source) {
         m => m[0],
       ),
     ),
-  ].sort((a, b) => a.localeCompare(b));
+  ].sort(byCodePoint);
 }
 
 /**
