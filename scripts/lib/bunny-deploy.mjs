@@ -1,6 +1,6 @@
 /**
- * Whether a Bunny publish should deploy, skip or fail — and whether a
- * "successful" deploy actually moved anything.
+ * Whether a Bunny publish should deploy or fail — and whether a "successful"
+ * deploy actually moved anything.
  *
  * 🔴 WHY THIS EXISTS (riff ua771kpb/KH-1008, measured again 2026-09-19).
  * Both publish scripts turned a missing secret into `exit 0` with a warning.
@@ -12,22 +12,25 @@
  * The hole stood open from the moment the secrets moved into environments
  * until someone read the log.
  *
- * An ABSENCE cannot carry a decision. A skip has to be something someone
- * DECLARED, not something a missing value produced.
+ * An ABSENCE cannot carry a decision. A job that exists to deploy either
+ * deploys or fails, and says which secret was missing.
  */
 
-/** The opt-in that turns a missing secret into a legitimate skip. */
-export const OPT_IN = 'BUNNY_DEPLOY_OPTIONAL';
-
+// 🔴 THE OPT-IN IS GONE, and its absence is the point (riff from [sikkerhed],
+// 2026-09-19). `BUNNY_DEPLOY_OPTIONAL` was read here and mapped NOWHERE:
+// release.yml had 0 occurrences of it, so `process.env.BUNNY_DEPLOY_OPTIONAL`
+// was always undefined on a runner. The cells covered this module and nothing
+// covered the consumer — an escape hatch that could never open, i.e. a
+// capability armed against nothing. The zones are provisioned now, so the
+// honest shape is: a deploy job deploys or fails.
 /**
  * @param {object} input
  * @param {{name: string, value: string|undefined}[]} input.required
  *   Required secrets as NAME + value. Only the names ever reach a log.
- * @param {string|undefined} input.optional  the value of BUNNY_DEPLOY_OPTIONAL
  * @param {string} input.label               the script's name, for messages
- * @returns {{mode: 'deploy'|'skip'|'fail', reason: string, missing: string[]}}
+ * @returns {{mode: 'deploy'|'fail', reason: string, missing: string[]}}
  */
-export function resolveDeployMode({ required, optional, label }) {
+export function resolveDeployMode({ required, label }) {
   // 🔴 `.trim()` rather than plain falsiness: what actually happened was
   // `gh secret set` with an empty clipboard. '' is falsy, but ' ' is truthy —
   // a single space would otherwise be read as a valid key and sent upstream.
@@ -40,21 +43,12 @@ export function resolveDeployMode({ required, optional, label }) {
       missing,
     };
   }
-  if (optional?.trim() === '1') {
-    return {
-      mode: 'skip',
-      reason:
-        `${label}: ${OPT_IN}=1 and ${missing.join(' + ')} missing — skipping because ` +
-        'someone declared it, not because a value was absent',
-      missing,
-    };
-  }
   return {
     mode: 'fail',
     reason:
       `${label}: ${missing.join(' + ')} is empty or unset. This job exists to deploy, so a ` +
-      'missing secret is a failure, not a skip. Set them in the environment the job declares, ' +
-      `or set ${OPT_IN}=1 to skip on purpose.`,
+      'missing secret is a failure, not a skip. Set them in the environment the job declares ' +
+      '(see the gh secret set block in #208).',
     missing,
   };
 }
@@ -63,7 +57,7 @@ export function resolveDeployMode({ required, optional, label }) {
  * Acts on a decision, so no caller has to spell out the branches.
  *
  * 🔴 THE GATE OPENS ONLY ON A POSITIVELY DECLARED `deploy` ([sikkerhed] on
- * #208). Handling `skip` and `fail` and letting everything else fall through
+ * #208). Handling the known failure and letting everything else fall through
  * means the deploy runs because the two known failures did not match — an
  * unknown mode (a value added here later) would silently deploy. Exhaustive
  * here, once, instead of in both scripts.
@@ -73,11 +67,6 @@ export function resolveDeployMode({ required, optional, label }) {
  */
 export function applyDeployMode(decision, io) {
   if (decision.mode === 'deploy') return;
-  if (decision.mode === 'skip') {
-    io.warn(decision.reason);
-    io.exit(0);
-    return;
-  }
   if (decision.mode === 'fail') {
     io.error(decision.reason);
     io.exit(1);

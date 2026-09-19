@@ -35,7 +35,7 @@ function run(script, env) {
     encoding: 'utf8',
     // Only the secrets this cell is about are set explicitly; the rest of the
     // environment (PATH etc.) is inherited, or node cannot start.
-    env: { ...process.env, BUNNY_DEPLOY_OPTIONAL: '', SENTRY_DSN: '', ...env },
+    env: { ...process.env, SENTRY_DSN: '', ...env },
   });
   if (r.error) throw r.error;
   return {
@@ -75,9 +75,14 @@ describe.each(SCRIPTS)('$label fails closed', ({ path, zone, key }) => {
     expect(r.output).not.toContain('en-zone');
   });
 
-  it('exits 0 only when the skip is declared positively', () => {
+  // 🔴 THERE IS NO WAY TO EXIT 0 WITHOUT THE SECRETS ([sikkerhed], 19/9).
+  // The old `BUNNY_DEPLOY_OPTIONAL` hatch was read by these scripts and mapped
+  // by no workflow, so it could never open on a runner — a capability armed
+  // against nothing. It is gone, and this cell pins that: even with the old
+  // variable set, an empty secret still fails.
+  it('cannot be talked into exit 0 by the removed opt-in', () => {
     const r = run(path, { [zone]: '', [key]: '', BUNNY_DEPLOY_OPTIONAL: '1' });
-    expect(r.status).toBe(0);
-    expect(r.output).toContain('BUNNY_DEPLOY_OPTIONAL');
+    expect(r.status).not.toBe(0);
+    expect(r.output).toContain(zone);
   });
 });
