@@ -39,9 +39,12 @@ const IMPORT_PATH = /from\s+'([^']+)'/g;
  * @param {string} importPath
  */
 export function escapesPackage(filePath, importPath) {
-  if (!importPath.startsWith('../')) return false;
+  const leading = /^(\.\.\/)+/.exec(importPath);
+  // Not `.match(...)[0]`: that indexes a value that can be null, and the guard
+  // that made it safe lived on a separate line where a later edit could drop it.
+  if (!leading) return false;
   const depth = filePath.split('/').slice(0, -1).length;
-  const ups = importPath.match(/^(\.\.\/)+/)[0].split('../').length - 1;
+  const ups = leading[0].split('../').length - 1;
   return ups > depth;
 }
 

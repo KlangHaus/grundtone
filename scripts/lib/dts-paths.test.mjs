@@ -1,5 +1,5 @@
 // @vitest-environment node
-import { readdirSync, readFileSync, statSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -62,21 +62,24 @@ describe('escapesPackage', () => {
 describe('the packages we publish', () => {
   const root = fileURLToPath(new URL('../../packages/', import.meta.url));
 
+  // 🔴 withFileTypes, NOT statSync-then-read: CodeQL flagged the two-call form
+  // as js/file-system-race (high) — the path is checked and then used, so the
+  // entry can change in between. One readdir answers both questions, and
+  // deploy-guard.mjs's walker already had it this way; this one drifted.
   const dtsFiles = pkg => {
     const out = [];
     const walk = dir => {
-      for (const entry of readdirSync(dir)) {
-        const full = join(dir, entry);
-        if (statSync(full).isDirectory()) walk(full);
-        else if (
-          entry.endsWith('.d.ts') ||
-          entry.endsWith('.d.cts') ||
-          entry.endsWith('.d.mts')
-        )
-          out.push({
-            path: full.slice(join(root, pkg).length + 1),
-            source: readFileSync(full, 'utf8'),
-          });
+      for (const entry of readdirSync(dir, { withFileTypes: true })) {
+        const full = join(dir, entry.name);
+        if (entry.isDirectory()) {
+          walk(full);
+          continue;
+        }
+        if (!/\.d\.[cm]?ts$/.test(entry.name)) continue;
+        out.push({
+          path: full.slice(join(root, pkg).length + 1),
+          source: readFileSync(full, 'utf8'),
+        });
       }
     };
     walk(join(root, pkg, 'dist'));
