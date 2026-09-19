@@ -83,9 +83,8 @@ const empty = emptyChangesetNames(
 // 🔴 The cause travels with each entry, so a red job says WHICH event it is:
 // "never published" and "registry unreadable" both fail a release and need
 // different responses ([sikkerhed], riff KH-1101).
-const unpublishedEntries = await unpublishedVersions({
-  packages: publishablePackages(),
-});
+const packages = publishablePackages();
+const unpublishedEntries = await unpublishedVersions({ packages });
 const unpublished = describeUnpublished(unpublishedEntries);
 
 const outcome = releaseOutcome({
@@ -96,8 +95,14 @@ const outcome = releaseOutcome({
   unpublished,
 });
 
+// 🔴 THE DENOMINATOR BELONGS IN THE GREEN (riff KH-1101). This line used to
+// print the numerator only — "unpublished versions: 0" — which reads the same
+// whether the enumeration found nine packages or one. The floor below it is 1,
+// so a walk that silently returned a single package would pass AND print an
+// identical line. Say how many were checked.
 console.log(
-  `changesets: ${changesets.length} (${empty.length} empty) · ` +
+  `checked ${packages.length} publishable package(s) · ` +
+    `changesets: ${changesets.length} (${empty.length} empty) · ` +
     `unpublished versions: ${unpublished.length}`,
 );
 console.log(`release outcome: ${outcome.code} — ${outcome.message}`);

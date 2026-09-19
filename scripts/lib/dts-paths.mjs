@@ -25,8 +25,35 @@
  * the author typed.
  */
 
-/** `from '…'` / `import … from '…'` targets in a declaration file. */
-const IMPORT_PATH = /from\s+'([^']+)'/g;
+/**
+ * Every syntax a declaration file uses to name another module.
+ *
+ * 🔴 FOUND BY [quality] ON #217, AND THE NUMBER I PUBLISHED WAS ITS VICTIM.
+ * The first version of this file matched only `from '…'`. Run against the
+ * PUBLISHED 3.2.0 tarball, one pass per form:
+ *
+ *     from '…'        13 escaping, 9 files   <- all the guard could see
+ *     import('…')      1 escaping            <- INVISIBLE
+ *                        dist/atoms/Toggle/Toggle.vue.d.ts -> ../../../../core/src
+ *     from "…"         0
+ *     import("…")      0
+ *
+ * So the true count in the broken artifact is **14**, not the 13 I wrote in the
+ * riff, the PR and the commit message. The denominator was produced by the very
+ * regex it was meant to justify — and the mutation could not expose it: restore
+ * the old tsconfig and the cell goes red on the 13, so everything looks right
+ * while a regression confined to `import('…')` walks past a green guard.
+ *
+ * Double quotes are 0 in today's artifact and are matched anyway: they are the
+ * same class, and "0 today" is the reason a form goes unnoticed, not a reason
+ * to leave it out.
+ */
+export const FORMS = {
+  "from '…'": /from\s+'([^']*)'/g,
+  'from "…"': /from\s+"([^"]*)"/g,
+  "import('…')": /import\(\s*'([^']*)'\s*\)/g,
+  'import("…")': /import\(\s*"([^"]*)"\s*\)/g,
+};
 
 /**
  * 🔴 THE DISCRIMINATING RULE IS "DOES IT LEAVE THE PACKAGE", NOT "DOES IT START
@@ -49,16 +76,30 @@ export function escapesPackage(filePath, importPath) {
 }
 
 /**
+ * 🔴 REPORTS ITS OWN DENOMINATOR, PER FORM ([quality]'s requirement on #217).
+ * `escaping: []` alone reads as "nothing wrong". It reads the same whether the
+ * guard examined four forms or silently examined one — which is exactly how the
+ * `import('…')` hole survived. `seen` counts the candidate module references
+ * found per form, so a form that suddenly yields zero candidates is visible as
+ * a change in the instrument rather than as good news about the artifact.
+ *
  * @param {{path: string, source: string}[]} files  .d.ts files, package-relative
- * @returns {{path: string, importPath: string}[]}
+ * @returns {{escaping: {path: string, importPath: string, form: string}[],
+ *            seen: Record<string, number>, files: number}}
  */
 export function escapingTypeImports(files) {
-  const out = [];
+  const escaping = [];
+  const seen = Object.fromEntries(Object.keys(FORMS).map(form => [form, 0]));
+
   for (const file of files) {
-    for (const m of file.source.matchAll(IMPORT_PATH)) {
-      if (escapesPackage(file.path, m[1]))
-        out.push({ path: file.path, importPath: m[1] });
+    for (const [form, pattern] of Object.entries(FORMS)) {
+      // A fresh regex per file: a shared /g keeps lastIndex between calls.
+      for (const m of file.source.matchAll(new RegExp(pattern.source, 'g'))) {
+        seen[form] += 1;
+        if (escapesPackage(file.path, m[1]))
+          escaping.push({ path: file.path, importPath: m[1], form });
+      }
     }
   }
-  return out;
+  return { escaping, seen, files: files.length };
 }

@@ -62,6 +62,38 @@ describe('releaseOutcome', () => {
     expect(r.message).toContain('#201');
   });
 
+  // 🔴 THE BRANCH ORDER, PROVOKED RATHER THAN ASSUMED (riff KH-1101).
+  // Measured in production: on a version-PR run the changesets step has already
+  // bumped the working tree, so `unpublished` counts exactly the versions the
+  // release PR is about to introduce — develop's run 35476988549 printed
+  // "unpublished versions: 1" with PULL_REQUEST_NUMBER=218, because the tree
+  // said @grundtone/nuxt@3.2.1 and the registry had only 3.2.0.
+  //
+  // The ONLY thing that keeps that from being a false `silent` red on every
+  // version PR is that pullRequestNumber is checked BEFORE unpublished. That
+  // ordering was load-bearing and uncelled: swap the two branches and every
+  // other cell in this file still passes while production turns red each time.
+  it('a release PR outranks versions the PR itself is about to introduce', () => {
+    const r = releaseOutcome({
+      ...base,
+      pullRequestNumber: '218',
+      unpublished: ['@grundtone/nuxt@3.2.1'],
+    });
+    expect(r.ok).toBe(true);
+    expect(r.code).toBe(OUTCOME.VERSION_PR);
+    expect(r.code).not.toBe(OUTCOME.SILENT);
+  });
+
+  it('a release PR also outranks an empty changeset, so precedence is pinned end to end', () => {
+    const r = releaseOutcome({
+      ...base,
+      pullRequestNumber: '218',
+      emptyNames: ['stray.md'],
+      unpublished: ['@grundtone/nuxt@3.2.1'],
+    });
+    expect(r.code).toBe(OUTCOME.VERSION_PR);
+  });
+
   it('green when every publishable version is already on the registry', () => {
     const r = releaseOutcome({ ...base, unpublished: [] });
     expect(r.ok).toBe(true);
