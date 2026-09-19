@@ -59,6 +59,12 @@ export const OUTCOME = {
  *   - `nothing-to-publish`: every publishable version is already on the
  *     registry. Legitimate, and only legitimate when someone measured it.
  *
+ * 🔴 The SILENT message says "could not be confirmed on the registry", not
+ * "absent from the registry": an entry lands here either because the registry
+ * answered and did not have it, or because the registry could not be read at
+ * all (riff KH-1101). Each entry carries its own cause, and the summary must
+ * not assert the stronger of the two for both.
+ *
  * A publish that fails on auth (ENEEDAUTH/E403, riff qqa2q3lb) is a different
  * animal: the action exits non-zero and the job is already red. This helper is
  * about the green cases, and says so rather than pretending to cover both.
@@ -125,8 +131,8 @@ export function releaseOutcome({
     ok: false,
     code: OUTCOME.SILENT,
     message:
-      `nothing was published, but ${unpublished.length} version(s) are absent from the ` +
-      `registry: ${unpublished.join(', ')}. The job is green and the release did not happen; ` +
+      `nothing was published, and ${unpublished.length} version(s) could not be confirmed on ` +
+      `the registry: ${unpublished.join(', ')}. The job is green and the release did not happen; ` +
       'read the publish step of this run before re-running it.',
   };
 }

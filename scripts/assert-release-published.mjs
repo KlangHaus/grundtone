@@ -20,65 +20,58 @@ import {
   emptyChangesetNames,
   releaseOutcome,
 } from './lib/release-decision.mjs';
+import {
+  describeUnpublished,
+  unpublishedVersions,
+} from './lib/registry-status.mjs';
+import {
+  assertPlausible,
+  globParents,
+  workspaceGlobs,
+} from './lib/workspace-packages.mjs';
 
 const root = process.cwd();
 
-/** npm's own name grammar, narrowed: optional scope, lowercase, no traversal. */
-const NPM_NAME = /^(@[a-z0-9][a-z0-9._-]*\/)?[a-z0-9][a-z0-9._-]*$/;
-
 /**
- * Versions this repo would publish that the registry does not have.
+ * The publishable packages, derived from the workspace globs.
  *
- * 🔴 Asked of the REGISTRY, not of `npm view`: measured 2026-09-19, the CLI
- * answered `2.22.0` and "not found" for minutes after
- * `@grundtone/react-native@3.0.0` was published, because it serves a local
- * cache. Reporting on that answer would have called a successful publish a
- * failure.
+ * 🔴 DERIVED, NOT LISTED (riff KH-1101). This read `packages/` only, while the
+ * workspace globs also cover `apps/*` and `apps/playground/*`. A publishable
+ * package outside `packages/` would have been invisible to this assertion —
+ * and invisible in the direction that matters, since an unpublished version it
+ * cannot see reads as "everything is published".
  */
-async function unpublishedVersions() {
-  const out = [];
-  const packagesDir = join(root, 'packages');
-  for (const dir of readdirSync(packagesDir)) {
-    let pkg;
-    try {
-      pkg = JSON.parse(
-        readFileSync(join(packagesDir, dir, 'package.json'), 'utf8'),
-      );
-    } catch {
-      continue; // not a package directory
-    }
-    if (pkg.private || !pkg.name || !pkg.version) continue;
+function publishablePackages() {
+  const parents = assertPlausible(
+    globParents(
+      workspaceGlobs(readFileSync(join(root, 'pnpm-workspace.yaml'), 'utf8')),
+    ),
+    2,
+    'workspace parents',
+  );
 
-    // 🔴 The name comes from a file, and it ends up in a URL. CodeQL flagged
-    // both halves of that on the first version of this script, and it was
-    // right: `.replace('/', '%2f')` escapes only the FIRST slash, which is
-    // correct for `@scope/name` by luck rather than by rule. Validate against
-    // the npm name grammar first, then escape every slash.
-    if (!NPM_NAME.test(pkg.name)) {
-      out.push(
-        `${pkg.name}@${pkg.version} (refusing to query: not an npm package name)`,
-      );
+  const out = [];
+  for (const parent of parents) {
+    let entries;
+    try {
+      entries = readdirSync(join(root, parent));
+    } catch {
       continue;
     }
-    const url = `https://registry.npmjs.org/${pkg.name.replaceAll('/', '%2f')}`;
-    try {
-      const res = await fetch(url, { headers: { accept: 'application/json' } });
-      if (res.status === 404) {
-        out.push(`${pkg.name}@${pkg.version}`); // never published at all
-        continue;
+    for (const dir of entries) {
+      let pkg;
+      try {
+        pkg = JSON.parse(
+          readFileSync(join(root, parent, dir, 'package.json'), 'utf8'),
+        );
+      } catch {
+        continue; // not a package directory
       }
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const doc = await res.json();
-      if (!doc.versions?.[pkg.version]) out.push(`${pkg.name}@${pkg.version}`);
-    } catch (err) {
-      // 🔴 A registry we could not read is not "everything is published".
-      // Fail loudly rather than let an outage look like a clean release.
-      out.push(
-        `${pkg.name}@${pkg.version} (registry unreadable: ${err.message})`,
-      );
+      if (pkg.private || !pkg.name || !pkg.version) continue;
+      out.push({ name: pkg.name, version: pkg.version });
     }
   }
-  return out.sort();
+  return assertPlausible(out, 1, 'publishable packages');
 }
 
 // Same parser the action uses, so "empty" means what it means in production.
@@ -87,7 +80,13 @@ const empty = emptyChangesetNames(
   changesets,
   changesets.map(c => `${c.id}.md`),
 );
-const unpublished = await unpublishedVersions();
+// 🔴 The cause travels with each entry, so a red job says WHICH event it is:
+// "never published" and "registry unreadable" both fail a release and need
+// different responses ([sikkerhed], riff KH-1101).
+const unpublishedEntries = await unpublishedVersions({
+  packages: publishablePackages(),
+});
+const unpublished = describeUnpublished(unpublishedEntries);
 
 const outcome = releaseOutcome({
   published: process.env.PUBLISHED,
