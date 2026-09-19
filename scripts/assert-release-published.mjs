@@ -23,6 +23,9 @@ import {
 
 const root = process.cwd();
 
+/** npm's own name grammar, narrowed: optional scope, lowercase, no traversal. */
+const NPM_NAME = /^(@[a-z0-9][a-z0-9._-]*\/)?[a-z0-9][a-z0-9._-]*$/;
+
 /**
  * Versions this repo would publish that the registry does not have.
  *
@@ -46,7 +49,18 @@ async function unpublishedVersions() {
     }
     if (pkg.private || !pkg.name || !pkg.version) continue;
 
-    const url = `https://registry.npmjs.org/${pkg.name.replace('/', '%2f')}`;
+    // 🔴 The name comes from a file, and it ends up in a URL. CodeQL flagged
+    // both halves of that on the first version of this script, and it was
+    // right: `.replace('/', '%2f')` escapes only the FIRST slash, which is
+    // correct for `@scope/name` by luck rather than by rule. Validate against
+    // the npm name grammar first, then escape every slash.
+    if (!NPM_NAME.test(pkg.name)) {
+      out.push(
+        `${pkg.name}@${pkg.version} (refusing to query: not an npm package name)`,
+      );
+      continue;
+    }
+    const url = `https://registry.npmjs.org/${pkg.name.replaceAll('/', '%2f')}`;
     try {
       const res = await fetch(url, { headers: { accept: 'application/json' } });
       if (res.status === 404) {
