@@ -1,5 +1,32 @@
 # @grundtone/vue
 
+## 3.2.0 - 2026-09-19
+
+### Patch Changes
+
+- [#176](https://github.com/KlangHaus/grundtone/pull/176)
+  [`52fc360`](https://github.com/KlangHaus/grundtone/commit/52fc360c7a1b0ab8bf7982f8695ca519288b9502)
+  Thanks [@allanasp](https://github.com/allanasp)! - Løft `@tiptap/*`-afhængighederne fra `^3.29.1`
+  til `^3.31.3`.
+
+  Rettelsen gælder GHSA-cp6q-959q-f8rh: `@tiptap/core`s `mergeAttributes()` behandler en egen
+  `__proto__`-nøgle som en prototype-write. Fixet ligger i `@tiptap/core` 3.30.4.
+
+  `@tiptap/core` er ikke en direkte afhængighed her — den kommer via de seks `@tiptap/*`-pakker, som
+  peer-pinner den EKSAKT til deres egen version. Et gulv på `core` alene ville derfor bryde tre
+  eksakte peer-pins; vejen er at løfte søskendepakkerne, hvorefter core følger med.
+
+  Ingen API-ændring i `@grundtone/vue`. 809 tests uændret grønne.
+
+- Updated dependencies
+  [[`90bc07d`](https://github.com/KlangHaus/grundtone/commit/90bc07df2e7cdff7368a692fdd60f354da5445d2),
+  [`97e4bb9`](https://github.com/KlangHaus/grundtone/commit/97e4bb9b100dbe8ca98a71e52012ee9bc28c3005),
+  [`97e4bb9`](https://github.com/KlangHaus/grundtone/commit/97e4bb9b100dbe8ca98a71e52012ee9bc28c3005)]:
+  - @grundtone/core@3.2.0
+  - @grundtone/design-system@3.2.0
+  - @grundtone/icons@3.2.0
+  - @grundtone/utils@3.2.0
+
 ## 3.1.0 - 2026-08-30
 
 ### Minor Changes

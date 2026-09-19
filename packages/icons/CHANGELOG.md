@@ -1,5 +1,15 @@
 # @grundtone/icons
 
+## 3.2.0 - 2026-09-19
+
+### Minor Changes
+
+- [#205](https://github.com/KlangHaus/grundtone/pull/205)
+  [`97e4bb9`](https://github.com/KlangHaus/grundtone/commit/97e4bb9b100dbe8ca98a71e52012ee9bc28c3005)
+  Thanks [@allanasp](https://github.com/allanasp)! - Seven navigation icons: `home`, `folder`,
+  `users`, `list`, `key`, `credit-card`, `settings`, taken from Feather (MIT, see
+  `THIRD-PARTY-NOTICES.md`, now included in the package) and drawn like the rest of the set.
+
 ## 3.0.0 - 2026-08-23
 
 ### Major Changes
