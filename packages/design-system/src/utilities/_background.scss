@@ -2,72 +2,72 @@
 // Semantic background colors from theme tokens.
 @use '../core/breakpoints' as *;
 
-@include responsive-variants using ($p) {
+@include responsive-and-hover-variants using ($p, $s) {
   // Surface / layout backgrounds
-  .#{$p}bg-background {
+  .#{$p}bg-background#{$s} {
     background-color: var(--color-background);
   }
-  .#{$p}bg-background-alt {
+  .#{$p}bg-background-alt#{$s} {
     background-color: var(--color-background-alt);
   }
-  .#{$p}bg-surface {
+  .#{$p}bg-surface#{$s} {
     background-color: var(--color-surface);
   }
-  .#{$p}bg-surface-alt {
+  .#{$p}bg-surface-alt#{$s} {
     background-color: var(--color-surface-alt);
   }
-  .#{$p}bg-surface-raised {
+  .#{$p}bg-surface-raised#{$s} {
     background-color: var(--color-surface-raised);
   }
-  .#{$p}bg-overlay {
+  .#{$p}bg-overlay#{$s} {
     background-color: var(--color-surface-overlay);
   }
-  .#{$p}bg-backdrop {
+  .#{$p}bg-backdrop#{$s} {
     background-color: var(--color-modal-backdrop);
   }
 
   // Brand
-  .#{$p}bg-primary {
+  .#{$p}bg-primary#{$s} {
     background-color: var(--color-primary);
   }
-  .#{$p}bg-primary-light {
+  .#{$p}bg-primary-light#{$s} {
     background-color: var(--color-primary-light);
   }
-  .#{$p}bg-primary-dark {
+  .#{$p}bg-primary-dark#{$s} {
     background-color: var(--color-primary-dark);
   }
-  .#{$p}bg-secondary {
+  .#{$p}bg-secondary#{$s} {
     background-color: var(--color-secondary);
   }
 
   // Status
-  .#{$p}bg-success {
+  .#{$p}bg-success#{$s} {
     background-color: var(--color-success);
   }
-  .#{$p}bg-success-light {
+  .#{$p}bg-success-light#{$s} {
     background-color: var(--color-success-light);
   }
-  .#{$p}bg-warning {
+  .#{$p}bg-warning#{$s} {
     background-color: var(--color-warning);
   }
-  .#{$p}bg-warning-light {
+  .#{$p}bg-warning-light#{$s} {
     background-color: var(--color-warning-light);
   }
-  .#{$p}bg-error {
+  .#{$p}bg-error#{$s} {
     background-color: var(--color-error);
   }
-  .#{$p}bg-error-light {
+  .#{$p}bg-error-light#{$s} {
     background-color: var(--color-error-light);
   }
-  .#{$p}bg-info {
+  .#{$p}bg-info#{$s} {
     background-color: var(--color-info);
   }
-  .#{$p}bg-info-light {
+  .#{$p}bg-info-light#{$s} {
     background-color: var(--color-info-light);
   }
 
   // Transparent
-  .#{$p}bg-transparent {
+  .#{$p}bg-transparent#{$s} {
     background-color: transparent;
   }
 }

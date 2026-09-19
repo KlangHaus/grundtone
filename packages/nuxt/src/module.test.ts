@@ -62,6 +62,11 @@ describe('grundtone nuxt-modulet', () => {
     );
 
     expect(nuxt.options.css.some(p => p.endsWith('index.css'))).toBe(true);
+    const fonts = nuxt.options.css.find(p =>
+      p.endsWith('design-system/dist/fonts.css'),
+    );
+    expect(fonts).toBeDefined();
+    expect(fonts!.startsWith('/')).toBe(true);
   });
 
   it('eksponerer modulets options til runtime', async () => {

@@ -15,10 +15,15 @@
       "require": "./dist/index.cjs"
     },
     "./css": "./dist/index.css",
+    "./fonts.css": "./dist/fonts.css",
     "./dist/index.css": "./dist/index.css",
     "./scss": {
       "sass": "./src/index.scss",
       "default": "./src/index.scss"
+    },
+    "./scss/fonts": {
+      "sass": "./src/fonts.scss",
+      "default": "./src/fonts.scss"
     },
     "./scss/lib": {
       "sass": "./src/lib.scss",
@@ -63,7 +68,7 @@
   "scripts": {
     "lint": "eslint src scripts",
     "generate:tokens": "tsx scripts/generate-token-defaults.ts",
-    "build": "pnpm generate:tokens && tsup && sass --silence-deprecation=if-function src/index.scss dist/index.css",
+    "build": "pnpm generate:tokens && tsup && sass --silence-deprecation=if-function src/index.scss dist/index.css && sass src/fonts.scss dist/fonts.css",
     "dev": "tsup --watch",
     "clean": "rm -rf .turbo node_modules dist",
     "prepublishOnly": "test -d dist || pnpm run build"

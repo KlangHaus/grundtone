@@ -23,6 +23,8 @@ $color-overrides-dark: () !default;
 $_colors-light: map.merge(c-def.$colors-light, $color-overrides-light);
 $_colors-dark: map.merge(c-def.$colors-dark, $color-overrides-dark);
 
+// IBM Plex @font-face is a separate entry (src/fonts.scss → dist/fonts.css).
+
 // Element styles (tag selectors, specificity 0,0,1)
 @use 'elements';
 
