@@ -28,16 +28,92 @@
  * present, which is exactly the script that forgets it that we need to catch.
  */
 
-/** A file that reads a Bunny secret is a deploy script, whatever it is named. */
+/** A file that names a Bunny zone/key secret, in any position. */
 export const BUNNY_SECRET = /\bBUNNY_[A-Z0-9_]*(ZONE|API_KEY)\b/;
 
 /**
- * @param {{path: string, source: string}[]} files  candidate scripts
- * @returns {string[]} paths that touch a Bunny zone/key, sorted
+ * 🔴 READS the secret from its own environment, rather than merely NAMING it.
+ * Measured on this repo: seven files mention a Bunny zone/key, but only three
+ * read one from `process.env` — the other four are the shared helper (which
+ * takes the names as arguments) and tests (which pass them as data). Asking
+ * "does this file name a secret?" would have put our own guard lib in the list
+ * of things the guard polices.
+ */
+const READS_SECRET =
+  /process\.env\.BUNNY_[A-Z0-9_]*(?:ZONE|API_KEY)\b|process\.env\[['"]BUNNY_[A-Z0-9_]*(?:ZONE|API_KEY)['"]\]/;
+
+/** Directories that never contain source: build output, deps, caches. */
+export const PRUNE = new Set([
+  'node_modules',
+  'dist',
+  '.output',
+  '.nuxt',
+  '.git',
+  'coverage',
+  '.vitepress',
+  '.turbo',
+]);
+
+const SOURCE_EXT = ['.ts', '.mts', '.js', '.mjs', '.cts', '.cjs'];
+
+/**
+ * Every source file in the repo, pruned of build output.
+ *
+ * 🔴 WHY THIS WALKS THE TREE ([sikkerhed] on #215). The first version of this
+ * guard derived the PREDICATE from the hazard but was handed its FILE SET by
+ * the cell — a list of three, asserted against itself, which could not fail on
+ * a fourth script. The predicate was hazard-derived and the denominator was
+ * cure-by-memory: exactly the shape this riff is about, one level down. A new
+ * `apps/shop/scripts/ship.ts` is now in the denominator because it is on disk,
+ * not because someone remembered to add it.
+ *
+ * Pruning matters and is measured: `apps/docs/.vitepress/dist/assets/*.js`
+ * contains a Bunny name in a built changelog page, and would otherwise be
+ * "a deploy script".
+ */
+export function candidateFiles(root, fs) {
+  const out = [];
+  const walk = dir => {
+    let entries;
+    try {
+      entries = fs.readdirSync(dir, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    for (const entry of entries) {
+      const full = `${dir}/${entry.name}`;
+      if (entry.isDirectory()) {
+        if (!PRUNE.has(entry.name)) walk(full);
+        continue;
+      }
+      if (!SOURCE_EXT.some(ext => entry.name.endsWith(ext))) continue;
+      let source;
+      try {
+        source = fs.readFileSync(full, 'utf8');
+      } catch {
+        continue;
+      }
+      out.push({ path: full.slice(root.length + 1), source });
+    }
+  };
+  walk(root);
+  return out;
+}
+
+/**
+ * @param {{path: string, source: string}[]} files  candidates, from candidateFiles()
+ * @returns {string[]} paths that deploy with a Bunny secret, sorted
+ *
+ * Tests are excluded because they carry fixtures that read these names on
+ * purpose — including this guard's own cells, which would otherwise police
+ * themselves. DECLARED BLIND SPOT: a real deploy script named `*.test.*` would
+ * escape. Nothing in the repo is shaped that way, and the alternative is a
+ * guard that flags its own fixtures forever.
  */
 export function deployScripts(files) {
   return files
-    .filter(f => BUNNY_SECRET.test(f.source))
+    .filter(f => READS_SECRET.test(f.source))
+    .filter(f => !/\.(test|spec)\.[cm]?[jt]s$/.test(f.path))
     .map(f => f.path)
     .sort();
 }

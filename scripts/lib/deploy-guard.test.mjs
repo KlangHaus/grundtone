@@ -1,9 +1,20 @@
 // @vitest-environment node
-import { readFileSync } from 'node:fs';
+import {
+  mkdirSync,
+  mkdtempSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import { describe, expect, it } from 'vitest';
 
 import {
+  candidateFiles,
   deployProtection,
   deployScripts,
   exitsZeroOnMissingSecret,
@@ -11,15 +22,31 @@ import {
   guardedByWorkflow,
   secretNames,
 } from './deploy-guard.mjs';
+import { assertPlausible } from './workspace-packages.mjs';
 
 const read = rel =>
   readFileSync(new URL(`../../${rel}`, import.meta.url), 'utf8');
 
-const SCRIPT_PATHS = [
-  'apps/docs/scripts/publish-bunny.ts',
-  'apps/web/scripts/publish-bunny.ts',
-  'packages/email/scripts/publish-cdn.ts',
-];
+const repoRoot = fileURLToPath(new URL('../../', import.meta.url)).replace(
+  /\/$/,
+  '',
+);
+
+// 🔴 THE FILE SET COMES FROM THE REPO, NOT FROM THIS FILE ([sikkerhed] on
+// #215). The first version of this cell handed the predicate a list of three
+// and asserted the output against that same list — it could not fail on a
+// fourth script, which is the only case anyone cares about. The predicate was
+// derived from the hazard; the denominator was cure-by-memory.
+const walked = assertPlausible(
+  candidateFiles(repoRoot, { readdirSync, readFileSync }),
+  100,
+  'candidate source files',
+);
+const SCRIPT_PATHS = assertPlausible(
+  deployScripts(walked),
+  3,
+  'deploy scripts',
+);
 const scripts = SCRIPT_PATHS.map(path => ({ path, source: read(path) }));
 const workflows = ['deploy-web.yml', 'release.yml'].map(name => ({
   path: name,
@@ -27,8 +54,49 @@ const workflows = ['deploy-web.yml', 'release.yml'].map(name => ({
 }));
 
 describe('deployScripts', () => {
+  // Walked from disk above, so this asserts what the REPO contains — the two
+  // that were celled plus the one that was not.
   it('finds all three real deploy scripts, not the two anyone remembered', () => {
-    expect(deployScripts(scripts)).toEqual(SCRIPT_PATHS);
+    expect(SCRIPT_PATHS).toEqual([
+      'apps/docs/scripts/publish-bunny.ts',
+      'apps/web/scripts/publish-bunny.ts',
+      'packages/email/scripts/publish-cdn.ts',
+    ]);
+  });
+
+  // 🔴 The walk must not be able to pass by finding nothing, and it must not
+  // count build output: a built changelog page under .vitepress/dist mentions
+  // a Bunny name, and would otherwise be "a deploy script".
+  it('walks real source and prunes build output', () => {
+    expect(walked.length).toBeGreaterThan(100);
+    expect(walked.some(f => f.path.includes('node_modules'))).toBe(false);
+    expect(walked.some(f => f.path.includes('/dist/'))).toBe(false);
+    expect(walked.some(f => f.path.includes('.vitepress'))).toBe(false);
+  });
+
+  // 🔴 THE CELL THAT PROVES THE DENOMINATOR IS NOT HAND-FED: a script planted
+  // on disk under a directory nobody listed is found by the walk itself.
+  it('finds a NEW deploy script nobody added to any list', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'deploy-guard-'));
+    try {
+      mkdirSync(join(dir, 'apps', 'shop', 'scripts'), { recursive: true });
+      mkdirSync(join(dir, 'node_modules', 'evil'), { recursive: true });
+      writeFileSync(
+        join(dir, 'apps', 'shop', 'scripts', 'ship.ts'),
+        'const z = process.env.BUNNY_SHOP_STORAGE_ZONE;\nupload(z);\n',
+      );
+      // Same content inside a pruned directory must NOT be found.
+      writeFileSync(
+        join(dir, 'node_modules', 'evil', 'ship.ts'),
+        'const z = process.env.BUNNY_SHOP_STORAGE_ZONE;\n',
+      );
+      const found = deployScripts(
+        candidateFiles(dir, { readdirSync, readFileSync }),
+      );
+      expect(found).toEqual(['apps/shop/scripts/ship.ts']);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 
   // 🔴 The negative control. Without it, a predicate that returned every file
@@ -61,6 +129,21 @@ describe('deployProtection', () => {
     expect(byPath['apps/docs/scripts/publish-bunny.ts']).toBe('script');
     expect(byPath['packages/email/scripts/publish-cdn.ts']).toBe('script');
     expect(byPath['apps/web/scripts/publish-bunny.ts']).toBe('workflow');
+  });
+
+  // 🔴 THE ASSERTION THAT ACTUALLY GUARDS THE REPO, as opposed to pinning a
+  // list: whatever the walk finds, every one of them must be unable to end
+  // green having uploaded nothing. A fourth script that IS protected only
+  // needs the list above updated; a fourth that is NOT protected fails here,
+  // and the message names it.
+  it('every deploy script the walk finds is protected by SOME mechanism', () => {
+    const unprotected = deployProtection(scripts, workflows)
+      .filter(r => r.protection === 'none')
+      .map(r => `${r.path} (reads ${r.names.join(', ')})`);
+    expect(
+      unprotected,
+      'a deploy script can exit 0 having uploaded nothing',
+    ).toEqual([]);
   });
 
   // 🔴 THE CELL THE WHOLE FILE IS FOR: a deploy script protected by NEITHER
