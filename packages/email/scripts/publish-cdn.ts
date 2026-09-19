@@ -34,10 +34,13 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { resolve, relative, join, dirname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as Sentry from '@sentry/node';
-// Delt med apps/docs' publish-bunny.ts — samme fejlklasse, ét sted.
-// (Antallet behøver ingen vagt her: `versioned.length === 0` kaster allerede
-// nedenfor, så et tomt publish er umuligt i dette script.)
-import { resolveDeployMode } from '../../../scripts/lib/bunny-deploy.mjs';
+// Shared with apps/docs' publish-bunny.ts — one place for one failure class.
+// (No upload-count guard needed here: `versioned.length === 0` already throws
+// below, so an empty publish is impossible in this script.)
+import {
+  applyDeployMode,
+  resolveDeployMode,
+} from '../../../scripts/lib/bunny-deploy.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const publishedRoot = resolve(here, '../published');
@@ -64,25 +67,20 @@ if (sentryEnabled) {
   );
 }
 
-// 🔴 Samme kur som apps/docs' publish-bunny.ts (riff ua771kpb): tomme secrets
-// i et deploy-job er en fejl, ikke et skip. Et skip kræver
-// BUNNY_DEPLOY_OPTIONAL=1.
-const deploy = resolveDeployMode({
-  required: [
-    { name: 'BUNNY_STORAGE_ZONE', value: zone },
-    { name: 'BUNNY_STORAGE_API_KEY', value: apiKey },
-  ],
-  optional: process.env.BUNNY_DEPLOY_OPTIONAL,
-  label: 'publish-cdn',
-});
-if (deploy.mode === 'skip') {
-  console.warn(deploy.reason);
-  process.exit(0);
-}
-if (deploy.mode === 'fail') {
-  console.error(deploy.reason);
-  process.exit(1);
-}
+// 🔴 Same cure as apps/docs' publish-bunny.ts (riff ua771kpb): empty secrets
+// in a deploy job are a failure, not a skip. A skip needs
+// BUNNY_DEPLOY_OPTIONAL=1, and the gate opens only on a declared `deploy`.
+applyDeployMode(
+  resolveDeployMode({
+    required: [
+      { name: 'BUNNY_STORAGE_ZONE', value: zone },
+      { name: 'BUNNY_STORAGE_API_KEY', value: apiKey },
+    ],
+    optional: process.env.BUNNY_DEPLOY_OPTIONAL,
+    label: 'publish-cdn',
+  }),
+  { warn: console.warn, error: console.error, exit: process.exit },
+);
 
 const host = region ? `${region}.storage.bunnycdn.com` : 'storage.bunnycdn.com';
 

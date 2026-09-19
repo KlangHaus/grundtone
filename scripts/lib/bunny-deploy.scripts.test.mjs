@@ -1,30 +1,31 @@
 // @vitest-environment node
 //
-// node, ikke rod-configens jsdom: cellen spawner rigtige processer og finder
-// repo-roden via `import.meta.url`, som under jsdom er en http-URL.
+// node, not the root config's jsdom: this cell spawns real processes and finds
+// the repo root via `import.meta.url`, which under jsdom is an http URL.
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 
 /**
- * 🔴 Kører de RIGTIGE publish-scripts, ikke kun hjælpefunktionen.
+ * 🔴 Runs the REAL publish scripts, not just the helper.
  *
- * Det, der gik galt (riff ua771kpb), var ikke en forkert beslutning i en ren
- * funktion — det var, at et deploy-trin med tomme secrets blev **success**.
- * Målt i release-kørsel 35459568087: GitHub maskerer et sat secret som `***`,
- * og i loggen stod der ingenting efter `BUNNY_DOCS_STORAGE_ZONE:`. Derfor
- * spørger cellen scriptet om præcis dét: hvad er exit-koden, når værdien er tom?
+ * What went wrong (riff ua771kpb) was not a wrong decision inside a pure
+ * function — it was that a deploy step with empty secrets went **success**.
+ * Measured in release run 35459568087: GitHub masks a set secret as `***`,
+ * and the log showed nothing after `BUNNY_DOCS_STORAGE_ZONE:`. So this cell
+ * asks the script exactly that: what is the exit code when the value is empty?
  *
- * Begge scripts afgør deploy/skip/fejl FØR de rører build-output, så cellen
- * behøver hverken et bygget site eller en netværksforbindelse.
+ * Both scripts decide deploy/skip/fail BEFORE touching build output, so the
+ * cell needs neither a built site nor a network.
  */
 
 const repoRoot = fileURLToPath(new URL('../..', import.meta.url));
 
 /**
- * 🔴 spawnSync og BEGGE strømme. Første udgave brugte execFileSync, som kun
- * giver stdout — skip-beskeden skrives med console.warn til stderr, så cellen
- * så en tom streng og faldt på en besked, scriptet faktisk havde skrevet.
+ * 🔴 spawnSync and BOTH streams. The first version used execFileSync, which
+ * only returns stdout — the skip message is written with console.warn to
+ * stderr, so the cell saw an empty string and failed on a message the script
+ * had in fact printed.
  *
  * @returns {{status: number, output: string}}
  */
@@ -32,8 +33,8 @@ function run(script, env) {
   const r = spawnSync('node', ['--import', 'tsx', script], {
     cwd: repoRoot,
     encoding: 'utf8',
-    // Kun de secrets, cellen handler om, sættes eksplicit; resten af miljøet
-    // (PATH osv.) arves, ellers kan node ikke starte.
+    // Only the secrets this cell is about are set explicitly; the rest of the
+    // environment (PATH etc.) is inherited, or node cannot start.
     env: { ...process.env, BUNNY_DEPLOY_OPTIONAL: '', SENTRY_DSN: '', ...env },
   });
   if (r.error) throw r.error;
@@ -58,23 +59,23 @@ const SCRIPTS = [
   },
 ];
 
-describe.each(SCRIPTS)('$label fejler lukket', ({ path, zone, key }) => {
-  it('exit != 0 når begge secrets er tomme (dét, der var grønt)', () => {
+describe.each(SCRIPTS)('$label fails closed', ({ path, zone, key }) => {
+  it('exits non-zero when both secrets are empty (what used to be green)', () => {
     const r = run(path, { [zone]: '', [key]: '' });
     expect(r.status).not.toBe(0);
     expect(r.output).toContain(zone);
     expect(r.output).toContain(key);
   });
 
-  it('exit != 0 når kun den ene mangler', () => {
+  it('exits non-zero when only one is missing', () => {
     const r = run(path, { [zone]: 'en-zone', [key]: '' });
     expect(r.status).not.toBe(0);
     expect(r.output).toContain(key);
-    // Navne, ikke værdier — zonen er sat, så den må ikke stå i beskeden.
+    // Names, not values — the zone is set, so it must not appear in the message.
     expect(r.output).not.toContain('en-zone');
   });
 
-  it('exit 0 kun når skip er erklæret positivt', () => {
+  it('exits 0 only when the skip is declared positively', () => {
     const r = run(path, { [zone]: '', [key]: '', BUNNY_DEPLOY_OPTIONAL: '1' });
     expect(r.status).toBe(0);
     expect(r.output).toContain('BUNNY_DEPLOY_OPTIONAL');

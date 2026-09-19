@@ -28,8 +28,9 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { resolve, relative, join, dirname, sep, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as Sentry from '@sentry/node';
-// Delt med packages/email's publish-cdn.ts — samme fejlklasse, ét sted.
+// Shared with packages/email's publish-cdn.ts — one place for one failure class.
 import {
+  applyDeployMode,
   checkUploaded,
   resolveDeployMode,
 } from '../../../scripts/lib/bunny-deploy.mjs';
@@ -59,26 +60,21 @@ if (sentryEnabled) {
   );
 }
 
-// 🔴 Et fravær beslutter ikke længere (riff ua771kpb): dette script kører kun
-// i et job, der findes for at deploye, så tomme secrets er en fejl. Et skip
-// kræver BUNNY_DEPLOY_OPTIONAL=1. Se scripts/lib/bunny-deploy.mjs for hvad der
-// blev målt i release-kørsel 35459568087.
-const deploy = resolveDeployMode({
-  required: [
-    { name: 'BUNNY_DOCS_STORAGE_ZONE', value: zone },
-    { name: 'BUNNY_DOCS_STORAGE_API_KEY', value: apiKey },
-  ],
-  optional: process.env.BUNNY_DEPLOY_OPTIONAL,
-  label: 'publish-bunny',
-});
-if (deploy.mode === 'skip') {
-  console.warn(deploy.reason);
-  process.exit(0);
-}
-if (deploy.mode === 'fail') {
-  console.error(deploy.reason);
-  process.exit(1);
-}
+// 🔴 An absence no longer decides (riff ua771kpb): this script only runs in a
+// job that exists to deploy, so empty secrets are a failure. A skip needs
+// BUNNY_DEPLOY_OPTIONAL=1. See scripts/lib/bunny-deploy.mjs for what release
+// run 35459568087 measured, and why the gate opens only on `deploy`.
+applyDeployMode(
+  resolveDeployMode({
+    required: [
+      { name: 'BUNNY_DOCS_STORAGE_ZONE', value: zone },
+      { name: 'BUNNY_DOCS_STORAGE_API_KEY', value: apiKey },
+    ],
+    optional: process.env.BUNNY_DEPLOY_OPTIONAL,
+    label: 'publish-bunny',
+  }),
+  { warn: console.warn, error: console.error, exit: process.exit },
+);
 
 const host = region ? `${region}.storage.bunnycdn.com` : 'storage.bunnycdn.com';
 const zoneBase = `https://${host}/${zone}`;
@@ -242,8 +238,8 @@ async function main() {
         uploaded++;
       });
       console.log(`  ✓ uploaded ${uploaded}/${files.length} files`);
-      // Uploadede 0 filer er også "færdig" for et loop. Tallet er den eneste
-      // forskel mellem "udgav intet" og "udgav noget".
+      // 0 uploaded files is also "done" for a loop; the count is the only
+      // difference between "published nothing" and "published something".
       const counted = checkUploaded(uploaded, 'publish-bunny');
       if (!counted.ok) throw new Error(counted.reason);
     },
