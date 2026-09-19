@@ -115,7 +115,7 @@ export function deployScripts(files) {
     .filter(f => READS_SECRET.test(f.source))
     .filter(f => !/\.(test|spec)\.[cm]?[jt]s$/.test(f.path))
     .map(f => f.path)
-    .sort();
+    .sort((a, b) => a.localeCompare(b));
 }
 
 /**
@@ -138,7 +138,6 @@ export function exitsZeroOnMissingSecret(source) {
     // this script bails out of quietly IS the missing-secret path — and
     // requiring the clause to name the secret literally would miss the common
     // shape, where the guard tests locals assigned from the env further up.
-    void before.slice(guard);
     return true;
   }
   return false;
@@ -172,7 +171,7 @@ export function secretNames(source) {
         m => m[0],
       ),
     ),
-  ].sort();
+  ].sort((a, b) => a.localeCompare(b));
 }
 
 /**
