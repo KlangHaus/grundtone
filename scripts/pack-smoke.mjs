@@ -187,22 +187,35 @@ for (const [spec, why] of result.bad)
 // renders and nothing reports it. Checked on the tarball contents, so a file
 // missing from `files` is caught here. design-system's fonts.css must contain
 // its IBM Plex @font-face urls, so the check cannot pass on an empty count.
-// No exported CSS may carry an inlined font either: Vite library mode turns
+// No exported CSS may carry a large inline blob either: Vite library mode turns
 // url() assets into base64, and fonts in design-system's index.css landed as
 // ~140 kB inside @grundtone/vue's CSS (grundtone#205).
+//
+// 🔴 The rule lives in scripts/lib/css-assets.mjs and is EMBEDDED here rather
+// than reimplemented: the probe runs inside the smoke project, which cannot
+// import from this repo, and a second copy of the rule is a second thing to
+// forget. Its cells own the mutants (riff KH-1055) — in particular a font
+// inlined as `application/octet-stream`, which the MIME-matching predecessor
+// of this rule let through.
+const cssAssetsRule = readFileSync(
+  new URL('./lib/css-assets.mjs', import.meta.url),
+  'utf8',
+);
 writeFileSync(
   join(proj, 'css-urls.mjs'),
   `import { existsSync, readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-const out = { checked: {}, missing: [], inlinedFonts: {} };
+${cssAssetsRule}
+const out = { checked: {}, missing: [], inlined: {}, inlineSeen: 0 };
 for (const spec of ${JSON.stringify(specs)}) {
   let path;
   try { path = fileURLToPath(import.meta.resolve(spec)); } catch { continue; }
   if (!path.endsWith('.css') || !existsSync(path)) continue;
   const css = readFileSync(path, 'utf8');
-  const inlined = css.match(/url\\(\\s*['"]?data:(font\\/|application\\/(x-)?font)/g);
-  if (inlined) out.inlinedFonts[spec] = inlined.length;
+  out.inlineSeen += dataUrls(css).length;
+  const offending = offendingInlineAssets(css);
+  if (offending.length) out.inlined[spec] = offending;
   const urls = [...css.matchAll(/url\\(\\s*(['"]?)([^'")]+)\\1\\s*\\)/g)]
     .map(m => m[2])
     .filter(u => !/^(data:|https?:|#)/.test(u));
@@ -218,26 +231,31 @@ console.log(JSON.stringify(out));
 const cssUrls = JSON.parse(run('node', ['css-urls.mjs'], proj));
 for (const [spec, n] of Object.entries(cssUrls.checked))
   console.log(`  ✔ css urls  ${spec}  (${n})`);
+// A green here should say what it looked at, not just that it found nothing.
+console.log(
+  `  ✔ inline    ${cssUrls.inlineSeen} data: url(s) across ${Object.keys(cssUrls.checked).length} css file(s)`,
+);
 for (const [spec, u] of cssUrls.missing)
-  console.log(`  ✗ MANGLER   ${spec}  ${u}`);
-for (const [spec, n] of Object.entries(cssUrls.inlinedFonts))
-  console.log(`  ✗ INLINET   ${spec}  (${n} fonte som data:-url)`);
+  console.log(`  ✗ MISSING   ${spec}  ${u}`);
+for (const [spec, entries] of Object.entries(cssUrls.inlined))
+  for (const entry of entries)
+    console.log(`  ✗ INLINED   ${spec}  ${entry.reason}`);
 const fontUrls = cssUrls.checked['@grundtone/design-system/fonts.css'] ?? 0;
 if (fontUrls < 7) {
   console.error(
-    `::error::@grundtone/design-system/fonts.css har ${fontUrls} fil-url'er, forventet mindst 7 (IBM Plex @font-face)`,
+    `::error::@grundtone/design-system/fonts.css has ${fontUrls} file url(s), expected at least 7 (IBM Plex @font-face)`,
   );
   process.exit(1);
 }
-if (Object.keys(cssUrls.inlinedFonts).length) {
+if (Object.keys(cssUrls.inlined).length) {
   console.error(
-    '::error::en udgivet CSS-fil har fonte inlinet som data:-url (base64) i stedet for filer',
+    '::error::a published CSS file carries an inline data: blob instead of a file',
   );
   process.exit(1);
 }
 if (cssUrls.missing.length) {
   console.error(
-    '::error::mindst én url() i en udgivet CSS-fil peger på en fil der ikke findes i pakken',
+    '::error::at least one url() in a published CSS file points at a file the package does not contain',
   );
   process.exit(1);
 }
