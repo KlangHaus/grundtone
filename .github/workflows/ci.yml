@@ -104,6 +104,15 @@ jobs:
       - name: Flade-metadata (canonical, og/twitter-par)
         run: node scripts/assert-flade-metadata.mjs apps/web/.output/public
 
+      # Run AFTER the build, and against the emitted JAVASCRIPT rather than the
+      # HTML: `nuxi generate` writes 404.html as an SPA fallback, so the error
+      # page is rendered by the client. Measured on the live site the same day:
+      # an unknown path returns 404 with a 2.5 kB shell whose only visible text
+      # is the document title. A guard that grepped 404.html would therefore
+      # report the page missing on a build where it works.
+      - name: Error page ships with the generated site
+        run: node scripts/assert-error-page.mjs apps/web/.output/public
+
       # Koeres EFTER build, fordi den maaler den BYGGEDE stylesheet. Kilden
       # fortaeller hvad nogen skrev; kun resultatet fortaeller, hvad der endte
       # med at vaere defineret. En `var(--x)` uden fallback og uden definition
