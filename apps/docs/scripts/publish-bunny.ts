@@ -61,16 +61,15 @@ if (sentryEnabled) {
 }
 
 // 🔴 An absence no longer decides (riff ua771kpb): this script only runs in a
-// job that exists to deploy, so empty secrets are a failure. A skip needs
-// BUNNY_DEPLOY_OPTIONAL=1. See scripts/lib/bunny-deploy.mjs for what release
-// run 35459568087 measured, and why the gate opens only on `deploy`.
+// job that exists to deploy, so empty secrets are a failure. See scripts/lib/bunny-deploy.mjs
+// for what release run 35459568087 measured, and why the gate opens only on
+// a declared `deploy`.
 applyDeployMode(
   resolveDeployMode({
     required: [
       { name: 'BUNNY_DOCS_STORAGE_ZONE', value: zone },
       { name: 'BUNNY_DOCS_STORAGE_API_KEY', value: apiKey },
     ],
-    optional: process.env.BUNNY_DEPLOY_OPTIONAL,
     label: 'publish-bunny',
   }),
   { warn: console.warn, error: console.error, exit: process.exit },

@@ -2,7 +2,6 @@ import { describe, expect, it, vi } from 'vitest';
 import {
   applyDeployMode,
   checkUploaded,
-  OPT_IN,
   resolveDeployMode,
 } from './bunny-deploy.mjs';
 
@@ -40,33 +39,19 @@ describe('resolveDeployMode', () => {
     expect(r.reason).not.toContain('zone-name');
   });
 
-  it('skips only on a positively declared opt-in', () => {
-    const skipped = resolveDeployMode({
-      required: secrets('', ''),
-      optional: '1',
-      label,
-    });
-    expect(skipped.mode).toBe('skip');
-    expect(skipped.reason).toContain(OPT_IN);
-
-    // An opt-in that is not exactly '1' is not an opt-in: "true"/"0"/"" are
-    // the kinds of values that land in an env var by accident.
-    for (const value of ['0', 'true', 'yes', '', ' ']) {
-      expect(
-        resolveDeployMode({ required: secrets('', ''), optional: value, label })
-          .mode,
-        `optional=${JSON.stringify(value)}`,
-      ).toBe('fail');
+  // 🔴 THERE IS NO SKIP MODE, and that is deliberate ([sikkerhed], 19/9):
+  // the old `BUNNY_DEPLOY_OPTIONAL` escape hatch was read here and mapped in
+  // no workflow, so it could never open. A missing secret has exactly one
+  // outcome now.
+  it('has no third outcome: a missing secret always fails', () => {
+    for (const optional of ['1', '0', 'true', '', undefined]) {
+      const r = resolveDeployMode({
+        required: secrets('', ''),
+        optional,
+        label,
+      });
+      expect(r.mode, `optional=${JSON.stringify(optional)}`).toBe('fail');
     }
-  });
-
-  it('the opt-in cannot hide a deploy that would otherwise run', () => {
-    const r = resolveDeployMode({
-      required: secrets('zone', 'key'),
-      optional: '1',
-      label,
-    });
-    expect(r.mode).toBe('deploy');
   });
 });
 
@@ -84,12 +69,7 @@ describe('applyDeployMode', () => {
     expect(o.error).not.toHaveBeenCalled();
   });
 
-  it('skip warns and exits 0; fail errors and exits 1', () => {
-    const skip = io();
-    applyDeployMode({ mode: 'skip', reason: 'declared' }, skip);
-    expect(skip.warn).toHaveBeenCalledWith('declared');
-    expect(skip.exit).toHaveBeenCalledWith(0);
-
+  it('fail errors and exits 1', () => {
     const fail = io();
     applyDeployMode({ mode: 'fail', reason: 'empty secret' }, fail);
     expect(fail.error).toHaveBeenCalledWith('empty secret');
@@ -99,7 +79,7 @@ describe('applyDeployMode', () => {
   // 🔴 [sikkerhed] on #208: the gate must open on a positively declared
   // `deploy`, not on "neither known failure matched". A mode nobody wrote
   // handling for must stop the deploy, not sail through it.
-  it.each([['dry-run'], [''], [undefined], ['DEPLOY']])(
+  it.each([['skip'], ['dry-run'], [''], [undefined], ['DEPLOY']])(
     'refuses to deploy on the undeclared mode %j',
     mode => {
       const o = io();

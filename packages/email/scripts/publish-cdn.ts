@@ -68,15 +68,14 @@ if (sentryEnabled) {
 }
 
 // 🔴 Same cure as apps/docs' publish-bunny.ts (riff ua771kpb): empty secrets
-// in a deploy job are a failure, not a skip. A skip needs
-// BUNNY_DEPLOY_OPTIONAL=1, and the gate opens only on a declared `deploy`.
+// in a deploy job are a failure, not a skip, and the gate opens only on a
+// declared `deploy`.
 applyDeployMode(
   resolveDeployMode({
     required: [
       { name: 'BUNNY_STORAGE_ZONE', value: zone },
       { name: 'BUNNY_STORAGE_API_KEY', value: apiKey },
     ],
-    optional: process.env.BUNNY_DEPLOY_OPTIONAL,
     label: 'publish-cdn',
   }),
   { warn: console.warn, error: console.error, exit: process.exit },
