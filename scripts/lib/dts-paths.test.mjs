@@ -132,6 +132,31 @@ describe('escapesPublishedFiles', () => {
     }
   });
 
+  // 🔴 THE PREFIX BOUNDARY, found by [sikkerhed] with a mutation that killed
+  // NOTHING. Containment is `resolved === dir || resolved.startsWith(dir + '/')`.
+  // Mutate that one slash away — `startsWith(dir)` — and `distractions/…` counts
+  // as inside `dist`. Measured on this file: the slash mutation killed 0 of 14
+  // cells, while inverting the rule killed 8, so the harness can see deaths and
+  // the zero was a real blind spot rather than a broken runner.
+  //
+  // It is the same figure as the bug this PR fixes: a boundary that is one
+  // character away from correct, and silent about the difference.
+  it('does not accept a sibling directory whose name merely starts with a published one', () => {
+    expect(
+      escapesPublishedFiles('dist/a/b.d.ts', '../../distractions/x', ['dist']),
+      'distractions/x is not inside dist',
+    ).toBe(true);
+    // The mirror costs nothing and pins the other direction.
+    expect(
+      escapesPublishedFiles('distractions/a/b.d.ts', './x', ['dist']),
+      'a file already outside the published dirs stays outside',
+    ).toBe(true);
+    // Control: the real thing must still pass, or the cell above proves nothing.
+    expect(escapesPublishedFiles('dist/a/b.d.ts', '../x', ['dist'])).toBe(
+      false,
+    );
+  });
+
   it('honours every published dir, not just the first', () => {
     expect(escapesPublishedFiles('scss/lib.d.ts', './tokens', VUE_FILES)).toBe(
       false,
