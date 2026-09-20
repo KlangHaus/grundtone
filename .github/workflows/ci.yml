@@ -278,6 +278,27 @@ jobs:
           name: build-output
           path: packages
 
+      # 🔴 EGET STEP, FORDI EN TEST-CELLE IKKE PUBLICERER SIT TAL (KH-1113).
+      # `scripts/lib/dts-paths.test.mjs` koerer den SAMME fejning nedenfor, men
+      # dens taellinger ligger inde i `expect()` og er derfor kun synlige paa en
+      # ROED koersel. Maalt paa run 35499749741 (groen): hele loggen naevner
+      # vagten to gange — et ✓ og en coverage-raekke — og ingen af dem baerer et
+      # tal. En groen af den form kan ikke skelnes fra en vagt der gik gennem en
+      # TOM dist.
+      #
+      # Et `console.log` i testen loeser det IKKE: vitests standard-reporter
+      # skjuler konsol-output fra BESTAAENDE tests, paa stdout som stderr, og
+      # CI=true aendrer det ikke (maalt lokalt paa den praecise CI-kommando: 0
+      # forekomster). Derfor et step, hvor step-loggen ER fladen.
+      #
+      # Placeret UMIDDELBART efter download-artifact: det er foerste oejeblik
+      # hvor dist findes, og en manglende dist skal faelde HER frem for at ligne
+      # en tom fejning senere. Ingen ny check-NAVN — steppet hoerer til det
+      # eksisterende `Test`-job, saa der opstaar ikke et paakraevet navn uden
+      # producent.
+      - name: Check published .d.ts boundaries
+        run: node scripts/check-dts-paths.mjs
+
       # Cachen fjerner den hyppigste aarsag til haengningen: selve downloaden.
       # Foerste koersel installerer stadig — og faelder paa step-timeouten i
       # stedet for at staa i timevis.
