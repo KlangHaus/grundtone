@@ -117,6 +117,51 @@ describe('check-dts-paths.mjs', () => {
     expect(code).toBe(1);
   });
 
+  // 🔴 THE CELL FOR THE NARROWING, written because CI found what my local run
+  // could not: `@grundtone/mcp` ships a GENERATED, gitignored `catalog.json`,
+  // present on a machine that has built and absent in the Test job, which only
+  // downloads `dist`. The first version of this guard went red on it. A missing
+  // shipped FILE is a release-gate question; a missing shipped DIRECTORY is
+  // this guard's, and the cell below pins both halves so the narrowing cannot
+  // quietly widen into "nothing is required to exist".
+  it('ignores a `files` entry that is a file, while still requiring the directories', () => {
+    const withGeneratedFile = fixture({
+      defect: root => {
+        const pkg = join(root, 'packages', 'p1');
+        writeFileSync(
+          join(pkg, 'package.json'),
+          JSON.stringify({
+            name: '@fixture/p1',
+            types: './dist/index.d.ts',
+            files: ['dist', 'generated-at-build.json'],
+          }),
+        );
+      },
+    });
+    expect(
+      run(withGeneratedFile).code,
+      'a never-built file must not fail it',
+    ).toBe(0);
+
+    const withoutDist = fixture({
+      defect: root => {
+        const pkg = join(root, 'packages', 'p1');
+        writeFileSync(
+          join(pkg, 'package.json'),
+          JSON.stringify({
+            name: '@fixture/p1',
+            types: './dist/index.d.ts',
+            files: ['dist', 'generated-at-build.json'],
+          }),
+        );
+        rmSync(join(pkg, 'dist'), { recursive: true, force: true });
+      },
+    });
+    const { code, out } = run(withoutDist);
+    expect(out, out).toContain('dist, which do not exist');
+    expect(code).toBe(1);
+  });
+
   it('fails when the package derivation comes back short', () => {
     const { code, out } = run(fixture({ packages: 4 }));
     expect(out, out).toContain('derived 4, expected at least 5');

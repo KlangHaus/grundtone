@@ -149,10 +149,25 @@ console.log(
 for (const { dir, manifest } of packages) {
   const files = manifest.files;
 
-  // RED 2: a directory that `files` promises to ship, and that is not there.
+  // RED 2: a DIRECTORY that `files` promises to ship, and that is not there.
   // A zero over an absent dist must be red, not green.
+  //
+  // 🔴 DIRECTORIES ONLY, and the narrowing was forced by a measurement rather
+  // than guessed: the first version required every `files` entry to exist and
+  // went red in CI on `@grundtone/mcp: catalog.json`. That file is GENERATED
+  // and gitignored (packages/mcp/.gitignore), so it exists on my machine, where
+  // I had built, and legitimately does not exist in the Test job, which only
+  // downloads the `dist` artifacts. Requiring it here would make this guard red
+  // forever for a reason that has nothing to do with type boundaries — and the
+  // local green would have hidden it, which is the lesson, not the fix.
+  //
+  // A missing shipped FILE is still a real packaging question; it belongs to
+  // the release gate, not to a .d.ts boundary check. `dist`, `scss`, `assets`
+  // and `src` carry no extension, so everything this guard actually walks stays
+  // covered.
   const missing = files
     .map(f => f.replace(/\/\*\*$/, '').replace(/\/$/, ''))
+    .filter(entry => !/\.[a-z0-9]+$/i.test(entry.split('/').pop()))
     .filter(entry => !existsSync(join(repoRoot, dir, entry)));
   if (missing.length > 0) {
     failures.push(
