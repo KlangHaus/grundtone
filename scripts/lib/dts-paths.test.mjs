@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 
 import { describe, expect, it } from 'vitest';
 
-import { escapesPackage, escapingTypeImports } from './dts-paths.mjs';
+import { escapesPackage, escapingTypeImports, FORMS } from './dts-paths.mjs';
 import { assertPlausible } from './workspace-packages.mjs';
 
 describe('escapesPackage', () => {
@@ -86,12 +86,85 @@ describe('the packages we publish', () => {
     return out;
   };
 
-  it('vue ships no type import that leaves the package', () => {
+  it('vue ships no type import that leaves the package, in ANY form', () => {
     const files = assertPlausible(dtsFiles('vue'), 5, 'vue .d.ts files');
-    const escaping = escapingTypeImports(files);
+    const { escaping, seen } = escapingTypeImports(files);
     expect(
-      escaping.map(e => `${e.path} -> ${e.importPath}`),
+      escaping.map(e => `${e.path} -> ${e.importPath} [${e.form}]`),
       'a consumer cannot resolve these, and with skipLibCheck they silently become any',
     ).toEqual([]);
+
+    // 🔴 The green must say what it looked at. A build that emitted no module
+    // references at all would satisfy the assertion above while measuring
+    // nothing — and that is the shape the `import('…')` hole had.
+    const total = Object.values(seen).reduce((a, b) => a + b, 0);
+    expect(
+      total,
+      `no module references found at all in ${files.length} files`,
+    ).toBeGreaterThan(50);
+  });
+
+  // 🔴 THE CELL FOR THE HOLE [quality] FOUND ON #217, with the fixture taken
+  // verbatim from the PUBLISHED 3.2.0 tarball. The guard matched only
+  // `from '…'`, so this one line was invisible — and the number "13 real" I
+  // published in the riff, the PR and the commit message was produced by that
+  // same blind regex. The true count in the broken artifact is 14.
+  it('sees the dynamic-import form, which the first version could not', () => {
+    const toggle = {
+      path: 'dist/atoms/Toggle/Toggle.vue.d.ts',
+      source:
+        "declare const _default: import('../../../../core/src').ToggleSize;\n",
+    };
+    const { escaping, seen } = escapingTypeImports([toggle]);
+    expect(escaping).toHaveLength(1);
+    expect(escaping[0].form).toBe("import('…')");
+    expect(seen["import('…')"]).toBe(1);
+  });
+
+  it('sees double-quoted forms too, which are 0 today', () => {
+    const { escaping } = escapingTypeImports([
+      {
+        path: 'dist/index.d.ts',
+        source: 'export { X } from "../../utils/src";',
+      },
+      {
+        path: 'dist/index.d.ts',
+        source: 'type A = import("../../core/src").B;',
+      },
+    ]);
+    expect(escaping.map(e => e.form).sort()).toEqual([
+      'from "…"',
+      'import("…")',
+    ]);
+  });
+
+  // 🔴 The denominator itself, so a form that stops matching is a RED and not a
+  // quiet improvement in the numbers.
+  it('counts candidates per form, including forms with no escaping paths', () => {
+    const { seen } = escapingTypeImports([
+      {
+        path: 'dist/index.d.ts',
+        source:
+          "export { A } from './local';\n" +
+          'export { B } from "./local";\n' +
+          "type C = import('./local').T;\n" +
+          'type D = import("./local").T;\n',
+      },
+    ]);
+    expect(seen).toEqual({
+      "from '…'": 1,
+      'from "…"': 1,
+      "import('…')": 1,
+      'import("…")': 1,
+    });
+  });
+
+  it('declares every form it knows about, so the list is auditable', () => {
+    expect(Object.keys(FORMS).sort()).toEqual([
+      'from "…"',
+      "from '…'",
+      'import("…")',
+      "import('…')",
+    ]);
   });
 });
