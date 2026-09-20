@@ -1,5 +1,26 @@
 # @grundtone/nuxt
 
+## 3.2.1 - 2026-09-20
+
+### Patch Changes
+
+- [#211](https://github.com/KlangHaus/grundtone/pull/211)
+  [`f5ec104`](https://github.com/KlangHaus/grundtone/commit/f5ec104bef461338cef4a204350cb78a403e5819)
+  Thanks [@allanasp](https://github.com/allanasp)! - Declare `@grundtone/utils` as a dependency, so
+  the auto-imported validators reach consumers.
+
+  The module registers `required`, `email`, `cpr`, `cvr` and the other validators
+  `from: '@grundtone/utils'`, but declared no dependency on that package. Nuxt resolves an
+  auto-import's `from` against the consumer's module directories, and when it cannot, it skips the
+  import **silently**: a build printed
+  `[NUXT_B6005] Could not resolve @grundtone/utils used by the auto-import required` on stdout and
+  stayed green. Measured on the test fixture: 1 occurrence before this change, 0 after. The
+  workspace playground could not have shown it, because it declares `@grundtone/utils` itself.
+
+- Updated dependencies
+  [[`5cf1dca`](https://github.com/KlangHaus/grundtone/commit/5cf1dca9d1f096d7bd082d17ef62fcb816c6b9d5)]:
+  - @grundtone/vue@3.2.1
+
 ## 3.2.0 - 2026-09-19
 
 ### Minor Changes

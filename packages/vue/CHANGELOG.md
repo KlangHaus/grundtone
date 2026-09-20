@@ -1,5 +1,24 @@
 # @grundtone/vue
 
+## 3.2.1 - 2026-09-20
+
+### Patch Changes
+
+- [#217](https://github.com/KlangHaus/grundtone/pull/217)
+  [`5cf1dca`](https://github.com/KlangHaus/grundtone/commit/5cf1dca9d1f096d7bd082d17ef62fcb816c6b9d5)
+  Thanks [@allanasp](https://github.com/allanasp)! - Emit type re-exports as bare specifiers, so
+  consumers can resolve them.
+
+  The published declarations re-exported through `'../../utils/src'` and `'../../core/src'`. Neither
+  `@grundtone/utils` nor `@grundtone/core` publishes `src`, so the target existed in no consumer
+  install. Measured on a real install of 3.2.0: with `skipLibCheck: false` tsc reports 13 × TS2307;
+  with `skipLibCheck: true` — what most consumers run — it reports nothing, and `required`,
+  `getSystemThemeMode`, `Validator`, `ValidationResult`, `IconDefinition` and `IconRegistry` are
+  silently `any`.
+
+  The declaration build now runs with a tsconfig that does not remap the `@grundtone` scope onto
+  sibling sources, so the emitter writes the specifier the author typed.
+
 ## 3.2.0 - 2026-09-19
 
 ### Patch Changes
