@@ -76,8 +76,8 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
     "@testing-library/jest-dom": "^6.8.0",
-    "@vitejs/plugin-vue": "^6.0.8",
-    "@vue/test-utils": "^2.5.0",
+    "@vitejs/plugin-vue": "^6.0.9",
+    "@vue/test-utils": "^2.5.1",
     "axe-core": "^4.13.0",
     "sass": "^1.104.1",
     "vite-plugin-dts": "^5.1.0",
