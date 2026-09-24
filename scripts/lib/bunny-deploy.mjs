@@ -211,3 +211,52 @@ export function classifyBunnyAuthFailure({
       "password. Replace the secret with the zone's read/write password.",
   };
 }
+
+/**
+ * The whole failure report: probe, classify, print — in one place.
+ *
+ * 🔴 It is here rather than in each script because the block was written twice,
+ * and two copies of the code that explains a 401 is the same shape as the two
+ * copies of the code that chose a HOST, which is the bug this module exists to
+ * prevent. Sonar named it (9.25% duplicated lines on new code) before a human
+ * did.
+ *
+ * Only a failure carrying a `status` is classified: a transport error or a
+ * thrown precondition has no HTTP answer to explain, and inventing one would be
+ * a plausible wrong cause rather than a missing one.
+ *
+ * @param {object} input
+ * @param {unknown} input.err
+ * @param {string} input.zone
+ * @param {string} input.host
+ * @param {string} input.apiKey
+ * @param {string} input.label
+ * @param {(msg: string) => void} input.error   where the explanation goes
+ * @param {typeof fetch} [input.fetchImpl]
+ * @returns {Promise<string|null>} the explanation printed, or null when the
+ *   failure was not an HTTP answer this can speak about
+ */
+export async function reportBunnyAuthFailure({
+  err,
+  zone,
+  host,
+  apiKey,
+  label,
+  error,
+  fetchImpl,
+}) {
+  const status = /** @type {{status?: number}} */ (err)?.status;
+  if (status === undefined) return null;
+
+  const readStatus =
+    status === 401 ? await probeBunnyRead(host, zone, apiKey, fetchImpl) : null;
+  const { reason } = classifyBunnyAuthFailure({
+    zone,
+    host,
+    uploadStatus: status,
+    readStatus,
+    label,
+  });
+  error(reason);
+  return reason;
+}

@@ -30,8 +30,7 @@ import { fileURLToPath } from 'node:url';
 import * as Sentry from '@sentry/node';
 // Shared with packages/email's publish-cdn.ts — one place for one failure class.
 import {
-  probeBunnyRead,
-  classifyBunnyAuthFailure,
+  reportBunnyAuthFailure,
   applyDeployMode,
   checkUploaded,
   resolveDeployMode,
@@ -297,19 +296,14 @@ main().catch(async err => {
 
   // 🔴 A bare 401 is not actionable: Bunny answers 401 for a wrong key, a
   // wrong zone, the wrong regional endpoint AND a read-only password.
-  const status = (err as { status?: number })?.status;
-  if (status !== undefined) {
-    console.error(
-      classifyBunnyAuthFailure({
-        zone: zone!,
-        host,
-        uploadStatus: status,
-        readStatus:
-          status === 401 ? await probeBunnyRead(host, zone!, apiKey!) : null,
-        label: 'publish-bunny',
-      }).reason,
-    );
-  }
+  await reportBunnyAuthFailure({
+    err,
+    zone: zone!,
+    host,
+    apiKey: apiKey!,
+    label: 'publish-bunny',
+    error: console.error,
+  });
   if (sentryEnabled) {
     Sentry.captureException(err, {
       tags: { zone: zone ?? 'unset', region: region ?? 'default' },

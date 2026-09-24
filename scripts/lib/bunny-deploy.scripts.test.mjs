@@ -106,7 +106,11 @@ describe('every Bunny publisher wires the 401 diagnosis', () => {
     '%s carries the status and classifies it',
     (_label, path) => {
       const source = readFileSync(join(repoRoot, path), 'utf8');
-      expect(source).toContain('classifyBunnyAuthFailure');
+      // 🔴 THE CALL, NOT THE NAME. The first version asserted the bare
+      // identifier and a mutation that deleted the call SURVIVED — the import
+      // line still carried the string. The name occurs twice; only one of them
+      // does anything, so the cell must match the one that does.
+      expect(source).toContain('await reportBunnyAuthFailure({');
       // Without this, the classifier is called with `undefined` and every
       // failure reads as "no read probe was made".
       expect(source).toContain('status: res.status');

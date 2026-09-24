@@ -4,6 +4,7 @@ import {
   checkUploaded,
   classifyBunnyAuthFailure,
   probeBunnyRead,
+  reportBunnyAuthFailure,
   resolveDeployMode,
 } from './bunny-deploy.mjs';
 
@@ -236,5 +237,64 @@ describe('probeBunnyRead', () => {
       throw new Error('getaddrinfo ENOTFOUND');
     };
     expect(await probeBunnyRead('nope.invalid', 'z', 'k', thrower)).toBeNull();
+  });
+});
+
+describe('reportBunnyAuthFailure', () => {
+  const base = {
+    zone: 'kh-email',
+    host: 'storage.bunnycdn.com',
+    apiKey: 'k',
+    label: 'publish-cdn',
+  };
+
+  it('🔴 says nothing about a failure that carries no HTTP answer', async () => {
+    // A transport error or a thrown precondition has no status to explain, and
+    // inventing a cause would be a plausible wrong answer rather than a missing
+    // one. `error` must not be called at all.
+    const error = vi.fn();
+    const got = await reportBunnyAuthFailure({
+      ...base,
+      err: new Error('published/manifest.json missing'),
+      error,
+    });
+    expect(got).toBeNull();
+    expect(error).not.toHaveBeenCalled();
+  });
+
+  it('probes on a 401 and reports the read-only case', async () => {
+    const error = vi.fn();
+    const reason = await reportBunnyAuthFailure({
+      ...base,
+      err: Object.assign(new Error('PUT x → 401'), { status: 401 }),
+      error,
+      fetchImpl: async () => ({ status: 200 }),
+    });
+    expect(reason).toContain('READ-ONLY');
+    expect(error).toHaveBeenCalledWith(reason);
+  });
+
+  it('does NOT probe for a non-401, and says it is not an auth failure', async () => {
+    // The discriminating pair: a 507 must not send a second request, or every
+    // ordinary upload failure costs an extra round trip and reads as auth.
+    const fetchImpl = vi.fn();
+    const reason = await reportBunnyAuthFailure({
+      ...base,
+      err: Object.assign(new Error('PUT x → 507'), { status: 507 }),
+      error: vi.fn(),
+      fetchImpl,
+    });
+    expect(fetchImpl).not.toHaveBeenCalled();
+    expect(reason).toContain('not an auth failure');
+  });
+
+  it('reports the credentials case when the read is 401 too', async () => {
+    const reason = await reportBunnyAuthFailure({
+      ...base,
+      err: Object.assign(new Error('PUT x → 401'), { status: 401 }),
+      error: vi.fn(),
+      fetchImpl: async () => ({ status: 401 }),
+    });
+    expect(reason).toContain('cannot be told apart');
   });
 });

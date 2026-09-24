@@ -41,9 +41,8 @@ import * as Sentry from '@sentry/node';
 // (No upload-count guard needed here: `versioned.length === 0` already throws
 // below, so an empty publish is impossible in this script.)
 import {
-  probeBunnyRead,
+  reportBunnyAuthFailure,
   applyDeployMode,
-  classifyBunnyAuthFailure,
   resolveDeployMode,
 } from '../../../scripts/lib/bunny-deploy.mjs';
 
@@ -208,19 +207,14 @@ main().catch(async err => {
 
   // 🔴 A bare 401 is not actionable: Bunny answers 401 for a wrong key, a
   // wrong zone, the wrong regional endpoint AND a read-only password.
-  const status = (err as { status?: number })?.status;
-  if (status !== undefined) {
-    console.error(
-      classifyBunnyAuthFailure({
-        zone: zone!,
-        host,
-        uploadStatus: status,
-        readStatus:
-          status === 401 ? await probeBunnyRead(host, zone!, apiKey!) : null,
-        label: 'publish-cdn',
-      }).reason,
-    );
-  }
+  await reportBunnyAuthFailure({
+    err,
+    zone: zone!,
+    host,
+    apiKey: apiKey!,
+    label: 'publish-cdn',
+    error: console.error,
+  });
   if (sentryEnabled) {
     Sentry.captureException(err, {
       tags: { zone: zone ?? 'unset', region: region ?? 'default' },
