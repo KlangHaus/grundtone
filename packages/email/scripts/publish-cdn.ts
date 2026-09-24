@@ -15,12 +15,15 @@
  * BUNNY_STORAGE_PATH_PREFIX (share a zone with other assets without
  * collision).
  *
- * Skips (exit 0, warning) rather than fails when the storage secrets are
- * absent — the Bunny zone for email templates is not provisioned yet
- * (grundtone#6, pending [infra]); CI must stay green on ordinary package
- * releases until it is. Once configured, a real upload failure DOES fail
- * the job — silently leaving `published/` un-published while claiming
- * success would strand notifications on the stub/inline renderer.
+ * FAILS (exit 1, naming the missing secret) when the storage secrets are
+ * absent — see scripts/lib/bunny-deploy.mjs. This paragraph used to say the
+ * opposite, and was left behind when the skip was removed in KH-1008: a job
+ * that exists to deploy either deploys or fails. Silently leaving `published/`
+ * un-published while claiming success would strand notifications on the
+ * stub/inline renderer.
+ *
+ * On a 401 the failure says WHICH of the four causes it is, or says it cannot
+ * tell them apart — a bare "401 Unauthorized" is not actionable.
  *
  * Error reporting: Sentry (SENTRY_DSN, also optional/graceful-skip) captures
  * upload failures with tracing spans around each PUT and the overall publish
@@ -38,6 +41,7 @@ import * as Sentry from '@sentry/node';
 // (No upload-count guard needed here: `versioned.length === 0` already throws
 // below, so an empty publish is impossible in this script.)
 import {
+  reportBunnyAuthFailure,
   applyDeployMode,
   resolveDeployMode,
 } from '../../../scripts/lib/bunny-deploy.mjs';
@@ -115,8 +119,11 @@ async function upload(localPath: string, remotePath: string): Promise<void> {
             body,
           });
           if (res.ok) return;
-          lastErr = new Error(
-            `PUT ${remotePath} → ${res.status} ${await res.text()}`,
+          lastErr = Object.assign(
+            new Error(`PUT ${remotePath} → ${res.status} ${await res.text()}`),
+            // Carried so the failure path can ask WHICH kind of rejection this
+            // was; the message text is for a human, not for a branch.
+            { status: res.status },
           );
           const retryable = res.status >= 500 || res.status === 429;
           if (!retryable || attempt === 3) break;
@@ -197,6 +204,17 @@ main().catch(async err => {
     'publish-cdn: upload failed —',
     err instanceof Error ? err.message : err,
   );
+
+  // 🔴 A bare 401 is not actionable: Bunny answers 401 for a wrong key, a
+  // wrong zone, the wrong regional endpoint AND a read-only password.
+  await reportBunnyAuthFailure({
+    err,
+    zone: zone!,
+    host,
+    apiKey: apiKey!,
+    label: 'publish-cdn',
+    error: console.error,
+  });
   if (sentryEnabled) {
     Sentry.captureException(err, {
       tags: { zone: zone ?? 'unset', region: region ?? 'default' },
