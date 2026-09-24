@@ -1,5 +1,27 @@
 # @grundtone/utils
 
+## 3.2.2 - 2026-09-24
+
+### Patch Changes
+
+- [#231](https://github.com/KlangHaus/grundtone/pull/231)
+  [`8930bbe`](https://github.com/KlangHaus/grundtone/commit/8930bbef4f321511d54e2c10de0fc28ec9e23b53)
+  Thanks [@allanasp](https://github.com/allanasp)! - Ship the MIT licence text inside the package
+  itself.
+
+  Every package already declared `license: MIT`, and npm has served that to everyone installing them
+  — but the text existed nowhere in the repository, and the README's licence badge linked to a file
+  that answered 404. npm includes `LICENSE` from the package directory only; it does not reach up to
+  a monorepo root, so a root-level file would satisfy a human browsing GitHub and nobody who
+  installs the package.
+
+  No terms change: this makes the grant that was already published readable in the artefact that
+  carries it.
+
+- Updated dependencies
+  [[`8930bbe`](https://github.com/KlangHaus/grundtone/commit/8930bbef4f321511d54e2c10de0fc28ec9e23b53)]:
+  - @grundtone/core@3.2.2
+
 ## 3.2.0 - 2026-09-19
 
 ### Patch Changes

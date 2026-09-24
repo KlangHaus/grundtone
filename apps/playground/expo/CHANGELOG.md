@@ -1,5 +1,14 @@
 # @grundtone/expo-playground
 
+## 0.0.16
+
+### Patch Changes
+
+- Updated dependencies
+  [[`8930bbe`](https://github.com/KlangHaus/grundtone/commit/8930bbef4f321511d54e2c10de0fc28ec9e23b53)]:
+  - @grundtone/icons@3.2.2
+  - @grundtone/react-native@3.0.1
+
 ## 0.0.15
 
 ### Patch Changes
