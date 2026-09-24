@@ -30,6 +30,7 @@ import { fileURLToPath } from 'node:url';
 import * as Sentry from '@sentry/node';
 // Shared with packages/email's publish-cdn.ts — one place for one failure class.
 import {
+  reportBunnyAuthFailure,
   applyDeployMode,
   checkUploaded,
   resolveDeployMode,
@@ -138,7 +139,12 @@ async function putWithRetry(
         body,
       });
       if (res.ok) return;
-      lastErr = new Error(`PUT ${url} → ${res.status} ${await res.text()}`);
+      lastErr = Object.assign(
+        new Error(`PUT ${url} → ${res.status} ${await res.text()}`),
+        // Carried so the failure path can ask WHICH kind of rejection this
+        // was; the message text is for a human, not for a branch.
+        { status: res.status },
+      );
       const retryable = res.status >= 500 || res.status === 429;
       if (!retryable || attempt === 3) break;
     } catch (err) {
@@ -287,6 +293,17 @@ main().catch(async err => {
     'publish-bunny: deploy failed —',
     err instanceof Error ? err.message : err,
   );
+
+  // 🔴 A bare 401 is not actionable: Bunny answers 401 for a wrong key, a
+  // wrong zone, the wrong regional endpoint AND a read-only password.
+  await reportBunnyAuthFailure({
+    err,
+    zone: zone!,
+    host,
+    apiKey: apiKey!,
+    label: 'publish-bunny',
+    error: console.error,
+  });
   if (sentryEnabled) {
     Sentry.captureException(err, {
       tags: { zone: zone ?? 'unset', region: region ?? 'default' },
