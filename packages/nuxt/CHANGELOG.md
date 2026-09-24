@@ -1,5 +1,33 @@
 # @grundtone/nuxt
 
+## 3.2.3 - 2026-09-24
+
+### Patch Changes
+
+- [#233](https://github.com/KlangHaus/grundtone/pull/233)
+  [`137bf22`](https://github.com/KlangHaus/grundtone/commit/137bf223f9b49a69c82c04e7e6c43103d7999595)
+  Thanks [@dependabot](https://github.com/apps/dependabot)! - Bump development dependencies
+  ([#233](https://github.com/KlangHaus/grundtone/issues/233)): `@vitejs/plugin-vue` 6.0.8→6.0.9,
+  `eslint` 10.10.0→10.11.0, `tsx` 4.23.13→4.23.15, `@vue/test-utils` 2.5.0→2.5.1 and the rest of the
+  dev-remainder group.
+
+  No source file changes. Written because the repo's own gate requires a changeset from every
+  published package whose `package.json` is touched, and Dependabot does not write one — not because
+  these bumps are known to alter what consumers receive.
+
+  🔴 Whether they DO alter it is unmeasured here. The honest test is whether the packed tarball
+  changes byte for byte, which is the instrument this repo already uses for the licence text; it
+  does not exist for this question yet. Until it does, a changeset is the conservative answer: a
+  version nobody needed costs a patch number, a missing one ships a change with no record.
+
+- Updated dependencies
+  [[`137bf22`](https://github.com/KlangHaus/grundtone/commit/137bf223f9b49a69c82c04e7e6c43103d7999595)]:
+  - @grundtone/design-system@3.2.3
+  - @grundtone/core@3.2.3
+  - @grundtone/icons@3.2.3
+  - @grundtone/utils@3.2.3
+  - @grundtone/vue@3.2.3
+
 ## 3.2.2 - 2026-09-24
 
 ### Patch Changes
