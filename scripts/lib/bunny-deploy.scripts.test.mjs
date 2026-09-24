@@ -3,6 +3,8 @@
 // node, not the root config's jsdom: this cell spawns real processes and finds
 // the repo root via `import.meta.url`, which under jsdom is an http URL.
 import { spawnSync } from 'node:child_process';
+import { globSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 
@@ -84,5 +86,46 @@ describe.each(SCRIPTS)('$label fails closed', ({ path, zone, key }) => {
     const r = run(path, { [zone]: '', [key]: '', BUNNY_DEPLOY_OPTIONAL: '1' });
     expect(r.status).not.toBe(0);
     expect(r.output).toContain(zone);
+  });
+});
+
+describe('every Bunny publisher wires the 401 diagnosis', () => {
+  /**
+   * 🔴 THIS CELL GREPS, SO SAY WHAT IT CANNOT SEE. It proves the two strings
+   * are present in each script's source. It does NOT prove the branch is
+   * reached, that `status` is the value the classifier receives, or that the
+   * message ever gets printed — a `classifyBunnyAuthFailure` call inside dead
+   * code would keep it green. The decision itself is measured in-process in
+   * bunny-deploy.test.mjs; what is unmeasured here is the wiring, because
+   * reaching it needs a real 401 from Bunny.
+   *
+   * It exists anyway because the failure it guards against is a lib function
+   * with no caller: a capability armed against nothing.
+   */
+  it.each(SCRIPTS.map(s => [s.label, s.path]))(
+    '%s carries the status and classifies it',
+    (_label, path) => {
+      const source = readFileSync(join(repoRoot, path), 'utf8');
+      expect(source).toContain('classifyBunnyAuthFailure');
+      // Without this, the classifier is called with `undefined` and every
+      // failure reads as "no read probe was made".
+      expect(source).toContain('status: res.status');
+    },
+  );
+
+  it('names every publisher in this repo, so a new one cannot be forgotten', () => {
+    // The nevner: a cell that checks two scripts is worthless if a third
+    // exists. apps/web/scripts/publish-bunny.ts is deliberately NOT in SCRIPTS
+    // — it does not import the shared module at all and gates its secrets in
+    // deploy-web.yml instead. That divergence is real and is recorded in the
+    // riff; this assertion fails the day someone adds a fourth.
+    const publishers = globSync('{apps/*,packages/*}/scripts/publish-*.ts', {
+      cwd: repoRoot,
+    }).sort();
+    expect(publishers).toEqual([
+      'apps/docs/scripts/publish-bunny.ts',
+      'apps/web/scripts/publish-bunny.ts',
+      'packages/email/scripts/publish-cdn.ts',
+    ]);
   });
 });

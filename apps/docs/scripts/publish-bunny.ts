@@ -30,6 +30,7 @@ import { fileURLToPath } from 'node:url';
 import * as Sentry from '@sentry/node';
 // Shared with packages/email's publish-cdn.ts — one place for one failure class.
 import {
+  classifyBunnyAuthFailure,
   applyDeployMode,
   checkUploaded,
   resolveDeployMode,
@@ -138,7 +139,12 @@ async function putWithRetry(
         body,
       });
       if (res.ok) return;
-      lastErr = new Error(`PUT ${url} → ${res.status} ${await res.text()}`);
+      lastErr = Object.assign(
+        new Error(`PUT ${url} → ${res.status} ${await res.text()}`),
+        // Carried so the failure path can ask WHICH kind of rejection this
+        // was; the message text is for a human, not for a branch.
+        { status: res.status },
+      );
       const retryable = res.status >= 500 || res.status === 429;
       if (!retryable || attempt === 3) break;
     } catch (err) {
@@ -282,11 +288,41 @@ async function main() {
   );
 }
 
+/**
+ * Read the zone root, to tell a rejected KEY from a key that may only read.
+ * Runs only after a write has already failed, so the happy path pays nothing.
+ */
+async function probeRead(): Promise<number | null> {
+  try {
+    const res = await fetch(`https://${host}/${zone}/`, {
+      headers: { AccessKey: apiKey! },
+    });
+    return res.status;
+  } catch {
+    return null;
+  }
+}
+
 main().catch(async err => {
   console.error(
     'publish-bunny: deploy failed —',
     err instanceof Error ? err.message : err,
   );
+
+  // 🔴 A bare 401 is not actionable: Bunny answers 401 for a wrong key, a
+  // wrong zone, the wrong regional endpoint AND a read-only password.
+  const status = (err as { status?: number })?.status;
+  if (status !== undefined) {
+    console.error(
+      classifyBunnyAuthFailure({
+        zone: zone!,
+        host,
+        uploadStatus: status,
+        readStatus: status === 401 ? await probeRead() : null,
+        label: 'publish-bunny',
+      }).reason,
+    );
+  }
   if (sentryEnabled) {
     Sentry.captureException(err, {
       tags: { zone: zone ?? 'unset', region: region ?? 'default' },

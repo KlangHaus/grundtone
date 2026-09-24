@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import {
   applyDeployMode,
   checkUploaded,
+  classifyBunnyAuthFailure,
   resolveDeployMode,
 } from './bunny-deploy.mjs';
 
@@ -102,5 +103,99 @@ describe('checkUploaded', () => {
     const r = checkUploaded(42, label);
     expect(r.ok).toBe(true);
     expect(r.reason).toContain('42');
+  });
+});
+
+describe('classifyBunnyAuthFailure', () => {
+  const base = {
+    zone: 'kh-email',
+    host: 'storage.bunnycdn.com',
+    label: 'publish-cdn',
+  };
+
+  it('says the key is read-only when a read works and the write does not', () => {
+    // The only branch that can name ONE cause, because the read proves the key,
+    // the zone and the region are all right.
+    const r = classifyBunnyAuthFailure({
+      ...base,
+      uploadStatus: 401,
+      readStatus: 404,
+    });
+    expect(r.cause).toBe('read-only-key');
+    expect(r.reason).toContain('READ-ONLY');
+    expect(r.reason).toContain('read/write password');
+  });
+
+  it.each([[200], [404]])(
+    'treats a read of %i as proof the key can read (404 = empty zone)',
+    readStatus => {
+      expect(
+        classifyBunnyAuthFailure({ ...base, uploadStatus: 401, readStatus })
+          .cause,
+      ).toBe('read-only-key');
+    },
+  );
+
+  it('🔴 refuses to name one cause when the read is ALSO 401, and says why', () => {
+    // The discriminating case. Key, zone and region all answer 401, so a
+    // message that picked one would send the reader after the wrong thing.
+    const r = classifyBunnyAuthFailure({
+      ...base,
+      uploadStatus: 401,
+      readStatus: 401,
+    });
+    expect(r.cause).toBe('credentials');
+    expect(r.reason).toContain('AccessKey');
+    expect(r.reason).toContain('zone name');
+    expect(r.reason).toContain('region');
+    expect(r.reason).toContain('cannot be told apart');
+  });
+
+  it('names the zone and the endpoint, because those are what the operator compares', () => {
+    const r = classifyBunnyAuthFailure({
+      ...base,
+      host: 'ny.storage.bunnycdn.com',
+      uploadStatus: 401,
+      readStatus: 401,
+    });
+    expect(r.reason).toContain('kh-email');
+    expect(r.reason).toContain('ny.storage.bunnycdn.com');
+  });
+
+  it('says so when no probe was made rather than implying a cause', () => {
+    const r = classifyBunnyAuthFailure({
+      ...base,
+      uploadStatus: 401,
+      readStatus: null,
+    });
+    expect(r.cause).toBe('unknown');
+    expect(r.reason).toContain('no read probe');
+  });
+
+  it('does not claim an auth problem for a non-401 write failure', () => {
+    const r = classifyBunnyAuthFailure({
+      ...base,
+      uploadStatus: 507,
+      readStatus: null,
+    });
+    expect(r.cause).toBe('not-401');
+    expect(r.reason).toContain('507');
+  });
+
+  it('never puts a key in a message — no branch receives one', () => {
+    // The nevner: every branch of the function, driven, and none of them can
+    // print a secret because none of them is given one. What this does NOT
+    // cover: a caller that concatenates the key into its own log line.
+    for (const readStatus of [null, 200, 404, 401]) {
+      for (const uploadStatus of [401, 500]) {
+        const r = classifyBunnyAuthFailure({
+          ...base,
+          uploadStatus,
+          readStatus,
+        });
+        expect(r.reason).not.toMatch(/AccessKey:/);
+        expect(r.reason).toEqual(expect.any(String));
+      }
+    }
   });
 });
