@@ -38,7 +38,11 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
+// Same shape as check-dts-paths.mjs: an env override so the cells can aim the
+// REAL script at a throwaway workspace instead of reimplementing its rules.
+const ROOT =
+  process.env.LICENSE_GUARD_ROOT ??
+  resolve(fileURLToPath(new URL('..', import.meta.url)));
 
 /** Published packages: every package directory whose package.json is not private. */
 export function publishedPackages(root = ROOT) {

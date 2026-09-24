@@ -12,7 +12,9 @@ import { join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { publishedPackages } from './assert-license-shipped.mjs';
 
-const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
+const ROOT =
+  process.env.LICENSE_GUARD_ROOT ??
+  resolve(fileURLToPath(new URL('..', import.meta.url)));
 const source = join(ROOT, 'LICENSE');
 
 const packages = publishedPackages(ROOT);
