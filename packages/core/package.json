@@ -37,7 +37,7 @@
     "prepublishOnly": "test -d dist || pnpm run build"
   },
   "devDependencies": {
-    "@types/node": "^26.1.1",
+    "@types/node": "^26.6.2",
     "@typescript-eslint/eslint-plugin": "^8.70.0",
     "@typescript-eslint/parser": "^6.21.0",
     "@vitejs/plugin-vue": "^6.0.9",
