@@ -13,29 +13,24 @@ import { fileURLToPath } from 'node:url';
 
 import { afterEach, describe, expect, it } from 'vitest';
 
+/**
+ * End-to-end cells: they run the REAL scripts as processes and read exit code
+ * and printed line. The decision itself is tested in-process in
+ * scripts/lib/license-shipped.test.mjs; these cover the part a library test
+ * cannot see — that the exit codes and the output are what CI reacts to.
+ */
+
 const GUARD = fileURLToPath(
   new URL('./assert-license-shipped.mjs', import.meta.url),
 );
 const SYNC = fileURLToPath(new URL('./sync-license.mjs', import.meta.url));
-
-/**
- * 🔴 THE CELLS RUN THE SCRIPTS, not a copy of their rules — same form as
- * check-dts-paths.test.mjs. A cell that reimplements the decision it checks
- * stays green on a script that was deleted.
- *
- * What is under test is one sentence: a package that DECLARES a licence must
- * SHIP its text, byte for byte, in the directory npm packs from. The defect it
- * was written against (2026-09-24) was nine packages declaring MIT with no
- * LICENSE file anywhere in the repository.
- */
-
 const LICENCE = 'MIT License\n\nCopyright (c) 2026 Example\n';
 const temps = [];
 
-function workspace({ packages, licence = LICENCE }) {
+function workspace(packages) {
   const root = mkdtempSync(join(tmpdir(), 'licence-guard-'));
   temps.push(root);
-  if (licence !== null) writeFileSync(join(root, 'LICENSE'), licence);
+  writeFileSync(join(root, 'LICENSE'), LICENCE);
   mkdirSync(join(root, 'packages'));
   for (const pkg of packages) {
     const dir = join(root, 'packages', pkg.dir);
@@ -48,9 +43,7 @@ function workspace({ packages, licence = LICENCE }) {
         private: pkg.private,
       }),
     );
-    if (pkg.licenceText !== undefined && pkg.licenceText !== null) {
-      writeFileSync(join(dir, 'LICENSE'), pkg.licenceText);
-    }
+    if (pkg.text !== undefined) writeFileSync(join(dir, 'LICENSE'), pkg.text);
   }
   return root;
 }
@@ -77,103 +70,43 @@ afterEach(() => {
     rmSync(temps.pop(), { recursive: true, force: true });
 });
 
-describe('assert-license-shipped', () => {
-  it('passes when every published package ships the same text, and says how many it walked', () => {
-    const root = workspace({
-      packages: [
-        { dir: 'a', name: '@x/a', license: 'MIT', licenceText: LICENCE },
-        { dir: 'b', name: '@x/b', license: 'MIT', licenceText: LICENCE },
-      ],
-    });
-    const { code, stdout } = run(GUARD, root);
-    expect(code).toBe(0);
-    // The denominator is part of the output, so a green cannot be confused with
-    // a run that walked nothing.
-    expect(stdout).toContain('2 published package(s)');
-  });
-
-  it('fails, naming the package, when a declared licence has no text in the tarball directory', () => {
-    const root = workspace({
-      packages: [
-        { dir: 'a', name: '@x/a', license: 'MIT', licenceText: LICENCE },
-        { dir: 'b', name: '@x/b', license: 'MIT' },
-      ],
-    });
-    const { code, stderr } = run(GUARD, root);
-    expect(code).toBe(1);
-    expect(stderr).toContain('@x/b');
-    expect(stderr).toContain('no LICENSE file');
-  });
-
-  it('fails on DRIFT: a copy edited in one place is two grants under one name', () => {
-    const root = workspace({
-      packages: [
-        { dir: 'a', name: '@x/a', license: 'MIT', licenceText: LICENCE },
-        {
-          dir: 'b',
-          name: '@x/b',
-          license: 'MIT',
-          licenceText: `${LICENCE}and one more line\n`,
-        },
-      ],
-    });
-    const { code, stderr } = run(GUARD, root);
-    expect(code).toBe(1);
-    expect(stderr).toContain('@x/b');
-    expect(stderr).toContain('differs from the root LICENSE');
-  });
-
-  it('ignores private packages, because nothing is shipped from them', () => {
-    const root = workspace({
-      packages: [
-        { dir: 'a', name: '@x/a', license: 'MIT', licenceText: LICENCE },
-        { dir: 'internal', name: '@x/internal', private: true },
-      ],
-    });
+describe('assert-license-shipped (exit codes and output)', () => {
+  it('exits 0 and prints the denominator when everything ships its text', () => {
+    const root = workspace([
+      { dir: 'a', name: '@x/a', license: 'MIT', text: LICENCE },
+    ]);
     const { code, stdout } = run(GUARD, root);
     expect(code).toBe(0);
     expect(stdout).toContain('1 published package(s)');
   });
 
-  it('fails LOUDLY on an empty workspace, or LICENSE_GUARD_ROOT=/tmp would be a green', () => {
-    const root = workspace({ packages: [] });
+  it('exits 1 and names the package when the text is missing', () => {
+    const root = workspace([{ dir: 'a', name: '@x/a', license: 'MIT' }]);
+    const { code, stderr } = run(GUARD, root);
+    expect(code).toBe(1);
+    expect(stderr).toContain('@x/a');
+  });
+
+  it('exits 2 on an empty workspace, or LICENSE_GUARD_ROOT=/tmp would be a green', () => {
+    const root = workspace([]);
     const { code, stderr } = run(GUARD, root);
     expect(code).toBe(2);
     expect(stderr).toContain('no published packages found');
   });
-
-  it('flags a package that ships text but declares no licence field', () => {
-    const root = workspace({
-      packages: [
-        { dir: 'a', name: '@x/a', license: undefined, licenceText: LICENCE },
-      ],
-    });
-    const { code, stderr } = run(GUARD, root);
-    expect(code).toBe(1);
-    expect(stderr).toContain('no `license` field');
-  });
 });
 
 describe('sync-license', () => {
-  it('writes the root text into every published package, and the guard then passes', () => {
-    const root = workspace({
-      packages: [
-        { dir: 'a', name: '@x/a', license: 'MIT' },
-        { dir: 'b', name: '@x/b', license: 'MIT' },
-        { dir: 'internal', name: '@x/internal', private: true },
-      ],
-    });
+  it('writes the copies, leaves private packages alone, and the guard then passes', () => {
+    const root = workspace([
+      { dir: 'a', name: '@x/a', license: 'MIT' },
+      { dir: 'internal', name: '@x/internal', private: true },
+    ]);
     expect(run(GUARD, root).code).toBe(1);
-
-    const sync = run(SYNC, root);
-    expect(sync.code).toBe(0);
-    expect(sync.stdout).toContain('2 published package(s) updated');
-
+    expect(run(SYNC, root).code).toBe(0);
     expect(run(GUARD, root).code).toBe(0);
     expect(readFileSync(join(root, 'packages', 'a', 'LICENSE'), 'utf8')).toBe(
       LICENCE,
     );
-    // A private package is not given one: it ships nothing.
     expect(() =>
       readFileSync(join(root, 'packages', 'internal', 'LICENSE'), 'utf8'),
     ).toThrow();

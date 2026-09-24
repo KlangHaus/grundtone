@@ -10,7 +10,7 @@
 import { copyFileSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { publishedPackages } from './assert-license-shipped.mjs';
+import { publishedPackages } from './lib/license-shipped.mjs';
 
 const ROOT =
   process.env.LICENSE_GUARD_ROOT ??
