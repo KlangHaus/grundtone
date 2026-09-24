@@ -3,6 +3,7 @@ import {
   applyDeployMode,
   checkUploaded,
   classifyBunnyAuthFailure,
+  probeBunnyRead,
   resolveDeployMode,
 } from './bunny-deploy.mjs';
 
@@ -197,5 +198,43 @@ describe('classifyBunnyAuthFailure', () => {
         expect(r.reason).toEqual(expect.any(String));
       }
     }
+  });
+});
+
+describe('probeBunnyRead', () => {
+  const ok = status => async () => ({ status });
+
+  it('returns the status the zone answered', async () => {
+    expect(
+      await probeBunnyRead('storage.bunnycdn.com', 'z', 'k', ok(404)),
+    ).toBe(404);
+    expect(
+      await probeBunnyRead('storage.bunnycdn.com', 'z', 'k', ok(401)),
+    ).toBe(401);
+  });
+
+  it('asks the zone root at the endpoint it was given', async () => {
+    const seen = [];
+    await probeBunnyRead(
+      'ny.storage.bunnycdn.com',
+      'kh-email',
+      'secret',
+      async (url, init) => {
+        seen.push([url, init]);
+        return { status: 200 };
+      },
+    );
+    expect(seen[0][0]).toBe('https://ny.storage.bunnycdn.com/kh-email/');
+    expect(seen[0][1].headers.AccessKey).toBe('secret');
+  });
+
+  it('🔴 returns null on a transport error rather than a status', async () => {
+    // The discriminating case: a DNS or TLS failure is not an authorization
+    // answer, and returning 0 or 401 here would make the classifier name a
+    // cause the network never reported.
+    const thrower = async () => {
+      throw new Error('getaddrinfo ENOTFOUND');
+    };
+    expect(await probeBunnyRead('nope.invalid', 'z', 'k', thrower)).toBeNull();
   });
 });

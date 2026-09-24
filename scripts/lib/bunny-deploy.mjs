@@ -100,6 +100,36 @@ export function checkUploaded(uploaded, label) {
 }
 
 /**
+ * Can this key READ the zone at this endpoint?
+ *
+ * The probe that makes a 401 discriminating. It runs only after a write has
+ * already failed, so the happy path pays nothing — and it lives here rather
+ * than in each publish script because it was copied into two of them, which is
+ * how the two scripts' 401 handling would drift apart the way their FALLBACKS
+ * already did.
+ *
+ * A transport error returns null rather than a status: the classifier then says
+ * it could not narrow the cause, instead of reading a network failure as an
+ * authorization answer.
+ *
+ * @param {string} host      e.g. `storage.bunnycdn.com`
+ * @param {string} zone      storage zone name
+ * @param {string} apiKey    the AccessKey — never logged, only sent
+ * @param {typeof fetch} [fetchImpl]
+ * @returns {Promise<number|null>}
+ */
+export async function probeBunnyRead(host, zone, apiKey, fetchImpl = fetch) {
+  try {
+    const res = await fetchImpl(`https://${host}/${zone}/`, {
+      headers: { AccessKey: apiKey },
+    });
+    return res.status;
+  } catch {
+    return null;
+  }
+}
+
+/**
  * WHICH of the three things a Bunny 401 means.
  *
  * 🔴 WHY THIS EXISTS (measured 2026-09-24, release run 35999462350). The email

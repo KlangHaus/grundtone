@@ -30,6 +30,7 @@ import { fileURLToPath } from 'node:url';
 import * as Sentry from '@sentry/node';
 // Shared with packages/email's publish-cdn.ts — one place for one failure class.
 import {
+  probeBunnyRead,
   classifyBunnyAuthFailure,
   applyDeployMode,
   checkUploaded,
@@ -288,21 +289,6 @@ async function main() {
   );
 }
 
-/**
- * Read the zone root, to tell a rejected KEY from a key that may only read.
- * Runs only after a write has already failed, so the happy path pays nothing.
- */
-async function probeRead(): Promise<number | null> {
-  try {
-    const res = await fetch(`https://${host}/${zone}/`, {
-      headers: { AccessKey: apiKey! },
-    });
-    return res.status;
-  } catch {
-    return null;
-  }
-}
-
 main().catch(async err => {
   console.error(
     'publish-bunny: deploy failed —',
@@ -318,7 +304,8 @@ main().catch(async err => {
         zone: zone!,
         host,
         uploadStatus: status,
-        readStatus: status === 401 ? await probeRead() : null,
+        readStatus:
+          status === 401 ? await probeBunnyRead(host, zone!, apiKey!) : null,
         label: 'publish-bunny',
       }).reason,
     );

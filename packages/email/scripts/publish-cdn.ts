@@ -41,6 +41,7 @@ import * as Sentry from '@sentry/node';
 // (No upload-count guard needed here: `versioned.length === 0` already throws
 // below, so an empty publish is impossible in this script.)
 import {
+  probeBunnyRead,
   applyDeployMode,
   classifyBunnyAuthFailure,
   resolveDeployMode,
@@ -199,24 +200,6 @@ async function main() {
   );
 }
 
-/**
- * Read the zone root, to tell a rejected KEY from a key that may only read.
- *
- * Runs only after a write has already failed, so it costs nothing on the happy
- * path. A transport error returns null, and the classifier then says it could
- * not narrow the cause rather than picking one.
- */
-async function probeRead(): Promise<number | null> {
-  try {
-    const res = await fetch(`https://${host}/${zone}/`, {
-      headers: { AccessKey: apiKey! },
-    });
-    return res.status;
-  } catch {
-    return null;
-  }
-}
-
 main().catch(async err => {
   console.error(
     'publish-cdn: upload failed —',
@@ -232,7 +215,8 @@ main().catch(async err => {
         zone: zone!,
         host,
         uploadStatus: status,
-        readStatus: status === 401 ? await probeRead() : null,
+        readStatus:
+          status === 401 ? await probeBunnyRead(host, zone!, apiKey!) : null,
         label: 'publish-cdn',
       }).reason,
     );
