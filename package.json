@@ -51,7 +51,7 @@
     "@neoconfetti/react": "^1.0.0",
     "@types/node": "26.6.2",
     "@typescript-eslint/eslint-plugin": "8.70.0",
-    "@typescript-eslint/parser": "^8.65.0",
+    "@typescript-eslint/parser": "^8.70.1",
     "@vitest/browser": "^4.1.11",
     "@vitest/coverage-v8": "^4.1.11",
     "eslint": "^10.11.0",
