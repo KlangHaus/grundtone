@@ -102,5 +102,10 @@
     ]
   },
   "repository": "KlangHaus/grundtone",
-  "author": "Allan Asp <mail@allanasp.dk>"
+  "author": "Allan Asp <mail@allanasp.dk>",
+  "pnpm": {
+    "overrides": {
+      "vue": "$vue"
+    }
+  }
 }
