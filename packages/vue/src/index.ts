@@ -175,6 +175,7 @@ export type { DrawerProps, DrawerSide } from './molecules/Drawer';
 export { GTConfirmDialog } from './molecules/ConfirmDialog';
 export type { ConfirmDialogProps } from './molecules/ConfirmDialog';
 export { GTRichText } from './molecules/RichText';
+export { fromHTML } from './molecules/RichText';
 export type { RichTextProps, RichTextFeature } from './molecules/RichText';
 export { GTHero } from './molecules/Hero';
 export type { HeroProps, HeroAlign, HeroBackground } from './molecules/Hero';
