@@ -11,6 +11,33 @@ onlyBuiltDependencies:
   - esbuild
 
 overrides:
+  # Gulve tilfoejet 2026-10-10, alle BUNDNE til deres egen major.
+  '@modelcontextprotocol/sdk': '>=1.31.0 <2'
+  compression: '>=1.8.2 <2'
+  source-map-js: '>=1.2.2 <2'
+  # 🔴 FLYTTET HERTIL 2026-10-10 FRA package.json's `pnpm.overrides`, hvor #245
+  # satte den. Den placering annullerede #207 ("keep every pnpm override in one
+  # file") i TAVSHED: med en `pnpm`-noegle i package.json optegnede lockfilen 1
+  # override i stedet for 67, og hver advisory-floor i denne fil var inert.
+  # Maalt: med noeglen gav shell-quote 1.10.0 og proxy-addr 2.0.7; uden den
+  # 1.12.0 og 2.0.8, og lockfilens overrides-antal gik 1 -> 67.
+  #
+  # #245's eget vaern (assert-single-vue.mjs) var groent hele tiden — det maaler
+  # vue, og vue VAR én kopi. Et vaern der maaler sin egen sag er blind for den
+  # mekanisme det deler med 66 andre.
+  vue: $vue
+  # GHSA-w7jw-789q-3m8p + GHSA-pqg4-j6r4-53mv — critical: shell-quote quote()
+  # does not escape newlines in object .op values, and a later parse() DoS.
+  # Patched 1.11.0. Reached only through apps/playground/expo > react-native >
+  # react-devtools, i.e. dev tooling in a playground app — but the gate scans the
+  # tree, not the blast radius. Bounded to 1.x by the caret, deliberately: a floor
+  # written against one advisory is not a guard against the next, and an unbounded
+  # range lets the resolution climb a major where the fix floor sits elsewhere.
+  shell-quote: ^1.11.0
+  # GHSA — critical: proxy-addr. Patched 2.0.8. Transitive via
+  # packages/mcp > @modelcontextprotocol/sdk > express > proxy-addr. Bounded to
+  # 2.x for the same reason as above.
+  proxy-addr: '>=2.0.8 <3'
   # 🔴 REMOVED with this change: `react-native: 0.81.5` and
   # `react-devtools-core: 6.1.5`. Both were exact pins that lived here while
   # this file was inert, so they never bore. MEASURED both ways: deleting them
@@ -64,7 +91,7 @@ overrides:
   '@xmldom/xmldom': '>=0.8.13'
   simple-git: '>=3.36.0'
   fast-uri: '>=4.1.3 <5'
-  devalue: '>=5.8.1'
+  devalue: '>=5.9.3 <6'
   unhead: '>=2.1.13'
   postcss: '>=8.5.18'
   nitropack: '>=2.13.4'
@@ -101,6 +128,37 @@ overrides:
 # (Har begge den, VINDER package.json — se reference-noten om prioritering.)
 auditConfig:
   ignoreGhsas:
+    # 🔴 TILFOEJET 2026-10-10. Seks id'er, og kun seks: hver af dem er maalt
+    # uafhjaelpelig FOR OS, og alle tre pakker kommer ind gennem
+    # apps/playground/* — demo-apps, ikke publicerede pakker. Ingen af dem er
+    # direkte afhaengighed i nogen publiceret @grundtone-pakke, saa de kan ikke
+    # naa en forbruger af biblioteket. `pnpm audit --prod` scanner hele
+    # workspacets prod-lukning, playground-apps inklusive; det er derfor de
+    # taelles.
+    #
+    # NAVNGIVNE, ikke `--ignore-unfixable`. Blankotaeppet absorberer ogsaa det
+    # NAESTE uafhjaelpelige fund, inklusive et kritisk, uden at nogen beslutter
+    # det. Seks id'er lader et syvende advisory goere gaten roed.
+    #
+    # braces (via expo > @expo/metro) og node-forge (via expo > @expo/cli):
+    # ingen patch findes. Verificeret mod registret, ikke kun mod auditens
+    # `<0.0.0`-kodning: nyeste udgivne braces ER 3.0.3 og node-forge ER 1.4.0,
+    # begge inde i deres eget advisory-span. Samme to undtages ved navn i
+    # grundtone-studio (#343).
+    - GHSA-vfj7-8cjw-p6xm
+    - GHSA-86w9-cpqp-85rv
+    # simple-git-kaeden (via playground/nuxt > nuxt > @nuxt/devtools): kraever
+    # simple-git >=4.0.1, og en override DER brakker byggeriet — simple-git 4
+    # droppede default-eksporten @nuxt/devtools importerer, saa `nuxt prepare`
+    # fejler ved install. Maalt i studio og dokumenteret i dets
+    # pnpm-workspace.yaml. Ingen udgivet @nuxt/devtools op til 3.4.2 bruger
+    # simple-git 4, saa der er heller ingen opstroems kur. FJERN DISSE FIRE naar
+    # devtools udgiver simple-git 4 — det er den ene blokering tilbage i BEGGE
+    # repoer.
+    - GHSA-x6jw-m9v5-85vh
+    - GHSA-v5rq-49vh-5v5c
+    - GHSA-g4wm-2vf7-vfgr
+    - GHSA-858h-whjf-mvg5
     # GHSA-5p2g-fcmc-qvqq · GHSA-w3rx-r6r6-pgpr — image-size DoS i ICNS- og
     # JXL/HEIF-parserne. **Der findes INGEN patch**: advisory'et angiver
     # `Patched versions <0.0.0`, og npms nyeste (2.0.2) er selv saarbar. En
