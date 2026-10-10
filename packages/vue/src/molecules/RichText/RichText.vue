@@ -4,9 +4,8 @@
   import { createFocusTrap, type FocusTrap } from '@grundtone/utils';
   import { useEditor, EditorContent, type JSONContent } from '@tiptap/vue-3';
   import { generateHTML } from '@tiptap/html';
-  import StarterKit from '@tiptap/starter-kit';
-  import Placeholder from '@tiptap/extension-placeholder';
   import type { AnyExtension } from '@tiptap/core';
+  import { buildExtensions } from './extensions';
   import { isSafeLinkUrl } from './link';
   import type { RichTextProps, RichTextFeature } from './types';
 
@@ -43,24 +42,13 @@
   // The extension set IS the schema — and the schema IS the paste allow-list.
   // Anything not enabled here can neither be typed nor pasted in. StarterKit
   // nodes/marks outside our feature set are explicitly disabled.
-  const extensions = computed<AnyExtension[]>(() => [
-    StarterKit.configure({
-      heading: has('heading') ? { levels: [2, 3] } : false,
-      bold: has('bold') ? {} : false,
-      italic: has('italic') ? {} : false,
-      code: has('code') ? {} : false,
-      bulletList: has('bulletList') ? {} : false,
-      orderedList: has('orderedList') ? {} : false,
-      link: has('link') ? { openOnClick: false, autolink: true } : false,
-      // Deliberately out of the v1 feature set:
-      strike: false,
-      codeBlock: false,
-      blockquote: false,
-      horizontalRule: false,
-      underline: false,
-    }) as AnyExtension,
-    Placeholder.configure({ placeholder: props.placeholder }),
-  ]);
+  // 🔴 ONE definition of the extension set, shared with fromHTML (see
+  // extensions.ts). A second list here would drift from the converter's, and a
+  // node the converter accepted but this schema dropped would lose content on
+  // first open with nothing red anywhere.
+  const extensions = computed<AnyExtension[]>(() =>
+    buildExtensions(props.features, props.placeholder),
+  );
 
   const isInvalid = computed(
     () => props.error !== false && props.error !== undefined,
