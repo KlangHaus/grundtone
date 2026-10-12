@@ -1,5 +1,13 @@
 # @grundtone/design-system
 
+## 3.3.0 - 2026-10-12
+
+### Patch Changes
+
+- Updated dependencies
+  [[`14e10ed`](https://github.com/KlangHaus/grundtone/commit/14e10ed26e95996f1f2d3e2c06b5cf5947b36412)]:
+  - @grundtone/core@3.3.0
+
 ## 3.2.3 - 2026-09-28
 
 ### Patch Changes

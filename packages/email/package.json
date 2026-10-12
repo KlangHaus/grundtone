@@ -1,6 +1,6 @@
 {
   "name": "@grundtone/email",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "Framework-agnostic, token-themed email building blocks for Grundtone — compile to bulletproof inlined HTML",
   "license": "MIT",
   "private": false,
