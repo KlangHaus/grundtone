@@ -23,8 +23,15 @@
  * correctly). This script is the production proof (what did it decide about the
  * artifact we are about to publish).
  *
+ * 🔴 IT READS THE TARBALL, NOT `files` (KH-1113, step two). Each package is
+ * packed with `pnpm pack` — the same packer `changeset publish` uses — and both
+ * the .d.ts files swept and the boundary they are judged against come from that
+ * pack list. A `files` entry that matches nothing, a glob, an exclusion, or a
+ * file npm always adds can therefore no longer make this guard disagree with
+ * what a consumer installs.
+ *
  * WHAT MAKES IT RED — each one an alternative explanation for a zero:
- *   1. any escaping type import, in any package                (the defect)
+ *   1. any type import that resolves to no file in the tarball  (the defect)
  *   2. a directory named in `files` that does not exist         (absent dist)
  *   3. a package that declares types but emitted no .d.ts       (empty dist)
  *   4. vue under its known-true floor of module references      (the `import('…')`
@@ -38,7 +45,15 @@
  * carried only by vue, where a real floor is known.
  */
 
-import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import {
+  existsSync,
+  mkdtempSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+} from 'node:fs';
+import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -87,38 +102,37 @@ function workspacePackageDirs() {
 }
 
 /**
- * 🔴 A `files` entry is not necessarily a directory. Measured: icons ships
- * `THIRD-PARTY-NOTICES.md` and mcp ships `catalog.json`. My first walker
- * crashed on exactly that, and a walker that instead skipped quietly would have
- * reported a smaller denominator with no sign that it had.
+ * Every path `pnpm pack` puts in the tarball, package-relative.
+ *
+ * 🔴 A REAL PACK, NOT A DRY RUN: pnpm 10.14 has no `pack --dry-run`, and npm's
+ * dry run is a different packer from the one that publishes. The tarball goes to
+ * a throwaway directory and is deleted; only the list is kept.
  */
-function publishedDirs(pkgDir, files) {
-  return files
-    .map(f => f.replace(/\/\*\*$/, '').replace(/\/$/, ''))
-    .filter(entry => {
-      const full = join(repoRoot, pkgDir, entry);
-      return existsSync(full) && statSync(full).isDirectory();
-    });
+function tarballPaths(pkgDir) {
+  const dest = mkdtempSync(join(tmpdir(), 'dts-guard-pack-'));
+  try {
+    const out = execFileSync(
+      'pnpm',
+      ['pack', '--json', '--pack-destination', dest],
+      {
+        cwd: join(repoRoot, pkgDir),
+        encoding: 'utf8',
+        stdio: ['ignore', 'pipe', 'pipe'],
+      },
+    );
+    return JSON.parse(out.slice(out.indexOf('{'))).files.map(f => f.path);
+  } finally {
+    rmSync(dest, { recursive: true, force: true });
+  }
 }
 
-function declarationFiles(pkgDir, dirs) {
-  const out = [];
-  const walk = dir => {
-    for (const entry of readdirSync(dir, { withFileTypes: true })) {
-      const full = join(dir, entry.name);
-      if (entry.isDirectory()) {
-        walk(full);
-        continue;
-      }
-      if (!/\.d\.[cm]?ts$/.test(entry.name)) continue;
-      out.push({
-        path: full.slice(join(repoRoot, pkgDir).length + 1),
-        source: readFileSync(full, 'utf8'),
-      });
-    }
-  };
-  for (const dir of dirs) walk(join(repoRoot, pkgDir, dir));
-  return out;
+function declarationFiles(pkgDir, packed) {
+  return packed
+    .filter(path => /\.d\.[cm]?ts$/.test(path))
+    .map(path => ({
+      path,
+      source: readFileSync(join(repoRoot, pkgDir, path), 'utf8'),
+    }));
 }
 
 function declaresTypes(manifest) {
@@ -175,26 +189,26 @@ for (const { dir, manifest } of packages) {
     );
   }
 
-  const dirs = publishedDirs(dir, files);
-  const dts = declarationFiles(dir, dirs);
-  const { escaping, seen } = escapingTypeImports(dts, files);
+  const packed = tarballPaths(dir);
+  const dts = declarationFiles(dir, packed);
+  const { escaping, seen } = escapingTypeImports(dts, packed);
   const total = Object.values(seen).reduce((a, b) => a + b, 0);
 
   console.log(
-    `[dts-guard] ${manifest.name}: ${dts.length} .d.ts in ${JSON.stringify(dirs)}, ` +
+    `[dts-guard] ${manifest.name}: ${packed.length} packed files, ${dts.length} .d.ts, ` +
       `${total} module references ${JSON.stringify(seen)}, escaping=${escaping.length}`,
   );
 
   for (const e of escaping) {
     failures.push(
-      `${manifest.name}: ${e.path} -> ${e.importPath} [${e.form}] leaves the published files`,
+      `${manifest.name}: ${e.path} -> ${e.importPath} [${e.form}] resolves to no file in the tarball`,
     );
   }
 
-  // RED 3: declarations promised, none emitted.
+  // RED 3: declarations promised, none packed.
   if (dts.length === 0 && declaresTypes(manifest)) {
     failures.push(
-      `${manifest.name}: declares types but emitted 0 .d.ts under ${JSON.stringify(dirs)}`,
+      `${manifest.name}: declares types but its tarball holds 0 .d.ts`,
     );
   }
 

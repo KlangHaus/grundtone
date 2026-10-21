@@ -41,6 +41,7 @@ function fixture({ packages = 5, defect = null } = {}) {
       join(dir, 'package.json'),
       JSON.stringify({
         name: `@fixture/${name}`,
+        version: '0.0.0',
         types: './dist/index.d.ts',
         files: ['dist'],
       }),
@@ -49,6 +50,7 @@ function fixture({ packages = 5, defect = null } = {}) {
       join(dir, 'dist', 'index.d.ts'),
       "export type A = import('./other').B;\n",
     );
+    writeFileSync(join(dir, 'dist', 'other.d.ts'), 'export type B = 1;\n');
   }
   if (defect) defect(root);
   return root;
@@ -67,7 +69,9 @@ function run(root) {
   }
 }
 
-describe('check-dts-paths.mjs', () => {
+// Each run packs five fixture packages for real (`pnpm pack`, ~0.5 s each), so
+// a cell that runs the guard twice outlives vitest's 5 s default.
+describe('check-dts-paths.mjs', { timeout: 30_000 }, () => {
   // 🔴 THE POSITIVE CONTROL. Without it, every red below could come from a
   // script that fails on anything at all.
   it('passes a workspace whose declarations stay inside the published dirs', () => {
@@ -81,7 +85,7 @@ describe('check-dts-paths.mjs', () => {
     const { out } = run(fixture());
     // The numbers, not just a tick: files seen, references seen, escapes.
     expect(out).toMatch(
-      /@fixture\/p0: 1 \.d\.ts in \["dist"\], 1 module references .*escaping=0/,
+      /@fixture\/p0: 3 packed files, 2 \.d\.ts, 1 module references .*escaping=0/,
     );
   });
 
@@ -95,9 +99,40 @@ describe('check-dts-paths.mjs', () => {
           ),
       }),
     );
-    expect(out, out).toContain('leaves the published files');
+    expect(out, out).toContain('resolves to no file in the tarball');
     expect(out).toContain('dist/leak.d.ts');
     expect(code).toBe(1);
+  });
+
+  // 🔴 THE CLASS #220's `files`-prefix rule could not see: the target is under
+  // a published directory, and the build never emitted it. The consumer gets
+  // TS2307 (or `any`) all the same.
+  it('fails on a type import inside dist whose target is not in the tarball', () => {
+    const { code, out } = run(
+      fixture({
+        defect: root =>
+          rmSync(join(root, 'packages', 'p2', 'dist', 'other.d.ts')),
+      }),
+    );
+    expect(out, out).toContain(
+      "@fixture/p2: dist/index.d.ts -> ./other [import('…')] resolves to no file in the tarball",
+    );
+    expect(code).toBe(1);
+  });
+
+  // 🔴 AND THE ONE IT GOT WRONG THE OTHER WAY: npm always packs package.json,
+  // whatever `files` says, so referencing it is not a leak.
+  it('passes a reference to a file npm always packs, though `files` omits it', () => {
+    const { code, out } = run(
+      fixture({
+        defect: root =>
+          writeFileSync(
+            join(root, 'packages', 'p2', 'dist', 'version.d.ts'),
+            "export type V = typeof import('../package.json').version;\n",
+          ),
+      }),
+    );
+    expect(code, out).toBe(0);
   });
 
   // 🔴 A ZERO OVER AN ABSENT dist MUST BE RED. This is the case the vitest
@@ -113,7 +148,7 @@ describe('check-dts-paths.mjs', () => {
       }),
     );
     expect(out, out).toContain('which do not exist — the package is not built');
-    expect(out).toContain('declares types but emitted 0 .d.ts');
+    expect(out).toContain('declares types but its tarball holds 0 .d.ts');
     expect(code).toBe(1);
   });
 
@@ -132,6 +167,7 @@ describe('check-dts-paths.mjs', () => {
           join(pkg, 'package.json'),
           JSON.stringify({
             name: '@fixture/p1',
+            version: '0.0.0',
             types: './dist/index.d.ts',
             files: ['dist', 'generated-at-build.json'],
           }),
@@ -150,6 +186,7 @@ describe('check-dts-paths.mjs', () => {
           join(pkg, 'package.json'),
           JSON.stringify({
             name: '@fixture/p1',
+            version: '0.0.0',
             types: './dist/index.d.ts',
             files: ['dist', 'generated-at-build.json'],
           }),

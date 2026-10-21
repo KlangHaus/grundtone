@@ -67,58 +67,99 @@ export const FORMS = {
  *     dist/a/b.d.ts  +  ../../x   ->  resolves to  x   (the package ROOT)
  *
  * is INSIDE the package and NOT in the tarball. It fails for a consumer exactly
- * like KH-1100 — and the old rule called it fine. Worse, the cell asserted that
- * answer as correct ("two ups stay inside"), so the guard did not merely miss
- * the case: it pinned the wrong behaviour.
+ * like KH-1100 — and the old rule called it fine.
  *
- * Measured by [sikkerhed]: `../src/tokens`, `../../../src/tokens` and
- * `import('../../../src/core')` all passed unflagged, while the control
- * `../../utils/src` was flagged. Calibrated honestly: 0 occurrences in today's
- * artifact, and the six benign forms all resolve inside `dist` — a hole in the
- * RULE, not in 3.2.1.
+ * 🔴 AND THE BOUNDARY IS THE PACK LIST, NOT A READING OF `files` (KH-1113, step
+ * two). #220 moved the rule from the package root to `files`, but it did so by
+ * RE-INTERPRETING `files` as a list of directory prefixes. That is a second
+ * model of npm-packlist, and it is wrong wherever the two disagree:
  *
- * 🔴 The existing coverage does not weaken this, and the proof is an outcome
- * rather than a reading: `pack-smoke` has run in CI the whole time, and
- * @grundtone/vue 3.1.0 AND 3.2.0 shipped the escaping paths anyway. A guard
- * that was green through two releases of the defect cannot be the reason not to
- * fix this one.
+ *   - a target inside a published dir that does not EXIST passes as "inside"
+ *     (`dist/x.d.ts` -> `./gone`) — the consumer still gets TS2307;
+ *   - a `files` glob such as `dist/*.d.ts` is matched as a literal prefix;
+ *   - `!dist/internal` and `.npmignore` exclusions are invisible;
+ *   - files npm ALWAYS packs (`package.json`, `README*`, `LICENSE*`) are
+ *     reported as unpublished.
+ *
+ * So the question is now asked of the list `pnpm pack` itself produced: does
+ * the specifier resolve to a file that IS in the tarball? There is no model of
+ * `files` left here to drift.
  *
  * @param {string} filePath   path relative to the PACKAGE root, e.g. dist/atoms/Icon/types.d.ts
  * @param {string} importPath the specifier as written
- * @param {string[]} files    the package's `files` field
+ * @param {Set<string>} packed every path in the tarball, package-relative
  */
-export function escapesPublishedFiles(filePath, importPath, files) {
+export function missingFromTarball(filePath, importPath, packed) {
   if (!importPath.startsWith('.')) return false; // bare specifier: not our question
 
-  // 🔴 The floor is loud rather than permissive. An empty `files` would make
-  // every path "unpublished" — but a caller that forgot to pass it would
-  // otherwise get a silent avalanche of findings, and the guard would look
-  // newly effective instead of newly broken.
-  if (!Array.isArray(files) || files.length === 0)
+  // 🔴 The floor is loud rather than permissive. An empty pack list would make
+  // every path "unpublished" — a caller that forgot to pass it would get a
+  // silent avalanche of findings, and the guard would look newly effective
+  // instead of newly broken.
+  if (!(packed instanceof Set) || packed.size === 0)
     throw new Error(
-      `escapesPublishedFiles: no \`files\` given for ${filePath} — the tarball ` +
+      `missingFromTarball: no pack list given for ${filePath} — the tarball ` +
         'boundary cannot be decided without it, and guessing it is how the ' +
         'package-root rule went wrong in the first place',
     );
 
+  const resolved = resolveRelative(filePath, importPath);
+  // Above the package root: no tarball entry can cover it.
+  if (resolved === null) return true;
+  return !typeTargets(resolved).some(candidate => packed.has(candidate));
+}
+
+/**
+ * `dist/a/b.d.ts` + `../c` -> `dist/c`, or null when it climbs above the root.
+ * @param {string} filePath
+ * @param {string} importPath
+ */
+export function resolveRelative(filePath, importPath) {
   const segments = filePath.split('/').slice(0, -1);
   for (const part of importPath.split('/')) {
     if (part === '.' || part === '') continue;
     if (part === '..') {
-      // Above the package root: escapes, and no `files` entry can cover it.
-      if (segments.length === 0) return true;
+      if (segments.length === 0) return null;
       segments.pop();
       continue;
     }
     segments.push(part);
   }
-  const resolved = segments.join('/');
+  return segments.join('/');
+}
 
-  // Published directories, as `files` spells them (`dist`, `dist/**`, `dist/`).
-  const published = files.map(f => f.replace(/\/\*\*$/, '').replace(/\/$/, ''));
-  return !published.some(
-    dir => resolved === dir || resolved.startsWith(`${dir}/`),
+// What TypeScript tries for a relative specifier, in the shapes this repo emits:
+// `./x` -> x.d.ts, `./Toggle.vue` -> Toggle.vue.d.ts, `./dir` -> dir/index.d.ts,
+// `./module.mjs` -> module.d.mts, `../template-CJ3ZdEAr.cjs` -> template-CJ3ZdEAr.d.cts.
+const JS_TO_TYPES = {
+  '.js': ['.d.ts', '.ts', '.tsx'],
+  '.jsx': ['.d.ts', '.tsx'],
+  '.mjs': ['.d.mts', '.mts'],
+  '.cjs': ['.d.cts', '.cts'],
+};
+const APPENDED = ['.d.ts', '.d.mts', '.d.cts', '.ts', '.tsx', '.mts', '.cts'];
+
+/**
+ * Every file a relative specifier may take its TYPES from, package-relative.
+ *
+ * 🔴 A JS extension never counts as its own answer. `./module.mjs` is satisfied
+ * by `module.d.mts`, not by `module.mjs`: a tarball that ships the code but not
+ * its declaration gives the consumer `any`, which is the KH-1100 failure. The
+ * first draft of this list put the exact path first and passed nuxt's
+ * `./module.mjs` on the `.mjs` alone — measured, not reasoned.
+ *
+ * @param {string} resolved
+ */
+export function typeTargets(resolved) {
+  const jsExt = Object.keys(JS_TO_TYPES).find(ext => resolved.endsWith(ext));
+  if (jsExt) {
+    const stem = resolved.slice(0, -jsExt.length);
+    return JS_TO_TYPES[jsExt].map(ext => stem + ext);
+  }
+  const index = ['index.d.ts', 'index.ts'].map(f =>
+    resolved ? `${resolved}/${f}` : f,
   );
+  return [resolved, ...APPENDED.map(ext => resolved + ext), ...index];
 }
 
 /**
@@ -130,18 +171,19 @@ export function escapesPublishedFiles(filePath, importPath, files) {
  * than as good news about the artifact.
  *
  * 🔴 TWO DIFFERENT KINDS OF "files", named apart on purpose (KH-1113):
- *   dtsFiles       — the declaration files being read
- *   publishedFiles — the package's `files` field, i.e. what the tarball carries
- * The old signature called the first one `files`, and the rule it fed asked
+ *   dtsFiles — the declaration files being read
+ *   packed   — every path `pnpm pack` put in the tarball
+ * The first signature called the former `files`, and the rule it fed asked
  * about the package ROOT rather than the tarball. Reusing one word for two
  * questions is how they got confused.
  *
  * @param {{path: string, source: string}[]} dtsFiles  .d.ts files, package-relative
- * @param {string[]} publishedFiles  the package's `files` field
+ * @param {Iterable<string>} packed  the tarball's paths, package-relative
  * @returns {{escaping: {path: string, importPath: string, form: string}[],
  *            seen: Record<string, number>, files: number}}
  */
-export function escapingTypeImports(dtsFiles, publishedFiles) {
+export function escapingTypeImports(dtsFiles, packed) {
+  const packedSet = new Set(packed);
   const escaping = [];
   const seen = Object.fromEntries(Object.keys(FORMS).map(form => [form, 0]));
 
@@ -150,7 +192,7 @@ export function escapingTypeImports(dtsFiles, publishedFiles) {
       // A fresh regex per file: a shared /g keeps lastIndex between calls.
       for (const m of file.source.matchAll(new RegExp(pattern.source, 'g'))) {
         seen[form] += 1;
-        if (escapesPublishedFiles(file.path, m[1], publishedFiles))
+        if (missingFromTarball(file.path, m[1], packedSet))
           escaping.push({ path: file.path, importPath: m[1], form });
       }
     }
