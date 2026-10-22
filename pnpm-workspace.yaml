@@ -211,5 +211,5 @@ auditConfig:
     # Dev-only, via @changesets/cli > ... > js-yaml 3 > argparse 1, which
     # formats its own help strings, not input. `pnpm audit --prod` does not see
     # it; it is listed here because the two accept lists must match. Expiry and
-    # exit condition are in osv-scanner.toml.
+    # exit condition are in osv-scanner.toml. Task: umaalt (no ClickUp id yet).
     - GHSA-hp3w-g68c-fv3c
