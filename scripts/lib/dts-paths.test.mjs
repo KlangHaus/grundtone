@@ -1,193 +1,198 @@
 // @vitest-environment node
-import { readdirSync, readFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { describe, expect, it } from 'vitest';
 
 import {
-  escapesPublishedFiles,
   escapingTypeImports,
   FORMS,
+  missingFromTarball,
+  typeTargets,
 } from './dts-paths.mjs';
 import { assertPlausible } from './workspace-packages.mjs';
 
-// @grundtone/vue's real `files`. The whole point of KH-1113 is that this list,
-// not the package root, is the boundary.
-const VUE_FILES = ['dist', 'scss'];
+// A pack list shaped like @grundtone/vue's (`files: ["dist","scss"]`), plus the
+// files npm adds whatever `files` says. The whole point of KH-1113 is that THIS
+// list, not the package root and not a reading of `files`, is the boundary.
+const VUE_PACK = new Set([
+  'package.json',
+  'README.md',
+  'LICENSE',
+  'dist/index.d.ts',
+  'dist/x.d.ts',
+  'dist/a/b.d.ts',
+  'dist/composables/useDawaAutocomplete.d.ts',
+  'dist/composables/useToast.d.ts',
+  'dist/molecules/Toast/types.d.ts',
+  'dist/molecules/AddressInput/types.d.ts',
+  'dist/atoms/Button/index.d.ts',
+  'dist/atoms/Toggle/Toggle.vue.d.ts',
+  'dist/templates/index.d.cts',
+  'dist/template-CJ3ZdEAr.d.cts',
+  'dist/module.mjs',
+  'scss/lib.d.ts',
+  'scss/tokens.d.ts',
+]);
+const gone = path => {
+  const pack = new Set(VUE_PACK);
+  pack.delete(path);
+  return pack;
+};
 
-describe('escapesPublishedFiles', () => {
+describe('missingFromTarball', () => {
   // The 13 real ones from @grundtone/vue@3.2.0, by shape.
   it('flags a path that leaves the package root', () => {
-    expect(
-      escapesPublishedFiles('dist/index.d.ts', '../../utils/src', VUE_FILES),
-    ).toBe(true);
-    expect(
-      escapesPublishedFiles('dist/index.d.ts', '../../core/src', VUE_FILES),
-    ).toBe(true);
-    expect(
-      escapesPublishedFiles(
-        'dist/atoms/Icon/types.d.ts',
-        '../../../../core/src',
-        VUE_FILES,
-      ),
-    ).toBe(true);
-    expect(
-      escapesPublishedFiles(
-        'dist/composables/useField.d.ts',
-        '../../../utils/src',
-        VUE_FILES,
-      ),
-    ).toBe(true);
+    for (const [file, spec] of [
+      ['dist/index.d.ts', '../../utils/src'],
+      ['dist/index.d.ts', '../../core/src'],
+      ['dist/atoms/Icon/types.d.ts', '../../../../core/src'],
+      ['dist/composables/useField.d.ts', '../../../utils/src'],
+    ])
+      expect(missingFromTarball(file, spec, VUE_PACK), spec).toBe(true);
   });
 
-  // 🔴 THE NEGATIVE CONTROL. The rule is "does it land in a published dir",
-  // and these six shapes do — a guard that failed on them would be switched off
-  // within a week.
-  it('leaves relative paths that stay inside a published dir alone', () => {
-    expect(
-      escapesPublishedFiles(
+  // 🔴 THE NEGATIVE CONTROL. The six benign intra-dist shapes resolve to a
+  // packed file — a guard that failed on them would be switched off within a
+  // week.
+  it('leaves relative paths that resolve to a packed file alone', () => {
+    for (const [file, spec] of [
+      [
         'dist/molecules/AddressInput/types.d.ts',
         '../../composables/useDawaAutocomplete',
-        VUE_FILES,
-      ),
-    ).toBe(false);
-    expect(
-      escapesPublishedFiles(
-        'dist/composables/useToast.d.ts',
-        '../molecules/Toast/types',
-        VUE_FILES,
-      ),
-    ).toBe(false);
-    expect(
-      escapesPublishedFiles(
-        'dist/templates/index.d.cts',
-        '../template-CJ3ZdEAr.cjs',
-        ['dist'],
-      ),
-    ).toBe(false);
+      ],
+      ['dist/composables/useToast.d.ts', '../molecules/Toast/types'],
+      ['dist/templates/index.d.cts', '../template-CJ3ZdEAr.cjs'],
+      ['dist/index.d.ts', './atoms/Button'],
+      ['dist/index.d.ts', './atoms/Toggle/Toggle.vue'],
+      ['dist/a/b.d.ts', '../x'],
+    ])
+      expect(missingFromTarball(file, spec, VUE_PACK), spec).toBe(false);
   });
 
   it('ignores bare specifiers, which is what the cure produces', () => {
     expect(
-      escapesPublishedFiles('dist/index.d.ts', '@grundtone/utils', VUE_FILES),
-    ).toBe(false);
-    expect(
-      escapesPublishedFiles('dist/index.d.ts', './atoms/Button', VUE_FILES),
+      missingFromTarball('dist/index.d.ts', '@grundtone/utils', VUE_PACK),
     ).toBe(false);
   });
 
   // 🔴 THE CELL THAT USED TO PIN THE WRONG ANSWER (riff KH-1113, found by
-  // [sikkerhed]). It previously asserted `dist/a/b.d.ts` + `../../x` === false
-  // — "two ups stay inside". Inside the PACKAGE, yes; inside the TARBALL, no:
-  // it resolves to `x` at the package root, and `files: ["dist","scss"]` does
-  // not ship that. The guard did not merely miss the case, it proved the wrong
-  // behaviour. This assertion is now FLIPPED.
-  it('flags a path that stays in the package but leaves the published dirs', () => {
-    expect(escapesPublishedFiles('dist/a/b.d.ts', '../x', VUE_FILES)).toBe(
-      false,
-    ); // dist/x — shipped
-    expect(escapesPublishedFiles('dist/a/b.d.ts', '../../x', VUE_FILES)).toBe(
+  // [sikkerhed]). It once asserted `dist/a/b.d.ts` + `../../x` === false —
+  // "two ups stay inside". Inside the PACKAGE, yes; inside the TARBALL, no.
+  it('flags a path that stays in the package but is not in the tarball', () => {
+    expect(missingFromTarball('dist/a/b.d.ts', '../x', VUE_PACK)).toBe(false); // dist/x — packed
+    expect(missingFromTarball('dist/a/b.d.ts', '../../x', VUE_PACK)).toBe(true); // x — not packed
+    expect(missingFromTarball('dist/a/b.d.ts', '../../../x', VUE_PACK)).toBe(
       true,
-    ); // x — NOT shipped
-    expect(
-      escapesPublishedFiles('dist/a/b.d.ts', '../../../x', VUE_FILES),
-    ).toBe(true); // above root
+    ); // above root
   });
 
-  // [sikkerhed]'s measured examples: all three passed unflagged under the old
-  // rule, while the control `../../utils/src` was flagged.
+  // [sikkerhed]'s measured examples: all three passed the package-root rule.
   it('flags the three shapes that slipped through the package-root rule', () => {
     expect(
-      escapesPublishedFiles('dist/index.d.ts', '../src/tokens', VUE_FILES),
+      missingFromTarball('dist/index.d.ts', '../src/tokens', VUE_PACK),
     ).toBe(true);
     expect(
-      escapesPublishedFiles(
-        'dist/a/b/c.d.ts',
-        '../../../src/tokens',
-        VUE_FILES,
-      ),
+      missingFromTarball('dist/a/b/c.d.ts', '../../../src/tokens', VUE_PACK),
     ).toBe(true);
     expect(
-      escapesPublishedFiles('dist/a/b/c.d.ts', '../../../src/core', VUE_FILES),
+      missingFromTarball('dist/a/b/c.d.ts', '../../../src/core', VUE_PACK),
     ).toBe(true);
   });
 
   // 🔴 THE CELL THAT FAILS IF THE RULE FALLS BACK TO THE PACKAGE BOUNDARY.
-  // Without it, someone could "simplify" this back to `ups > depth` and every
-  // other cell here would still pass — that is precisely how the hole was born.
-  // A package-boundary rule answers `false` for both of these; the tarball rule
-  // answers `true`.
+  // A package-boundary rule answers `false` for all three; the tarball answers
+  // `true`. Without it, someone could "simplify" this back to `ups > depth`.
   it('cannot be satisfied by a package-boundary rule', () => {
-    const packageBoundaryWouldSay = false;
     for (const [file, spec] of [
       ['dist/a/b.d.ts', '../../x'],
       ['dist/index.d.ts', '../src/tokens'],
-      ['scss/a/b.d.ts', '../../README.md'],
-    ]) {
+      ['scss/a/b.d.ts', '../../README'],
+    ])
       expect(
-        escapesPublishedFiles(file, spec, VUE_FILES),
-        `${file} + ${spec} must not inherit the package-boundary answer`,
-      ).not.toBe(packageBoundaryWouldSay);
-    }
+        missingFromTarball(file, spec, VUE_PACK),
+        `${file} + ${spec}`,
+      ).toBe(true);
+  });
+
+  // 🔴 THE CELL THAT FAILS IF THE RULE FALLS BACK TO READING `files` (#220's
+  // rule: "does it land under a published directory?"). That rule gets each of
+  // these wrong, and each one was measured against it before this change.
+  it('cannot be satisfied by a `files`-prefix rule', () => {
+    // Inside dist, but the target was never emitted: TS2307 for the consumer.
+    expect(missingFromTarball('dist/a.d.ts', './gone', VUE_PACK)).toBe(true);
+    expect(
+      missingFromTarball(
+        'dist/index.d.ts',
+        './atoms/Button',
+        gone('dist/atoms/Button/index.d.ts'),
+      ),
+      'a published dir that lost its index',
+    ).toBe(true);
+    // Outside every `files` entry, and packed anyway: npm always adds it.
+    expect(missingFromTarball('dist/a.d.ts', '../package.json', VUE_PACK)).toBe(
+      false,
+    );
   });
 
   // 🔴 THE PREFIX BOUNDARY, found by [sikkerhed] with a mutation that killed
-  // NOTHING. Containment is `resolved === dir || resolved.startsWith(dir + '/')`.
-  // Mutate that one slash away — `startsWith(dir)` — and `distractions/…` counts
-  // as inside `dist`. Measured on this file: the slash mutation killed 0 of 14
-  // cells, while inverting the rule killed 8, so the harness can see deaths and
-  // the zero was a real blind spot rather than a broken runner.
-  //
-  // It is the same figure as the bug this PR fixes: a boundary that is one
-  // character away from correct, and silent about the difference.
+  // nothing under the old rule. Membership is by whole path now, so a sibling
+  // whose name merely starts with `dist` cannot count as inside it.
   it('does not accept a sibling directory whose name merely starts with a published one', () => {
     expect(
-      escapesPublishedFiles('dist/a/b.d.ts', '../../distractions/x', ['dist']),
-      'distractions/x is not inside dist',
+      missingFromTarball('dist/a/b.d.ts', '../../distractions/x', VUE_PACK),
     ).toBe(true);
-    // The mirror costs nothing and pins the other direction.
+    expect(missingFromTarball('dist/a/b.d.ts', '../x', VUE_PACK)).toBe(false);
+  });
+
+  // 🔴 A JS extension is not its own type source. nuxt emits
+  // `from './module.mjs'`; the tarball must carry `module.d.mts` for it.
+  it('wants the declaration behind a JS specifier, not the JS file', () => {
     expect(
-      escapesPublishedFiles('distractions/a/b.d.ts', './x', ['dist']),
-      'a file already outside the published dirs stays outside',
+      missingFromTarball('dist/types.d.mts', './module.mjs', VUE_PACK),
     ).toBe(true);
-    // Control: the real thing must still pass, or the cell above proves nothing.
-    expect(escapesPublishedFiles('dist/a/b.d.ts', '../x', ['dist'])).toBe(
+    const withDecl = new Set([...VUE_PACK, 'dist/module.d.mts']);
+    expect(
+      missingFromTarball('dist/types.d.mts', './module.mjs', withDecl),
+    ).toBe(false);
+    expect(
+      missingFromTarball(
+        'dist/templates/index.d.cts',
+        '../template-CJ3ZdEAr.cjs',
+        gone('dist/template-CJ3ZdEAr.d.cts'),
+      ),
+    ).toBe(true);
+  });
+
+  it('honours every packed dir, not just the first', () => {
+    expect(missingFromTarball('scss/lib.d.ts', './tokens', VUE_PACK)).toBe(
+      false,
+    );
+    expect(missingFromTarball('dist/a.d.ts', '../scss/lib', VUE_PACK)).toBe(
       false,
     );
   });
 
-  it('honours every published dir, not just the first', () => {
-    expect(escapesPublishedFiles('scss/lib.d.ts', './tokens', VUE_FILES)).toBe(
-      false,
-    );
-    expect(escapesPublishedFiles('dist/a.d.ts', '../scss/lib', VUE_FILES)).toBe(
-      false,
-    );
+  it('names what TypeScript would try, so the list is auditable', () => {
+    expect(typeTargets('dist/x.mjs')).toEqual(['dist/x.d.mts', 'dist/x.mts']);
+    expect(typeTargets('dist/x')).toContain('dist/x/index.d.ts');
+    expect(typeTargets('dist/x.js')).not.toContain('dist/x.js');
   });
 
-  it('accepts the glob and trailing-slash spellings of `files`', () => {
-    for (const spelling of [['dist'], ['dist/**'], ['dist/']]) {
-      expect(
-        escapesPublishedFiles('dist/a.d.ts', './b', spelling),
-        String(spelling),
-      ).toBe(false);
-      expect(
-        escapesPublishedFiles('dist/a.d.ts', '../b', spelling),
-        String(spelling),
-      ).toBe(true);
-    }
-  });
-
-  // 🔴 A missing `files` must be LOUD. Treating it as "publishes nothing" would
-  // flag every path and look like a newly effective guard; treating it as
-  // "publishes everything" would silently restore the old hole.
-  it('throws when the caller gives it no published list', () => {
-    expect(() => escapesPublishedFiles('dist/a.d.ts', '../b', [])).toThrow(
-      /no .files. given/,
+  // 🔴 A missing pack list must be LOUD. Treating it as "publishes nothing"
+  // would flag every path and look like a newly effective guard.
+  it('throws when the caller gives it no pack list', () => {
+    expect(() => missingFromTarball('dist/a.d.ts', '../b', new Set())).toThrow(
+      /no pack list given/,
     );
     expect(() =>
-      escapesPublishedFiles('dist/a.d.ts', '../b', undefined),
+      missingFromTarball('dist/a.d.ts', '../b', ['dist/b.d.ts']),
+    ).toThrow();
+    expect(() =>
+      missingFromTarball('dist/a.d.ts', '../b', undefined),
     ).toThrow();
   });
 });
@@ -199,58 +204,53 @@ describe('escapesPublishedFiles', () => {
 describe('the packages we publish', () => {
   const root = fileURLToPath(new URL('../../packages/', import.meta.url));
 
-  // 🔴 withFileTypes, NOT statSync-then-read: CodeQL flagged the two-call form
-  // as js/file-system-race (high) — the path is checked and then used, so the
-  // entry can change in between. One readdir answers both questions, and
-  // deploy-guard.mjs's walker already had it this way; this one drifted.
-  const dtsFiles = pkg => {
-    const out = [];
-    const walk = dir => {
-      for (const entry of readdirSync(dir, { withFileTypes: true })) {
-        const full = join(dir, entry.name);
-        if (entry.isDirectory()) {
-          walk(full);
-          continue;
-        }
-        if (!/\.d\.[cm]?ts$/.test(entry.name)) continue;
-        out.push({
-          path: full.slice(join(root, pkg).length + 1),
-          source: readFileSync(full, 'utf8'),
-        });
-      }
-    };
-    walk(join(root, pkg, 'dist'));
-    return out;
+  // 🔴 The tarball's own list, from the packer `changeset publish` uses —
+  // neither the walk of dist nor `files` restated here. pnpm 10.14 has no
+  // `pack --dry-run`, so the tarball is written to a throwaway dir and dropped.
+  const tarballPaths = pkg => {
+    const dest = mkdtempSync(join(tmpdir(), 'dts-paths-test-'));
+    try {
+      const out = execFileSync(
+        'pnpm',
+        ['pack', '--json', '--pack-destination', dest],
+        {
+          cwd: join(root, pkg),
+          encoding: 'utf8',
+          stdio: ['ignore', 'pipe', 'pipe'],
+        },
+      );
+      return JSON.parse(out.slice(out.indexOf('{'))).files.map(f => f.path);
+    } finally {
+      rmSync(dest, { recursive: true, force: true });
+    }
   };
 
-  // 🔴 `files` is READ FROM THE PACKAGE, not restated here. A copy in the cell
-  // would drift from the manifest, and the whole point of KH-1113 is that the
-  // manifest — not the package root — decides the boundary.
-  const publishedFiles = pkg =>
-    JSON.parse(readFileSync(join(root, pkg, 'package.json'), 'utf8')).files;
-
-  it('vue ships no type import that leaves the PUBLISHED dirs, in ANY form', () => {
-    const files = assertPlausible(dtsFiles('vue'), 5, 'vue .d.ts files');
-    const vueFiles = assertPlausible(
-      publishedFiles('vue'),
-      1,
-      "vue's `files` field",
+  it('vue ships no type import that resolves outside its TARBALL, in ANY form', () => {
+    const packed = assertPlausible(tarballPaths('vue'), 5, 'vue packed files');
+    const files = assertPlausible(
+      packed
+        .filter(p => /\.d\.[cm]?ts$/.test(p))
+        .map(p => ({
+          path: p,
+          source: readFileSync(join(root, 'vue', p), 'utf8'),
+        })),
+      5,
+      'vue .d.ts files',
     );
-    const { escaping, seen } = escapingTypeImports(files, vueFiles);
+    const { escaping, seen } = escapingTypeImports(files, packed);
     expect(
       escaping.map(e => `${e.path} -> ${e.importPath} [${e.form}]`),
       'a consumer cannot resolve these, and with skipLibCheck they silently become any',
     ).toEqual([]);
 
-    // 🔴 The green must say what it looked at. A build that emitted no module
-    // references at all would satisfy the assertion above while measuring
-    // nothing — and that is the shape the `import('…')` hole had.
-    const total = Object.values(seen).reduce((a, b) => a + b, 0);
-    expect(
-      total,
-      `no module references found at all in ${files.length} files`,
-    ).toBeGreaterThan(50);
-  });
+    // 🔴 The green must say what it looked at, PER FORM. A sum over forms
+    // cannot see one form go to zero — which is the shape the `import('…')`
+    // hole had. Measured 2026-10-21: 314 `from '…'`, 807 `import('…')`.
+    for (const form of ["from '…'", "import('…')"])
+      expect(seen[form], `${form} in ${files.length} files`).toBeGreaterThan(
+        50,
+      );
+  }, 30_000);
 
   // 🔴 THE CELL FOR THE HOLE [quality] FOUND ON #217, with the fixture taken
   // verbatim from the PUBLISHED 3.2.0 tarball. The guard matched only
@@ -263,7 +263,7 @@ describe('the packages we publish', () => {
       source:
         "declare const _default: import('../../../../core/src').ToggleSize;\n",
     };
-    const { escaping, seen } = escapingTypeImports([toggle], ['dist']);
+    const { escaping, seen } = escapingTypeImports([toggle], VUE_PACK);
     expect(escaping).toHaveLength(1);
     expect(escaping[0].form).toBe("import('…')");
     expect(seen["import('…')"]).toBe(1);
@@ -281,7 +281,7 @@ describe('the packages we publish', () => {
           source: 'type A = import("../../core/src").B;',
         },
       ],
-      ['dist'],
+      VUE_PACK,
     );
     expect(escaping.map(e => e.form).sort()).toEqual([
       'from "…"',
@@ -303,7 +303,7 @@ describe('the packages we publish', () => {
             'type D = import("./local").T;\n',
         },
       ],
-      ['dist'],
+      VUE_PACK,
     );
     expect(seen).toEqual({
       "from '…'": 1,
