@@ -12,16 +12,26 @@
 # Manual-dispatch only: the first publish is outward-facing (public npm), so
 # rollout gates on an Allan-go (typing "publish" in the confirm input).
 #
-# ── [infra] REVIEW 2026-08-03: OPTION B VALGT ────────────────────────────────
-# npm tillader kun ÉN trusted publisher pr. pakke (valideret mod ENTRY-workflow-
-# filnavnet) — release.yml er/bliver den ene. Denne kanal kører derfor på et
-# GRANULAR AUTOMATION-TOKEN (NPM_PRERELEASE_TOKEN, Allan-provisioneret via
-# `gh secret set`): ingen provenance, ingen id-token-permission. Option A (ét
-# fælles entry-workflow for begge kanaler) er slutmålet ved main/develop-
-# rekonciliationen. NB: setup-node må IKKE få registry-url her uden token i
-# env — det skriver en .npmrc-authToken-linje der kortslutter til ENEEDAUTH
-# (samme fælde som release.yml's kommentar dokumenterer); med token SKAL
-# registry-url + NODE_AUTH_TOKEN følges ad, hvilket de gør nedenfor.
+# ── AUTH: npm OIDC trusted publishing, no token ─────────────────────────────
+# History, because this comment carries an EXTERNAL fact and those expire:
+# - 2026-08-03 ([infra] review, option B): npm allowed ONE trusted publisher
+#   per package, and release.yml held it. TRUE then. This channel therefore
+#   ran on a granular automation token (NPM_PRERELEASE_TOKEN, repo level).
+# - 2026-09-03: npm allowed several trusted publishing configurations per
+#   package (github.blog/changelog/2026-09-03-multiple-trusted-publishing-
+#   configurations-for-npm). The reason for the token was gone.
+# - 2026-10-22: measured again. docs.npmjs.com/trusted-publishers: "Each
+#   package can have up to 10 trusted publishers". This workflow now
+#   publishes through its OWN trusted publisher per package, which names
+#   `prerelease-next.yml` and environment `npmjs-prerelease`.
+# Two traps in that setup, both from GitHub's changelogs:
+# - A new configuration only STAGES by default; "Direct publishing is opt-in
+#   per configuration". Without it this job ends green with nothing on npm,
+#   which is why the last step reads the registry back.
+# - An unvalidated configuration expires 48 hours after creation
+#   (changelog 2026-10-02); the first successful publish validates it.
+# `npm publish` must stay in THIS file: npm validates the entry workflow's
+# filename, so a shared workflow_call publish job would break the binding.
 # 2. Package set: core/utils/icons/design-system/vue/nuxt/mcp (see
 #    scripts/prerelease-next-version.mjs). email + react-native are excluded.
 # 3. Trigger ownership: infra owns when this runs (manual for now).
@@ -45,8 +55,12 @@ jobs:
     # Only from develop, only on explicit confirmation.
     if: ${{ github.ref == 'refs/heads/develop' && inputs.confirm == 'publish' }}
     runs-on: ubuntu-latest
+    # The npm trusted publisher for each package names this environment, and
+    # the environment only admits develop. The `if:` above is the second layer.
+    environment: npmjs-prerelease
     permissions:
       contents: read
+      id-token: write # npm OIDC trusted publishing
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -62,10 +76,16 @@ jobs:
           # nået (første rigtige kørsel, 2026-08-04). Filen er i forvejen
           # kilden i ci.yml, så næste Node-bump følger automatisk med her.
           node-version-file: '.nvmrc'
-          # registry-url SKAL følges ad med NODE_AUTH_TOKEN i publish-steppet
-          # (option B) — se filhovedet. Uden token ville denne linje skrive en
-          # tom authToken og kortslutte til ENEEDAUTH.
-          registry-url: 'https://registry.npmjs.org'
+          # Deliberately NO `registry-url:`. It writes an .npmrc authToken line
+          # from NODE_AUTH_TOKEN; with no token that line is empty, and npm
+          # stops at ENEEDAUTH instead of trying the OIDC exchange (same as
+          # release.yml).
+
+      # Trusted publishing needs npm >= 11.5.1; npm's docs ask >= 11.21.0 for
+      # dist-tags with OIDC, and this job publishes under `next`. Exact pin, so
+      # that question cannot reopen on a new 11.x.
+      - name: npm CLI that supports OIDC dist-tags
+        run: npm install -g npm@11.21.1
 
       - name: Install
         run: pnpm install --frozen-lockfile
@@ -175,8 +195,8 @@ jobs:
         # pnpm rewrites workspace:* deps to the stamped -next version, so the
         # published graph is self-consistent. --no-git-checks: the stamp dirties
         # the tree on purpose. Prerelease versions never become `latest`.
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_PRERELEASE_TOKEN }}
+        # No NODE_AUTH_TOKEN: an empty one would short-circuit npm to
+        # ENEEDAUTH before it attempts the OIDC exchange.
         run: >-
           pnpm publish
           --filter=@grundtone/core
@@ -189,3 +209,24 @@ jobs:
           --tag next
           --no-git-checks
           --access public
+
+      # 🔴 UNCONDITIONAL read-back. A configuration without direct publishing
+      # STAGES and the publish step still exits 0, so green here must mean
+      # "the registry serves it", not "the command did not fail".
+      - name: Every package is on npm under next
+        if: always()
+        run: |
+          set -euo pipefail
+          fail=0
+          for dir in core utils icons design-system vue nuxt mcp; do
+            name=$(node -p "require('./packages/$dir/package.json').name")
+            want=$(node -p "require('./packages/$dir/package.json').version")
+            got=$(npm view "$name" dist-tags.next 2>/dev/null || true)
+            if [ "$got" = "$want" ]; then
+              echo "ok   $name@next = $want"
+            else
+              echo "::error::$name@next is '${got:-<none>}', expected $want (staged or not published)"
+              fail=1
+            fi
+          done
+          exit "$fail"
