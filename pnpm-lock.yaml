@@ -223,7 +223,7 @@ importers:
         version: 26.6.2
       markdown-it:
         specifier: '>=14.2.0'
-        version: 14.3.1
+        version: 14.3.3
       tsx:
         specifier: ^4.23.15
         version: 4.23.15
@@ -232,10 +232,10 @@ importers:
         version: 1.6.4(@algolia/client-search@5.49.2)(@types/node@26.6.2)(change-case@5.4.4)(esbuild@0.28.2)(fuse.js@7.5.0)(jiti@2.7.0)(postcss@8.5.29)(sass@1.104.1)(search-insights@2.17.3)(terser@5.51.2)(tsx@4.23.15)(typescript@5.9.3)(yaml@2.9.1)
       vitepress-plugin-color-preview:
         specifier: ^0.4.1
-        version: 0.4.1(markdown-it@14.3.1)
+        version: 0.4.1(markdown-it@14.3.3)
       vitepress-plugin-mermaid-diagram:
         specifier: ^0.3.2
-        version: 0.3.2(markdown-it@14.3.1)
+        version: 0.3.2(markdown-it@14.3.3)
 
   apps/playground/expo:
     dependencies:
@@ -2610,6 +2610,7 @@ packages:
   '@opentelemetry/sdk-trace-base@2.11.0':
     resolution: {integrity: sha512-H19x/TX/LZdqiYOjM7fqtSxwlplC5pgelavqbQdHbhdq0q/AI/TGkM2dfGuuynTXmJPeF2HoZVoPDu+TGoW78A==}
     engines: {node: ^18.19.0 || >=20.6.0}
+    deprecated: Use @opentelemetry/sdk-trace package
     peerDependencies:
       '@opentelemetry/api': '>=1.3.0 <1.10.0'
 
@@ -6852,8 +6853,8 @@ packages:
       ocache:
         optional: true
 
-  h3@2.0.2:
-    resolution: {integrity: sha512-+/zvHSNldYpNURuUUG+y1KzdASUhNnSd1VpqxYFVY40ov3YzuBnCETaUQaT+QbKkoxhh9LRa6AEQdB14LALwdA==}
+  h3@2.0.8:
+    resolution: {integrity: sha512-ENuKlF9kC6E6PrvY1PUyE0qkrnnPTIt2/v48uyEEfTVfgoiqBCE0uwwf++2XrWwT1gxjQBDLQ8PAsmZVniKvTw==}
     engines: {node: '>=20.19.0'}
     hasBin: true
     peerDependencies:
@@ -7710,8 +7711,8 @@ packages:
   mark.js@8.11.1:
     resolution: {integrity: sha512-1I+1qpDt4idfgLQG+BNWmrqku+7/2bi5nLf4YwF8y8zXvmfiTBY3PV3ZibfrjBueCByROpuBjLLFCajqkgYoLQ==}
 
-  markdown-it@14.3.1:
-    resolution: {integrity: sha512-4Ej49aYTDFIQ+uBkfX8GBvJGccoARxxPep+7aWTs55ozbjQJpW9M26Fe53vnGgvLeVzva/amzjQQaQu9w0vMhA==}
+  markdown-it@14.3.3:
+    resolution: {integrity: sha512-L//tDAkjTjJCU6pBUSBTgs3Kg4InVaZuUZog/b6V12UKhcDQ7S78877ibbCanRExwPuYP1CZD7Gd2dxSy1GXRg==}
     hasBin: true
 
   marky@1.3.0:
@@ -8387,6 +8388,11 @@ packages:
 
   nypm@0.6.10:
     resolution: {integrity: sha512-W72Hrj1petq+b3Hk2aAC+9zswetlIFTnDW4s5djseZh2nYqBbyQLOtj472HwcbcWykPBUW1WpWpjOd4nK6gMRw==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  nypm@0.6.11:
+    resolution: {integrity: sha512-wrVBTLWDu7nTUKGWplQebWOXWnhaIwyKQhBxobH/CGxJHoVw27r9vG5ba7kdZnxG+f4rC6dZd6m2oHmpkOcO7g==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -16721,7 +16727,6 @@ snapshots:
   '@types/node@26.6.5':
     dependencies:
       undici-types: 8.9.0
-    optional: true
 
   '@types/react-test-renderer@19.3.0':
     dependencies:
@@ -16743,7 +16748,7 @@ snapshots:
 
   '@types/ws@8.18.2':
     dependencies:
-      '@types/node': 26.6.2
+      '@types/node': 26.6.5
 
   '@types/yargs-parser@21.0.3': {}
 
@@ -17241,7 +17246,7 @@ snapshots:
       local-pkg: 1.2.1
       mlly: 1.8.2
       nostics: 1.3.0
-      nypm: 0.6.10
+      nypm: 0.6.11
       vite: 8.3.5(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.104.1)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)
     transitivePeerDependencies:
       - '@modelcontextprotocol/sdk'
@@ -18096,7 +18101,7 @@ snapshots:
 
   buffer-image-size@0.6.4:
     dependencies:
-      '@types/node': 26.6.2
+      '@types/node': 26.6.5
 
   buffer@5.7.1:
     dependencies:
@@ -18818,7 +18823,7 @@ snapshots:
       birpc: 4.2.0
       crossws: 0.4.12(srvx@1.0.5)
       destr: 2.0.5
-      h3: 2.0.2(crossws@0.4.12(srvx@1.0.5))
+      h3: 2.0.8(crossws@0.4.12(srvx@1.0.5))
       mrmime: 2.0.1
       nostics: 1.3.0
       pathe: 2.0.3
@@ -20019,7 +20024,7 @@ snapshots:
     optionalDependencies:
       crossws: 0.4.12(srvx@1.0.5)
 
-  h3@2.0.2(crossws@0.4.12(srvx@1.0.5)):
+  h3@2.0.8(crossws@0.4.12(srvx@1.0.5)):
     dependencies:
       rou3: 1.0.0
       srvx: 1.0.5
@@ -20038,7 +20043,7 @@ snapshots:
 
   happy-dom@20.11.1:
     dependencies:
-      '@types/node': 26.6.2
+      '@types/node': 26.6.5
       '@types/whatwg-mimetype': 3.0.2
       '@types/ws': 8.18.2
       buffer-image-size: 0.6.4
@@ -20919,7 +20924,7 @@ snapshots:
 
   mark.js@8.11.1: {}
 
-  markdown-it@14.3.1:
+  markdown-it@14.3.3:
     dependencies:
       argparse: 2.0.1
       entities: 4.5.0
@@ -23094,6 +23099,13 @@ snapshots:
       citty: 0.2.2
       pathe: 2.0.3
       tinyexec: 1.3.1
+
+  nypm@0.6.11:
+    dependencies:
+      citty: 0.2.2
+      pathe: 2.0.3
+      tinyexec: 1.3.1
+    optional: true
 
   ob1@0.83.3:
     dependencies:
@@ -26262,13 +26274,13 @@ snapshots:
       tsx: 4.23.15
       yaml: 2.9.1
 
-  vitepress-plugin-color-preview@0.4.1(markdown-it@14.3.1):
+  vitepress-plugin-color-preview@0.4.1(markdown-it@14.3.3):
     dependencies:
-      markdown-it: 14.3.1
+      markdown-it: 14.3.3
 
-  vitepress-plugin-mermaid-diagram@0.3.2(markdown-it@14.3.1):
+  vitepress-plugin-mermaid-diagram@0.3.2(markdown-it@14.3.3):
     dependencies:
-      markdown-it: 14.3.1
+      markdown-it: 14.3.3
 
   vitepress@1.6.4(@algolia/client-search@5.49.2)(@types/node@26.6.2)(change-case@5.4.4)(esbuild@0.28.2)(fuse.js@7.5.0)(jiti@2.7.0)(postcss@8.5.24)(sass@1.104.1)(search-insights@2.17.3)(terser@5.51.2)(tsx@4.23.15)(typescript@5.8.3)(yaml@2.9.1):
     dependencies:
