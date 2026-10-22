@@ -162,7 +162,7 @@ jobs:
       # kunne baere en udgivelse igennem, bare fordi scannen selv siger groent.
       - name: Vuln-accepter er ikke udløbet
         env:
-          OSV_EXPECTED: '9'
+          OSV_EXPECTED: '5'
         run: python3 .github/scripts/assert-osv-ignores-expire.py osv-scanner.toml
 
       - name: Udgivelses-invarianter holder på artefaktet

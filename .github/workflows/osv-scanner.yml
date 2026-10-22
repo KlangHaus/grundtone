@@ -23,10 +23,11 @@ permissions:
 jobs:
   # 🔴 EGET JOB med eget navn, saa det kan goeres required for sig.
   #
-  # osv-scanner HAANDHAEVER IKKE `ignoreUntil` — bevist ved koersel ([quality],
-  # v2.5.0): en UDLOEBET dato undertrykker sarbarheden fuldstaendigt, exit 0.
-  # Datoen i configen er dekoration, saa uden dette tjek er hver "midlertidig"
-  # accept i praksis PERMANENT, og gaten afvikler sig selv i stilhed.
+  # osv-scanner DOES enforce `ignoreUntil` (measured 2026-10-22 on 1.9.2, 2.4.0
+  # and 2.5.0: an expired accept gives the rows back, exit 1; [quality]'s
+  # 2026-08-11 observation of the opposite could not be reproduced). This job
+  # still earns its place: it refuses an accept without a date, checks the
+  # count, and names the expired accept instead of a bare "vulnerability found".
   #
   # Ligger foer scan-jobbet i filen, men koerer uafhaengigt: et udloebt
   # ignoreUntil skal fejle SELV naar scannen er groen — det er hele pointen.
@@ -45,10 +46,12 @@ jobs:
       # er i orden" ser plausibelt ud, hvis man ikke ved, hvad man forventer.
       - name: Assert ignoreUntil er sat og ikke passeret
         env:
-          OSV_EXPECTED: '9'
+          OSV_EXPECTED: '5'
         run: python3 .github/scripts/assert-osv-ignores-expire.py osv-scanner.toml
       - name: Roed-foer-groen for selve tjekket
         run: ./.github/scripts/assert-osv-ignores-expire.test.sh
+      - name: Red-before-green for the anti-rot check
+        run: ./.github/scripts/assert-osv-accepts-still-needed.test.sh
 
       # De samme saarbarheder accepteres i TO filer for TO vaerktoejer, uden et
       # faelles felt at binde dem med. Driften ville vaere tavs: én opdateres,
@@ -80,6 +83,24 @@ jobs:
           sudo install -m 0755 /tmp/osv-scanner /usr/local/bin/osv-scanner
           rm -f /tmp/osv-scanner
           osv-scanner --version
+
+      # 🔴 An accept must still be NEEDED. Scan once WITHOUT any accepts (an
+      # empty --config; measured 2026-10-22 on 1.9.2: it does not fall back to
+      # ./osv-scanner.toml) and fail when an accepted id is no longer reported.
+      # Before the real scan, so a red scan cannot skip it. Exit 1 from the
+      # scanner means "vulnerabilities found" and is expected here; anything
+      # above 1 is the scanner failing, which must not read as a pass.
+      - name: Every accept is still needed
+        run: |
+          printf '' > /tmp/no-accepts.toml
+          rc=0
+          osv-scanner --recursive --skip-git --config=/tmp/no-accepts.toml --format json ./ \
+            > /tmp/osv-without-accepts.json || rc=$?
+          if [ "$rc" -gt 1 ]; then
+            echo "::error::osv-scanner exited $rc without accepts — not measured, not a pass"
+            exit 2
+          fi
+          python3 .github/scripts/assert-osv-accepts-still-needed.py osv-scanner.toml /tmp/osv-without-accepts.json
 
       - name: Scan dependencies
         run: |
