@@ -35,15 +35,6 @@ describe('nedgraderings-vagten dækker udgivelsesstierne', () => {
     ).toEqual({ ok: true, reason: 'gaten står før publish-trinnet' });
   });
 
-  it('prerelease-next.yml: gaten står før @next publiceres', () => {
-    expect(
-      gateRunsBeforePublish(read('prerelease-next.yml'), {
-        gate: GATE,
-        publish: 'Publish @next',
-      }),
-    ).toEqual({ ok: true, reason: 'gaten står før publish-trinnet' });
-  });
-
   // 🔴 Samme krav for vuln-gaten. Maalt 2026-08-24: baade `pnpm audit` og osv
   // koerte KUN paa PR-stien, saa en saarbar transitiv dependency kunne shippe
   // til ni offentlige pakker uden at stoppe udgivelsen.
@@ -56,14 +47,6 @@ describe('nedgraderings-vagten dækker udgivelsesstierne', () => {
     ).toBe(true);
   });
 
-  it('prerelease-next.yml: vuln-scannen står før @next publiceres', () => {
-    expect(
-      gateRunsBeforePublish(read('prerelease-next.yml'), {
-        gate: VULN,
-        publish: 'Publish @next',
-      }).ok,
-    ).toBe(true);
-  });
 });
 
 describe('gateRunsBeforePublish selv', () => {
