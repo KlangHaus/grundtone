@@ -113,6 +113,8 @@ klanghausPipeline(
       cmd: '''
         set -euo pipefail
         tools="$(mktemp -d)"
+        # Outside the workspace, so Jenkins' workspace cleanup never reaches it.
+        trap 'rm -rf -- "$tools"' EXIT
         ( cd "$tools" && echo '{}' > package.json \
           && npm install --no-save --no-package-lock --no-audit --no-fund \
                @commitlint/cli@21.2.3 @commitlint/config-conventional@21.2.3 >/dev/null )
@@ -140,6 +142,8 @@ klanghausPipeline(
       cmd: '''
         set -euo pipefail
         tools="$(mktemp -d)"
+        # Outside the workspace, so Jenkins' workspace cleanup never reaches it.
+        trap 'rm -rf -- "$tools"' EXIT
         ( cd "$tools" && echo '{}' > package.json \
           && npm install --no-save --no-package-lock --no-audit --no-fund \
                @commitlint/cli@21.2.3 @commitlint/config-conventional@21.2.3 >/dev/null )
