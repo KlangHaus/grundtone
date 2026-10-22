@@ -62,6 +62,12 @@ overrides:
   vite@>=6.0.0 <=6.3.5: '>=6.3.6'
   vite@>=7.1.0 <=7.1.10: '>=7.1.11'
   vite@>=7.1.0 <=7.1.4: '>=7.1.5'
+  # GHSA-587h-7wmj-h5pm (high, 2026-10-20): launch-editor's existence check can
+  # be bypassed on Windows; vite 8.3.0-8.3.2 are affected too (the bare `vite`
+  # floor below is raised for that). Both arrive via nuxt > @nuxt/devtools in
+  # the playground and failed the required `Security Audit` (pnpm audit --prod
+  # --audit-level=high) on every PR to develop.
+  launch-editor@<2.14.2: '>=2.14.2 <3'
   # Moved here from package.json's `pnpm.overrides` (riff da3hho2c/KH-586).
   # 🔴 MEASURED on develop 97e4bb9, not assumed: the lockfile's resolved
   # `overrides:` block held exactly these 52 keys, and 15 of the keys that
@@ -101,7 +107,8 @@ overrides:
   tmp: '>=0.2.6'
   turbo: '>=2.9.14'
   undici: '>=6.27.0'
-  vite: '>=6.4.3'
+  # Raised from '>=6.4.3' for GHSA-587h-7wmj-h5pm; the lockfile holds one vite (8.x).
+  vite: '>=8.3.3 <9'
   svgo: '^4.1.0'
   markdown-it: '>=14.2.0'
   'js-yaml@>=4.0.0 <4.3.0': '>=4.3.0'
