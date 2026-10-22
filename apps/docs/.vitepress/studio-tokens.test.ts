@@ -10,6 +10,7 @@ describe('resolveStudioTokensUrl', () => {
     'https://cdn.grundtone.com/k/pk_live_x/tokens.css',
     'http://localhost:3000/k/pk_live_x/tokens.css',
     'http://127.0.0.1:3000/k/pk_live_x/tokens.css',
+    'http://[::1]:3000/k/pk_live_x/tokens.css',
   ])('accepts %s', raw => {
     expect(resolveStudioTokensUrl(`  ${raw} `)).toBe(raw);
   });
