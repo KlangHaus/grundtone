@@ -27,6 +27,7 @@ import { opacityExamples } from './theme/opacity-examples';
 import { interactivityExamples } from './theme/interactivity-examples';
 import { elementExamples } from './theme/element-examples';
 import { componentExamples } from './theme/component-examples';
+import { STUDIO_TOKENS_LINK_ID } from './studio-tokens';
 
 /** All code examples merged */
 const allExamples: Record<string, string> = {
@@ -96,7 +97,6 @@ function codePreviewHighlightPlugin(): Plugin {
 // the components and the VitePress chrome (custom.css maps --vp-c-brand-* to
 // --color-primary) take the project's brand. Unset = grundtone's own defaults.
 // Locally (Tilt): http://localhost:3000/k/<pk_live_…>/tokens.css
-export const STUDIO_TOKENS_LINK_ID = 'grundtone-studio-tokens';
 const studioTokensUrl = process.env.GRUNDTONE_STUDIO_TOKENS_URL?.trim() || '';
 
 export default defineConfig({

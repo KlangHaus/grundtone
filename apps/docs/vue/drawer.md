@@ -73,7 +73,7 @@ pnpm add @grundtone/vue
 
 | Event | Payload | Description |
 | --- | --- | --- |
-| `update:open` | `boolean` | Emitted with `false` on Escape or a scrim click |
+| `update:open` | `boolean` | Emitted with `false` on Escape or a scrim click (modal) |
 | `close` | — | Emitted when the drawer closes itself |
 
 ## Slots

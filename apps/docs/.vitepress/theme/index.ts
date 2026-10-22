@@ -66,6 +66,7 @@ import 'vitepress-plugin-color-preview/style.css';
 import 'vitepress-plugin-mermaid-diagram/diagram-dark.css';
 import '@grundtone/design-system/dist/index.css';
 import './custom.css';
+import { STUDIO_TOKENS_LINK_ID } from '../studio-tokens';
 
 export default {
   extends: DefaultTheme,
@@ -136,7 +137,7 @@ export default {
       // Studio tokens and grundtone's defaults both set :root, so the later
       // one wins. Vite injects the theme's CSS after the head links in dev,
       // so move the Studio link to the end of <head> once mounted.
-      const studio = document.getElementById('grundtone-studio-tokens');
+      const studio = document.getElementById(STUDIO_TOKENS_LINK_ID);
       if (studio) document.head.appendChild(studio);
     });
   },
