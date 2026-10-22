@@ -1,11 +1,18 @@
 #!/usr/bin/env python3
 """Fejler hvis en vuln-accept i osv-scanner.toml er udløbet ELLER mangler dato.
 
-🔴 HVORFOR DETTE FINDES: `osv-scanner` HÅNDHÆVER IKKE `ignoreUntil`. Bevist ved
-kørsel ([quality], v2.5.0, 2026-08-11): en ignore med en UDLØBET dato
-undertrykker sårbarheden fuldstændigt og giver exit 0. Datoen i configen er
-altså dekoration — uden dette eksterne tjek er hver "midlertidig" accept i
-praksis PERMANENT, og gaten afvikler sig selv i stilhed.
+🔴 WHY THIS EXISTS. osv-scanner DOES enforce `ignoreUntil`: an expired date stops filtering the
+advisory, and the scan fails as if there were no accept. Measured 2026-10-22 by
+[grundtone] on osv-scanner 1.9.2 (CI's pinned binary), 2.4.0 and 2.5.0, with the
+date written as an unquoted timestamp, a quoted string and a plain date: every
+expired accept gave the rows back and exit 1. [quality]'s observation of
+2026-08-11 (v2.5.0, "an expired date suppresses fully, exit 0") could NOT be
+reproduced.
+So the scanner is not blind to the date. This check still earns its place: it
+refuses an accept WITHOUT a date (the scanner treats that as permanent), it
+checks the COUNT, and it names the expired accept by id instead of a bare
+"vulnerability found". (Corrected 2026-10-22; this file is a copy of
+[quality]'s template, which carries the old premise.)
 
 🔴 LÆSNINGEN SKER MED `tomllib`, IKKE MED REGEX. Den kanoniske forms første
 udgave splittede på `[[IgnoredVulns]]` som tekst. `[[ IgnoredVulns ]]` med

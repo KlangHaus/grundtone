@@ -103,7 +103,7 @@ overrides:
   postcss: '>=8.5.18'
   nitropack: '>=2.13.4'
   ws: '>=8.20.1'
-  nuxt: '>=4.4.6'
+  nuxt: '>=4.6.2'
   uuid: '>=11.1.1'
   tmp: '>=0.2.6'
   turbo: '>=2.9.14'
@@ -170,18 +170,6 @@ auditConfig:
     # grundtone-studio (#343).
     - GHSA-vfj7-8cjw-p6xm
     - GHSA-86w9-cpqp-85rv
-    # simple-git-kaeden (via playground/nuxt > nuxt > @nuxt/devtools): kraever
-    # simple-git >=4.0.1, og en override DER brakker byggeriet — simple-git 4
-    # droppede default-eksporten @nuxt/devtools importerer, saa `nuxt prepare`
-    # fejler ved install. Maalt i studio og dokumenteret i dets
-    # pnpm-workspace.yaml. Ingen udgivet @nuxt/devtools op til 3.4.2 bruger
-    # simple-git 4, saa der er heller ingen opstroems kur. FJERN DISSE FIRE naar
-    # devtools udgiver simple-git 4 — det er den ene blokering tilbage i BEGGE
-    # repoer.
-    - GHSA-x6jw-m9v5-85vh
-    - GHSA-v5rq-49vh-5v5c
-    - GHSA-g4wm-2vf7-vfgr
-    - GHSA-858h-whjf-mvg5
     # GHSA-5p2g-fcmc-qvqq · GHSA-w3rx-r6r6-pgpr — image-size DoS i ICNS- og
     # JXL/HEIF-parserne. **Der findes INGEN patch**: advisory'et angiver
     # `Patched versions <0.0.0`, og npms nyeste (2.0.2) er selv saarbar. En
@@ -197,8 +185,9 @@ auditConfig:
     #
     # 🔴 DEADLINE: 2026-11-24T00:00:00Z. Den STAAR i `osv-scanner.toml`
     # (`ignoreUntil` paa begge GHSA'er) og haandhaeves af
-    # `.github/scripts/assert-osv-ignores-expire.py` som eget job — osv-scanner
-    # selv ignorerer datoen. `scripts/assert-vuln-accepts-in-sync.mjs` binder
+    # `.github/scripts/assert-osv-ignores-expire.py` som eget job, and osv-scanner
+    # enforces it too (measured 2026-10-22, see osv-scanner.toml's header).
+    # `scripts/assert-vuln-accepts-in-sync.mjs` binder
     # de to lister, saa den dag deadlinen falder, faelder CI accepten HER ogsaa.
     # Den tidligere formulering ("genvurdér paa haendelsen, ikke paa en dato")
     # laeste som en accept UDEN udloeb (riff v8e8x8in/KH-937); maalt er det
@@ -206,10 +195,9 @@ auditConfig:
     # Aendrer du datoen, skal den aendres BEGGE steder.
     - GHSA-5p2g-fcmc-qvqq
     - GHSA-w3rx-r6r6-pgpr
-    # GHSA-hp3w-g68c-fv3c — sprintf-js DoS through unbounded precision
-    # specifiers. NO patch: every published version (<=1.1.3) is affected.
-    # Dev-only, via @changesets/cli > ... > js-yaml 3 > argparse 1, which
-    # formats its own help strings, not input. `pnpm audit --prod` does not see
-    # it; it is listed here because the two accept lists must match. Expiry and
-    # exit condition are in osv-scanner.toml. Task: umaalt (no ClickUp id yet).
-    - GHSA-hp3w-g68c-fv3c
+    # GHSA-vjh5-4x84-xrqp — a FALSE POSITIVE in OSV's data on nuxt /
+    # @nuxt/nitro-server 4.6.2 (OSV dropped the `< 4.0.0` bound on the unpatched
+    # 3.x range; GitHub's advisory, which `pnpm audit` reads, is correct). Listed
+    # here only because the two accept lists must match. Reason, expiry and exit
+    # condition are in osv-scanner.toml.
+    - GHSA-vjh5-4x84-xrqp
