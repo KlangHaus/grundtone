@@ -73,8 +73,11 @@
     }
 
     &--info {
+      // Text is the neutral text token, not the status colour: the status colours
+      // on their own 14 % tint fail AA in light mode. Tint + dot carry the status
+      // (as in GTAlert). Guarded by badge-contrast.test.ts on the built CSS.
       background: color-mix(in srgb, tokens.color('info') 14%, transparent);
-      color: tokens.color('info');
+      color: tokens.color('text');
 
       .#{$prefix}-badge__dot {
         background: tokens.color('info');
@@ -83,7 +86,7 @@
 
     &--success {
       background: color-mix(in srgb, tokens.color('success') 14%, transparent);
-      color: tokens.color('success');
+      color: tokens.color('text');
 
       .#{$prefix}-badge__dot {
         background: tokens.color('success');
@@ -92,7 +95,7 @@
 
     &--warning {
       background: color-mix(in srgb, tokens.color('warning') 14%, transparent);
-      color: tokens.color('warning');
+      color: tokens.color('text');
 
       .#{$prefix}-badge__dot {
         background: tokens.color('warning');
@@ -101,7 +104,7 @@
 
     &--error {
       background: color-mix(in srgb, tokens.color('error') 14%, transparent);
-      color: tokens.color('error');
+      color: tokens.color('text');
 
       .#{$prefix}-badge__dot {
         background: tokens.color('error');
