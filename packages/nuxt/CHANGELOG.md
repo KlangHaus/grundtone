@@ -1,5 +1,25 @@
 # @grundtone/nuxt
 
+## 3.3.0 - 2026-10-22
+
+### Patch Changes
+
+- [#279](https://github.com/KlangHaus/grundtone/pull/279)
+  [`24b1505`](https://github.com/KlangHaus/grundtone/commit/24b1505280ab18129d64788a1631497fa9b55f1b)
+  Thanks [@allanasp](https://github.com/allanasp)! - Require `@nuxt/kit` ^4.6.2. Nuxt 4.6.2 fixes
+  GHSA-vjh5-4x84-xrqp (server-side route rules), GHSA-jjm6-p2m9-9w4x (incomplete `javascript:` URL
+  fix) and GHSA-xfq5-w38q-pc2x (server islands render `useHeadSafe` input unsanitised), all
+  published 2026-10-22.
+- Updated dependencies
+  [[`14e10ed`](https://github.com/KlangHaus/grundtone/commit/14e10ed26e95996f1f2d3e2c06b5cf5947b36412),
+  [`af12912`](https://github.com/KlangHaus/grundtone/commit/af12912f21ca0861a03080b64470759776cb6d61),
+  [`4ad6655`](https://github.com/KlangHaus/grundtone/commit/4ad665541a6740a7423c0b63413b8cb1b8a84966)]:
+  - @grundtone/core@3.3.0
+  - @grundtone/icons@3.3.0
+  - @grundtone/utils@3.3.0
+  - @grundtone/vue@3.3.0
+  - @grundtone/design-system@3.3.0
+
 ## 3.2.3 - 2026-09-28
 
 ### Patch Changes

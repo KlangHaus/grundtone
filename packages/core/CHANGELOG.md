@@ -1,5 +1,24 @@
 # @grundtone/core
 
+## 3.3.0 - 2026-10-22
+
+### Patch Changes
+
+- [#257](https://github.com/KlangHaus/grundtone/pull/257)
+  [`14e10ed`](https://github.com/KlangHaus/grundtone/commit/14e10ed26e95996f1f2d3e2c06b5cf5947b36412)
+  Thanks [@allanasp](https://github.com/allanasp)! - Align `@typescript-eslint/parser` on `^8.71.1`
+  in all four manifests.
+
+  The three packages were pinned at `^6.21.0` while the root was already at `^8.65.0` — two major
+  lines of the same lint parser in one workspace. This is the split being closed, not just a version
+  bump.
+
+  No consumer-visible change: the dependency is a `devDependency` in each package, so nothing in the
+  published tarballs changes behaviour. The changeset is here because the gate reasons at path level
+  and `package.json` ships — deliberately, since comparing against the `files` field was wrong in
+  the dangerous direction (`dist` is built from `src`). A patch release is the honest way past it;
+  an empty changeset is the thing that gate exists to prevent.
+
 ## 3.2.3 - 2026-09-28
 
 ### Patch Changes
