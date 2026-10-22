@@ -49,6 +49,13 @@ import TableDemo from '../../../../packages/vue/src/molecules/Table/demo.vue';
 import TabsDemo from '../../../../packages/vue/src/molecules/Tabs/demo.vue';
 import ToastDemo from '../../../../packages/vue/src/molecules/Toast/demo.vue';
 import CookieMessageDemo from '../../../../packages/vue/src/molecules/CookieMessage/demo.vue';
+import AppShellDemo from '../../../../packages/vue/src/molecules/AppShell/demo.vue';
+import ConfirmDialogDemo from '../../../../packages/vue/src/molecules/ConfirmDialog/demo.vue';
+import DrawerDemo from '../../../../packages/vue/src/molecules/Drawer/demo.vue';
+import CodeBlockDemo from '../../../../packages/vue/src/atoms/CodeBlock/demo.vue';
+import MeterDemo from '../../../../packages/vue/src/atoms/Meter/demo.vue';
+import RichTextDemo from '../../../../packages/vue/src/molecules/RichText/demo.vue';
+import HeroDemo from '../../../../packages/vue/src/molecules/Hero/demo.vue';
 import IconGallery from './components/IconGallery.vue';
 import SnackEmbed from './components/SnackEmbed.vue';
 import { GT_ICON_REGISTRY_KEY } from '../../../../packages/vue/src/atoms/Icon/types';
@@ -112,11 +119,25 @@ export default {
     app.component('TabsDemo', TabsDemo);
     app.component('ToastDemo', ToastDemo);
     app.component('CookieMessageDemo', CookieMessageDemo);
+    app.component('AppShellDemo', AppShellDemo);
+    app.component('ConfirmDialogDemo', ConfirmDialogDemo);
+    app.component('DrawerDemo', DrawerDemo);
+    app.component('CodeBlockDemo', CodeBlockDemo);
+    app.component('MeterDemo', MeterDemo);
+    app.component('RichTextDemo', RichTextDemo);
+    app.component('HeroDemo', HeroDemo);
     app.component('IconGallery', IconGallery);
     app.component('SnackEmbed', SnackEmbed);
     app.component('DiagramPreview', DiagramPreview);
   },
   setup() {
-    onMounted(() => setupColorPreview());
+    onMounted(() => {
+      setupColorPreview();
+      // Studio tokens and grundtone's defaults both set :root, so the later
+      // one wins. Vite injects the theme's CSS after the head links in dev,
+      // so move the Studio link to the end of <head> once mounted.
+      const studio = document.getElementById('grundtone-studio-tokens');
+      if (studio) document.head.appendChild(studio);
+    });
   },
 } satisfies Theme;

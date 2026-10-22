@@ -91,6 +91,14 @@ function codePreviewHighlightPlugin(): Plugin {
   };
 }
 
+// Theme the docs from a Grundtone Studio project (dogfooding): when set, the
+// project's published tokens.css is linked after grundtone's defaults, so both
+// the components and the VitePress chrome (custom.css maps --vp-c-brand-* to
+// --color-primary) take the project's brand. Unset = grundtone's own defaults.
+// Locally (Tilt): http://localhost:3000/k/<pk_live_…>/tokens.css
+export const STUDIO_TOKENS_LINK_ID = 'grundtone-studio-tokens';
+const studioTokensUrl = process.env.GRUNDTONE_STUDIO_TOKENS_URL?.trim() || '';
+
 export default defineConfig({
   title: 'Grundtone',
   description:
@@ -160,6 +168,18 @@ export default defineConfig({
   },
 
   head: [
+    ...(studioTokensUrl
+      ? ([
+          [
+            'link',
+            {
+              rel: 'stylesheet',
+              href: studioTokensUrl,
+              id: STUDIO_TOKENS_LINK_ID,
+            },
+          ],
+        ] as [string, Record<string, string>][])
+      : []),
     [
       'link',
       {
@@ -251,6 +271,7 @@ export default defineConfig({
             { text: 'Back Link', link: '/vue/back-link' },
             { text: 'Back to Top', link: '/vue/back-to-top' },
             { text: 'Anchor Links', link: '/vue/anchor-links' },
+            { text: 'App Shell', link: '/vue/app-shell' },
             { text: 'Badge', link: '/vue/badge' },
             { text: 'Breadcrumb', link: '/vue/breadcrumb' },
             { text: 'Bulk Action Bar', link: '/vue/bulk-action-bar' },
@@ -258,9 +279,14 @@ export default defineConfig({
             { text: 'Card', link: '/vue/card' },
             { text: 'Carousel', link: '/vue/carousel' },
             { text: 'Chart', link: '/vue/chart' },
+            { text: 'Code Block', link: '/vue/code-block' },
+            { text: 'Confirm Dialog', link: '/vue/confirm-dialog' },
             { text: 'Cookie Message', link: '/vue/cookie-message' },
             { text: 'Details', link: '/vue/details' },
+            { text: 'Drawer', link: '/vue/drawer' },
             { text: 'Error Page', link: '/vue/error-page' },
+            { text: 'Hero', link: '/vue/hero' },
+            { text: 'Meter', link: '/vue/meter' },
             { text: 'Modal', link: '/vue/modal' },
             { text: 'Overflow Menu', link: '/vue/overflow-menu' },
             { text: 'Skip Link', link: '/vue/skip-link' },
@@ -289,6 +315,7 @@ export default defineConfig({
             { text: 'OTP Input', link: '/vue/otp-input' },
             { text: 'Password Input', link: '/vue/password-input' },
             { text: 'Radio Group', link: '/vue/radio-group' },
+            { text: 'Rich Text', link: '/vue/rich-text' },
             { text: 'Search Field', link: '/vue/search-field' },
             { text: 'Select', link: '/vue/select' },
             { text: 'Slider', link: '/vue/slider' },
