@@ -74,14 +74,18 @@ klanghausPipeline(
         set -euo pipefail
         version=8.21.2
         sha256=5bc41815076e6ed6ef8fbecc9d9b75bcae31f39029ceb55da08086315316e3ba
-        mkdir -p .ci-tools
-        curl -fsSL -o .ci-tools/gitleaks.tar.gz \
+        # The download lives OUTSIDE the checkout, like the commitlint cells:
+        # an untrusted tarball inside the tree would be part of what gitleaks
+        # scans, and it would survive into the next build on a reused agent.
+        tools="$(mktemp -d)"
+        trap 'rm -rf -- "$tools"' EXIT
+        curl -fsSL -o "$tools/gitleaks.tar.gz" \
           "https://github.com/gitleaks/gitleaks/releases/download/v${version}/gitleaks_${version}_linux_x64.tar.gz"
-        echo "${sha256}  .ci-tools/gitleaks.tar.gz" | sha256sum --check --strict -
-        tar -xzf .ci-tools/gitleaks.tar.gz -C .ci-tools gitleaks
-        got=$(.ci-tools/gitleaks version)
+        echo "${sha256}  $tools/gitleaks.tar.gz" | sha256sum --check --strict -
+        tar -xzf "$tools/gitleaks.tar.gz" -C "$tools" gitleaks
+        got=$("$tools/gitleaks" version)
         [ "$got" = "$version" ] || { echo "gitleaks reports '$got', expected $version"; exit 1; }
-        .ci-tools/gitleaks detect --no-banner --redact --verbose --exit-code 1
+        "$tools/gitleaks" detect --no-banner --redact --verbose --exit-code 1
       ''',
     ],
 

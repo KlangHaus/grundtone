@@ -60,3 +60,7 @@ TEMPLATES/*
 # Rust build artifacts (grundtone-tokens crate)
 packages/tokens-rust/target/
 packages/tokens-rust/Cargo.lock
+
+# Tool downloads from Jenkins checks. The Jenkinsfile installs them outside the
+# checkout; this keeps a stray local run from committing a binary.
+.ci-tools/
