@@ -55,7 +55,6 @@ describe('OSV_EXPECTED matches osv-scanner.toml', () => {
     expect(accepts).toBeGreaterThan(0);
     expect(consumers.map(c => c.file).sort()).toEqual([
       'osv-scanner.yml',
-      'prerelease-next.yml',
       'release.yml',
     ]);
   });

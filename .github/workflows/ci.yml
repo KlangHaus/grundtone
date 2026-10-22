@@ -396,16 +396,18 @@ jobs:
   # Fanger main→develop-driften DÉR hvor den opstår, frem for den dag vi vil
   # udgive. Rodårsagen er ikke versionsnumre, men at releases fra
   # main/frozen-2.x aldrig flyder tilbage til develop — så uden dette check
-  # står vi samme sted efter næste main-release. Der er en TILSVARENDE hård
-  # gate i prerelease-next.yml før publish; denne her er den tidlige advarsel,
-  # den anden er den der ikke kan omgås. Begge er nødvendige.
+  # står vi samme sted efter næste main-release. (The `next` channel and its
+  # hard gate in prerelease-next.yml were retired 2026-10-22: release.yml
+  # publishes `latest` from develop, so develop == latest after every release,
+  # and `next` could never pass its own gate. This check stays: it catches
+  # develop falling BEHIND latest.)
   version-drift:
     name: Version drift (develop ahead of npm latest)
     runs-on: ubuntu-latest
     # KUN på develop-PR'er. På main ER de udgivne versioner `latest` — main
     # er dét, npm har fået — så "strengt højere" er per definition falsk dér,
     # og gaten ville gøre enhver main-PR rød uden at der var noget galt.
-    # Kravet gælder develop, fordi det er develop `next` stempler fra.
+    # Kravet gælder develop, fordi det er develop `latest` udgives fra.
     if: github.base_ref == 'develop'
 
     steps:
@@ -421,9 +423,7 @@ jobs:
       # `npm view`. Det holder checket hurtigt og uafhængigt af lockfilen.
       - name: Assert every next-channel package is ahead of latest
         # --allow-equal: lighed er den NORMALE tilstand paa en PR lige efter en
-        # udgivelse, fordi develop selv er udgivelseslinjen. Udgivelsesstien
-        # (prerelease-next.yml) koerer UDEN flaget og kraever stadig strengt
-        # stoerre — dér ville lighed udgive en prerelease under sin egen release.
+        # udgivelse, fordi develop selv er udgivelseslinjen. Only BEHIND fails.
         run: node scripts/assert-develop-ahead-of-latest.mjs --allow-equal
 
   # C8 — artefakt-bevis. At bygge i monorepoet beviser kun at TypeScript kan

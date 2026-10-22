@@ -9,9 +9,9 @@ import { execFileSync } from 'node:child_process';
  * Den første udgave svarede tom streng ved enhver fejl, og kalderen læste tom
  * streng som "aldrig udgivet — intet at være bagud for". Et registry-udfald,
  * en rate limit eller en npm-CLI-fejl gjorde altså gaten GRØN præcis i det
- * tilfælde hvor den ikke havde målt noget. Og den samme kode er den hårde
- * gate i prerelease-next.yml, umiddelbart før et publish der ikke kan gøres
- * om (npm unpublish er 72 timer og frarådet).
+ * tilfælde hvor den ikke havde målt noget. (It was also the hard gate in
+ * prerelease-next.yml before publish, until that workflow was retired
+ * 2026-10-22.)
  *
  * npm skelner selv, så vi kan også:
  *   · pakken findes ikke              → fejl med E404 → 'unpublished'

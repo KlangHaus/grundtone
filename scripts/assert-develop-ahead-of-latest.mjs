@@ -30,11 +30,9 @@
  *    fault for an invisible one.
  *
  * ── Where this runs ─────────────────────────────────────────────────────────
- * Both places, and both are needed:
- *   · on develop PRs      — so drift is caught when it appears
- *   · in prerelease-next, BEFORE publish — so a bypassed PR check cannot
- *                           reach the registry. That is the step that cannot
- *                           be undone.
+ *   · on develop PRs (ci.yml, `--allow-equal`) — so drift is caught when it
+ *     appears. It also ran without the flag in prerelease-next.yml before
+ *     publish; that workflow and the `next` channel were retired 2026-10-22.
  *
  * Usage: node scripts/assert-develop-ahead-of-latest.mjs
  *        NPM_DIST_TAG=next node scripts/... (compare against another tag)
@@ -44,7 +42,8 @@ import { join } from 'node:path';
 import { gt } from './lib/semver-gt.mjs';
 import { lookupPublished } from './lib/npm-dist-tag.mjs';
 
-// Keep in sync with PACKAGE_DIRS in prerelease-next-version.mjs — same channel.
+// The seven packages the retired `next` channel published; still the set this
+// drift check covers.
 //
 // 🔴 @grundtone/react-native and @grundtone/email are absent ON PURPOSE: they
 // are not part of the `next` channel. What that exception does NOT cover:
