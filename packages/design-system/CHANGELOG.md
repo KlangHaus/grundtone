@@ -1,5 +1,20 @@
 # @grundtone/design-system
 
+## 3.3.0 - 2026-10-22
+
+### Patch Changes
+
+- [#271](https://github.com/KlangHaus/grundtone/pull/271)
+  [`af12912`](https://github.com/KlangHaus/grundtone/commit/af12912f21ca0861a03080b64470759776cb6d61)
+  Thanks [@allanasp](https://github.com/allanasp)! - Tinted badges (info, success, warning, error)
+  now use the neutral text colour on their status tint instead of the status colour itself, so their
+  text meets WCAG AA (≥ 4.5:1) in light and dark mode. Before, light mode measured 1.51–3.78:1. The
+  tint and the dot still carry the status colour, as in `GTAlert`. This applies to both
+  `.gt-badge--*` and `.badge--*`.
+- Updated dependencies
+  [[`14e10ed`](https://github.com/KlangHaus/grundtone/commit/14e10ed26e95996f1f2d3e2c06b5cf5947b36412)]:
+  - @grundtone/core@3.3.0
+
 ## 3.2.3 - 2026-09-28
 
 ### Patch Changes
