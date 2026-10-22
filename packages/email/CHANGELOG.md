@@ -1,5 +1,24 @@
 # @grundtone/email
 
+## 0.3.5 - 2026-10-22
+
+### Patch Changes
+
+- [#259](https://github.com/KlangHaus/grundtone/pull/259)
+  [`1b3751c`](https://github.com/KlangHaus/grundtone/commit/1b3751c6176a7f09c37b5a26808ca5acffb86806)
+  Thanks [@allanasp](https://github.com/allanasp)! - Bump `handlebars` to `^4.7.10` — a critical
+  advisory (`>=4.0.0 <=4.7.9`) with a patch in 4.7.10.
+
+  This one is consumer-relevant, unlike most dependency bumps: `handlebars` is a runtime template
+  engine declared directly in `@grundtone/email`, so the vulnerable code was in the published
+  tarball's dependency closure, not merely in our tooling. Raised on the declared range rather than
+  with an override, because an override on a direct dependency hides the real version from anyone
+  reading the manifest.
+
+- Updated dependencies
+  [[`14e10ed`](https://github.com/KlangHaus/grundtone/commit/14e10ed26e95996f1f2d3e2c06b5cf5947b36412)]:
+  - @grundtone/core@3.3.0
+
 ## 0.3.4 - 2026-09-28
 
 ### Patch Changes
