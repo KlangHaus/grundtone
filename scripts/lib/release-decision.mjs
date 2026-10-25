@@ -77,6 +77,7 @@ export const OUTCOME = {
  * @param {string[]} input.emptyNames               from emptyChangesetNames()
  * @param {string[]} input.unpublished              local versions absent from the registry
  * @param {string[]} [input.unconfirmed]            published packages not read back (published branch)
+ * @param {string[]} [input.omitted]                publishable versions changesets did not name, not on the registry
  * @returns {{ok: boolean, code: string, message: string}}
  */
 export function releaseOutcome({
@@ -86,6 +87,7 @@ export function releaseOutcome({
   emptyNames,
   unpublished,
   unconfirmed = [],
+  omitted = [],
 }) {
   if (published === 'true') {
     // 🔴 "published" IS CHANGESETS' CLAIM, NOT THE REGISTRY'S (task 1amk32fku63).
@@ -113,6 +115,21 @@ export function releaseOutcome({
         message:
           `changesets reported ${listed.length} package(s) published, but ${unconfirmed.length} ` +
           `could not be read back from the registry: ${unconfirmed.join(', ')}.`,
+      };
+    }
+    // 🔴 WHAT CHANGESETS DID NOT NAME IS CHECKED TOO ([sikkerhed], #284
+    // verdict). Reading back only the claimed list leaves a publishable version
+    // the claim forgot invisible: published=true, every claimed package
+    // confirmed, and `glemt@9.9.9` never on npm was GREEN. `omitted` is the
+    // publishable set minus the claimed set, read AFTER the wait so both sets
+    // are measured on the same clock.
+    if (omitted.length > 0) {
+      return {
+        ok: false,
+        code: OUTCOME.UNCONFIRMED,
+        message:
+          `changesets reported ${listed.length} package(s) published, but ${omitted.length} ` +
+          `publishable version(s) it did not name are not on the registry: ${omitted.join(', ')}.`,
       };
     }
     return {
@@ -185,4 +202,16 @@ export function parsePublishedPackages(json) {
       p.name.length > 0 &&
       p.version.length > 0,
   );
+}
+
+/**
+ * The publishable versions changesets did not name, matched on name AND
+ * version: a claim for `vue@3.3.0` does not cover a local `vue@3.3.1`.
+ *
+ * @param {{name: string, version: string}[]} publishable
+ * @param {{name: string, version: string}[]} claimed
+ */
+export function notClaimed(publishable, claimed) {
+  const named = new Set(claimed.map(c => `${c.name}@${c.version}`));
+  return publishable.filter(p => !named.has(`${p.name}@${p.version}`));
 }

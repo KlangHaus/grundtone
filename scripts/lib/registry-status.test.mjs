@@ -4,6 +4,7 @@ import {
   awaitOnRegistry,
   CAUSE,
   describeUnpublished,
+  readbackMs,
   unpublishedVersions,
 } from './registry-status.mjs';
 
@@ -245,4 +246,25 @@ describe('awaitOnRegistry — bounded read-back after a publish (1amk32fku63)', 
     });
     expect(out[0].cause).toBe(CAUSE.UNREADABLE);
   });
+});
+
+describe('readbackMs — the bound must be a real bound ([sikkerhed], #284)', () => {
+  it('unset → the default', () => {
+    expect(readbackMs(undefined, 1200000, 'READBACK_TIMEOUT_MS')).toBe(1200000);
+  });
+
+  it('a positive number → that number', () => {
+    expect(readbackMs('60000', 1, 'READBACK_TIMEOUT_MS')).toBe(60000);
+  });
+
+  // NaN would make `now() >= deadline` never true; '' and 0 would mean no
+  // wait at all; a negative deadline is already past.
+  it.each(['abc', '', '   ', '0', '-5', 'Infinity', 'NaN'])(
+    'refuses %j, naming the variable',
+    raw => {
+      expect(() => readbackMs(raw, 1, 'READBACK_TIMEOUT_MS')).toThrow(
+        /READBACK_TIMEOUT_MS must be a positive number/,
+      );
+    },
+  );
 });

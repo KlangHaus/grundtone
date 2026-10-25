@@ -148,3 +148,29 @@ export async function awaitOnRegistry({
     await sleep(intervalMs);
   }
 }
+
+/**
+ * A read-back duration from the environment, in milliseconds.
+ *
+ * 🔴 `Number()` ALONE ACCEPTS TWO VALUES THAT BREAK THE BOUND ([sikkerhed],
+ * #284 verdict): `Number('abc')` is NaN, so `now() >= deadline` is never true
+ * and only the job's 360-minute limit stops the wait; `Number('')` is 0, so
+ * there is no wait at all and an ordinary npm lag turns a good release red.
+ * Unset means the default; anything else must be a finite number above zero,
+ * or the release stops here and says which variable is wrong.
+ *
+ * @param {string|undefined} raw
+ * @param {number} fallback
+ * @param {string} name  the variable, for the error
+ */
+export function readbackMs(raw, fallback, name) {
+  if (raw === undefined) return fallback;
+  // '' and whitespace are Number() 0, so `n <= 0` refuses them too.
+  const n = Number(raw);
+  if (!Number.isFinite(n) || n <= 0) {
+    throw new Error(
+      `${name} must be a positive number of milliseconds, got ${JSON.stringify(raw)}`,
+    );
+  }
+  return n;
+}

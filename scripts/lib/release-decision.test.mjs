@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   emptyChangesetNames,
+  notClaimed,
   OUTCOME,
   parsePublishedPackages,
   releaseOutcome,
@@ -184,6 +185,20 @@ describe('releaseOutcome — a claimed publish must be read back (1amk32fku63)',
     expect(r.message).toContain('@grundtone/email@0.3.5');
   });
 
+  // 🔴 [sikkerhed]'s provoked case on c2b6cf1, which was GREEN: everything
+  // claimed confirmed, one publishable version the claim never named.
+  it('red when a publishable version changesets did not name is not on the registry', () => {
+    const r = releaseOutcome({
+      ...claimed,
+      unconfirmed: [],
+      omitted: ['glemt@9.9.9 (absent from the registry)'],
+    });
+    expect(r.ok).toBe(false);
+    expect(r.code).toBe(OUTCOME.UNCONFIRMED);
+    expect(r.message).toContain('1 publishable version(s) it did not name');
+    expect(r.message).toContain('glemt@9.9.9');
+  });
+
   it('red on an empty list: a publish that names nothing', () => {
     const r = releaseOutcome({ ...claimed, publishedPackages: '[]' });
     expect(r.ok).toBe(false);
@@ -206,4 +221,30 @@ describe('parsePublishedPackages', () => {
       expect(parsePublishedPackages(v)).toEqual([]);
     },
   );
+});
+
+describe('notClaimed', () => {
+  const publishable = [
+    { name: '@grundtone/vue', version: '3.3.0' },
+    { name: '@grundtone/email', version: '0.3.5' },
+    { name: 'glemt', version: '9.9.9' },
+  ];
+
+  it('keeps what the claim did not name', () => {
+    expect(
+      notClaimed(publishable, [
+        { name: '@grundtone/vue', version: '3.3.0' },
+        { name: '@grundtone/email', version: '0.3.5' },
+      ]),
+    ).toEqual([{ name: 'glemt', version: '9.9.9' }]);
+  });
+
+  it('matches on name AND version: a claim for another version does not cover it', () => {
+    expect(
+      notClaimed(
+        [{ name: '@grundtone/vue', version: '3.3.1' }],
+        [{ name: '@grundtone/vue', version: '3.3.0' }],
+      ),
+    ).toEqual([{ name: '@grundtone/vue', version: '3.3.1' }]);
+  });
 });
