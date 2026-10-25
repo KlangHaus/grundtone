@@ -107,7 +107,12 @@ overrides:
   uuid: '>=11.1.1'
   tmp: '>=0.2.6'
   turbo: '>=2.9.14'
-  undici: '>=6.27.0'
+  # GHSA-xjj6-f33q-929c (high, DoS on excessive content-encodings): patched
+  # 6.29.1, 7.30.1 and 8.12.2. Replaces the unbounded '>=6.27.0' floor with
+  # one floor per major, so no line can lift another's consumers across a major.
+  'undici@>=6.0.0 <6.29.1': '^6.29.1'
+  'undici@>=7.0.0 <7.30.1': '^7.30.1'
+  'undici@>=8.0.0 <8.12.2': '^8.12.2'
   # Raised from '>=6.4.3' for GHSA-587h-7wmj-h5pm; the lockfile holds one vite (8.x).
   vite: '>=8.3.3 <9'
   svgo: '^4.1.0'
@@ -123,6 +128,9 @@ overrides:
   'js-yaml@>=4.0.0 <4.3.2': '^4.3.2'
   'nanoid@<3.3.17': '^3.3.17'
   'qs@<6.16.0': '>=6.16.0'
+  # GHSA-27r3-jxmh-p828 (high). Transitive via packages/mcp >
+  # @modelcontextprotocol/sdk > express. Patched 2.4.0, bounded to 2.x.
+  'body-parser@>=2.0.0 <2.4.0': '^2.4.0'
   '@xmldom/xmldom@<0.9.12': '>=0.9.12'
   'decode-uri-component@<0.5.0': '>=0.5.0'
   '@humanfs/node@<0.16.8': '>=0.16.8'
