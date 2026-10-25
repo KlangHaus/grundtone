@@ -215,6 +215,7 @@ auditConfig:
     # waived. Reason, reachability, expiry and exit condition are in
     # osv-scanner.toml. In short: it reaches us through packages/vue >
     # @tiptap/html, whose declared peer is `happy-dom ^20.8.9`, so the fix cannot
-    # be installed without breaking that peer; and tiptap loads happy-dom only
-    # for SSR, with `disableJavaScriptEvaluation: true`.
+    # be installed without breaking that peer; and happy-dom evaluates no script
+    # unless `enableJavaScriptEvaluation` is set, which nothing on our path sets
+    # — guarded by packages/vue/src/molecules/RichText/fromHTML.server.test.ts.
     - GHSA-834v-8h66-3h79
