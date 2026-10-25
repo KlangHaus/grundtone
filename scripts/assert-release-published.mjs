@@ -18,9 +18,11 @@ import { join } from 'node:path';
 import readChangesets from '@changesets/read';
 import {
   emptyChangesetNames,
+  parsePublishedPackages,
   releaseOutcome,
 } from './lib/release-decision.mjs';
 import {
+  awaitOnRegistry,
   describeUnpublished,
   unpublishedVersions,
 } from './lib/registry-status.mjs';
@@ -87,12 +89,33 @@ const packages = publishablePackages();
 const unpublishedEntries = await unpublishedVersions({ packages });
 const unpublished = describeUnpublished(unpublishedEntries);
 
+// 🔴 A CLAIMED PUBLISH IS READ BACK, PACKAGE BY PACKAGE (task 1amk32fku63).
+// Release 3.3.0 printed "published 7 package(s)" 2½ and 11 minutes before
+// two of them existed on npm. 20 minutes covers the longest lag measured with
+// room to spare; the job has no timeout of its own (default 360 min).
+let unconfirmed = [];
+if (process.env.PUBLISHED === 'true') {
+  const claimed = parsePublishedPackages(process.env.PUBLISHED_PACKAGES);
+  unconfirmed = describeUnpublished(
+    await awaitOnRegistry({
+      packages: claimed,
+      timeoutMs: Number(process.env.READBACK_TIMEOUT_MS ?? 20 * 60_000),
+      intervalMs: Number(process.env.READBACK_INTERVAL_MS ?? 30_000),
+      log: line => console.log(line),
+    }),
+  );
+  console.log(
+    `read back ${claimed.length - unconfirmed.length} of ${claimed.length} published package(s) from the registry`,
+  );
+}
+
 const outcome = releaseOutcome({
   published: process.env.PUBLISHED,
   publishedPackages: process.env.PUBLISHED_PACKAGES,
   pullRequestNumber: process.env.PULL_REQUEST_NUMBER,
   emptyNames: empty,
   unpublished,
+  unconfirmed,
 });
 
 // 🔴 THE DENOMINATOR BELONGS IN THE GREEN (riff KH-1101). This line used to

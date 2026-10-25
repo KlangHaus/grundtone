@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   emptyChangesetNames,
   OUTCOME,
+  parsePublishedPackages,
   releaseOutcome,
 } from './release-decision.mjs';
 
@@ -137,13 +138,72 @@ describe('releaseOutcome', () => {
     expect(r.code).toBe(OUTCOME.PUBLISHED);
   });
 
-  it('survives a publishedPackages value that is not JSON', () => {
+  // 🔴 CHANGED MEANING (task 1amk32fku63). This cell used to assert GREEN with
+  // "0 package(s)": a publish that named nothing counted as a release. A claim
+  // with nothing to read back is not evidence, so it is now red — without a
+  // crash, which is what the cell was first written to hold.
+  it('refuses a publishedPackages value that is not JSON — red, not a crash', () => {
     const r = releaseOutcome({
       ...base,
       published: 'true',
       publishedPackages: 'not json',
     });
-    expect(r.ok).toBe(true);
-    expect(r.message).toContain('0 package');
+    expect(r.ok).toBe(false);
+    expect(r.code).toBe(OUTCOME.UNCONFIRMED);
+    expect(r.message).toContain('listed no packages');
   });
+});
+
+describe('releaseOutcome — a claimed publish must be read back (1amk32fku63)', () => {
+  const claimed = {
+    ...base,
+    published: 'true',
+    publishedPackages:
+      '[{"name":"@grundtone/vue","version":"3.3.0"},{"name":"@grundtone/email","version":"0.3.5"}]',
+  };
+
+  it('ACCEPT: green when every listed package was read back, and says so', () => {
+    const r = releaseOutcome({ ...claimed, unconfirmed: [] });
+    expect(r.ok).toBe(true);
+    expect(r.code).toBe(OUTCOME.PUBLISHED);
+    expect(r.message).toBe(
+      'published 2 package(s), each read back from the registry',
+    );
+  });
+
+  it('red when one listed package never appeared — the 3.3.0 shape, had it not resolved', () => {
+    const r = releaseOutcome({
+      ...claimed,
+      unconfirmed: ['@grundtone/email@0.3.5 (absent from the registry)'],
+    });
+    expect(r.ok).toBe(false);
+    expect(r.code).toBe(OUTCOME.UNCONFIRMED);
+    expect(r.message).toContain(
+      '2 package(s) published, but 1 could not be read back',
+    );
+    expect(r.message).toContain('@grundtone/email@0.3.5');
+  });
+
+  it('red on an empty list: a publish that names nothing', () => {
+    const r = releaseOutcome({ ...claimed, publishedPackages: '[]' });
+    expect(r.ok).toBe(false);
+    expect(r.code).toBe(OUTCOME.UNCONFIRMED);
+  });
+});
+
+describe('parsePublishedPackages', () => {
+  it('keeps name/version entries and drops anything else', () => {
+    expect(
+      parsePublishedPackages(
+        '[{"name":"a","version":"1.0.0"},{"name":"b"},null,{"name":"","version":"1"}]',
+      ),
+    ).toEqual([{ name: 'a', version: '1.0.0' }]);
+  });
+
+  it.each([undefined, '', 'not json', '{"name":"a","version":"1"}'])(
+    'yields [] for %j',
+    v => {
+      expect(parsePublishedPackages(v)).toEqual([]);
+    },
+  );
 });

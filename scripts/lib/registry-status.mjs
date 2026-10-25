@@ -94,3 +94,57 @@ export async function unpublishedVersions({
 export function describeUnpublished(entries) {
   return entries.map(e => `${e.name}@${e.version} (${e.detail})`);
 }
+
+/**
+ * Reads `packages` back from the registry until every one is there, or the
+ * deadline passes. Returns the entries still not confirmed (empty = all read
+ * back).
+ *
+ * 🔴 WHY A WAIT AND NOT ONE READ (task 1amk32fku63). npm acknowledges a publish
+ * before the version is readable: in release 3.3.0 the gap was 2½ min for
+ * @grundtone/vue and 11 min for @grundtone/email. One read right after the
+ * publish would turn most releases red for a lag that resolves on its own; no
+ * read at all printed "published" about versions nobody could install. The
+ * bound makes "never appeared" a red job instead of a hung one.
+ *
+ * A `refused` entry is not retried: the name will not become valid by waiting.
+ *
+ * @param {object} input
+ * @param {{name: string, version: string}[]} input.packages
+ * @param {number} input.timeoutMs
+ * @param {number} input.intervalMs
+ * @param {typeof fetch} [input.fetchImpl]
+ * @param {string} [input.registryBase]
+ * @param {(ms: number) => Promise<void>} [input.sleep]
+ * @param {() => number} [input.now]
+ * @param {(line: string) => void} [input.log]
+ */
+export async function awaitOnRegistry({
+  packages,
+  timeoutMs,
+  intervalMs,
+  fetchImpl = fetch,
+  registryBase,
+  sleep = ms => new Promise(r => setTimeout(r, ms)),
+  now = Date.now,
+  log = () => {},
+}) {
+  const deadline = now() + timeoutMs;
+  let pending = packages;
+  for (let attempt = 1; ; attempt += 1) {
+    const missing = await unpublishedVersions({
+      packages: pending,
+      registryBase,
+      fetchImpl,
+    });
+    if (missing.length === 0) return [];
+    const retryable = missing.filter(m => m.cause !== CAUSE.REFUSED);
+    if (retryable.length === 0 || now() >= deadline) return missing;
+    log(
+      `read-back attempt ${attempt}: ${missing.length} of ${packages.length} not yet on the registry ` +
+        `(${describeUnpublished(missing).join(', ')}); retrying in ${Math.round(intervalMs / 1000)}s`,
+    );
+    pending = retryable.map(({ name, version }) => ({ name, version }));
+    await sleep(intervalMs);
+  }
+}
