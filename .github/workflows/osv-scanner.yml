@@ -46,7 +46,7 @@ jobs:
       # er i orden" ser plausibelt ud, hvis man ikke ved, hvad man forventer.
       - name: Assert ignoreUntil er sat og ikke passeret
         env:
-          OSV_EXPECTED: '5'
+          OSV_EXPECTED: '6'
         run: python3 .github/scripts/assert-osv-ignores-expire.py osv-scanner.toml
       - name: Roed-foer-groen for selve tjekket
         run: ./.github/scripts/assert-osv-ignores-expire.test.sh
