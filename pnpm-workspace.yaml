@@ -209,3 +209,12 @@ auditConfig:
     # here only because the two accept lists must match. Reason, expiry and exit
     # condition are in osv-scanner.toml.
     - GHSA-vjh5-4x84-xrqp
+    # GHSA-834v-8h66-3h79 — happy-dom, high: host code execution through the
+    # ESM compiler's unvalidated import alias. Every version 17.0.0–21.0.3; the
+    # first fix is 21.0.4. Accepted by Allan 2026-10-25, NAMED and DATED, not
+    # waived. Reason, reachability, expiry and exit condition are in
+    # osv-scanner.toml. In short: it reaches us through packages/vue >
+    # @tiptap/html, whose declared peer is `happy-dom ^20.8.9`, so the fix cannot
+    # be installed without breaking that peer; and tiptap loads happy-dom only
+    # for SSR, with `disableJavaScriptEvaluation: true`.
+    - GHSA-834v-8h66-3h79

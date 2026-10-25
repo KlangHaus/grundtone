@@ -88,3 +88,29 @@ Exit: falls away when OSV's record terminates `introduced: 3.0.0` (nuxt) and
 The anti-rot check fails the day OSV stops reporting it, so it cannot outlive
 the error. The 7-day date is a forced re-read, not the exit condition.
 """
+[[IgnoredVulns]]
+id = "GHSA-834v-8h66-3h79"
+ignoreUntil = 2026-11-25T00:00:00Z
+reason = """
+happy-dom, high: host code execution through the ESM compiler, which puts an
+unvalidated import alias into generated JavaScript (an incomplete fix of
+CVE-2026-33943). Affects 17.0.0-21.0.3; the first fix is 21.0.4. Accepted by
+Allan 2026-10-25.
+
+Why it cannot simply be patched: it reaches us through packages/vue ->
+@tiptap/html, a PROD dependency of @grundtone/vue. @tiptap/html (3.31.3, and the
+latest 3.32.0) declares the PEER `happy-dom: ^20.8.9`. An override rewrote that
+peer spec but did not move the auto-installed resolution (measured: still
+20.11.1, with "unmet peer").
+
+Reachability, read from the published @tiptap/html 3.31.3 (not provoked):
+happy-dom is imported only under the `node` export condition
+(dist/server/index.js), i.e. server-side rendering, and both Window
+constructions there set `disableJavaScriptEvaluation: true` and
+`disableJavaScriptFileLoading: true`. The advisory's PoC needs a
+<script type="module"> to be evaluated.
+
+Exit: @tiptap/html allows happy-dom >=21.0.4 -> bump it, delete this accept here
+AND in pnpm-workspace.yaml, and lower OSV_EXPECTED. The date is a forced
+re-assessment, not the exit.
+"""
