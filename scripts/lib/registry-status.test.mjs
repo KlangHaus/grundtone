@@ -223,6 +223,16 @@ describe('awaitOnRegistry — bounded read-back after a publish (1amk32fku63)', 
     expect(reg.sleeps).toHaveLength(3);
   });
 
+  // 🔴 Cursor Bugbot's case on #284: the refused name left `pending` after the
+  // first read, and once email appeared the guard returned [] — green.
+  it('a refused name is still reported when the rest appears on a later read', async () => {
+    const reg = lagging({ [email.name]: 1 });
+    const out = await run(reg, [{ name: '../evil', version: '1.0.0' }, email]);
+    expect(out).toHaveLength(1);
+    expect(out[0]).toMatchObject({ name: '../evil', cause: CAUSE.REFUSED });
+    expect(reg.sleeps).toEqual([10_000]);
+  });
+
   it('does not wait on a name it refuses to query', async () => {
     const reg = lagging({});
     const out = await run(reg, [{ name: '../evil', version: '1.0.0' }]);

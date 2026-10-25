@@ -131,15 +131,23 @@ export async function awaitOnRegistry({
 }) {
   const deadline = now() + timeoutMs;
   let pending = packages;
+  // 🔴 A REFUSED NAME IS KEPT, NOT JUST NOT RETRIED (Cursor Bugbot on #284).
+  // It leaves `pending` after its first read, so a later round that finds
+  // everything else would return [] and the name that was never queried
+  // would vanish — a green release about a package nobody checked.
+  const refused = [];
   for (let attempt = 1; ; attempt += 1) {
     const missing = await unpublishedVersions({
       packages: pending,
       registryBase,
       fetchImpl,
     });
-    if (missing.length === 0) return [];
+    refused.push(...missing.filter(m => m.cause === CAUSE.REFUSED));
     const retryable = missing.filter(m => m.cause !== CAUSE.REFUSED);
-    if (retryable.length === 0 || now() >= deadline) return missing;
+    if (retryable.length === 0 || now() >= deadline)
+      return [...refused, ...retryable].sort((a, b) =>
+        a.name.localeCompare(b.name),
+      );
     log(
       `read-back attempt ${attempt}: ${missing.length} of ${packages.length} not yet on the registry ` +
         `(${describeUnpublished(missing).join(', ')}); retrying in ${Math.round(intervalMs / 1000)}s`,
