@@ -5,16 +5,15 @@ export default defineConfig({
   plugins: [vue()],
   test: {
     environment: 'jsdom',
-    // 🔴 lcov er IKKE med i @vitest/coverage-v8's standard-reportere (text,
-    // html, clover, json). Uden denne linje producerer `pnpm test:coverage`
-    // ingen lcov.info i roden — og baade Sonar og codecov leder efter netop
-    // den fil.
+    // 🔴 lcov is NOT among @vitest/coverage-v8's default reporters (text,
+    // html, clover, json). Without this line `pnpm test:coverage` writes no
+    // lcov.info at the root — and that is the file Sonar (sonar.yml) reads.
+    // (ci.yml's Codecov upload was removed 2026-10-25: it was never received.)
     //
-    // Maalt 2026-08-11: af elleve pakker satte KUN packages/vue lcov, og
-    // ci.yml's codecov-step peger paa './coverage/lcov.info,**/coverage/
-    // lcov.info'. Rod-filen fandtes ikke, saa uploadet har hentet én pakkes
-    // tal og kaldt det repoets. **En rapport der loeber uden data ligner en
-    // rapport med daarlige data.**
+    // Measured 2026-08-11: of eleven packages ONLY packages/vue wrote lcov. The
+    // root file did not exist, so a report took one package's numbers and
+    // called them the repo's. **A report that runs without data looks like a
+    // report with bad data.**
     coverage: {
       reporter: ['text', 'html', 'lcov'],
       reportsDirectory: './coverage',
