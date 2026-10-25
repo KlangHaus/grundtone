@@ -338,14 +338,12 @@ jobs:
           retention-days: 30
           if-no-files-found: ignore
 
-      - name: Coverage Report
-        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
-        if: success() || failure()
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: './coverage/lcov.info,**/coverage/lcov.info'
-          fail_ci_if_error: false
-          verbose: true
+      # No Codecov upload (Allan 2026-10-25). Measured: no CODECOV_TOKEN exists
+      # in the repo or the org, Codecov rejected every upload with "Token
+      # required - not valid tokenless upload", and the repo was never activated
+      # there (`active: false`, `totals: null`). The step stayed green only
+      # because of fail_ci_if_error: false. Coverage goes to our own SonarQube
+      # (sonar.yml), which runs test:coverage itself and fails on a missing lcov.
 
   size-check:
     name: Bundle Size Check
