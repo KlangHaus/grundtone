@@ -18,10 +18,14 @@ import { join } from 'node:path';
 import readChangesets from '@changesets/read';
 import {
   emptyChangesetNames,
+  notClaimed,
+  parsePublishedPackages,
   releaseOutcome,
 } from './lib/release-decision.mjs';
 import {
+  awaitOnRegistry,
   describeUnpublished,
+  readbackMs,
   unpublishedVersions,
 } from './lib/registry-status.mjs';
 import {
@@ -87,12 +91,61 @@ const packages = publishablePackages();
 const unpublishedEntries = await unpublishedVersions({ packages });
 const unpublished = describeUnpublished(unpublishedEntries);
 
+// 🔴 A CLAIMED PUBLISH IS READ BACK, PACKAGE BY PACKAGE (task 1amk32fku63).
+// Release 3.3.0 printed "published 7 package(s)" 2½ and 11 minutes before
+// two of them existed on npm. 20 minutes covers the longest lag measured with
+// room to spare; the job has no timeout of its own (default 360 min).
+let unconfirmed = [];
+let omitted = [];
+if (process.env.PUBLISHED === 'true') {
+  let timeoutMs;
+  let intervalMs;
+  try {
+    timeoutMs = readbackMs(
+      process.env.READBACK_TIMEOUT_MS,
+      20 * 60_000,
+      'READBACK_TIMEOUT_MS',
+    );
+    intervalMs = readbackMs(
+      process.env.READBACK_INTERVAL_MS,
+      30_000,
+      'READBACK_INTERVAL_MS',
+    );
+  } catch (err) {
+    console.error(`::error::release read-back not run: ${err.message}`);
+    process.exit(1);
+  }
+  const claimed = parsePublishedPackages(process.env.PUBLISHED_PACKAGES);
+  unconfirmed = describeUnpublished(
+    await awaitOnRegistry({
+      packages: claimed,
+      timeoutMs,
+      intervalMs,
+      log: line => console.log(line),
+    }),
+  );
+  console.log(
+    `read back ${claimed.length - unconfirmed.length} of ${claimed.length} published package(s) from the registry`,
+  );
+  // Same clock as the claimed set: enumerated and read AFTER the wait, so a
+  // claimed package's npm lag cannot show up here as a false positive.
+  const others = notClaimed(publishablePackages(), claimed);
+  omitted = describeUnpublished(
+    await unpublishedVersions({ packages: others }),
+  );
+  console.log(
+    `checked ${others.length} publishable version(s) changesets did not name · not on the registry: ${omitted.length}`,
+  );
+}
+
 const outcome = releaseOutcome({
   published: process.env.PUBLISHED,
   publishedPackages: process.env.PUBLISHED_PACKAGES,
   pullRequestNumber: process.env.PULL_REQUEST_NUMBER,
   emptyNames: empty,
   unpublished,
+  unconfirmed,
+  omitted,
 });
 
 // 🔴 THE DENOMINATOR BELONGS IN THE GREEN (riff KH-1101). This line used to

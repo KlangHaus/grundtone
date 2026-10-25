@@ -43,6 +43,7 @@ export function emptyChangesetNames(changesets, names) {
 /** Outcomes the assertion can reach. The code is what a reader greps for. */
 export const OUTCOME = {
   PUBLISHED: 'published',
+  UNCONFIRMED: 'published-unconfirmed',
   VERSION_PR: 'version-pr',
   NOTHING_TO_PUBLISH: 'nothing-to-publish',
   EMPTY_CHANGESETS: 'empty-changesets',
@@ -75,6 +76,8 @@ export const OUTCOME = {
  * @param {string|undefined} input.pullRequestNumber the step's PR output, if any
  * @param {string[]} input.emptyNames               from emptyChangesetNames()
  * @param {string[]} input.unpublished              local versions absent from the registry
+ * @param {string[]} [input.unconfirmed]            published packages not read back (published branch)
+ * @param {string[]} [input.omitted]                publishable versions changesets did not name, not on the registry
  * @returns {{ok: boolean, code: string, message: string}}
  */
 export function releaseOutcome({
@@ -83,18 +86,56 @@ export function releaseOutcome({
   pullRequestNumber,
   emptyNames,
   unpublished,
+  unconfirmed = [],
+  omitted = [],
 }) {
   if (published === 'true') {
-    let count = 0;
-    try {
-      count = JSON.parse(publishedPackages || '[]').length;
-    } catch {
-      count = 0;
+    // 🔴 "published" IS CHANGESETS' CLAIM, NOT THE REGISTRY'S (task 1amk32fku63).
+    // This branch used to return green on the flag alone. Release 3.3.0 (run
+    // 39855638476): changesets said success at 21:16:24Z, and
+    // @grundtone/vue@3.3.0 was on the registry at 21:18:56Z,
+    // @grundtone/email@0.3.5 only at 21:27:33Z — so "published 7 package(s)"
+    // was printed about versions a consumer could not install. The caller now
+    // reads every listed package back (bounded wait) and passes what it could
+    // not confirm; green requires that list to be empty AND non-vacuous.
+    const listed = parsePublishedPackages(publishedPackages);
+    if (listed.length === 0) {
+      return {
+        ok: false,
+        code: OUTCOME.UNCONFIRMED,
+        message:
+          'changesets reported a publish but listed no packages, so nothing could be read back ' +
+          'from the registry. A publish that names nothing is not evidence of a release.',
+      };
+    }
+    if (unconfirmed.length > 0) {
+      return {
+        ok: false,
+        code: OUTCOME.UNCONFIRMED,
+        message:
+          `changesets reported ${listed.length} package(s) published, but ${unconfirmed.length} ` +
+          `could not be read back from the registry: ${unconfirmed.join(', ')}.`,
+      };
+    }
+    // 🔴 WHAT CHANGESETS DID NOT NAME IS CHECKED TOO ([sikkerhed], #284
+    // verdict). Reading back only the claimed list leaves a publishable version
+    // the claim forgot invisible: published=true, every claimed package
+    // confirmed, and `glemt@9.9.9` never on npm was GREEN. `omitted` is the
+    // publishable set minus the claimed set, read AFTER the wait so both sets
+    // are measured on the same clock.
+    if (omitted.length > 0) {
+      return {
+        ok: false,
+        code: OUTCOME.UNCONFIRMED,
+        message:
+          `changesets reported ${listed.length} package(s) published, but ${omitted.length} ` +
+          `publishable version(s) it did not name are not on the registry: ${omitted.join(', ')}.`,
+      };
     }
     return {
       ok: true,
       code: OUTCOME.PUBLISHED,
-      message: `published ${count} package(s)`,
+      message: `published ${listed.length} package(s), each read back from the registry`,
     };
   }
 
@@ -135,4 +176,42 @@ export function releaseOutcome({
       `the registry: ${unpublished.join(', ')}. The job is green and the release did not happen; ` +
       'read the publish step of this run before re-running it.',
   };
+}
+
+/**
+ * The `publishedPackages` output of changesets/action, as `{name, version}`.
+ * Anything that is not a JSON array of such entries yields `[]`, which the
+ * published branch refuses rather than counts.
+ *
+ * @param {string|undefined} json
+ * @returns {{name: string, version: string}[]}
+ */
+export function parsePublishedPackages(json) {
+  let parsed;
+  try {
+    parsed = JSON.parse(json || '[]');
+  } catch {
+    return [];
+  }
+  if (!Array.isArray(parsed)) return [];
+  return parsed.filter(
+    p =>
+      p &&
+      typeof p.name === 'string' &&
+      typeof p.version === 'string' &&
+      p.name.length > 0 &&
+      p.version.length > 0,
+  );
+}
+
+/**
+ * The publishable versions changesets did not name, matched on name AND
+ * version: a claim for `vue@3.3.0` does not cover a local `vue@3.3.1`.
+ *
+ * @param {{name: string, version: string}[]} publishable
+ * @param {{name: string, version: string}[]} claimed
+ */
+export function notClaimed(publishable, claimed) {
+  const named = new Set(claimed.map(c => `${c.name}@${c.version}`));
+  return publishable.filter(p => !named.has(`${p.name}@${p.version}`));
 }

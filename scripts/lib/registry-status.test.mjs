@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  awaitOnRegistry,
   CAUSE,
   describeUnpublished,
+  readbackMs,
   unpublishedVersions,
 } from './registry-status.mjs';
 
@@ -149,4 +151,130 @@ describe('the outage branch against a real fetch', () => {
     expect(out).toHaveLength(1);
     expect(out[0].cause).toBe(CAUSE.UNREADABLE);
   }, 20000);
+});
+
+describe('awaitOnRegistry — bounded read-back after a publish (1amk32fku63)', () => {
+  const vue = { name: '@grundtone/vue', version: '3.3.0' };
+  const email = { name: '@grundtone/email', version: '0.3.5' };
+
+  /**
+   * A registry where each package APPEARS after a given number of reads of it,
+   * and a clock that advances only when the guard sleeps — so the cells are
+   * deterministic and measure the loop, not the wall clock.
+   */
+  function lagging(appearAfter) {
+    const reads = {};
+    let t = 0;
+    const fetchImpl = async url => {
+      const name = decodeURIComponent(url.split('/').pop());
+      reads[name] = (reads[name] ?? 0) + 1;
+      const pkgVersion = name === vue.name ? vue.version : email.version;
+      const there = reads[name] > (appearAfter[name] ?? 0);
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({ versions: there ? { [pkgVersion]: {} } : {} }),
+      };
+    };
+    return {
+      fetchImpl,
+      reads,
+      sleeps: [],
+      now: () => t,
+      sleep(ms) {
+        this.sleeps.push(ms);
+        t += ms;
+        return Promise.resolve();
+      },
+    };
+  }
+
+  const run = (reg, packages, timeoutMs = 60_000) =>
+    awaitOnRegistry({
+      packages,
+      timeoutMs,
+      intervalMs: 10_000,
+      fetchImpl: reg.fetchImpl,
+      now: reg.now,
+      sleep: ms => reg.sleep(ms),
+    });
+
+  it('ACCEPT: returns [] at once when everything is already there — no sleep', async () => {
+    const reg = lagging({});
+    expect(await run(reg, [vue, email])).toEqual([]);
+    expect(reg.sleeps).toEqual([]);
+  });
+
+  it('waits out a lag, and only re-reads what is still missing', async () => {
+    // email appears on its 3rd read; vue is there from the start.
+    const reg = lagging({ [email.name]: 2 });
+    expect(await run(reg, [vue, email])).toEqual([]);
+    expect(reg.sleeps).toEqual([10_000, 10_000]);
+    expect(reg.reads[vue.name]).toBe(1);
+    expect(reg.reads[email.name]).toBe(3);
+  });
+
+  it('🔴 gives up at the deadline and NAMES what never appeared', async () => {
+    const reg = lagging({ [email.name]: 1_000 });
+    const out = await run(reg, [vue, email], 30_000);
+    expect(out).toHaveLength(1);
+    expect(out[0]).toMatchObject({ ...email, cause: CAUSE.MISSING });
+    // bounded: 30 s / 10 s = 3 sleeps, then the deadline answers
+    expect(reg.sleeps).toHaveLength(3);
+  });
+
+  // 🔴 Cursor Bugbot's case on #284: the refused name left `pending` after the
+  // first read, and once email appeared the guard returned [] — green.
+  it('a refused name is still reported when the rest appears on a later read', async () => {
+    const reg = lagging({ [email.name]: 1 });
+    const out = await run(reg, [{ name: '../evil', version: '1.0.0' }, email]);
+    expect(out).toHaveLength(1);
+    expect(out[0]).toMatchObject({ name: '../evil', cause: CAUSE.REFUSED });
+    expect(reg.sleeps).toEqual([10_000]);
+  });
+
+  it('does not wait on a name it refuses to query', async () => {
+    const reg = lagging({});
+    const out = await run(reg, [{ name: '../evil', version: '1.0.0' }]);
+    expect(out[0].cause).toBe(CAUSE.REFUSED);
+    expect(reg.sleeps).toEqual([]);
+  });
+
+  it('an unreadable registry is retried, and reported as unreadable at the deadline', async () => {
+    let t = 0;
+    const out = await awaitOnRegistry({
+      packages: [vue],
+      timeoutMs: 20_000,
+      intervalMs: 10_000,
+      fetchImpl: async () => {
+        throw new Error('ECONNRESET');
+      },
+      now: () => t,
+      sleep: async ms => {
+        t += ms;
+      },
+    });
+    expect(out[0].cause).toBe(CAUSE.UNREADABLE);
+  });
+});
+
+describe('readbackMs — the bound must be a real bound ([sikkerhed], #284)', () => {
+  it('unset → the default', () => {
+    expect(readbackMs(undefined, 1200000, 'READBACK_TIMEOUT_MS')).toBe(1200000);
+  });
+
+  it('a positive number → that number', () => {
+    expect(readbackMs('60000', 1, 'READBACK_TIMEOUT_MS')).toBe(60000);
+  });
+
+  // NaN would make `now() >= deadline` never true; '' and 0 would mean no
+  // wait at all; a negative deadline is already past.
+  it.each(['abc', '', '   ', '0', '-5', 'Infinity', 'NaN'])(
+    'refuses %j, naming the variable',
+    raw => {
+      expect(() => readbackMs(raw, 1, 'READBACK_TIMEOUT_MS')).toThrow(
+        /READBACK_TIMEOUT_MS must be a positive number/,
+      );
+    },
+  );
 });
