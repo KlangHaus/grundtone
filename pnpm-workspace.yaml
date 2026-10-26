@@ -171,12 +171,11 @@ auditConfig:
     # NAESTE uafhjaelpelige fund, inklusive et kritisk, uden at nogen beslutter
     # det. Seks id'er lader et syvende advisory goere gaten roed.
     #
-    # braces (via expo > @expo/metro) og node-forge (via expo > @expo/cli):
-    # ingen patch findes. Verificeret mod registret, ikke kun mod auditens
-    # `<0.0.0`-kodning: nyeste udgivne braces ER 3.0.3 og node-forge ER 1.4.0,
-    # begge inde i deres eget advisory-span. Samme to undtages ved navn i
-    # grundtone-studio (#343).
-    - GHSA-vfj7-8cjw-p6xm
+    # node-forge (via expo > @expo/cli): no patch exists. Verified against the
+    # registry, not only against the audit's `<0.0.0` encoding: the newest
+    # published node-forge IS 1.4.0, inside its own advisory span. Also
+    # accepted by name in grundtone-studio (#343). (braces GHSA-vfj7-8cjw-p6xm
+    # stood here until GitHub withdrew the advisory on 2026-10-23.)
     - GHSA-86w9-cpqp-85rv
     # GHSA-5p2g-fcmc-qvqq · GHSA-w3rx-r6r6-pgpr — image-size DoS i ICNS- og
     # JXL/HEIF-parserne. **Der findes INGEN patch**: advisory'et angiver
