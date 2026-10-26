@@ -93,8 +93,13 @@ jobs:
       - name: Every accept is still needed
         run: |
           printf '' > /tmp/no-accepts.toml
+          # The canary (.github/osv-canary/README.md): a known-vulnerable
+          # lockfile scanned in the SAME invocation, so "every accept is stale"
+          # can be told apart from "the scan saw nothing".
+          mkdir -p /tmp/osv-canary
+          cp .github/osv-canary/package-lock.json.canary /tmp/osv-canary/package-lock.json
           rc=0
-          osv-scanner --recursive --skip-git --config=/tmp/no-accepts.toml --format json ./ \
+          osv-scanner --recursive --skip-git --config=/tmp/no-accepts.toml --format json ./ /tmp/osv-canary \
             > /tmp/osv-without-accepts.json || rc=$?
           if [ "$rc" -gt 1 ]; then
             echo "::error::osv-scanner exited $rc without accepts — not measured, not a pass"
