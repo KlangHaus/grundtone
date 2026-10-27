@@ -84,7 +84,9 @@ export function classify(line) {
   // anything. Handled before the key-form below, because it is a key AND a hazard.
   // These two are YAML KEYS on the raw line, not expressions, so they are matched before the
   // expression spans are isolated above.
-  const inherit = /(^|\s)secrets:\s*inherit\s*$/.test(line)
+  // An inline comment after `inherit` is still YAML for `inherit` (Bugbot on #291: v4 read
+  // `secrets: inherit # all of them` as no inherit at all, and the ungated caller passed).
+  const inherit = /(^|\s)secrets:\s*inherit\s*(#.*)?$/.test(line)
 
   // `secrets.NAME`
   for (const m of rest.matchAll(/secrets\.(\w+)/g)) named.push(m[1] ?? '')
@@ -192,7 +194,8 @@ export function foldExpressions(text) {
  * @param {string} text the folded text
  */
 function assertFoldKeptKeys(name, rawText, text) {
-  const jobKeyCount = (t) => t.split('\n').filter((l) => /^ +[A-Za-z0-9_-]+:\s*$/.test(l)).length
+  const jobKeyCount = (t) =>
+    t.split('\n').filter((l) => /^ +[A-Za-z0-9_-]+:\s*(#.*)?$/.test(l)).length
   if (jobKeyCount(text) < jobKeyCount(rawText)) {
     throw new Instrument(
       `${name}: folding \`\${{ ... }}\` spans removed ${jobKeyCount(rawText) - jobKeyCount(text)} ` +
@@ -202,14 +205,78 @@ function assertFoldKeptKeys(name, rawText, text) {
   }
 }
 
+/** @param {string} value a YAML scalar, minus a trailing ` # comment` */
+function stripInlineComment(value) {
+  return value.replace(/\s#.*$/, '').trim()
+}
+
+/**
+ * The environment name a job-level `environment:` value names, or null when it cannot be
+ * resolved statically (an expression, or a mapping without `name:`).
+ * @param {string} raw
+ */
+function environmentName(raw) {
+  let v = stripInlineComment(raw)
+  if (v.startsWith('{')) v = /\bname:([^,}]+)/.exec(v)?.[1]?.trim() ?? ''
+  if (!v || v.includes('${{')) return null
+  return v.replace(/^['"]|['"]$/g, '')
+}
+
+/**
+ * Track the job-level `environment:` and the environment it names.
+ * 🔴 Only at the job's OWN child indentation (Bugbot on #291). v4 accepted `environment:` at any
+ * depth below the job key, so a step input (`with: environment: prod`) or a matrix key named
+ * `environment` marked an ungated job as gated, and its secrets passed. The child indentation is
+ * DERIVED from the job's first line, like the job indentation itself, not assumed.
+ * @param {Job} job
+ * @param {string} line
+ */
+function readEnvironment(job, line) {
+  if (!line.trim()) return
+  const indent = line.length - line.trimStart().length
+  job.childIndent ??= indent
+  if (job.envIndent !== null && indent > job.envIndent) {
+    const name = /^\s*name:(.*)$/.exec(line)
+    if (name) job.environment = environmentName(name[1] ?? '')
+    return
+  }
+  job.envIndent = null
+  if (indent !== job.childIndent) return
+  const env = /^\s*environment:(.*)$/.exec(line)
+  if (!env) return
+  job.hasEnvironment = true
+  const value = stripInlineComment(env[1] ?? '')
+  if (value) job.environment = environmentName(value)
+  else job.envIndent = indent
+}
+
+/**
+ * @typedef {{job: string, secrets: Set<string>, hasEnvironment: boolean,
+ *   environment: string|null|undefined, inherit: boolean,
+ *   childIndent: number|null, envIndent: number|null}} Job
+ *   `environment` is undefined when the job names none, null when the name cannot be resolved.
+ */
+
+/** @param {string} job */
+function newJob(job) {
+  return {
+    job,
+    secrets: new Set(),
+    hasEnvironment: false,
+    environment: undefined,
+    inherit: false,
+    childIndent: null,
+    envIndent: null,
+  }
+}
+
 /**
  * Attribute one line under `jobs:` to the current job, or record why it cannot be.
- * @param {{secrets: Set<string>, hasEnvironment: boolean, inherit: boolean}|null} current
+ * @param {Job|null} current
  * @param {string} line
- * @param {RegExp} envKey
  * @param {{unattributed: string[], unknownForms: string[]}} acc
  */
-function attributeLine(current, line, envKey, acc) {
+function attributeLine(current, line, acc) {
   const c = classify(line)
   if (c.unknown) acc.unknownForms.push(c.unknown)
   if (!current) {
@@ -220,7 +287,7 @@ function attributeLine(current, line, envKey, acc) {
     return
   }
   if (c.inherit) current.inherit = true
-  if (envKey.test(line)) current.hasEnvironment = true
+  readEnvironment(current, line)
   for (const s of c.named) current.secrets.add(s)
 }
 
@@ -253,7 +320,7 @@ function assertFullyAttributed(name, indent, acc) {
  * error — see the review note in the file header.
  * @param {string} name
  * @param {string} text
- * @returns {{job: string, secrets: Set<string>, hasEnvironment: boolean}[]}
+ * @returns {Job[]}
  */
 export function parseJobs(name, rawText) {
   const text = foldExpressions(rawText)
@@ -281,28 +348,35 @@ export function parseJobs(name, rawText) {
     throw new Instrument(`${name}: could not derive the job indentation from the first key under \`jobs:\``)
   }
 
-  const jobKey = new RegExp(String.raw`^ {${indent}}([A-Za-z0-9_-]+):\s*$`)
-  // `environment:` sits one level deeper than the job key; accept anything deeper, since the step
-  // size is a style choice and a job-level `environment:` is the only one YAML puts there.
-  const envKey = new RegExp(`^ {${indent + 1},}environment:`)
+  // A job key may carry an inline comment (`deploy: # prod only`) — Bugbot on #291: v4 matched only
+  // a bare key, so a commented job never began and its secrets were attributed to the job above,
+  // inheriting THAT job's environment.
+  const jobKey = new RegExp(String.raw`^ {${indent}}([A-Za-z0-9_-]+):\s*(#.*)?$`)
+  // 🔴 And the backstop for the next shape nobody thought of: any other line at the job
+  // indentation is something this parser does not understand, so it refuses instead of guessing.
+  const atJobLevel = new RegExp(String.raw`^ {${indent}}\S`)
 
-  /** @type {{job: string, secrets: Set<string>, hasEnvironment: boolean, inherit: boolean}[]} */
+  /** @type {Job[]} */
   const out = []
-  if (headSecrets.size > 0) {
-    out.push({ job: '<file-level>', secrets: headSecrets, hasEnvironment: false, inherit: false })
-  }
+  if (headSecrets.size > 0) out.push({ ...newJob('<file-level>'), secrets: headSecrets })
 
   let current = null
   const acc = { unattributed: [], unknownForms: [] }
   for (const line of body) {
     const m = jobKey.exec(line)
     if (m) {
-      current = { job: m[1] ?? '', secrets: new Set(), hasEnvironment: false, inherit: false }
+      current = newJob(m[1] ?? '')
       out.push(current)
       continue
     }
     if (isComment(line)) continue
-    attributeLine(current, line, envKey, acc)
+    if (atJobLevel.test(line)) {
+      throw new Instrument(
+        `${name}: a line at job indentation ${indent} is not a job key this guard understands — ` +
+          `${JSON.stringify(line.trim())}`,
+      )
+    }
+    attributeLine(current, line, acc)
   }
   assertFullyAttributed(name, indent, acc)
   return out
@@ -311,12 +385,33 @@ export function parseJobs(name, rawText) {
 // ───────────────────────────────────────────── surface A: what the workflows consume
 
 /**
+ * Why a job's secrets are NOT behind a working gate, or null when they are.
+ * 🔴 `environment:` alone is not the gate (Bugbot on #291). An environment in ENV_ALLOWLIST has
+ * no branch policy by definition — surface B allows exactly that — so naming it gated nothing
+ * while both surfaces stayed green. A name this guard cannot resolve cannot be confirmed either.
+ * @param {Job} job
+ * @param {Set<string>} ungatedEnvs
+ * @returns {string|null}
+ */
+function gateGap(job, ungatedEnvs) {
+  if (!job.hasEnvironment) return 'without an `environment:`'
+  if (typeof job.environment !== 'string') {
+    return 'behind an `environment:` whose name this guard cannot resolve (an expression, or no `name:`)'
+  }
+  if (ungatedEnvs.has(job.environment)) {
+    return `behind environment '${job.environment}', which is in ENV_ALLOWLIST and so has no branch policy`
+  }
+  return null
+}
+
+/**
  * @param {string} name
  * @param {string} job
  * @param {string} secret
+ * @param {string} gap from gateGap
  * @param {Set<string>|null} ungateable the triggers, when ALL of them are ungateable
  */
-function ungatedMessage(name, job, secret, ungateable) {
+function ungatedMessage(name, job, secret, gap, ungateable) {
   if (ungateable) {
     return (
       `${name} job '${job}' consumes secrets.${secret}, and this workflow triggers ` +
@@ -327,7 +422,7 @@ function ungatedMessage(name, job, secret, ungateable) {
     )
   }
   return (
-    `${name} job '${job}' consumes secrets.${secret} without an \`environment:\` — ` +
+    `${name} job '${job}' consumes secrets.${secret} ${gap} — ` +
     `gate it with an environment that has a branch policy, or add it to ` +
     `SECRET_ALLOWLIST with the measured reason it cannot be gated`
   )
@@ -335,22 +430,24 @@ function ungatedMessage(name, job, secret, ungateable) {
 
 /**
  * @param {string} name
- * @param {{job: string, secrets: Set<string>, hasEnvironment: boolean, inherit: boolean}} job
+ * @param {Job} job
  * @param {Record<string,string>} allow
+ * @param {Set<string>} ungatedEnvs
  * @param {Set<string>|null} ungateable
  * @returns {{seen: number, bad: string[]}}
  */
-function jobFindings(name, job, allow, ungateable) {
+function jobFindings(name, job, allow, ungatedEnvs, ungateable) {
   const bad = []
   let seen = 0
+  const gap = gateGap(job, ungatedEnvs)
   // `secrets: inherit` hands the called workflow EVERY secret the caller can see, so there is
   // no name to gate. [grundtone]'s scope, deliberately narrow: flag it when the job has no
   // environment. Residual NOT asserted here: inherit WITH an environment is still broader than
   // any single job needs, but that is a design finding, not this guard's claim.
-  if (job.inherit && !job.hasEnvironment) {
+  if (job.inherit && gap) {
     seen += 1
     bad.push(
-      `${name} job '${job.job}' uses \`secrets: inherit\` without an \`environment:\` — ` +
+      `${name} job '${job.job}' uses \`secrets: inherit\` ${gap} — ` +
         `that passes EVERY secret to the called workflow with no name to gate. Name the ` +
         `secrets it actually needs, or gate the job with an environment that has a branch policy.`,
     )
@@ -358,8 +455,8 @@ function jobFindings(name, job, allow, ungateable) {
   for (const secret of job.secrets) {
     if (BUILTIN.has(secret)) continue
     seen += 1
-    if (secret in allow || job.hasEnvironment) continue
-    bad.push(ungatedMessage(name, job.job, secret, ungateable))
+    if (secret in allow || !gap) continue
+    bad.push(ungatedMessage(name, job.job, secret, gap, ungateable))
   }
   return { seen, bad }
 }
@@ -385,9 +482,11 @@ function allowlistDebt(files, allow) {
  * @param {[string,string][]} files
  * @param {Record<string,string>} allow injectable so a self-test cell is not contaminated by the
  *   live allowlist — the staleness check would otherwise turn every small fixture red.
+ * @param {string[]} ungatedEnvs environments known to have NO branch policy; naming one gates nothing.
  * @returns {string[]} violations
  */
-export function surfaceA(files, allow = SECRET_ALLOWLIST) {
+export function surfaceA(files, allow = SECRET_ALLOWLIST, ungatedEnvs = Object.keys(ENV_ALLOWLIST)) {
+  const noPolicy = new Set(ungatedEnvs)
   /** @type {string[]} */
   const bad = []
   let seen = 0
@@ -395,7 +494,7 @@ export function surfaceA(files, allow = SECRET_ALLOWLIST) {
     const trig = triggers(text)
     const ungateable = trig !== null && [...trig].every((t) => UNGATEABLE_TRIGGERS.has(t)) ? trig : null
     for (const job of parseJobs(name, text)) {
-      const r = jobFindings(name, job, allow, ungateable)
+      const r = jobFindings(name, job, allow, noPolicy, ungateable)
       seen += r.seen
       bad.push(...r.bad)
     }
@@ -413,6 +512,50 @@ export function surfaceA(files, allow = SECRET_ALLOWLIST) {
 }
 
 // ───────────────────────────────────────────── surface B: environments and branch policies
+
+/**
+ * Every environment of the repo, all pages. Each way this can fail is an instrument error, never
+ * an empty list: an empty list would read as "no environment lacks a policy".
+ * 🔴 Paginated (Bugbot on #291). v4 made one request with GitHub's default page size of 30 and
+ * never compared it with `total_count`, so an unprotected 31st environment would never have been
+ * seen while the run exited 0. Measured on grundtone with per_page=2: total_count=5, returned=2.
+ * @param {{token: string|undefined, repo: string, apiUrl: string, fetchImpl?: typeof fetch}} o
+ */
+export async function fetchEnvironments({ token, repo, apiUrl, fetchImpl = globalThis.fetch }) {
+  if (!token) throw new Instrument('GITHUB_TOKEN is empty — SETUP failure, not a finding')
+  /** @type {{name:string, deployment_branch_policy:unknown}[]} */
+  const envs = []
+  let total = Infinity
+  let page = 1
+  while (envs.length < total) {
+    const res = await fetchImpl(`${apiUrl}/repos/${repo}/environments?per_page=100&page=${page}`, {
+      headers: { authorization: `Bearer ${token}`, accept: 'application/vnd.github+json' },
+    })
+    if (!res.ok) {
+      throw new Instrument(
+        `GET /repos/${repo}/environments answered HTTP ${res.status} as the workflow token — ` +
+          `SETUP failure, not a finding. Needs repository read; check \`permissions:\`.`,
+      )
+    }
+    const body = await res.json()
+    const batch = body?.environments
+    if (!Array.isArray(batch)) throw new Instrument('environments response carries no array')
+    if (typeof body.total_count !== 'number') {
+      throw new Instrument('environments response carries no total_count — cannot tell if the list is whole')
+    }
+    total = body.total_count
+    // An empty page before the count is reached would loop forever; it is also a list that
+    // contradicts its own total, which is exactly what this function must not pass on.
+    if (batch.length === 0) break
+    envs.push(...batch)
+    page += 1
+  }
+  if (envs.length !== total) {
+    throw new Instrument(`environments: read ${envs.length} but total_count says ${total} — incomplete list`)
+  }
+  if (envs.length === 0) throw new Instrument('0 environments returned — cannot discriminate')
+  return envs
+}
 
 /**
  * @param {{name:string, deployment_branch_policy:unknown}[]} envs
@@ -606,6 +749,29 @@ export function selfTestCells() {
       ['a.yml', 'on:\n  workflow_call:\n    secrets:\n      DEPLOY_KEY:\n        required: true\njobs:\n  a:\n    environment:\n      name: x\n    env:\n      K: ${{ secrets.DEPLOY_KEY }}\n'],
       ['b.yml', bare],
     ], { MY_KEY: 'r' }), 'GREEN')
+
+  // 🔴 Cursor Bugbot's review of #291, 2026-10-26: five shapes that v4 answered GREEN. Each cell is
+  // the shape that passed; every one was provoked against v4 before it was fixed.
+  cell('Bugbot: a step input named environment: is not the gate', () =>
+    surfaceA(wf('jobs:\n  a:\n    steps:\n      - uses: x/y@v1\n        with:\n          environment: prod\n        env:\n          K: ${{ secrets.LEAKY_KEY }}\n'), {}), 'RED')
+  cell('Bugbot: a matrix key named environment: is not the gate', () =>
+    surfaceA(wf('jobs:\n  a:\n    strategy:\n      matrix:\n        environment: [a, b]\n    env:\n      K: ${{ secrets.LEAKY_KEY }}\n'), {}), 'RED')
+  cell('Bugbot: a job key with an inline comment starts its own job', () =>
+    surfaceA(wf('jobs:\n  a:\n    environment: prod\n  b: # deploy job\n    env:\n      K: ${{ secrets.LEAKY_KEY }}\n'), {}), 'RED')
+  cell('an unknown line at job indentation -> instrument, not guessed', () =>
+    surfaceA(wf('jobs:\n  a:\n    environment: prod\n  b: { runs-on: x }\n    env:\n      K: ${{ secrets.LEAKY_KEY }}\n'), {}), 'INSTRUMENT')
+  cell('Bugbot: an environment with no branch policy gates nothing', () =>
+    surfaceA(wf('jobs:\n  a:\n    environment: copilot\n    env:\n      K: ${{ secrets.LEAKY_KEY }}\n'), {}), 'RED')
+  cell('an environment named by an expression cannot be confirmed', () =>
+    surfaceA(wf('jobs:\n  a:\n    environment: ${{ inputs.target }}\n    env:\n      K: ${{ secrets.LEAKY_KEY }}\n'), {}), 'RED')
+  cell('Bugbot: secrets: inherit with an inline comment is still inherit', () =>
+    surfaceA(wf('jobs:\n  call:\n    uses: ./x.yml\n    secrets: inherit # all of them\n'), {}), 'RED')
+  // The repairs must not turn the valid forms red: the inline name with a comment, the mapping
+  // form deploy-web.yml uses, and the flow mapping.
+  cell('environment: NAME # comment still gates', () =>
+    surfaceA(wf('jobs:\n  a:\n    environment: prod # gated\n    env:\n      K: ${{ secrets.MY_KEY }}\n'), {}), 'GREEN')
+  cell('environment: { name: NAME } still gates', () =>
+    surfaceA(wf("jobs:\n  a:\n    environment: { name: 'prod', url: x }\n    env:\n      K: ${{ secrets.MY_KEY }}\n"), {}), 'GREEN')
 
   // 🔴 THE REAL-CORPUS CELL. The lesson of v3: 32 synthetic cells could not find the prose false
   // positive, because every fixture was written by the author of the parser. A test suite with no

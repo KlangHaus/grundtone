@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 
-import { Instrument, runCell, selfTestCells } from './secret-hygiene.mjs';
+import {
+  fetchEnvironments,
+  Instrument,
+  runCell,
+  selfTestCells,
+} from './secret-hygiene.mjs';
 
 /**
  * In-process cells for the DECISION, per this repo's cut: scripts/lib is where the guard makes
@@ -34,5 +39,91 @@ describe('runCell', () => {
       throw new TypeError('boom');
     };
     expect(runCell({ fn })).toBe('THREW TypeError: boom');
+  });
+});
+
+/**
+ * A stand-in for `fetch` that serves the given pages in order and records the URLs it was asked
+ * for. `pages` holds JSON bodies, or a number for an HTTP error status.
+ */
+function stubFetch(pages) {
+  const urls = [];
+  const fetchImpl = async url => {
+    urls.push(url);
+    const page = pages[urls.length - 1];
+    if (typeof page === 'number') return { ok: false, status: page };
+    return { ok: true, status: 200, json: async () => page };
+  };
+  return { fetchImpl, urls };
+}
+
+const env = name => ({ name, deployment_branch_policy: { custom: true } });
+const opts = fetchImpl => ({
+  token: 't',
+  repo: 'o/r',
+  apiUrl: 'https://api.example',
+  fetchImpl,
+});
+
+describe('fetchEnvironments', () => {
+  // 🔴 Bugbot on #291: v4 read one page and never compared it with total_count.
+  it('reads every page until total_count is reached', async () => {
+    const { fetchImpl, urls } = stubFetch([
+      { total_count: 3, environments: [env('a'), env('b')] },
+      { total_count: 3, environments: [env('c')] },
+    ]);
+    const envs = await fetchEnvironments(opts(fetchImpl));
+    expect(envs.map(e => e.name)).toEqual(['a', 'b', 'c']);
+    expect(urls).toEqual([
+      'https://api.example/repos/o/r/environments?per_page=100&page=1',
+      'https://api.example/repos/o/r/environments?per_page=100&page=2',
+    ]);
+  });
+
+  // The exact shape Allan pointed at on #291: one more environment than GitHub's default page
+  // of 30. v4 read the 30 and exited 0; the 31st was never measured.
+  it('refuses 30 environments when total_count says 31', async () => {
+    const thirty = Array.from({ length: 30 }, (_, i) => env(`e${i}`));
+    const { fetchImpl } = stubFetch([
+      { total_count: 31, environments: thirty },
+      { total_count: 31, environments: [] },
+    ]);
+    await expect(fetchEnvironments(opts(fetchImpl))).rejects.toThrow(
+      /read 30 but total_count says 31/,
+    );
+  });
+
+  it('accepts 30 environments when total_count says 30, in one request', async () => {
+    const thirty = Array.from({ length: 30 }, (_, i) => env(`e${i}`));
+    const { fetchImpl, urls } = stubFetch([
+      { total_count: 30, environments: thirty },
+    ]);
+    expect(await fetchEnvironments(opts(fetchImpl))).toHaveLength(30);
+    expect(urls).toHaveLength(1);
+  });
+
+  it('refuses a list shorter than its own total_count', async () => {
+    const { fetchImpl } = stubFetch([
+      { total_count: 3, environments: [env('a')] },
+      { total_count: 3, environments: [] },
+    ]);
+    await expect(fetchEnvironments(opts(fetchImpl))).rejects.toThrow(
+      /read 1 but total_count says 3/,
+    );
+  });
+
+  it('refuses a response without total_count', async () => {
+    const { fetchImpl } = stubFetch([{ environments: [env('a')] }]);
+    await expect(fetchEnvironments(opts(fetchImpl))).rejects.toThrow(
+      Instrument,
+    );
+  });
+
+  it('refuses an empty token before asking anything', async () => {
+    const { fetchImpl, urls } = stubFetch([]);
+    await expect(
+      fetchEnvironments({ ...opts(fetchImpl), token: '' }),
+    ).rejects.toThrow(/GITHUB_TOKEN is empty/);
+    expect(urls).toEqual([]);
   });
 });
