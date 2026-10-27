@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
- * Gate: every package in the `next` channel must be STRICTLY AHEAD of what is
- * already on npm's `latest` tag.
+ * Gate: every PUBLISHABLE package on develop must not be behind npm's `latest`
+ * (`--allow-equal`, on develop PRs), or strictly ahead of it (no flag).
  *
  * ── Why this exists ─────────────────────────────────────────────────────────
  * The `next` channel stamps `<develop version>-next.<id>`. That silently
@@ -37,37 +37,32 @@
  * Usage: node scripts/assert-develop-ahead-of-latest.mjs
  *        NPM_DIST_TAG=next node scripts/... (compare against another tag)
  */
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
-import { gt } from './lib/semver-gt.mjs';
+import { readdirSync, readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { driftVerdict } from './lib/drift-verdict.mjs';
 import { lookupPublished } from './lib/npm-dist-tag.mjs';
+import { publishablePackages } from './lib/publishable-packages.mjs';
 
-// The seven packages the retired `next` channel published; still the set this
-// drift check covers.
+// 🔴 THE SET IS DERIVED, NOT LISTED (task 1amk32fku64, [sikkerhed]'s #283
+// verdict). It used to be seven hand-picked directories, justified only as
+// "the seven packages the retired `next` channel published" — a reason that
+// died with the channel on 2026-10-22. @grundtone/react-native and
+// @grundtone/email were outside it, and that exception is how react-native
+// reached 2.12.0 on develop against 2.22.0 on npm unnoticed.
 //
-// 🔴 @grundtone/react-native and @grundtone/email are absent ON PURPOSE: they
-// are not part of the `next` channel. What that exception does NOT cover:
-//
-//   · it is not an exemption from version checking. Every publishable package,
-//     these two included, is checked by assert-no-downgrade-publish.mjs before
-//     any publish.
-//   · it is not a statement that the package does not matter. react-native is
-//     published on npm and has consumers.
-//
-// Spelling that out is the point. The absence used to carry only the reason
-// "not in this channel", and it was read as "outside version checking" — which
-// is how react-native reached 2.12.0 on develop against 2.22.0 on npm without
-// anyone noticing. An exception has to name the control it is an exception
-// FROM, or the next reader will generalise it to every control there is.
-const PACKAGE_DIRS = [
-  'core',
-  'utils',
-  'icons',
-  'design-system',
-  'vue',
-  'nuxt',
-  'mcp',
-];
+// Now every publishable package is checked: the same publishablePackages() that
+// assert-no-downgrade-publish.mjs uses, so the two gates cannot count
+// differently. `private: true` is the only exclusion, and npm enforces it.
+const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+const packages = publishablePackages(root, { readdirSync, readFileSync });
+if (packages.length === 0) {
+  console.error(
+    '::error::found no publishable packages under packages/ — the gate would ' +
+      'have been green without measuring anything.',
+  );
+  process.exit(1);
+}
 const TAG = process.env.NPM_DIST_TAG ?? 'latest';
 
 // 🔴 To taerskler, fordi de beskytter to forskellige ting.
@@ -88,32 +83,13 @@ const TAG = process.env.NPM_DIST_TAG ?? 'latest';
 // efter udgivelsen, og to urelaterede PR'er blev roede paa det.
 const ALLOW_EQUAL = process.argv.includes('--allow-equal');
 
-const failures = [];
-const rows = [];
-
-for (const dir of PACKAGE_DIRS) {
-  const pkg = JSON.parse(
-    readFileSync(join('packages', dir, 'package.json'), 'utf8'),
-  );
-  const local = pkg.version;
-  // Kaster ved et opslag der ikke lykkedes — se lib/npm-dist-tag.mjs. Et
-  // registry-udfald må ikke kunne gøre denne gate grøn.
-  const result = lookupPublished(pkg.name, TAG);
-
-  if (result.state === 'unpublished') {
-    rows.push([pkg.name, local, '(unpublished)', 'ok']);
-    continue;
-  }
-  // "ikke bagud" naar lighed er tilladt; ellers "strengt foran".
-  const ok = ALLOW_EQUAL
-    ? !gt(result.version, local)
-    : gt(local, result.version);
-  // Ikke en indlejret ternaer: fjerde gang i dag Sonar fanger den form hos mig,
-  // og en navngiven variabel siger desuden hvad de to tilstande ER.
-  const failLabel = ALLOW_EQUAL ? 'BEHIND' : 'NOT AHEAD';
-  rows.push([pkg.name, local, result.version, ok ? 'ok' : failLabel]);
-  if (!ok) failures.push({ name: pkg.name, local, published: result.version });
-}
+// Throws on a lookup that did not succeed — see lib/npm-dist-tag.mjs. A
+// registry outage must not be able to turn this gate green.
+const { rows, failures } = driftVerdict({
+  packages,
+  lookup: name => lookupPublished(name, TAG),
+  allowEqual: ALLOW_EQUAL,
+});
 
 const w = i => Math.max(...rows.map(r => r[i].length));
 const [w0, w1, w2] = [w(0), w(1), w(2)];
@@ -127,7 +103,10 @@ for (const r of rows) {
 }
 
 if (failures.length === 0) {
-  console.log(`\nAll ${PACKAGE_DIRS.length} packages are ahead of \`${TAG}\`.`);
+  const relation = ALLOW_EQUAL ? 'not behind' : 'ahead of';
+  console.log(
+    `\nAll ${packages.length} publishable packages are ${relation} \`${TAG}\`.`,
+  );
   process.exit(0);
 }
 
