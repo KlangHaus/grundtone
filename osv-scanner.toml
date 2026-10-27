@@ -43,20 +43,6 @@ exit-betingelse.
 """
 
 [[IgnoredVulns]]
-id = "GHSA-vfj7-8cjw-p6xm"
-ignoreUntil = 2026-11-24T00:00:00Z
-reason = """
-braces stack-exhaustion DoS via dybt indlejrede mønstre. INGEN patch findes:
-verificeret mod registret, ikke kun mod auditens `<0.0.0`-kodning — nyeste
-udgivne braces ER 3.0.3, og advisory'et dækker `<=3.0.3`. Nåbar udelukkende via
-apps/playground/expo -> expo -> @expo/metro -> metro-file-map: et playground,
-der aldrig shippes, og ingen publiceret @grundtone-pakke har braces som direkte
-afhængighed. Samme advisory undtages ved navn i grundtone-studio (#343).
-Accepten falder bort når (a) braces udgiver en patch, ELLER (b)
-expo-playgroundet fjernes.
-"""
-
-[[IgnoredVulns]]
 id = "GHSA-86w9-cpqp-85rv"
 ignoreUntil = 2026-11-24T00:00:00Z
 reason = """
