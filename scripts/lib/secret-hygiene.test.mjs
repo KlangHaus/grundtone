@@ -80,6 +80,28 @@ describe('fetchEnvironments', () => {
     ]);
   });
 
+  // The exact shape Allan pointed at on #291: one more environment than GitHub's default page
+  // of 30. v4 read the 30 and exited 0; the 31st was never measured.
+  it('refuses 30 environments when total_count says 31', async () => {
+    const thirty = Array.from({ length: 30 }, (_, i) => env(`e${i}`));
+    const { fetchImpl } = stubFetch([
+      { total_count: 31, environments: thirty },
+      { total_count: 31, environments: [] },
+    ]);
+    await expect(fetchEnvironments(opts(fetchImpl))).rejects.toThrow(
+      /read 30 but total_count says 31/,
+    );
+  });
+
+  it('accepts 30 environments when total_count says 30, in one request', async () => {
+    const thirty = Array.from({ length: 30 }, (_, i) => env(`e${i}`));
+    const { fetchImpl, urls } = stubFetch([
+      { total_count: 30, environments: thirty },
+    ]);
+    expect(await fetchEnvironments(opts(fetchImpl))).toHaveLength(30);
+    expect(urls).toHaveLength(1);
+  });
+
   it('refuses a list shorter than its own total_count', async () => {
     const { fetchImpl } = stubFetch([
       { total_count: 3, environments: [env('a')] },

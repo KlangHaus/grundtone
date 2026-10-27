@@ -48,9 +48,15 @@ beforeAll(async () => {
   for (const [name, text] of Object.entries(WORKFLOWS)) {
     writeFileSync(join(dir, 'workflows', name), text);
   }
-  server = createServer((_req, res) => {
+  server = createServer((req, res) => {
+    // `body` may be a function of the requested page, for the paging cell.
+    const page = Number(
+      new URL(req.url, 'http://localhost').searchParams.get('page'),
+    );
+    const body =
+      typeof reply.body === 'function' ? reply.body(page) : reply.body;
     res.writeHead(reply.status, { 'content-type': 'application/json' });
-    res.end(JSON.stringify(reply.body));
+    res.end(JSON.stringify(body));
   });
   await new Promise(resolve => server.listen(0, 'localhost', resolve));
   apiUrl = `http://localhost:${server.address().port}`;
@@ -109,6 +115,24 @@ describe('secret-hygiene.mjs exit codes', () => {
       't',
       { status: 200, body: { total_count: 0, environments: [] } },
       /0 environments returned/,
+    ],
+    [
+      'total_count 31 with only 30 served',
+      't',
+      {
+        status: 200,
+        body: page => ({
+          total_count: 31,
+          environments:
+            page === 1
+              ? Array.from({ length: 30 }, (_, i) => ({
+                  name: `e${i}`,
+                  deployment_branch_policy: { custom_branch_policies: true },
+                }))
+              : [],
+        }),
+      },
+      /read 30 but total_count says 31/,
     ],
   ])('exits 2 with a message on %s', async (_label, token, served, message) => {
     reply = served;
