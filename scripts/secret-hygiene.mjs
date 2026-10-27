@@ -42,6 +42,7 @@ import process from 'node:process'
 
 import {
   ENV_ALLOWLIST,
+  fetchEnvironments,
   Instrument,
   readWorkflows,
   runCell,
@@ -57,27 +58,6 @@ const REPO = process.env.GITHUB_REPOSITORY ?? 'KlangHaus/grundtone'
 const EXIT_OK = 0
 const EXIT_VIOLATION = 1
 const EXIT_INSTRUMENT = 2
-
-// ───────────────────────────────────────────── surface B: environments and branch policies
-
-async function fetchEnvironments() {
-  const token = process.env.GITHUB_TOKEN
-  if (!token) throw new Instrument('GITHUB_TOKEN is empty — SETUP failure, not a finding')
-  const res = await globalThis.fetch(`https://api.github.com/repos/${REPO}/environments`, {
-    headers: { authorization: `Bearer ${token}`, accept: 'application/vnd.github+json' },
-  })
-  if (!res.ok) {
-    throw new Instrument(
-      `GET /repos/${REPO}/environments answered HTTP ${res.status} as the workflow token — ` +
-        `SETUP failure, not a finding. Needs repository read; check \`permissions:\`.`,
-    )
-  }
-  const body = await res.json()
-  const envs = body?.environments
-  if (!Array.isArray(envs)) throw new Instrument('environments response carries no array')
-  if (envs.length === 0) throw new Instrument('0 environments returned — cannot discriminate')
-  return envs
-}
 
 // ───────────────────────────────────────────── self-test
 
@@ -109,7 +89,14 @@ async function main(argv) {
     a = surfaceA(files)
     // Both surfaces are measured before either verdict prints: [sikkerhed]'s rule that independent
     // facts are AGGREGATED, because a known red above makes everything below dead and silent.
-    envs = argv.includes('--no-api') ? null : await fetchEnvironments()
+    envs = argv.includes('--no-api')
+      ? null
+      : await fetchEnvironments({
+          token: process.env.GITHUB_TOKEN,
+          repo: REPO,
+          // Set by Actions on every runner; the e2e cells point it at a local stub.
+          apiUrl: process.env.GITHUB_API_URL ?? 'https://api.github.com',
+        })
     b = envs ? surfaceB(envs) : []
   } catch (e) {
     if (!(e instanceof Instrument)) throw e
