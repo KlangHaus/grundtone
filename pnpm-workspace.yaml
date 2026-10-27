@@ -159,17 +159,24 @@ overrides:
 # (Har begge den, VINDER package.json — se reference-noten om prioritering.)
 auditConfig:
   ignoreGhsas:
-    # 🔴 TILFOEJET 2026-10-10. Seks id'er, og kun seks: hver af dem er maalt
-    # uafhjaelpelig FOR OS, og alle tre pakker kommer ind gennem
-    # apps/playground/* — demo-apps, ikke publicerede pakker. Ingen af dem er
-    # direkte afhaengighed i nogen publiceret @grundtone-pakke, saa de kan ikke
-    # naa en forbruger af biblioteket. `pnpm audit --prod` scanner hele
-    # workspacets prod-lukning, playground-apps inklusive; det er derfor de
-    # taelles.
+    # 🔴 NAMED accepts, and only these. The prose here carries no count on
+    # purpose: the enforced count is OSV_EXPECTED in
+    # .github/workflows/osv-scanner.yml and release.yml, and
+    # scripts/assert-vuln-accepts-in-sync.mjs requires this list to equal
+    # osv-scanner.toml. A count written here went stale (it said six while the
+    # list held five), and prose that contradicts the gate invites "fixing" the
+    # gate instead. Each id has its own reason below:
+    # - node-forge and image-size: unfixable for us, and they come in only
+    #   through apps/playground/* (demo apps, not published packages).
+    #   `pnpm audit --prod` scans the whole workspace's prod closure, playground
+    #   apps included, which is why they count.
+    # - GHSA-vjh5 (nuxt): a false positive in OSV's data, listed only because
+    #   the two lists must match.
+    # - GHSA-834v (happy-dom): reaches packages/vue; accepted by name and date.
     #
-    # NAVNGIVNE, ikke `--ignore-unfixable`. Blankotaeppet absorberer ogsaa det
-    # NAESTE uafhjaelpelige fund, inklusive et kritisk, uden at nogen beslutter
-    # det. Seks id'er lader et syvende advisory goere gaten roed.
+    # NAMED, not `--ignore-unfixable`. The blanket also absorbs the NEXT
+    # unfixable finding, including a critical one, without anyone deciding it.
+    # A named list lets the next advisory turn the gate red.
     #
     # node-forge (via expo > @expo/cli): no patch exists. Verified against the
     # registry, not only against the audit's `<0.0.0` encoding: the newest
