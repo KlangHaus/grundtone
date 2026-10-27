@@ -19,8 +19,11 @@ is stale": loud, but naming the wrong cause.
   1. The CANARY must be reported: .github/osv-canary/ pins lodash@4.17.15, and
      the workflow scans a copy of it in the same invocation. Missing = the
      scanner did not work.
-  2. The repo's own pnpm-lock.yaml must be among the scanned sources. Missing
-     = the scan looked somewhere else.
+  2. The scanner's own log must say it scanned the repo's pnpm-lock.yaml and
+     found packages in it. Missing = the scan looked somewhere else. Read from
+     the LOG, not the JSON: the JSON lists only sources that have findings, so
+     a clean lockfile would be absent and the check could never pass once the
+     repo is clean (Cursor Bugbot on #290; measured on osv-scanner 1.9.2).
 Only the repo's own results count toward the accepts, so the canary's
 advisories can never keep an accept alive.
 
@@ -28,11 +31,12 @@ Exit: 0 = every accept is still reported · 1 = stale accept(s) ·
 2 = the input could not be read, or a positive control failed (never a pass).
 """
 import json
+import re
 import sys
 import tomllib
 
-if len(sys.argv) != 3:
-    print('usage: assert-osv-accepts-still-needed.py <osv-scanner.toml> <scan.json>')
+if len(sys.argv) != 4:
+    print('usage: assert-osv-accepts-still-needed.py <osv-scanner.toml> <scan.json> <scan.log>')
     sys.exit(2)
 
 try:
@@ -40,6 +44,8 @@ try:
         accepted = [e['id'] for e in tomllib.load(handle).get('IgnoredVulns', [])]
     with open(sys.argv[2], encoding='utf-8') as handle:
         scan = json.load(handle)
+    with open(sys.argv[3], encoding='utf-8') as handle:
+        scan_log = handle.read()
 except (OSError, ValueError, KeyError) as error:
     print(f'::error::cannot read the input ({error}) — not measured, not a pass')
     sys.exit(2)
@@ -70,18 +76,34 @@ results = scan['results'] or []
 canary = [r for r in results if CANARY_DIR in source_path(r)]
 repo = [r for r in results if CANARY_DIR not in source_path(r)]
 
-if CANARY_ID not in ids_in(canary):
+# The cause travels with the exit ([sikkerhed], #290 verdict): an empty
+# canary and a canary whose advisories moved are different events.
+canary_ids = ids_in(canary)
+if not canary_ids:
     print(
-        f'::error::the canary {CANARY_ID} (lodash@4.17.15 in .github/osv-canary/) '
-        'was not reported — the scanner did not work, so "stale" cannot be '
-        'told apart from "saw nothing". Not measured, not a pass.'
+        '::error::the canary (lodash@4.17.15 in .github/osv-canary/) reported '
+        'nothing — the scanner did not work, so "stale" cannot be told apart '
+        'from "saw nothing". Not measured, not a pass.'
+    )
+    sys.exit(2)
+if CANARY_ID not in canary_ids:
+    print(
+        f'::error::the canary reported {len(canary_ids)} id(s) but not {CANARY_ID} — '
+        "the canary's own advisories moved; pick a new CANARY_ID from: "
+        f'{", ".join(sorted(canary_ids))}. Not measured, not a pass.'
     )
     sys.exit(2)
 
-if not any(source_path(r).endswith('/pnpm-lock.yaml') for r in repo):
+# osv-scanner 1.9.2 logs "Scanned <path> file and found <n> package(s)".
+scanned_repo = [
+    m for m in re.finditer(r'^Scanned (\S+/pnpm-lock\.yaml) file and found (\d+) package', scan_log, re.M)
+    if CANARY_DIR not in m.group(1)
+]
+if not any(int(m.group(2)) > 0 for m in scanned_repo):
     print(
-        "::error::the repo's pnpm-lock.yaml is not among the scanned sources — "
-        'the scan looked somewhere else. Not measured, not a pass.'
+        "::error::the scanner's log does not show the repo's pnpm-lock.yaml "
+        'scanned with packages in it — the scan looked somewhere else. Not '
+        'measured, not a pass.'
     )
     sys.exit(2)
 

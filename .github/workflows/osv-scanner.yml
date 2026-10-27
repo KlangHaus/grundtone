@@ -77,6 +77,8 @@ jobs:
           # og som en diff kan se ændre sig.
           set -euo pipefail
           OSV_SHA256="d6af4b67fa5de658598bd2d445efb99e90d1734b3146962418719c4350ecb74b"
+          # 1.9.2 on purpose: the anti-rot check reads its "Scanned <path> file and
+          # found <n> package" log line, and 2.4.0 rejects --skip-git (exit 127).
           curl -sSfL https://github.com/google/osv-scanner/releases/download/v1.9.2/osv-scanner_linux_amd64 \
             -o /tmp/osv-scanner
           echo "${OSV_SHA256}  /tmp/osv-scanner" | sha256sum -c -
@@ -100,12 +102,12 @@ jobs:
           cp .github/osv-canary/package-lock.json.canary /tmp/osv-canary/package-lock.json
           rc=0
           osv-scanner --recursive --skip-git --config=/tmp/no-accepts.toml --format json ./ /tmp/osv-canary \
-            > /tmp/osv-without-accepts.json || rc=$?
+            > /tmp/osv-without-accepts.json 2> /tmp/osv-without-accepts.log || rc=$?
           if [ "$rc" -gt 1 ]; then
             echo "::error::osv-scanner exited $rc without accepts — not measured, not a pass"
             exit 2
           fi
-          python3 .github/scripts/assert-osv-accepts-still-needed.py osv-scanner.toml /tmp/osv-without-accepts.json
+          python3 .github/scripts/assert-osv-accepts-still-needed.py osv-scanner.toml /tmp/osv-without-accepts.json /tmp/osv-without-accepts.log
 
       - name: Scan dependencies
         run: |
