@@ -1,5 +1,14 @@
 # @grundtone/mcp
 
+## 0.2.4 - 2026-10-28
+
+### Patch Changes
+
+- [#286](https://github.com/KlangHaus/grundtone/pull/286)
+  [`9bab261`](https://github.com/KlangHaus/grundtone/commit/9bab261a1394b4d3141008331d571376dfe420ee)
+  Thanks [@allanasp](https://github.com/allanasp)! - Raise the zod floor to 4.6.6 for
+  GHSA-mrhx-c7xc-m3w5 (high).
+
 ## 0.2.3 - 2026-09-28
 
 ### Patch Changes
