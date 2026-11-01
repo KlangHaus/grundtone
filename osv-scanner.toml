@@ -58,7 +58,7 @@ node-forge udgiver en patch, ELLER (b) expo-playgroundet fjernes.
 
 [[IgnoredVulns]]
 id = "GHSA-vjh5-4x84-xrqp"
-ignoreUntil = 2026-11-04T00:00:00Z
+ignoreUntil = 2026-11-11T00:00:00Z
 reason = """
 FALSE POSITIVE in OSV's data, not in the code. Nuxt server-side route rules.
 GitHub's advisory bounds all four ranges: nuxt >= 4.0.0, < 4.6.2 (patched 4.6.2)
@@ -82,6 +82,13 @@ Re-read 2026-10-27T23:08Z by [grundtone], before the 2026-10-29 expiry:
     flags nuxt@4.6.2 and @nuxt/nitro-server@4.6.2; the canary
     (GHSA-p6mc-m468-83gw, lodash 4.17.15) reported in the same run.
   Renewed 7 days. A renewal needs a second party's dated reading ([sikkerhed]).
+Re-read 2026-11-01T20:20Z by [grundtone], before the 2026-11-04 expiry:
+  - OSV record and GitHub advisory: both unchanged since 2026-10-22 (same
+    `modified` / `updated_at`, same four ranges).
+  - osv-scanner 1.9.2 (sha256 d6af4b67…, re-downloaded and verified), no
+    accepts, develop 0ad6cc4: still flags nuxt@4.6.2 and
+    @nuxt/nitro-server@4.6.2; the canary reported in the same run.
+  Renewed 7 days, to 2026-11-11.
 """
 [[IgnoredVulns]]
 id = "GHSA-834v-8h66-3h79"
