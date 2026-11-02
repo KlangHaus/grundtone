@@ -66,12 +66,12 @@
     "@grundtone/design-system": "workspace:*",
     "@grundtone/icons": "workspace:*",
     "@grundtone/utils": "workspace:*",
-    "@tiptap/extension-link": "^3.31.3",
-    "@tiptap/extension-placeholder": "^3.31.3",
-    "@tiptap/html": "^3.31.3",
-    "@tiptap/pm": "^3.31.3",
-    "@tiptap/starter-kit": "^3.31.3",
-    "@tiptap/vue-3": "^3.31.3"
+    "@tiptap/extension-link": "^3.32.2",
+    "@tiptap/extension-placeholder": "^3.32.2",
+    "@tiptap/html": "^3.32.2",
+    "@tiptap/pm": "^3.32.2",
+    "@tiptap/starter-kit": "^3.32.2",
+    "@tiptap/vue-3": "^3.32.2"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
@@ -79,6 +79,7 @@
     "@vitejs/plugin-vue": "^6.0.9",
     "@vue/test-utils": "^2.5.1",
     "axe-core": "^4.13.0",
+    "happy-dom": "^21.0.4",
     "sass": "^1.104.1",
     "vite-plugin-dts": "^5.1.1",
     "vitest-axe": "^0.1.0"

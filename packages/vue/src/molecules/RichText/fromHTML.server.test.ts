@@ -5,7 +5,11 @@ import { describe, expect, it } from 'vitest';
 import { fromHTML } from './fromHTML';
 
 /**
- * 🔴 THE CELL BEHIND THE happy-dom ACCEPT (GHSA-834v-8h66-3h79, osv-scanner.toml).
+ * 🔴 THE CELL THAT ONCE CARRIED THE happy-dom ACCEPT (GHSA-834v-8h66-3h79).
+ * The accept is gone (2026-11-01): @tiptap/html 3.32.2 allows happy-dom ^21.0.4,
+ * which fixes the advisory, so packages/vue now resolves 21.0.4. The cells stay:
+ * "nothing on the fromHTML path evaluates a script" is still a default worth
+ * measuring, and it now runs on happy-dom 21.
  *
  * The advisory is host code execution through happy-dom's ESM compiler, so it
  * needs a script to be EVALUATED. The accept rests on that never happening on
@@ -60,7 +64,7 @@ async function liveScript(settings: Record<string, boolean>) {
   }
 }
 
-describe('happy-dom does not evaluate scripts on the fromHTML path (GHSA-834v accept)', () => {
+describe('happy-dom does not evaluate scripts on the fromHTML path', () => {
   it('this file runs where @tiptap/html resolves to its happy-dom SERVER build', () => {
     // The browser build needs a DOM global; the server build creates its own
     // happy-dom Window. No `document` here means the server build is the one
