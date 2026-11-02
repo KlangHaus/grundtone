@@ -43,22 +43,8 @@ exit-betingelse.
 """
 
 [[IgnoredVulns]]
-id = "GHSA-86w9-cpqp-85rv"
-ignoreUntil = 2026-11-24T00:00:00Z
-reason = """
-node-forge: RSA PKCS#1 v1.5-signaturverifikation accepterer ekstra indlejrede
-DigestAlgorithm-elementer. 🔴 Det er en signaturverifikations-svaghed, ikke en
-DoS — en tungere klasse end de øvrige accepter her, og den undtages UDELUKKENDE
-på nåbarhed. INGEN patch: nyeste udgivne node-forge ER 1.4.0, og advisory'et
-dækker `<=1.4.0`. Nåbar via apps/playground/expo -> @expo/cli, som bruger den
-til at udstede et selvsigneret certifikat til dev-serveren. Samme advisory
-undtages ved navn i grundtone-studio (#343). Accepten falder bort når (a)
-node-forge udgiver en patch, ELLER (b) expo-playgroundet fjernes.
-"""
-
-[[IgnoredVulns]]
 id = "GHSA-vjh5-4x84-xrqp"
-ignoreUntil = 2026-11-04T00:00:00Z
+ignoreUntil = 2026-11-11T00:00:00Z
 reason = """
 FALSE POSITIVE in OSV's data, not in the code. Nuxt server-side route rules.
 GitHub's advisory bounds all four ranges: nuxt >= 4.0.0, < 4.6.2 (patched 4.6.2)
@@ -82,38 +68,11 @@ Re-read 2026-10-27T23:08Z by [grundtone], before the 2026-10-29 expiry:
     flags nuxt@4.6.2 and @nuxt/nitro-server@4.6.2; the canary
     (GHSA-p6mc-m468-83gw, lodash 4.17.15) reported in the same run.
   Renewed 7 days. A renewal needs a second party's dated reading ([sikkerhed]).
-"""
-[[IgnoredVulns]]
-id = "GHSA-834v-8h66-3h79"
-ignoreUntil = 2026-11-25T00:00:00Z
-reason = """
-happy-dom, high: host code execution through the ESM compiler, which puts an
-unvalidated import alias into generated JavaScript (an incomplete fix of
-CVE-2026-33943). Affects 17.0.0-21.0.3; the first fix is 21.0.4. Accepted by
-Allan 2026-10-25.
-
-Why it cannot simply be patched: it reaches us through packages/vue ->
-@tiptap/html, a PROD dependency of @grundtone/vue. @tiptap/html (3.31.3, and the
-latest 3.32.0) declares the PEER `happy-dom: ^20.8.9`. An override rewrote that
-peer spec but did not move the auto-installed resolution (measured: still
-20.11.1, with "unmet peer").
-
-Not reachable on our path, MEASURED (2026-10-25, happy-dom 20.11.1):
-happy-dom evaluates no script unless `enableJavaScriptEvaluation` is set, and
-nothing on our path (fromHTML -> @tiptap/html server build -> happy-dom) sets
-it. (tiptap passes `disableJavaScriptEvaluation: true`; that flag is
-deprecated and gates nothing — it is NOT the protection.) On top of that,
-tiptap parses with DOMParser.parseFromString, which ran no script even with
-evaluation enabled.
-
-The protection is a DEFAULT, so it is guarded by a cell:
-packages/vue/src/molecules/RichText/fromHTML.server.test.ts runs the real
-fromHTML path on hostile markup, with a positive control that proves the
-signal fires when a script does run. If that cell turns red, this accept's
-premise is gone.
-
-Exit: @tiptap/html allows happy-dom >=21.0.4 -> bump it, delete this accept here
-AND in pnpm-workspace.yaml, and lower OSV_EXPECTED. The date is the day someone
-checks @tiptap/html's declared happy-dom peer range again; it is a forced
-re-assessment, not the exit.
+Re-read 2026-11-01T20:20Z by [grundtone], before the 2026-11-04 expiry:
+  - OSV record and GitHub advisory: both unchanged since 2026-10-22 (same
+    `modified` / `updated_at`, same four ranges).
+  - osv-scanner 1.9.2 (sha256 d6af4b67…, re-downloaded and verified), no
+    accepts, develop 0ad6cc4: still flags nuxt@4.6.2 and
+    @nuxt/nitro-server@4.6.2; the canary reported in the same run.
+  Renewed 7 days, to 2026-11-11.
 """
