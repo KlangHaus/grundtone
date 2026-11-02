@@ -46,7 +46,7 @@
     "@grundtone/icons": "workspace:*",
     "@grundtone/utils": "workspace:*",
     "@grundtone/vue": "workspace:*",
-    "@nuxt/kit": "^4.6.2"
+    "@nuxt/kit": "^4.6.3"
   },
   "devDependencies": {
     "@nuxt/eslint": "1.17.0",
