@@ -17,7 +17,7 @@ hero:
       link: /guide/theme-configuration
     - theme: alt
       text: View on GitHub
-      link: https://github.com/grundtone/grundtone
+      link: https://github.com/KlangHaus/grundtone
 
 features:
   - title: Platform Agnostic

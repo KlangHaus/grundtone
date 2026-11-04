@@ -581,7 +581,7 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/grundtone/grundtone' },
+      { icon: 'github', link: 'https://github.com/KlangHaus/grundtone' },
     ],
   },
 });
