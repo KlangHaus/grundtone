@@ -1,5 +1,18 @@
 # @grundtone/nuxt
 
+## 3.3.1 - 2026-11-06
+
+### Patch Changes
+
+- [#301](https://github.com/KlangHaus/grundtone/pull/301)
+  [`53420e6`](https://github.com/KlangHaus/grundtone/commit/53420e686198ef5bc0191e6e64772cd0deaf5dd7)
+  Thanks [@allanasp](https://github.com/allanasp)! - Build and test against Nuxt 4.6.3, which fixes
+  GHSA-9v7c-q64q-vv33 and three dev-server advisories (GHSA-3xf4-9g3c-4h4w, GHSA-648h-gw55-m2g7,
+  GHSA-x287-wcfc-q46c).
+- Updated dependencies
+  [[`814b244`](https://github.com/KlangHaus/grundtone/commit/814b244066af81a3bcca4d42135cc70432a4deaa)]:
+  - @grundtone/vue@3.3.1
+
 ## 3.3.0 - 2026-10-22
 
 ### Patch Changes
