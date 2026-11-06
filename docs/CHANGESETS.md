@@ -102,7 +102,9 @@ Linked packages maintain synchronized versions across the monorepo. When you:
 
    - GitHub Action creates a "Version Packages" PR
    - This PR updates versions and CHANGELOGs
-   - Review and merge to develop
+   - A person approves its workflow runs on the final head (see
+     [the manual step](#manual-step-approve-the-release-prs-workflow-runs))
+   - Review and merge to develop when the required checks are green
 
 4. **Publish (automated via CI):**
    - After merging version PR, packages auto-publish to npm
@@ -287,15 +289,28 @@ pnpm changeset:empty
 
 **Release workflow (.github/workflows/release.yml):**
 
-1. **Triggers:** Push to `main` branch
+1. **Triggers:** Push to `develop` branch
 2. **Creates PR:** "Version Packages" with updated versions/changelogs
 3. **Auto-publishes:** When version PR merges, packages publish to npm
 4. **Creates tags:** Git tags for each released version
 
-**Required secrets:**
+**Credentials:**
 
 - `GITHUB_TOKEN` - Automatically provided
-- `NPM_TOKEN` - Add to repository secrets
+- npm publishing uses OIDC trusted publishing through the `npmjs-publish` environment; there is no
+  `NPM_TOKEN`
+
+### Manual step: approve the release PR's workflow runs
+
+Each release needs one manual step. The release PR is opened by `github-actions[bot]`, so its
+workflow runs stop at `action_required` and the PR has no checks. It cannot merge, because the
+required checks never report.
+
+A person approves those runs on the PR's final head, then merges when the required checks are green.
+No extra credential or GitHub App is used for this; that is a deliberate choice.
+
+Every merge to `develop` force-pushes the release branch to a new head, and the new runs need a new
+approval. Finish other merges first.
 
 ### GitHub Changeset Bot
 
