@@ -53,11 +53,11 @@ npm install @grundtone/vue @grundtone/design-system
 
 ```vue
 <script setup>
-  import { Button } from '@grundtone/vue';
+  import { GTButton } from '@grundtone/vue';
 </script>
 
 <template>
-  <Button variant="primary">Submit</Button>
+  <GTButton variant="primary">Submit</GTButton>
 </template>
 ```
 
@@ -213,14 +213,14 @@ pnpm --filter @grundtone/expo-playground dev
 ## Contributing
 
 ```bash
-git clone https://github.com/grundtone/grundtone.git
+git clone https://github.com/KlangHaus/grundtone.git
 cd grundtone
 pnpm install
 pnpm build:packages
 pnpm --filter @grundtone/vue-playground dev
 ```
 
-See [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for guidelines.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 
 ## License
 

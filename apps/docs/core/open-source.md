@@ -19,13 +19,13 @@ MIT License – use, modify, distribute, and use commercially.
 No warranty. Keep attribution if you redistribute.
 ```
 
-The source code is on [GitHub](https://github.com/grundtone/grundtone).
+The source code is on [GitHub](https://github.com/KlangHaus/grundtone).
 
 ## Self-Hosting Packages
 
 ### Option 1: Fork and publish to npm
 
-1. Fork the [repository](https://github.com/grundtone/grundtone)
+1. Fork the [repository](https://github.com/KlangHaus/grundtone)
 2. Update `package.json` names if desired (e.g. `@your-org/design-system`)
 3. Configure your npm registry and publish:
 

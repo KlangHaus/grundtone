@@ -66,10 +66,12 @@ Changesets are stored as markdown files in `.changeset/` and should be committed
 
 **Automated via GitHub Actions:**
 
-1. Push changes with changesets to `main` branch
+1. Merge changes with changesets to the `develop` branch
 2. GitHub Actions creates/updates a "Version Packages" PR
 3. Review the PR to see version bumps and generated changelogs
-4. Merge the PR to publish all packages to NPM
+4. A person approves the PR's workflow runs on its final head (see
+   [the manual step](docs/CHANGESETS.md#manual-step-approve-the-release-prs-workflow-runs))
+5. Merge the PR when the required checks are green to publish all packages to NPM
 
 **Manual release (emergency use only):**
 

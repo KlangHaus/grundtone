@@ -218,8 +218,12 @@ function stripInlineComment(value) {
 function environmentName(raw) {
   let v = stripInlineComment(raw)
   if (v.startsWith('{')) v = /\bname:([^,}]+)/.exec(v)?.[1]?.trim() ?? ''
+  // Unquote BEFORE the emptiness check (Bugbot on #293): `environment: ""` was a non-empty
+  // string until the quotes came off, so it resolved to the name '' and counted as a gate. GitHub
+  // reads an empty name as no environment at all.
+  v = v.replace(/^['"]|['"]$/g, '').trim()
   if (!v || v.includes('${{')) return null
-  return v.replace(/^['"]|['"]$/g, '')
+  return v
 }
 
 /**
@@ -766,6 +770,10 @@ export function selfTestCells() {
     surfaceA(wf('jobs:\n  a:\n    environment: ${{ inputs.target }}\n    env:\n      K: ${{ secrets.LEAKY_KEY }}\n'), {}), 'RED')
   cell('Bugbot: secrets: inherit with an inline comment is still inherit', () =>
     surfaceA(wf('jobs:\n  call:\n    uses: ./x.yml\n    secrets: inherit # all of them\n'), {}), 'RED')
+  cell('Bugbot (#293): environment: "" is no environment', () =>
+    surfaceA(wf('jobs:\n  a:\n    environment: ""\n    env:\n      K: ${{ secrets.LEAKY_KEY }}\n'), {}), 'RED')
+  cell("Bugbot (#293): environment: { name: '' } is no environment", () =>
+    surfaceA(wf("jobs:\n  a:\n    environment: { name: '' }\n    env:\n      K: ${{ secrets.LEAKY_KEY }}\n"), {}), 'RED')
   // The repairs must not turn the valid forms red: the inline name with a comment, the mapping
   // form deploy-web.yml uses, and the flow mapping.
   cell('environment: NAME # comment still gates', () =>
