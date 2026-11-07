@@ -298,13 +298,13 @@ defaults.
 
 ```vue
 <template>
-  <ThemeProvider :theme="myTheme" mode="auto">
+  <GrundtoneThemeProvider :theme="myTheme" mode="auto">
     <RouterView />
-  </ThemeProvider>
+  </GrundtoneThemeProvider>
 </template>
 
 <script setup lang="ts">
-  import { ThemeProvider } from '@grundtone/vue';
+  import { GrundtoneThemeProvider } from '@grundtone/vue';
   import { createTheme } from '@grundtone/core';
 
   const myTheme = createTheme({
@@ -328,13 +328,13 @@ defaults.
 
 ```vue
 <template>
-  <ThemeProvider :theme="myTheme" mode="auto">
+  <GrundtoneThemeProvider :theme="myTheme" mode="auto">
     <App />
-  </ThemeProvider>
+  </GrundtoneThemeProvider>
 </template>
 
 <script setup lang="ts">
-  import { ThemeProvider } from '@grundtone/vue';
+  import { GrundtoneThemeProvider } from '@grundtone/vue';
 
   const myTheme = {
     colors: {

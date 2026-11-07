@@ -50,13 +50,13 @@ Add theme customization via the `theme` prop. Configure both light and dark them
 ```vue
 <!-- App.vue -->
 <template>
-  <ThemeProvider :theme="themeConfig" mode="auto">
+  <GrundtoneThemeProvider :theme="themeConfig" mode="auto">
     <RouterView />
-  </ThemeProvider>
+  </GrundtoneThemeProvider>
 </template>
 
 <script setup lang="ts">
-  import { ThemeProvider } from '@grundtone/vue';
+  import { GrundtoneThemeProvider } from '@grundtone/vue';
   import { createTheme } from '@grundtone/core';
 
   const { light, dark } = createTheme({
@@ -73,25 +73,19 @@ Add theme customization via the `theme` prop. Configure both light and dark them
 
 ### Step 5: Use components and utilities
 
+Import components explicitly (auto-import is provided by the Nuxt module, not by `@grundtone/vue`):
+
 ```vue
+<script setup lang="ts">
+  import { GTButton } from '@grundtone/vue';
+</script>
+
 <template>
-  <GrundtoneButton>Click me</GrundtoneButton>
+  <GTButton>Click me</GTButton>
 </template>
 ```
 
 Grid and other utilities are available – see [Grid Utility](/web/grid-utility).
-
-Or import explicitly:
-
-```vue
-<script setup lang="ts">
-  import { Button } from '@grundtone/vue';
-</script>
-
-<template>
-  <Button>Click me</Button>
-</template>
-```
 
 ---
 
