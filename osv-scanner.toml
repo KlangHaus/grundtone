@@ -88,10 +88,12 @@ Owner: [grundtone]. Added 2026-11-07 to unblock the npm release gate.
 Paths (pnpm why, develop 0ca60ad7):
   - @grundtone/email -> html-to-text 9.0.5 -> deepmerge (published runtime path).
     html-to-text calls deepmerge only in compile() to merge DEFAULT_OPTIONS with
-    the caller's options, and in its selector merge. @grundtone/email passes a
-    constant object (wordwrap + three fixed selectors); the HTML being converted
-    is never merged. No attacker-controlled source object reaches it from our
-    code.
+    the caller's options, and in its selector merge. @grundtone/email's
+    toPlainText (packages/email/src/compile.ts l.74-80) passes our own
+    constants (three fixed selectors) plus a typed `wordwrap: number | false`;
+    the HTML being converted is never merged. Not reachable as used: no
+    attacker-controlled source object reaches deepmerge from our code.
+    Approved by Allan 2026-11-07 ("ja, accepter deepmerge til 24. november").
   - @rollup/plugin-node-resolve (build tooling) and @expo/config
     (apps/playground/expo): not shipped.
 Exit: falls away when (a) deepmerge publishes a fixed version and the lockfile
