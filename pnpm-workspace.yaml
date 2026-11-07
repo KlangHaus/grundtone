@@ -78,13 +78,20 @@ overrides:
   # One file, one set: what is written here is what resolves.
   file-type: '>=16.5.4'
   node-fetch: '>=2.6.7'
-  glob: '>=11.1.0'
+  # Raised from '>=11.1.0' for GHSA-3g3m-2fjr-6pw4 (AbortSignal cancellation
+  # bypass; affected >=9.0.0 <=14.0.1, fixed 14.0.2, no backport to 13.x). The
+  # old floor let mjml-cli, js-beautify and rimraf keep 13.0.6.
+  glob: '>=14.0.2 <15'
   '@octokit/request-error': '>=5.1.1'
   '@octokit/request': '>=8.4.1'
   '@octokit/plugin-paginate-rest': '>=9.2.2'
   esbuild: '>=0.28.1'
   flatted: '>=3.4.2'
-  minimatch: '>=9.0.7'
+  # Raised from '>=9.0.7' for GHSA-g3hv-75wg-m249 (globparts amplification DoS;
+  # affected >=7.0.0 <11.0.1, fixed 11.0.1, no backport to 9.x or 10.x). The old
+  # floor let eslint, typescript-estree, @vue/language-core and mjml-cli keep
+  # 9.0.9 and 10.2.6.
+  minimatch: '>=11.0.1 <12'
   node-forge: '>=1.4.2 <2'
   happy-dom: '>=21.0.4 <22'
   picomatch: '>=4.0.4'
@@ -214,3 +221,9 @@ auditConfig:
     # here only because the two accept lists must match. Reason, expiry and exit
     # condition are in osv-scanner.toml.
     - GHSA-vjh5-4x84-xrqp
+    # GHSA-gcqx-w48m-w2h4 — deepmerge prototype poisoning. NO patch exists
+    # (affected >=4.2.0 <=4.3.1, no patched version; 4.3.1 is npm's latest).
+    # Reached through @grundtone/email -> html-to-text, which merges only its
+    # own option objects. Reason, expiry and exit condition are in
+    # osv-scanner.toml.
+    - GHSA-gcqx-w48m-w2h4

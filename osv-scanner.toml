@@ -76,3 +76,26 @@ Re-read 2026-11-01T20:20Z by [grundtone], before the 2026-11-04 expiry:
     @nuxt/nitro-server@4.6.2; the canary reported in the same run.
   Renewed 7 days, to 2026-11-11.
 """
+
+[[IgnoredVulns]]
+id = "GHSA-gcqx-w48m-w2h4"
+ignoreUntil = 2026-11-24T00:00:00Z
+reason = """
+deepmerge prototype poisoning in mergeObject(). NO patch exists: OSV and GitHub
+both give affected >=4.2.0 <=4.3.1 with no fixed version, and 4.3.1 is npm's
+latest, so an override cannot fix it.
+Owner: [grundtone]. Added 2026-11-07 to unblock the npm release gate.
+Paths (pnpm why, develop 0ca60ad7):
+  - @grundtone/email -> html-to-text 9.0.5 -> deepmerge (published runtime path).
+    html-to-text calls deepmerge only in compile() to merge DEFAULT_OPTIONS with
+    the caller's options, and in its selector merge. @grundtone/email passes a
+    constant object (wordwrap + three fixed selectors); the HTML being converted
+    is never merged. No attacker-controlled source object reaches it from our
+    code.
+  - @rollup/plugin-node-resolve (build tooling) and @expo/config
+    (apps/playground/expo): not shipped.
+Exit: falls away when (a) deepmerge publishes a fixed version and the lockfile
+moves to it, OR (b) html-to-text drops deepmerge or @grundtone/email replaces
+html-to-text. The anti-rot check fails the day OSV stops reporting it. The date
+is a forced re-read, not the exit condition.
+"""
