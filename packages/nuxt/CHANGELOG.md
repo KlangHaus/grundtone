@@ -1,5 +1,16 @@
 # @grundtone/nuxt
 
+## 3.3.2 - 2026-11-07
+
+### Patch Changes
+
+- [#310](https://github.com/KlangHaus/grundtone/pull/310)
+  [`a0238ca`](https://github.com/KlangHaus/grundtone/commit/a0238ca64b9c1870b5d1bd70034e3c2302600381)
+  Thanks [@dependabot](https://github.com/apps/dependabot)! - Raise dependency ranges:
+  `@grundtone/mcp` now requires `@modelcontextprotocol/sdk` ^1.32.2 (was ^1.18.0), and
+  `@grundtone/nuxt` now requires `@nuxt/kit` ^4.6.4 (was ^4.6.2) and builds and tests against Nuxt
+  4.6.4.
+
 ## 3.3.1 - 2026-11-06
 
 ### Patch Changes
