@@ -19,7 +19,10 @@ import { execFileSync } from 'node:child_process';
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import readChangesets from '@changesets/read';
-import { changesetRequirement } from './lib/changeset-requirement.mjs';
+import {
+  changesetRequirement,
+  manifestChangeShips,
+} from './lib/changeset-requirement.mjs';
 import {
   assertPlausible,
   globParents,
@@ -104,10 +107,45 @@ if (empty.length > 0) {
   process.exit(1);
 }
 
+// A package manifest is judged by which keys changed (see
+// manifestChangeShips): a devDependencies-only bump reaches no consumer.
+const mergeBase = execFileSync('git', ['merge-base', base, 'HEAD'], {
+  cwd: root,
+  encoding: 'utf8',
+}).trim();
+
+function manifestAt(ref, path) {
+  try {
+    return JSON.parse(
+      execFileSync('git', ['show', `${ref}:${path}`], {
+        cwd: root,
+        encoding: 'utf8',
+        stdio: ['ignore', 'pipe', 'ignore'],
+      }),
+    );
+  } catch {
+    return null;
+  }
+}
+
+const packages = workspacePackages();
+const nonShippingFiles = packages
+  .filter(p => !p.private)
+  .map(p => `${p.dir}/package.json`)
+  .filter(
+    f =>
+      changedFiles.includes(f) &&
+      !manifestChangeShips(manifestAt(mergeBase, f), manifestAt('HEAD', f)),
+  );
+for (const f of nonShippingFiles) {
+  console.log(`· ${f}: only devDependencies changed`);
+}
+
 const { ok, decisions } = changesetRequirement({
   changedFiles,
-  packages: workspacePackages(),
+  packages,
   releasedPackages,
+  nonShippingFiles,
 });
 
 if (decisions.length === 0) {
