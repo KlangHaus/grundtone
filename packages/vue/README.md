@@ -12,16 +12,16 @@ npm install @grundtone/vue @grundtone/design-system
 
 ```vue
 <script setup>
-  import { Button, Icon, ThemeProvider } from '@grundtone/vue';
+  import { GTButton, GTIcon, GrundtoneThemeProvider } from '@grundtone/vue';
 </script>
 
 <template>
-  <ThemeProvider>
-    <Button variant="primary" size="md">
-      <Icon name="check" />
+  <GrundtoneThemeProvider>
+    <GTButton variant="primary" size="md">
+      <GTIcon name="check" />
       Confirm
-    </Button>
-  </ThemeProvider>
+    </GTButton>
+  </GrundtoneThemeProvider>
 </template>
 ```
 

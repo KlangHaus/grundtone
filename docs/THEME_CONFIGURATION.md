@@ -26,13 +26,13 @@ export default defineNuxtConfig({
 
 ```vue
 <template>
-  <ThemeProvider :theme="myTheme">
+  <GrundtoneThemeProvider :theme="myTheme">
     <App />
-  </ThemeProvider>
+  </GrundtoneThemeProvider>
 </template>
 
 <script setup>
-  import { ThemeProvider } from '@grundtone/vue';
+  import { GrundtoneThemeProvider } from '@grundtone/vue';
   import { createTheme } from '@grundtone/core';
 
   const { light } = createTheme({ light: { primary: '#your-brand' } });

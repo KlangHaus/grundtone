@@ -180,24 +180,21 @@ pnpm add @grundtone/vue @grundtone/design-system
 ```typescript
 // main.ts
 import { createApp } from 'vue';
-import Grundtone from '@grundtone/vue';
 import '@grundtone/vue/dist/style.css';
 import App from './App.vue';
 
-const app = createApp(App);
-app.use(Grundtone);
-app.mount('#app');
+createApp(App).mount('#app');
 ```
 
 #### Component-level Usage
 
 ```vue
 <script setup lang="ts">
-  import { Button } from '@grundtone/vue';
+  import { GTButton } from '@grundtone/vue';
 </script>
 
 <template>
-  <Button variant="primary" size="lg"> Click me </Button>
+  <GTButton variant="primary" size="lg"> Click me </GTButton>
 </template>
 
 <style lang="scss">

@@ -172,7 +172,7 @@ Each component selects a default token from the palette via SCSS. For example, B
 }
 ```
 
-This means every `<Button>` in your project gets consistent, design-system-driven border radius
+This means every `<GTButton>` in your project gets consistent, design-system-driven border radius
 without any configuration.
 
 ### 3. Props allow per-instance overrides
@@ -182,10 +182,10 @@ a prop that is constrained to design-system tokens:
 
 ```vue
 <!-- 48 buttons use the default md radius -->
-<Button>Submit</Button>
+<GTButton>Submit</GTButton>
 
 <!-- 2 buttons need to be pill-shaped in a specific context -->
-<Button rounded="full">Subscribe</Button>
+<GTButton rounded="full">Subscribe</GTButton>
 ```
 
 The `rounded` prop does not accept arbitrary CSS values — only valid design-system tokens
