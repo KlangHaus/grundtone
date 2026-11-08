@@ -1,5 +1,15 @@
 # @grundtone/vue
 
+## 3.3.3 - 2026-11-08
+
+### Patch Changes
+
+- [#315](https://github.com/KlangHaus/grundtone/pull/315)
+  [`c275bd9`](https://github.com/KlangHaus/grundtone/commit/c275bd9fab150e8a48501eeec1bbf3ab8d8cfbfc)
+  Thanks [@allanasp](https://github.com/allanasp)! - README: the usage example now imports the names
+  the package exports (`GTButton`, `GTIcon`, `GrundtoneThemeProvider`) instead of `Button`, `Icon`
+  and `ThemeProvider`, which did not resolve.
+
 ## 3.3.1 - 2026-11-06
 
 ### Patch Changes

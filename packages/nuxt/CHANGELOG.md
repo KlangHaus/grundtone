@@ -1,5 +1,13 @@
 # @grundtone/nuxt
 
+## 3.3.3 - 2026-11-08
+
+### Patch Changes
+
+- Updated dependencies
+  [[`c275bd9`](https://github.com/KlangHaus/grundtone/commit/c275bd9fab150e8a48501eeec1bbf3ab8d8cfbfc)]:
+  - @grundtone/vue@3.3.3
+
 ## 3.3.2 - 2026-11-07
 
 ### Patch Changes
