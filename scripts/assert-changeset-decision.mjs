@@ -32,14 +32,13 @@ import {
 const root = process.cwd();
 const base = process.argv[2] ?? 'origin/develop';
 
-const changedFiles = execFileSync(
-  'git',
-  ['diff', '--name-only', `${base}...HEAD`],
-  {
-    cwd: root,
-    encoding: 'utf8',
-  },
-)
+// The one place this gate starts a process: every git read goes through here,
+// so the PATH lookup is a single site to review rather than one per call.
+function git(args, stdio) {
+  return execFileSync('git', args, { cwd: root, encoding: 'utf8', stdio });
+}
+
+const changedFiles = git(['diff', '--name-only', `${base}...HEAD`])
   .split('\n')
   .filter(Boolean);
 
@@ -109,19 +108,12 @@ if (empty.length > 0) {
 
 // A package manifest is judged by which keys changed (see
 // manifestChangeShips): a devDependencies-only bump reaches no consumer.
-const mergeBase = execFileSync('git', ['merge-base', base, 'HEAD'], {
-  cwd: root,
-  encoding: 'utf8',
-}).trim();
+const mergeBase = git(['merge-base', base, 'HEAD']).trim();
 
 function manifestAt(ref, path) {
   try {
     return JSON.parse(
-      execFileSync('git', ['show', `${ref}:${path}`], {
-        cwd: root,
-        encoding: 'utf8',
-        stdio: ['ignore', 'pipe', 'ignore'],
-      }),
+      git(['show', `${ref}:${path}`], ['ignore', 'pipe', 'ignore']),
     );
   } catch {
     return null;
