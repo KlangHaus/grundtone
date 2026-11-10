@@ -50,16 +50,53 @@ export function affectsPublishedArtifact(relPath) {
 }
 
 /**
+ * 🔴 WHY A MANIFEST IS READ BY KEY (ClickUp 1amk32fn47x). ci.yml used to skip
+ * this gate for every Dependabot PR, because a `package.json` counts as
+ * shipping and a devDependency bump would otherwise demand a changeset in
+ * every package it touches. The skip was also blind to the runtime ranges:
+ * #310 without its hand-written changeset raised `dependencies` in
+ * packages/mcp and packages/nuxt, and the step never ran.
+ *
+ * So the gate runs for Dependabot too, and the manifest is judged by what
+ * changed in it. Only `devDependencies` is exempt: consumers never install it.
+ * Everything else, including `scripts`, `exports` and `peerDependencies`,
+ * ships. A manifest that cannot be parsed on either side ships too.
+ *
+ * Not exempt from judgement: a devDependency that is build tooling can still
+ * change what dist contains. That is the same trade the Dependabot skip made,
+ * narrowed from every dependency to dev only.
+ */
+const MANIFEST_NON_SHIPPING_KEYS = new Set(['devDependencies']);
+
+/**
+ * @param {object | null} before parsed package.json at the base, or null
+ * @param {object | null} after  parsed package.json at HEAD, or null
+ * @returns {boolean} whether the manifest change can affect what consumers install
+ */
+export function manifestChangeShips(before, after) {
+  if (!before || !after) return true;
+  const keys = new Set([...Object.keys(before), ...Object.keys(after)]);
+  return [...keys].some(
+    key =>
+      !MANIFEST_NON_SHIPPING_KEYS.has(key) &&
+      JSON.stringify(before[key]) !== JSON.stringify(after[key]),
+  );
+}
+
+/**
  * @param {object} input
  * @param {string[]} input.changedFiles        repo-relative paths
  * @param {{name: string, dir: string, private?: boolean}[]} input.packages
  * @param {string[]} input.releasedPackages    package names named by real changesets
+ * @param {string[]} [input.nonShippingFiles]  repo-relative paths already judged
+ *   unable to reach the artifact (manifests whose change is dev-only)
  * @returns {{ok: boolean, decisions: {name: string, status: string, reason: string, files: string[]}[]}}
  */
 export function changesetRequirement({
   changedFiles,
   packages,
   releasedPackages,
+  nonShippingFiles = [],
 }) {
   const decisions = [];
 
@@ -79,8 +116,10 @@ export function changesetRequirement({
       continue;
     }
 
-    const shipping = touched.filter(f =>
-      affectsPublishedArtifact(f.slice(prefix.length)),
+    const shipping = touched.filter(
+      f =>
+        !nonShippingFiles.includes(f) &&
+        affectsPublishedArtifact(f.slice(prefix.length)),
     );
     if (shipping.length === 0) {
       decisions.push({

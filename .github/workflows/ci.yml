@@ -210,14 +210,14 @@ jobs:
       # Raekkefoelgen i et flertrins-job er ikke kun et spoergsmaal om
       # hastighed: den afgoer hvad man overhovedet FAAR at vide, naar noget
       # fejler. ([projektleder]s sidefund paa #146.)
-      # Dependabot bumps deliberately carry no changeset: merging a deps bump
-      # must not force a release of the linked packages. (Until 3.0.0 the reason
-      # given here was "publish-frozen until the main/develop reconciliation" —
-      # that reconciliation is decided and the freeze is gone, but the reason
-      # for skipping dependabot is unchanged: a dependency bump is not a reason
-      # to cut a release.) Failing this step also aborted the
-      # job before ESLint/typecheck ever ran, so dependabot PRs got NO lint
-      # signal at all. Skip the gate for dependabot, keep the real checks.
+      # 🔴 Dependabot is NOT skipped any more (ClickUp 1amk32fn47x). The skip
+      # was bound to `github.actor`, and it let a raised RUNTIME range reach
+      # develop with no release: #310 without its hand-written changeset fails
+      # this script with rc=1, and the step did not exist in its job. The
+      # reason for the skip, that a devDependency bump is no reason to cut a
+      # release, now lives in the script: a manifest whose only change is
+      # `devDependencies` needs no changeset (measured on #317: rc=0, eight
+      # packages). The gate still runs last, after the substantive checks.
       # 🔴 Springes over paa changesets' EGEN version-PR. Den PR FORBRUGER
       # changesets — den sletter dem og bumper versionerne — saa "pakker er
       # aendret, men ingen changesets fundet" er strukturelt garanteret dér.
@@ -233,7 +233,6 @@ jobs:
       - name: Check for changesets
         if: |
           github.base_ref == 'develop'
-          && github.actor != 'dependabot[bot]'
           && !startsWith(github.head_ref, 'changeset-release/')
         # 🔴 NOT a bare `changeset status` (riff f9xld6w1). That command has one
         # way to say "no release needed" — an EMPTY changeset — and an empty

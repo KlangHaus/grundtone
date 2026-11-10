@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   affectsPublishedArtifact,
   changesetRequirement,
+  manifestChangeShips,
 } from './changeset-requirement.mjs';
 
 const email = { name: '@grundtone/email', dir: 'packages/email' };
@@ -93,6 +94,17 @@ describe('changesetRequirement', () => {
     expect(r.decisions).toEqual([]);
   });
 
+  it('a manifest judged dev-only needs no changeset', () => {
+    const r = changesetRequirement({
+      changedFiles: ['packages/email/package.json'],
+      packages: [email],
+      releasedPackages: [],
+      nonShippingFiles: ['packages/email/package.json'],
+    });
+    expect(r.ok).toBe(true);
+    expect(r.decisions[0].status).toBe('no-release');
+  });
+
   it('untouched packages produce no decision', () => {
     const r = changesetRequirement({
       changedFiles: ['README.md'],
@@ -101,5 +113,60 @@ describe('changesetRequirement', () => {
     });
     expect(r.decisions).toEqual([]);
     expect(r.ok).toBe(true);
+  });
+});
+
+describe('manifestChangeShips', () => {
+  const before = {
+    name: '@grundtone/mcp',
+    dependencies: { '@modelcontextprotocol/sdk': '^1.18.0' },
+    devDependencies: { vitest: '^4.1.11' },
+  };
+
+  // 🔴 THE HOLE (ClickUp 1amk32fn47x). #310 without its hand-written changeset:
+  // Dependabot raised a RUNTIME range, and ci.yml skipped this gate for every
+  // Dependabot PR, so the new range reached develop with no release planned.
+  it('a raised runtime range ships', () => {
+    const after = {
+      ...before,
+      dependencies: { '@modelcontextprotocol/sdk': '^1.32.2' },
+    };
+    expect(manifestChangeShips(before, after)).toBe(true);
+  });
+
+  // #317: the bump the Dependabot skip existed for. It must stay green.
+  it('a devDependencies-only bump does not ship', () => {
+    const after = { ...before, devDependencies: { vitest: '^4.1.12' } };
+    expect(manifestChangeShips(before, after)).toBe(false);
+  });
+
+  it('runtime and dev changed together ships', () => {
+    const after = {
+      ...before,
+      dependencies: { '@modelcontextprotocol/sdk': '^1.32.2' },
+      devDependencies: { vitest: '^4.1.12' },
+    };
+    expect(manifestChangeShips(before, after)).toBe(true);
+  });
+
+  it('peerDependencies, scripts and a new key ship', () => {
+    expect(
+      manifestChangeShips(before, {
+        ...before,
+        peerDependencies: { vue: '^3' },
+      }),
+    ).toBe(true);
+    expect(
+      manifestChangeShips(before, { ...before, scripts: { postinstall: 'x' } }),
+    ).toBe(true);
+  });
+
+  it('an unreadable side ships, which is the cheap error', () => {
+    expect(manifestChangeShips(null, before)).toBe(true);
+    expect(manifestChangeShips(before, null)).toBe(true);
+  });
+
+  it('an unchanged manifest does not ship', () => {
+    expect(manifestChangeShips(before, { ...before })).toBe(false);
   });
 });

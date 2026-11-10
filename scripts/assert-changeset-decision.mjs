@@ -19,7 +19,10 @@ import { execFileSync } from 'node:child_process';
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import readChangesets from '@changesets/read';
-import { changesetRequirement } from './lib/changeset-requirement.mjs';
+import {
+  changesetRequirement,
+  manifestChangeShips,
+} from './lib/changeset-requirement.mjs';
 import {
   assertPlausible,
   globParents,
@@ -29,14 +32,13 @@ import {
 const root = process.cwd();
 const base = process.argv[2] ?? 'origin/develop';
 
-const changedFiles = execFileSync(
-  'git',
-  ['diff', '--name-only', `${base}...HEAD`],
-  {
-    cwd: root,
-    encoding: 'utf8',
-  },
-)
+// The one place this gate starts a process: every git read goes through here,
+// so the PATH lookup is a single site to review rather than one per call.
+function git(args, stdio) {
+  return execFileSync('git', args, { cwd: root, encoding: 'utf8', stdio });
+}
+
+const changedFiles = git(['diff', '--name-only', `${base}...HEAD`])
   .split('\n')
   .filter(Boolean);
 
@@ -104,10 +106,38 @@ if (empty.length > 0) {
   process.exit(1);
 }
 
+// A package manifest is judged by which keys changed (see
+// manifestChangeShips): a devDependencies-only bump reaches no consumer.
+const mergeBase = git(['merge-base', base, 'HEAD']).trim();
+
+function manifestAt(ref, path) {
+  try {
+    return JSON.parse(
+      git(['show', `${ref}:${path}`], ['ignore', 'pipe', 'ignore']),
+    );
+  } catch {
+    return null;
+  }
+}
+
+const packages = workspacePackages();
+const nonShippingFiles = packages
+  .filter(p => !p.private)
+  .map(p => `${p.dir}/package.json`)
+  .filter(
+    f =>
+      changedFiles.includes(f) &&
+      !manifestChangeShips(manifestAt(mergeBase, f), manifestAt('HEAD', f)),
+  );
+for (const f of nonShippingFiles) {
+  console.log(`· ${f}: only devDependencies changed`);
+}
+
 const { ok, decisions } = changesetRequirement({
   changedFiles,
-  packages: workspacePackages(),
+  packages,
   releasedPackages,
+  nonShippingFiles,
 });
 
 if (decisions.length === 0) {
