@@ -85,19 +85,19 @@ deepmerge prototype poisoning in mergeObject(). NO patch exists: OSV and GitHub
 both give affected >=4.2.0 <=4.3.1 with no fixed version, and 4.3.1 is npm's
 latest, so an override cannot fix it.
 Owner: [grundtone]. Added 2026-11-07 to unblock the npm release gate.
-Paths (pnpm why, develop 0ca60ad7):
-  - @grundtone/email -> html-to-text 9.0.5 -> deepmerge (published runtime path).
-    html-to-text calls deepmerge only in compile() to merge DEFAULT_OPTIONS with
-    the caller's options, and in its selector merge. @grundtone/email's
-    toPlainText (packages/email/src/compile.ts l.74-80) passes our own
-    constants (three fixed selectors) plus a typed `wordwrap: number | false`;
-    the HTML being converted is never merged. Not reachable as used: no
-    attacker-controlled source object reaches deepmerge from our code.
-    Approved by Allan 2026-11-07 ("ja, accepter deepmerge til 24. november").
-  - @rollup/plugin-node-resolve (build tooling) and @expo/config
-    (apps/playground/expo): not shipped.
+Approved by Allan 2026-11-07 ("ja, accepter deepmerge til 24. november").
+The published runtime path is gone: @grundtone/email moved to html-to-text
+10.0.1, which uses deepmerge-ts instead (pnpm why --prod per published package:
+0 deepmerge paths in every package except @grundtone/react-native, where it
+comes through its PEER dependency expo, i.e. the consumer's own app).
+Paths that remain (pnpm why -r):
+  - @rollup/plugin-node-resolve, via nuxt/nitropack, unbuild and @sentry/nuxt:
+    build tooling, not shipped.
+  - @expo/config, via expo (apps/playground/expo, and the peer of
+    @grundtone/react-native): not in any package we publish.
 Exit: falls away when (a) deepmerge publishes a fixed version and the lockfile
-moves to it, OR (b) html-to-text drops deepmerge or @grundtone/email replaces
-html-to-text. The anti-rot check fails the day OSV stops reporting it. The date
-is a forced re-read, not the exit condition.
+moves to it, OR (b) no package in the lockfile depends on deepmerge any more.
+The anti-rot check fails the day OSV stops reporting it. The date is a forced
+re-read, not the exit condition: on 2026-11-24 the remaining paths are tooling
+only, and a renewal needs Allan's word on that reason.
 """
