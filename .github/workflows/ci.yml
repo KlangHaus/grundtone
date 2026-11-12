@@ -350,7 +350,6 @@ jobs:
     permissions:
       contents: read
       pull-requests: write # compressed-size-action comments on the PR
-      checks: write # open question: kept until a run shows the action does not need it
 
     steps:
       - name: Checkout
