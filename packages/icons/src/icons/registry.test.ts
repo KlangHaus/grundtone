@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { readdirSync, statSync } from 'node:fs';
 import { join, basename } from 'node:path';
-import { iconRegistry } from './registry.generated';
+import { iconRegistry, type IconDefinition } from './registry.generated';
+import { collectSvgs } from '../../scripts/svg-source';
 
 const svgRoot = join(__dirname, 'svg');
 
@@ -32,6 +33,32 @@ describe('icon set', () => {
     expect(files.length).toBeGreaterThan(0);
     expect(files.map(f => basename(f, '.svg')).sort()).toEqual(
       Object.keys(iconRegistry).sort(),
+    );
+  });
+
+  // 🔴 Name parity alone lets an edited SVG ship without regeneration: the
+  // file name still matches, the committed registry still renders the old
+  // drawing. CI's `test` job runs vitest on the committed registry (its build
+  // artifact is dist/ only, so nothing regenerates it), so this cell sees what
+  // was committed. It parses the sources with the generator's own parser.
+  it('every registry entry matches its source file (body, viewBox, category)', () => {
+    const sources = collectSvgs(svgRoot);
+    expect(sources.length).toBe(files.length);
+    const stale = sources
+      .filter(src => {
+        const entry = (iconRegistry as Record<string, IconDefinition>)[
+          src.name
+        ];
+        return (
+          !entry ||
+          entry.body !== src.body ||
+          entry.viewBox !== src.viewBox ||
+          entry.category !== src.category
+        );
+      })
+      .map(src => src.name);
+    expect(stale, 'run `pnpm generate:icons` and commit the result').toEqual(
+      [],
     );
   });
 

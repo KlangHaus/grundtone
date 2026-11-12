@@ -92,7 +92,9 @@ overrides:
   # floor let eslint, typescript-estree, @vue/language-core and mjml-cli keep
   # 9.0.9 and 10.2.6.
   minimatch: '>=11.0.1 <12'
-  node-forge: '>=1.4.2 <2'
+  # Raised from '>=1.4.2' for GHSA-6889-vf6x-f3g5, GHSA-6cv4-p8m7-4r25,
+  # GHSA-j8rw-jp99-435v and GHSA-w4xr-hqv8-ch44 (all <=1.4.2, fixed 1.4.3).
+  node-forge: '>=1.4.3 <2'
   happy-dom: '>=21.0.4 <22'
   picomatch: '>=4.0.4'
   # Raised from '>=7.0.5' for GHSA-gfhx-hw2g-v5hg (fixed 7.1.2).
@@ -223,7 +225,7 @@ auditConfig:
     - GHSA-vjh5-4x84-xrqp
     # GHSA-gcqx-w48m-w2h4 — deepmerge prototype poisoning. NO patch exists
     # (affected >=4.2.0 <=4.3.1, no patched version; 4.3.1 is npm's latest).
-    # Reached through @grundtone/email -> html-to-text, which merges only its
-    # own option objects. Reason, expiry and exit condition are in
-    # osv-scanner.toml.
+    # No published package depends on it any more (html-to-text 10 uses
+    # deepmerge-ts); it remains in build tooling and expo. Reason, expiry and
+    # exit condition are in osv-scanner.toml.
     - GHSA-gcqx-w48m-w2h4
