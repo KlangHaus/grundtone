@@ -38,6 +38,9 @@ concurrency:
   group: sonar-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
+# Every job declares its own permissions.
+permissions: {}
+
 jobs:
   sonarqube:
     name: SonarQube analyse
