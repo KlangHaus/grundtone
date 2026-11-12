@@ -44,7 +44,7 @@ exit-betingelse.
 
 [[IgnoredVulns]]
 id = "GHSA-vjh5-4x84-xrqp"
-ignoreUntil = 2026-11-11T00:00:00Z
+ignoreUntil = 2026-11-24T00:00:00Z
 reason = """
 FALSE POSITIVE in OSV's data, not in the code. Nuxt server-side route rules.
 GitHub's advisory bounds all four ranges: nuxt >= 4.0.0, < 4.6.2 (patched 4.6.2)
@@ -75,6 +75,8 @@ Re-read 2026-11-01T20:20Z by [grundtone], before the 2026-11-04 expiry:
     accepts, develop 0ad6cc4: still flags nuxt@4.6.2 and
     @nuxt/nitro-server@4.6.2; the canary reported in the same run.
   Renewed 7 days, to 2026-11-11.
+Renewed by Allan 2026-11-12 (in chat) to 2026-11-24; a further renewal needs
+Allan's word on the reason.
 """
 
 [[IgnoredVulns]]
