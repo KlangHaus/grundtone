@@ -37,7 +37,7 @@ overrides:
   esbuild: '>=0.28.1'
   flatted: '>=3.4.2'
   minimatch: '>=11.0.1 <12'
-  node-forge: '>=1.4.2 <2'
+  node-forge: '>=1.4.3 <2'
   happy-dom: '>=21.0.4 <22'
   picomatch: '>=4.0.4'
   serialize-javascript: '>=7.1.2 <8'
@@ -8605,10 +8605,6 @@ packages:
     resolution: {integrity: sha512-dRB78srN/l6gqWulah9SrxeYnxeddIG30+GOqK/9OlLVyLg3HPnr6SqOWTWOXKRwC2eGYCkZ59NNuSgvSrpgOA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  node-forge@1.4.2:
-    resolution: {integrity: sha512-rRtAR5XLJ8gCKd9du4qrKAsgCG1ObGP4gLeNJMa4vYSeq4bmBMOJk5IHkrviBV0q7uoAJlVd8HEQYQSVUb4FGQ==}
-    engines: {node: '>= 6.13.0'}
-
   node-forge@1.4.3:
     resolution: {integrity: sha512-P6wzfh6t70avmV8FrVEAd/36sOPJQ+hkaJVX1Laap9J/77m7M0eyozDvc8SwnDf4P7MP94gwbAAo0rg3YVXT+g==}
     engines: {node: '>= 6.13.0'}
@@ -13286,7 +13282,7 @@ snapshots:
       glob: 14.0.4
       lan-network: 0.2.1
       minimatch: 11.0.5
-      node-forge: 1.4.2
+      node-forge: 1.4.3
       npm-package-arg: 11.0.3
       ora: 3.4.0
       picomatch: 4.0.7
@@ -23403,8 +23399,6 @@ snapshots:
       data-uri-to-buffer: 4.0.1
       fetch-blob: 3.2.0
       formdata-polyfill: 4.0.10
-
-  node-forge@1.4.2: {}
 
   node-forge@1.4.3: {}
 
