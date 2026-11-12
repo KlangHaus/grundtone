@@ -24,6 +24,21 @@ import { describe, expect, it } from 'vitest';
 const repoRoot = fileURLToPath(new URL('../..', import.meta.url));
 
 /**
+ * 🔴 THE CHILD HAS ITS OWN DEADLINE, BECAUSE VITEST'S CANNOT REACH IT.
+ * spawnSync blocks the worker's event loop, so the 5 s test timeout never
+ * fires while a child runs: measured 2026-11-12, a child that never exits held
+ * its test until an external 25 s kill, with no timeout reported. A publish
+ * script that hangs would hang the CI job instead of failing this cell.
+ *
+ * 4000 ms, measured: in CI the slowest of these spawns was 1632 ms (28 ci.yml
+ * runs on 2026-11-07..12, 6 spawns each); locally 1288 ms under the full
+ * `test:coverage` run and ~350 ms alone. 4000 is ~2.5x the CI maximum and stays
+ * under vitest's 5000, so a hang fails here with its own message. Raise it only
+ * with a new measurement of the slowest run, not because a run was slow.
+ */
+const CHILD_TIMEOUT_MS = 4000;
+
+/**
  * 🔴 spawnSync and BOTH streams. The first version used execFileSync, which
  * only returns stdout — the skip message is written with console.warn to
  * stderr, so the cell saw an empty string and failed on a message the script
@@ -31,20 +46,48 @@ const repoRoot = fileURLToPath(new URL('../..', import.meta.url));
  *
  * @returns {{status: number, output: string}}
  */
-function run(script, env) {
-  const r = spawnSync('node', ['--import', 'tsx', script], {
+function spawnBounded(args, env) {
+  const r = spawnSync('node', args, {
     cwd: repoRoot,
     encoding: 'utf8',
+    timeout: CHILD_TIMEOUT_MS,
+    killSignal: 'SIGKILL',
     // Only the secrets this cell is about are set explicitly; the rest of the
     // environment (PATH etc.) is inherited, or node cannot start.
     env: { ...process.env, SENTRY_DSN: '', ...env },
   });
+  if (r.error?.code === 'ETIMEDOUT')
+    throw new Error(
+      `child did not exit within ${CHILD_TIMEOUT_MS} ms: node ${args.join(' ')}`,
+    );
   if (r.error) throw r.error;
   return {
     status: r.status ?? 1,
     output: `${r.stdout ?? ''}${r.stderr ?? ''}`,
   };
 }
+
+function run(script, env) {
+  return spawnBounded(['--import', 'tsx', script], env);
+}
+
+describe('the child deadline', () => {
+  // The bound must be able to fire: a child that never exits fails the cell
+  // with a named error instead of hanging the job. This cell's own budget is
+  // explicit and generous, because its run time IS the deadline (~4 s) and
+  // vitest's timeout cannot interrupt spawnSync anyway.
+  it(
+    'fails a child that never exits, with a named error',
+    { timeout: 15_000 },
+    () => {
+      const started = Date.now();
+      expect(() =>
+        spawnBounded(['-e', 'setInterval(() => {}, 1000)'], {}),
+      ).toThrow(`did not exit within ${CHILD_TIMEOUT_MS} ms`);
+      expect(Date.now() - started).toBeLessThan(CHILD_TIMEOUT_MS * 2);
+    },
+  );
+});
 
 const SCRIPTS = [
   {
