@@ -16,8 +16,8 @@
     "clean": "turbo run clean",
     "typecheck": "turbo run typecheck",
     "format": "prettier --write \"**/*.{ts,tsx,vue,scss,css,json,md,yml,yaml}\"",
-    "lint:js": "eslint \"{packages,apps,docs}/**/*.{js,jsx,ts,tsx,vue}\" --fix",
-    "lint:js:check": "eslint \"{packages,apps,docs}/**/*.{js,jsx,ts,tsx,vue}\"",
+    "lint:js": "eslint \"{packages,apps,docs,scripts}/**/*.{js,jsx,mjs,cjs,ts,tsx,vue}\" \"*.{js,mjs,cjs}\" --fix",
+    "lint:js:check": "eslint \"{packages,apps,docs,scripts}/**/*.{js,jsx,mjs,cjs,ts,tsx,vue}\" \"*.{js,mjs,cjs}\"",
     "lint:styles": "stylelint \"{packages,apps}/**/*.{scss,css,vue}\" --fix",
     "lint:styles:check": "stylelint \"{packages,apps}/**/*.{scss,css,vue}\"",
     "lint:format": "prettier --check \"**/*.{ts,tsx,vue,scss,css,json,md,yml,yaml}\"",
@@ -94,7 +94,7 @@
     "*.{ts,tsx,vue,scss,css,json,md,yml,yaml}": [
       "prettier --write"
     ],
-    "*.{js,jsx,ts,tsx,vue}": [
+    "*.{js,jsx,mjs,cjs,ts,tsx,vue}": [
       "eslint --fix"
     ],
     "*.{scss,css,vue}": [

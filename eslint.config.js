@@ -75,9 +75,9 @@ export default [
     },
   },
 
-  // JavaScript files
+  // JavaScript files, including ES and CommonJS modules by extension
   {
-    files: ['**/*.{js,jsx}'],
+    files: ['**/*.{js,jsx,mjs,cjs}'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
