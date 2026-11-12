@@ -7,6 +7,8 @@ own language. Each default is the text the component rendered before, so nothing
 pass the prop.
 
 - `GTAlert`, `GTCookieMessage`, `GTModal`, `GTToast`: `closeLabel`
+- `GTToastContainer`: `closeLabel` for every toast it shows, and `useToast` takes a per-toast
+  `closeLabel` option that wins over it
 - `GTDatePicker`: `openCalendarLabel`, `closeCalendarLabel`, `previousMonthLabel`, `nextMonthLabel`
 - `GTRichText`: `toolbarLabel`, `linkInputLabel`, `openLinkLabel`, `editLinkLabel`,
   `removeLinkLabel`

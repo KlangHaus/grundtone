@@ -15,6 +15,7 @@ export interface ToastItem {
   icon?: string;
   duration: number;
   dismissible: boolean;
+  closeLabel?: string;
 }
 
 export interface ToastProps {
@@ -47,6 +48,8 @@ export interface ToastContainerProps {
   richColors?: boolean;
   /** Always expanded (no stack effect) */
   expand?: boolean;
+  /** Accessible label for every toast's close button, unless a toast sets its own */
+  closeLabel?: string;
 }
 
 export interface ToastOptions {
@@ -54,4 +57,6 @@ export interface ToastOptions {
   icon?: string;
   duration?: number;
   dismissible?: boolean;
+  /** Accessible label for this toast's close button */
+  closeLabel?: string;
 }

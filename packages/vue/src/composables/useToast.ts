@@ -25,6 +25,7 @@ function addToast(
     icon: options?.icon,
     duration: options?.duration ?? 5000,
     dismissible: options?.dismissible ?? true,
+    closeLabel: options?.closeLabel,
   };
 
   // Newest first
