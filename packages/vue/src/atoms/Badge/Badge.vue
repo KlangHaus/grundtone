@@ -64,8 +64,11 @@
     }
 
     &--neutral {
+      // --color-text, not --color-text-secondary: text-secondary on surface-alt
+      // is 4.15:1 in light mode, under AA for this small text. The grey surface
+      // carries "neutral". Guarded by badge-contrast.test.ts on the built CSS.
       background: tokens.color('surface-alt');
-      color: tokens.color('text-secondary');
+      color: tokens.color('text');
 
       .#{$prefix}-badge__dot {
         background: tokens.color('text-tertiary');
