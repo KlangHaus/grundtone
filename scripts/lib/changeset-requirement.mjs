@@ -30,8 +30,19 @@
  * artifact are excluded. The list is deliberately short; anything not on it
  * costs a changeset nobody needed, which is the cheap error.
  */
+/*
+ * 🔴 A PACKAGE'S scripts/ IS NOT TOOLING BY LOCATION. This list used to exempt
+ * all of `scripts/`, but several of those files are codegen the build runs:
+ * design-system's `build` starts with `generate:tokens`
+ * (scripts/generate-token-defaults.ts), icons' with `generate:icons`, and
+ * email's templates come from scripts/build-templates.ts. A change to one of
+ * them changes dist for every consumer, and the old rule called it
+ * "no-release". So only a script that runs AFTER the build, on what it
+ * produced, is exempt, and it is named exactly: a new script ships by default.
+ */
 const NON_SHIPPING = [
-  /^scripts\//, // repo-side tooling: publish scripts, codegen runners
+  /^scripts\/publish-cdn\.ts$/, // email: uploads the built templates to the CDN
+
   /(^|\/)__tests__\//,
   /(^|\/)test\//,
   /(^|\/)tests\//,

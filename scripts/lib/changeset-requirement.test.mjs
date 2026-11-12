@@ -36,6 +36,22 @@ describe('affectsPublishedArtifact', () => {
   it('an unknown path defaults to shipping, which is the cheap error', () => {
     expect(affectsPublishedArtifact('some/new/thing.ts')).toBe(true);
   });
+
+  // Codegen under a package's scripts/ runs inside `build`, so it changes dist.
+  it('codegen scripts the build runs count as shipping', () => {
+    expect(affectsPublishedArtifact('scripts/generate-token-defaults.ts')).toBe(
+      true,
+    );
+    expect(affectsPublishedArtifact('scripts/generate-icon-registry.ts')).toBe(
+      true,
+    );
+    expect(affectsPublishedArtifact('scripts/svg-source.ts')).toBe(true);
+    expect(affectsPublishedArtifact('scripts/build-templates.ts')).toBe(true);
+  });
+
+  it('a new script under scripts/ ships by default', () => {
+    expect(affectsPublishedArtifact('scripts/new-thing.ts')).toBe(true);
+  });
 });
 
 describe('changesetRequirement', () => {
@@ -48,6 +64,27 @@ describe('changesetRequirement', () => {
     });
     expect(r.ok).toBe(true);
     expect(r.decisions[0].status).toBe('no-release');
+  });
+
+  // The design-system token generator feeds dist/index.css: the old rule gave
+  // a PR touching only this file "no-release" and rc 0.
+  it('demands a changeset when only a package codegen script changes', () => {
+    const designSystem = {
+      name: '@grundtone/design-system',
+      dir: 'packages/design-system',
+    };
+    const r = changesetRequirement({
+      changedFiles: [
+        'packages/design-system/scripts/generate-token-defaults.ts',
+      ],
+      packages: [designSystem],
+      releasedPackages: [],
+    });
+    expect(r.ok).toBe(false);
+    expect(r.decisions[0].status).toBe('needs-changeset');
+    expect(r.decisions[0].reason).toContain(
+      'scripts/generate-token-defaults.ts',
+    );
   });
 
   it('demands a changeset when source changes', () => {
