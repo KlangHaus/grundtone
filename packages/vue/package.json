@@ -66,12 +66,12 @@
     "@grundtone/design-system": "workspace:*",
     "@grundtone/icons": "workspace:*",
     "@grundtone/utils": "workspace:*",
-    "@tiptap/extension-link": "^3.32.2",
-    "@tiptap/extension-placeholder": "^3.32.2",
-    "@tiptap/html": "^3.32.2",
-    "@tiptap/pm": "^3.32.2",
-    "@tiptap/starter-kit": "^3.32.2",
-    "@tiptap/vue-3": "^3.32.2"
+    "@tiptap/extension-link": "^3.33.0",
+    "@tiptap/extension-placeholder": "^3.33.0",
+    "@tiptap/html": "^3.33.0",
+    "@tiptap/pm": "^3.33.0",
+    "@tiptap/starter-kit": "^3.33.0",
+    "@tiptap/vue-3": "^3.33.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
