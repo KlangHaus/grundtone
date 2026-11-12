@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { measure } from './badge-contrast';
 
-// 🔴 Contrast of every TINTED badge variant, computed on the BUILT CSS that
+// 🔴 Contrast of every badge variant, computed on the BUILT CSS that
 // ships in the tarball (dist/index.css), in light AND dark mode.
 //
 // Why built CSS and not the SCSS: the published file is what consumers get,
@@ -13,23 +13,27 @@ import { measure } from './badge-contrast';
 // The defect (KH-1121, ClickUp 869fbfz77) was eight rules using the status
 // token as both the 14 % tint AND the text: 1.51-3.78:1 in light mode.
 //
+// The neutral variant (ClickUp 1amk32fkwct) painted --color-text-secondary on
+// a solid --color-surface-alt: 4.15:1 in light mode on 3.3.0.
+//
 // The cell reports its own denominator: every rule shaped
 // `background: color-mix(in srgb, var(--color-X) N%, transparent); color: var(--color-Y)`
-// under a badge prefix. If that count drops, a variant stopped being measured.
+// (tinted) or `background: var(--color-X); color: var(--color-Y)` (solid) under a
+// badge prefix. If that count drops, a variant stopped being measured.
 // It needs `dist/` (turbo runs `build` before `test`).
 
 const CSS_PATH = fileURLToPath(
   new URL('../../../dist/index.css', import.meta.url),
 );
 const AA_NORMAL_TEXT = 4.5;
-const VARIANTS = ['info', 'success', 'warning', 'error'] as const;
+const VARIANTS = ['info', 'success', 'warning', 'error', 'neutral'] as const;
 const PREFIXES = ['gt-badge', 'badge'] as const;
 
-describe('🔴 tinted badge variants meet WCAG AA in the published CSS', () => {
+describe('🔴 badge variants meet WCAG AA in the published CSS', () => {
   const css = readFileSync(CSS_PATH, 'utf8');
   const rows = measure(css);
 
-  it('measures every tinted variant under both prefixes (the denominator)', () => {
+  it('measures every variant under both prefixes (the denominator)', () => {
     const measured = new Set(rows.map(r => r.selector));
     for (const p of PREFIXES)
       for (const v of VARIANTS) expect(measured).toContain(`.${p}--${v}`);
@@ -37,7 +41,7 @@ describe('🔴 tinted badge variants meet WCAG AA in the published CSS', () => {
     expect(rows).toHaveLength(PREFIXES.length * VARIANTS.length * 2);
   });
 
-  it('every tinted variant is >= 4.5:1 in light and dark mode', () => {
+  it('every variant is >= 4.5:1 in light and dark mode', () => {
     const failing = rows
       .filter(r => r.ratio < AA_NORMAL_TEXT)
       .map(r => `${r.selector} (${r.mode}) ${r.ratio.toFixed(2)}:1`);
@@ -62,5 +66,18 @@ describe('the instrument itself', () => {
     expect(
       light.find(r => r.selector === '.gt-badge--info')!.ratio,
     ).toBeCloseTo(1.76, 1);
+  });
+
+  it('reproduces the published 3.3.0 neutral defect: text-secondary on surface-alt fails', () => {
+    // Positive control for the solid-background path, from the measurement on
+    // grundtone-studio with @grundtone/vue@3.3.0: 4.15:1 in light mode.
+    const css =
+      '--color-background:var(--lightningcss-light,#fff)var(--lightningcss-dark,#121212);' +
+      '--color-surface-alt:var(--lightningcss-light,#f0f1f2)var(--lightningcss-dark,#252525);' +
+      '--color-text-secondary:var(--lightningcss-light,#6c757d)var(--lightningcss-dark,#b0b0b0);' +
+      '}.gt-badge--neutral{background:var(--color-surface-alt);color:var(--color-text-secondary)}';
+    const light = measure(css).find(r => r.mode === 'light')!;
+    expect(light.selector).toBe('.gt-badge--neutral');
+    expect(light.ratio).toBeCloseTo(4.15, 2);
   });
 });

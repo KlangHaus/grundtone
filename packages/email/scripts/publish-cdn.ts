@@ -44,6 +44,7 @@ import {
   reportBunnyAuthFailure,
   applyDeployMode,
   resolveDeployMode,
+  sentryZoneRedaction,
 } from '../../../scripts/lib/bunny-deploy.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -64,6 +65,7 @@ if (sentryEnabled) {
     environment: process.env.SENTRY_ENVIRONMENT ?? 'ci',
     tracesSampleRate: 1.0,
     tags: { script: 'publish-cdn', package: '@grundtone/email' },
+    ...sentryZoneRedaction(zone, Sentry.makeNodeTransport),
   });
 } else {
   console.warn(
@@ -195,7 +197,7 @@ async function main() {
   );
 
   console.log(
-    `Published v${manifest.version} (${versioned.length} artifacts) + current pointer to zone "${zone}"${prefix ? ` under /${prefix}` : ''}.`,
+    `Published v${manifest.version} (${versioned.length} artifacts) + current pointer to the storage zone${prefix ? ` under /${prefix}` : ''}.`,
   );
 }
 
@@ -217,7 +219,7 @@ main().catch(async err => {
   });
   if (sentryEnabled) {
     Sentry.captureException(err, {
-      tags: { zone: zone ?? 'unset', region: region ?? 'default' },
+      tags: { region: region ?? 'default' },
     });
     // Sentry's transport is async; a script exiting immediately after
     // captureException would drop the event before it's sent.
