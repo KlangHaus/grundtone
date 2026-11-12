@@ -104,7 +104,8 @@ jobs:
       # fails on .nvmrc's 24.13 (EBADENGINE) — that single failing step blocked
       # every develop release (incl. docs deploys) from 2026-07-10 to -13.
       - name: Ensure npm CLI supports OIDC trusted publishing
-        run: npm install -g npm@11
+        # Exact version; OIDC trusted publishing needs >= 11.5.1. Bump by hand.
+        run: npm install -g npm@11.21.2
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
