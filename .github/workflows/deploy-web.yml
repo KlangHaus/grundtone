@@ -32,6 +32,9 @@ concurrency:
   group: deploy-web-${{ github.ref }}
   cancel-in-progress: true
 
+# Every job declares its own permissions.
+permissions: {}
+
 jobs:
   deploy:
     name: build + publish til Bunny
