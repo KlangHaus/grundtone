@@ -1,69 +1,15 @@
 // AUTO-GENERATED file generator — do not edit this script's output manually.
 // Source of truth: packages/icons/src/icons/svg/**/*.svg
 
-import { readdirSync, readFileSync, writeFileSync, statSync } from 'node:fs';
-import { resolve, dirname, basename } from 'node:path';
+import { writeFileSync } from 'node:fs';
+import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execSync } from 'node:child_process';
+import { collectSvgs } from './svg-source';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const svgDir = resolve(__dirname, '../src/icons/svg');
 const outPath = resolve(__dirname, '../src/icons/registry.generated.ts');
-
-interface ParsedIcon {
-  name: string;
-  category: string;
-  viewBox: string;
-  body: string;
-}
-
-function parseSvg(filepath: string, category: string): ParsedIcon {
-  const name = basename(filepath, '.svg');
-  const raw = readFileSync(filepath, 'utf-8').trim();
-
-  // Extract viewBox
-  const viewBoxMatch = raw.match(/viewBox="([^"]+)"/);
-  const viewBox = viewBoxMatch ? viewBoxMatch[1] : '0 0 24 24';
-
-  // Extract inner content (everything between <svg ...> and </svg>)
-  const body = raw
-    .replace(/<svg[^>]*>/, '')
-    .replace(/<\/svg>/, '')
-    .trim();
-
-  return { name, category, viewBox, body };
-}
-
-/**
- * Recursively collect SVG files from svgDir.
- * Files in svgDir root → category 'general'.
- * Files in svgDir/{category}/ → that category name.
- */
-function collectSvgs(dir: string): ParsedIcon[] {
-  const icons: ParsedIcon[] = [];
-  const entries = readdirSync(dir).sort();
-
-  for (const entry of entries) {
-    const fullPath = resolve(dir, entry);
-    const stat = statSync(fullPath);
-
-    if (stat.isDirectory()) {
-      // Subdirectory = category
-      const categoryName = entry;
-      const subFiles = readdirSync(fullPath)
-        .filter(f => f.endsWith('.svg'))
-        .sort();
-      for (const file of subFiles) {
-        icons.push(parseSvg(resolve(fullPath, file), categoryName));
-      }
-    } else if (entry.endsWith('.svg')) {
-      // Root-level SVG = 'general' category
-      icons.push(parseSvg(fullPath, 'general'));
-    }
-  }
-
-  return icons;
-}
 
 const icons = collectSvgs(svgDir);
 
@@ -103,11 +49,7 @@ const lines: string[] = [
 ];
 
 for (const icon of icons) {
-  const escapedBody = icon.body
-    .replace(/\n/g, ' ')
-    .replace(/\s+/g, ' ')
-    .replace(/\\/g, '\\\\')
-    .replace(/'/g, "\\'");
+  const escapedBody = icon.body.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
   lines.push(`  '${icon.name}': {`);
   lines.push(`    body: '${escapedBody}',`);
   lines.push(`    viewBox: '${icon.viewBox}',`);
