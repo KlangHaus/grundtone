@@ -49,7 +49,9 @@ const lines: string[] = [
 ];
 
 for (const icon of icons) {
-  const escapedBody = icon.body.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+  const escapedBody = icon.body
+    .replace(/\\/g, String.raw`\\`)
+    .replace(/'/g, "\\'");
   lines.push(`  '${icon.name}': {`);
   lines.push(`    body: '${escapedBody}',`);
   lines.push(`    viewBox: '${icon.viewBox}',`);
