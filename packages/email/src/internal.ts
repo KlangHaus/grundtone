@@ -13,9 +13,10 @@
  */
 export function remToPx(value: string, base = 16): string {
   const v = value.trim();
-  const rem = /^(-?\d*\.?\d+)rem$/.exec(v);
+  // One way to match each number (`1`, `1.5`, `.5`), so matching stays linear.
+  const rem = /^(-?(?:\d+(?:\.\d+)?|\.\d+))rem$/.exec(v);
   if (rem) return `${Math.round(parseFloat(rem[1]) * base)}px`;
-  const em = /^(-?\d*\.?\d+)em$/.exec(v);
+  const em = /^(-?(?:\d+(?:\.\d+)?|\.\d+))em$/.exec(v);
   if (em) return `${Math.round(parseFloat(em[1]) * base)}px`;
   return v;
 }
@@ -57,7 +58,7 @@ export function section(
 export function compact(mjml: string): string {
   return mjml
     .split('\n')
-    .map(l => l.replace(/\s+$/, ''))
+    .map(l => l.trimEnd())
     .filter(l => l.trim() !== '')
     .join('\n');
 }
