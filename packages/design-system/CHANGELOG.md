@@ -1,5 +1,26 @@
 # @grundtone/design-system
 
+## 3.4.0 - 2026-11-12
+
+### Minor Changes
+
+- [#332](https://github.com/KlangHaus/grundtone/pull/332)
+  [`20b6e0b`](https://github.com/KlangHaus/grundtone/commit/20b6e0ba3f82828da198071516732ad935b040dd)
+  Thanks [@allanasp](https://github.com/allanasp)! - `GTTable` gains `stackBelow`, which says below
+  which named breakpoint a `responsive` table stacks its rows: `'sm'` (40rem, the default and
+  today's behaviour), `'md'` (768px), `'lg'` (1024px), `'xl'` (1280px) or `'2xl'` (1536px). Without
+  the prop nothing changes. The design system adds the matching `.table-wrapper--stack-md`, `-lg`,
+  `-xl` and `-2xl` modifier classes, built from the default breakpoint scale.
+
+### Patch Changes
+
+- [#327](https://github.com/KlangHaus/grundtone/pull/327)
+  [`2410742`](https://github.com/KlangHaus/grundtone/commit/241074255f211542906529b7640f4b823c4cf2ab)
+  Thanks [@allanasp](https://github.com/allanasp)! - The neutral badge (`GTBadge variant="neutral"`
+  and `.badge--neutral`) now uses `--color-text` instead of `--color-text-secondary` for its text.
+  The old pair measured 4.15:1 on `--color-surface-alt` in light mode, below WCAG AA for small text.
+  The grey surface is unchanged.
+
 ## 3.3.0 - 2026-10-22
 
 ### Patch Changes

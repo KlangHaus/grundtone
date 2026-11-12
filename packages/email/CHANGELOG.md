@@ -1,5 +1,21 @@
 # @grundtone/email
 
+## 0.3.6 - 2026-11-12
+
+### Patch Changes
+
+- [#325](https://github.com/KlangHaus/grundtone/pull/325)
+  [`b126fa8`](https://github.com/KlangHaus/grundtone/commit/b126fa8474650d23e3b3675549f480b7e6dc53b6)
+  Thanks [@allanasp](https://github.com/allanasp)! - `html-to-text` 9.0.5 → 10.0.1. Version 10
+  replaces `deepmerge` with `deepmerge-ts`, so `@grundtone/email` no longer installs `deepmerge`.
+  `toPlainText` output is unchanged for every built-in template. html-to-text 10 needs Node.js >=
+  20.19.0.
+
+- [#333](https://github.com/KlangHaus/grundtone/pull/333)
+  [`9ea0a50`](https://github.com/KlangHaus/grundtone/commit/9ea0a50c2ed944fd443ea2e1d0add999640fe6da)
+  Thanks [@allanasp](https://github.com/allanasp)! - Internal trimming and rem/em unit conversion
+  now run in linear time. The output is unchanged.
+
 ## 0.3.5 - 2026-10-22
 
 ### Patch Changes
