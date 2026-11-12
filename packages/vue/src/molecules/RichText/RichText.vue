@@ -10,6 +10,11 @@
   import type { RichTextProps, RichTextFeature } from './types';
 
   const props = withDefaults(defineProps<RichTextProps>(), {
+    toolbarLabel: 'Formatering',
+    openLinkLabel: 'Åbn link i nyt faneblad',
+    editLinkLabel: 'Redigér link',
+    removeLinkLabel: 'Fjern link',
+    linkInputLabel: 'Link',
     modelValue: null,
     placeholder: '',
     readonly: false,
@@ -430,7 +435,7 @@
         ref="toolbarEl"
         :class="`${base}__toolbar`"
         role="toolbar"
-        aria-label="Formatering"
+        :aria-label="toolbarLabel"
         :aria-controls="editorId"
         @keydown="onToolbarKeydown"
       >
@@ -471,13 +476,13 @@
           :href="bubble.href"
           target="_blank"
           rel="noopener"
-          aria-label="Åbn link i nyt faneblad"
+          :aria-label="openLinkLabel"
           >↗</a
         >
         <button
           type="button"
           :class="`${base}__bubble-action`"
-          aria-label="Redigér link"
+          :aria-label="editLinkLabel"
           @click="openLinkPopover"
         >
           ✎
@@ -485,7 +490,7 @@
         <button
           type="button"
           :class="`${base}__bubble-action`"
-          aria-label="Fjern link"
+          :aria-label="removeLinkLabel"
           @click="unlink"
         >
           ⛓️‍💥
@@ -499,7 +504,7 @@
         :class="`${base}__popover`"
         :style="{ top: `${overlayPos.top}px`, left: `${overlayPos.left}px` }"
         role="dialog"
-        aria-label="Link"
+        :aria-label="linkInputLabel"
         @keydown="onPopoverKeydown"
       >
         <label :class="`${base}__popover-field`">

@@ -13,4 +13,6 @@ export interface CookieMessageProps {
   persistent?: boolean;
   /** Accessible label for the cookie message region */
   ariaLabel?: string;
+  /** Accessible label for the close button */
+  closeLabel?: string;
 }

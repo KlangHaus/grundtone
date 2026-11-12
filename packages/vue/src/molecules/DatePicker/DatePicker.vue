@@ -14,6 +14,10 @@
   import type { DatePickerProps } from './types';
 
   const props = withDefaults(defineProps<DatePickerProps>(), {
+    previousMonthLabel: 'Forrige måned',
+    nextMonthLabel: 'Næste måned',
+    openCalendarLabel: 'Åbn kalender',
+    closeCalendarLabel: 'Luk kalender',
     modelValue: '',
     placeholder: 'DD/MM/ÅÅÅÅ',
     format: 'DD/MM/YYYY',
@@ -198,7 +202,7 @@
         <button
           type="button"
           :class="`${base}__icon-btn`"
-          :aria-label="isOpen ? 'Luk kalender' : 'Åbn kalender'"
+          :aria-label="isOpen ? closeCalendarLabel : openCalendarLabel"
           :disabled="disabled"
           @click.stop="toggleCalendar"
         >
@@ -216,7 +220,7 @@
           <button
             type="button"
             :class="`${base}__nav`"
-            aria-label="Forrige måned"
+            :aria-label="previousMonthLabel"
             @click.stop="prevMonth"
           >
             <GTIcon name="chevron-left" size="sm" />
@@ -227,7 +231,7 @@
           <button
             type="button"
             :class="`${base}__nav`"
-            aria-label="Næste måned"
+            :aria-label="nextMonthLabel"
             @click.stop="nextMonth"
           >
             <GTIcon name="chevron-right" size="sm" />

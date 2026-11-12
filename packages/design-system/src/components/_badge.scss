@@ -43,9 +43,11 @@
 // 14 % tint the status colours give 1.51-3.78:1 in light mode (info and warning
 // are too light for ANY shade of themselves to reach 4.5:1). The tint and the
 // dot carry the status; the text carries the words. See badge-contrast.test.ts.
+// Neutral uses --color-text as well: --color-text-secondary on surface-alt is
+// 4.15:1 in light mode. The grey surface carries "neutral".
 .badge--neutral {
   background: var(--color-surface-alt);
-  color: var(--color-text-secondary);
+  color: var(--color-text);
 
   .badge__dot {
     background: var(--color-text-tertiary);

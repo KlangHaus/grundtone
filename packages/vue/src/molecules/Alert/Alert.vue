@@ -5,6 +5,7 @@
   import type { AlertProps } from './types';
 
   const props = withDefaults(defineProps<AlertProps>(), {
+    closeLabel: 'Close',
     heading: undefined,
     icon: undefined,
     dismissible: false,
@@ -45,7 +46,7 @@
       v-if="dismissible"
       type="button"
       :class="`${base}__close`"
-      aria-label="Close"
+      :aria-label="closeLabel"
       @click="emit('dismiss')"
     >
       <GTIcon name="close" size="xs" />

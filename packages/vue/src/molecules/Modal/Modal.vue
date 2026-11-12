@@ -6,6 +6,7 @@
   import type { ModalProps } from './types';
 
   const props = withDefaults(defineProps<ModalProps>(), {
+    closeLabel: 'Luk',
     persistent: false,
     transition: 'scale',
     ariaLabel: undefined,
@@ -94,7 +95,7 @@
               v-if="!persistent"
               :class="`${base}__close`"
               type="button"
-              aria-label="Luk"
+              :aria-label="closeLabel"
               @click="handleClose"
             >
               &times;

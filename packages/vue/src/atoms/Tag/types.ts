@@ -15,4 +15,6 @@ export interface TagProps {
   size?: TagSize;
   /** Disabled state */
   disabled?: boolean;
+  /** Accessible label for the remove button; receives the tag label */
+  removeLabel?: (label: string) => string;
 }

@@ -22,4 +22,6 @@ export interface FileUploadProps {
   required?: boolean;
   /** HTML id */
   id?: string;
+  /** Accessible label for a file's remove button; receives the file name */
+  removeFileLabel?: (fileName: string) => string;
 }

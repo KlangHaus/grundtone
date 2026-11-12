@@ -6,7 +6,6 @@ import { fileURLToPath } from 'node:url';
 import { gateRunsBeforePublish } from './workflow-order.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '../..');
-const read = f => readFileSync(join(root, '.github/workflows', f), 'utf8');
 
 const GATE = 'scripts/assert-no-downgrade-publish.mjs';
 const VULN = 'osv-scanner --recursive';

@@ -42,6 +42,23 @@ export function tintedRules(css: string): TintedRule[] {
   }));
 }
 
+export interface SolidRule {
+  selector: string;
+  background: string;
+  text: string;
+}
+
+/** Every badge rule that paints a solid token background and a token text (the neutral variant). */
+export function solidRules(css: string): SolidRule[] {
+  const re =
+    /(?:^|[}\s,])\.((?:gt-)?badge--[a-z]+)\{background:var\(--color-([a-z-]+)\);color:var\(--color-([a-z-]+)\)\}/g;
+  return [...css.matchAll(re)].map(m => ({
+    selector: `.${m[1]}`,
+    background: m[2],
+    text: m[3],
+  }));
+}
+
 export function luminance([r, g, b]: Rgb): number {
   const ch = (c: number) => {
     const s = c / 255;
@@ -68,7 +85,7 @@ export function measure(css: string) {
   const t = tokens(css);
   const page = t.get('background');
   if (!page) throw new Error('--color-background not found in the built CSS');
-  return tintedRules(css).flatMap(rule =>
+  const tinted = tintedRules(css).flatMap(rule =>
     (['light', 'dark'] as const).map(mode => {
       const tint = t.get(rule.tint)?.[mode];
       const text = t.get(rule.text)?.[mode];
@@ -83,4 +100,16 @@ export function measure(css: string) {
       };
     }),
   );
+  const solid = solidRules(css).flatMap(rule =>
+    (['light', 'dark'] as const).map(mode => {
+      const bg = t.get(rule.background)?.[mode];
+      const text = t.get(rule.text)?.[mode];
+      if (!bg || !text)
+        throw new Error(
+          `${rule.selector}: token not found (${rule.background}/${rule.text})`,
+        );
+      return { selector: rule.selector, mode, ratio: contrast(text, bg) };
+    }),
+  );
+  return [...tinted, ...solid];
 }

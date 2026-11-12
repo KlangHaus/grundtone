@@ -11,6 +11,9 @@
   import type { CarouselProps } from './types';
 
   const props = withDefaults(defineProps<CarouselProps>(), {
+    goToSlideLabel: (slide: number) => `Gå til slide ${slide}`,
+    previousSlideLabel: 'Forrige slide',
+    nextSlideLabel: 'Næste slide',
     modelValue: 0,
     autoplay: false,
     interval: 5000,
@@ -238,7 +241,7 @@
       <button
         type="button"
         class="carousel__prev"
-        :aria-label="'Forrige slide'"
+        :aria-label="previousSlideLabel"
         @click="prev"
       >
         <slot name="prev">&#8249;</slot>
@@ -246,7 +249,7 @@
       <button
         type="button"
         class="carousel__next"
-        :aria-label="'Næste slide'"
+        :aria-label="nextSlideLabel"
         @click="next"
       >
         <slot name="next">&#8250;</slot>
@@ -268,7 +271,7 @@
           { 'carousel__indicator--active': activeIndex === i },
         ]"
         :aria-selected="activeIndex === i"
-        :aria-label="`Gå til slide ${i + 1}`"
+        :aria-label="goToSlideLabel(i + 1)"
         @click="goTo(i)"
       />
     </div>

@@ -44,7 +44,7 @@ exit-betingelse.
 
 [[IgnoredVulns]]
 id = "GHSA-vjh5-4x84-xrqp"
-ignoreUntil = 2026-11-11T00:00:00Z
+ignoreUntil = 2026-11-24T00:00:00Z
 reason = """
 FALSE POSITIVE in OSV's data, not in the code. Nuxt server-side route rules.
 GitHub's advisory bounds all four ranges: nuxt >= 4.0.0, < 4.6.2 (patched 4.6.2)
@@ -75,6 +75,18 @@ Re-read 2026-11-01T20:20Z by [grundtone], before the 2026-11-04 expiry:
     accepts, develop 0ad6cc4: still flags nuxt@4.6.2 and
     @nuxt/nitro-server@4.6.2; the canary reported in the same run.
   Renewed 7 days, to 2026-11-11.
+Renewed by Allan 2026-11-12 (in chat) to 2026-11-24; a further renewal needs
+Allan's word on the reason.
+  The 2026-11-24 date is Allan's and deviates from the 7-day cadence above (13
+  days); the exit condition is unchanged.
+Re-read 2026-11-12T18:44Z by [sikkerhed] (grundtone PR comment 6832731967):
+  - OSV record: `modified` still 2026-10-22T17:15:04Z, not withdrawn; both
+    legacy ranges still `introduced` only (nuxt 3.0.0, @nuxt/nitro-server
+    3.20.0); the 4.x ranges `fixed: 4.6.2`.
+  - GitHub advisory (updated 2026-10-22T16:59:57Z): all four ranges bounded,
+    4.6.2 patched — unchanged, not withdrawn.
+  - Lockfile: only nuxt@4.6.4 and @nuxt/nitro-server@4.6.4, no 3.x entries;
+    the same false positive on the newer patch release.
 """
 
 [[IgnoredVulns]]
@@ -85,19 +97,19 @@ deepmerge prototype poisoning in mergeObject(). NO patch exists: OSV and GitHub
 both give affected >=4.2.0 <=4.3.1 with no fixed version, and 4.3.1 is npm's
 latest, so an override cannot fix it.
 Owner: [grundtone]. Added 2026-11-07 to unblock the npm release gate.
-Paths (pnpm why, develop 0ca60ad7):
-  - @grundtone/email -> html-to-text 9.0.5 -> deepmerge (published runtime path).
-    html-to-text calls deepmerge only in compile() to merge DEFAULT_OPTIONS with
-    the caller's options, and in its selector merge. @grundtone/email's
-    toPlainText (packages/email/src/compile.ts l.74-80) passes our own
-    constants (three fixed selectors) plus a typed `wordwrap: number | false`;
-    the HTML being converted is never merged. Not reachable as used: no
-    attacker-controlled source object reaches deepmerge from our code.
-    Approved by Allan 2026-11-07 ("ja, accepter deepmerge til 24. november").
-  - @rollup/plugin-node-resolve (build tooling) and @expo/config
-    (apps/playground/expo): not shipped.
+Approved by Allan 2026-11-07 ("ja, accepter deepmerge til 24. november").
+The published runtime path is gone: @grundtone/email moved to html-to-text
+10.0.1, which uses deepmerge-ts instead (pnpm why --prod per published package:
+0 deepmerge paths in every package except @grundtone/react-native, where it
+comes through its PEER dependency expo, i.e. the consumer's own app).
+Paths that remain (pnpm why -r):
+  - @rollup/plugin-node-resolve, via nuxt/nitropack, unbuild and @sentry/nuxt:
+    build tooling, not shipped.
+  - @expo/config, via expo (apps/playground/expo, and the peer of
+    @grundtone/react-native): not in any package we publish.
 Exit: falls away when (a) deepmerge publishes a fixed version and the lockfile
-moves to it, OR (b) html-to-text drops deepmerge or @grundtone/email replaces
-html-to-text. The anti-rot check fails the day OSV stops reporting it. The date
-is a forced re-read, not the exit condition.
+moves to it, OR (b) no package in the lockfile depends on deepmerge any more.
+The anti-rot check fails the day OSV stops reporting it. The date is a forced
+re-read, not the exit condition: on 2026-11-24 the remaining paths are tooling
+only, and a renewal needs Allan's word on that reason.
 """

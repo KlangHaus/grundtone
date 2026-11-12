@@ -3,6 +3,7 @@
   import type { ErrorPageProps } from './types';
 
   const props = withDefaults(defineProps<ErrorPageProps>(), {
+    illustrationLabel: (code: number | undefined) => `Fejl ${code}`,
     code: 404,
     title: undefined,
     description: undefined,
@@ -77,7 +78,7 @@
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           role="img"
-          :aria-label="`Fejl ${code}`"
+          :aria-label="illustrationLabel(code)"
         >
           <!-- Five staff lines -->
           <line

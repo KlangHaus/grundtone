@@ -3,6 +3,8 @@
   import type { TableProps, SortDirection } from './types';
 
   const props = withDefaults(defineProps<TableProps>(), {
+    selectAllLabel: 'Vælg alle rækker',
+    selectRowLabel: (row: number) => `Vælg række ${row}`,
     variant: 'default',
     density: 'normal',
     responsive: false,
@@ -161,7 +163,7 @@
               type="checkbox"
               :checked="allSelected"
               :indeterminate="someSelected"
-              :aria-label="`Vælg alle rækker`"
+              :aria-label="selectAllLabel"
               @change="toggleAll"
             />
           </th>
@@ -208,7 +210,7 @@
             <input
               type="checkbox"
               :checked="selected.has(origIdx)"
-              :aria-label="`Vælg række ${origIdx + 1}`"
+              :aria-label="selectRowLabel(origIdx + 1)"
               @change="toggleRow(origIdx)"
             />
           </td>

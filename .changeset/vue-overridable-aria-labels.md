@@ -1,0 +1,27 @@
+---
+'@grundtone/vue': minor
+---
+
+Accessible labels that were fixed text in the templates are now props, so an app can set them in its
+own language. Each default is the text the component rendered before, so nothing changes unless you
+pass the prop.
+
+- `GTAlert`, `GTCookieMessage`, `GTModal`, `GTToast`: `closeLabel`
+- `GTToastContainer`: `closeLabel` for every toast it shows, and `useToast` takes a per-toast
+  `closeLabel` option that wins over it
+- `GTDatePicker`: `openCalendarLabel`, `closeCalendarLabel`, `previousMonthLabel`, `nextMonthLabel`
+- `GTRichText`: `toolbarLabel`, `linkInputLabel`, `openLinkLabel`, `editLinkLabel`,
+  `removeLinkLabel`
+- `GTCodeBlock`: `copyLabel`, `copiedLabel`
+- `GTCarousel`: `previousSlideLabel`, `nextSlideLabel`, `goToSlideLabel(slide)`
+- `GTTable`: `selectAllLabel`, `selectRowLabel(row)`
+- `GTTag`: `removeLabel(label)`
+- `GTFileUpload`: `removeFileLabel(fileName)`
+- `GTSlider`: `minimumThumbLabel(label)`, `maximumThumbLabel(label)` (range mode)
+- `GTErrorPage`: `illustrationLabel(code)`
+
+The props shown with an argument take a function, because their text includes a value (a row number,
+a file name, a status code).
+
+If you passed one of these names as a plain attribute (for example `close-label="…"`), it used to
+land on the component's root element as an HTML attribute; it now sets the prop instead.
