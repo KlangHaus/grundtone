@@ -54,8 +54,8 @@ export function solidRules(css: string): SolidRule[] {
     /(?:^|[}\s,])\.((?:gt-)?badge--[a-z]+)\{background:var\(--color-([a-z-]+)\);color:var\(--color-([a-z-]+)\)\}/g;
   return [...css.matchAll(re)].map(m => ({
     selector: `.${m[1]}`,
-    background: m[2]!,
-    text: m[3]!,
+    background: m[2],
+    text: m[3],
   }));
 }
 
