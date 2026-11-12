@@ -53,7 +53,7 @@ export function installedCopies(root, name, maxDepth = 4) {
     }
     for (const entry of entries) {
       const full = join(dir, entry);
-      let isDir = false;
+      let isDir;
       try {
         isDir = statSync(full).isDirectory();
       } catch {
