@@ -51,6 +51,7 @@
         :icon="item.icon"
         :duration="item.duration"
         :dismissible="item.dismissible"
+        :close-label="item.closeLabel ?? closeLabel"
         :rich="richColors"
         :index="i"
         @dismiss="dismiss(item.id)"

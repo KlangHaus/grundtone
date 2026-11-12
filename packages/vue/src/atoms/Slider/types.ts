@@ -17,4 +17,8 @@ export interface SliderProps {
   label?: string;
   /** Show current value display */
   showValue?: boolean;
+  /** Accessible label for the lower thumb in range mode; receives `label` */
+  minimumThumbLabel?: (label: string | undefined) => string;
+  /** Accessible label for the upper thumb in range mode; receives `label` */
+  maximumThumbLabel?: (label: string | undefined) => string;
 }

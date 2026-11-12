@@ -1,6 +1,9 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, afterEach } from 'vitest';
 import { mount } from '@vue/test-utils';
+import { nextTick } from 'vue';
 import Toast from './Toast.vue';
+import ToastContainer from './ToastContainer.vue';
+import { useToast } from '../../composables/useToast';
 
 const stubs = { GTIcon: true };
 
@@ -111,5 +114,53 @@ describe('Toast', () => {
     const wrapper = mountToast();
     // No icon prop = no icon element in DOM
     expect(wrapper.html()).not.toContain('gt-toast__icon');
+  });
+});
+
+// The usual path is useToast() plus GTToastContainer, not a hand-mounted
+// GTToast, so the close label has to travel through that path too.
+describe('Toast close label through useToast and the container', () => {
+  const toast = useToast();
+  let container: ReturnType<typeof mount> | undefined;
+
+  afterEach(() => {
+    container?.unmount();
+    container = undefined;
+    toast.dismissAll();
+  });
+
+  async function closeLabels(containerProps = {}) {
+    container = mount(ToastContainer, {
+      props: containerProps,
+      global: { stubs },
+      attachTo: document.body,
+    });
+    await nextTick();
+    return [...document.body.querySelectorAll('.gt-toast__close')].map(b =>
+      b.getAttribute('aria-label'),
+    );
+  }
+
+  it('keeps the default label when nothing is set', async () => {
+    toast('Saved');
+    expect(await closeLabels()).toEqual(['Luk']);
+  });
+
+  it('uses the container closeLabel for every toast', async () => {
+    toast('One');
+    toast.success('Two');
+    expect(await closeLabels({ closeLabel: 'Close' })).toEqual([
+      'Close',
+      'Close',
+    ]);
+  });
+
+  it("uses a toast's own closeLabel over the container's", async () => {
+    toast('One', { closeLabel: 'Dismiss' });
+    toast('Two');
+    expect(await closeLabels({ closeLabel: 'Close' })).toEqual([
+      'Close',
+      'Dismiss',
+    ]);
   });
 });

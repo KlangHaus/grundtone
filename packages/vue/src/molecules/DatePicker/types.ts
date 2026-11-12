@@ -25,4 +25,12 @@ export interface DatePickerProps {
   locale?: string;
   /** HTML id */
   id?: string;
+  /** Accessible label for the previous-month button */
+  previousMonthLabel?: string;
+  /** Accessible label for the next-month button */
+  nextMonthLabel?: string;
+  /** Accessible label for the calendar toggle while the calendar is closed */
+  openCalendarLabel?: string;
+  /** Accessible label for the calendar toggle while the calendar is open */
+  closeCalendarLabel?: string;
 }

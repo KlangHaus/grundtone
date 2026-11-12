@@ -6,6 +6,7 @@
   import type { CookieMessageProps } from './types';
 
   withDefaults(defineProps<CookieMessageProps>(), {
+    closeLabel: 'Luk',
     heading: undefined,
     icon: undefined,
     acceptLabel: 'Acceptér',
@@ -82,7 +83,7 @@
     <button
       type="button"
       :class="`${base}__close`"
-      aria-label="Luk"
+      :aria-label="closeLabel"
       @click="emit('accept')"
     >
       <GTIcon name="close" size="xs" />
