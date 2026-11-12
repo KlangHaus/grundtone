@@ -5,6 +5,7 @@
   import type { ToastProps } from './types';
 
   const props = withDefaults(defineProps<ToastProps>(), {
+    closeLabel: 'Luk',
     variant: 'default',
     description: undefined,
     icon: undefined,
@@ -59,7 +60,7 @@
       v-if="dismissible"
       :class="`${base}__close`"
       type="button"
-      aria-label="Luk"
+      :aria-label="closeLabel"
       @click="emit('dismiss')"
     >
       &times;

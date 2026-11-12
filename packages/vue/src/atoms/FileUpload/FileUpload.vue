@@ -6,6 +6,7 @@
   import type { FileUploadProps, SelectedFile } from './types';
 
   const props = withDefaults(defineProps<FileUploadProps>(), {
+    removeFileLabel: (fileName: string) => `Fjern ${fileName}`,
     label: undefined,
     helpText: undefined,
     errorText: undefined,
@@ -159,7 +160,7 @@
         <button
           type="button"
           :class="`${base}__remove`"
-          :aria-label="`Fjern ${f.file.name}`"
+          :aria-label="removeFileLabel(f.file.name)"
           @click="removeFile(f.id)"
         >
           &times;

@@ -7,4 +7,8 @@ export interface CodeBlockProps {
   label?: string;
   /** Show a copy-to-clipboard button (default true). */
   copyable?: boolean;
+  /** Accessible label for the copy button */
+  copyLabel?: string;
+  /** Accessible label for the copy button after copying */
+  copiedLabel?: string;
 }

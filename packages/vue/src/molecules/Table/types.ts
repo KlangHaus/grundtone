@@ -40,4 +40,8 @@ export interface TableProps {
   sortDirection?: SortDirection;
   /** Striped rows (shorthand for variant="zebra") */
   striped?: boolean;
+  /** Accessible label for the select-all checkbox */
+  selectAllLabel?: string;
+  /** Accessible label for a row checkbox; receives the 1-based row number */
+  selectRowLabel?: (row: number) => string;
 }

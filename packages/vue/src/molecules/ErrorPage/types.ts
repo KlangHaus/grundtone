@@ -18,4 +18,6 @@ export interface ErrorPageProps {
     message?: string;
     stack?: string;
   };
+  /** Accessible label for the illustration; receives `code` */
+  illustrationLabel?: (code: number | undefined) => string;
 }

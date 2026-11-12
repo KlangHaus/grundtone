@@ -5,6 +5,7 @@
   import type { TagProps } from './types';
 
   const props = withDefaults(defineProps<TagProps>(), {
+    removeLabel: (label: string) => `Fjern ${label}`,
     value: undefined,
     icon: undefined,
     dismissible: false,
@@ -59,7 +60,7 @@
       v-if="dismissible"
       type="button"
       :class="`${base}__dismiss`"
-      :aria-label="`Fjern ${label}`"
+      :aria-label="removeLabel(label)"
       :disabled="disabled"
       @click="handleDismiss"
     >

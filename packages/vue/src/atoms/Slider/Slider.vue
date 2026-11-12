@@ -3,6 +3,10 @@
   import type { SliderProps } from './types';
 
   const props = withDefaults(defineProps<SliderProps>(), {
+    minimumThumbLabel: (label: string | undefined) =>
+      `${label ?? 'Slider'} minimum`,
+    maximumThumbLabel: (label: string | undefined) =>
+      `${label ?? 'Slider'} maximum`,
     modelValue: 0,
     min: 0,
     max: 100,
@@ -238,7 +242,7 @@
         :aria-valuemax="range ? highValue : max"
         :aria-valuenow="lowValue"
         :aria-orientation="orientation"
-        :aria-label="range ? `${label ?? 'Slider'} minimum` : label"
+        :aria-label="range ? minimumThumbLabel(label) : label"
         :aria-disabled="disabled"
         :style="lowThumbStyle"
         @keydown="onKeydown($event, 'low')"
@@ -257,7 +261,7 @@
         :aria-valuemax="max"
         :aria-valuenow="highValue"
         :aria-orientation="orientation"
-        :aria-label="`${label ?? 'Slider'} maximum`"
+        :aria-label="maximumThumbLabel(label)"
         :aria-disabled="disabled"
         :style="highThumbStyle"
         @keydown="onKeydown($event, 'high')"

@@ -12,4 +12,6 @@ export interface ModalProps {
   transition?: ModalTransition;
   /** Accessible label override (defaults to title) */
   ariaLabel?: string;
+  /** Accessible label for the close button */
+  closeLabel?: string;
 }

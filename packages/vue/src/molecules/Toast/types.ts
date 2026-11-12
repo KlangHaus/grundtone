@@ -34,6 +34,8 @@ export interface ToastProps {
   rich?: boolean;
   /** Stack index (for stacking transforms) */
   index?: number;
+  /** Accessible label for the close button */
+  closeLabel?: string;
 }
 
 export interface ToastContainerProps {

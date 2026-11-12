@@ -17,6 +17,12 @@ export interface CarouselProps {
   pauseOnHover?: boolean;
   /** Accessible label */
   ariaLabel?: string;
+  /** Accessible label for the previous-slide button */
+  previousSlideLabel?: string;
+  /** Accessible label for the next-slide button */
+  nextSlideLabel?: string;
+  /** Accessible label for an indicator button; receives the 1-based slide number */
+  goToSlideLabel?: (slide: number) => string;
 }
 
 export interface CarouselSlideProps {

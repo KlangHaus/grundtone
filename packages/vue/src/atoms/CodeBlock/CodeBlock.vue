@@ -4,6 +4,8 @@
   import type { CodeBlockProps } from './types';
 
   const props = withDefaults(defineProps<CodeBlockProps>(), {
+    copyLabel: 'Kopiér kode',
+    copiedLabel: 'Kopieret',
     language: undefined,
     label: undefined,
     copyable: true,
@@ -32,7 +34,7 @@
         v-if="copyable"
         type="button"
         :class="`${base}__copy`"
-        :aria-label="copied ? 'Kopieret' : 'Kopiér kode'"
+        :aria-label="copied ? copiedLabel : copyLabel"
         @click="copy"
       >
         {{ copied ? 'Kopieret!' : 'Kopiér' }}

@@ -11,4 +11,6 @@ export interface AlertProps {
   dismissible?: boolean;
   /** Accessible label for the alert region */
   ariaLabel?: string;
+  /** Accessible label for the dismiss button */
+  closeLabel?: string;
 }

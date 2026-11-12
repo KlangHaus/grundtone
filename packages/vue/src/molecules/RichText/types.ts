@@ -32,4 +32,14 @@ export interface RichTextProps {
    * allow-list.
    */
   features?: RichTextFeature[];
+  /** Accessible label for the formatting toolbar */
+  toolbarLabel?: string;
+  /** Accessible label for the open-link button in the link popover */
+  openLinkLabel?: string;
+  /** Accessible label for the edit-link button in the link popover */
+  editLinkLabel?: string;
+  /** Accessible label for the remove-link button in the link popover */
+  removeLinkLabel?: string;
+  /** Accessible label for the link editor */
+  linkInputLabel?: string;
 }
