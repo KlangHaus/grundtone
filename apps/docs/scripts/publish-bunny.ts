@@ -34,6 +34,7 @@ import {
   applyDeployMode,
   checkUploaded,
   resolveDeployMode,
+  sentryZoneRedaction,
 } from '../../../scripts/lib/bunny-deploy.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -54,6 +55,7 @@ if (sentryEnabled) {
     environment: process.env.SENTRY_ENVIRONMENT ?? 'ci',
     tracesSampleRate: 1.0,
     tags: { script: 'publish-bunny', package: '@grundtone/docs' },
+    ...sentryZoneRedaction(zone, Sentry.makeNodeTransport),
   });
 } else {
   console.warn(
@@ -140,7 +142,9 @@ async function putWithRetry(
       });
       if (res.ok) return;
       lastErr = Object.assign(
-        new Error(`PUT ${url} → ${res.status} ${await res.text()}`),
+        new Error(
+          `PUT ${url.slice(zoneBase.length)} → ${res.status} ${await res.text()}`,
+        ),
         // Carried so the failure path can ask WHICH kind of rejection this
         // was; the message text is for a human, not for a branch.
         { status: res.status },
@@ -221,7 +225,7 @@ async function main() {
     );
   }
   console.log(
-    `Uploading ${files.length} files to zone "${zone}"${prefix ? ` under /${prefix}` : ''}...`,
+    `Uploading ${files.length} files to the storage zone${prefix ? ` under /${prefix}` : ''}...`,
   );
 
   await Sentry.startSpan(
@@ -284,7 +288,7 @@ async function main() {
   }
 
   console.log(
-    `Published docs.grundtone.com (${files.length} files) to zone "${zone}".`,
+    `Published docs.grundtone.com (${files.length} files) to the storage zone.`,
   );
 }
 
@@ -306,7 +310,7 @@ main().catch(async err => {
   });
   if (sentryEnabled) {
     Sentry.captureException(err, {
-      tags: { zone: zone ?? 'unset', region: region ?? 'default' },
+      tags: { region: region ?? 'default' },
     });
     await Sentry.flush(2000);
   }
