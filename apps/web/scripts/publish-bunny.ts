@@ -29,6 +29,7 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { resolve, relative, join, dirname, sep, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as Sentry from '@sentry/node';
+import { sentryZoneRedaction } from '../../../scripts/lib/bunny-deploy.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const distRoot = resolve(here, '../.output/public');
@@ -48,6 +49,7 @@ if (sentryEnabled) {
     environment: process.env.SENTRY_ENVIRONMENT ?? 'ci',
     tracesSampleRate: 1.0,
     tags: { script: 'publish-bunny', package: '@grundtone/web' },
+    ...sentryZoneRedaction(zone, Sentry.makeNodeTransport),
   });
 } else {
   console.warn(
@@ -126,7 +128,9 @@ async function putWithRetry(
         body,
       });
       if (res.ok) return;
-      lastErr = new Error(`PUT ${url} → ${res.status} ${await res.text()}`);
+      lastErr = new Error(
+        `PUT ${url.slice(zoneBase.length)} → ${res.status} ${await res.text()}`,
+      );
       const retryable = res.status >= 500 || res.status === 429;
       if (!retryable || attempt === 3) break;
     } catch (err) {
@@ -203,7 +207,7 @@ async function main() {
     );
   }
   console.log(
-    `Uploading ${files.length} files to zone "${zone}"${prefix ? ` under /${prefix}` : ''}...`,
+    `Uploading ${files.length} files to the storage zone${prefix ? ` under /${prefix}` : ''}...`,
   );
 
   await Sentry.startSpan(
@@ -262,7 +266,7 @@ async function main() {
   }
 
   console.log(
-    `Published grundtone.com (${files.length} files) to zone "${zone}".`,
+    `Published grundtone.com (${files.length} files) to the storage zone.`,
   );
 }
 
@@ -273,7 +277,7 @@ main().catch(async err => {
   );
   if (sentryEnabled) {
     Sentry.captureException(err, {
-      tags: { zone: zone ?? 'unset', region: region ?? 'default' },
+      tags: { region: region ?? 'default' },
     });
     await Sentry.flush(2000);
   }
