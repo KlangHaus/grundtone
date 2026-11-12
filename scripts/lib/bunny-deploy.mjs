@@ -260,3 +260,81 @@ export async function reportBunnyAuthFailure({
   error(reason);
   return reason;
 }
+
+/**
+ * 🔴 THE ZONE NAME STAYS OUT OF SENTRY (ClickUp 869fbfz68).
+ *
+ * The zone comes from a GitHub secret, so the Actions log prints it as `***`.
+ * Sentry has no such mask: the zone reached it as an explicit `zone` tag, in a
+ * `PUT https://<host>/<zone>/…` error message, in the `fetch` breadcrumbs and
+ * spans the SDK records on its own (tracesSampleRate is 1.0), and in console
+ * breadcrumbs. Removing the tag and the URL is not enough on its own, because
+ * the SDK keeps recording requests; this scrubs every string Sentry is about
+ * to send.
+ *
+ * The 401 diagnosis still prints the zone to the console on purpose: a person
+ * running the script locally needs it, and in Actions it is masked.
+ *
+ * @param {T} value   any JSON-shaped value (an event, a breadcrumb)
+ * @param {string|undefined} zone
+ * @returns {T} the same shape with every occurrence of `zone` replaced
+ * @template T
+ */
+export function redactZone(value, zone) {
+  const z = zone?.trim();
+  if (!z) return value;
+  // Cycle-safe, and only into plain objects and arrays: a transaction event
+  // carries live SDK objects (measured: the first version recursed until the
+  // stack overflowed, and the SDK then sent its own error event with the zone
+  // untouched). `sdkProcessingMetadata` is SDK-internal and never sent.
+  const seen = new WeakMap();
+  const walk = v => {
+    if (typeof v === 'string') return v.split(z).join('<zone>');
+    if (!v || typeof v !== 'object') return v;
+    const proto = Object.getPrototypeOf(v);
+    if (!Array.isArray(v) && proto !== Object.prototype && proto !== null)
+      return v;
+    if (seen.has(v)) return seen.get(v);
+    if (Array.isArray(v)) {
+      const out = [];
+      seen.set(v, out);
+      for (const inner of v) out.push(walk(inner));
+      return out;
+    }
+    const out = {};
+    seen.set(v, out);
+    for (const [k, inner] of Object.entries(v))
+      out[walk(k)] = k === 'sdkProcessingMetadata' ? inner : walk(inner);
+    return out;
+  };
+  return walk(value);
+}
+
+/**
+ * Options for `Sentry.init` that keep the zone out of everything Sentry sends.
+ * Spread them into the init options.
+ *
+ * The hooks scrub events, transactions and breadcrumbs. The transport wrapper
+ * is the layer that cannot be bypassed: the envelope HEADER carries the root
+ * span's name (`trace.transaction`), which no hook sees, and an
+ * auto-instrumented fetch outside a span is a root span named after its URL
+ * (measured with the real SDK in bunny-zone-redaction.test.mjs).
+ *
+ * @param {string|undefined} zone
+ * @param {(options: object) => {send: Function, flush: Function}} makeTransport
+ *   the SDK's transport factory, e.g. `Sentry.makeNodeTransport`
+ */
+export function sentryZoneRedaction(zone, makeTransport) {
+  return {
+    beforeSend: event => redactZone(event, zone),
+    beforeSendTransaction: event => redactZone(event, zone),
+    beforeBreadcrumb: crumb => redactZone(crumb, zone),
+    transport: options => {
+      const base = makeTransport(options);
+      return {
+        ...base,
+        send: envelope => base.send(redactZone(envelope, zone)),
+      };
+    },
+  };
+}
