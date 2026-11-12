@@ -4,7 +4,7 @@
 // committed registry against it. One parser, so the two cannot disagree on
 // what a source file means.
 
-import { readdirSync, readFileSync, statSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { basename, resolve } from 'node:path';
 
 // The order the registry has always had: code-unit order, the default of an
@@ -50,9 +50,16 @@ export function parseSvg(
 export function collectSvgs(dir: string): ParsedIcon[] {
   const icons: ParsedIcon[] = [];
 
-  for (const entry of readdirSync(dir).sort(byCodeUnit)) {
+  // The directory listing says what each entry is, so no path is stat'ed and
+  // then read in a second step. The sources hold no symlinks, so the entry type
+  // is the same answer statSync gave.
+  const entries = readdirSync(dir, { withFileTypes: true }).sort((a, b) =>
+    byCodeUnit(a.name, b.name),
+  );
+  for (const dirent of entries) {
+    const entry = dirent.name;
     const fullPath = resolve(dir, entry);
-    if (statSync(fullPath).isDirectory()) {
+    if (dirent.isDirectory()) {
       const files = readdirSync(fullPath)
         .filter(f => f.endsWith('.svg'))
         .sort(byCodeUnit);
