@@ -5,4 +5,5 @@ export type {
   TableVariant,
   TableDensity,
   SortDirection,
+  TableStackBreakpoint,
 } from './types';

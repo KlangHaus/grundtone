@@ -6,6 +6,7 @@
     variant: 'default',
     density: 'normal',
     responsive: false,
+    stackBelow: 'sm',
     selectable: false,
     modelValue: () => [],
     caption: undefined,
@@ -136,7 +137,16 @@
 </script>
 
 <template>
-  <div :class="['table-wrapper', { 'table-wrapper--responsive': responsive }]">
+  <div
+    :class="[
+      'table-wrapper',
+      {
+        'table-wrapper--responsive': responsive,
+        [`table-wrapper--stack-${stackBelow}`]:
+          responsive && stackBelow !== 'sm',
+      },
+    ]"
+  >
     <table :class="tableClasses">
       <caption v-if="caption" :class="{ 'sr-only': !captionVisible }">
         {{
