@@ -77,6 +77,16 @@ Re-read 2026-11-01T20:20Z by [grundtone], before the 2026-11-04 expiry:
   Renewed 7 days, to 2026-11-11.
 Renewed by Allan 2026-11-12 (in chat) to 2026-11-24; a further renewal needs
 Allan's word on the reason.
+  The 2026-11-24 date is Allan's and deviates from the 7-day cadence above (13
+  days); the exit condition is unchanged.
+Re-read 2026-11-12T18:44Z by [sikkerhed] (grundtone PR comment 6832731967):
+  - OSV record: `modified` still 2026-10-22T17:15:04Z, not withdrawn; both
+    legacy ranges still `introduced` only (nuxt 3.0.0, @nuxt/nitro-server
+    3.20.0); the 4.x ranges `fixed: 4.6.2`.
+  - GitHub advisory (updated 2026-10-22T16:59:57Z): all four ranges bounded,
+    4.6.2 patched — unchanged, not withdrawn.
+  - Lockfile: only nuxt@4.6.4 and @nuxt/nitro-server@4.6.4, no 3.x entries;
+    the same false positive on the newer patch release.
 """
 
 [[IgnoredVulns]]
