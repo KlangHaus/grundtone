@@ -1,3 +1,6 @@
+@use 'sass:map';
+@use '../core/breakpoints-defaults' as bp;
+
 // Table
 // A systematic layout for displaying data in columns and rows.
 // Modern aesthetic: airy spacing, soft borders, smooth micro-interactions.
@@ -8,13 +11,15 @@
   -webkit-overflow-scrolling: touch;
 }
 
-// Responsive: stack rows as cards on small screens
-@media (max-width: 40rem) {
-  .table-wrapper--responsive .table thead {
+// Responsive: stack rows as cards below a breakpoint.
+//
+// The rules live in one mixin so every threshold stacks the same way.
+@mixin stacked-table($scope) {
+  #{$scope} .table thead {
     display: none;
   }
 
-  .table-wrapper--responsive .table tbody tr {
+  #{$scope} .table tbody tr {
     display: block;
     margin-bottom: var(--space-sm);
     border: 1px solid var(--color-border-light);
@@ -22,7 +27,7 @@
     padding: var(--space-xs) 0;
   }
 
-  .table-wrapper--responsive .table tbody td {
+  #{$scope} .table tbody td {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
@@ -32,7 +37,7 @@
     border-bottom: none;
   }
 
-  .table-wrapper--responsive .table tbody td::before {
+  #{$scope} .table tbody td::before {
     content: attr(data-label);
     font-weight: var(--font-weight-medium);
     font-size: var(--font-size-xs);
@@ -41,6 +46,27 @@
     letter-spacing: 0.04em;
     text-align: left;
     flex-shrink: 0;
+  }
+}
+
+// Default threshold, unchanged: 40rem (640px), inclusive.
+@media (max-width: 40rem) {
+  @include stacked-table('.table-wrapper--responsive');
+}
+
+// Named thresholds (GTTable's `stackBelow`). `@media` cannot read a CSS
+// variable, so the names resolve here, at build time: one modifier class per
+// step of the default breakpoint scale above sm, stacking below that step
+// (value - 0.02px, as core/breakpoints' media-breakpoint-down does).
+// core/breakpoints itself is configured later, by utilities/grid, so it cannot
+// be loaded from a component; the default map is the same source it starts from.
+@each $name, $value in bp.$grid-breakpoints-default {
+  @if $value > map.get(bp.$grid-breakpoints-default, 'sm') {
+    @media (max-width: ($value - 0.02)) {
+      @include stacked-table(
+        '.table-wrapper--responsive.table-wrapper--stack-#{$name}'
+      );
+    }
   }
 }
 

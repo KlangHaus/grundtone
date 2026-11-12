@@ -245,6 +245,7 @@ export type {
   TableVariant,
   TableDensity,
   SortDirection,
+  TableStackBreakpoint,
 } from './molecules/Table';
 
 // Organisms
