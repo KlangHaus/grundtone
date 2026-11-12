@@ -1,5 +1,57 @@
 # @grundtone/vue
 
+## 3.4.0 - 2026-11-12
+
+### Minor Changes
+
+- [#332](https://github.com/KlangHaus/grundtone/pull/332)
+  [`20b6e0b`](https://github.com/KlangHaus/grundtone/commit/20b6e0ba3f82828da198071516732ad935b040dd)
+  Thanks [@allanasp](https://github.com/allanasp)! - `GTTable` gains `stackBelow`, which says below
+  which named breakpoint a `responsive` table stacks its rows: `'sm'` (40rem, the default and
+  today's behaviour), `'md'` (768px), `'lg'` (1024px), `'xl'` (1280px) or `'2xl'` (1536px). Without
+  the prop nothing changes. The design system adds the matching `.table-wrapper--stack-md`, `-lg`,
+  `-xl` and `-2xl` modifier classes, built from the default breakpoint scale.
+
+- [#330](https://github.com/KlangHaus/grundtone/pull/330)
+  [`cf2dfbf`](https://github.com/KlangHaus/grundtone/commit/cf2dfbfe3ce3a00025e43efc88bff2f2841b3c32)
+  Thanks [@allanasp](https://github.com/allanasp)! - Accessible labels that were fixed text in the
+  templates are now props, so an app can set them in its own language. Each default is the text the
+  component rendered before, so nothing changes unless you pass the prop.
+
+  - `GTAlert`, `GTCookieMessage`, `GTModal`, `GTToast`: `closeLabel`
+  - `GTToastContainer`: `closeLabel` for every toast it shows, and `useToast` takes a per-toast
+    `closeLabel` option that wins over it
+  - `GTDatePicker`: `openCalendarLabel`, `closeCalendarLabel`, `previousMonthLabel`,
+    `nextMonthLabel`
+  - `GTRichText`: `toolbarLabel`, `linkInputLabel`, `openLinkLabel`, `editLinkLabel`,
+    `removeLinkLabel`
+  - `GTCodeBlock`: `copyLabel`, `copiedLabel`
+  - `GTCarousel`: `previousSlideLabel`, `nextSlideLabel`, `goToSlideLabel(slide)`
+  - `GTTable`: `selectAllLabel`, `selectRowLabel(row)`
+  - `GTTag`: `removeLabel(label)`
+  - `GTFileUpload`: `removeFileLabel(fileName)`
+  - `GTSlider`: `minimumThumbLabel(label)`, `maximumThumbLabel(label)` (range mode)
+  - `GTErrorPage`: `illustrationLabel(code)`
+
+  The props shown with an argument take a function, because their text includes a value (a row
+  number, a file name, a status code).
+
+  If you passed one of these names as a plain attribute (for example `close-label="…"`), it used to
+  land on the component's root element as an HTML attribute; it now sets the prop instead.
+
+### Patch Changes
+
+- [#327](https://github.com/KlangHaus/grundtone/pull/327)
+  [`2410742`](https://github.com/KlangHaus/grundtone/commit/241074255f211542906529b7640f4b823c4cf2ab)
+  Thanks [@allanasp](https://github.com/allanasp)! - The neutral badge (`GTBadge variant="neutral"`
+  and `.badge--neutral`) now uses `--color-text` instead of `--color-text-secondary` for its text.
+  The old pair measured 4.15:1 on `--color-surface-alt` in light mode, below WCAG AA for small text.
+  The grey surface is unchanged.
+- Updated dependencies
+  [[`2410742`](https://github.com/KlangHaus/grundtone/commit/241074255f211542906529b7640f4b823c4cf2ab),
+  [`20b6e0b`](https://github.com/KlangHaus/grundtone/commit/20b6e0ba3f82828da198071516732ad935b040dd)]:
+  - @grundtone/design-system@3.4.0
+
 ## 3.3.3 - 2026-11-08
 
 ### Patch Changes
